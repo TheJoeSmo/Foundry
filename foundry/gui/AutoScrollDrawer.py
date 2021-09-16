@@ -5,7 +5,7 @@ from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_WIDTH
 from foundry.game.level.Level import Level
-from smb3parse.constants import (
+from foundry.smb3parse.constants import (
     AScroll_HorizontalInitMove,
     AScroll_Movement,
     AScroll_MovementLoop,

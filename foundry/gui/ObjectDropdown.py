@@ -10,7 +10,7 @@ from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.LevelObject import LevelObject, get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
-from smb3parse.objects import MAX_DOMAIN, MAX_ENEMY_ITEM_ID, MAX_ID_VALUE, MIN_DOMAIN
+from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ENEMY_ITEM_ID, MAX_ID_VALUE, MIN_DOMAIN
 
 
 class ObjectDropdown(QComboBox):

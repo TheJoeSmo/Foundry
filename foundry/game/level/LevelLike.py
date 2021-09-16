@@ -1,6 +1,6 @@
 import abc
 
-from smb3parse.levels import LevelBase
+from foundry.smb3parse.levels import LevelBase
 
 
 class LevelLike(LevelBase, abc.ABC):

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "foundry"
+version = "0.1.0"
+description = ""
+authors = ["TheJoeSmo <joesmo.joesmo12@gmail.com>"]
+license = "GPL3"
+
+[tool.poetry.dependencies]
+python = "3.9"
+QDarkStyle = "^3.0.2"
+PySide2 = "^5.15.2"
+
+[tool.poetry.dev-dependencies]
+black = "^21.9b0"
+pytest = "^6.2.5"
+flake8 = "^3.9.2"
+hypothesis = "^6.21.4"
+pytest-qt = "^4.0.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

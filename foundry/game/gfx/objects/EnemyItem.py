@@ -8,7 +8,7 @@ from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
-from smb3parse.objects.object_set import ENEMY_ITEM_GRAPHICS_SET, ENEMY_ITEM_OBJECT_SET
+from foundry.smb3parse.objects.object_set import ENEMY_ITEM_GRAPHICS_SET, ENEMY_ITEM_OBJECT_SET
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 

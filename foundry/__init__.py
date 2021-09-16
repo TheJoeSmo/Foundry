@@ -3,11 +3,12 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 from typing import Union
+from pkg_resources import get_distribution
 
 from PySide2.QtCore import QUrl
 from PySide2.QtGui import QDesktopServices, QIcon
 
-root_dir = Path(__file__).parent.parent
+root_dir = Path(__file__).parent
 
 home_dir = Path.home() / ".smb3foundry"
 home_dir.mkdir(parents=True, exist_ok=True)
@@ -21,7 +22,7 @@ auto_save_rom_path = auto_save_path / "auto_save.nes"
 auto_save_m3l_path = auto_save_path / "auto_save.m3l"
 auto_save_level_data_path = auto_save_path / "level_data.json"
 
-data_dir = root_dir.joinpath("data")
+data_dir = root_dir / "data"
 doc_dir = root_dir.joinpath("doc")
 icon_dir = data_dir.joinpath("icons")
 
@@ -39,12 +40,10 @@ def open_url(url: Union[str, QUrl]):
 
 
 def get_current_version_name() -> str:
-    version_file = root_dir / "VERSION"
-
-    if not version_file.exists():
-        raise LookupError("Version file not found.")
-
-    return version_file.read_text().strip()
+    try:
+        return get_distribution("foundry").version
+    except LookupError:
+        return "beta"
 
 
 def get_latest_version_name(timeout: int = 10) -> str:
