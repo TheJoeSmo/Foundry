@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List
 
 from foundry import data_dir
-from smb3parse.objects.object_set import (
+from foundry.smb3parse.objects.object_set import (
     AIR_SHIP_OBJECT_SET,
     CLOUDY_OBJECT_SET,
     DESERT_OBJECT_SET,

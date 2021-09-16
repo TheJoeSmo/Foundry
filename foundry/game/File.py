@@ -1,8 +1,8 @@
 from os.path import basename
 from typing import List, Optional
 
-from smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
-from smb3parse.util.rom import Rom
+from foundry.smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
+from foundry.smb3parse.util.rom import Rom
 
 WORLD_COUNT = 9  # includes warp zone
 
