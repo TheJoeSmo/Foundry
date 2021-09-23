@@ -1,5 +1,5 @@
 from foundry.game.File import ROM
-from smb3parse.constants import Level_BG_Pages1, Level_BG_Pages2
+from foundry.smb3parse.constants import Level_BG_Pages1, Level_BG_Pages2
 
 CHR_ROM_OFFSET = 0x40010
 CHR_ROM_SEGMENT_SIZE = 0x400

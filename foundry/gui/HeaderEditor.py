@@ -21,7 +21,7 @@ from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.LevelSelector import LevelSelector, OBJECT_SET_ITEMS
 from foundry.gui.Spinner import Spinner
-from smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
+from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 
 LEVEL_LENGTHS = [0x10 * (i + 1) for i in range(0, 2 ** 4)]
 STR_LEVEL_LENGTHS = [f"{length - 1:0=#4X} / {length} Blocks".replace("X", "x") for length in LEVEL_LENGTHS]

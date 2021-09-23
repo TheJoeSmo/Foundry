@@ -29,7 +29,7 @@ from foundry.gui.settings import (
     GUI_STYLE,
 )
 from foundry.gui.HorizontalLine import HorizontalLine
-from smb3parse.constants import (
+from foundry.smb3parse.constants import (
     POWERUP_MUSHROOM,
     POWERUP_RACCOON,
     POWERUP_FIREFLOWER,

@@ -12,8 +12,8 @@ from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.level import LevelByteData, _load_level_offsets
 from foundry.game.level.LevelLike import LevelLike
 from foundry.gui.UndoStack import UndoStack
-from smb3parse.constants import BASE_OFFSET, Level_TilesetIdx_ByTileset
-from smb3parse.levels.level_header import LevelHeader
+from foundry.smb3parse.constants import BASE_OFFSET, Level_TilesetIdx_ByTileset
+from foundry.smb3parse.levels.level_header import LevelHeader
 
 LEVEL_POINTER_OFFSET = Level_TilesetIdx_ByTileset
 

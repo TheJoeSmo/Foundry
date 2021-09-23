@@ -6,7 +6,7 @@ from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.Spinner import Spinner
-from smb3parse.constants import OBJ_AUTOSCROLL
+from foundry.smb3parse.constants import OBJ_AUTOSCROLL
 
 AUTOSCROLL_LABELS = {
     -1: "No Autoscroll in Level.",

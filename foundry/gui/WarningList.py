@@ -5,6 +5,7 @@ from PySide2.QtCore import QEvent, QRect, Qt, Signal, SignalInstance
 from PySide2.QtGui import QCursor, QFocusEvent
 from PySide2.QtWidgets import QLabel, QVBoxLayout, QWidget
 
+from foundry import data_dir
 from foundry.game.ObjectDefinitions import GeneratorType
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import GROUND, LevelObject
@@ -13,8 +14,8 @@ from foundry.gui.HeaderEditor import SCROLL_DIRECTIONS
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.util import clear_layout
-from smb3parse.constants import OBJ_AUTOSCROLL
-from smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.constants import OBJ_AUTOSCROLL
+from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
 
 class WarningList(QWidget):
@@ -120,7 +121,7 @@ class WarningList(QWidget):
         self.warnings_updated.emit(bool(self.warnings))
 
     def _build_enemy_clan_dict(self):
-        with open("data/enemy_data.json", "r") as enemy_data_file:
+        with open(data_dir / "enemy_data.json", "r") as enemy_data_file:
             enemy_data = json.loads(enemy_data_file.read())
 
             self._enemy_dict.clear()

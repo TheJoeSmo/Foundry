@@ -12,7 +12,7 @@ from foundry.game.gfx.Palette import PaletteGroup, bg_color_for_object_set
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.ObjectLike import EXPANDS_BOTH, EXPANDS_HORIZ, EXPANDS_NOT, EXPANDS_VERT, ObjectLike
-from smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
 SKY = 0
 GROUND = 27
