@@ -1,7 +1,12 @@
 import pytest
 from hypothesis import given, strategies
 
-from foundry.smb3parse.levels import DEFAULT_HORIZONTAL_HEIGHT, DEFAULT_VERTICAL_WIDTH, HEADER_LENGTH, is_valid_level_length
+from foundry.smb3parse.levels import (
+    DEFAULT_HORIZONTAL_HEIGHT,
+    DEFAULT_VERTICAL_WIDTH,
+    HEADER_LENGTH,
+    is_valid_level_length,
+)
 from foundry.smb3parse.levels.level_header import LevelHeader
 from foundry.smb3parse.objects.object_set import MAX_OBJECT_SET, MIN_OBJECT_SET, is_valid_object_set_number
 
