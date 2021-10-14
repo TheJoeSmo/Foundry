@@ -153,8 +153,7 @@ def test_change_attribute_to_bytes(attribute, increase):
     assert cloud_object.to_bytes() != initial_bytes
 
 
-def gen_object_factories():
-    ROM(root_dir.joinpath("SMB3.nes"))
+def gen_object_factories(rom_singleton):
 
     for object_set in range(MAX_OBJECT_SET + 1):
         if object_set in [WORLD_MAP_OBJECT_SET, MUSHROOM_OBJECT_SET, SPADE_BONUS_OBJECT_SET]:
