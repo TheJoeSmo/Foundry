@@ -31,7 +31,13 @@ def rom_singleton():
     if not rom_path.exists() and not rom_path.is_dir():
         Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
 
-    subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+    try:
+        subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+    except PermissionError:
+        # Try Linux alternative
+        subprocess.run(["chmod", "+x", rom_path / "asm6.exe"])  # Give file execution perms
+        subprocess.run(["wine", rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+
     test_rom_path = rom_path / "smb3.bin"
 
     rom = ROM(str(test_rom_path))
