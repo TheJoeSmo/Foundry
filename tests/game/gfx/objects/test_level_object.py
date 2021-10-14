@@ -4,9 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from foundry import root_dir
 from tests.conftest import compare_images
-from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObject import get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectViewer import ObjectDrawArea
