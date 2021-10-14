@@ -16,6 +16,9 @@ pytest = "^6.2.5"
 flake8 = "^3.9.2"
 hypothesis = "^6.21.4"
 pytest-qt = "^4.0.2"
+Sphinx = "^4.2.0"
+numpydoc = "^1.1.0"
+pydata-sphinx-theme = "^0.7.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
