@@ -2,10 +2,6 @@ from pathlib import Path
 
 import pytest
 
-from PySide2.QtGui import QPixmap
-
-from tests.gui import ApprovalDialog
-
 from foundry import root_dir
 from foundry.smb3parse.levels.world_map import WorldMap
 from foundry.smb3parse.util.rom import Rom
