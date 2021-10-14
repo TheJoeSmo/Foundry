@@ -1,21 +1,23 @@
 from pathlib import Path
 
 import pytest
+import subprocess
+from pathlib import Path
+from git.repo.base import Repo
 
-from foundry import root_dir
 from foundry.smb3parse.levels.world_map import WorldMap
 from foundry.smb3parse.util.rom import Rom
-
-test_rom_path = root_dir / Path("SMB3.nes")
-assert test_rom_path.exists(), f"The test suite needs a SMB3(U) Rom at '{test_rom_path}' to run."
 
 
 @pytest.fixture()
 def rom():
-    if not test_rom_path.exists():
-        raise ValueError(
-            f"To run the test suite, place a US SMB3 Rom named '{test_rom_path}' in the root of the repository."
-        )
+    rom_path = Path(__file__).parent.resolve() / "artifacts"
+
+    if not rom_path.exists() and not rom_path.is_dir():
+        Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
+
+    subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+    test_rom_path = rom_path / "smb3.bin"
 
     with open(test_rom_path, "rb") as rom_file:
         yield Rom(bytearray(rom_file.read()))
