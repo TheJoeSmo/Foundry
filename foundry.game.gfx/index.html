@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>foundry.game.gfx package &#8212; Foundry 0.1.0 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="foundry.game.gfx.drawable package" href="../foundry.game.gfx.drawable/" />
+    <link rel="prev" title="foundry.game package" href="../foundry.game/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../">
+  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
+</a>      
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../modules/">
+  foundry
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../foundry/">
+   foundry package
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../foundry.game/">
+     foundry.game package
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active has-children">
+      <a class="current reference internal" href="#">
+       foundry.game.gfx package
+      </a>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+      <label for="toctree-checkbox-3">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../foundry.game.gfx.drawable/">
+         foundry.game.gfx.drawable package
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../foundry.game.gfx.objects/">
+         foundry.game.gfx.objects package
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.game.level/">
+       foundry.game.level package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../foundry.gui/">
+     foundry.gui package
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../foundry.smb3parse/">
+     foundry.smb3parse package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.levels/">
+       foundry.smb3parse.levels package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.objects/">
+       foundry.smb3parse.objects package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.util/">
+       foundry.smb3parse.util package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subpackages">
+   Subpackages
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.GraphicsSet">
+   foundry.game.gfx.GraphicsSet module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.Palette">
+   foundry.game.gfx.Palette module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="foundry-game-gfx-package">
+<h1>foundry.game.gfx package<a class="headerlink" href="#foundry-game-gfx-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.game.gfx.drawable/">foundry.game.gfx.drawable package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.drawable/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable.Block">foundry.game.gfx.drawable.Block module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable.Tile">foundry.game.gfx.drawable.Tile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.game.gfx.objects/">foundry.game.gfx.objects package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.EnemyItem">foundry.game.gfx.objects.EnemyItem module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.EnemyItemFactory">foundry.game.gfx.objects.EnemyItemFactory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.Jump">foundry.game.gfx.objects.Jump module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.LevelObject">foundry.game.gfx.objects.LevelObject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.LevelObjectFactory">foundry.game.gfx.objects.LevelObjectFactory module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.MapObject">foundry.game.gfx.objects.MapObject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.ObjectLike">foundry.game.gfx.objects.ObjectLike module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-foundry.game.gfx.GraphicsSet">
+<span id="foundry-game-gfx-graphicsset-module"></span><h2>foundry.game.gfx.GraphicsSet module<a class="headerlink" href="#module-foundry.game.gfx.GraphicsSet" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.GraphicsSet.GraphicsSet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">GraphicsSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graphic_set_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.GraphicsSet.GraphicsSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.GraphicsSet.GraphicsSet.GRAPHIC_SET_BG_PAGE_1">
+<span class="sig-name descname"><span class="pre">GRAPHIC_SET_BG_PAGE_1</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#foundry.game.gfx.GraphicsSet.GraphicsSet.GRAPHIC_SET_BG_PAGE_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.GraphicsSet.GraphicsSet.GRAPHIC_SET_BG_PAGE_2">
+<span class="sig-name descname"><span class="pre">GRAPHIC_SET_BG_PAGE_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#foundry.game.gfx.GraphicsSet.GraphicsSet.GRAPHIC_SET_BG_PAGE_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.Palette">
+<span id="foundry-game-gfx-palette-module"></span><h2>foundry.game.gfx.Palette module<a class="headerlink" href="#module-foundry.game.gfx.Palette" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.gfx.Palette.bg_color_for_object_set">
+<span class="sig-name descname"><span class="pre">bg_color_for_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_number</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide2.QtGui.QColor</span></span></span><a class="headerlink" href="#foundry.game.gfx.Palette.bg_color_for_object_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.gfx.Palette.bg_color_for_palette">
+<span class="sig-name descname"><span class="pre">bg_color_for_palette</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.Palette.bg_color_for_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.gfx.Palette.load_palette_group">
+<span class="sig-name descname"><span class="pre">load_palette_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.game.gfx.Palette.load_palette_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basically does, what the Setup_PalData routine does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_set</strong> – Level_Tileset in the disassembly.</p></li>
+<li><p><strong>palette_group_index</strong> – Palette_By_Tileset. Defined in the level header.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of 4 groups of 4 colors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.game.gfx" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../foundry.game/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">foundry.game package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../foundry.game.gfx.drawable/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">foundry.game.gfx.drawable package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, TheJoeSmo.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

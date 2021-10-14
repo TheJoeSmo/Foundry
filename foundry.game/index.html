@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>foundry.game package &#8212; Foundry 0.1.0 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="foundry.game.gfx package" href="../foundry.game.gfx/" />
+    <link rel="prev" title="foundry package" href="../foundry/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../">
+  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
+</a>      
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../modules/">
+  foundry
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../foundry/">
+   foundry package
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="current reference internal" href="#">
+     foundry.game package
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../foundry.game.gfx/">
+       foundry.game.gfx package
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+      <label for="toctree-checkbox-3">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../foundry.game.gfx.drawable/">
+         foundry.game.gfx.drawable package
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../foundry.game.gfx.objects/">
+         foundry.game.gfx.objects package
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.game.level/">
+       foundry.game.level package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../foundry.gui/">
+     foundry.gui package
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../foundry.smb3parse/">
+     foundry.smb3parse package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.levels/">
+       foundry.smb3parse.levels package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.objects/">
+       foundry.smb3parse.objects package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.util/">
+       foundry.smb3parse.util package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subpackages">
+   Subpackages
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.Data">
+   foundry.game.Data module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.File">
+   foundry.game.File module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.ObjectDefinitions">
+   foundry.game.ObjectDefinitions module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.ObjectSet">
+   foundry.game.ObjectSet module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="foundry-game-package">
+<h1>foundry.game package<a class="headerlink" href="#foundry-game-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.game.gfx/">foundry.game.gfx package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx/#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../foundry.game.gfx.drawable/">foundry.game.gfx.drawable package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable.Block">foundry.game.gfx.drawable.Block module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable.Tile">foundry.game.gfx.drawable.Tile module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/#module-foundry.game.gfx.drawable">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../foundry.game.gfx.objects/">foundry.game.gfx.objects package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.EnemyItem">foundry.game.gfx.objects.EnemyItem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.EnemyItemFactory">foundry.game.gfx.objects.EnemyItemFactory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.Jump">foundry.game.gfx.objects.Jump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.LevelObject">foundry.game.gfx.objects.LevelObject module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.LevelObjectFactory">foundry.game.gfx.objects.LevelObjectFactory module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.MapObject">foundry.game.gfx.objects.MapObject module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects.ObjectLike">foundry.game.gfx.objects.ObjectLike module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/#module-foundry.game.gfx.objects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx/#module-foundry.game.gfx.GraphicsSet">foundry.game.gfx.GraphicsSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx/#module-foundry.game.gfx.Palette">foundry.game.gfx.Palette module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.gfx/#module-foundry.game.gfx">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.game.level/">foundry.game.level package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.Level">foundry.game.level.Level module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.LevelLike">foundry.game.level.LevelLike module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.LevelRef">foundry.game.level.LevelRef module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.WorldMap">foundry.game.level.WorldMap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-foundry.game.Data">
+<span id="foundry-game-data-module"></span><h2>foundry.game.Data module<a class="headerlink" href="#module-foundry.game.Data" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.Data.MapscreenPointerLocation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MapscreenPointerLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.Data.MapscreenPointerLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.MapscreenPointerLocation.count">
+<span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#foundry.game.Data.MapscreenPointerLocation.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.MapscreenPointerLocation.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#foundry.game.Data.MapscreenPointerLocation.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Mario3Level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_world</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_in_world</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rom_level_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_obj_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.Data.Mario3Level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.NamedTuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.enemy_offset">
+<span class="sig-name descname"><span class="pre">enemy_offset</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.enemy_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.game_world">
+<span class="sig-name descname"><span class="pre">game_world</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.game_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.level_in_world">
+<span class="sig-name descname"><span class="pre">level_in_world</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.level_in_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.real_obj_set">
+<span class="sig-name descname"><span class="pre">real_obj_set</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.real_obj_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.Mario3Level.rom_level_offset">
+<span class="sig-name descname"><span class="pre">rom_level_offset</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.Data.Mario3Level.rom_level_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ObjectInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subindex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.Data.ObjectInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.drag">
+<span class="sig-name descname"><span class="pre">drag</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.drag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 11</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.height">
+<span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.index">
+<span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.obj">
+<span class="sig-name descname"><span class="pre">obj</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 8</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.objtype">
+<span class="sig-name descname"><span class="pre">objtype</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.objtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 9</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 10</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.subindex">
+<span class="sig-name descname"><span class="pre">subindex</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.subindex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.width">
+<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.x">
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.x2">
+<span class="sig-name descname"><span class="pre">x2</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.x2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 6</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.Data.ObjectInfo.y2">
+<span class="sig-name descname"><span class="pre">y2</span></span><a class="headerlink" href="#foundry.game.Data.ObjectInfo.y2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 7</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.Data.read_string_dict">
+<span class="sig-name descname"><span class="pre">read_string_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.Data.read_string_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-foundry.game.File">
+<span id="foundry-game-file-module"></span><h2>foundry.game.File module<a class="headerlink" href="#module-foundry.game.File" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.File.ROM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ROM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../foundry.smb3parse.util/#foundry.smb3parse.util.rom.Rom" title="foundry.smb3parse.util.rom.Rom"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.smb3parse.util.rom.Rom</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.MARKER_VALUE">
+<span class="sig-name descname"><span class="pre">MARKER_VALUE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">b'SMB3FOUNDRY'</span></em><a class="headerlink" href="#foundry.game.File.ROM.MARKER_VALUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.W_INIT_OS_LIST">
+<span class="sig-name descname"><span class="pre">W_INIT_OS_LIST</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#foundry.game.File.ROM.W_INIT_OS_LIST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.additional_data">
+<span class="sig-name descname"><span class="pre">additional_data</span></span><em class="property"> <span class="pre">=</span> <span class="pre">''</span></em><a class="headerlink" href="#foundry.game.File.ROM.additional_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.bulk_read">
+<span class="sig-name descname"><span class="pre">bulk_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.bulk_read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.bulk_write">
+<span class="sig-name descname"><span class="pre">bulk_write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.bulk_write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.get_byte">
+<span class="sig-name descname"><span class="pre">get_byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.get_byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.get_tsa_data">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_tsa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.get_tsa_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.is_loaded">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_loaded</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.is_loaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.load_from_file">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">''</span></em><a class="headerlink" href="#foundry.game.File.ROM.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">''</span></em><a class="headerlink" href="#foundry.game.File.ROM.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.peek_byte">
+<span class="sig-name descname"><span class="pre">peek_byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.peek_byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.rom_data">
+<span class="sig-name descname"><span class="pre">rom_data</span></span><em class="property"> <span class="pre">=</span> <span class="pre">bytearray(b'')</span></em><a class="headerlink" href="#foundry.game.File.ROM.rom_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.save_to_file">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">save_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_new_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.save_to_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.seek">
+<span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.seek" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.File.ROM.set_additional_data">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_additional_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">additional_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.set_additional_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.ObjectDefinitions">
+<span id="foundry-game-objectdefinitions-module"></span><h2>foundry.game.ObjectDefinitions module<a class="headerlink" href="#module-foundry.game.ObjectDefinitions" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.EndType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EndType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectDefinitions.EndType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Some level objects have blocks designated to be used at their ends. For example pipes, which can be extended, but
+always end at one side with the same couple of blocks. To keep track of where those special blocks are to be placed,
+this enum is used. When the value is TWO_ENDS they are always on opposite sides and whether they are left and right
+or top and bottom depends on the generator type of the object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.EndType.END_ON_BOTTOM_OR_RIGHT">
+<span class="sig-name descname"><span class="pre">END_ON_BOTTOM_OR_RIGHT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.EndType.END_ON_BOTTOM_OR_RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.EndType.END_ON_TOP_OR_LEFT">
+<span class="sig-name descname"><span class="pre">END_ON_TOP_OR_LEFT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.EndType.END_ON_TOP_OR_LEFT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.EndType.TWO_ENDS">
+<span class="sig-name descname"><span class="pre">TWO_ENDS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.EndType.TWO_ENDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.EndType.UNIFORM">
+<span class="sig-name descname"><span class="pre">UNIFORM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.EndType.UNIFORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">GeneratorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Level objects are generated using different methods, depending on their generator type. Some objects extend until
+they hit another object, some extend up to the sky. To identify in what way a specific type of level object is
+constructed, this enum lists the known generator types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.CENTERED">
+<span class="sig-name descname"><span class="pre">CENTERED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">10</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.CENTERED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.DESERT_PIPE_BOX">
+<span class="sig-name descname"><span class="pre">DESERT_PIPE_BOX</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.DESERT_PIPE_BOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.DIAG_DOWN_LEFT">
+<span class="sig-name descname"><span class="pre">DIAG_DOWN_LEFT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.DIAG_DOWN_LEFT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.DIAG_DOWN_RIGHT">
+<span class="sig-name descname"><span class="pre">DIAG_DOWN_RIGHT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.DIAG_DOWN_RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.DIAG_UP_RIGHT">
+<span class="sig-name descname"><span class="pre">DIAG_UP_RIGHT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.DIAG_UP_RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.DIAG_WEIRD">
+<span class="sig-name descname"><span class="pre">DIAG_WEIRD</span></span><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.DIAG_WEIRD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.ENDING">
+<span class="sig-name descname"><span class="pre">ENDING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">14</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.ENDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.HORIZONTAL">
+<span class="sig-name descname"><span class="pre">HORIZONTAL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.HORIZONTAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.HORIZONTAL_2">
+<span class="sig-name descname"><span class="pre">HORIZONTAL_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">7</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.HORIZONTAL_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.HORIZ_TO_GROUND">
+<span class="sig-name descname"><span class="pre">HORIZ_TO_GROUND</span></span><em class="property"> <span class="pre">=</span> <span class="pre">6</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.HORIZ_TO_GROUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.PYRAMID_2">
+<span class="sig-name descname"><span class="pre">PYRAMID_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">12</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.PYRAMID_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.PYRAMID_TO_GROUND">
+<span class="sig-name descname"><span class="pre">PYRAMID_TO_GROUND</span></span><em class="property"> <span class="pre">=</span> <span class="pre">11</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.PYRAMID_TO_GROUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.SINGLE_BLOCK_OBJECT">
+<span class="sig-name descname"><span class="pre">SINGLE_BLOCK_OBJECT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">9</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.SINGLE_BLOCK_OBJECT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.TO_THE_SKY">
+<span class="sig-name descname"><span class="pre">TO_THE_SKY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">13</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.TO_THE_SKY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.GeneratorType.VERTICAL">
+<span class="sig-name descname"><span class="pre">VERTICAL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#foundry.game.ObjectDefinitions.GeneratorType.VERTICAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.ObjectDefinition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ObjectDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectDefinitions.ObjectDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.ObjectDefinitions.load_object_definitions">
+<span class="sig-name descname"><span class="pre">load_object_definitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectDefinitions.load_object_definitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-foundry.game.ObjectSet">
+<span id="foundry-game-objectset-module"></span><h2>foundry.game.ObjectSet module<a class="headerlink" href="#module-foundry.game.ObjectSet" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ObjectSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_number</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_definition_of">
+<span class="sig-name descname"><span class="pre">get_definition_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.game.ObjectDefinitions.ObjectDefinition" title="foundry.game.ObjectDefinitions.ObjectDefinition"><span class="pre">foundry.game.ObjectDefinitions.ObjectDefinition</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_definition_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_ending_offset">
+<span class="sig-name descname"><span class="pre">get_ending_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_ending_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_object_byte_length">
+<span class="sig-name descname"><span class="pre">get_object_byte_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_object_byte_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.game" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../foundry/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">foundry package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../foundry.game.gfx/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">foundry.game.gfx package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, TheJoeSmo.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

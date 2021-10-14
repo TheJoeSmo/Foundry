@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>foundry.game.gfx.objects package &#8212; Foundry 0.1.0 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="foundry.game.level package" href="../foundry.game.level/" />
+    <link rel="prev" title="foundry.game.gfx.drawable package" href="../foundry.game.gfx.drawable/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../">
+  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
+</a>      
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../modules/">
+  foundry
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../foundry/">
+   foundry package
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../foundry.game/">
+     foundry.game package
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active has-children">
+      <a class="reference internal" href="../foundry.game.gfx/">
+       foundry.game.gfx package
+      </a>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+      <label for="toctree-checkbox-3">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul class="current">
+       <li class="toctree-l4">
+        <a class="reference internal" href="../foundry.game.gfx.drawable/">
+         foundry.game.gfx.drawable package
+        </a>
+       </li>
+       <li class="toctree-l4 current active">
+        <a class="current reference internal" href="#">
+         foundry.game.gfx.objects package
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.game.level/">
+       foundry.game.level package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../foundry.gui/">
+     foundry.gui package
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../foundry.smb3parse/">
+     foundry.smb3parse package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.levels/">
+       foundry.smb3parse.levels package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.objects/">
+       foundry.smb3parse.objects package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.smb3parse.util/">
+       foundry.smb3parse.util package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.EnemyItem">
+   foundry.game.gfx.objects.EnemyItem module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.EnemyItemFactory">
+   foundry.game.gfx.objects.EnemyItemFactory module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.Jump">
+   foundry.game.gfx.objects.Jump module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.LevelObject">
+   foundry.game.gfx.objects.LevelObject module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.LevelObjectFactory">
+   foundry.game.gfx.objects.LevelObjectFactory module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.MapObject">
+   foundry.game.gfx.objects.MapObject module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects.ObjectLike">
+   foundry.game.gfx.objects.ObjectLike module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.game.gfx.objects">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="foundry-game-gfx-objects-package">
+<h1>foundry.game.gfx.objects package<a class="headerlink" href="#foundry-game-gfx-objects-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-foundry.game.gfx.objects.EnemyItem">
+<span id="foundry-game-gfx-objects-enemyitem-module"></span><h2>foundry.game.gfx.objects.EnemyItem module<a class="headerlink" href="#module-foundry.game.gfx.objects.EnemyItem" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EnemyObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">png_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.as_image">
+<span class="sig-name descname"><span class="pre">as_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide2.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.as_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.change_type">
+<span class="sig-name descname"><span class="pre">change_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.change_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.decrement_type">
+<span class="sig-name descname"><span class="pre">decrement_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.decrement_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PySide2.QtGui.QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.get_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.get_status_info">
+<span class="sig-name descname"><span class="pre">get_status_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.get_status_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.increment_type">
+<span class="sig-name descname"><span class="pre">increment_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.increment_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.is_4byte">
+<span class="sig-name descname"><span class="pre">is_4byte</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.is_4byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.move_by">
+<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.move_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.obj_index">
+<span class="sig-name descname"><span class="pre">obj_index</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.obj_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in">
+<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.rect">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">rect</span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.resize_by">
+<span class="sig-name descname"><span class="pre">resize_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.resize_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.set_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.type">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.EnemyItemFactory">
+<span id="foundry-game-gfx-objects-enemyitemfactory-module"></span><h2>foundry.game.gfx.objects.EnemyItemFactory module<a class="headerlink" href="#module-foundry.game.gfx.objects.EnemyItemFactory" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EnemyItemFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.definitions">
+<span class="sig-name descname"><span class="pre">definitions</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.definitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.from_data">
+<span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.from_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.from_properties">
+<span class="sig-name descname"><span class="pre">from_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enemy_item_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.from_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.graphic_set">
+<span class="sig-name descname"><span class="pre">graphic_set</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.graphic_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set">
+<span class="sig-name descname"><span class="pre">object_set</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.Jump">
+<span id="foundry-game-gfx-objects-jump-module"></span><h2>foundry.game.gfx.objects.Jump module<a class="headerlink" href="#module-foundry.game.gfx.objects.Jump" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Jump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.POINTER_DOMAIN">
+<span class="sig-name descname"><span class="pre">POINTER_DOMAIN</span></span><em class="property"> <span class="pre">=</span> <span class="pre">7</span></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.POINTER_DOMAIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.SIZE">
+<span class="sig-name descname"><span class="pre">SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.change_type">
+<span class="sig-name descname"><span class="pre">change_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.change_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.from_properties">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">from_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horiz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vert</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.from_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.get_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.get_rect">
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide2.QtCore.QRect</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.get_rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.get_status_info">
+<span class="sig-name descname"><span class="pre">get_status_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.get_status_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.is_4byte">
+<span class="sig-name descname"><span class="pre">is_4byte</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.is_4byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.is_jump">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">is_jump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.is_jump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.move_by">
+<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.move_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.obj_index">
+<span class="sig-name descname"><span class="pre">obj_index</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.obj_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.point_in">
+<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.point_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="pre">:</span> <span class="pre">PySide2.QtCore.QRect</span></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.resize_by">
+<span class="sig-name descname"><span class="pre">resize_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.resize_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.set_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.LevelObject">
+<span id="foundry-game-gfx-objects-levelobject-module"></span><h2>foundry.game.gfx.objects.LevelObject module<a class="headerlink" href="#module-foundry.game.gfx.objects.LevelObject" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LevelObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../foundry.game.gfx/#foundry.game.gfx.GraphicsSet.GraphicsSet" title="foundry.game.gfx.GraphicsSet.GraphicsSet"><span class="pre">foundry.game.gfx.GraphicsSet.GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_vertical</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.as_image">
+<span class="sig-name descname"><span class="pre">as_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide2.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.as_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.change_type">
+<span class="sig-name descname"><span class="pre">change_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">increment</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.change_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.decrement_type">
+<span class="sig-name descname"><span class="pre">decrement_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.decrement_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.display_size">
+<span class="sig-name descname"><span class="pre">display_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zoom_factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.display_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PySide2.QtGui.QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.expands">
+<span class="sig-name descname"><span class="pre">expands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.expands" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.get_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.get_status_info">
+<span class="sig-name descname"><span class="pre">get_status_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.get_status_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.increment_type">
+<span class="sig-name descname"><span class="pre">increment_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.increment_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.is_4byte">
+<span class="sig-name descname"><span class="pre">is_4byte</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.is_4byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.length">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.move_by">
+<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.move_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.obj_index">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">obj_index</span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.obj_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.object_info">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">object_info</span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.object_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.point_in">
+<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.primary_expansion">
+<span class="sig-name descname"><span class="pre">primary_expansion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.primary_expansion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="pre">:</span> <span class="pre">PySide2.QtCore.QRect</span></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.resize_by">
+<span class="sig-name descname"><span class="pre">resize_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.resize_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.resize_x">
+<span class="sig-name descname"><span class="pre">resize_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.resize_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.resize_y">
+<span class="sig-name descname"><span class="pre">resize_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.resize_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.set_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.get_minimal_icon_object">
+<span class="sig-name descname"><span class="pre">get_minimal_icon_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_object</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.get_minimal_icon_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the object with a length, so that every block is rendered. E. g. clouds with length 0, don’t have a face.</p>
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.LevelObjectFactory">
+<span id="foundry-game-gfx-objects-levelobjectfactory-module"></span><h2>foundry.game.gfx.objects.LevelObjectFactory module<a class="headerlink" href="#module-foundry.game.gfx.objects.LevelObjectFactory" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LevelObjectFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_level</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_data">
+<span class="sig-name descname"><span class="pre">from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_properties">
+<span class="sig-name descname"><span class="pre">from_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.graphic_set">
+<span class="sig-name descname"><span class="pre">graphic_set</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.graphic_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.graphics_set">
+<span class="sig-name descname"><span class="pre">graphics_set</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx/#foundry.game.gfx.GraphicsSet.GraphicsSet" title="foundry.game.gfx.GraphicsSet.GraphicsSet"><span class="pre">foundry.game.gfx.GraphicsSet.GraphicsSet</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.graphics_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set">
+<span class="sig-name descname"><span class="pre">object_set</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group">
+<span class="sig-name descname"><span class="pre">palette_group</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group_index">
+<span class="sig-name descname"><span class="pre">palette_group_index</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_graphic_set">
+<span class="sig-name descname"><span class="pre">set_graphic_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_graphic_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set">
+<span class="sig-name descname"><span class="pre">set_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">
+<span class="sig-name descname"><span class="pre">set_palette_group_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.MapObject">
+<span id="foundry-game-gfx-objects-mapobject-module"></span><h2>foundry.game.gfx.objects.MapObject module<a class="headerlink" href="#module-foundry.game.gfx.objects.MapObject" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MapObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.change_type">
+<span class="sig-name descname"><span class="pre">change_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.change_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.get_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.get_rect">
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.get_rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.get_status_info">
+<span class="sig-name descname"><span class="pre">get_status_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.get_status_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.is_4byte">
+<span class="sig-name descname"><span class="pre">is_4byte</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.is_4byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.move_by">
+<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.move_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.obj_index">
+<span class="sig-name descname"><span class="pre">obj_index</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.obj_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.point_in">
+<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.point_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="pre">:</span> <span class="pre">PySide2.QtCore.QRect</span></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.resize_by">
+<span class="sig-name descname"><span class="pre">resize_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.resize_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.resize_to">
+<span class="sig-name descname"><span class="pre">resize_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.resize_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.set_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects.ObjectLike">
+<span id="foundry-game-gfx-objects-objectlike-module"></span><h2>foundry.game.gfx.objects.ObjectLike module<a class="headerlink" href="#module-foundry.game.gfx.objects.ObjectLike" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ObjectLike</span></span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.change_type">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">change_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.change_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.draw">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.expands">
+<span class="sig-name descname"><span class="pre">expands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.expands" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.get_position">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.get_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.get_rect">
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide2.QtCore.QRect</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.get_rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.get_status_info">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_status_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.get_status_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.is_4byte">
+<span class="sig-name descname"><span class="pre">is_4byte</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.is_4byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.move_by">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.move_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.obj_index">
+<span class="sig-name descname"><span class="pre">obj_index</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.obj_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.primary_expansion">
+<span class="sig-name descname"><span class="pre">primary_expansion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.primary_expansion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="pre">:</span> <span class="pre">PySide2.QtCore.QRect</span></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.rect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.render">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.resize_by">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">resize_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.resize_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.set_position">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.set_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.to_bytes">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.game.gfx.objects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.game.gfx.objects" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../foundry.game.gfx.drawable/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">foundry.game.gfx.drawable package</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../foundry.game.level/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">foundry.game.level package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, TheJoeSmo.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
