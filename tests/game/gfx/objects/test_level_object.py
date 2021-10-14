@@ -163,7 +163,7 @@ def gen_object_factories():
     subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
     test_rom_path = rom_path / "smb3.bin"
 
-    rom = ROM(str(test_rom_path))
+    ROM(str(test_rom_path))
 
     for object_set in range(MAX_OBJECT_SET + 1):
         if object_set in [WORLD_MAP_OBJECT_SET, MUSHROOM_OBJECT_SET, SPADE_BONUS_OBJECT_SET]:
