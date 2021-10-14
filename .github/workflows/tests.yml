@@ -42,18 +42,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Clone Drakim's source code for SMB3
-      - uses: actions/checkout@master
-        with:
-          name: Drakim/smb3
-          ref: refs/heads/release
-
-      # Generate a copy of SMB3
-      - name: Generate SMB3
-        shell: cmd
-        run: |
-          asm6.exe smb3.asm
-
       # Install Poetry
       - name: Install Poetry
         uses: snok/install-poetry@v1
