@@ -155,12 +155,17 @@ def test_change_attribute_to_bytes(attribute, increase):
 
 
 def gen_object_factories():
-    rom_path = Path(__file__).parent.parent.parent.resolve() / "artifacts"
+    rom_path = Path(__file__).parent.parent.parent.parent.resolve() / "artifacts"
 
     if not rom_path.exists() and not rom_path.is_dir():
         Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
 
-    subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+        try:
+            subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+        except PermissionError:
+            # Try Linux alternative
+            subprocess.run(["chmod", "+x", rom_path / "asm6.exe"])  # Give file execution perms
+            subprocess.run(["wine", rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
     test_rom_path = rom_path / "smb3.bin"
 
     ROM(str(test_rom_path))
