@@ -1,0 +1,66 @@
+name: Github Pages
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.9.7"]
+    defaults:
+      run:
+        shell: bash
+    runs-on: ${{ matrix.os }}
+    steps:
+      # Check out the repo and set up python
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Install Poetry
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      # Load cached venv if it exists
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      # Install dependencies if cache does not exist
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      # Install root project
+      - name: Install library
+        run: poetry install --no-interaction
+
+      # Building documentation
+      - name: Build Documentation
+        run: |
+          poetry run sphinx-apidoc -o docs/source foundry/
+          poetry run sphinx-build docs/source public -b dirhtml
+
+      # Build and handle Github Pages
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          public_dir: ./public
+
+      # Upload the artifacts
+      - uses: actions/upload-artifact@v1
+        with:
+          name: documentation
+          path: public
