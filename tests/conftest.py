@@ -1,17 +1,16 @@
 import os
 
 import pytest
+import subprocess
+from pathlib import Path
+from git.repo.base import Repo
 from PySide2.QtGui import QPixmap
 
 from tests.gui import ApprovalDialog
-from foundry import root_dir
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
-test_rom_path = root_dir / "SMB3.nes"
-
-assert test_rom_path.exists(), f"The test suite needs a SMB3(U) Rom at '{test_rom_path}' to run."
 
 level_1_1_object_address = 0x1FB92
 level_1_1_enemy_address = 0xC537 + 1
@@ -27,7 +26,15 @@ def level(rom_singleton, qtbot):
 
 @pytest.fixture(scope="module", autouse=True)
 def rom_singleton():
-    rom = ROM(test_rom_path)
+    rom_path = Path(__file__).parent.resolve() / "artifacts"
+
+    if not rom_path.exists() and not rom_path.is_dir():
+        Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
+
+    subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+    test_rom_path = rom_path / "smb3.bin"
+
+    rom = ROM(str(test_rom_path))
 
     yield rom
 
