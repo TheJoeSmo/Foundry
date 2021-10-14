@@ -1,6 +1,8 @@
 import os
 from itertools import product
 from pathlib import Path
+import subprocess
+from git.repo.base import Repo
 
 import pytest
 
@@ -8,6 +10,7 @@ from tests.conftest import compare_images
 from foundry.game.gfx.objects.LevelObject import get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectViewer import ObjectDrawArea
+from foundry.game.File import ROM
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ID_VALUE
 from foundry.smb3parse.objects.object_set import (
     DUNGEON_GRAPHICS_SET,
@@ -151,7 +154,16 @@ def test_change_attribute_to_bytes(attribute, increase):
     assert cloud_object.to_bytes() != initial_bytes
 
 
-def gen_object_factories(rom_singleton):  # noqa F401
+def gen_object_factories():
+    rom_path = Path(__file__).parent.resolve() / "artifacts"
+
+    if not rom_path.exists() and not rom_path.is_dir():
+        Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
+
+    subprocess.run([rom_path / "asm6.exe", "smb3.asm"], cwd=rom_path)
+    test_rom_path = rom_path / "smb3.bin"
+
+    rom = ROM(str(test_rom_path))
 
     for object_set in range(MAX_OBJECT_SET + 1):
         if object_set in [WORLD_MAP_OBJECT_SET, MUSHROOM_OBJECT_SET, SPADE_BONUS_OBJECT_SET]:
