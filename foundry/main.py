@@ -17,7 +17,7 @@ if hasattr(sys, "_MEIPASS"):
     logger.info(f"Changing current dir to {getattr(sys, '_MEIPASS')}")
     os.chdir(getattr(sys, "_MEIPASS"))
 
-from foundry.gui.MainWindow import MainWindow
+from foundry.gui.MainWindow import MainWindow  # noqa: E402
 
 
 def main(path_to_rom):
