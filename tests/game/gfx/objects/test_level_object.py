@@ -155,7 +155,7 @@ def test_change_attribute_to_bytes(attribute, increase):
 
 
 def gen_object_factories():
-    rom_path = Path(__file__).parent.resolve() / "artifacts"
+    rom_path = Path(__file__).parent.parent.parent.resolve() / "artifacts"
 
     if not rom_path.exists() and not rom_path.is_dir():
         Repo.clone_from("https://github.com/Drakim/smb3", rom_path)
