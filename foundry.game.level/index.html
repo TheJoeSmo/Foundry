@@ -239,7 +239,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-game-level-worldmap-module">
+  <a class="reference internal nav-link" href="#module-foundry.game.level.WorldMap">
    foundry.game.level.WorldMap module
   </a>
  </li>
@@ -763,8 +763,89 @@ objects are in the order, that they appear in, in memory, meaning back to front.
 </dd></dl>
 
 </section>
-<section id="foundry-game-level-worldmap-module">
-<h2>foundry.game.level.WorldMap module<a class="headerlink" href="#foundry-game-level-worldmap-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.game.level.WorldMap">
+<span id="foundry-game-level-worldmap-module"></span><h2>foundry.game.level.WorldMap module<a class="headerlink" href="#module-foundry.game.level.WorldMap" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">WorldMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.game.level.LevelLike.LevelLike" title="foundry.game.level.LevelLike.LevelLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.game.level.LevelLike.LevelLike</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.add_object">
+<span class="sig-name descname"><span class="pre">add_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.add_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_expansion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.from_bytes">
+<span class="sig-name descname"><span class="pre">from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.get_all_objects">
+<span class="sig-name descname"><span class="pre">get_all_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.get_all_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.get_object">
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.get_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.get_object_names">
+<span class="sig-name descname"><span class="pre">get_object_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.get_object_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.index_of">
+<span class="sig-name descname"><span class="pre">index_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.index_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.level_at_position">
+<span class="sig-name descname"><span class="pre">level_at_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.level_at_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.level_name_at_position">
+<span class="sig-name descname"><span class="pre">level_name_at_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.level_name_at_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.object_at">
+<span class="sig-name descname"><span class="pre">object_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.object_at" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.q_size">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">q_size</span></span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.q_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.remove_object">
+<span class="sig-name descname"><span class="pre">remove_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.remove_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.level.WorldMap.WorldMap.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.level.WorldMap.WorldMap.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-foundry.game.level">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.game.level" title="Permalink to this headline">¶</a></h2>
