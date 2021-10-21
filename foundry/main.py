@@ -20,7 +20,7 @@ if hasattr(sys, "_MEIPASS"):
 from foundry.gui.MainWindow import MainWindow  # noqa: E402
 
 
-def main(path_to_rom):
+def main(path_to_rom: str = ""):
     load_settings()
 
     app = QApplication()
