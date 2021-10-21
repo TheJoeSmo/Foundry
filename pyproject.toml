@@ -6,7 +6,7 @@ authors = ["TheJoeSmo <joesmo.joesmo12@gmail.com>"]
 license = "GPL3"
 
 [tool.poetry.dependencies]
-python = ">=3.9.7,<3.10"
+python = ">=3.9.0,<3.10"
 QDarkStyle = "^3.0.2"
 PySide2 = "^5.15.2"
 
