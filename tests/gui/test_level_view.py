@@ -1,11 +1,14 @@
 import pytest
 from PySide2.QtCore import QPoint
-from PySide2.QtGui import QWheelEvent, Qt
+from PySide2.QtGui import Qt, QWheelEvent
 
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.LevelView import LevelView
 from foundry.gui.settings import SETTINGS
-from foundry.smb3parse.objects.object_set import ENEMY_ITEM_OBJECT_SET, PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.object_set import (
+    ENEMY_ITEM_OBJECT_SET,
+    PLAINS_OBJECT_SET,
+)
 
 
 @pytest.fixture

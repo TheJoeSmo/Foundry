@@ -1,5 +1,5 @@
-from tests.conftest import level_1_2_enemy_address, level_1_2_object_address
 from foundry.smb3parse.objects.object_set import HILLY_OBJECT_SET
+from tests.conftest import level_1_2_enemy_address, level_1_2_object_address
 
 
 def test_object_update_on_level_change(main_window):

@@ -1,4 +1,4 @@
-from PySide2.QtGui import QMouseEvent, QWindow, Qt
+from PySide2.QtGui import QMouseEvent, Qt, QWindow
 from PySide2.QtWidgets import QListWidget, QSizePolicy
 
 from foundry.game.level.LevelRef import LevelRef

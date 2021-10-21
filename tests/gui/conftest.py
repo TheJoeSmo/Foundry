@@ -1,8 +1,8 @@
 import pytest
 
-from tests.conftest import level_1_1_enemy_address, level_1_1_object_address
 from foundry.gui.MainWindow import MainWindow
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from tests.conftest import level_1_1_enemy_address, level_1_1_object_address
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import pytest
 
-from foundry.smb3parse.levels.world_map import WorldMap
 from foundry.smb3parse.constants import TILE_LEVEL_1
+from foundry.smb3parse.levels.world_map import WorldMap
 from foundry.smb3parse.util.rom import Rom
 
 

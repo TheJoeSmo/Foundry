@@ -2,14 +2,14 @@ import pytest
 from hypothesis import given, strategies
 
 from foundry.smb3parse.objects import (
-    MIN_DOMAIN,
     MAX_DOMAIN,
-    MIN_Y_VALUE,
-    MAX_Y_VALUE,
-    MIN_ID_VALUE,
     MAX_ID_VALUE,
-    MIN_X_VALUE,
     MAX_X_VALUE,
+    MAX_Y_VALUE,
+    MIN_DOMAIN,
+    MIN_ID_VALUE,
+    MIN_X_VALUE,
+    MIN_Y_VALUE,
 )
 from foundry.smb3parse.objects.level_object import LevelObject
 

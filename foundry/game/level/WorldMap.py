@@ -1,17 +1,17 @@
 from PySide2.QtCore import QPoint, QSize
 
 from foundry.game.File import ROM
-from foundry.game.gfx.Palette import load_palette_group
-from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.drawable.Block import Block
+from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.MapObject import MapObject
+from foundry.game.gfx.Palette import load_palette_group
 from foundry.game.level.LevelLike import LevelLike
 from foundry.smb3parse.levels.world_map import (
     WORLD_MAP_HEIGHT,
     WORLD_MAP_SCREEN_SIZE,
     WORLD_MAP_SCREEN_WIDTH,
-    WorldMap as _WorldMap,
 )
+from foundry.smb3parse.levels.world_map import WorldMap as _WorldMap
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 
 OVERWORLD_GRAPHIC_SET = 0

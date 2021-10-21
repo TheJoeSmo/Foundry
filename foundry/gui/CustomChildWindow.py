@@ -1,4 +1,4 @@
-from PySide2.QtGui import Qt, QKeyEvent
+from PySide2.QtGui import QKeyEvent, Qt
 from PySide2.QtWidgets import QMainWindow
 
 

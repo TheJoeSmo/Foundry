@@ -1,16 +1,15 @@
 import os
-
-import pytest
 import subprocess
 from pathlib import Path
+
+import pytest
 from git.repo.base import Repo
 from PySide2.QtGui import QPixmap
 
-from tests.gui import ApprovalDialog
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
-
+from tests.gui import ApprovalDialog
 
 level_1_1_object_address = 0x1FB92
 level_1_1_enemy_address = 0xC537 + 1

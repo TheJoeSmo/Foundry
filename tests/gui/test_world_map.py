@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from tests.conftest import compare_images
 from foundry.game.level.WorldMap import WorldMap
 from foundry.gui.WorldMapView import WorldMapView
 from foundry.smb3parse.levels import WORLD_COUNT
+from tests.conftest import compare_images
 
 reference_image_dir = Path(__file__).parent.joinpath("test_refs")
 os.makedirs(reference_image_dir, exist_ok=True)

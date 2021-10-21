@@ -1,14 +1,18 @@
 from math import ceil
 
 from PySide2.QtCore import QPoint, QRect, QSize
-from PySide2.QtGui import QBrush, QMouseEvent, QPaintEvent, QPainter, QResizeEvent
+from PySide2.QtGui import QBrush, QMouseEvent, QPainter, QPaintEvent, QResizeEvent
 from PySide2.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
 from foundry.game.File import ROM
-from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import PALETTE_GROUPS_PER_OBJECT_SET, bg_color_for_object_set, load_palette_group
 from foundry.game.gfx.drawable.Block import Block
+from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.Palette import (
+    PALETTE_GROUPS_PER_OBJECT_SET,
+    bg_color_for_object_set,
+    load_palette_group,
+)
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
 from foundry.gui.Spinner import Spinner
