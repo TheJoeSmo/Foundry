@@ -49,7 +49,6 @@ from foundry.smb3parse.levels import (
     LevelBase,
 )
 from foundry.smb3parse.levels.level import Level
-from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 from foundry.smb3parse.util.rom import Rom
 
@@ -382,6 +381,8 @@ class WorldMap(LevelBase):
         """
         Returns a generator, which yield WorldMapPosition objects, one screen at a time, one row at a time.
         """
+        from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
+
         for screen in range(1, self.screen_count + 1):
             for row in range(WORLD_MAP_HEIGHT):
                 for column in range(WORLD_MAP_SCREEN_WIDTH):
