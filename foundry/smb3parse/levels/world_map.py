@@ -29,15 +29,14 @@ from foundry.smb3parse.levels import (
     ENEMY_BASE_OFFSET,
     FIRST_VALID_ROW,
     LAYOUT_LIST_OFFSET,
-    LEVELS_IN_WORLD_LIST_OFFSET,
     LEVEL_ENEMY_LIST_OFFSET,
     LEVEL_X_POS_LISTS,
     LEVEL_Y_POS_LISTS,
-    LevelBase,
+    LEVELS_IN_WORLD_LIST_OFFSET,
     OFFSET_BY_OBJECT_SET_A000,
     OFFSET_SIZE,
-    SPECIAL_ENTERABLE_TILES_LIST,
     SPECIAL_ENTERABLE_TILE_AMOUNT,
+    SPECIAL_ENTERABLE_TILES_LIST,
     STRUCTURE_DATA_OFFSETS,
     TILE_ATTRIBUTES_TS0_OFFSET,
     VALID_COLUMNS,
@@ -47,9 +46,10 @@ from foundry.smb3parse.levels import (
     WORLD_MAP_HEIGHT,
     WORLD_MAP_SCREEN_SIZE,
     WORLD_MAP_SCREEN_WIDTH,
+    LevelBase,
 )
-from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
 from foundry.smb3parse.levels.level import Level
+from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 from foundry.smb3parse.util.rom import Rom
 

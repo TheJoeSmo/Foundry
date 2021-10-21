@@ -1,6 +1,7 @@
-import pytest
 import subprocess
 from pathlib import Path
+
+import pytest
 from git.repo.base import Repo
 
 from foundry.smb3parse.levels.world_map import WorldMap

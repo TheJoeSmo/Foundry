@@ -4,7 +4,7 @@ from PySide2.QtGui import QColor
 
 from foundry import root_dir
 from foundry.game.File import ROM
-from foundry.smb3parse.constants import PalSet_Maps, Palette_By_Tileset
+from foundry.smb3parse.constants import Palette_By_Tileset, PalSet_Maps
 from foundry.smb3parse.levels import BASE_OFFSET
 
 MAP_PALETTE_ADDRESS = PalSet_Maps

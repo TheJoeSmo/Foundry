@@ -65,11 +65,15 @@ from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
 from foundry.gui.PaletteViewer import PaletteViewer
+from foundry.gui.settings import SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.WarningList import WarningList
-from foundry.gui.settings import SETTINGS, save_settings
-from foundry.smb3parse.constants import TILE_LEVEL_1, Title_DebugMenu, Title_PrepForWorldMap
+from foundry.smb3parse.constants import (
+    TILE_LEVEL_1,
+    Title_DebugMenu,
+    Title_PrepForWorldMap,
+)
 from foundry.smb3parse.levels.world_map import WorldMap as SMB3World
 from foundry.smb3parse.util.rom import Rom as SMB3Rom
 

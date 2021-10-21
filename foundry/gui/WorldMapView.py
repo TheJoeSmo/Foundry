@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PySide2.QtCore import QSize
-from PySide2.QtGui import QPaintEvent, QPainter
+from PySide2.QtGui import QPainter, QPaintEvent
 from PySide2.QtWidgets import QWidget
 
 from foundry.game.level.WorldMap import WorldMap

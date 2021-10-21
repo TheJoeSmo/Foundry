@@ -2,14 +2,14 @@ from itertools import product
 from typing import Optional, Union
 
 from PySide2.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
-from PySide2.QtGui import QColor, QDrag, QImage, QMouseEvent, QPaintEvent, QPainter
+from PySide2.QtGui import QColor, QDrag, QImage, QMouseEvent, QPainter, QPaintEvent
 from PySide2.QtWidgets import QGridLayout, QSizePolicy, QWidget
 
-from foundry.game.gfx.Palette import bg_color_for_palette
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.LevelObject import LevelObject, get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
+from foundry.game.gfx.Palette import bg_color_for_palette
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ENEMY_ITEM_ID, MAX_ID_VALUE
 from foundry.smb3parse.objects.enemy_item import EnemyItem
 

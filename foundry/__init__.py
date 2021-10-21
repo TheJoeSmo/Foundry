@@ -1,10 +1,10 @@
 import json
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Union
-from pkg_resources import get_distribution
 
+from pkg_resources import get_distribution
 from PySide2.QtCore import QUrl
 from PySide2.QtGui import QDesktopServices, QIcon
 

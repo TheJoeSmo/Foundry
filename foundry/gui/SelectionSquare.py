@@ -1,5 +1,5 @@
-from PySide2.QtCore import QRect, QPoint
-from PySide2.QtGui import QPen, Qt, QColor, QPainter
+from PySide2.QtCore import QPoint, QRect
+from PySide2.QtGui import QColor, QPainter, QPen, Qt
 
 STROKE_COLOR = QColor(0x00, 0x00, 0x00, 0x80)
 

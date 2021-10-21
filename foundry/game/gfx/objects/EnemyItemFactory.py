@@ -2,9 +2,9 @@ from PySide2.QtCore import QRect
 from PySide2.QtGui import QImage
 
 from foundry import data_dir
-from foundry.game.gfx.Palette import load_palette_group
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
+from foundry.game.gfx.Palette import load_palette_group
 
 
 class EnemyItemFactory:

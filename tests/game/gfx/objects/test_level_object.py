@@ -1,16 +1,15 @@
 import os
+import subprocess
 from itertools import product
 from pathlib import Path
-import subprocess
-from git.repo.base import Repo
 
 import pytest
+from git.repo.base import Repo
 
-from tests.conftest import compare_images
+from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObject import get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectViewer import ObjectDrawArea
-from foundry.game.File import ROM
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ID_VALUE
 from foundry.smb3parse.objects.object_set import (
     DUNGEON_GRAPHICS_SET,
@@ -24,6 +23,7 @@ from foundry.smb3parse.objects.object_set import (
     UNDERGROUND_OBJECT_SET,
     WORLD_MAP_OBJECT_SET,
 )
+from tests.conftest import compare_images
 
 reference_image_dir = Path(__file__).parent.joinpath("test_refs")
 os.makedirs(reference_image_dir, exist_ok=True)

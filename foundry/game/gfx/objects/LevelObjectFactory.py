@@ -1,9 +1,13 @@
-from typing import Optional, List
+from typing import List, Optional
 
-from foundry.game.gfx.objects.Jump import Jump
-from foundry.game.gfx.objects.LevelObject import LevelObject, SCREEN_HEIGHT, SCREEN_WIDTH
-from foundry.game.gfx.Palette import load_palette_group
 from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.objects.Jump import Jump
+from foundry.game.gfx.objects.LevelObject import (
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    LevelObject,
+)
+from foundry.game.gfx.Palette import load_palette_group
 
 
 class LevelObjectFactory:

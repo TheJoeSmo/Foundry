@@ -6,10 +6,10 @@ from PySide2.QtGui import QCursor, QFocusEvent
 from PySide2.QtWidgets import QLabel, QVBoxLayout, QWidget
 
 from foundry import data_dir
-from foundry.game.ObjectDefinitions import GeneratorType
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import GROUND, LevelObject
 from foundry.game.level.LevelRef import LevelRef
+from foundry.game.ObjectDefinitions import GeneratorType
 from foundry.gui.HeaderEditor import SCROLL_DIRECTIONS
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectList import ObjectList

@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PySide2.QtCore import Signal, SignalInstance
-from PySide2.QtGui import QWindow, Qt
+from PySide2.QtGui import Qt, QWindow
 from PySide2.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -19,7 +19,7 @@ from foundry.game.gfx.GraphicsSet import GRAPHIC_SET_NAMES
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
-from foundry.gui.LevelSelector import LevelSelector, OBJECT_SET_ITEMS
+from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
 from foundry.gui.Spinner import Spinner
 from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 

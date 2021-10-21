@@ -3,13 +3,25 @@ from typing import List, Optional, Tuple, Union
 from warnings import warn
 
 from PySide2.QtCore import QMimeData, QPoint, QSize
-from PySide2.QtGui import QDragEnterEvent, QDragMoveEvent, QMouseEvent, QPaintEvent, QPainter, QWheelEvent, Qt
+from PySide2.QtGui import (
+    QDragEnterEvent,
+    QDragMoveEvent,
+    QMouseEvent,
+    QPainter,
+    QPaintEvent,
+    Qt,
+    QWheelEvent,
+)
 from PySide2.QtWidgets import QSizePolicy, QToolTip, QWidget
 
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
-from foundry.game.gfx.objects.ObjectLike import EXPANDS_BOTH, EXPANDS_HORIZ, EXPANDS_VERT
+from foundry.game.gfx.objects.ObjectLike import (
+    EXPANDS_BOTH,
+    EXPANDS_HORIZ,
+    EXPANDS_VERT,
+)
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.game.level.WorldMap import WorldMap

@@ -6,13 +6,21 @@ from PySide2.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir
 from foundry.game.File import ROM
-from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import NESPalette, bg_color_for_object_set, load_palette_group
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.objects.EnemyItem import EnemyObject, MASK_COLOR
+from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.objects.EnemyItem import MASK_COLOR, EnemyObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
-from foundry.game.gfx.objects.ObjectLike import EXPANDS_BOTH, EXPANDS_HORIZ, EXPANDS_VERT
+from foundry.game.gfx.objects.ObjectLike import (
+    EXPANDS_BOTH,
+    EXPANDS_HORIZ,
+    EXPANDS_VERT,
+)
+from foundry.game.gfx.Palette import (
+    NESPalette,
+    bg_color_for_object_set,
+    load_palette_group,
+)
 from foundry.game.level.Level import Level
 from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
 from foundry.smb3parse.constants import OBJ_AUTOSCROLL

@@ -8,7 +8,11 @@ from foundry.smb3parse.levels import (
     is_valid_level_length,
 )
 from foundry.smb3parse.levels.level_header import LevelHeader
-from foundry.smb3parse.objects.object_set import MAX_OBJECT_SET, MIN_OBJECT_SET, is_valid_object_set_number
+from foundry.smb3parse.objects.object_set import (
+    MAX_OBJECT_SET,
+    MIN_OBJECT_SET,
+    is_valid_object_set_number,
+)
 
 
 @given(

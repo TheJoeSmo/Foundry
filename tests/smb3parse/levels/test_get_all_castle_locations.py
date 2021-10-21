@@ -1,6 +1,6 @@
+from foundry.smb3parse.constants import TILE_CASTLE_BOTTOM
 from foundry.smb3parse.levels import WORLD_COUNT
 from foundry.smb3parse.levels.world_map import WorldMap
-from foundry.smb3parse.constants import TILE_CASTLE_BOTTOM
 
 
 def test_get_castle_map_positions(rom):

@@ -2,13 +2,21 @@ from typing import List
 
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor, QPixmap
-from PySide2.QtWidgets import QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QVBoxLayout, QWidget
+from PySide2.QtWidgets import (
+    QFrame,
+    QGridLayout,
+    QGroupBox,
+    QHBoxLayout,
+    QLabel,
+    QVBoxLayout,
+    QWidget,
+)
 
 from foundry.game.gfx.Palette import (
     COLORS_PER_PALETTE,
-    NESPalette,
-    PALETTES_PER_PALETTES_GROUP,
     PALETTE_GROUPS_PER_OBJECT_SET,
+    PALETTES_PER_PALETTES_GROUP,
+    NESPalette,
     load_palette_group,
 )
 from foundry.game.level.LevelRef import LevelRef

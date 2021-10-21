@@ -1,5 +1,6 @@
 from foundry.game.ObjectDefinitions import ObjectDefinition, load_object_definitions
-from foundry.smb3parse.objects.object_set import ENEMY_ITEM_OBJECT_SET, ObjectSet as _ObjectSet
+from foundry.smb3parse.objects.object_set import ENEMY_ITEM_OBJECT_SET
+from foundry.smb3parse.objects.object_set import ObjectSet as _ObjectSet
 
 
 class ObjectSet:
