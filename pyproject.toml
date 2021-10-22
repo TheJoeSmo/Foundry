@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "foundry"
+name = "foundry_smb3"
 version = "0.1.0"
 description = ""
 authors = ["TheJoeSmo <joesmo.joesmo12@gmail.com>"]
 license = "GPL3"
+packages = [
+    { include = "foundry" }
+]
 
 [tool.poetry.dependencies]
 python = ">=3.9.0,<3.10"
