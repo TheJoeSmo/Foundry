@@ -41,7 +41,7 @@ def open_url(url: Union[str, QUrl]):
 
 def get_current_version_name() -> str:
     try:
-        return get_distribution("foundry").version
+        return "0.1.0"  # get_distribution("foundry").version
     except LookupError:
         return "beta"
 
