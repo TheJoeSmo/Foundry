@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Generator, List, Any
+from typing import Any, Generator, List
 from warnings import warn
 
 from foundry.smb3parse.constants import (
