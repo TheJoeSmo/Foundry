@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Generator, List
+from typing import Generator, List, Any
 from warnings import warn
 
 from foundry.smb3parse.constants import (
@@ -232,7 +232,7 @@ class WorldMap(LevelBase):
 
         return object_set_number, absolute_level_address, enemy_address
 
-    def replace_level_at_position(self, level_info, position: "WorldMapPosition"):
+    def replace_level_at_position(self, level_info, position):
         level_address, enemy_address, object_set_number = level_info
 
         existing_level = self.level_for_position(position.screen, position.row, position.column)
@@ -377,7 +377,7 @@ class WorldMap(LevelBase):
             or tile_index in self._special_enterable_tiles
         )
 
-    def gen_positions(self) -> Generator["WorldMapPosition", None, None]:
+    def gen_positions(self) -> Generator[Any, None, None]:
         """
         Returns a generator, which yield WorldMapPosition objects, one screen at a time, one row at a time.
         """

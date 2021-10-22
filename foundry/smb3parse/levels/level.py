@@ -23,7 +23,7 @@ class Level(LevelBase):
 
         self.header = LevelHeader(self.header_bytes, self.object_set_number)
 
-    def set_world_map_position(self, position: "WorldMapPosition"):
+    def set_world_map_position(self, position):
         self.world_map_position = position
 
     def __eq__(self, other):
@@ -37,7 +37,7 @@ class Level(LevelBase):
         )
 
     @staticmethod
-    def from_world_map(rom: Rom, world_map_position: "WorldMapPosition") -> Optional["Level"]:
+    def from_world_map(rom: Rom, world_map_position) -> Optional["Level"]:
         level_info = world_map_position.level_info
 
         if level_info is None:
