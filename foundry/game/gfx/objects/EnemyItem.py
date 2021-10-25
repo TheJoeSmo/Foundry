@@ -1,3 +1,6 @@
+from PySide6.QtCore import QRect, QSize
+from PySide6.QtGui import QColor, QImage, QPainter, Qt
+
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -13,8 +16,6 @@ from foundry.smb3parse.objects.object_set import (
     ENEMY_ITEM_GRAPHICS_SET,
     ENEMY_ITEM_OBJECT_SET,
 )
-from PySide6.QtCore import QRect, QSize
-from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 

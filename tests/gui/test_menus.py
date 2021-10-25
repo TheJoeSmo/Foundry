@@ -1,7 +1,8 @@
 from pathlib import Path
 
-from foundry.game.File import ROM
 from PySide6.QtWidgets import QFileDialog
+
+from foundry.game.File import ROM
 
 test_data_dir = Path(__file__).parent.joinpath("test_data")
 test_m3l_path = test_data_dir.joinpath("test.m3l")

@@ -1,12 +1,5 @@
 from typing import Optional
 
-from foundry.game.gfx.GraphicsSet import GRAPHIC_SET_NAMES
-from foundry.game.level.Level import Level
-from foundry.game.level.LevelRef import LevelRef
-from foundry.gui.CustomDialog import CustomDialog
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
-from foundry.gui.Spinner import Spinner
-from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 from PySide6.QtCore import Signal
 from PySide6.QtGui import Qt, QWindow
 from PySide6.QtWidgets import (
@@ -21,6 +14,14 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
+from foundry.game.gfx.GraphicsSet import GRAPHIC_SET_NAMES
+from foundry.game.level.Level import Level
+from foundry.game.level.LevelRef import LevelRef
+from foundry.gui.CustomDialog import CustomDialog
+from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
+from foundry.gui.Spinner import Spinner
+from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 
 LEVEL_LENGTHS = [0x10 * (i + 1) for i in range(0, 2 ** 4)]
 STR_LEVEL_LENGTHS = [f"{length - 1:0=#4X} / {length} Blocks".replace("X", "x") for length in LEVEL_LENGTHS]

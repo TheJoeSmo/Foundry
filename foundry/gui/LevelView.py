@@ -2,6 +2,18 @@ from bisect import bisect_right
 from typing import List, Optional, Tuple, Union
 from warnings import warn
 
+from PySide6.QtCore import QMimeData, QPoint, QSize
+from PySide6.QtGui import (
+    QDragEnterEvent,
+    QDragMoveEvent,
+    QMouseEvent,
+    QPainter,
+    QPaintEvent,
+    Qt,
+    QWheelEvent,
+)
+from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
+
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -17,17 +29,6 @@ from foundry.gui.ContextMenu import ContextMenu
 from foundry.gui.LevelDrawer import LevelDrawer
 from foundry.gui.SelectionSquare import SelectionSquare
 from foundry.gui.settings import RESIZE_LEFT_CLICK, RESIZE_RIGHT_CLICK, SETTINGS
-from PySide6.QtCore import QMimeData, QPoint, QSize
-from PySide6.QtGui import (
-    QDragEnterEvent,
-    QDragMoveEvent,
-    QMouseEvent,
-    QPainter,
-    QPaintEvent,
-    Qt,
-    QWheelEvent,
-)
-from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
 HIGHEST_ZOOM_LEVEL = 8  # on linux, at least
 LOWEST_ZOOM_LEVEL = 1 / 16  # on linux, but makes sense with 16x16 blocks
