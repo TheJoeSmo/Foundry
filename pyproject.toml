@@ -1,7 +1,8 @@
 [tool.poetry]
 name = "foundry_smb3"
 version = "0.1.0"
-description = ""
+description = "The future of SMB3"
+readme = "README.md"
 authors = ["TheJoeSmo <joesmo.joesmo12@gmail.com>"]
 license = "GPL3"
 packages = [
@@ -27,6 +28,16 @@ isort = "^5.9.3"
 
 [tool.poetry.scripts]
 foundry = "foundry.main:main"
+
+[tool.isort]
+profile = "black"
+known_first_party = "foundry"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest]
+qt_api = "PySide6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
