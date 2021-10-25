@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from git.repo.base import Repo
-from PySide2.QtGui import QPixmap
+from PySide6.QtGui import QPixmap
 
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level

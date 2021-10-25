@@ -1,4 +1,4 @@
-from PySide2.QtGui import QImage
+from PySide6.QtGui import QImage
 
 from foundry.game.gfx.drawable import MASK_COLOR, bit_reverse
 from foundry.game.gfx.GraphicsSet import GraphicsSet

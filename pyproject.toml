@@ -11,7 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.9.0,<3.10"
 QDarkStyle = "^3.0.2"
-PySide2 = "^5.15.2"
+PySide6 = "^6.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"

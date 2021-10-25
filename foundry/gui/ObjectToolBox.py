@@ -1,9 +1,9 @@
 from itertools import product
 from typing import Optional, Union
 
-from PySide2.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
-from PySide2.QtGui import QColor, QDrag, QImage, QMouseEvent, QPainter, QPaintEvent
-from PySide2.QtWidgets import QGridLayout, QSizePolicy, QWidget
+from PySide6.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
+from PySide6.QtGui import QColor, QDrag, QImage, QMouseEvent, QPainter, QPaintEvent
+from PySide6.QtWidgets import QGridLayout, QSizePolicy, QWidget
 
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory

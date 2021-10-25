@@ -1,5 +1,5 @@
-from PySide2.QtGui import QKeyEvent, Qt
-from PySide2.QtWidgets import QMainWindow
+from PySide6.QtGui import QKeyEvent, Qt
+from PySide6.QtWidgets import QMainWindow
 
 
 class CustomChildWindow(QMainWindow):

@@ -8,26 +8,6 @@ import subprocess
 import tempfile
 from typing import Tuple, Union
 
-from PySide2.QtCore import QSize
-from PySide2.QtGui import QCloseEvent, QKeySequence, QMouseEvent, Qt
-from PySide2.QtWidgets import (
-    QAction,
-    QDialog,
-    QFileDialog,
-    QHBoxLayout,
-    QMainWindow,
-    QMenu,
-    QMessageBox,
-    QPushButton,
-    QScrollArea,
-    QShortcut,
-    QSizePolicy,
-    QSplitter,
-    QToolBar,
-    QWhatsThis,
-    QWidget,
-)
-
 from foundry import (
     auto_save_level_data_path,
     auto_save_m3l_path,
@@ -76,6 +56,23 @@ from foundry.smb3parse.constants import (
 )
 from foundry.smb3parse.levels.world_map import WorldMap as SMB3World
 from foundry.smb3parse.util.rom import Rom as SMB3Rom
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShortcut, Qt
+from PySide6.QtWidgets import (
+    QDialog,
+    QFileDialog,
+    QHBoxLayout,
+    QMainWindow,
+    QMenu,
+    QMessageBox,
+    QPushButton,
+    QScrollArea,
+    QSizePolicy,
+    QSplitter,
+    QToolBar,
+    QWhatsThis,
+    QWidget,
+)
 
 ROM_FILE_FILTER = "ROM files (*.nes *.rom);;All files (*)"
 M3L_FILE_FILTER = "M3L files (*.m3l);;All files (*)"

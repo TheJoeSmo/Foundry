@@ -1,5 +1,5 @@
-from PySide2.QtCore import QPoint
-from PySide2.QtGui import QColor, QImage, QPainter, Qt
+from PySide6.QtCore import QPoint
+from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay

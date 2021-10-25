@@ -1,9 +1,6 @@
 from itertools import product
 from typing import Tuple
 
-from PySide2.QtCore import QPoint, QRect
-from PySide2.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
-
 from foundry import data_dir
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
@@ -31,6 +28,8 @@ from foundry.smb3parse.objects.object_set import (
     DUNGEON_OBJECT_SET,
     ICE_OBJECT_SET,
 )
+from PySide6.QtCore import QPoint, QRect
+from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 png = QImage(str(data_dir / "gfx.png"))
 png.convertTo(QImage.Format_RGB888)
@@ -117,8 +116,10 @@ class LevelDrawer:
 
         self.block_length = Block.WIDTH
 
-        self.grid_pen = QPen(QColor(0x80, 0x80, 0x80, 0x80), width=1)
-        self.screen_pen = QPen(QColor(0xFF, 0x00, 0x00, 0xFF), width=1)
+        self.grid_pen = QPen(QColor(0x80, 0x80, 0x80, 0x80))
+        self.grid_pen.setWidth(1)
+        self.screen_pen = QPen(QColor(0xFF, 0x00, 0x00, 0xFF))
+        self.screen_pen.setWidth(1)
 
     def draw(self, painter: QPainter, level: Level):
         self._draw_background(painter, level)
@@ -228,7 +229,9 @@ class LevelDrawer:
             if level_object.selected:
                 painter.save()
 
-                painter.setPen(QPen(QColor(0x00, 0x00, 0x00, 0x80), width=1))
+                pen = QPen(QColor(0x00, 0x00, 0x00, 0x80))
+                pen.setWidth(1)
+                painter.setPen(pen)
                 painter.drawRect(level_object.get_rect(self.block_length))
 
                 painter.restore()

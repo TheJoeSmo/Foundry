@@ -1,6 +1,6 @@
-from PySide2.QtCore import Signal, SignalInstance
-from PySide2.QtGui import QContextMenuEvent
-from PySide2.QtWidgets import QListWidget, QMenu, QWidget
+from PySide6.QtCore import Signal, SignalInstance
+from PySide6.QtGui import QContextMenuEvent
+from PySide6.QtWidgets import QListWidget, QMenu, QWidget
 
 from foundry.game.level.LevelRef import LevelRef
 

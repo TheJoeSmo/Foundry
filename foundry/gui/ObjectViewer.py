@@ -1,8 +1,8 @@
 from typing import Union
 
-from PySide2.QtCore import QPoint, QSize
-from PySide2.QtGui import QPainter, QPaintEvent
-from PySide2.QtWidgets import (
+from PySide6.QtCore import QPoint, QSize
+from PySide6.QtGui import QPainter, QPaintEvent
+from PySide6.QtWidgets import (
     QComboBox,
     QHBoxLayout,
     QLayout,

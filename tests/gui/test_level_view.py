@@ -1,6 +1,6 @@
 import pytest
-from PySide2.QtCore import QPoint
-from PySide2.QtGui import Qt, QWheelEvent
+from PySide6.QtCore import QPoint
+from PySide6.QtGui import Qt, QWheelEvent
 
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.LevelView import LevelView

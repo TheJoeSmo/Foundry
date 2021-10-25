@@ -1,5 +1,5 @@
-from PySide2.QtCore import QPoint, QRect
-from PySide2.QtGui import QColor, QPainter, QPen, Qt
+from PySide6.QtCore import QPoint, QPointF, QRect
+from PySide6.QtGui import QColor, QPainter, QPen, Qt
 
 STROKE_COLOR = QColor(0x00, 0x00, 0x00, 0x80)
 
@@ -14,7 +14,8 @@ class SelectionSquare:
 
         self.rect = QRect(self.start_point, self.end_point)
 
-        self.pen = QPen(STROKE_COLOR, width=1)
+        self.pen = QPen(STROKE_COLOR)
+        self.pen.setWidth(1)
         self.brush = Qt.NoBrush
 
     def is_active(self):
@@ -23,11 +24,19 @@ class SelectionSquare:
     def start(self, point: QPoint):
         self.active = True
 
+        # Convert to a regular point
+        if isinstance(point, QPointF):
+            point = point.toPoint()
+
         self.start_point = point
 
     def set_current_end(self, point: QPoint):
         if not self.active:
             return
+
+        # Convert to a regular point
+        if isinstance(point, QPointF):
+            point = point.toPoint()
 
         self.should_draw = True
 
