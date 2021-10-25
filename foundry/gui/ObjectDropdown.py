@@ -1,5 +1,9 @@
 from typing import Union
 
+from PySide6.QtCore import Qt, Signal, SignalInstance
+from PySide6.QtGui import QIcon, QImage, QPixmap
+from PySide6.QtWidgets import QApplication, QComboBox, QCompleter, QWidget
+
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
@@ -12,9 +16,6 @@ from foundry.smb3parse.objects import (
     MAX_ID_VALUE,
     MIN_DOMAIN,
 )
-from PySide6.QtCore import Qt, Signal, SignalInstance
-from PySide6.QtGui import QIcon, QImage, QPixmap
-from PySide6.QtWidgets import QApplication, QComboBox, QCompleter, QWidget
 
 
 class ObjectDropdown(QComboBox):

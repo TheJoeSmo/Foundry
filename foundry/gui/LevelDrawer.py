@@ -1,6 +1,9 @@
 from itertools import product
 from typing import Tuple
 
+from PySide6.QtCore import QPoint, QRect
+from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
+
 from foundry import data_dir
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
@@ -28,8 +31,6 @@ from foundry.smb3parse.objects.object_set import (
     DUNGEON_OBJECT_SET,
     ICE_OBJECT_SET,
 )
-from PySide6.QtCore import QPoint, QRect
-from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 png = QImage(str(data_dir / "gfx.png"))
 png.convertTo(QImage.Format_RGB888)

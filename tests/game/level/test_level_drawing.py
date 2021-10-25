@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 
 import pytest
+from PySide6.QtCore import QPoint, QRect, QSize
+
 from foundry import data_dir
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.LevelRef import LevelRef
@@ -9,7 +11,6 @@ from foundry.gui.ContextMenu import ContextMenu
 from foundry.gui.LevelView import LevelView
 from foundry.smb3parse.levels import HEADER_LENGTH
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
-from PySide6.QtCore import QPoint, QRect, QSize
 from tests.conftest import compare_images
 
 reference_image_dir = Path(__file__).parent.joinpath("test_refs")
