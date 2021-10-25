@@ -4,7 +4,7 @@ import os
 import sys
 import traceback
 
-from PySide2.QtWidgets import QApplication, QMessageBox
+from PySide6.QtWidgets import QApplication, QMessageBox
 
 from foundry import auto_save_rom_path, github_issue_link
 from foundry.gui.AutoSaveDialog import AutoSaveDialog

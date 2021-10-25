@@ -1,5 +1,5 @@
-from PySide2.QtGui import QMouseEvent, Qt, QWindow
-from PySide2.QtWidgets import QListWidget, QSizePolicy
+from PySide6.QtGui import QMouseEvent, Qt, QWindow
+from PySide6.QtWidgets import QListWidget, QSizePolicy
 
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.ContextMenu import ContextMenu

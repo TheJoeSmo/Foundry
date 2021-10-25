@@ -1,6 +1,6 @@
-from PySide2.QtCore import QRect
-from PySide2.QtGui import QColor, QIcon, QImage, QPixmap, Qt
-from PySide2.QtWidgets import (
+from PySide6.QtCore import QRect
+from PySide6.QtGui import QColor, QIcon, QImage, QPixmap, Qt
+from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
     QComboBox,

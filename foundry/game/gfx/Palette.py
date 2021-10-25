@@ -1,6 +1,6 @@
 from typing import List
 
-from PySide2.QtGui import QColor
+from PySide6.QtGui import QColor
 
 from foundry import root_dir
 from foundry.game.File import ROM

@@ -1,5 +1,5 @@
 import pytest
-from PySide2.QtWidgets import QCheckBox, QComboBox
+from PySide6.QtWidgets import QCheckBox, QComboBox
 
 from foundry.game.gfx.objects.LevelObject import SCREEN_WIDTH
 from foundry.game.level.Level import Level

@@ -1,6 +1,3 @@
-from PySide2.QtCore import QRect, QSize
-from PySide2.QtGui import QColor, QImage, QPainter, Qt
-
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -16,6 +13,8 @@ from foundry.smb3parse.objects.object_set import (
     ENEMY_ITEM_GRAPHICS_SET,
     ENEMY_ITEM_OBJECT_SET,
 )
+from PySide6.QtCore import QRect, QSize
+from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 
@@ -157,7 +156,9 @@ class EnemyObject(ObjectLike):
         self._setup()
 
     def to_bytes(self):
-        return bytearray([self.obj_index, self.x_position + int(enemy_handle_x2[self.obj_index]), self.y_position])
+        return bytearray(
+            [self.obj_index, int(self.x_position) + int(enemy_handle_x2[self.obj_index]), int(self.y_position)]
+        )
 
     def as_image(self) -> QImage:
         image = QImage(

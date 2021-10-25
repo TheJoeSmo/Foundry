@@ -1,8 +1,8 @@
 from typing import List
 
-from PySide2.QtCore import QSize
-from PySide2.QtGui import QColor, QPixmap
-from PySide2.QtWidgets import (
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QColor, QPixmap
+from PySide6.QtWidgets import (
     QFrame,
     QGridLayout,
     QGroupBox,
