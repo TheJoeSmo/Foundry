@@ -224,17 +224,17 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.game.gfx.drawable.Block">
+  <a class="reference internal nav-link" href="#foundry-game-gfx-drawable-block-module">
    foundry.game.gfx.drawable.Block module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.game.gfx.drawable.Tile">
+  <a class="reference internal nav-link" href="#foundry-game-gfx-drawable-tile-module">
    foundry.game.gfx.drawable.Tile module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.game.gfx.drawable">
+  <a class="reference internal nav-link" href="#module-contents">
    Module contents
   </a>
  </li>
@@ -264,96 +264,14 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.game.gfx.drawable.Block">
-<span id="foundry-game-gfx-drawable-block-module"></span><h2>foundry.game.gfx.drawable.Block module<a class="headerlink" href="#module-foundry.game.gfx.drawable.Block" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../foundry.game.gfx/#foundry.game.gfx.GraphicsSet.GraphicsSet" title="foundry.game.gfx.GraphicsSet.GraphicsSet"><span class="pre">foundry.game.gfx.GraphicsSet.GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsa_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mirrored</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.HEIGHT">
-<span class="sig-name descname"><span class="pre">HEIGHT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">16</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.HEIGHT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.PIXEL_COUNT">
-<span class="sig-name descname"><span class="pre">PIXEL_COUNT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">256</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.PIXEL_COUNT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.SIDE_LENGTH">
-<span class="sig-name descname"><span class="pre">SIDE_LENGTH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">16</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.SIDE_LENGTH" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.WIDTH">
-<span class="sig-name descname"><span class="pre">WIDTH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">16</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.WIDTH" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PySide2.QtGui.QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.draw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.Block.tsa_data">
-<span class="sig-name descname"><span class="pre">tsa_data</span></span><em class="property"> <span class="pre">=</span> <span class="pre">b''</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Block.Block.tsa_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Block.get_block">
-<span class="sig-name descname"><span class="pre">get_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsa_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.Block.get_block" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="foundry-game-gfx-drawable-block-module">
+<h2>foundry.game.gfx.drawable.Block module<a class="headerlink" href="#foundry-game-gfx-drawable-block-module" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.game.gfx.drawable.Tile">
-<span id="foundry-game-gfx-drawable-tile-module"></span><h2>foundry.game.gfx.drawable.Tile module<a class="headerlink" href="#module-foundry.game.gfx.drawable.Tile" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Tile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../foundry.game.gfx/#foundry.game.gfx.GraphicsSet.GraphicsSet" title="foundry.game.gfx.GraphicsSet.GraphicsSet"><span class="pre">foundry.game.gfx.GraphicsSet.GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mirrored</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.HEIGHT">
-<span class="sig-name descname"><span class="pre">HEIGHT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.HEIGHT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.PIXEL_COUNT">
-<span class="sig-name descname"><span class="pre">PIXEL_COUNT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">64</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.PIXEL_COUNT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.SIDE_LENGTH">
-<span class="sig-name descname"><span class="pre">SIDE_LENGTH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.SIDE_LENGTH" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.SIZE">
-<span class="sig-name descname"><span class="pre">SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">16</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.SIZE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.WIDTH">
-<span class="sig-name descname"><span class="pre">WIDTH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.WIDTH" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.Tile.Tile.as_image">
-<span class="sig-name descname"><span class="pre">as_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tile_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.Tile.Tile.as_image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="foundry-game-gfx-drawable-tile-module">
+<h2>foundry.game.gfx.drawable.Tile module<a class="headerlink" href="#foundry-game-gfx-drawable-tile-module" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.game.gfx.drawable">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.game.gfx.drawable" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="foundry.game.gfx.drawable.apply_selection_overlay">
-<span class="sig-name descname"><span class="pre">apply_selection_overlay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.drawable.apply_selection_overlay" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 

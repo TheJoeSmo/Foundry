@@ -223,12 +223,12 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.smb3parse.util.rom">
+  <a class="reference internal nav-link" href="#foundry-smb3parse-util-rom-module">
    foundry.smb3parse.util.rom module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.smb3parse.util">
+  <a class="reference internal nav-link" href="#module-contents">
    Module contents
   </a>
  </li>
@@ -258,58 +258,11 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.smb3parse.util.rom">
-<span id="foundry-smb3parse-util-rom-module"></span><h2>foundry.smb3parse.util.rom module<a class="headerlink" href="#module-foundry.smb3parse.util.rom" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Rom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rom_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.find" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.int">
-<span class="sig-name descname"><span class="pre">int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.int" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.little_endian">
-<span class="sig-name descname"><span class="pre">little_endian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.little_endian" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.read" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.save_to">
-<span class="sig-name descname"><span class="pre">save_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.save_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.rom.Rom.write_little_endian">
-<span class="sig-name descname"><span class="pre">write_little_endian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">integer</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom.int" title="foundry.smb3parse.util.rom.Rom.int"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.rom.Rom.write_little_endian" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="foundry-smb3parse-util-rom-module">
+<h2>foundry.smb3parse.util.rom module<a class="headerlink" href="#foundry-smb3parse-util-rom-module" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.smb3parse.util">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.smb3parse.util" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="foundry.smb3parse.util.little_endian">
-<span class="sig-name descname"><span class="pre">little_endian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">two_bytes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.little_endian" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a byte array of length 2 and returns the integer it represents in little endian.</p>
-</dd></dl>
-
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 
