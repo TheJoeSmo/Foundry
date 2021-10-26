@@ -37,6 +37,7 @@ from foundry import (
     get_latest_version_name,
     github_link,
     icon,
+    main_window_flags_path,
     open_url,
     releases_link,
 )
@@ -79,29 +80,12 @@ ROM_FILE_FILTER = "ROM files (*.nes *.rom);;All files (*)"
 M3L_FILE_FILTER = "M3L files (*.m3l);;All files (*)"
 IMG_FILE_FILTER = "Screenshots (*.png);;All files (*)"
 
-ID_RELOAD_LEVEL = 303
+with open(main_window_flags_path, "r") as data:
+    main_window_flags = json.loads(data.read())
+del data
 
-ID_GRID_LINES = 501
-ID_TRANSPARENCY = 508
-ID_JUMPS = 509
-ID_MARIO = 510
-ID_RESIZE_TYPE = 511
-ID_JUMP_OBJECTS = 512
-ID_ITEM_BLOCKS = 513
-ID_INVISIBLE_ITEMS = 514
-ID_AUTOSCROLL = 515
-
-CHECKABLE_MENU_ITEMS = [
-    ID_TRANSPARENCY,
-    ID_GRID_LINES,
-    ID_JUMPS,
-    ID_MARIO,
-    ID_RESIZE_TYPE,
-    ID_JUMP_OBJECTS,
-    ID_ITEM_BLOCKS,
-    ID_INVISIBLE_ITEMS,
-    ID_AUTOSCROLL,
-]
+CHECKABLE_MENU_ITEMS = [flag["id"] for flag in main_window_flags["menu"]["view"].values()]
+CHECKABLE_MENU = {flag["id"]: flag for flag in main_window_flags["menu"]["view"].values()}
 
 ID_PROP = "ID"
 
@@ -174,54 +158,13 @@ class MainWindow(QMainWindow):
         self.view_menu = QMenu("View")
         self.view_menu.triggered.connect(self.on_menu)
 
-        action = self.view_menu.addAction("Mario")
-        action.setProperty(ID_PROP, ID_MARIO)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_mario"])
-
-        action = self.view_menu.addAction("&Jumps on objects")
-        action.setProperty(ID_PROP, ID_JUMP_OBJECTS)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_jump_on_objects"])
-
-        action = self.view_menu.addAction("Items in blocks")
-        action.setProperty(ID_PROP, ID_ITEM_BLOCKS)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_items_in_blocks"])
-
-        action = self.view_menu.addAction("Invisible items")
-        action.setProperty(ID_PROP, ID_INVISIBLE_ITEMS)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_invisible_items"])
-
-        action = self.view_menu.addAction("Autoscroll Path")
-        action.setProperty(ID_PROP, ID_AUTOSCROLL)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_autoscroll"])
-
-        self.view_menu.addSeparator()
-
-        action = self.view_menu.addAction("Jump Zones")
-        action.setProperty(ID_PROP, ID_JUMPS)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_jumps"])
-
-        action = self.view_menu.addAction("&Grid lines")
-        action.setProperty(ID_PROP, ID_GRID_LINES)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_grid"])
-
-        action = self.view_menu.addAction("Resize Type")
-        action.setProperty(ID_PROP, ID_RESIZE_TYPE)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["draw_expansion"])
-
-        self.view_menu.addSeparator()
-
-        action = self.view_menu.addAction("&Block Transparency")
-        action.setProperty(ID_PROP, ID_TRANSPARENCY)
-        action.setCheckable(True)
-        action.setChecked(SETTINGS["block_transparency"])
+        for flag in CHECKABLE_MENU.values():
+            action: QAction = self.view_menu.addAction(flag["display_name"])
+            action.setProperty(ID_PROP, flag["id"])
+            action.setCheckable(True)
+            action.setChecked(SETTINGS[flag["name"]])
+            if flag.get("separator", False):
+                self.view_menu.addSeparator()
 
         self.view_menu.addSeparator()
         self.view_menu.addAction("&Save Screenshot of Level").triggered.connect(self.on_screenshot)
@@ -985,34 +928,10 @@ class MainWindow(QMainWindow):
 
         checked = action.isChecked()
 
-        if item_id == ID_GRID_LINES:
-            self.level_view.draw_grid = checked
-        elif item_id == ID_TRANSPARENCY:
-            self.level_view.transparency = checked
-        elif item_id == ID_JUMPS:
-            self.level_view.draw_jumps = checked
-        elif item_id == ID_MARIO:
-            self.level_view.draw_mario = checked
-        elif item_id == ID_RESIZE_TYPE:
-            self.level_view.draw_expansions = checked
-        elif item_id == ID_JUMP_OBJECTS:
-            self.level_view.draw_jumps_on_objects = checked
-        elif item_id == ID_ITEM_BLOCKS:
-            self.level_view.draw_items_in_blocks = checked
-        elif item_id == ID_INVISIBLE_ITEMS:
-            self.level_view.draw_invisible_items = checked
-        elif item_id == ID_AUTOSCROLL:
-            self.level_view.draw_autoscroll = checked
-
-        SETTINGS["draw_mario"] = self.level_view.draw_mario
-        SETTINGS["draw_jumps"] = self.level_view.draw_jumps
-        SETTINGS["draw_grid"] = self.level_view.draw_grid
-        SETTINGS["draw_expansion"] = self.level_view.draw_expansions
-        SETTINGS["draw_jump_on_objects"] = self.level_view.draw_jumps_on_objects
-        SETTINGS["draw_items_in_blocks"] = self.level_view.draw_items_in_blocks
-        SETTINGS["draw_invisible_items"] = self.level_view.draw_invisible_items
-        SETTINGS["draw_autoscroll"] = self.level_view.draw_autoscroll
-        SETTINGS["block_transparency"] = self.level_view.transparency
+        if item_id not in CHECKABLE_MENU:
+            return
+        setattr(self.level_view, CHECKABLE_MENU[item_id]["attribute"], checked)
+        SETTINGS[CHECKABLE_MENU[item_id]["name"]] = checked
 
         save_settings()
 
