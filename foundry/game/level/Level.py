@@ -604,6 +604,12 @@ class Level(LevelLike):
             return self.add_object(obj.domain, obj.obj_index, x, y, length)
 
     def create_object_at(self, x: int, y: int, domain: int = 0, object_index: int = 0):
+        assert isinstance(domain, int)
+        assert isinstance(object_index, int)
+        assert isinstance(x, int)
+        assert isinstance(y, int)
+        assert isinstance(object_index, int)
+
         self.add_object(domain, object_index, x, y, None, len(self.objects))
 
     def create_enemy_at(self, x: int, y: int):
@@ -613,6 +619,12 @@ class Level(LevelLike):
     def add_object(
         self, domain: int, object_index: int, x: int, y: int, length: Optional[int], index: int = -1
     ) -> LevelObject:
+        assert isinstance(domain, int)
+        assert isinstance(object_index, int)
+        assert isinstance(x, int)
+        assert isinstance(y, int)
+        assert isinstance(index, int)
+
         if index == -1:
             index = len(self.objects)
 

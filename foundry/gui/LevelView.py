@@ -689,7 +689,7 @@ class LevelView(QWidget):
     def create_object_at(self, x: int, y: int, domain: int = 0, object_index: int = 0):
         level_x, level_y = self._to_level_point(x, y)
 
-        self.level_ref.create_object_at(level_x, level_y, domain, object_index)
+        self.level_ref.create_object_at(int(level_x), int(level_y), domain, object_index)
 
         self.update()
 
