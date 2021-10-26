@@ -27,10 +27,10 @@ main_window_flags_path = data_dir / "main_window_flags.json"
 doc_dir = root_dir.joinpath("doc")
 icon_dir = data_dir.joinpath("icons")
 
-releases_link = "https://github.com/mchlnix/SMB3-Foundry/releases"
+releases_link = "https://github.com/TheJoeSmo/Foundry/releases"
 feature_video_link = "https://www.youtube.com/watch?v=7_22cAffMmE"
-github_link = "https://github.com/mchlnix/SMB3-Foundry"
-github_issue_link = "https://github.com/mchlnix/SMB3-Foundry/issues"
+github_link = "https://github.com/TheJoeSmo/Foundry"
+github_issue_link = "https://github.com/TheJoeSmo/Foundry/issues"
 discord_link = "https://discord.gg/pm87gm7"
 
 enemy_compat_link = QUrl.fromLocalFile(str(doc_dir.joinpath("SMB3 enemy compatibility.html")))
