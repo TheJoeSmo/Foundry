@@ -1,0 +1,62 @@
+{
+    "menu": {
+        "view": {
+            "ID_MARIO": {
+                "id": 510,
+                "attribute": "draw_mario",
+                "name": "draw_mario",
+                "display_name": "Mario"
+            },
+            "ID_JUMP_OBJECTS": {
+                "id": 512,
+                "attribute": "draw_jumps_on_objects",
+                "name": "draw_jump_on_objects",
+                "display_name": "&Jumps on objects"
+            },
+            "ID_ITEM_BLOCKS": {
+                "id": 513,
+                "attribute": "draw_items_in_blocks",
+                "name": "draw_items_in_blocks",
+                "display_name": "Items in blocks"
+            },
+            "ID_INVISIBLE_ITEMS": {
+                "id": 514,
+                "attribute": "draw_invisible_items",
+                "name": "draw_invisible_items",
+                "display_name": "Invisible items"
+            },
+            "ID_AUTOSCROLL": {
+                "id": 515,
+                "attribute": "draw_autoscroll",
+                "name": "draw_autoscroll",
+                "display_name": "Autoscroll Path",
+                "separator": true
+            },
+            "ID_JUMPS": {
+                "id": 509,
+                "attribute": "draw_jumps",
+                "name": "draw_jumps",
+                "display_name": "Jump Zones"
+            },
+            "ID_GRID_LINES": {
+                "id": 501,
+                "attribute": "draw_grid",
+                "name": "draw_grid",
+                "display_name": "&Grid lines"
+            },
+            "ID_RESIZE_TYPE": {
+                "id": 511,
+                "attribute": "draw_expansions",
+                "name": "draw_expansion",
+                "display_name": "Resize Type",
+                "separator": true
+            },
+            "ID_TRANSPARENCY": {
+                "id": 508,
+                "attribute": "transparency",
+                "name": "block_transparency",
+                "display_name": "&Block Transparency"
+            }
+        }
+    }   
+}
