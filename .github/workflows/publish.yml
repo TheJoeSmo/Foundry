@@ -136,7 +136,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "artifacts/linux-foundry-smb3/linux-foundry-smb3"
           asset_name: "linux-foundry-smb3"
           asset_content_type: application/octet-stream
@@ -146,7 +146,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "artifacts/osx-foundry-smb3/osx-foundry-smb3"
           asset_name: "osx-foundry-smb3"
           asset_content_type: application/octet-stream
@@ -156,7 +156,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "artifacts/win64-foundry-smb3.exe/win64-foundry-smb3.exe"
           asset_name: "win64-foundry-smb3.exe"
           asset_content_type: application/octet-stream
@@ -166,7 +166,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "artifacts/win32-foundry-smb3.exe/win32-foundry-smb3.exe"
           asset_name: "win32-foundry-smb3.exe"
           asset_content_type: application/octet-stream
@@ -176,7 +176,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: "artifacts/MANUAL.pdf/MANUAL.pdf"
           asset_name: "MANUAL.pdf"
           asset_content_type: application/pdf
