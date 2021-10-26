@@ -69,4 +69,4 @@ jobs:
       - name: Run tests
         run: |
           source $VENV
-          pytest tests/ --verbose --failed-first --ignore="tests/game/gfx/objects/"
+          pytest tests/ --verbose --failed-first --ignore="tests/game/gfx/objects/", "tests/game/level/test_level_drawing.py"
