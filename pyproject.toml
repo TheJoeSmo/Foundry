@@ -38,6 +38,7 @@ line-length = 120
 
 [tool.pytest]
 qt_api = "PySide6"
+ignore = "tests/game/gfx/objects/"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
