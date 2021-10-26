@@ -199,6 +199,9 @@ class WorldMap(LevelBase):
         :return: A tuple of the object set number, the absolute level address, pointing to the objects and the enemy
         address. Or None, if there is no level at the map position.
         """
+        assert isinstance(screen, int)
+        assert isinstance(player_row, int)
+        assert isinstance(player_column, int)
 
         tile = self.tile_at(screen, player_row, player_column)
 
@@ -344,6 +347,10 @@ class WorldMap(LevelBase):
         :param column:
         :return:
         """
+        assert isinstance(screen, int)
+        assert isinstance(row, int)
+        assert isinstance(column, int)
+
         if row + FIRST_VALID_ROW not in VALID_ROWS:
             raise ValueError(
                 f"Given row {row} is outside the valid range for world maps. First valid row is " f"{FIRST_VALID_ROW}."
