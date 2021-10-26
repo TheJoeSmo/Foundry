@@ -80,7 +80,7 @@ jobs:
 
       - name: Build Executable
         run: |
-          pyinstaller foundry-smb3.spec
+          poetry run pyinstaller foundry-smb3.spec
           mv dist/${{ matrix.config.exe }} dist/${{ matrix.config.prefix }}-smb3-foundry${{ matrix.config.suffix }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
