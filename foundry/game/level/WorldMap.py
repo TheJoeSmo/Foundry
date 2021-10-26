@@ -121,6 +121,9 @@ class WorldMap(LevelLike):
         self.objects.remove(obj)
 
     def level_at_position(self, x: int, y: int):
+        assert isinstance(x, int)
+        assert isinstance(y, int)
+
         screen = x // WORLD_MAP_SCREEN_WIDTH + 1
 
         x %= WORLD_MAP_SCREEN_WIDTH
