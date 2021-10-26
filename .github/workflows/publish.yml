@@ -15,28 +15,28 @@ jobs:
         config:
           - {
               os: ubuntu-20.04,
-              exe: "smb3-foundry",
+              exe: "foundry-smb3",
               prefix: "linux",
               suffix: "",
               architecture: "x64",
             }
           - {
               os: windows-2019,
-              exe: "smb3-foundry.exe",
+              exe: "foundry-smb3.exe",
               prefix: "win64",
               suffix: ".exe",
               architecture: "x64",
             }
           - {
               os: windows-2019,
-              exe: "smb3-foundry.exe",
+              exe: "foundry-smb3.exe",
               prefix: "win32",
               suffix: ".exe",
               architecture: "x86",
             }
           - {
               os: macos-latest,
-              exe: "smb3-foundry",
+              exe: "foundry-smb3",
               prefix: "osx",
               suffix: "",
               architecture: "x64",
@@ -81,12 +81,12 @@ jobs:
       - name: Build Executable
         run: |
           poetry run pyinstaller foundry-smb3.spec
-          mv dist/${{ matrix.config.exe }} dist/${{ matrix.config.prefix }}-smb3-foundry${{ matrix.config.suffix }}
+          mv dist/${{ matrix.config.exe }} dist/${{ matrix.config.prefix }}-foundry-smb3${{ matrix.config.suffix }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config.prefix }}-smb3-foundry${{ matrix.config.suffix }}
-          path: dist/${{ matrix.config.prefix }}-smb3-foundry${{ matrix.config.suffix }}
+          name: ${{ matrix.config.prefix }}-foundry-smb3${{ matrix.config.suffix }}
+          path: dist/${{ matrix.config.prefix }}-foundry-smb3${{ matrix.config.suffix }}
 
   build_manual:
     name: Build Manual
@@ -137,8 +137,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "artifacts/linux-smb3-foundry/linux-smb3-foundry"
-          asset_name: "linux-smb3-foundry"
+          asset_path: "artifacts/linux-foundry-smb3/linux-foundry-smb3"
+          asset_name: "linux-foundry-smb3"
           asset_content_type: application/octet-stream
 
       - name: Upload SMB3 Foundry OSX
@@ -147,8 +147,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "artifacts/osx-smb3-foundry/osx-smb3-foundry"
-          asset_name: "osx-smb3-foundry"
+          asset_path: "artifacts/osx-foundry-smb3/osx-foundry-smb3"
+          asset_name: "osx-foundry-smb3"
           asset_content_type: application/octet-stream
 
       - name: Upload SMB3 Foundry Windows x64
@@ -157,8 +157,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "artifacts/win64-smb3-foundry.exe/win64-smb3-foundry.exe"
-          asset_name: "win64-smb3-foundry.exe"
+          asset_path: "artifacts/win64-foundry-smb3.exe/win64-foundry-smb3.exe"
+          asset_name: "win64-foundry-smb3.exe"
           asset_content_type: application/octet-stream
 
       - name: Upload SMB3 Foundry Windows x32
@@ -167,8 +167,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "artifacts/win32-smb3-foundry.exe/win32-smb3-foundry.exe"
-          asset_name: "win32-smb3-foundry.exe"
+          asset_path: "artifacts/win32-foundry-smb3.exe/win32-foundry-smb3.exe"
+          asset_name: "win32-foundry-smb3.exe"
           asset_content_type: application/octet-stream
 
       - name: Upload SMB3 Foundry Manual
