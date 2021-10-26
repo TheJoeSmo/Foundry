@@ -3,9 +3,9 @@
 block_cipher = None
 
 
-a = Analysis(['smb3-foundry.py'],
+a = Analysis(['foundry/main.py'],
              binaries=[],
-             datas=[('data', 'data'), ('VERSION', '.')],
+             datas=[('foundry/data', 'foundry/data')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -22,12 +22,12 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='smb3-foundry',
+          name='foundry-smb3',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
           console=False,
-          icon='data/foundry.ico'
+          icon='foundry/data/foundry.ico'
           )
