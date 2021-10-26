@@ -1251,7 +1251,7 @@ class MainWindow(QMainWindow):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         if event.button() == Qt.MiddleButton:
-            pos = self.level_view.mapFromGlobal(self.mapToGlobal(event.pos())).toTuple()
+            pos = self.level_view.mapFromGlobal(self.mapToGlobal(event.position())).toTuple()
 
             self.place_object_from_dropdown(pos)
 
