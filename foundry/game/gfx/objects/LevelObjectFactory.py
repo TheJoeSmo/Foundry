@@ -73,6 +73,11 @@ class LevelObjectFactory:
         length: Optional[int],
         index: int,
     ):
+        assert isinstance(domain, int)
+        assert isinstance(object_index, int)
+        assert isinstance(x, int)
+        assert isinstance(y, int)
+        assert isinstance(index, int)
         if self.vertical_level:
             offset = y // SCREEN_HEIGHT
             y %= SCREEN_HEIGHT
