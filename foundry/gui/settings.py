@@ -17,6 +17,7 @@ SETTINGS = dict()
 SETTINGS["instaplay_emulator"] = "fceux"
 SETTINGS["instaplay_arguments"] = "%f"
 SETTINGS["default_powerup"] = 0
+SETTINGS["default_power_has_star"] = False
 
 SETTINGS["resize_mode"] = RESIZE_LEFT_CLICK
 SETTINGS["gui_style"] = ""  # initially blank, since we can't call load_stylesheet until the app is started
