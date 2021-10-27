@@ -176,10 +176,23 @@ class SettingsDialog(CustomDialog):
             self.powerup_combo_box.addItem(powerup_icon, name)
 
         self.powerup_combo_box.currentIndexChanged.connect(self._update_settings)
-
         self.powerup_combo_box.setCurrentIndex(SETTINGS["default_powerup"])
 
+        label = QLabel("Start with invincibility:")
+        label.setToolTip("The player will start with star power.")
+        self.powerup_star = QCheckBox("Enabled")
+        self.powerup_star.setIcon(self._load_from_png(5, 48))
+        print(SETTINGS["default_power_has_star"])
+        self.powerup_star.setChecked(SETTINGS["default_power_has_star"])
+        self.powerup_star.toggled.connect(self._update_settings)
+
+        powerup_star_layout = QHBoxLayout()
+        powerup_star_layout.addWidget(label)
+        powerup_star_layout.addStretch(1)
+        powerup_star_layout.addWidget(self.powerup_star)
+
         command_layout.addWidget(self.powerup_combo_box)
+        command_layout.addLayout(powerup_star_layout)
 
         # ----------------------
 
@@ -218,6 +231,7 @@ class SettingsDialog(CustomDialog):
         SETTINGS["object_tooltip_enabled"] = self._tooltip_check_box.isChecked()
 
         SETTINGS["default_powerup"] = self.powerup_combo_box.currentIndex()
+        SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
 
         self.update()
 
