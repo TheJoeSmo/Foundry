@@ -509,11 +509,11 @@ class MainWindow(QMainWindow):
     def _put_current_level_to_level_1_1(self, path_to_rom) -> bool:
         rom = self._open_rom(path_to_rom)
 
-        # load world-1 data
-        world_1 = SMB3World.from_world_number(rom, 1)
+        # load world data
+        world = SMB3World.from_world_number(rom, SETTINGS["default_starting_world"])
 
         # find position of "level 1" tile in world map
-        for position in world_1.gen_positions():
+        for position in world.gen_positions():
             if position.tile() == TILE_LEVEL_1:
                 break
         else:
@@ -538,7 +538,7 @@ class MainWindow(QMainWindow):
         # replace level information with that of current level
         object_set_number = self.level_ref.object_set_number
 
-        world_1.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
+        world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
 
         # save rom
         rom.save_to(path_to_rom)
@@ -550,10 +550,14 @@ class MainWindow(QMainWindow):
 
         *_, powerup, hasPWing = POWERUPS[SETTINGS["default_powerup"]]
         hasStar = SETTINGS["default_power_has_star"]
+        worldStart = SETTINGS["default_starting_world"] - 1
+        nop = 0xEA
+
+        rom.write(Title_PrepForWorldMap - 0x8, bytes([worldStart]))
+        rom.write(Title_PrepForWorldMap - 0x4, bytes([nop, nop, nop]))
 
         rom.write(Title_PrepForWorldMap + 0x1, bytes([powerup]))
 
-        nop = 0xEA
         rts = 0x60
         lda = 0xA9
         staAbsolute = 0x8D
