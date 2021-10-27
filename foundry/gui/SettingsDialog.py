@@ -182,7 +182,6 @@ class SettingsDialog(CustomDialog):
         label.setToolTip("The player will start with star power.")
         self.powerup_star = QCheckBox("Enabled")
         self.powerup_star.setIcon(self._load_from_png(5, 48))
-        print(SETTINGS["default_power_has_star"])
         self.powerup_star.setChecked(SETTINGS["default_power_has_star"])
         self.powerup_star.toggled.connect(self._update_settings)
 
