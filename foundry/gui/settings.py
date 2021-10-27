@@ -1,7 +1,7 @@
 import json
 from functools import partial
 
-import qdarkstyle
+import qdarktheme
 
 from foundry import default_settings_path
 
@@ -10,7 +10,7 @@ RESIZE_RIGHT_CLICK = "RMB"
 
 GUI_STYLE = {
     "RETRO": lambda: "",
-    "DRACULA": partial(qdarkstyle.load_stylesheet, pyside=True),
+    "DRACULA": partial(qdarktheme.load_stylesheet),
 }
 
 SETTINGS = dict()

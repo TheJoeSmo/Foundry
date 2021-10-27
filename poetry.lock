@@ -448,6 +448,14 @@ python-versions = ">=3.6"
 diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
+name = "pyqtdarktheme"
+version = "0.1.6"
+description = "Flat dark theme for PySide, PyQt."
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[[package]]
 name = "pyside6"
 version = "6.2.0"
 description = "Python bindings for the Qt cross-platform application and UI framework"
@@ -509,30 +517,6 @@ description = ""
 category = "dev"
 optional = false
 python-versions = "*"
-
-[[package]]
-name = "qdarkstyle"
-version = "3.0.2"
-description = "The most complete dark/light style sheet for C++/Python and Qt applications"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-qtpy = ">=1.9"
-
-[package.extras]
-develop = ["qtsass", "watchdog"]
-docs = ["sphinx", "sphinx-rtd-theme"]
-example = ["pyqt5", "pyside2"]
-
-[[package]]
-name = "qtpy"
-version = "1.11.2"
-description = "Provides an abstraction layer on top of the various Qt bindings (PyQt5, PyQt4 and PySide) and additional custom QWidgets."
-category = "main"
-optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
 
 [[package]]
 name = "regex"
@@ -742,7 +726,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9.0,<3.10"
-content-hash = "01456f78e8ba3209d1be13950cfaf58799490b11cde0818349e157f67b55d880"
+content-hash = "56062ce18ac0e07f2037eb1f4eb4c992b15af7cd20e5f673cc07bfa4d536e959"
 
 [metadata.files]
 alabaster = [
@@ -960,6 +944,10 @@ pyparsing = [
     {file = "pyparsing-3.0.1-py3-none-any.whl", hash = "sha256:fd93fc45c47893c300bd98f5dd1b41c0e783eaeb727e7cea210dcc09d64ce7c3"},
     {file = "pyparsing-3.0.1.tar.gz", hash = "sha256:84196357aa3566d64ad123d7a3c67b0e597a115c4934b097580e5ce220b91531"},
 ]
+pyqtdarktheme = [
+    {file = "PyQtDarkTheme-0.1.6-py3-none-any.whl", hash = "sha256:2a91315934444274b0f68a0e5cfeac1aa9bf772f8c247054045b956820004acb"},
+    {file = "PyQtDarkTheme-0.1.6.tar.gz", hash = "sha256:ac5dc4b2b11ff4235314cb31b8e24bcb609257bf7c67dc303b758f1bed29a6bf"},
+]
 pyside6 = [
     {file = "PySide6-6.2.0-6.2.0-cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_14_x86_64.whl", hash = "sha256:57c039dc188dd5465c8a605ffa364748ae397894ac18f6df2655252ad015c97b"},
     {file = "PySide6-6.2.0-6.2.0-cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl", hash = "sha256:f1b3c2992a3edbadb8b40734870ca6d6bd51b6f1678a7ec91839fad1fd0dbc91"},
@@ -980,14 +968,6 @@ pytz = [
 pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
     {file = "pywin32_ctypes-0.2.0-py2.py3-none-any.whl", hash = "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"},
-]
-qdarkstyle = [
-    {file = "QDarkStyle-3.0.2-py2.py3-none-any.whl", hash = "sha256:7c791535cc20b3cc1e8e1bf6b88dabe53cb0615983df702be83597e73ada2558"},
-    {file = "QDarkStyle-3.0.2.tar.gz", hash = "sha256:55d149cf5f40ee297397f1818e091118cefb855a4a9c5c38566c47acd2d8c7ae"},
-]
-qtpy = [
-    {file = "QtPy-1.11.2-py2.py3-none-any.whl", hash = "sha256:83c502973e9fdd7b648d8267a421229ea3d9a0651c22e4c65a4d9228479c39b6"},
-    {file = "QtPy-1.11.2.tar.gz", hash = "sha256:d6e4ae3a41f1fcb19762b58f35ad6dd443b4bdc867a4cb81ef10ccd85403c92b"},
 ]
 regex = [
     {file = "regex-2021.10.23-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:45b65d6a275a478ac2cbd7fdbf7cc93c1982d613de4574b56fd6972ceadb8395"},
