@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QSplitter,
     QToolBar,
+    QVBoxLayout,
     QWhatsThis,
     QWidget,
 )
@@ -44,6 +45,11 @@ from foundry import (
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
+from foundry.game.gfx.Palette import (
+    PaletteGroup,
+    restore_all_palettes,
+    save_all_palette_groups,
+)
 from foundry.game.level.Level import Level, world_and_level_for_level_address
 from foundry.game.level.LevelRef import LevelRef
 from foundry.game.level.WorldMap import WorldMap
@@ -63,7 +69,7 @@ from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
-from foundry.gui.PaletteViewer import PaletteViewer
+from foundry.gui.PaletteViewer import PaletteViewer, SidePalette
 from foundry.gui.settings import SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.SpinnerPanel import SpinnerPanel
@@ -227,6 +233,17 @@ class MainWindow(QMainWindow):
         self.level_size_bar = LevelSizeBar(self, self.level_ref)
         self.enemy_size_bar = EnemySizeBar(self, self.level_ref)
 
+        size_and_palette = QWidget()
+        size_and_palette.setLayout(QHBoxLayout())
+        size_and_palette.layout().setContentsMargins(0, 0, 0, 0)
+
+        size_layout = QVBoxLayout()
+        size_layout.addWidget(self.level_size_bar)
+        size_layout.addWidget(self.enemy_size_bar)
+
+        size_and_palette.layout().addLayout(size_layout, stretch=1)
+        size_and_palette.layout().addWidget(SidePalette(self.level_ref))
+
         self.jump_list = JumpList(self, self.level_ref)
         self.jump_list.add_jump.connect(self.on_jump_added)
         self.jump_list.edit_jump.connect(self.on_jump_edit)
@@ -263,6 +280,7 @@ class MainWindow(QMainWindow):
 
         level_toolbar.addWidget(self.spinner_panel)
         level_toolbar.addWidget(self.object_dropdown)
+        level_toolbar.addWidget(size_and_palette)
         level_toolbar.addWidget(self.level_size_bar)
         level_toolbar.addWidget(self.enemy_size_bar)
         level_toolbar.addWidget(splitter)
@@ -292,6 +310,8 @@ class MainWindow(QMainWindow):
         self.menu_toolbar.addSeparator()
         self.menu_toolbar.addAction(icon("folder.svg"), "Open ROM").triggered.connect(self.on_open_rom)
         self.menu_toolbar.addAction(icon("save.svg"), "Save Level").triggered.connect(self.on_save_rom)
+        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.svg"), "Save Level")
+        self.menu_toolbar_save_action.triggered.connect(self.on_save_rom)
         self.menu_toolbar.addSeparator()
 
         self.undo_action = self.menu_toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
@@ -373,6 +393,11 @@ class MainWindow(QMainWindow):
         self.redo_action.setEnabled(self.level_ref.undo_stack.redo_available)
 
         self.jump_destination_action.setEnabled(self.level_ref.level.has_next_area)
+
+        level_has_changed = self.level_ref.level.changed and not self.level_ref.level.undo_stack.is_empty
+        level_is_m3l = not self.level_ref.level.attached_to_rom
+
+        self.menu_toolbar_save_action.setEnabled(level_has_changed or level_is_m3l or PaletteGroup.changed)
 
         self._save_auto_data()
 
@@ -463,13 +488,19 @@ class MainWindow(QMainWindow):
 
         path_to_temp_rom = temp_dir / "instaplay.rom"
 
-        ROM().save_to(path_to_temp_rom)
+        ROM().save_to(str(path_to_temp_rom))
+
+        temp_rom = self._open_rom(path_to_temp_rom)
 
         if not self._put_current_level_to_level_1_1(path_to_temp_rom):
             return
 
         if not self._set_default_powerup(path_to_temp_rom):
             return
+
+        save_all_palette_groups(temp_rom)
+
+        temp_rom.save_to(str(path_to_temp_rom))
 
         arguments = SETTINGS["instaplay_arguments"].replace("%f", str(path_to_temp_rom))
         arguments = shlex.split(arguments, posix=False)
@@ -607,7 +638,6 @@ class MainWindow(QMainWindow):
         # set as Raccoon Mario instead of P-wing
         Map_Power_DispResetLocation = 0x3C5A2
         rom.write(Map_Power_DispResetLocation, bytes([nop, nop, nop]))
-        rom.save_to(path_to_rom)
         return True
 
     def on_screenshot(self, _) -> bool:
@@ -712,6 +742,36 @@ class MainWindow(QMainWindow):
             return answer == QMessageBox.Yes
         else:
             return True
+
+    def _ask_for_palette_save(self) -> bool:
+        """
+        If Object Palettes have been changed, this function opens a dialog box, asking the user, if they want to save
+        the changes, dismiss them, or cancel whatever they have been doing (probably saving/selecting another level).
+        Saving or restoring Object Palettes is done inside the function if necessary.
+        :return: False, if Cancel was chosen. True, if Palettes were restored or saved to ROM.
+        """
+        if not PaletteGroup.changed:
+            return True
+
+        answer = QMessageBox.question(
+            self,
+            "Please confirm",
+            "You changed some object palettes. This is a change, that potentially affects other levels in this ROM. Do "
+            "you want to save these changes?",
+            QMessageBox.Cancel | QMessageBox.RestoreDefaults | QMessageBox.Yes,
+            QMessageBox.Cancel,
+        )
+
+        if answer == QMessageBox.Cancel:
+            return False
+
+        if answer == QMessageBox.Yes:
+            save_all_palette_groups()
+        elif answer == QMessageBox.RestoreDefaults:
+            restore_all_palettes()
+            self.level_ref.level.reload()
+
+        return True
 
     def on_save_rom(self, _):
         self.save_rom(False)
@@ -1051,6 +1111,8 @@ class MainWindow(QMainWindow):
         self.update_gui_for_level()
 
     def update_gui_for_level(self):
+        restore_all_palettes()
+
         self._enable_disable_gui_elements()
 
         self.update_title()
