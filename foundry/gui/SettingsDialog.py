@@ -244,7 +244,8 @@ class SettingsDialog(CustomDialog):
         SETTINGS["object_tooltip_enabled"] = self._tooltip_check_box.isChecked()
 
         SETTINGS["default_powerup"] = self.powerup_combo_box.currentIndex()
-        SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
+        if hasattr(self, "powerup_star"):
+            SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
         SETTINGS["default_starting_world"] = self.starting_world.value()
 
         self.update()
