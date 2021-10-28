@@ -84,8 +84,15 @@ with open(main_window_flags_path, "r") as data:
     main_window_flags = json.loads(data.read())
 del data
 
-CHECKABLE_MENU_ITEMS = [flag["id"] for flag in main_window_flags["menu"]["view"].values()]
-CHECKABLE_MENU = {flag["id"]: flag for flag in main_window_flags["menu"]["view"].values()}
+menu_options_groups = main_window_flags["menu"]["view"]["options"]
+menu_options = {}
+for menu_option in menu_options_groups:
+    menu_options.update(menu_option)
+
+CHECKABLE_MENU_ITEMS = [option["id"] for option in menu_options.values()]
+CHECKABLE_MENU = {option["id"]: option for option in menu_options.values()}
+del menu_options_groups
+del menu_options
 
 ID_PROP = "ID"
 
@@ -100,102 +107,53 @@ class MainWindow(QMainWindow):
     def __init__(self, path_to_rom=""):
         super(MainWindow, self).__init__()
 
-        self.setWindowIcon(icon("foundry.ico"))
-        self.setStyleSheet(SETTINGS["gui_style"])
+        self.setWindowIcon(icon(main_window_flags["icon"]))
+        self.setStyleSheet(SETTINGS[main_window_flags["style"]])
 
-        file_menu = QMenu("File")
+        for menu_name, menu in main_window_flags["menu"].items():
+            qmenu = QMenu(menu["name"])
+            if menu.get("attribute", False):
+                setattr(self, f"{menu_name}_menu", qmenu)
+            if "action" in menu:
+                qmenu.triggered.connect(getattr(self, menu["action"]))
+            menu_type = menu["type"]
 
-        open_rom_action = file_menu.addAction("&Open ROM")
-        open_rom_action.triggered.connect(self.on_open_rom)
-        self.open_m3l_action = file_menu.addAction("&Open M3L")
-        self.open_m3l_action.triggered.connect(self.on_open_m3l)
+            for index, option_group in enumerate(menu["options"]):
+                if index != 0:
+                    qmenu.addSeparator()
+                if menu_type == "actions":
+                    for base_name, option in option_group.items():
+                        name: str = option["name"]
+                        action = qmenu.addAction(name)
+                        if option.get("attribute", False):
+                            setattr(self, f"{base_name}_action", action)
+                        if "action" in option:
+                            method = getattr(self, option["action"])
+                        elif "link" in option:
 
-        file_menu.addSeparator()
+                            def call_link(url: str):
+                                def call_link():
+                                    return open_url(url)
 
-        self.save_rom_action = file_menu.addAction("&Save ROM")
-        self.save_rom_action.triggered.connect(self.on_save_rom)
-        self.save_rom_as_action = file_menu.addAction("&Save ROM as ...")
-        self.save_rom_as_action.triggered.connect(self.on_save_rom_as)
-        self.save_m3l_action = file_menu.addAction("&Save M3L")
-        self.save_m3l_action.triggered.connect(self.on_save_m3l)
+                                return call_link
 
-        file_menu.addSeparator()
-        settings_action = file_menu.addAction("&Settings")
-        settings_action.triggered.connect(self._on_show_settings)
-        file_menu.addSeparator()
-        exit_action = file_menu.addAction("&Exit")
-        exit_action.triggered.connect(lambda _: self.close())
+                            method = call_link(option["link"])
+                        else:
+                            raise NotImplementedError
+                        if option.get("wrapped", False):
+                            action.triggered.connect(lambda *_: method())
+                        else:
+                            action.triggered.connect(method)
 
-        self.menuBar().addMenu(file_menu)
+                elif menu_type == "settings":
+                    for option in option_group.values():
+                        name: str = option["display_name"]
+                        action = qmenu.addAction(name)
+                        action.setProperty(ID_PROP, option["id"])
+                        action.setCheckable(True)
+                        action.setChecked(SETTINGS[option["name"]])
 
-        self.level_menu = QMenu("Level")
-
-        self.select_level_action = self.level_menu.addAction("&Select Level")
-        self.select_level_action.triggered.connect(self.open_level_selector)
-
-        self.reload_action = self.level_menu.addAction("&Reload Level")
-        self.reload_action.triggered.connect(self.reload_level)
-        self.level_menu.addSeparator()
-        self.edit_header_action = self.level_menu.addAction("&Edit Header")
-        self.edit_header_action.triggered.connect(self.on_header_editor)
-        self.edit_autoscroll = self.level_menu.addAction("Edit Autoscrolling")
-        self.edit_autoscroll.triggered.connect(self.on_edit_autoscroll)
-
-        self.menuBar().addMenu(self.level_menu)
-
-        self.object_menu = QMenu("Objects")
-
-        view_blocks_action = self.object_menu.addAction("&View Blocks")
-        view_blocks_action.triggered.connect(self.on_block_viewer)
-        view_objects_action = self.object_menu.addAction("&View Objects")
-        view_objects_action.triggered.connect(self.on_object_viewer)
-        self.object_menu.addSeparator()
-        view_palettes_action = self.object_menu.addAction("View Object Palettes")
-        view_palettes_action.triggered.connect(self.on_palette_viewer)
-
-        self.menuBar().addMenu(self.object_menu)
-
-        self.view_menu = QMenu("View")
-        self.view_menu.triggered.connect(self.on_menu)
-
-        for flag in CHECKABLE_MENU.values():
-            action: QAction = self.view_menu.addAction(flag["display_name"])
-            action.setProperty(ID_PROP, flag["id"])
-            action.setCheckable(True)
-            action.setChecked(SETTINGS[flag["name"]])
-            if flag.get("separator", False):
-                self.view_menu.addSeparator()
-
-        self.view_menu.addSeparator()
-        self.view_menu.addAction("&Save Screenshot of Level").triggered.connect(self.on_screenshot)
-
-        self.menuBar().addMenu(self.view_menu)
-
-        help_menu = QMenu("Help")
-
-        update_action = help_menu.addAction("Check for updates")
-        update_action.triggered.connect(self.on_check_for_update)
-
-        help_menu.addSeparator()
-
-        video_action = help_menu.addAction("Feature Video on YouTube")
-        video_action.triggered.connect(lambda: open_url(feature_video_link))
-
-        github_action = help_menu.addAction("Github Repository")
-        github_action.triggered.connect(lambda: open_url(github_link))
-
-        discord_action = help_menu.addAction("SMB3 Rom Hacking Discord")
-        discord_action.triggered.connect(lambda: open_url(discord_link))
-
-        help_menu.addSeparator()
-
-        enemy_compat_action = help_menu.addAction("Enemy Compatibility")
-        enemy_compat_action.triggered.connect(lambda: open_url(enemy_compat_link))
-
-        about_action = help_menu.addAction("&About")
-        about_action.triggered.connect(self.on_about)
-
-        self.menuBar().addMenu(help_menu)
+            self.menuBar().addMenu(qmenu)
 
         self.block_viewer = None
         self.object_viewer = None
