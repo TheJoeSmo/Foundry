@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QRadioButton,
+    QSpinBox,
     QVBoxLayout,
 )
 
@@ -190,8 +191,21 @@ class SettingsDialog(CustomDialog):
         powerup_star_layout.addStretch(1)
         powerup_star_layout.addWidget(self.powerup_star)
 
+        label = QLabel("Starting World:")
+        label.setToolTip("The world that the player starts inside.")
+        self.starting_world = QSpinBox(self)
+        self.starting_world.setRange(1, 9)
+        self.starting_world.setValue(SETTINGS["default_starting_world"])
+        self.starting_world.valueChanged.connect(self._update_settings)
+
+        starting_world_layout = QHBoxLayout()
+        starting_world_layout.addWidget(label)
+        starting_world_layout.addStretch(1)
+        starting_world_layout.addWidget(self.starting_world)
+
         command_layout.addWidget(self.powerup_combo_box)
         command_layout.addLayout(powerup_star_layout)
+        command_layout.addLayout(starting_world_layout)
 
         # ----------------------
 
@@ -231,6 +245,7 @@ class SettingsDialog(CustomDialog):
 
         SETTINGS["default_powerup"] = self.powerup_combo_box.currentIndex()
         SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
+        SETTINGS["default_starting_world"] = self.starting_world.value()
 
         self.update()
 
