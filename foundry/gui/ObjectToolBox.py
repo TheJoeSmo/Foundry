@@ -9,7 +9,7 @@ from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.LevelObject import LevelObject, get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
-from foundry.game.gfx.Palette import bg_color_for_palette
+from foundry.game.gfx.Palette import bg_color_for_palette_group
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ENEMY_ITEM_ID, MAX_ID_VALUE
 from foundry.smb3parse.objects.enemy_item import EnemyItem
 
@@ -93,7 +93,7 @@ class ObjectIcon(QWidget):
             painter = QPainter(self)
 
             if self.draw_background_color:
-                painter.fillRect(event.rect(), QColor(*bg_color_for_palette(self.object.palette_group)))
+                painter.fillRect(event.rect(), QColor(*bg_color_for_palette_group(self.object.palette_group)))
 
             scaled_image = self.image.scaled(self.size(), aspectMode=Qt.KeepAspectRatio)
 
