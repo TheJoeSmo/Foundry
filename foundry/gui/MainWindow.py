@@ -264,7 +264,7 @@ class MainWindow(QMainWindow):
         self.menu_toolbar.addSeparator()
         self.menu_toolbar.addAction(icon("folder.svg"), "Open ROM").triggered.connect(self.on_open_rom)
         self.menu_toolbar.addAction(icon("save.svg"), "Save Level").triggered.connect(self.on_save_rom)
-        self.menu_toolbar_save_action = self.menu_toolbar
+        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.svg"), "Save Level")
         self.menu_toolbar_save_action.triggered.connect(self.on_save_rom)
         self.menu_toolbar.addSeparator()
 
