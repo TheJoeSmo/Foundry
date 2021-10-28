@@ -246,7 +246,8 @@ class SettingsDialog(CustomDialog):
         SETTINGS["default_powerup"] = self.powerup_combo_box.currentIndex()
         if hasattr(self, "powerup_star"):
             SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
-        SETTINGS["default_starting_world"] = self.starting_world.value()
+        if hasattr(self, "starting_world"):
+            SETTINGS["default_starting_world"] = self.starting_world.value()
 
         self.update()
 
