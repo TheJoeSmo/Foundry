@@ -737,7 +737,9 @@ class LevelObject(ObjectLike):
 
     def _draw_block(self, painter: QPainter, block_index, x, y, block_length, transparent):
         if block_index not in self.block_cache:
-            self.block_cache[block_index] = get_block(block_index, self.palette_group, self.graphics_set, self.tsa_data)
+            self.block_cache[block_index] = get_block(
+                block_index, self.palette_group, self.graphics_set, bytes(self.tsa_data)
+            )
 
         self.block_cache[block_index].draw(
             painter,
