@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to Foundry’s Documentation! &#8212; Foundry 0.1.0 documentation</title>
+    <title>Welcome to Foundry’s Documentation! &#8212; Foundry 0.2.4 documentation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -78,6 +78,24 @@
  </a>
 </li>
 
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="license/">
+  License
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="contributing/">
+  How To Contribute
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="changelog/">
+  Changelog
+ </a>
+</li>
+
     
 </ul>
       </div>
@@ -132,12 +150,14 @@
 
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Welcome to Foundry’s Documentation!
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#call-for-contributions">
+   Call for Contributions
   </a>
+  <ul class="nav section-nav flex-column">
+  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#indices-and-tables">
    Indices and tables
   </a>
@@ -165,6 +185,50 @@
                 
   <section id="welcome-to-foundry-s-documentation">
 <h1>Welcome to Foundry’s Documentation!<a class="headerlink" href="#welcome-to-foundry-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Release 0.2.4 (<a class="reference external" href="changelog">What’s new?</a>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">`Foundry`</span></code> is the all-in-one editor for modifying
+<a class="reference external" href="https://en.wikipedia.org/wiki/Super_Mario_Bros._3">Super Mario Bros. 3.</a>.</p>
+<p>Our priority is providing an enjoyable platform to unleash your creative protential
+for the best game the world has to offer.  Particularly with level editing, but we hope
+to extend our ambitions in the future.</p>
+<p>It provides a modern
+<a class="reference external" href="https://en.wikipedia.org/wiki/Graphical_user_interface">graphical user interface</a>
+built to make editing SMB3 as easy and simple as possible.</p>
+<p>The editor can be downloaded through three methods:</p>
+<p>Downloading through the precompiled
+<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/releases/latest">releases</a> on Github.  Simply
+select a version and download the version in accordance to your machine.</p>
+<p>Downloading the package through
+<a class="reference external" href="https://packaging.python.org/tutorials/installing-packages/">pip</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pip install foundry-smb3
+</pre></div>
+</div>
+<p>Downloading the repository and running it with Python and
+<a class="reference external" href="https://pypi.org/project/poetry/">Poetry</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:TheJoeSmo/Foundry.git
+<span class="gp">$ </span><span class="nb">cd</span> Foundry
+<span class="gp">$ </span>poetry install
+<span class="gp">$ </span>poetry run foundry
+</pre></div>
+</div>
+<section id="call-for-contributions">
+<h2>Call for Contributions<a class="headerlink" href="#call-for-contributions" title="Permalink to this headline">¶</a></h2>
+<p>Foundry is a community driven initiative that relies on your help and expertise.</p>
+<p>Small improvements or fixes are critical to this repository’s success.
+Issues labeled <code class="docutils literal notranslate"><span class="pre">`good</span> <span class="pre">first</span> <span class="pre">issue`</span></code> are a great place to start.</p>
+<p>You do not need to be literate with programming to aid Foundry on its journey.
+We also need help with:</p>
+<ul class="simple">
+<li><p>Developing tutorials</p></li>
+<li><p>Creating graphics for our brand and promotional material</p></li>
+<li><p>Translation</p></li>
+<li><p>Outreach and onboarding new contributors</p></li>
+<li><p>Reviewing issues and suggestions</p></li>
+</ul>
+<p>If you are undecided on where to start, we encourage you to reach out.
+You can ask on our Discord or privately through email.</p>
+<p>If you are new to open source projects and want to be caught up to speed, we recommend
+<a class="reference external" href="https://opensource.guide/how-to-contribute/">this guide</a>.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -174,14 +238,38 @@
 </li>
 </ul>
 </div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license/">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing/">How To Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#code">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#tests">Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing/#contributor-code-of-conduct">Contributor Code of Conduct</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#our-promise">Our Promise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#our-standards">Our Standards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#our-responsibilities">Our Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#scope">Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#enforcement">Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/#attribution">Attribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog/">Changelog</a></li>
+</ul>
+</div>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex/"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex/"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search/"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 
 
