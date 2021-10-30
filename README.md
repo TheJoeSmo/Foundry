@@ -1,12 +1,18 @@
 # Foundry
 
-[![Build Status](https://travis-ci.org/mchlnix/SMB3-Foundry.svg?branch=master)](https://travis-ci.org/mchlnix/SMB3-Foundry)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+<p align="center">
+<a href="https://github.com/TheJoeSmo/Foundry/actions"><img alt="Actions Status" src="https://github.com/TheJoeSmo/Foundry/actions/workflows/tests.yml/badge.svg"></a>
+<a href="https://github.com/TheJoeSmo/Foundry/actions"><img alt="Actions Status" src="https://github.com/TheJoeSmo/Foundry/actions/workflows/github_pages.yml/badge.svg"></a>
+<a href="https://github.com/TheJoeSmo/Foundry/block/main/LICENSE.md"><img alt="License GPL3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
+<a href="https://pypi.org/project/foundry-smb3/"><img alt="PyPI" src="https://img.shields.io/pypi/v/foundry-smb3"></a>
+<a href="https://pepy.tech/project/black"><img alt="Downloads" src="https://pepy.tech/badge/foundry-smb3"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
 
 Foundry is the leading editor for SMB3.
-- Website: WIP
+- Website: https://thejoesmo.github.io/Foundry/
 - Discord: https://discord.gg/pm87gm7
-- Documentation: WIP
+- Documentation: https://thejoesmo.github.io/Foundry/
 - Manual: https://github.com/TheJoeSmo/Foundry/blob/master/MANUAL.md
 - Source Code: https://github.com/TheJoeSmo/Foundry
 - Bug Reporting: https://github.com/TheJoeSmo/Foundry/issues
