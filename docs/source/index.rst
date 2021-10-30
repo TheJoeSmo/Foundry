@@ -1,8 +1,10 @@
-.. Foundry's documentation master file, last updated by
-   Joe Smo on 10/13/2021.
-
+===================================
 Welcome to Foundry's Documentation!
-=====================================
+===================================
+
+Release |release| (`What's new? <changelog>`_).
+
+.. include:: ../../README.rst
 
 .. toctree::
    :maxdepth: 2
@@ -10,6 +12,10 @@ Welcome to Foundry's Documentation!
 
    modules
 
+.. toctree::
+   license
+   contributing
+   changelog
 
 
 Indices and tables
