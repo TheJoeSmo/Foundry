@@ -1,3 +1,5 @@
+from typing import Optional
+
 from PySide6.QtCore import QMargins, QSize, Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent, QKeyEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import (
@@ -60,7 +62,7 @@ WORLD_1_INDEX = 1
 
 
 class LevelSelector(QDialog):
-    def __init__(self, parent):
+    def __init__(self, parent, *, start_level: Optional[tuple[int, int]] = None):
         super(LevelSelector, self).__init__(parent)
 
         self.setWindowTitle("Level Selector")
@@ -141,8 +143,16 @@ class LevelSelector(QDialog):
 
         self.setLayout(main_layout)
 
-        self.world_list.setCurrentRow(1)  # select Level 1-1
-        self.on_world_click()
+        if start_level is None:
+            self.world_list.setCurrentRow(1)  # select Level 1-1
+            self.on_world_click()
+        else:
+            self.world_list.setCurrentRow(start_level[0])
+            self.level_list.setCurrentRow(start_level[1])
+
+    @property
+    def current_level_index(self) -> tuple[int, int]:
+        return self.world_list.currentRow(), self.level_list.currentRow()
 
     def keyPressEvent(self, key_event: QKeyEvent):
         if key_event.key() == Qt.Key_Escape:
