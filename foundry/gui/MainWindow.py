@@ -6,7 +6,7 @@ import pathlib
 import shlex
 import subprocess
 import tempfile
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShortcut, Qt
@@ -106,6 +106,8 @@ MODE_RESIZE = 2
 
 
 class MainWindow(QMainWindow):
+    level_selector_last_level: Optional[tuple[int, int]]
+
     def __init__(self, path_to_rom=""):
         super(MainWindow, self).__init__()
 
@@ -160,6 +162,7 @@ class MainWindow(QMainWindow):
         self.block_viewer = None
         self.object_viewer = None
 
+        self.level_selector_last_level = None
         self.level_ref = LevelRef()
         self.level_ref.data_changed.connect(self._on_level_data_changed)
 
@@ -1000,9 +1003,11 @@ class MainWindow(QMainWindow):
         if not self.safe_to_change():
             return
 
-        level_selector = LevelSelector(self)
+        level_selector = LevelSelector(self, start_level=self.level_selector_last_level)
 
         level_was_selected = level_selector.exec_() == QDialog.Accepted
+
+        self.level_selector_last_level = level_selector.current_level_index
 
         if level_was_selected:
             self.update_level(
