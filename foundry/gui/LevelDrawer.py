@@ -23,6 +23,7 @@ from foundry.game.gfx.Palette import (
 )
 from foundry.game.level.Level import Level
 from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
+from foundry.gui.settings import SETTINGS
 from foundry.smb3parse.constants import OBJ_AUTOSCROLL
 from foundry.smb3parse.levels import LEVEL_MAX_LENGTH
 from foundry.smb3parse.objects.object_set import (
@@ -423,8 +424,10 @@ class LevelDrawer:
         mario_position = QPoint(*level.header.mario_position()) * self.block_length
 
         x_offset = 32 * level.start_action
+        MARIO_POWERUP_Y_OFFSETS = [0, 0x20, 0x60, 0x40, 0xC0, 0xA0, 0x80, 0x60, 0xC0]
+        y_offset = MARIO_POWERUP_Y_OFFSETS[SETTINGS["default_powerup"]]
 
-        mario_cutout = mario_actions.copy(QRect(x_offset, 0, 32, 32)).scaled(
+        mario_cutout = mario_actions.copy(QRect(x_offset, y_offset, 32, 32)).scaled(
             2 * self.block_length, 2 * self.block_length
         )
 
