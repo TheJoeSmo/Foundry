@@ -16,6 +16,7 @@ Release |release| (`What's new? <changelog>`_).
    license
    contributing
    changelog
+   enemy_compatibility
 
 
 Indices and tables
