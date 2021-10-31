@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Enemy Compatibility &#8212; Foundry 0.2.4 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="prev" title="Changelog" href="../changelog/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../">
+  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
+</a>      
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../modules/">
+  foundry
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../license/">
+  License
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contributing/">
+  How To Contribute
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../changelog/">
+  Changelog
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Enemy Compatibility
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-first-clan">
+   The First Clan
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bone-family">
+     Bone Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#arson-family">
+     Arson Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generic-family">
+     Generic Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#slow-family">
+     Slow Family
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-second-clan">
+   The Second Clan
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hammer-family">
+     Hammer Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#windy-family">
+     Windy Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dungeon-family">
+     Dungeon Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beatle-family">
+     Beatle Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#airship-family">
+     Airship Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solar-family">
+     Solar Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#botany-family">
+     Botany Family
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#water-family">
+     Water Family
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-third-clan">
+   The Third Clan
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#attribution">
+   Attribution
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="enemy-compatibility">
+<h1>Enemy Compatibility<a class="headerlink" href="#enemy-compatibility" title="Permalink to this headline">¶</a></h1>
+<p>As with many systems on the NES and SNES, enemies seldom work with one another.  SMB3 is no
+different in this regard.  The Picture Processing unit of the NES can only hold 4 banks of
+sprites each.  One is used for Mario or Luigi and another for the general animations of the
+game.  This only leaves 64 sprites or 128 characters left for the remaining enemies to utilize.
+Fortunately, SMB3 was developed at the later portion of the Nintendo’s life cycle and was blessed
+with dynamic swapping of enemies.  Nevertheless, this system is not perfect and is limited.
+Thus, this sheet serves to guide you on what enemies work kindly with one another.</p>
+<p>There are three classifications of enemies:
+- The enemies that compose the first partition of sprites
+- The enemies that compose the second partition of sprites
+- The enemies that compose both partitions of sprites</p>
+<p>At any given time only one set can use a given partition.  Or in other words, the enemies of the
+first and second group are independent of one another.  However, any work to manage the ladder
+will likely result in many graphical glitches to your dismay.  Likewise, any two sprites cannot
+be composed of the same taxonomy unless without suffering the same fate.  We reffer to these
+groupings as clans, in veneration of the history of their discovery.</p>
+<section id="the-first-clan">
+<h2>The First Clan<a class="headerlink" href="#the-first-clan" title="Permalink to this headline">¶</a></h2>
+<p>There are four families that compose the first clan:</p>
+<ul class="simple">
+<li><p>The Bone Family</p></li>
+<li><p>The Arson Family</p></li>
+<li><p>The Generic Family</p></li>
+<li><p>The Slow Family</p></li>
+</ul>
+<section id="bone-family">
+<h3>Bone Family<a class="headerlink" href="#bone-family" title="Permalink to this headline">¶</a></h3>
+<p>The bone family consists of only dry bones and the power switch door.</p>
+</section>
+<section id="arson-family">
+<h3>Arson Family<a class="headerlink" href="#arson-family" title="Permalink to this headline">¶</a></h3>
+<p>The arson family consists only of the four directional rocket engines that are fond of lighting
+our protagonist ablaze.</p>
+</section>
+<section id="generic-family">
+<h3>Generic Family<a class="headerlink" href="#generic-family" title="Permalink to this headline">¶</a></h3>
+<p>The generic family consists of the many Mario tropes from the origional.</p>
+<p>These include the following:</p>
+<ul class="simple">
+<li><p>Koopa Troopas and their varience</p></li>
+<li><p>Goombas and their varience</p></li>
+<li><p>Bullet Bills and their varience</p></li>
+<li><p>Piranha Plants and their varience</p></li>
+<li><p>Cheep Cheeps and their varience</p></li>
+<li><p>Pile Driver Micro Goomba</p></li>
+<li><p>Rotary Lift</p></li>
+</ul>
+</section>
+<section id="slow-family">
+<h3>Slow Family<a class="headerlink" href="#slow-family" title="Permalink to this headline">¶</a></h3>
+<p>The slow family is rather unnoteworthy, only consisting of the slowest enemy of Bowser’s navy:
+the lava lotus.</p>
+</section>
+</section>
+<section id="the-second-clan">
+<h2>The Second Clan<a class="headerlink" href="#the-second-clan" title="Permalink to this headline">¶</a></h2>
+<p>The second clan of enemies provides much more variety.  These provide the bulk of the more
+aggressive and interesting enemies and objects of the game.  Often these enemies may make only a
+single appearance inside the entire game.  Nevertheless, their lack of punctuality inside the
+origional does not have to carry over into yours.</p>
+<p>They consist of the following families:</p>
+<ul class="simple">
+<li><p>The Hammer Family</p></li>
+<li><p>The Windy Family</p></li>
+<li><p>The Dungeon Family</p></li>
+<li><p>The Beatle Family</p></li>
+<li><p>The Airship Family</p></li>
+<li><p>The Solar Family</p></li>
+<li><p>The Botany Family</p></li>
+<li><p>The Water Family</p></li>
+</ul>
+<section id="hammer-family">
+<h3>Hammer Family<a class="headerlink" href="#hammer-family" title="Permalink to this headline">¶</a></h3>
+<p>The hammer family consists of all the varience of hammer brothers.  I must say, it is quite
+peculiar that this family only consits of brothers.  This is likely fortunate for our protagnoist.
+If they were frequent as bunnies they would make the game a great deal harder.</p>
+</section>
+<section id="windy-family">
+<h3>Windy Family<a class="headerlink" href="#windy-family" title="Permalink to this headline">¶</a></h3>
+<p>The windy family yields many sorts of platforms.  Platforms that fall, platforms that move side to
+side, and even platforms that follow a track.  It also includes other enjoyable tools the help
+keep the player alert and alive.  These include both the firesnake and my personal favorite from
+childhood, the fire chomp.  Lastly, there is the parabeetles and their varience.</p>
+</section>
+<section id="dungeon-family">
+<h3>Dungeon Family<a class="headerlink" href="#dungeon-family" title="Permalink to this headline">¶</a></h3>
+<p>The dungeon family, as its name suggests, consists of the remainder of enemies housed inside the
+depths of a dungeon.  These include the following:</p>
+<ul class="simple">
+<li><p>Podoboo and their varience</p></li>
+<li><p>Rotodiscs and their varience</p></li>
+<li><p>Thwomps and their varience</p></li>
+<li><p>Boos and their more humble buddies</p></li>
+<li><p>Blue Lift</p></li>
+</ul>
+</section>
+<section id="beatle-family">
+<h3>Beatle Family<a class="headerlink" href="#beatle-family" title="Permalink to this headline">¶</a></h3>
+<p>The beatle family, despite its name, has very little to do with beatles.  It only serves to
+highlight the most common of their type, the buzzy beatle.  The members include:</p>
+<ul class="simple">
+<li><p>Buzzy Beatle and their varience</p></li>
+<li><p>Spinies and their varience</p></li>
+<li><p>Lakitu</p></li>
+<li><p>Bobombs</p></li>
+<li><p>Kuribo’s Shoe</p></li>
+</ul>
+</section>
+<section id="airship-family">
+<h3>Airship Family<a class="headerlink" href="#airship-family" title="Permalink to this headline">¶</a></h3>
+<p>The airship family is primarly composed of the projectiles housed inside one of Bowser’s mighty
+vessels.  It also includes a few other creatures, such as the rocky wrench and the ship’s
+propeller and scenic clouds.</p>
+</section>
+<section id="solar-family">
+<h3>Solar Family<a class="headerlink" href="#solar-family" title="Permalink to this headline">¶</a></h3>
+<p>The solar family, in spite of its bright name is one that deserves the most pity.  It is housed
+by only a single person, the angry sun.  The only enemy of Mario that will forever remain alone.</p>
+</section>
+<section id="botany-family">
+<h3>Botany Family<a class="headerlink" href="#botany-family" title="Permalink to this headline">¶</a></h3>
+<p>The botany family serves to liven up the outer forests of the Mushroom Kingdom.  As in most
+forests, their varieties are many and it is best to view them from a safe distance.  They
+include the following:</p>
+<ul class="simple">
+<li><p>Spike</p></li>
+<li><p>Chain Chomps and their varience</p></li>
+<li><p>Buster Beetle</p></li>
+<li><p>Ptooies and their varience</p></li>
+<li><p>Nippers and their varience</p></li>
+</ul>
+</section>
+<section id="water-family">
+<h3>Water Family<a class="headerlink" href="#water-family" title="Permalink to this headline">¶</a></h3>
+<p>The water family provides every morsle that screeches inside the depths of the ocean.  They are
+the following:</p>
+<ul class="simple">
+<li><p>Bloopers and their offspring</p></li>
+<li><p>Big Bertha</p></li>
+<li><p>Boss Bass</p></li>
+<li><p>Spiky Cheep Cheeps</p></li>
+<li><p>Baby Cheep Cheeps</p></li>
+<li><p>Water Currents</p></li>
+</ul>
+</section>
+</section>
+<section id="the-third-clan">
+<h2>The Third Clan<a class="headerlink" href="#the-third-clan" title="Permalink to this headline">¶</a></h2>
+<p>The final clan consists of one-off enemies.  These are most commonly bosses.  For this reason,
+they will not be introduced as families but individually.</p>
+<ul class="simple">
+<li><p>Boom Boom and varience</p></li>
+<li><p>The Koopa Kids</p></li>
+<li><p>Bowser</p></li>
+</ul>
+</section>
+<section id="attribution">
+<h2>Attribution<a class="headerlink" href="#attribution" title="Permalink to this headline">¶</a></h2>
+<p>This enemy compatibility sheet was adapted from <a class="reference external" href="mailto:hukka&#37;&#52;&#48;despammed&#46;com">Hukka</a>.</p>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../changelog/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Changelog</p>
+        </div>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, TheJoeSmo.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
