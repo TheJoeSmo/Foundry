@@ -24,6 +24,7 @@ auto_save_level_data_path = auto_save_path / "level_data.json"
 
 data_dir = root_dir / "data"
 main_window_flags_path = data_dir / "main_window_flags.json"
+tileset_data_path = data_dir / "tilesets.json"
 doc_dir = root_dir.joinpath("doc")
 icon_dir = data_dir.joinpath("icons")
 

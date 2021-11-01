@@ -8,7 +8,6 @@ from foundry.smb3parse.levels.world_map import (
     get_all_world_maps,
     list_world_map_addresses,
 )
-from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 
 world_map_addresses = [0x185BA, 0x1864B, 0x1876C, 0x1891D, 0x18A3E, 0x18B5F, 0x18D10, 0x18E31, 0x19072]
 world_map_screen_counts = [1, 2, 3, 2, 2, 3, 2, 4, 1]
@@ -45,11 +44,6 @@ def test_list_world_map_addresses(rom):
 def test_list_all_world_maps_address(rom):
     for world_map, world_map_address in zip(get_all_world_maps(rom), world_map_addresses):
         assert world_map.layout_address == world_map_address
-
-
-def test_list_all_world_maps_object_set(rom):
-    for world_map in get_all_world_maps(rom):
-        assert world_map.object_set.number == WORLD_MAP_OBJECT_SET
 
 
 def test_list_all_world_maps_height(rom):
