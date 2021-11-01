@@ -15,7 +15,6 @@ from foundry.smb3parse.constants import (
     PAGE_C000_ByTileset,
     Tile_Attributes_TS0,
 )
-from foundry.smb3parse.objects.object_set import ObjectSet
 
 OFFSET_SIZE = 2  # byte
 
@@ -146,4 +145,3 @@ class LevelBase(ABC):
         self.layout_address = layout_address
 
         self.object_set_number = object_set_number
-        self.object_set = ObjectSet(self.object_set_number)

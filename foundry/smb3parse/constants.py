@@ -1,3 +1,15 @@
+from json import loads
+
+from foundry import tileset_data_path
+
+with open(tileset_data_path, "r") as data:
+    _tileset_data = loads(data.read())
+
+TILESET_LEVEL_OFFSET = [int(tileset["location"], 16) for tileset in _tileset_data]
+TILESET_NAMES: list[str] = [tileset["name"] for tileset in _tileset_data]
+TILESET_RANGES = [range(int(tileset["start"], 16), int(tileset["end"], 16)) for tileset in _tileset_data]
+TILESET_ENDINGS: list[int] = [tileset["ending"] for tileset in _tileset_data]
+
 BASE_OFFSET = 0x10  # the size of the rom header identifying the rom
 
 TILE_LEVEL_1 = 0x03
