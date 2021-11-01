@@ -16,6 +16,15 @@ class ObjectSet:
 
         self.definitions = load_object_definitions(self.number)
 
+    def object_type(self, domain: int, index: int) -> int:
+        if self.number == ENEMY_ITEM_OBJECT_SET:
+            return index
+
+        if index <= 0x0F:
+            return index + domain
+        else:
+            return (index >> 4) + domain + 16 - 1
+
     def get_definition_of(self, object_id: int) -> ObjectDefinition:
         return self.definitions[object_id]
 
@@ -29,4 +38,8 @@ class ObjectSet:
         if self.number == ENEMY_ITEM_OBJECT_SET:
             raise ValueError(f"This method shouldn't be called for the {self.name}")
 
-        return self._internal_object_set.object_length(domain, object_id)
+        definition = self.get_definition_of(self.object_type(domain, object_id))
+        if definition.is_4byte:
+            return 4
+        else:
+            return 3
