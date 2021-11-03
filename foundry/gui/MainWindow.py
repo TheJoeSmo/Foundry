@@ -22,7 +22,6 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QSplitter,
     QToolBar,
-    QVBoxLayout,
     QWhatsThis,
     QWidget,
 )
@@ -149,16 +148,7 @@ class MainWindow(QMainWindow):
         self.level_size_bar = LevelSizeBar(self, self.level_ref)
         self.enemy_size_bar = EnemySizeBar(self, self.level_ref)
 
-        size_and_palette = QWidget()
-        size_and_palette.setLayout(QHBoxLayout())
-        size_and_palette.layout().setContentsMargins(0, 0, 0, 0)
-
-        size_layout = QVBoxLayout()
-        size_layout.addWidget(self.level_size_bar)
-        size_layout.addWidget(self.enemy_size_bar)
-
-        size_and_palette.layout().addLayout(size_layout, stretch=1)
-        size_and_palette.layout().addWidget(SidePalette(self.level_ref))
+        size_and_palette = SidePalette(self.level_ref)
 
         self.jump_list = JumpList(self, self.level_ref)
         self.jump_list.add_jump.connect(self.on_jump_added)
