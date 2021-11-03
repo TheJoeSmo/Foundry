@@ -448,13 +448,15 @@ class MainWindow(QMainWindow):
 
         temp_rom = self._open_rom(path_to_temp_rom)
 
-        if not self._put_current_level_to_level_1_1(path_to_temp_rom):
-            return
-
-        if not self._set_default_powerup(path_to_temp_rom):
-            return
+        self._put_current_level_to_level_1_1(temp_rom)
+        self._set_default_powerup(temp_rom)
 
         save_all_palette_groups(temp_rom)
+
+        temp_rom.write(
+            Title_PrepForWorldMap - 0x8,
+            bytes([SETTINGS["default_starting_world"] - 1]),
+        )
 
         temp_rom.save_to(str(path_to_temp_rom))
 
@@ -493,9 +495,7 @@ class MainWindow(QMainWindow):
 
         header_editor.exec_()
 
-    def _put_current_level_to_level_1_1(self, path_to_rom) -> bool:
-        rom = self._open_rom(path_to_rom)
-
+    def _put_current_level_to_level_1_1(self, rom) -> bool:
         # load world data
         world = SMB3World.from_world_number(rom, SETTINGS["default_starting_world"])
 
@@ -527,20 +527,11 @@ class MainWindow(QMainWindow):
 
         world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
 
-        # save rom
-        rom.save_to(path_to_rom)
-
-        return True
-
-    def _set_default_powerup(self, path_to_rom) -> bool:
-        rom = self._open_rom(path_to_rom)
-
+    def _set_default_powerup(self, rom) -> bool:
         *_, powerup, hasPWing = POWERUPS[SETTINGS["default_powerup"]]
         hasStar = SETTINGS["default_power_has_star"]
-        worldStart = SETTINGS["default_starting_world"] - 1
         nop = 0xEA
 
-        rom.write(Title_PrepForWorldMap - 0x8, bytes([worldStart]))
         rom.write(Title_PrepForWorldMap - 0x4, bytes([nop, nop, nop]))
 
         rom.write(Title_PrepForWorldMap + 0x1, bytes([powerup]))
@@ -594,7 +585,6 @@ class MainWindow(QMainWindow):
         # set as Raccoon Mario instead of P-wing
         Map_Power_DispResetLocation = 0x3C5A2
         rom.write(Map_Power_DispResetLocation, bytes([nop, nop, nop]))
-        return True
 
     def on_screenshot(self, _) -> bool:
         if self.level_view is None:
