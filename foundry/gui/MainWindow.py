@@ -69,6 +69,8 @@ from foundry.gui.PaletteViewer import PaletteViewer, SidePalette
 from foundry.gui.settings import SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.SpinnerPanel import SpinnerPanel
+from foundry.gui.Toolbar import create_toolbar
+from foundry.gui.util import setup_window
 from foundry.gui.WarningList import WarningList
 from foundry.smb3parse.constants import (
     TILE_LEVEL_1,
@@ -114,50 +116,7 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(icon(main_window_flags["icon"]))
         self.setStyleSheet(SETTINGS[main_window_flags["style"]])
 
-        for menu_name, menu in main_window_flags["menu"].items():
-            qmenu = QMenu(menu["name"])
-            if menu.get("attribute", False):
-                setattr(self, f"{menu_name}_menu", qmenu)
-            if "action" in menu:
-                qmenu.triggered.connect(getattr(self, menu["action"]))
-            menu_type = menu["type"]
-
-            for index, option_group in enumerate(menu["options"]):
-                if index != 0:
-                    qmenu.addSeparator()
-                if menu_type == "actions":
-                    for base_name, option in option_group.items():
-                        name: str = option["name"]
-                        action = qmenu.addAction(name)
-                        if option.get("attribute", False):
-                            setattr(self, f"{base_name}_action", action)
-                        if "action" in option:
-                            method = getattr(self, option["action"])
-                        elif "link" in option:
-
-                            def call_link(url: str):
-                                def call_link():
-                                    return open_url(url)
-
-                                return call_link
-
-                            method = call_link(option["link"])
-                        else:
-                            raise NotImplementedError
-                        if option.get("wrapped", False):
-                            action.triggered.connect(lambda *_: method())
-                        else:
-                            action.triggered.connect(method)
-
-                elif menu_type == "settings":
-                    for option in option_group.values():
-                        name: str = option["display_name"]
-                        action = qmenu.addAction(name)
-                        action.setProperty(ID_PROP, option["id"])
-                        action.setCheckable(True)
-                        action.setChecked(SETTINGS[option["name"]])
-
-            self.menuBar().addMenu(qmenu)
+        setup_window(self, main_window_flags)
 
         self.block_viewer = None
         self.object_viewer = None
@@ -229,22 +188,12 @@ class MainWindow(QMainWindow):
 
         splitter.setChildrenCollapsible(False)
 
-        level_toolbar = QToolBar("Level Info Toolbar", self)
-        level_toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
-        level_toolbar.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        level_toolbar.setOrientation(Qt.Horizontal)
-        level_toolbar.setFloatable(False)
-
-        level_toolbar.addWidget(self.spinner_panel)
-        level_toolbar.addWidget(self.object_dropdown)
-        level_toolbar.addWidget(size_and_palette)
-        level_toolbar.addWidget(self.level_size_bar)
-        level_toolbar.addWidget(self.enemy_size_bar)
-        level_toolbar.addWidget(splitter)
-
-        level_toolbar.setAllowedAreas(Qt.LeftToolBarArea | Qt.RightToolBarArea)
-
-        self.addToolBar(Qt.RightToolBarArea, level_toolbar)
+        create_toolbar(self, "Generator Editor", [self.spinner_panel], Qt.RightToolBarArea)
+        create_toolbar(self, "Generator Dropdown", [self.object_dropdown], Qt.RightToolBarArea)
+        create_toolbar(self, "Palette", [size_and_palette], Qt.RightToolBarArea)
+        create_toolbar(self, "Level Size", [self.level_size_bar], Qt.RightToolBarArea)
+        create_toolbar(self, "Enemy Size", [self.enemy_size_bar], Qt.RightToolBarArea)
+        create_toolbar(self, "Splitter", [splitter], Qt.RightToolBarArea)
 
         self.object_toolbar = ObjectToolBar(self)
         self.object_toolbar.object_selected.connect(self._on_placeable_object_selected)
