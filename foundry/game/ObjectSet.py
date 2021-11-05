@@ -18,10 +18,12 @@ class ObjectSet:
         if self.number == ENEMY_ITEM_OBJECT_SET:
             return index
 
+        domain_offset = domain * 0x1F
+
         if index <= 0x0F:
-            return index + domain
+            return index + domain_offset
         else:
-            return (index >> 4) + domain + 16 - 1
+            return (index >> 4) + domain_offset + 16 - 1
 
     def get_definition_of(self, object_id: int) -> ObjectDefinition:
         return self.definitions[object_id]
