@@ -13,7 +13,6 @@ from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShor
 from PySide6.QtWidgets import (
     QDialog,
     QFileDialog,
-    QHBoxLayout,
     QMainWindow,
     QMenu,
     QMessageBox,
@@ -23,7 +22,6 @@ from PySide6.QtWidgets import (
     QSplitter,
     QToolBar,
     QWhatsThis,
-    QWidget,
 )
 
 from foundry import (
@@ -54,6 +52,7 @@ from foundry.gui.BlockViewer import BlockViewer
 from foundry.gui.ContextMenu import CMAction, ContextMenu
 from foundry.gui.EnemySizeBar import EnemySizeBar
 from foundry.gui.HeaderEditor import HeaderEditor
+from foundry.gui.JumpCreator import JumpCreator
 from foundry.gui.JumpEditor import JumpEditor
 from foundry.gui.JumpList import JumpList
 from foundry.gui.LevelSelector import LevelSelector
@@ -155,26 +154,13 @@ class MainWindow(QMainWindow):
         self.jump_list.edit_jump.connect(self.on_jump_edit)
         self.jump_list.remove_jump.connect(self.on_jump_removed)
 
-        jump_buttons = QWidget()
-        jump_buttons.setLayout(QHBoxLayout())
-        jump_buttons.layout().setContentsMargins(0, 0, 0, 0)
-
-        add_jump_button = QPushButton("Add Jump")
-        add_jump_button.clicked.connect(self.on_jump_added)
-
-        set_jump_destination_button = QPushButton("Set Jump Destination")
-        set_jump_destination_button.clicked.connect(self._show_jump_dest)
-
-        jump_buttons.layout().addWidget(add_jump_button)
-        jump_buttons.layout().addWidget(set_jump_destination_button)
-
         splitter = QSplitter(self)
         splitter.setOrientation(Qt.Vertical)
 
         splitter.addWidget(self.object_list)
         splitter.setStretchFactor(0, 1)
         splitter.addWidget(self.jump_list)
-        splitter.addWidget(jump_buttons)
+        splitter.addWidget(JumpCreator(parent=self, level_view=self.level_view))
 
         splitter.setChildrenCollapsible(False)
 

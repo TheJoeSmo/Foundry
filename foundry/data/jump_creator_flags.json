@@ -1,0 +1,17 @@
+{
+    "layout": {
+        "type": "HORIZONTAL",
+        "widgets": [
+            {
+                "type": "BUTTON",
+                "name": "Add Jump",
+                "action": "add_jump"
+            },
+            {
+                "type": "BUTTON",
+                "name": "Set Jump Destination",
+                "action": "show_jump_dest"
+            }
+        ]
+    }
+}
