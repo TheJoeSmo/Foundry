@@ -44,7 +44,7 @@ def setup_widget_menu(widget: QMainWindow, flags):
                     else:
                         raise NotImplementedError
                     if option.get("wrapped", False):
-                        action.triggered.connect(lambda *_: method())
+                        action.triggered.connect(lambda *_, m=method: m())
                     else:
                         action.triggered.connect(method)
 
