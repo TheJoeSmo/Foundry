@@ -28,7 +28,7 @@ copyright = "2021, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
-release = "0.2.4"
+release = "0.2.8"
 
 
 # -- General configuration ---------------------------------------------------
