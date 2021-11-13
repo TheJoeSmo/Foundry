@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QMainWindow,
     QMenu,
     QPushButton,
+    QSpinBox,
     QVBoxLayout,
     QWidget,
 )
@@ -32,6 +33,7 @@ class WidgetType(str, Enum):
     """
 
     button = "BUTTON"
+    spinner = "SPINNER"
 
     @classmethod
     def has_value(cls, value: str) -> bool:
@@ -84,6 +86,29 @@ class Button(Widget):
     action: Optional[str]
 
 
+class Spinner(Widget):
+    """
+    A spinner representation of :class:`PySide6.QtWidgets.QSpinBox`.
+
+
+    Attributes
+    ----------
+    enabled: bool
+        Decides if the spinner will be activated on start.
+    minimum: Optional[int]
+        Will provide a lower bound that will be applied to the spinner, if present.
+    maximum: Optional[int]
+        Will provide an upper bound that will be applied to the spinner, if present.
+    hexadecimal: bool
+        Decides if the spinner should use hex as its base.
+    """
+
+    enabled: bool = Field(default_factor=Field(True))
+    minimum: Optional[int]
+    maximum: Optional[int]
+    hexadecimal: bool = Field(default_factor=Field(False))
+
+
 class WidgetCreator(BaseModel):
     """
     A generator for a :class:`~foundry.gui.util.Widget`.  Creates the widget dynamically from
@@ -123,6 +148,8 @@ class WidgetCreator(BaseModel):
         type_ = WidgetType(v["type"])
         if type_ == WidgetType.button:
             return Button(**v)
+        if type_ == WidgetType.spinner:
+            return Spinner(**v)
         raise NotImplementedError(f"There is no widget of type {type_}")
 
     @classmethod
@@ -356,7 +383,17 @@ def create_widget(parent: QWidget, meta: Widget) -> QWidget:
         widget = QPushButton(meta.name)
         if meta.action is not None:
             widget.clicked.connect(getattr(parent, meta.action))  # type: ignore
-        return widget
+    elif isinstance(meta, Spinner):
+        widget = QSpinBox()
+        if not meta.enabled:
+            widget.setEnabled(False)
+        if meta.minimum is not None:
+            widget.setMinimum(meta.minimum)
+        if meta.maximum is not None:
+            widget.setMaximum(meta.maximum)
+        if meta.hexadecimal:
+            widget.setDisplayIntegerBase(16)
+            widget.setPrefix("0x")
     else:
         raise NotImplementedError(f"{meta.type} is not supported")
 
