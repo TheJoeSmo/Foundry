@@ -26,6 +26,32 @@ def clear_layout(layout):
         item.widget().deleteLater()
 
 
+class WhatIsThis(BaseModel):
+    """
+    A generic representation of the what's this description.  This enables a multi-line
+    description to easily transfer from JSON and similar formats.
+
+    Attributes
+    ----------
+    elements: list[str]
+        A list of strings that represent each line of the description.
+    """
+
+    elements: list[str]
+
+    @property
+    def description(self) -> str:
+        """
+        The description of the `what's this` field in its entirety.
+
+        Returns
+        -------
+        str
+            The description of what the object is.
+        """
+        return "\n".join(self.elements)
+
+
 class WidgetType(str, Enum):
     """
     A declaration of the widgets possible to be created through
@@ -63,9 +89,15 @@ class Widget(BaseModel):
     type: WidgetType
         The type of widget this widget represents.  This determines how constructors
         will treat the widget, often providing it additional parameters.
+    parent_attribute_name: Optional[str]
+        If provided, will be used to set this widget to its parent's name.
+    what_is_this: Optional[WhatIsThis]
+        The type hint for the given widget, if provided.
     """
 
     type: WidgetType
+    parent_attribute_name: Optional[str]
+    what_is_this: Optional[WhatIsThis]
 
     class Config:
         use_enum_values = True  # Allow storing the enum as a string
@@ -102,12 +134,15 @@ class Spinner(Widget):
         Will provide an upper bound that will be applied to the spinner, if present.
     hexadecimal: bool
         Decides if the spinner should use hex as its base.
+    value_change_action: Optional[str]
+        The name of the callable that will be acted upon when the value changes.
     """
 
     enabled: bool = Field(default_factor=Field(True))
     minimum: Optional[int]
     maximum: Optional[int]
     hexadecimal: bool = Field(default_factor=Field(False))
+    value_change_action: Optional[str]
 
 
 class WidgetCreator(BaseModel):
@@ -438,8 +473,31 @@ def create_widget(parent: QWidget, meta: Widget) -> QWidget:
         if meta.hexadecimal:
             widget.setDisplayIntegerBase(16)
             widget.setPrefix("0x")
+        if meta.value_change_action is not None:
+            widget.valueChanged.connect(getattr(parent, meta.value_change_action))  # type: ignore
     else:
         raise NotImplementedError(f"{meta.type} is not supported")
+
+    if meta.parent_attribute_name is not None:
+        setattr(parent, meta.parent_attribute_name, widget)
+    if meta.what_is_this is not None:
+        widget.setWhatsThis(meta.what_is_this.description)
+    return widget
+
+
+def setup_description(parent: QWidget, flags: dict):
+    """
+    Generates any descriptions for a widget.  Most commonly the `what's this` field.
+
+    Parameters
+    ----------
+    parent : QWidget
+        The widget to apply the description to.
+    flags : dict
+        The dict that describes the description.
+    """
+    if "what is this" in flags:
+        parent.setWhatsThis(WhatIsThis(elements=flags["what is this"]).description)
 
 
 def setup_layout(parent: QWidget, flags: dict) -> QLayout:
