@@ -3,11 +3,13 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 from PySide6.QtWidgets import (
+    QFormLayout,
     QHBoxLayout,
     QLayout,
     QMainWindow,
     QMenu,
     QPushButton,
+    QSpinBox,
     QVBoxLayout,
     QWidget,
 )
@@ -24,6 +26,32 @@ def clear_layout(layout):
         item.widget().deleteLater()
 
 
+class WhatIsThis(BaseModel):
+    """
+    A generic representation of the what's this description.  This enables a multi-line
+    description to easily transfer from JSON and similar formats.
+
+    Attributes
+    ----------
+    elements: list[str]
+        A list of strings that represent each line of the description.
+    """
+
+    elements: list[str]
+
+    @property
+    def description(self) -> str:
+        """
+        The description of the `what's this` field in its entirety.
+
+        Returns
+        -------
+        str
+            The description of what the object is.
+        """
+        return "\n".join(self.elements)
+
+
 class WidgetType(str, Enum):
     """
     A declaration of the widgets possible to be created through
@@ -32,6 +60,7 @@ class WidgetType(str, Enum):
     """
 
     button = "BUTTON"
+    spinner = "SPINNER"
 
     @classmethod
     def has_value(cls, value: str) -> bool:
@@ -60,9 +89,15 @@ class Widget(BaseModel):
     type: WidgetType
         The type of widget this widget represents.  This determines how constructors
         will treat the widget, often providing it additional parameters.
+    parent_attribute_name: Optional[str]
+        If provided, will be used to set this widget to its parent's name.
+    what_is_this: Optional[WhatIsThis]
+        The type hint for the given widget, if provided.
     """
 
     type: WidgetType
+    parent_attribute_name: Optional[str]
+    what_is_this: Optional[WhatIsThis]
 
     class Config:
         use_enum_values = True  # Allow storing the enum as a string
@@ -82,6 +117,32 @@ class Button(Widget):
 
     name: str = Field(default_factory=Field(""))
     action: Optional[str]
+
+
+class Spinner(Widget):
+    """
+    A spinner representation of :class:`PySide6.QtWidgets.QSpinBox`.
+
+
+    Attributes
+    ----------
+    enabled: bool
+        Decides if the spinner will be activated on start.
+    minimum: Optional[int]
+        Will provide a lower bound that will be applied to the spinner, if present.
+    maximum: Optional[int]
+        Will provide an upper bound that will be applied to the spinner, if present.
+    hexadecimal: bool
+        Decides if the spinner should use hex as its base.
+    value_change_action: Optional[str]
+        The name of the callable that will be acted upon when the value changes.
+    """
+
+    enabled: bool = Field(default_factor=Field(True))
+    minimum: Optional[int]
+    maximum: Optional[int]
+    hexadecimal: bool = Field(default_factor=Field(False))
+    value_change_action: Optional[str]
 
 
 class WidgetCreator(BaseModel):
@@ -123,6 +184,8 @@ class WidgetCreator(BaseModel):
         type_ = WidgetType(v["type"])
         if type_ == WidgetType.button:
             return Button(**v)
+        if type_ == WidgetType.spinner:
+            return Spinner(**v)
         raise NotImplementedError(f"There is no widget of type {type_}")
 
     @classmethod
@@ -167,6 +230,7 @@ class LayoutType(str, Enum):
 
     horizontal = "HORIZONTAL"
     verticle = "VERTICLE"
+    form = "FORM"
 
     @classmethod
     def has_value(cls, value):
@@ -229,6 +293,46 @@ class BoxLayout(LayoutMeta):
         return self.widgets  # type: ignore
 
 
+class Form(BaseModel):
+    """
+    A layout which sets a series of widgets adjacent to their respective labels.
+
+    Attributes
+    ----------
+    label: str
+        The description of the following widget to its side.
+    widget: WidgetCreator
+        The widget that is displayed in the given form.
+    """
+
+    label: str
+    widget: WidgetCreator
+
+    def get_widget(self) -> Widget:
+        """
+        A helper function to get the widget with the correct typing hint.
+
+        Returns
+        -------
+        Widget
+            The widget as defined in `self.widget`.
+        """
+        return self.widget  # type: ignore
+
+
+class FormLayout(LayoutMeta):
+    """
+    A layout which widgets are adjacent to their respective labels.
+
+    Attributes
+    ----------
+    forms: list[Form]
+        The respective forms that compose the layout with their respective widgets and labels.
+    """
+
+    forms: list[Form]
+
+
 class LayoutCreator(BaseModel):
     """
     A generator for a :class:`~foundry.gui.util.LayoutMeta`.  Creates the layout dynamically
@@ -269,6 +373,8 @@ class LayoutCreator(BaseModel):
         type_ = LayoutType(v["type"])
         if type_ == LayoutType.horizontal or type_ == LayoutType.verticle:
             return BoxLayout(**v)
+        if type_ == LayoutType.form:
+            return FormLayout(**v)
         raise NotImplementedError(f"There is no layout of type {type_}")
 
     @classmethod
@@ -356,9 +462,42 @@ def create_widget(parent: QWidget, meta: Widget) -> QWidget:
         widget = QPushButton(meta.name)
         if meta.action is not None:
             widget.clicked.connect(getattr(parent, meta.action))  # type: ignore
-        return widget
+    elif isinstance(meta, Spinner):
+        widget = QSpinBox()
+        if not meta.enabled:
+            widget.setEnabled(False)
+        if meta.minimum is not None:
+            widget.setMinimum(meta.minimum)
+        if meta.maximum is not None:
+            widget.setMaximum(meta.maximum)
+        if meta.hexadecimal:
+            widget.setDisplayIntegerBase(16)
+            widget.setPrefix("0x")
+        if meta.value_change_action is not None:
+            widget.valueChanged.connect(getattr(parent, meta.value_change_action))  # type: ignore
     else:
         raise NotImplementedError(f"{meta.type} is not supported")
+
+    if meta.parent_attribute_name is not None:
+        setattr(parent, meta.parent_attribute_name, widget)
+    if meta.what_is_this is not None:
+        widget.setWhatsThis(meta.what_is_this.description)
+    return widget
+
+
+def setup_description(parent: QWidget, flags: dict):
+    """
+    Generates any descriptions for a widget.  Most commonly the `what's this` field.
+
+    Parameters
+    ----------
+    parent : QWidget
+        The widget to apply the description to.
+    flags : dict
+        The dict that describes the description.
+    """
+    if "what is this" in flags:
+        parent.setWhatsThis(WhatIsThis(elements=flags["what is this"]).description)
 
 
 def setup_layout(parent: QWidget, flags: dict) -> QLayout:
@@ -395,12 +534,17 @@ def setup_layout(parent: QWidget, flags: dict) -> QLayout:
 
         for layout_widget in meta.get_widgets():
             layout.addWidget(create_widget(parent, layout_widget))
+    elif isinstance(meta, FormLayout):
+        layout = QFormLayout()
 
-        parent.setLayout(layout)
-
-        return layout
+        for form in meta.forms:
+            layout.addRow(form.label, create_widget(parent, form.get_widget()))
     else:
         raise NotImplementedError(f"{meta.type} is not supported")
+
+    parent.setLayout(layout)
+
+    return layout
 
 
 def setup_widget_menu(widget: QMainWindow, flags):
