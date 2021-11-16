@@ -632,7 +632,7 @@ class LevelView(QWidget):
 
         enemies_end = self.level_ref.enemies_end
 
-        levels_by_enemy_offset = sorted(Level.offsets, key=lambda level: level.enemy_offset)
+        levels_by_enemy_offset = sorted(Level.offsets, key=lambda level: level.enemy_pointer)
 
         level_index = bisect_right([level.enemy_offset for level in levels_by_enemy_offset], enemies_end) - 1
 
