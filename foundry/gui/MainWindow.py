@@ -50,7 +50,6 @@ from foundry.gui.AboutWindow import AboutDialog
 from foundry.gui.AutoScrollEditor import AutoScrollEditor
 from foundry.gui.BlockViewer import BlockViewer
 from foundry.gui.ContextMenu import CMAction, ContextMenu
-from foundry.gui.EnemySizeBar import EnemySizeBar
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.JumpCreator import JumpCreator
 from foundry.gui.JumpEditor import JumpEditor
@@ -144,8 +143,21 @@ class MainWindow(QMainWindow):
         self.object_dropdown = ObjectDropdown(self)
         self.object_dropdown.object_selected.connect(self._on_placeable_object_selected)
 
-        self.level_size_bar = LevelSizeBar(self, self.level_ref)
-        self.enemy_size_bar = EnemySizeBar(self, self.level_ref)
+        self.level_size_bar = LevelSizeBar(self, "Generators", 0, 0)
+
+        def update_level_size_bar(*args, **kwargs):
+            self.level_size_bar.current_value = self.level_ref.level.current_object_size()
+            self.level_size_bar.maximum_value = self.level_ref.level.object_size_on_disk
+
+        self.level_ref.data_changed.connect(update_level_size_bar)
+
+        self.enemy_size_bar = LevelSizeBar(self, "Enemies/Items", 0, 0)
+
+        def update_enemy_size_bar(*args, **kwargs):
+            self.enemy_size_bar.current_value = self.level_ref.level.current_enemies_size()
+            self.enemy_size_bar.maximum_value = self.level_ref.level.enemy_size_on_disk
+
+        self.level_ref.data_changed.connect(update_enemy_size_bar)
 
         size_and_palette = SidePalette(self.level_ref)
 
