@@ -8,8 +8,9 @@ from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
-from foundry.game.level import LevelByteData, _load_level_offsets
+from foundry.game.level import LevelByteData
 from foundry.game.level.LevelLike import LevelLike
+from foundry.game.level.util import load_level_offsets
 from foundry.game.ObjectSet import ObjectSet
 from foundry.gui.UndoStack import UndoStack
 from foundry.smb3parse.constants import BASE_OFFSET, Level_TilesetIdx_ByTileset
@@ -26,9 +27,9 @@ LEVEL_DEFAULT_WIDTH = 16
 
 
 def world_and_level_for_level_address(level_address: int):
-    for level in Level.offsets[1:]:
-        if level.rom_level_offset == level_address:
-            return level.game_world, level.level_in_world
+    for level in Level.offsets:
+        if level.generator_pointer == level_address:
+            return level.display_information.locations[0].world, level.display_information.locations[0].index
     else:
         return -1, -1
 
@@ -41,8 +42,8 @@ class LevelSignaller(QObject):
 class Level(LevelLike):
     MIN_LENGTH = 0x10
 
-    offsets, world_indexes = _load_level_offsets()
-    sorted_offsets = sorted(offsets, key=lambda level: level.rom_level_offset)
+    offsets, world_indexes = load_level_offsets()
+    sorted_offsets = sorted(offsets, key=lambda level: level.generator_pointer)
 
     WORLDS = len(world_indexes)
 
