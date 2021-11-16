@@ -2,6 +2,7 @@ from enum import Enum
 from typing import Optional
 
 from pydantic import BaseModel, Field
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QFormLayout,
     QHBoxLayout,
@@ -24,6 +25,33 @@ def clear_layout(layout):
     while layout.count():
         item = layout.takeAt(0)
         item.widget().deleteLater()
+
+
+def ease_color(color1: QColor, color2: QColor, amount: float) -> QColor:
+    """
+    Eases between two colors, providing a combination of the two.
+
+    Parameters
+    ----------
+    color1 : QColor
+        The color which will be displayed with respect to amount.
+    color2 : QColor
+        The color which will be displayed with respect to 1 - amount.
+    amount : float
+        The amount as a decimal, where 1 represents everything and 0 represents nothing,
+        that color1 will be shown and color2 will not.
+
+    Returns
+    -------
+    QColor
+        The intermediary color from color1 and color2.
+    """
+    alt_amount = 1 - amount
+    return QColor(
+        int(color1.red() * amount + color2.red() * alt_amount),
+        int(color1.green() * amount + color2.green() * alt_amount),
+        int(color1.blue() * amount + color2.blue() * alt_amount),
+    )
 
 
 class WhatIsThis(BaseModel):
