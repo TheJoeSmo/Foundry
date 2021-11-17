@@ -13,7 +13,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".../foundry"))
+sys.path.insert(0, os.path.abspath(".../foundry_smb3"))
 
 source_suffix = ".rst"
 
