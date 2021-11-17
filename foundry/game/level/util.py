@@ -59,6 +59,24 @@ class Level(BaseModel):
     generator_pointer: int
     enemy_pointer: int
     tileset: int
+    generator_size: Optional[int]
+    enemy_size: Optional[int]
+
+
+class LevelList(BaseModel):
+    __root__: list[Level]
+
+
+def get_level_sizes():
+    levels = load_level_offsets()
+    levels_by_enemies = sorted(levels, key=lambda level: level.enemy_pointer)
+    for idx, level in enumerate(levels_by_enemies[:-1]):
+        level.enemy_size = levels_by_enemies[idx + 1].enemy_pointer - level.enemy_pointer
+    levels_by_generators = sorted(levels, key=lambda level: level.generator_pointer)
+    for idx, level in enumerate(levels_by_generators[:-1]):
+        level.generator_size = levels_by_generators[idx + 1].generator_pointer - level.generator_pointer
+    with open("test.json", "w+") as f:
+        f.write(LevelList(__root__=levels).json())
 
 
 def get_world_levels(world: int, levels: list[Level]) -> list[Level]:
