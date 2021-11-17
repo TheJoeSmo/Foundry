@@ -1,0 +1,2942 @@
+[
+  {
+    "display_information": {
+      "name": "World 1 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 1 }]
+    },
+    "generator_pointer": 99770,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 2 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 2 }]
+    },
+    "generator_pointer": 99915,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 3 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 3 }]
+    },
+    "generator_pointer": 100204,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 4 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 4 }]
+    },
+    "generator_pointer": 100637,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 5 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 5 }]
+    },
+    "generator_pointer": 100926,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 6 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 6 }]
+    },
+    "generator_pointer": 101215,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 7 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 7 }]
+    },
+    "generator_pointer": 101648,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "World 8 Map",
+      "description": null,
+      "locations": [{ "world": 0, "index": 8 }]
+    },
+    "generator_pointer": 101937,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "Warp Zone",
+      "description": null,
+      "locations": [{ "world": 0, "index": 9 }]
+    },
+    "generator_pointer": 102514,
+    "enemy_pointer": 0,
+    "tileset": 0
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 5, "index": 2 }]
+    },
+    "generator_pointer": 107920,
+    "enemy_pointer": 51407,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 2 }]
+    },
+    "generator_pointer": 108564,
+    "enemy_pointer": 51472,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 1, "index": 5 }]
+    },
+    "generator_pointer": 109146,
+    "enemy_pointer": 51516,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 8",
+      "description": null,
+      "locations": [{ "world": 3, "index": 8 }]
+    },
+    "generator_pointer": 109682,
+    "enemy_pointer": 51557,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 2, "index": 32 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49492,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 4, "index": 37 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49512,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 6, "index": 49 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49482,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 49 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49447,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 8 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 69 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49472,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 5 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110002,
+    "enemy_pointer": 49436,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 2, "index": 33 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49492,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 4, "index": 38 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49512,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 6, "index": 50 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49482,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 50 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49447,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 8 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 70 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49472,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 5 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110081,
+    "enemy_pointer": 49436,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 51 }]
+    },
+    "generator_pointer": 110160,
+    "enemy_pointer": 49502,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 4 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 55 }]
+    },
+    "generator_pointer": 110160,
+    "enemy_pointer": 49457,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 5 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 57 }]
+    },
+    "generator_pointer": 110160,
+    "enemy_pointer": 49442,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 6 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 65 }]
+    },
+    "generator_pointer": 110160,
+    "enemy_pointer": 49476,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 52 }]
+    },
+    "generator_pointer": 110253,
+    "enemy_pointer": 49502,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 4 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 56 }]
+    },
+    "generator_pointer": 110253,
+    "enemy_pointer": 49457,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 5 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 64 }]
+    },
+    "generator_pointer": 110253,
+    "enemy_pointer": 49442,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 6 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 66 }]
+    },
+    "generator_pointer": 110253,
+    "enemy_pointer": 49476,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 53 }]
+    },
+    "generator_pointer": 110346,
+    "enemy_pointer": 49507,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 53 }]
+    },
+    "generator_pointer": 110346,
+    "enemy_pointer": 49452,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 54 }]
+    },
+    "generator_pointer": 110418,
+    "enemy_pointer": 49507,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 54 }]
+    },
+    "generator_pointer": 110418,
+    "enemy_pointer": 49452,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 50 }]
+    },
+    "generator_pointer": 110490,
+    "enemy_pointer": 49497,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 1",
+      "description": null,
+      "locations": [{ "world": 4, "index": 39 }]
+    },
+    "generator_pointer": 110490,
+    "enemy_pointer": 49517,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 7 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 67 }]
+    },
+    "generator_pointer": 110490,
+    "enemy_pointer": 49467,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 49 }]
+    },
+    "generator_pointer": 110584,
+    "enemy_pointer": 49497,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 2",
+      "description": null,
+      "locations": [{ "world": 4, "index": 40 }]
+    },
+    "generator_pointer": 110584,
+    "enemy_pointer": 49517,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 7 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 68 }]
+    },
+    "generator_pointer": 110584,
+    "enemy_pointer": 49467,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 1",
+      "description": null,
+      "locations": [{ "world": 6, "index": 51 }]
+    },
+    "generator_pointer": 110678,
+    "enemy_pointer": 49487,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 51 }]
+    },
+    "generator_pointer": 110678,
+    "enemy_pointer": 49462,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 2",
+      "description": null,
+      "locations": [{ "world": 6, "index": 52 }]
+    },
+    "generator_pointer": 110738,
+    "enemy_pointer": 49487,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 52 }]
+    },
+    "generator_pointer": 110738,
+    "enemy_pointer": 49462,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110798,
+    "enemy_pointer": 49412,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110798,
+    "enemy_pointer": 49427,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110798,
+    "enemy_pointer": 49432,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 4 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110798,
+    "enemy_pointer": 49417,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 6 End 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110798,
+    "enemy_pointer": 49422,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 1 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110864,
+    "enemy_pointer": 49412,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 2 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110864,
+    "enemy_pointer": 49427,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 3 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110864,
+    "enemy_pointer": 49432,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 4 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110864,
+    "enemy_pointer": 49417,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Pipe 6 End 2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 110864,
+    "enemy_pointer": 49422,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Underground Room",
+      "description": null,
+      "locations": [{ "world": 4, "index": 32 }]
+    },
+    "generator_pointer": 110930,
+    "enemy_pointer": 51577,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 3, "index": 22 }]
+    },
+    "generator_pointer": 111268,
+    "enemy_pointer": 51601,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 3, "index": 33 }]
+    },
+    "generator_pointer": 111268,
+    "enemy_pointer": 51604,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 4, "index": 34 }]
+    },
+    "generator_pointer": 111502,
+    "enemy_pointer": 51609,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 5, "index": 23 }]
+    },
+    "generator_pointer": 111601,
+    "enemy_pointer": 51617,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 5, "index": 34 }]
+    },
+    "generator_pointer": 111601,
+    "enemy_pointer": 51620,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 23 }]
+    },
+    "generator_pointer": 111753,
+    "enemy_pointer": 51628,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 35 }]
+    },
+    "generator_pointer": 111753,
+    "enemy_pointer": 51625,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 10 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 36 }]
+    },
+    "generator_pointer": 111753,
+    "enemy_pointer": 51631,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 8 Bonus Area #2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 34 }]
+    },
+    "generator_pointer": 112126,
+    "enemy_pointer": 51636,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 7, "index": 38 }]
+    },
+    "generator_pointer": 112126,
+    "enemy_pointer": 51639,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 8, "index": 18 }]
+    },
+    "generator_pointer": 112244,
+    "enemy_pointer": 51647,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 3, "index": 4 }]
+    },
+    "generator_pointer": 112434,
+    "enemy_pointer": 51652,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 8",
+      "description": null,
+      "locations": [{ "world": 6, "index": 8 }]
+    },
+    "generator_pointer": 112845,
+    "enemy_pointer": 51702,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Level 7 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 5, "index": 36 }]
+    },
+    "generator_pointer": 124178,
+    "enemy_pointer": 49527,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 7, "index": 5 }]
+    },
+    "generator_pointer": 124390,
+    "enemy_pointer": 49538,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Lost 1 - Plains",
+      "description": null,
+      "locations": [{ "world": 9, "index": 1 }]
+    },
+    "generator_pointer": 124773,
+    "enemy_pointer": 49596,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 6 Small Side",
+      "description": null,
+      "locations": [{ "world": 4, "index": 25 }]
+    },
+    "generator_pointer": 125070,
+    "enemy_pointer": 49643,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Lost 2 - Plains",
+      "description": null,
+      "locations": [{ "world": 9, "index": 2 }]
+    },
+    "generator_pointer": 125381,
+    "enemy_pointer": 49714,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Outside Area",
+      "description": null,
+      "locations": [{ "world": 7, "index": 21 }]
+    },
+    "generator_pointer": 125562,
+    "enemy_pointer": 49758,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 7 Beginning/End",
+      "description": null,
+      "locations": [{ "world": 7, "index": 32 }]
+    },
+    "generator_pointer": 125633,
+    "enemy_pointer": 49763,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hidden Level",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 125633,
+    "enemy_pointer": 49230,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 4, "index": 6 }]
+    },
+    "generator_pointer": 125688,
+    "enemy_pointer": 49768,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Beginning",
+      "description": null,
+      "locations": [{ "world": 5, "index": 25 }]
+    },
+    "generator_pointer": 125999,
+    "enemy_pointer": 49175,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 5, "index": 3 }]
+    },
+    "generator_pointer": 126039,
+    "enemy_pointer": 49839,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 1, "index": 3 }]
+    },
+    "generator_pointer": 126498,
+    "enemy_pointer": 49919,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 23 }]
+    },
+    "generator_pointer": 126739,
+    "enemy_pointer": 49966,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 4, "index": 23 }]
+    },
+    "generator_pointer": 126793,
+    "enemy_pointer": 49974,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 8",
+      "description": null,
+      "locations": [{ "world": 7, "index": 8 }]
+    },
+    "generator_pointer": 126856,
+    "enemy_pointer": 49982,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 9",
+      "description": null,
+      "locations": [{ "world": 3, "index": 9 }]
+    },
+    "generator_pointer": 127265,
+    "enemy_pointer": 50080,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 34 }]
+    },
+    "generator_pointer": 127787,
+    "enemy_pointer": 50148,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 6 Outside Area",
+      "description": null,
+      "locations": [{ "world": 7, "index": 25 }]
+    },
+    "generator_pointer": 127819,
+    "enemy_pointer": 50153,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Outside Area",
+      "description": null,
+      "locations": [{ "world": 7, "index": 23 }]
+    },
+    "generator_pointer": 127899,
+    "enemy_pointer": 50158,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 38 }]
+    },
+    "generator_pointer": 128000,
+    "enemy_pointer": 50769,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 39 }]
+    },
+    "generator_pointer": 128032,
+    "enemy_pointer": 50769,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 48 }]
+    },
+    "generator_pointer": 128065,
+    "enemy_pointer": 50769,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 5, "index": 1 }]
+    },
+    "generator_pointer": 128100,
+    "enemy_pointer": 50163,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 5, "index": 21 }]
+    },
+    "generator_pointer": 128614,
+    "enemy_pointer": 50213,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 8, "index": 19 }]
+    },
+    "generator_pointer": 128723,
+    "enemy_pointer": 49174,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 1 }]
+    },
+    "generator_pointer": 128928,
+    "enemy_pointer": 50229,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 7",
+      "description": null,
+      "locations": [{ "world": 3, "index": 7 }]
+    },
+    "generator_pointer": 129237,
+    "enemy_pointer": 50303,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 19 }]
+    },
+    "generator_pointer": 129611,
+    "enemy_pointer": 50368,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 7, "index": 22 }]
+    },
+    "generator_pointer": 129611,
+    "enemy_pointer": 50368,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 1, "index": 16 }]
+    },
+    "generator_pointer": 129634,
+    "enemy_pointer": 49175,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 4, "index": 21 }]
+    },
+    "generator_pointer": 129692,
+    "enemy_pointer": 49175,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 1, "index": 1 }]
+    },
+    "generator_pointer": 129947,
+    "enemy_pointer": 50488,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 1, "index": 9 }]
+    },
+    "generator_pointer": 130220,
+    "enemy_pointer": 49175,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Outside Area",
+      "description": null,
+      "locations": [{ "world": 7, "index": 24 }]
+    },
+    "generator_pointer": 130306,
+    "enemy_pointer": 50535,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 8 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 32 }]
+    },
+    "generator_pointer": 130380,
+    "enemy_pointer": 50540,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Ending",
+      "description": null,
+      "locations": [{ "world": 1, "index": 20 }]
+    },
+    "generator_pointer": 130433,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 24 }]
+    },
+    "generator_pointer": 130433,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 32 }]
+    },
+    "generator_pointer": 130433,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Ending",
+      "description": null,
+      "locations": [{ "world": 4, "index": 17 }]
+    },
+    "generator_pointer": 130513,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 4, "index": 18 }]
+    },
+    "generator_pointer": 130513,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Ending",
+      "description": null,
+      "locations": [{ "world": 4, "index": 20 }]
+    },
+    "generator_pointer": 130513,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Ending",
+      "description": null,
+      "locations": [{ "world": 4, "index": 22 }]
+    },
+    "generator_pointer": 130513,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Ending",
+      "description": null,
+      "locations": [{ "world": 4, "index": 24 }]
+    },
+    "generator_pointer": 130513,
+    "enemy_pointer": 50545,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 4",
+      "description": null,
+      "locations": [{ "world": 3, "index": 41 }]
+    },
+    "generator_pointer": 130545,
+    "enemy_pointer": 50769,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 3",
+      "description": null,
+      "locations": [{ "world": 3, "index": 40 }]
+    },
+    "generator_pointer": 130580,
+    "enemy_pointer": 50769,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Ending",
+      "description": null,
+      "locations": [{ "world": 1, "index": 18 }]
+    },
+    "generator_pointer": 130657,
+    "enemy_pointer": 50581,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 3, "index": 3 }]
+    },
+    "generator_pointer": 130690,
+    "enemy_pointer": 50591,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 21 }]
+    },
+    "generator_pointer": 130995,
+    "enemy_pointer": 50632,
+    "tileset": 1
+  },
+  {
+    "display_information": {
+      "name": "Pyramid",
+      "description": null,
+      "locations": [{ "world": 2, "index": 8 }]
+    },
+    "generator_pointer": 132496,
+    "enemy_pointer": 50637,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 6, "index": 5 }]
+    },
+    "generator_pointer": 133104,
+    "enemy_pointer": 50684,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 9",
+      "description": null,
+      "locations": [{ "world": 6, "index": 9 }]
+    },
+    "generator_pointer": 133616,
+    "enemy_pointer": 50719,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hidden Hammer Bros",
+      "description": null,
+      "locations": [{ "world": 2, "index": 23 }]
+    },
+    "generator_pointer": 134350,
+    "enemy_pointer": 49171,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 5, "index": 51 }]
+    },
+    "generator_pointer": 134350,
+    "enemy_pointer": 50769,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 6, "index": 6 }]
+    },
+    "generator_pointer": 134389,
+    "enemy_pointer": 50780,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 1, "index": 2 }]
+    },
+    "generator_pointer": 134979,
+    "enemy_pointer": 50875,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Lost 3 - Hills",
+      "description": null,
+      "locations": [{ "world": 9, "index": 3 }]
+    },
+    "generator_pointer": 135414,
+    "enemy_pointer": 50925,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 7, "index": 3 }]
+    },
+    "generator_pointer": 135837,
+    "enemy_pointer": 50948,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hidden Hammer Bros",
+      "description": null,
+      "locations": [{ "world": 3, "index": 48 }]
+    },
+    "generator_pointer": 136192,
+    "enemy_pointer": 50769,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 1, "index": 23 }]
+    },
+    "generator_pointer": 136196,
+    "enemy_pointer": 51004,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 2",
+      "description": null,
+      "locations": [{ "world": 1, "index": 24 }]
+    },
+    "generator_pointer": 136222,
+    "enemy_pointer": 51004,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 2",
+      "description": null,
+      "locations": [{ "world": 5, "index": 52 }]
+    },
+    "generator_pointer": 136251,
+    "enemy_pointer": 50769,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Lost 4 - Underground",
+      "description": null,
+      "locations": [{ "world": 9, "index": 4 }]
+    },
+    "generator_pointer": 136283,
+    "enemy_pointer": 49175,
+    "tileset": 14
+  },
+  {
+    "display_information": {
+      "name": "Quicksand",
+      "description": null,
+      "locations": [{ "world": 2, "index": 7 }]
+    },
+    "generator_pointer": 136742,
+    "enemy_pointer": 51284,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 4, "index": 3 }]
+    },
+    "generator_pointer": 136942,
+    "enemy_pointer": 51316,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 2, "index": 2 }]
+    },
+    "generator_pointer": 137393,
+    "enemy_pointer": 51366,
+    "tileset": 3
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 2 }]
+    },
+    "generator_pointer": 141289,
+    "enemy_pointer": 51764,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 20 }]
+    },
+    "generator_pointer": 141539,
+    "enemy_pointer": 51817,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 3, "index": 6 }]
+    },
+    "generator_pointer": 141650,
+    "enemy_pointer": 51828,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 6 Ending",
+      "description": null,
+      "locations": [{ "world": 3, "index": 24 }]
+    },
+    "generator_pointer": 141910,
+    "enemy_pointer": 51863,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 6, "index": 3 }]
+    },
+    "generator_pointer": 141956,
+    "enemy_pointer": 51871,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2",
+      "description": null,
+      "locations": [{ "world": 6, "index": 18 }]
+    },
+    "generator_pointer": 142245,
+    "enemy_pointer": 51900,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Boss Room",
+      "description": null,
+      "locations": [{ "world": 6, "index": 38 }]
+    },
+    "generator_pointer": 142513,
+    "enemy_pointer": 51935,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Outside Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 25 }]
+    },
+    "generator_pointer": 142595,
+    "enemy_pointer": 51940,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Lost 11 - Sky",
+      "description": null,
+      "locations": [{ "world": 9, "index": 17 }]
+    },
+    "generator_pointer": 142822,
+    "enemy_pointer": 51945,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 5, "index": 5 }]
+    },
+    "generator_pointer": 143131,
+    "enemy_pointer": 51995,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Lost 12 - Sky",
+      "description": null,
+      "locations": [{ "world": 9, "index": 18 }]
+    },
+    "generator_pointer": 143445,
+    "enemy_pointer": 52039,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Lost 13 - Sky",
+      "description": null,
+      "locations": [{ "world": 9, "index": 19 }]
+    },
+    "generator_pointer": 143581,
+    "enemy_pointer": 52053,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 6, "index": 2 }]
+    },
+    "generator_pointer": 143717,
+    "enemy_pointer": 52067,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 6, "index": 1 }]
+    },
+    "generator_pointer": 143941,
+    "enemy_pointer": 52179,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Lost 6 - Ice",
+      "description": null,
+      "locations": [{ "world": 9, "index": 6 }]
+    },
+    "generator_pointer": 144088,
+    "enemy_pointer": 52214,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 6, "index": 22 }]
+    },
+    "generator_pointer": 144282,
+    "enemy_pointer": 52249,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 1, "index": 6 }]
+    },
+    "generator_pointer": 144321,
+    "enemy_pointer": 52254,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 1, "index": 4 }]
+    },
+    "generator_pointer": 144666,
+    "enemy_pointer": 52292,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 6, "index": 4 }]
+    },
+    "generator_pointer": 144958,
+    "enemy_pointer": 52348,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Lost 7 - Ice",
+      "description": null,
+      "locations": [{ "world": 9, "index": 7 }]
+    },
+    "generator_pointer": 145363,
+    "enemy_pointer": 52401,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 6 Outside Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 32 }]
+    },
+    "generator_pointer": 145738,
+    "enemy_pointer": 52465,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 10",
+      "description": null,
+      "locations": [{ "world": 6, "index": 16 }]
+    },
+    "generator_pointer": 145836,
+    "enemy_pointer": 52473,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 7",
+      "description": null,
+      "locations": [{ "world": 6, "index": 7 }]
+    },
+    "generator_pointer": 146179,
+    "enemy_pointer": 52520,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 7 Ending",
+      "description": null,
+      "locations": [{ "world": 6, "index": 33 }]
+    },
+    "generator_pointer": 146633,
+    "enemy_pointer": 52534,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Outside Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 34 }]
+    },
+    "generator_pointer": 146695,
+    "enemy_pointer": 52542,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 7",
+      "description": null,
+      "locations": [{ "world": 7, "index": 7 }]
+    },
+    "generator_pointer": 146760,
+    "enemy_pointer": 52550,
+    "tileset": 4
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 6, "index": 41 }]
+    },
+    "generator_pointer": 147241,
+    "enemy_pointer": 50769,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 21 }]
+    },
+    "generator_pointer": 147266,
+    "enemy_pointer": 49175,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 2",
+      "description": null,
+      "locations": [{ "world": 6, "index": 48 }]
+    },
+    "generator_pointer": 147351,
+    "enemy_pointer": 50769,
+    "tileset": 12
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 1 }]
+    },
+    "generator_pointer": 150448,
+    "enemy_pointer": 52644,
+    "tileset": 8
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 7, "index": 4 }]
+    },
+    "generator_pointer": 151005,
+    "enemy_pointer": 52691,
+    "tileset": 6
+  },
+  {
+    "display_information": {
+      "name": "Lost 8 - Pipe",
+      "description": null,
+      "locations": [{ "world": 9, "index": 8 }]
+    },
+    "generator_pointer": 151345,
+    "enemy_pointer": 49175,
+    "tileset": 8
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 3, "index": 5 }]
+    },
+    "generator_pointer": 151667,
+    "enemy_pointer": 52732,
+    "tileset": 6
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Pipe Room",
+      "description": null,
+      "locations": [{ "world": 4, "index": 33 }]
+    },
+    "generator_pointer": 152210,
+    "enemy_pointer": 52776,
+    "tileset": 8
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 1 }]
+    },
+    "generator_pointer": 152355,
+    "enemy_pointer": 52790,
+    "tileset": 6
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Pipe Room",
+      "description": null,
+      "locations": [{ "world": 5, "index": 22 }]
+    },
+    "generator_pointer": 152730,
+    "enemy_pointer": 52828,
+    "tileset": 8
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 7, "index": 6 }]
+    },
+    "generator_pointer": 153113,
+    "enemy_pointer": 52839,
+    "tileset": 8
+  },
+  {
+    "display_information": {
+      "name": "Level 8",
+      "description": null,
+      "locations": [{ "world": 5, "index": 8 }]
+    },
+    "generator_pointer": 158328,
+    "enemy_pointer": 52865,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 33 }]
+    },
+    "generator_pointer": 158545,
+    "enemy_pointer": 52882,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 6 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 35 }]
+    },
+    "generator_pointer": 158545,
+    "enemy_pointer": 52882,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 8 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 37 }]
+    },
+    "generator_pointer": 158545,
+    "enemy_pointer": 52882,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Ending",
+      "description": null,
+      "locations": [{ "world": 5, "index": 38 }]
+    },
+    "generator_pointer": 158545,
+    "enemy_pointer": 52882,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 7 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 3, "index": 25 }]
+    },
+    "generator_pointer": 158568,
+    "enemy_pointer": 52890,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 4, "index": 1 }]
+    },
+    "generator_pointer": 158625,
+    "enemy_pointer": 52904,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Lost 9 - Clouds",
+      "description": null,
+      "locations": [{ "world": 9, "index": 9 }]
+    },
+    "generator_pointer": 158914,
+    "enemy_pointer": 52942,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Lost 14 - Clouds",
+      "description": null,
+      "locations": [{ "world": 9, "index": 20 }]
+    },
+    "generator_pointer": 159172,
+    "enemy_pointer": 49175,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Lost 15 - Clouds",
+      "description": null,
+      "locations": [{ "world": 9, "index": 21 }]
+    },
+    "generator_pointer": 159354,
+    "enemy_pointer": 51004,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 7",
+      "description": null,
+      "locations": [{ "world": 5, "index": 7 }]
+    },
+    "generator_pointer": 159441,
+    "enemy_pointer": 52974,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Beginning",
+      "description": null,
+      "locations": [{ "world": 4, "index": 19 }]
+    },
+    "generator_pointer": 159784,
+    "enemy_pointer": 53021,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 4, "index": 2 }]
+    },
+    "generator_pointer": 159872,
+    "enemy_pointer": 53029,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Level 6",
+      "description": null,
+      "locations": [{ "world": 5, "index": 6 }]
+    },
+    "generator_pointer": 160090,
+    "enemy_pointer": 53073,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 9",
+      "description": null,
+      "locations": [{ "world": 5, "index": 9 }]
+    },
+    "generator_pointer": 160283,
+    "enemy_pointer": 53132,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 4, "index": 4 }]
+    },
+    "generator_pointer": 160454,
+    "enemy_pointer": 53194,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Tower (Going Down)",
+      "description": null,
+      "locations": [{ "world": 5, "index": 48 }]
+    },
+    "generator_pointer": 161153,
+    "enemy_pointer": 53224,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Tower Outside Area (Part 2)",
+      "description": null,
+      "locations": [{ "world": 5, "index": 41 }]
+    },
+    "generator_pointer": 161223,
+    "enemy_pointer": 53229,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Tower Outside Area (Part 1)",
+      "description": null,
+      "locations": [{ "world": 5, "index": 40 }]
+    },
+    "generator_pointer": 161360,
+    "enemy_pointer": 53237,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 4, "index": 5 }]
+    },
+    "generator_pointer": 161605,
+    "enemy_pointer": 53245,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Level 4 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 6, "index": 24 }]
+    },
+    "generator_pointer": 161873,
+    "enemy_pointer": 53304,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Bonus",
+      "description": null,
+      "locations": [{ "world": 1, "index": 19 }]
+    },
+    "generator_pointer": 161933,
+    "enemy_pointer": 53309,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 4, "index": 16 }]
+    },
+    "generator_pointer": 162155,
+    "enemy_pointer": 53314,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 4",
+      "description": null,
+      "locations": [{ "world": 5, "index": 54 }]
+    },
+    "generator_pointer": 162212,
+    "enemy_pointer": 50769,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Lost 10 - Clouds",
+      "description": null,
+      "locations": [{ "world": 9, "index": 16 }]
+    },
+    "generator_pointer": 162244,
+    "enemy_pointer": 52942,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 1, "index": 17 }]
+    },
+    "generator_pointer": 162371,
+    "enemy_pointer": 53219,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 5, "index": 4 }]
+    },
+    "generator_pointer": 162405,
+    "enemy_pointer": 53322,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Piranha Plant #2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 19 }]
+    },
+    "generator_pointer": 162617,
+    "enemy_pointer": 53369,
+    "tileset": 5
+  },
+  {
+    "display_information": {
+      "name": "Piranha Plant #1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 16 }]
+    },
+    "generator_pointer": 162876,
+    "enemy_pointer": 53389,
+    "tileset": 5
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 6 }]
+    },
+    "generator_pointer": 163063,
+    "enemy_pointer": 53412,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 5 }]
+    },
+    "generator_pointer": 163161,
+    "enemy_pointer": 53441,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #3",
+      "description": null,
+      "locations": [{ "world": 8, "index": 7 }]
+    },
+    "generator_pointer": 163240,
+    "enemy_pointer": 53458,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #1 Ending",
+      "description": null,
+      "locations": [{ "world": 8, "index": 22 }]
+    },
+    "generator_pointer": 163376,
+    "enemy_pointer": 53472,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #2 Ending",
+      "description": null,
+      "locations": [{ "world": 8, "index": 23 }]
+    },
+    "generator_pointer": 163376,
+    "enemy_pointer": 53472,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Hand Trap #3 Ending",
+      "description": null,
+      "locations": [{ "world": 8, "index": 24 }]
+    },
+    "generator_pointer": 163376,
+    "enemy_pointer": 53472,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Piranha Plant #2 Ending",
+      "description": null,
+      "locations": [{ "world": 7, "index": 40 }]
+    },
+    "generator_pointer": 163425,
+    "enemy_pointer": 53483,
+    "tileset": 5
+  },
+  {
+    "display_information": {
+      "name": "Piranha Plant #1 Ending",
+      "description": null,
+      "locations": [{ "world": 7, "index": 36 }]
+    },
+    "generator_pointer": 163564,
+    "enemy_pointer": 53491,
+    "tileset": 5
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 4, "index": 36 }]
+    },
+    "generator_pointer": 163703,
+    "enemy_pointer": 53499,
+    "tileset": 11
+  },
+  {
+    "display_information": {
+      "name": "Level 8 Bonus Area #1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 33 }]
+    },
+    "generator_pointer": 163728,
+    "enemy_pointer": 53507,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 3",
+      "description": null,
+      "locations": [{ "world": 5, "index": 53 }]
+    },
+    "generator_pointer": 163788,
+    "enemy_pointer": 50769,
+    "tileset": 13
+  },
+  {
+    "display_information": {
+      "name": "Pyramid Outside Area",
+      "description": null,
+      "locations": [{ "world": 2, "index": 21 }]
+    },
+    "generator_pointer": 167743,
+    "enemy_pointer": 53512,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 9 Ending",
+      "description": null,
+      "locations": [{ "world": 7, "index": 35 }]
+    },
+    "generator_pointer": 167927,
+    "enemy_pointer": 53520,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 2 }]
+    },
+    "generator_pointer": 167943,
+    "enemy_pointer": 53525,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 1",
+      "description": null,
+      "locations": [{ "world": 2, "index": 24 }]
+    },
+    "generator_pointer": 168463,
+    "enemy_pointer": 53598,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Hammer Bros 2",
+      "description": null,
+      "locations": [{ "world": 2, "index": 25 }]
+    },
+    "generator_pointer": 168463,
+    "enemy_pointer": 53587,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 9",
+      "description": null,
+      "locations": [{ "world": 7, "index": 9 }]
+    },
+    "generator_pointer": 168536,
+    "enemy_pointer": 53611,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 1",
+      "description": null,
+      "locations": [{ "world": 2, "index": 1 }]
+    },
+    "generator_pointer": 169080,
+    "enemy_pointer": 53658,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 2, "index": 16 }]
+    },
+    "generator_pointer": 169540,
+    "enemy_pointer": 49175,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 5",
+      "description": null,
+      "locations": [{ "world": 2, "index": 5 }]
+    },
+    "generator_pointer": 169811,
+    "enemy_pointer": 53714,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 5 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 2, "index": 19 }]
+    },
+    "generator_pointer": 170176,
+    "enemy_pointer": 49175,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 3",
+      "description": null,
+      "locations": [{ "world": 2, "index": 3 }]
+    },
+    "generator_pointer": 170286,
+    "enemy_pointer": 53761,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Dungeon",
+      "description": null,
+      "locations": [{ "world": 2, "index": 6 }]
+    },
+    "generator_pointer": 170707,
+    "enemy_pointer": 53811,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Dungeon Spike Room",
+      "description": null,
+      "locations": [{ "world": 2, "index": 20 }]
+    },
+    "generator_pointer": 171029,
+    "enemy_pointer": 53861,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 4",
+      "description": null,
+      "locations": [{ "world": 2, "index": 4 }]
+    },
+    "generator_pointer": 171153,
+    "enemy_pointer": 53872,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 2 Ending",
+      "description": null,
+      "locations": [{ "world": 2, "index": 17 }]
+    },
+    "generator_pointer": 171825,
+    "enemy_pointer": 53942,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "Level 3 Ending",
+      "description": null,
+      "locations": [{ "world": 2, "index": 18 }]
+    },
+    "generator_pointer": 171841,
+    "enemy_pointer": 53947,
+    "tileset": 9
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 2, "index": 34 }]
+    },
+    "generator_pointer": 174080,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 3, "index": 54 }]
+    },
+    "generator_pointer": 174096,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 4, "index": 48 }]
+    },
+    "generator_pointer": 174112,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 5, "index": 55 }]
+    },
+    "generator_pointer": 174128,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 6, "index": 53 }]
+    },
+    "generator_pointer": 174144,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 1, "index": 25 }]
+    },
+    "generator_pointer": 174160,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "End Castle",
+      "description": null,
+      "locations": [{ "world": 7, "index": 71 }]
+    },
+    "generator_pointer": 174176,
+    "enemy_pointer": 53952,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Beginning/End",
+      "description": null,
+      "locations": [{ "world": 5, "index": 49 }]
+    },
+    "generator_pointer": 174192,
+    "enemy_pointer": 53957,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2",
+      "description": null,
+      "locations": [{ "world": 5, "index": 19 }]
+    },
+    "generator_pointer": 174283,
+    "enemy_pointer": 53962,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon",
+      "description": null,
+      "locations": [{ "world": 1, "index": 7 }]
+    },
+    "generator_pointer": 174454,
+    "enemy_pointer": 54076,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon Spike Room",
+      "description": null,
+      "locations": [{ "world": 1, "index": 21 }]
+    },
+    "generator_pointer": 174659,
+    "enemy_pointer": 54114,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2",
+      "description": null,
+      "locations": [{ "world": 3, "index": 17 }]
+    },
+    "generator_pointer": 174738,
+    "enemy_pointer": 54131,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Water Room",
+      "description": null,
+      "locations": [{ "world": 3, "index": 36 }]
+    },
+    "generator_pointer": 174884,
+    "enemy_pointer": 54160,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1",
+      "description": null,
+      "locations": [{ "world": 3, "index": 16 }]
+    },
+    "generator_pointer": 175002,
+    "enemy_pointer": 54180,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Water Room",
+      "description": null,
+      "locations": [{ "world": 3, "index": 35 }]
+    },
+    "generator_pointer": 175201,
+    "enemy_pointer": 54230,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1",
+      "description": null,
+      "locations": [{ "world": 5, "index": 16 }]
+    },
+    "generator_pointer": 175423,
+    "enemy_pointer": 54241,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Bonus Area",
+      "description": null,
+      "locations": [{ "world": 5, "index": 39 }]
+    },
+    "generator_pointer": 175804,
+    "enemy_pointer": 54285,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2",
+      "description": null,
+      "locations": [{ "world": 7, "index": 18 }]
+    },
+    "generator_pointer": 175897,
+    "enemy_pointer": 54316,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2 Boss Room",
+      "description": null,
+      "locations": [{ "world": 7, "index": 39 }]
+    },
+    "generator_pointer": 176113,
+    "enemy_pointer": 54381,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #3",
+      "description": null,
+      "locations": [{ "world": 6, "index": 19 }]
+    },
+    "generator_pointer": 176203,
+    "enemy_pointer": 54401,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #3 Falling Room",
+      "description": null,
+      "locations": [{ "world": 6, "index": 39 }]
+    },
+    "generator_pointer": 176447,
+    "enemy_pointer": 54451,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1",
+      "description": null,
+      "locations": [{ "world": 6, "index": 17 }]
+    },
+    "generator_pointer": 176490,
+    "enemy_pointer": 54465,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Spike Room",
+      "description": null,
+      "locations": [{ "world": 6, "index": 37 }]
+    },
+    "generator_pointer": 176664,
+    "enemy_pointer": 54500,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1",
+      "description": null,
+      "locations": [{ "world": 7, "index": 17 }]
+    },
+    "generator_pointer": 176807,
+    "enemy_pointer": 54517,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1 Lonely Room",
+      "description": null,
+      "locations": [{ "world": 7, "index": 37 }]
+    },
+    "generator_pointer": 177124,
+    "enemy_pointer": 49175,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Tower (Part 1)",
+      "description": null,
+      "locations": [{ "world": 5, "index": 17 }]
+    },
+    "generator_pointer": 177294,
+    "enemy_pointer": 54525,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Tower (Part 2)",
+      "description": null,
+      "locations": [{ "world": 5, "index": 18 }]
+    },
+    "generator_pointer": 177463,
+    "enemy_pointer": 54545,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #2",
+      "description": null,
+      "locations": [{ "world": 4, "index": 8 }]
+    },
+    "generator_pointer": 177623,
+    "enemy_pointer": 54553,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon #1",
+      "description": null,
+      "locations": [{ "world": 4, "index": 7 }]
+    },
+    "generator_pointer": 177855,
+    "enemy_pointer": 54585,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Lost 5 - Dungeon",
+      "description": null,
+      "locations": [{ "world": 9, "index": 5 }]
+    },
+    "generator_pointer": 178029,
+    "enemy_pointer": 54290,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon",
+      "description": null,
+      "locations": [{ "world": 8, "index": 9 }]
+    },
+    "generator_pointer": 178323,
+    "enemy_pointer": 54626,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Dungeon (White Side)",
+      "description": null,
+      "locations": [{ "world": 8, "index": 32 }]
+    },
+    "generator_pointer": 178886,
+    "enemy_pointer": 54682,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Bowser's Castle",
+      "description": null,
+      "locations": [{ "world": 8, "index": 17 }]
+    },
+    "generator_pointer": 179270,
+    "enemy_pointer": 54750,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Bowser's Lair",
+      "description": null,
+      "locations": [{ "world": 8, "index": 34 }]
+    },
+    "generator_pointer": 179808,
+    "enemy_pointer": 54812,
+    "tileset": 2
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 2, "index": 35 }]
+    },
+    "generator_pointer": 191504,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 3, "index": 54 }]
+    },
+    "generator_pointer": 191529,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 1, "index": 32 }]
+    },
+    "generator_pointer": 191554,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 4, "index": 35 }]
+    },
+    "generator_pointer": 191579,
+    "enemy_pointer": 54962,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 5, "index": 20 }]
+    },
+    "generator_pointer": 191664,
+    "enemy_pointer": 54967,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 1, "index": 8 }]
+    },
+    "generator_pointer": 191952,
+    "enemy_pointer": 55035,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 2, "index": 9 }]
+    },
+    "generator_pointer": 192196,
+    "enemy_pointer": 55085,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 3, "index": 18 }]
+    },
+    "generator_pointer": 192546,
+    "enemy_pointer": 55144,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 4, "index": 9 }]
+    },
+    "generator_pointer": 192851,
+    "enemy_pointer": 55209,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 6, "index": 20 }]
+    },
+    "generator_pointer": 193228,
+    "enemy_pointer": 55286,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 4, "index": 49 }]
+    },
+    "generator_pointer": 193598,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 5, "index": 56 }]
+    },
+    "generator_pointer": 193623,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 6, "index": 54 }]
+    },
+    "generator_pointer": 193648,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Anchors Away",
+      "description": null,
+      "locations": [{ "world": 7, "index": 72 }]
+    },
+    "generator_pointer": 193673,
+    "enemy_pointer": 54957,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship",
+      "description": null,
+      "locations": [{ "world": 7, "index": 20 }]
+    },
+    "generator_pointer": 193698,
+    "enemy_pointer": 55333,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Crappy Ship",
+      "description": null,
+      "locations": [{ "world": 8, "index": 8 }]
+    },
+    "generator_pointer": 194096,
+    "enemy_pointer": 55416,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Battleship",
+      "description": null,
+      "locations": [{ "world": 8, "index": 4 }]
+    },
+    "generator_pointer": 194250,
+    "enemy_pointer": 55517,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Tank #2",
+      "description": null,
+      "locations": [{ "world": 8, "index": 16 }]
+    },
+    "generator_pointer": 194551,
+    "enemy_pointer": 55597,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Tank #1",
+      "description": null,
+      "locations": [{ "world": 8, "index": 3 }]
+    },
+    "generator_pointer": 194796,
+    "enemy_pointer": 55680,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 1, "index": 22 }]
+    },
+    "generator_pointer": 195099,
+    "enemy_pointer": 55799,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 2, "index": 22 }]
+    },
+    "generator_pointer": 195172,
+    "enemy_pointer": 55804,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 3, "index": 37 }]
+    },
+    "generator_pointer": 195257,
+    "enemy_pointer": 55809,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 5, "index": 50 }]
+    },
+    "generator_pointer": 195342,
+    "enemy_pointer": 55814,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 6, "index": 40 }]
+    },
+    "generator_pointer": 195427,
+    "enemy_pointer": 55819,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 7, "index": 41 }]
+    },
+    "generator_pointer": 195539,
+    "enemy_pointer": 55824,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Coin Ship",
+      "description": null,
+      "locations": [{ "world": 1, "index": 33 }]
+    },
+    "generator_pointer": 195630,
+    "enemy_pointer": 55829,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Coin Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 1, "index": 34 }]
+    },
+    "generator_pointer": 195793,
+    "enemy_pointer": 55840,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Tank #2 Boss Room",
+      "description": null,
+      "locations": [{ "world": 8, "index": 33 }]
+    },
+    "generator_pointer": 195878,
+    "enemy_pointer": 55851,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Battleship Boss Room",
+      "description": null,
+      "locations": [{ "world": 8, "index": 21 }]
+    },
+    "generator_pointer": 195927,
+    "enemy_pointer": 55856,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Crappy Ship Boss Room",
+      "description": null,
+      "locations": [{ "world": 8, "index": 25 }]
+    },
+    "generator_pointer": 195976,
+    "enemy_pointer": 55861,
+    "tileset": 10
+  },
+  {
+    "display_information": {
+      "name": "Tank #1 Boss Room",
+      "description": null,
+      "locations": [{ "world": 8, "index": 20 }]
+    },
+    "generator_pointer": 196025,
+    "enemy_pointer": 55866,
+    "tileset": 10
+  }
+]

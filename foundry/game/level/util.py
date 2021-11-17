@@ -1,3 +1,4 @@
+from json import loads
 from typing import Optional
 
 from pydantic import BaseModel
@@ -110,27 +111,5 @@ def get_worlds(levels: list[Level]) -> int:
 
 
 def load_level_offsets() -> list[Level]:
-    offsets = []
-
-    with open(data_dir.joinpath("levels.dat"), "r") as level_data:
-        for line_no, line in enumerate(level_data.readlines()):
-            data = line.rstrip("\n").split(",")
-
-            numbers = [int(_hex, 16) for _hex in data[0:5]]
-            level_name = data[5]
-
-            game_world, level_in_world, rom_level_offset, enemy_offset, real_obj_set = numbers
-
-            level = Level(
-                index=line_no,
-                display_information=DisplayInformation(
-                    name=level_name, locations=[Location(world=game_world, index=level_in_world)]
-                ),
-                generator_pointer=rom_level_offset,
-                enemy_pointer=enemy_offset,
-                tileset=real_obj_set,
-            )
-
-            offsets.append(level)
-
-    return offsets
+    with open(data_dir.joinpath("levels.json"), "r") as f:
+        return [Level(**level) for level in loads(f.read())]
