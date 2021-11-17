@@ -10,7 +10,7 @@ from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.level import LevelByteData
 from foundry.game.level.LevelLike import LevelLike
-from foundry.game.level.util import load_level_offsets
+from foundry.game.level.util import get_worlds, load_level_offsets
 from foundry.game.ObjectSet import ObjectSet
 from foundry.gui.UndoStack import UndoStack
 from foundry.smb3parse.constants import BASE_OFFSET, Level_TilesetIdx_ByTileset
@@ -42,10 +42,10 @@ class LevelSignaller(QObject):
 class Level(LevelLike):
     MIN_LENGTH = 0x10
 
-    offsets, world_indexes = load_level_offsets()
+    offsets = load_level_offsets()
     sorted_offsets = sorted(offsets, key=lambda level: level.generator_pointer)
 
-    WORLDS = len(world_indexes)
+    WORLDS = get_worlds(offsets)
 
     HEADER_LENGTH = 9  # bytes
 

@@ -60,9 +60,57 @@ class Level(BaseModel):
     tileset: int
 
 
-def load_level_offsets() -> tuple[list[Level], list[int]]:
+def get_world_levels(world: int, levels: list[Level]) -> list[Level]:
+    """
+    Provides every level that is inside a given world.
+
+    Parameters
+    ----------
+    world : int
+        The world to select levels from.
+    levels : list[Level]
+        The index of levels to find levels from.
+
+    Returns
+    -------
+    list[Level]
+        A sub-list of levels which contains only the levels that were inside the given world.
+
+    Notes
+    -----
+    For each level.display_information.index, there will only be a single level inside the return.
+    """
+    world_levels = {}
+    for level in levels:
+        for location in level.display_information.locations:
+            if location.world == world:
+                world_levels.update({location.index: level})
+    return [element[1] for element in sorted(world_levels.items(), key=lambda item: item[0])]
+
+
+def get_worlds(levels: list[Level]) -> int:
+    """
+    Determines the amount of worlds there are inside the game.
+
+    Parameters
+    ----------
+    levels : list[Level]
+        The levels to find worlds from.
+
+    Returns
+    -------
+    int
+        The amount of worlds there are.
+    """
+    worlds = 0
+    for level in levels:
+        if level.tileset == 0:
+            worlds += 1
+    return worlds
+
+
+def load_level_offsets() -> list[Level]:
     offsets = []
-    world_indexes = []
 
     with open(data_dir.joinpath("levels.dat"), "r") as level_data:
         for line_no, line in enumerate(level_data.readlines()):
@@ -74,6 +122,7 @@ def load_level_offsets() -> tuple[list[Level], list[int]]:
             game_world, level_in_world, rom_level_offset, enemy_offset, real_obj_set = numbers
 
             level = Level(
+                index=line_no,
                 display_information=DisplayInformation(
                     name=level_name, locations=[Location(world=game_world, index=level_in_world)]
                 ),
@@ -84,8 +133,4 @@ def load_level_offsets() -> tuple[list[Level], list[int]]:
 
             offsets.append(level)
 
-            for location in level.display_information.locations:
-                if location.world > 0 and location.index == 1:
-                    world_indexes.append(line_no)
-
-    return offsets, world_indexes
+    return offsets
