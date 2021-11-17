@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (
 
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.Level import Level
+from foundry.game.level.util import get_world_levels
 from foundry.game.level.WorldMap import WorldMap
 from foundry.gui.Spinner import Spinner
 from foundry.gui.WorldMapView import WorldMapView
@@ -165,11 +166,7 @@ class LevelSelector(QDialog):
 
         self.level_list.clear()
 
-        for level in Level.offsets:
-            for location in level.display_information.locations:
-                if location.world == index:
-                    if level.display_information.name:
-                        self.level_list.addItem(level.display_information.name)
+        self.level_list.addItems([level.display_information.name for level in get_world_levels(index, Level.offsets)])
 
         if self.level_list.count():
             self.level_list.setCurrentRow(0)
@@ -183,22 +180,16 @@ class LevelSelector(QDialog):
 
         level_is_overworld = self.world_list.currentRow() == OVERWORLD_MAPS_INDEX
 
-        if level_is_overworld:
-            level_array_offset = index
-            self.level_name = ""
-        else:
-            level_array_offset = Level.world_indexes[self.world_list.currentRow() - 1] + index
-            self.level_name = f"World {self.world_list.currentRow()}, "
+        level = get_world_levels(self.world_list.currentRow(), Level.offsets)[index]
+        self.level_name = level.display_information.name
 
-        self.level_name += f"{Level.offsets[level_array_offset].display_information.name}"
-
-        object_data_for_lvl = Level.offsets[level_array_offset].generator_pointer
+        object_data_for_lvl = level.generator_pointer
 
         if not level_is_overworld:
             object_data_for_lvl -= Level.HEADER_LENGTH
 
         if not level_is_overworld:
-            enemy_data_for_lvl = Level.offsets[level_array_offset].enemy_pointer
+            enemy_data_for_lvl = level.enemy_pointer
         else:
             enemy_data_for_lvl = 0
 
@@ -209,7 +200,7 @@ class LevelSelector(QDialog):
         self.enemy_data_spinner.setEnabled(not level_is_overworld)
 
         # if self.world_list.currentRow() >= WORLD_1_INDEX:
-        object_set_index = Level.offsets[level_array_offset].tileset
+        object_set_index = level.tileset
         self.button_ok.setDisabled(level_is_overworld)
 
         self._fill_in_data(object_set_index, object_data_for_lvl, enemy_data_for_lvl)
