@@ -68,14 +68,6 @@ foundry.gui.CustomDialog module
    :undoc-members:
    :show-inheritance:
 
-foundry.gui.EnemySizeBar module
--------------------------------
-
-.. automodule:: foundry.gui.EnemySizeBar
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 foundry.gui.HeaderEditor module
 -------------------------------
 
