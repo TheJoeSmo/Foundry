@@ -63,13 +63,6 @@ jobs:
               architecture: "x64",
             }
           - {
-              os: windows-2019,
-              exe: "foundry-smb3.exe",
-              prefix: "win32",
-              suffix: ".exe",
-              architecture: "x86",
-            }
-          - {
               os: macos-latest,
               exe: "foundry-smb3",
               prefix: "osx",
