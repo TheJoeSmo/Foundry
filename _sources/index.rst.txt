@@ -7,7 +7,7 @@ Release |release| (`What's new? <changelog>`_).
 .. include:: ../../README.rst
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
    :caption: Contents:
 
    modules
