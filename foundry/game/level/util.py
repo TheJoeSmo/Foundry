@@ -53,12 +53,18 @@ class Level(BaseModel):
         The location this level's enemies are located at.
     tileset: int
         The tileset of the this level.
+    generator_size: int
+        The amount of space the generator data takes inside the game.
+    enemy_size: int
+        The amount of space the enemy data takes inside the game.
     """
 
     display_information: DisplayInformation
     generator_pointer: int
     enemy_pointer: int
     tileset: int
+    generator_size: int
+    enemy_size: int
 
 
 def get_world_levels(world: int, levels: list[Level]) -> list[Level]:
