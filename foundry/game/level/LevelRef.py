@@ -64,11 +64,11 @@ class LevelRef(QObject):
 
         self.data_changed.emit()
 
-    def __getattr__(self, item: str):
-        if self._internal_level is None:
-            return None
-        else:
-            return getattr(self._internal_level, item)
+    @property
+    def state(self) -> LevelByteData:
+        assert self._undo_controller is not None
+
+        return self._undo_controller.state
 
     def do(self, level_data: LevelByteData):
         assert self._undo_controller is not None

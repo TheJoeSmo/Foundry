@@ -286,12 +286,12 @@ class MainWindow(QMainWindow):
         self.showMaximized()
 
     def _on_level_data_changed(self):
-        self.undo_action.setEnabled(self.level_ref.undo_stack.undo_available)
-        self.redo_action.setEnabled(self.level_ref.undo_stack.redo_available)
+        self.undo_action.setEnabled(self.level_ref.can_undo)
+        self.redo_action.setEnabled(self.level_ref.can_redo)
 
         self.jump_destination_action.setEnabled(self.level_ref.level.has_next_area)
 
-        level_has_changed = self.level_ref.level.changed and not self.level_ref.level.undo_stack.is_empty
+        level_has_changed = self.level_ref.level.changed
         level_is_m3l = not self.level_ref.level.attached_to_rom
 
         self.menu_toolbar_save_action.setEnabled(level_has_changed or level_is_m3l or PaletteGroup.changed)
@@ -306,23 +306,24 @@ class MainWindow(QMainWindow):
         ROM().save_to_file(auto_save_rom_path, set_new_path=False)
 
     def _save_auto_data(self):
-        undo_index, data = self.level_ref.level.undo_stack.export_data()
+        assert self.level_ref._undo_controller is not None
+
+        undo_index = len(self.level_ref._undo_controller.undo_stack)
 
         (level_offset, _), (enemy_offset, _) = self.level_ref.level.to_bytes()
 
         object_set_number = self.level_ref.level.object_set_number
 
+        (object_offset, object_data), (enemy_offset_, enemy_data) = self.level_ref.state
         base64_data = []
-
-        for (object_offset, object_data), (enemy_offset_, enemy_data) in data:
-            base64_data.append(
-                (
-                    object_offset,
-                    base64.b64encode(object_data).decode("ascii"),
-                    enemy_offset_,
-                    base64.b64encode(enemy_data).decode("ascii"),
-                )
+        base64_data.append(
+            (
+                object_offset,
+                base64.b64encode(object_data).decode("ascii"),
+                enemy_offset_,
+                base64.b64encode(enemy_data).decode("ascii"),
             )
+        )
 
         with open(auto_save_level_data_path, "w") as level_data_file:
             level_data_file.write(
@@ -464,7 +465,7 @@ class MainWindow(QMainWindow):
         rom.write(enemy_address, enemy_bytes)
 
         # replace level information with that of current level
-        object_set_number = self.level_ref.object_set_number
+        object_set_number = self.level_ref.level.object_set_number
 
         world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
 
@@ -547,7 +548,7 @@ class MainWindow(QMainWindow):
 
     def update_title(self):
         if self.level_view.level_ref is not None and ROM is not None:
-            title = f"{self.level_view.level_ref.name} - {ROM.name}"
+            title = f"{self.level_view.level_ref.level.name} - {ROM.name}"
         else:
             title = "SMB3Foundry"
 
@@ -609,7 +610,7 @@ class MainWindow(QMainWindow):
     def load_m3l(self, m3l_data: bytearray, pathname: str):
         self.level_ref.level.from_m3l(m3l_data)
 
-        self.level_view.level_ref.name = os.path.basename(pathname)
+        self.level_view.level_ref.level.name = os.path.basename(pathname)
 
         self.update_gui_for_level()
 
@@ -681,7 +682,7 @@ class MainWindow(QMainWindow):
             if answer == QMessageBox.No:
                 return
 
-        if not self.level_ref.attached_to_rom:
+        if not self.level_ref.level.attached_to_rom:
             QMessageBox.information(
                 self,
                 "Importing M3L into ROM",
@@ -729,10 +730,10 @@ class MainWindow(QMainWindow):
         self.update_title()
 
         if not is_save_as:
-            self.level_ref.changed = False
+            self.level_ref.level.changed = False
 
     def _save_current_changes_to_file(self, pathname: str, set_new_path):
-        for offset, data in self.level_ref.to_bytes():
+        for offset, data in self.level_ref.level.to_bytes():
             ROM().bulk_write(data, offset)
 
         try:
@@ -838,10 +839,10 @@ class MainWindow(QMainWindow):
         if not self.safe_to_change():
             return
 
-        level_name = self.level_view.level_ref.name
-        object_data = self.level_view.level_ref.header_offset
-        enemy_data = self.level_view.level_ref.enemy_offset
-        object_set = self.level_view.level_ref.object_set_number
+        level_name = self.level_view.level_ref.level.name
+        object_data = self.level_view.level_ref.level.header_offset
+        enemy_data = self.level_view.level_ref.level.enemy_offset
+        object_set = self.level_view.level_ref.level.object_set_number
 
         self.update_level(level_name, object_data, enemy_data, object_set)
 
@@ -955,8 +956,8 @@ class MainWindow(QMainWindow):
             self.block_viewer = BlockViewer(parent=self)
 
         if self.level_ref.level is not None:
-            self.block_viewer.object_set = self.level_ref.object_set.number
-            self.block_viewer.palette_group = self.level_ref.object_palette_index
+            self.block_viewer.object_set = self.level_ref.level.object_set.number
+            self.block_viewer.palette_group = self.level_ref.level.object_palette_index
 
         self.block_viewer.show()
 
@@ -965,8 +966,8 @@ class MainWindow(QMainWindow):
             self.object_viewer = ObjectViewer(parent=self)
 
         if self.level_ref.level is not None:
-            object_set = self.level_ref.object_set.number
-            graphics_set = self.level_ref.graphic_set
+            object_set = self.level_ref.level.object_set.number
+            graphics_set = self.level_ref.level.graphic_set
 
             self.object_viewer.set_object_and_graphic_set(object_set, graphics_set)
 
@@ -1020,11 +1021,13 @@ class MainWindow(QMainWindow):
             self.jump_list.Clear()
         else:
             self.object_dropdown.setEnabled(True)
-            self.object_dropdown.set_object_set(self.level_ref.object_set_number, self.level_ref.graphic_set)
+            self.object_dropdown.set_object_set(
+                self.level_ref.level.object_set_number, self.level_ref.level.graphic_set
+            )
 
             self.jump_list.setEnabled(True)
 
-        self.object_toolbar.set_object_set(self.level_ref.object_set_number, self.level_ref.graphic_set)
+        self.object_toolbar.set_object_set(self.level_ref.level.object_set_number, self.level_ref.level.graphic_set)
 
         self.level_view.update()
 
@@ -1066,13 +1069,13 @@ class MainWindow(QMainWindow):
             gui_element.setEnabled(ROM.is_loaded())
 
         for gui_element in level_elements:
-            gui_element.setEnabled(ROM.is_loaded() and self.level_ref.fully_loaded)
+            gui_element.setEnabled(ROM.is_loaded() and self.level_ref.level.fully_loaded)
 
     def on_jump_edit(self):
         index = self.jump_list.currentIndex().row()
 
         updated_jump = JumpEditor.edit_jump(
-            self, self.level_view.level_ref.jumps[index], not self.level_view.level_ref.level.is_vertical
+            self, self.level_view.level_ref.level.jumps[index], not self.level_view.level_ref.level.is_vertical
         )
 
         self.on_jump_edited(updated_jump)
@@ -1092,7 +1095,7 @@ class MainWindow(QMainWindow):
         assert index >= 0
 
         if isinstance(self.level_ref.level, Level):
-            self.level_view.level_ref.jumps[index] = jump
+            self.level_view.level_ref.level.jumps[index] = jump
             self.jump_list.item(index).setText(str(jump))
 
     def on_jump_list_change(self, event):

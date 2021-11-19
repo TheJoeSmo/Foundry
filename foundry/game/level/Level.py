@@ -12,7 +12,6 @@ from foundry.game.level import LevelByteData
 from foundry.game.level.LevelLike import LevelLike
 from foundry.game.level.util import get_worlds, load_level_offsets
 from foundry.game.ObjectSet import ObjectSet
-from foundry.gui.UndoStack import UndoStack
 from foundry.smb3parse.constants import (
     BASE_OFFSET,
     TILESET_LEVEL_OFFSET,
@@ -65,8 +64,6 @@ class Level(LevelLike):
 
         self.object_set = ObjectSet(object_set_number)
 
-        self.undo_stack = UndoStack()
-
         self.name = level_name
 
         self.header_offset = layout_address
@@ -98,8 +95,6 @@ class Level(LevelLike):
 
         if new_level:
             self._update_level_size()
-
-            self.undo_stack.clear(self.to_bytes())
             self.data_changed.emit()
 
     @property

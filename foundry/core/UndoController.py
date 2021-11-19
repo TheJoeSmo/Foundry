@@ -5,6 +5,10 @@ T = TypeVar("T")
 
 
 class UndoControllerProtocol(Protocol, Generic[T]):
+    @property
+    def state(self) -> T:
+        ...
+
     def do(self, new_state: T) -> T:
         ...
 
@@ -34,12 +38,16 @@ class UndoController(Generic[T]):
     """
 
     def __init__(self, initial_state: T, undo_stack: Optional[deque[T]] = None, redo_stack: Optional[deque[T]] = None):
-        self.state: T = initial_state
+        self._state: T = initial_state
         self.undo_stack: deque[T] = undo_stack if undo_stack is not None else deque()
         self.redo_stack: deque[T] = redo_stack if redo_stack is not None else deque()
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.state}, {self.undo_stack}, {self.redo_stack})"
+
+    @property
+    def state(self) -> T:
+        return self._state
 
     def do(self, new_state: T) -> T:
         """
@@ -58,7 +66,7 @@ class UndoController(Generic[T]):
         """
         self.undo_stack.append(self.state)
         self.redo_stack = deque()
-        self.state = new_state
+        self._state = new_state
         return self.state
 
     @property
@@ -83,7 +91,7 @@ class UndoController(Generic[T]):
             The new state that has been stored.
         """
         self.redo_stack.append(self.state)
-        self.state = self.undo_stack.pop()
+        self._state = self.undo_stack.pop()
         return self.state
 
     @property
@@ -108,5 +116,5 @@ class UndoController(Generic[T]):
             The new state that has been stored.
         """
         self.undo_stack.append(self.state)
-        self.state = self.redo_stack.pop()
+        self._state = self.redo_stack.pop()
         return self.state

@@ -39,7 +39,7 @@ class JumpList(QListWidget):
     def update(self):
         self.clear()
 
-        jumps = self._level_ref.jumps
+        jumps = self._level_ref.level.jumps
 
         self.addItems([str(jump) for jump in jumps])
 

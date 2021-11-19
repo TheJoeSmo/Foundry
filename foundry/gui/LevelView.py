@@ -321,7 +321,7 @@ class LevelView(QWidget):
         if not self.level_ref:
             return super(LevelView, self).sizeHint()
         else:
-            width, height = self.level_ref.size
+            width, height = self.level_ref.level.size
 
             return QSize(width * self.block_length, height * self.block_length)
 
@@ -383,7 +383,7 @@ class LevelView(QWidget):
         for obj in selected_objects:
             obj.resize_by(dx, dy)
 
-            self.level_ref.changed = True
+            self.level_ref.level.changed = True
 
         self.update()
 
@@ -465,7 +465,7 @@ class LevelView(QWidget):
         for obj in selected_objects:
             obj.move_by(dx, dy)
 
-            self.level_ref.changed = True
+            self.level_ref.level.changed = True
 
         self.update()
 
@@ -544,7 +544,7 @@ class LevelView(QWidget):
 
         sel_rect = self.selection_square.get_adjusted_rect(self.block_length, self.block_length)
 
-        touched_objects = [obj for obj in self.level_ref.get_all_objects() if sel_rect.intersects(obj.get_rect())]
+        touched_objects = [obj for obj in self.level_ref.level.get_all_objects() if sel_rect.intersects(obj.get_rect())]
 
         if touched_objects != self.level_ref.selected_objects:
             self._set_selected_objects(touched_objects)
@@ -557,7 +557,7 @@ class LevelView(QWidget):
         self.update()
 
     def select_all(self):
-        self.select_objects(self.level_ref.get_all_objects())
+        self.select_objects(self.level_ref.level.get_all_objects())
 
     def _select_object(self, obj=None):
         if obj is not None:
@@ -581,7 +581,7 @@ class LevelView(QWidget):
 
     def remove_selected_objects(self):
         for obj in self.level_ref.selected_objects:
-            self.level_ref.remove_object(obj)
+            self.level_ref.level.remove_object(obj)
 
     def scroll_to_objects(self, objects: List[LevelObject]):
         if not objects:
@@ -597,7 +597,7 @@ class LevelView(QWidget):
         reason = ""
         additional_info = ""
 
-        if self.level_ref.too_many_level_objects():
+        if self.level_ref.level.too_many_level_objects():
             level = self._cuts_into_other_objects()
 
             is_safe = False
@@ -610,7 +610,7 @@ class LevelView(QWidget):
                     "It wouldn't overwrite another level, " "but it might still overwrite other important data."
                 )
 
-        elif self.level_ref.too_many_enemies_or_items():
+        elif self.level_ref.level.too_many_enemies_or_items():
             level = self._cuts_into_other_enemies()
 
             is_safe = False
@@ -630,7 +630,7 @@ class LevelView(QWidget):
         if self.level_ref is None:
             raise ValueError("Level is None")
 
-        enemies_end = self.level_ref.enemies_end
+        enemies_end = self.level_ref.level.enemies_end
 
         levels_by_enemy_offset = sorted(Level.offsets, key=lambda level: level.enemy_pointer)
 
@@ -638,7 +638,7 @@ class LevelView(QWidget):
 
         found_level = levels_by_enemy_offset[level_index]
 
-        if found_level.enemy_pointer == self.level_ref.enemy_offset:
+        if found_level.enemy_offset == self.level_ref.level.enemy_offset:
             return ""
         else:
             return (
@@ -649,7 +649,7 @@ class LevelView(QWidget):
         if self.level_ref is None:
             raise ValueError("Level is None")
 
-        end_of_level_objects = self.level_ref.objects_end
+        end_of_level_objects = self.level_ref.level.objects_end
 
         level_index = (
             bisect_right(
@@ -660,7 +660,7 @@ class LevelView(QWidget):
 
         found_level = Level.sorted_offsets[level_index]
 
-        if found_level.generator_pointer == self.level_ref.object_offset:
+        if found_level.rom_level_offset == self.level_ref.level.object_offset:
             return ""
         else:
             return (
@@ -668,7 +668,7 @@ class LevelView(QWidget):
             )
 
     def add_jump(self):
-        self.level_ref.add_jump()
+        self.level_ref.level.add_jump()
 
     def object_at(self, x: int, y: int) -> Optional[Union[LevelObject, EnemyObject]]:
         """
@@ -693,49 +693,49 @@ class LevelView(QWidget):
     def create_object_at(self, x: int, y: int, domain: int = 0, object_index: int = 0):
         level_x, level_y = self._to_level_point(x, y)
 
-        self.level_ref.create_object_at(int(level_x), int(level_y), domain, object_index)
+        self.level_ref.level.create_object_at(int(level_x), int(level_y), domain, object_index)
 
         self.update()
 
     def create_enemy_at(self, x: int, y: int):
         level_x, level_y = self._to_level_point(x, y)
 
-        self.level_ref.create_enemy_at(level_x, level_y)
+        self.level_ref.level.create_enemy_at(level_x, level_y)
 
     def add_object(self, domain: int, obj_index: int, x: int, y: int, length: int, index: int = -1):
         level_x, level_y = self._to_level_point(x, y)
 
-        self.level_ref.add_object(domain, obj_index, level_x, level_y, length, index)
+        self.level_ref.level.add_object(domain, obj_index, level_x, level_y, length, index)
 
     def add_enemy(self, enemy_index: int, x: int, y: int, index: int):
         level_x, level_y = self._to_level_point(x, y)
 
-        self.level_ref.add_enemy(enemy_index, level_x, level_y, index)
+        self.level_ref.level.add_enemy(enemy_index, level_x, level_y, index)
 
     def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: int):
         self.remove_object(obj)
 
         x, y = obj.get_position()
 
-        new_obj = self.level_ref.add_object(domain, obj_index, x, y, length, obj.index_in_level)
+        new_obj = self.level_ref.level.add_object(domain, obj_index, x, y, length, obj.index_in_level)
         new_obj.selected = obj.selected
 
     def replace_enemy(self, old_enemy: EnemyObject, enemy_index: int):
-        index_in_level = self.level_ref.index_of(old_enemy)
+        index_in_level = self.level_ref.level.index_of(old_enemy)
 
         self.remove_object(old_enemy)
 
         x, y = old_enemy.get_position()
 
-        new_enemy = self.level_ref.add_enemy(enemy_index, x, y, index_in_level)
+        new_enemy = self.level_ref.level.add_enemy(enemy_index, x, y, index_in_level)
 
         new_enemy.selected = old_enemy.selected
 
     def remove_object(self, obj):
-        self.level_ref.remove_object(obj)
+        self.level_ref.level.remove_object(obj)
 
     def remove_jump(self, index: int):
-        del self.level_ref.jumps[index]
+        del self.level_ref.level.jumps[index]
 
         self.update()
 
@@ -762,14 +762,14 @@ class LevelView(QWidget):
             offset_x, offset_y = obj_x - ori_x, obj_y - ori_y
 
             try:
-                pasted_objects.append(self.level_ref.paste_object_at(level_x + offset_x, level_y + offset_y, obj))
+                pasted_objects.append(self.level_ref.level.paste_object_at(level_x + offset_x, level_y + offset_y, obj))
             except ValueError:
                 warn("Tried pasting outside of level.", RuntimeWarning)
 
         self.select_objects(pasted_objects)
 
     def get_object_names(self):
-        return self.level_ref.get_object_names()
+        return self.level_ref.level.get_object_names()
 
     def make_screenshot(self):
         if self.level_ref is None:
