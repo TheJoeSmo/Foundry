@@ -18,7 +18,7 @@ def test_on_ok(main_window):
     # GIVEN a jump to be edited and the JumpEditor
     jump_before = main_window.level_ref.level.jumps[_jump_index]
 
-    jump_editor = JumpEditor(None, jump_before)
+    jump_editor = JumpEditor(None, jump_before, True)
 
     # WHEN the properties changed and the ok button pressed
     jump_editor.screen_spinner.setValue(jump_before.screen_index + 1)
