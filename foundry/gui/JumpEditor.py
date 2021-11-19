@@ -13,53 +13,32 @@ from foundry.game.gfx.objects.Jump import Jump
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.Spinner import Spinner
 
-JUMP_ACTIONS = [
-    "Downward Pipe 1",
-    "Upward Pipe",
-    "Downward Pipe 2",
-    "Right Pipe",
-    "Left Pipe",
-    "?",
-    "?",
-    "Jump on Noteblock",
-    "Door",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-]
+JUMP_ACTIONS = {
+    "Downward Pipe 1": 0,
+    "Upward Pipe": 1,
+    "Downward Pipe 2": 2,
+    "Right Pipe": 3,
+    "Left Pipe": 4,
+    "Jump on Noteblock": 7,
+    "Door": 8,
+}
 
-VERT_POSITIONS = [
-    "00",
-    "05",
-    "08",
-    "12",
-    "16",
-    "20",
-    "23",
-    "24",
-    "00 (Vertical)",
-    "05 (Vertical)",
-    "08 (Vertical)",
-    "12 (Vertical)",
-    "16 (Vertical)",
-    "20 (Vertical)",
-    "23 (Vertical)",
-    "24 (Vertical)",
-]
+
+JUMP_INDEXES = [0, 1, 2, 3, 4, 0, 0, 5, 6, 0, 0, 0, 0, 0, 0, 0]
+
+
+VERT_POSITIONS = ["00", "05", "08", "12", "16", "20", "23", "24"]
 
 MAX_SCREEN_INDEX = 0x0F
 MAX_HORIZ_POSITION = 0xFF
 
 
 class JumpEditor(CustomDialog):
-    def __init__(self, parent: Optional[QWidget], jump: Jump):
+    def __init__(self, parent: Optional[QWidget], jump: Jump, is_horizontal: bool):
         super(JumpEditor, self).__init__(parent, "Jump Editor")
 
         self.jump = jump
+        self.is_horizontal = is_horizontal
 
         self.screen_spinner = Spinner(parent=self, maximum=MAX_SCREEN_INDEX, base=10)
 
@@ -70,7 +49,7 @@ class JumpEditor(CustomDialog):
         level_group_box.setLayout(position_layout)
 
         self.exit_action = QComboBox(self)
-        self.exit_action.addItems(JUMP_ACTIONS)
+        self.exit_action.addItems(JUMP_ACTIONS.keys())
 
         self.exit_horizontal = Spinner(parent=self, maximum=MAX_HORIZ_POSITION, base=10)
 
@@ -102,13 +81,13 @@ class JumpEditor(CustomDialog):
     def _set_widget_values(self):
         self.screen_spinner.setValue(self.jump.screen_index)
 
-        self.exit_action.setCurrentIndex(self.jump.exit_action)
+        self.exit_action.setCurrentIndex(JUMP_INDEXES[self.jump.exit_action])
         self.exit_horizontal.setValue(self.jump.exit_horizontal)
-        self.exit_vertical.setCurrentIndex(self.jump.exit_vertical)
+        self.exit_vertical.setCurrentIndex(self.jump.exit_vertical & 0b111)
 
     @staticmethod
-    def edit_jump(parent: Optional[QWidget], jump: Jump):
-        jump_editor = JumpEditor(parent, jump)
+    def edit_jump(parent: Optional[QWidget], jump: Jump, is_horizontal: bool):
+        jump_editor = JumpEditor(parent, jump, is_horizontal)
 
         jump_editor.exec_()
 
@@ -117,9 +96,9 @@ class JumpEditor(CustomDialog):
     def on_ok(self):
         self.jump = Jump.from_properties(
             self.screen_spinner.value(),
-            self.exit_action.currentIndex(),
+            JUMP_ACTIONS[self.exit_action.currentText()],
             self.exit_horizontal.value(),
-            self.exit_vertical.currentIndex(),
+            self.exit_vertical.currentIndex() if self.is_horizontal else self.exit_vertical.currentIndex() + 8,
         )
 
         self.close()

@@ -1067,7 +1067,9 @@ class MainWindow(QMainWindow):
     def on_jump_edit(self):
         index = self.jump_list.currentIndex().row()
 
-        updated_jump = JumpEditor.edit_jump(self, self.level_view.level_ref.jumps[index])
+        updated_jump = JumpEditor.edit_jump(
+            self, self.level_view.level_ref.jumps[index], not self.level_view.level_ref.level.is_vertical
+        )
 
         self.on_jump_edited(updated_jump)
 
