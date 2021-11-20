@@ -13,7 +13,11 @@ from foundry.game.level.LevelLike import LevelLike
 from foundry.game.level.util import get_worlds, load_level_offsets
 from foundry.game.ObjectSet import ObjectSet
 from foundry.gui.UndoStack import UndoStack
-from foundry.smb3parse.constants import BASE_OFFSET, Level_TilesetIdx_ByTileset
+from foundry.smb3parse.constants import (
+    BASE_OFFSET,
+    TILESET_LEVEL_OFFSET,
+    Level_TilesetIdx_ByTileset,
+)
 from foundry.smb3parse.levels.level_header import LevelHeader
 
 LEVEL_POINTER_OFFSET = Level_TilesetIdx_ByTileset
@@ -265,7 +269,7 @@ class Level(LevelLike):
         if value == self.header.jump_level_address:
             return
 
-        value -= LEVEL_POINTER_OFFSET + self.header.jump_object_set.level_offset
+        value -= LEVEL_POINTER_OFFSET + TILESET_LEVEL_OFFSET[self.header.jump_object_set_number]
 
         self.header_bytes[0] = 0x00FF & value
         self.header_bytes[1] = value >> 8
