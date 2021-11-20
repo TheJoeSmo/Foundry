@@ -634,14 +634,16 @@ class LevelView(QWidget):
 
         levels_by_enemy_offset = sorted(Level.offsets, key=lambda level: level.enemy_pointer)
 
-        level_index = bisect_right([level.enemy_offset for level in levels_by_enemy_offset], enemies_end) - 1
+        level_index = bisect_right([level.enemy_pointer for level in levels_by_enemy_offset], enemies_end) - 1
 
         found_level = levels_by_enemy_offset[level_index]
 
-        if found_level.enemy_offset == self.level_ref.enemy_offset:
+        if found_level.enemy_pointer == self.level_ref.enemy_offset:
             return ""
         else:
-            return f"World {found_level.game_world} - {found_level.name}"
+            return (
+                f"World {found_level.display_information.locations[0].world} - {found_level.display_information.name}"
+            )
 
     def _cuts_into_other_objects(self) -> str:
         if self.level_ref is None:
@@ -651,17 +653,19 @@ class LevelView(QWidget):
 
         level_index = (
             bisect_right(
-                [level.rom_level_offset - Level.HEADER_LENGTH for level in Level.sorted_offsets], end_of_level_objects
+                [level.generator_pointer - Level.HEADER_LENGTH for level in Level.sorted_offsets], end_of_level_objects
             )
             - 1
         )
 
         found_level = Level.sorted_offsets[level_index]
 
-        if found_level.rom_level_offset == self.level_ref.object_offset:
+        if found_level.generator_pointer == self.level_ref.object_offset:
             return ""
         else:
-            return f"World {found_level.game_world} - {found_level.name}"
+            return (
+                f"World {found_level.display_information.locations[0].world} - {found_level.display_information.name}"
+            )
 
     def add_jump(self):
         self.level_ref.add_jump()
