@@ -10,6 +10,7 @@ class ObjectList(QListWidget):
         super(ObjectList, self).__init__(parent=parent)
 
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
 
         self.setSelectionMode(self.ExtendedSelection)
 
