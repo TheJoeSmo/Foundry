@@ -190,16 +190,6 @@ jobs:
           asset_name: "win64-foundry-smb3.exe"
           asset_content_type: application/octet-stream
 
-      - name: Upload SMB3 Foundry Windows x32
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "artifacts/win32-foundry-smb3.exe/win32-foundry-smb3.exe"
-          asset_name: "win32-foundry-smb3.exe"
-          asset_content_type: application/octet-stream
-
       - name: Upload SMB3 Foundry Manual
         uses: actions/upload-release-asset@v1
         env:
