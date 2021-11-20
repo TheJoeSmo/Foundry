@@ -11,7 +11,7 @@ LINK_SMB3WS = "https://www.romhacking.net/utilities/298/"
 LINK_SOUTHBIRD = "https://github.com/captainsouthbird"
 LINK_DISASM = "https://github.com/captainsouthbird/smb3"
 LINK_BLUEFINCH = "https://www.twitch.tv/bluefinch3000"
-LINK_SKY = "https://www.youtube.com/channel/UCnI_HjFGbyRmfOBWzzxK6LA"
+LINK_SKJ = "https://www.youtube.com/channel/UCnI_HjFGbyRmfOBWzzxK6LA"
 LINK_PIJOKRA = "https://github.com/PiJoKra"
 
 
