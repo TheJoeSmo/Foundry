@@ -170,7 +170,7 @@ class MainWindow(QMainWindow):
         splitter.setOrientation(Qt.Vertical)
 
         splitter.addWidget(self.object_list)
-        splitter.setStretchFactor(0, 1)
+        splitter.setStretchFactor(1, 1)
         splitter.addWidget(self.jump_list)
         splitter.addWidget(JumpCreator(parent=self, level_view=self.level_view))
 
