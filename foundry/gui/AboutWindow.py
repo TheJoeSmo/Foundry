@@ -52,7 +52,7 @@ class AboutDialog(CustomDialog):
             LinkLabel(
                 self,
                 f'<a href="{LINK_BLUEFINCH}">BlueFinch</a>, ZacMario and '
-                f'<a href="{LINK_SKY}">SKJyannick</a> for testing and sanity checking',
+                f'<a href="{LINK_SKJ}">SKJyannick</a> for testing and sanity checking',
             )
         )
         text_layout.addWidget(QLabel("Spinzig for compiling the enemy incompatibilities.", self))
