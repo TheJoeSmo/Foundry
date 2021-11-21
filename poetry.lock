@@ -246,7 +246,7 @@ plugins = ["setuptools"]
 name = "jinja2"
 version = "3.0.2"
 description = "A very fast and expressive template engine."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -271,7 +271,7 @@ altgraph = ">=0.15"
 name = "markupsafe"
 version = "2.0.1"
 description = "Safely add untrusted strings to HTML/XML markup."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -471,14 +471,6 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
-name = "pyqtdarktheme"
-version = "0.1.7"
-description = "Flat dark theme for PySide, PyQt."
-category = "main"
-optional = false
-python-versions = ">=3.7,<4.0"
-
-[[package]]
 name = "pyside6"
 version = "6.2.1"
 description = "Python bindings for the Qt cross-platform application and UI framework"
@@ -540,6 +532,17 @@ description = ""
 category = "dev"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "qt-material"
+version = "2.8.13"
+description = "Qt Stylesheet for PySide6, PySide2 and PyQt5."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Jinja2 = "*"
 
 [[package]]
 name = "regex"
@@ -749,7 +752,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9.0,<3.10"
-content-hash = "dc0c306f8bfbea3c5de43c7d1cd5028cd8f63863cc8ba07cddb7c2f6c52e37eb"
+content-hash = "3c2266cebaa357b22087f4b286b025cddcd756e98de18b989032ee007753c731"
 
 [metadata.files]
 alabaster = [
@@ -997,10 +1000,6 @@ pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
-pyqtdarktheme = [
-    {file = "PyQtDarkTheme-0.1.7-py3-none-any.whl", hash = "sha256:a454cfa1e4e1ef29703d8cf47158f77917428549a1cb1bb4f25affbb4a354195"},
-    {file = "PyQtDarkTheme-0.1.7.tar.gz", hash = "sha256:75708e22048cabe88cd117794d6d2e84b3357602407bc11460409ec6cf3255a0"},
-]
 pyside6 = [
     {file = "PySide6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_14_x86_64.whl", hash = "sha256:f1ac2cd8b9712d2a2fbe0780a895afc0d4cdb7869d698d64ea75bde6b862ed8a"},
     {file = "PySide6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl", hash = "sha256:8fd5a9d0948392098f293a82ecf44d3daf347704e8058c654b4b5fdd2d96ee68"},
@@ -1021,6 +1020,10 @@ pytz = [
 pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
     {file = "pywin32_ctypes-0.2.0-py2.py3-none-any.whl", hash = "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"},
+]
+qt-material = [
+    {file = "qt-material-2.8.13.tar.gz", hash = "sha256:e23c9a9805b13142c7de4fdce50dc8a73abde740ba46972767e41fe6b9cc929a"},
+    {file = "qt_material-2.8.13-py3-none-any.whl", hash = "sha256:a3c933adad47ff16c7d4bdfd1ee2d842f4551d426c334869bf39182b798fd7c2"},
 ]
 regex = [
     {file = "regex-2021.11.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:897c539f0f3b2c3a715be651322bef2167de1cdc276b3f370ae81a3bda62df71"},
