@@ -63,7 +63,7 @@ from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
 from foundry.gui.PaletteViewer import PaletteViewer, SidePalette
-from foundry.gui.settings import SETTINGS, save_settings
+from foundry.gui.settings import GUI_STYLE, SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.Toolbar import create_toolbar
@@ -111,7 +111,11 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setWindowIcon(icon(main_window_flags["icon"]))
-        self.setStyleSheet(SETTINGS[main_window_flags["style"]])
+        try:
+            GUI_STYLE[SETTINGS["gui_style"]](self)
+        except KeyError:
+            SETTINGS["gui_style"] = "LIGHT BLUE"
+            GUI_STYLE[SETTINGS["gui_style"]]
 
         setup_window(self, main_window_flags)
 

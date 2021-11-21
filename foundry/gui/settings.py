@@ -1,16 +1,39 @@
 import json
-from functools import partial
 
-import qdarktheme
+from qt_material import build_stylesheet
 
 from foundry import default_settings_path
 
 RESIZE_LEFT_CLICK = "LMB"
 RESIZE_RIGHT_CLICK = "RMB"
 
+
+def set_style(theme):
+    def wrapped(app):
+        app.setStyleSheet(build_stylesheet(theme))
+
+    return wrapped
+
+
 GUI_STYLE = {
-    "RETRO": lambda: "",
-    "DRACULA": partial(qdarktheme.load_stylesheet),
+    "DARK AMBER": set_style("dark_amber.xml"),
+    "DARK BLUE": set_style("dark_blue.xml"),
+    "DARK CYAN": set_style("dark_cyan.xml"),
+    "DARK GREEN": set_style("dark_lightgreen.xml"),
+    "DARK PINK": set_style("dark_pink.xml"),
+    "DARK PURPLE": set_style("dark_purple.xml"),
+    "DARK RED": set_style("dark_red.xml"),
+    "DARK TEAL": set_style("dark_teal.xml"),
+    "DARK YELLOW": set_style("dark_yellow.xml"),
+    "LIGHT AMBER": set_style("light_amber.xml"),
+    "LIGHT BLUE": set_style("light_blue.xml"),
+    "LIGHT CYAN": set_style("light_cyan.xml"),
+    "LIGHT GREEN": set_style("light_lightgreen.xml"),
+    "LIGHT PINK": set_style("light_pink.xml"),
+    "LIGHT PURPLE": set_style("light_purple.xml"),
+    "LIGHT RED": set_style("light_red.xml"),
+    "LIGHT TEAL": set_style("light_teal.xml"),
+    "LIGHT YELLOW": set_style("light_yellow.xml"),
 }
 
 SETTINGS = dict()
