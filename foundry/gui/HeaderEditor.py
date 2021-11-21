@@ -80,6 +80,7 @@ class HeaderEditor(CustomDialog):
         super(HeaderEditor, self).__init__(parent, "Level Header Editor")
 
         self.level: Level = level_ref.level
+        assert self.level is not None
 
         # enables undo
         self.header_change.connect(level_ref.save_level_state)
@@ -92,7 +93,11 @@ class HeaderEditor(CustomDialog):
         # level settings
 
         self.length_dropdown = QComboBox()
-        self.length_dropdown.addItems(STR_LEVEL_LENGTHS)
+        if self.level.is_vertical:
+            self.length_dropdown.addItems(STR_LEVEL_LENGTHS)
+        else:
+            self.length_dropdown.addItems(STR_LEVEL_LENGTHS[:-1])
+
         self.length_dropdown.activated.connect(self.on_combo)
 
         self.music_dropdown = QComboBox()
@@ -345,6 +350,12 @@ class HeaderEditor(CustomDialog):
             self.level.pipe_ends_level = self.pipe_ends_level_cb.isChecked()
         elif checkbox == self.level_is_vertical_cb:
             self.level.is_vertical = self.level_is_vertical_cb.isChecked()
+
+            self.length_dropdown.clear()
+            if self.level.is_vertical:
+                self.length_dropdown.addItems(STR_LEVEL_LENGTHS)
+            else:
+                self.length_dropdown.addItems(STR_LEVEL_LENGTHS[:-1])
 
         self.level.data_changed.disconnect()
 
