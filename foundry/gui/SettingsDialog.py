@@ -118,18 +118,15 @@ class SettingsDialog(CustomDialog):
         # GUI theme section
 
         self.gui_style_box = QGroupBox("GUI", self)
-        QHBoxLayout(self.gui_style_box)
-
-        self.gui_style_box.layout().addWidget(QLabel("Style:"))
+        self.gui_style_hbox = QHBoxLayout(self.gui_style_box)
+        self.gui_style_hbox.addWidget(QLabel("Style:"))
+        self.gui_style_combo_box = QComboBox()
+        self.gui_style_hbox.addWidget(self.gui_style_combo_box)
 
         for gui_style in GUI_STYLE.keys():
-            gui_style = gui_style.capitalize()
-
-            style_radio_button = QRadioButton(gui_style)
-            style_radio_button.setChecked(SETTINGS["gui_style"] == GUI_STYLE[gui_style.upper()]())
-            style_radio_button.toggled.connect(self._update_settings)
-
-            self.gui_style_box.layout().addWidget(style_radio_button)
+            self.gui_style_combo_box.addItem(gui_style.capitalize())
+        self.gui_style_combo_box.setCurrentIndex(list(GUI_STYLE.keys()).index(SETTINGS["gui_style"]))
+        self.gui_style_combo_box.currentIndexChanged.connect(self._update_settings)
 
         # -----------------------------------------------
         # emulator command
@@ -229,16 +226,8 @@ class SettingsDialog(CustomDialog):
             SETTINGS["resize_mode"] = RESIZE_RIGHT_CLICK
 
         # setup style sheets
-        for child_widget in self.gui_style_box.children():
-            if isinstance(child_widget, QRadioButton):
-                if child_widget.isChecked():
-                    selected_gui_style = child_widget.text().upper()
-
-                    loaded_style_sheet = GUI_STYLE[selected_gui_style]()
-                    SETTINGS["gui_style"] = loaded_style_sheet
-
-                    self.parent().setStyleSheet(SETTINGS["gui_style"])
-                    break
+        SETTINGS["gui_style"] = self.gui_style_combo_box.currentText().upper()
+        GUI_STYLE[SETTINGS["gui_style"]](self.parent())
 
         SETTINGS["object_scroll_enabled"] = self._scroll_check_box.isChecked()
         SETTINGS["object_tooltip_enabled"] = self._tooltip_check_box.isChecked()
