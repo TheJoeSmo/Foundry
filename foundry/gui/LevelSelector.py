@@ -123,7 +123,7 @@ class LevelSelector(QDialog):
             world_map_select = WorldMapLevelSelect(world_number)
             world_map_select.level_selected.connect(self._on_level_selected_via_world_map)
 
-            self.source_selector.addTab(world_map_select, f"World {world_number}")
+            self.source_selector.addTab(world_map_select, f"W{world_number}")
 
         data_layout = QGridLayout()
 
