@@ -218,7 +218,7 @@ class HeaderEditor(CustomDialog):
         widget = QWidget()
         widget.setLayout(form)
 
-        self.tab_widget.addTab(widget, "Jump Destination")
+        self.tab_widget.addTab(widget, "Warping")
 
         self.header_bytes_label = QLabel()
 
