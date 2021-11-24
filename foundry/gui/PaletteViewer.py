@@ -232,8 +232,8 @@ class SidePalette(QWidget):
     def update(self):
         clear_layout(self.layout())
 
-        palette_group_index = self.level_ref.object_palette_index
-        palette_group = load_palette_group(self.level_ref.object_set_number, palette_group_index)
+        palette_group_index = self.level_ref.level.object_palette_index
+        palette_group = load_palette_group(self.level_ref.level.object_set_number, palette_group_index)
 
         for palette_no in range(PALETTES_PER_PALETTES_GROUP):
             widget = PaletteWidget(palette_group, palette_no)
@@ -256,6 +256,6 @@ class SidePalette(QWidget):
 
             PaletteGroup.changed = True
 
-            self.level_ref.reload()
+            self.level_ref.level.reload()
 
         return actual_changer

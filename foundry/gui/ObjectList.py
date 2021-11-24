@@ -70,7 +70,7 @@ class ObjectList(QListWidget):
         self.context_menu.as_list_menu().popup(event.globalPos())
 
     def update_content(self):
-        level_objects = self.level_ref.get_all_objects()
+        level_objects = self.level_ref.level.get_all_objects()
 
         labels = [obj.name for obj in level_objects]
 

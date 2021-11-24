@@ -8,7 +8,7 @@ from foundry.gui.HeaderEditor import HeaderEditor
 
 @pytest.fixture
 def header_editor(main_window):
-    level = main_window.level_ref
+    level = main_window.manager.controller.level_ref
 
     return HeaderEditor(None, level)
 

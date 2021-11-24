@@ -3,7 +3,7 @@ from foundry.game.gfx.objects.LevelObject import LevelObject
 
 def test_domain_spinner(main_window):
     # GIVEN a spinner panel and a level with a selected object
-    level_ref = main_window.level_ref
+    level_ref = main_window.manager.controller.level_ref
 
     level_object = level_ref.level.objects[0]
     level_object.selected = True
@@ -27,7 +27,7 @@ def test_domain_spinner(main_window):
 
 def test_object_selected(main_window):
     # GIVEN the main window containing the spinner panel
-    level_ref = main_window.level_ref
+    level_ref = main_window.manager.controller.level_ref
 
     # WHEN a level object or enemy is selected and the spinner is updated
     level_obj = level_ref.level.objects[0]
