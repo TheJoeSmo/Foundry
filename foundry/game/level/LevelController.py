@@ -153,8 +153,13 @@ class LevelController:
         self.parent.level_view.zoom_out()
 
     def middle_mouse_release(self, position: QPoint):
-        pos = self.parent.level_view.mapFromGlobal(position).toTuple()
-        self.place_object_from_dropdown(pos)  # type: ignore
+        pointf = self.parent.level_view.mapFromGlobal(position)
+        pos = (int(pointf.x()), int(pointf.y()))
+
+        # If the number is negative do not do anything
+        if any([num < 0 for num in pos]):
+            return
+        self.place_object_from_dropdown(pos)
 
     @undoable
     def to_foreground(self):
