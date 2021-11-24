@@ -49,8 +49,8 @@ def get_current_version_name() -> str:
 
 
 def get_latest_version_name(timeout: int = 10) -> str:
-    owner = "mchlnix"
-    repo = "SMB3-Foundry"
+    owner = "TheJoeSmo"
+    repo = "Foundry"
 
     api_call = f"https://api.github.com/repos/{owner}/{repo}/releases"
 
