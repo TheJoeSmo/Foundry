@@ -12,6 +12,11 @@
 #
 import os
 import sys
+from pathlib import Path
+
+from single_source import get_version
+
+root_dir = Path(__file__).parent.parent
 
 sys.path.insert(0, os.path.abspath(".../foundry"))
 
@@ -27,7 +32,7 @@ copyright = "2021, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
-release = "0.2.9"
+release = get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
 
 
 # -- General configuration ---------------------------------------------------
