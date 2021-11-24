@@ -696,7 +696,8 @@ class MainWindow(QMainWindow):
         self.manager.display_jump_editor()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        self.manager.middle_mouse_release(self.mapToGlobal(event.position()))
+        if event.button() == Qt.MiddleButton:
+            self.manager.middle_mouse_release(self.mapToGlobal(event.position()))
 
     def on_about(self, _):
         about = AboutDialog(self)
