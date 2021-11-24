@@ -264,6 +264,7 @@ class LevelController:
     def update_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, object_set: int):
         self.level_ref.load_level(level_name, object_data_offset, enemy_data_offset, object_set)
         self.update_gui_for_level()
+        self.parent.update_title()
 
     def update_gui_for_level(self):
         restore_all_palettes()
