@@ -34,3 +34,6 @@ class LevelControlled(Protocol):
     @property
     def safe_to_change(self) -> bool:
         ...
+
+    def update_title(self):
+        ...
