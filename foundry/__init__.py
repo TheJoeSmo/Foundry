@@ -4,7 +4,6 @@ import urllib.request
 from pathlib import Path
 from typing import Union
 
-from pkg_resources import get_distribution
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices, QIcon
 
@@ -44,10 +43,9 @@ def open_url(url: Union[str, QUrl]):
 
 
 def get_current_version_name() -> str:
-    try:
-        return "0.1.0"  # get_distribution("foundry").version
-    except LookupError:
-        return "beta"
+    from single_source import get_version
+
+    return get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
 
 
 def get_latest_version_name(timeout: int = 10) -> str:
