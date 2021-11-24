@@ -1,25 +1,20 @@
 import base64
 import json
-import logging
 import os
 import pathlib
 import shlex
 import subprocess
 import tempfile
-from typing import Optional, Tuple, Union
+from typing import Optional
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShortcut, Qt
 from PySide6.QtWidgets import (
-    QDialog,
     QFileDialog,
     QMainWindow,
     QMenu,
     QMessageBox,
     QPushButton,
-    QScrollArea,
-    QSizePolicy,
-    QSplitter,
     QToolBar,
     QWhatsThis,
 )
@@ -36,39 +31,18 @@ from foundry import (
     releases_link,
 )
 from foundry.game.File import ROM
-from foundry.game.gfx.objects.EnemyItem import EnemyObject
-from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.Palette import (
     PaletteGroup,
     restore_all_palettes,
     save_all_palette_groups,
 )
-from foundry.game.level.Level import Level, world_and_level_for_level_address
-from foundry.game.level.LevelRef import LevelRef
-from foundry.game.level.WorldMap import WorldMap
+from foundry.game.level.LevelManager import LevelManager
 from foundry.gui.AboutWindow import AboutDialog
-from foundry.gui.AutoScrollEditor import AutoScrollEditor
-from foundry.gui.BlockViewer import BlockViewer
-from foundry.gui.ContextMenu import CMAction, ContextMenu
-from foundry.gui.HeaderEditor import HeaderEditor
-from foundry.gui.JumpCreator import JumpCreator
-from foundry.gui.JumpEditor import JumpEditor
-from foundry.gui.JumpList import JumpList
+from foundry.gui.ContextMenu import CMAction
 from foundry.gui.LevelSelector import LevelSelector
-from foundry.gui.LevelSizeBar import LevelSizeBar
-from foundry.gui.LevelView import LevelView, undoable
-from foundry.gui.ObjectDropdown import ObjectDropdown
-from foundry.gui.ObjectList import ObjectList
-from foundry.gui.ObjectStatusBar import ObjectStatusBar
-from foundry.gui.ObjectToolBar import ObjectToolBar
-from foundry.gui.ObjectViewer import ObjectViewer
-from foundry.gui.PaletteViewer import PaletteViewer, SidePalette
 from foundry.gui.settings import GUI_STYLE, SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
-from foundry.gui.SpinnerPanel import SpinnerPanel
-from foundry.gui.Toolbar import create_toolbar
 from foundry.gui.util import setup_window
-from foundry.gui.WarningList import WarningList
 from foundry.smb3parse.constants import (
     TILE_LEVEL_1,
     Title_DebugMenu,
@@ -119,86 +93,8 @@ class MainWindow(QMainWindow):
 
         setup_window(self, main_window_flags)
 
-        self.block_viewer = None
-        self.object_viewer = None
-
-        self.level_selector_last_level = None
-        self.level_ref = LevelRef()
-        self.level_ref.data_changed.connect(self._on_level_data_changed)
-
-        self.context_menu = ContextMenu(self.level_ref)
-        self.context_menu.triggered.connect(self.on_menu)
-
-        self.level_view = LevelView(self, self.level_ref, self.context_menu)
-
-        self.scroll_panel = QScrollArea()
-        self.scroll_panel.setWidgetResizable(True)
-        self.scroll_panel.setWidget(self.level_view)
-
-        self.setCentralWidget(self.scroll_panel)
-
-        self.spinner_panel = SpinnerPanel(self, self.level_ref)
-        self.spinner_panel.zoom_in_triggered.connect(self.level_view.zoom_in)
-        self.spinner_panel.zoom_out_triggered.connect(self.level_view.zoom_out)
-        self.spinner_panel.object_change.connect(self.on_spin)
-
-        self.object_list = ObjectList(self, self.level_ref, self.context_menu)
-
-        self.object_dropdown = ObjectDropdown(self)
-        self.object_dropdown.object_selected.connect(self._on_placeable_object_selected)
-
-        self.level_size_bar = LevelSizeBar(self, "Generators", 0, 0)
-
-        def update_level_size_bar(*args, **kwargs):
-            self.level_size_bar.current_value = self.level_ref.level.current_object_size()
-            self.level_size_bar.maximum_value = self.level_ref.level.object_size_on_disk
-
-        self.level_ref.data_changed.connect(update_level_size_bar)
-
-        self.enemy_size_bar = LevelSizeBar(self, "Enemies/Items", 0, 0)
-
-        def update_enemy_size_bar(*args, **kwargs):
-            self.enemy_size_bar.current_value = self.level_ref.level.current_enemies_size()
-            self.enemy_size_bar.maximum_value = self.level_ref.level.enemy_size_on_disk
-
-        self.level_ref.data_changed.connect(update_enemy_size_bar)
-
-        size_and_palette = SidePalette(self.level_ref)
-
-        self.jump_list = JumpList(self, self.level_ref)
-        self.jump_list.add_jump.connect(self.on_jump_added)
-        self.jump_list.edit_jump.connect(self.on_jump_edit)
-        self.jump_list.remove_jump.connect(self.on_jump_removed)
-
-        splitter = QSplitter(self)
-        splitter.setOrientation(Qt.Vertical)
-
-        splitter.addWidget(self.object_list)
-        splitter.setStretchFactor(1, 1)
-        splitter.addWidget(self.jump_list)
-        splitter.addWidget(JumpCreator(parent=self, level_view=self.level_view))
-
-        splitter.setChildrenCollapsible(False)
-
-        create_toolbar(self, "Generator Editor", [self.spinner_panel], Qt.RightToolBarArea)
-        create_toolbar(self, "Generator Dropdown", [self.object_dropdown], Qt.RightToolBarArea)
-        create_toolbar(self, "Palette", [size_and_palette], Qt.RightToolBarArea)
-        create_toolbar(self, "Level Size", [self.level_size_bar], Qt.RightToolBarArea)
-        create_toolbar(self, "Enemy Size", [self.enemy_size_bar], Qt.RightToolBarArea)
-        create_toolbar(self, "Splitter", [splitter], Qt.RightToolBarArea)
-
-        self.object_toolbar = ObjectToolBar(self)
-        self.object_toolbar.object_selected.connect(self._on_placeable_object_selected)
-
-        object_toolbar = QToolBar("Object Toolbar", self)
-        object_toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
-        object_toolbar.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        object_toolbar.setFloatable(False)
-
-        object_toolbar.addWidget(self.object_toolbar)
-        object_toolbar.setAllowedAreas(Qt.LeftToolBarArea | Qt.RightToolBarArea)
-
-        self.addToolBar(Qt.LeftToolBarArea, object_toolbar)
+        self.manager = LevelManager(self)
+        self.manager.on_enable()
 
         self.menu_toolbar = QToolBar("Menu Toolbar", self)
         self.menu_toolbar.setOrientation(Qt.Horizontal)
@@ -212,10 +108,10 @@ class MainWindow(QMainWindow):
         self.menu_toolbar.addSeparator()
 
         self.undo_action = self.menu_toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
-        self.undo_action.triggered.connect(self.level_ref.undo)
+        self.undo_action.triggered.connect(self.manager.undo)
         self.undo_action.setEnabled(False)
         self.redo_action = self.menu_toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
-        self.redo_action.triggered.connect(self.level_ref.redo)
+        self.redo_action.triggered.connect(self.manager.redo)
         self.redo_action.setEnabled(False)
 
         self.menu_toolbar.addSeparator()
@@ -223,11 +119,11 @@ class MainWindow(QMainWindow):
         play_action.triggered.connect(self.on_play)
         play_action.setWhatsThis("Opens an emulator with the current Level set to 1-1.\nSee Settings.")
         self.menu_toolbar.addSeparator()
-        self.menu_toolbar.addAction(icon("zoom-out.svg"), "Zoom Out").triggered.connect(self.level_view.zoom_out)
-        self.menu_toolbar.addAction(icon("zoom-in.svg"), "Zoom In").triggered.connect(self.level_view.zoom_in)
+        self.menu_toolbar.addAction(icon("zoom-out.svg"), "Zoom Out").triggered.connect(self.manager.zoom_out)
+        self.menu_toolbar.addAction(icon("zoom-in.svg"), "Zoom In").triggered.connect(self.manager.zoom_in)
         self.menu_toolbar.addSeparator()
         header_action = self.menu_toolbar.addAction(icon("tool.svg"), "Edit Level Header")
-        header_action.triggered.connect(self.on_header_editor)
+        header_action.triggered.connect(self.manager.display_header_editor)
         header_action.setWhatsThis(
             "<b>Header Editor</b><br/>"
             "Many configurations regarding the level are done in its header, like the length of "
@@ -237,7 +133,7 @@ class MainWindow(QMainWindow):
         self.jump_destination_action = self.menu_toolbar.addAction(
             icon("arrow-right-circle.svg"), "Go to Jump Destination"
         )
-        self.jump_destination_action.triggered.connect(self._go_to_jump_destination)
+        self.jump_destination_action.triggered.connect(self.manager.warp_to_alternative)
         self.jump_destination_action.setWhatsThis(
             "Opens the level, that can be reached from this one, e.g. by entering a pipe."
         )
@@ -250,53 +146,32 @@ class MainWindow(QMainWindow):
         whats_this_action.setText("Starts 'What's this?' mode")
         self.menu_toolbar.addAction(whats_this_action)
 
-        self.menu_toolbar.addSeparator()
-        self.warning_list = WarningList(self, self.level_ref, self.level_view, self.object_list)
-
-        warning_action = self.menu_toolbar.addAction(icon("alert-triangle.svg"), "Warning Panel")
-        warning_action.setWhatsThis("Shows a list of warnings.")
-        warning_action.triggered.connect(self.warning_list.show)
-        warning_action.setDisabled(True)
-
-        self.warning_list.warnings_updated.connect(warning_action.setEnabled)
+        self.warning_action = self.menu_toolbar.addAction(icon("alert-triangle.svg"), "Warning Panel")
+        self.warning_action.setWhatsThis("Shows a list of warnings.")
+        self.warning_action.setDisabled(True)
+        self.warning_action.triggered.connect(self.manager.display_warnings)
 
         self.addToolBar(Qt.TopToolBarArea, self.menu_toolbar)
 
-        self.status_bar = ObjectStatusBar(self, self.level_ref)
-        self.setStatusBar(self.status_bar)
+        self.delete_shortcut = QShortcut(QKeySequence(Qt.Key_Delete), self, self.manager.delete)
 
-        self.delete_shortcut = QShortcut(QKeySequence(Qt.Key_Delete), self, self.remove_selected_objects)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_X), self, self.manager.cut)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_C), self, self.manager.copy)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_V), self, self.manager.paste)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_X), self, self._cut_objects)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_C), self, self._copy_objects)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_V), self, self._paste_objects)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Z), self, self.manager.undo)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Y), self, self.manager.redo)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Z), self, self.manager.redo)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Z), self, self.level_ref.undo)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Y), self, self.level_ref.redo)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Z), self, self.level_ref.redo)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Plus), self, self.manager.zoom_in)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Minus), self, self.manager.zoom_out)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Plus), self, self.level_view.zoom_in)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Minus), self, self.level_view.zoom_out)
-
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_A), self, self.level_view.select_all)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_L), self, self.object_dropdown.setFocus)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_A), self, self.manager.select_all)
+        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_L), self, self.manager.focus_selected)
 
         self.on_open_rom(path_to_rom)
 
         self.showMaximized()
-
-    def _on_level_data_changed(self):
-        self.undo_action.setEnabled(self.level_ref.can_undo)
-        self.redo_action.setEnabled(self.level_ref.can_redo)
-
-        self.jump_destination_action.setEnabled(self.level_ref.level.has_next_area)
-
-        level_has_changed = self.level_ref.level.changed
-        level_is_m3l = not self.level_ref.level.attached_to_rom
-
-        self.menu_toolbar_save_action.setEnabled(level_has_changed or level_is_m3l or PaletteGroup.changed)
-
-        self._save_auto_data()
 
     def _on_show_settings(self):
         SettingsDialog(self).exec_()
@@ -306,36 +181,32 @@ class MainWindow(QMainWindow):
         ROM().save_to_file(auto_save_rom_path, set_new_path=False)
 
     def _save_auto_data(self):
-        assert self.level_ref._undo_controller is not None
+        if self.manager.controller is None:
+            return
 
-        undo_index = len(self.level_ref._undo_controller.undo_stack)
+        (object_offset, object_data), (enemy_offset, enemy_data) = self.manager.controller.level_ref.level.to_bytes()
 
-        (level_offset, _), (enemy_offset, _) = self.level_ref.level.to_bytes()
+        object_set_number = self.manager.controller.level_ref.level.object_set_number
 
-        object_set_number = self.level_ref.level.object_set_number
-
-        (object_offset, object_data), (enemy_offset_, enemy_data) = self.level_ref.state
         base64_data = []
         base64_data.append(
             (
                 object_offset,
                 base64.b64encode(object_data).decode("ascii"),
-                enemy_offset_,
+                enemy_offset,
                 base64.b64encode(enemy_data).decode("ascii"),
             )
         )
 
         with open(auto_save_level_data_path, "w") as level_data_file:
-            level_data_file.write(
-                json.dumps([object_set_number, level_offset, enemy_offset, (undo_index, base64_data)])
-            )
+            level_data_file.write(json.dumps([object_set_number, object_offset, enemy_offset, base64_data]))
 
     def _load_auto_save(self):
         # rom already loaded
         with open(auto_save_level_data_path, "r") as level_data_file:
             json_data = level_data_file.read()
 
-            object_set_number, level_offset, enemy_offset, (undo_index, base64_data) = json.loads(json_data)
+            object_set_number, level_offset, enemy_offset, base64_data = json.loads(json_data)
 
         # load level from ROM, or from m3l file
         if level_offset == enemy_offset == 0:
@@ -353,28 +224,15 @@ class MainWindow(QMainWindow):
 
         # restore undo/redo stack
         byte_data = []
-        for undo_data in base64_data:
-            level_offset, object_data, enemy_offset, enemy_data = undo_data
+        level_offset, object_data, enemy_offset, enemy_data = base64_data
+        object_data = bytearray(base64.b64decode(object_data))
+        enemy_data = bytearray(base64.b64decode(enemy_data))
+        byte_data.append(((level_offset, object_data), (enemy_offset, enemy_data)))
 
-            object_data = bytearray(base64.b64decode(object_data))
-            enemy_data = bytearray(base64.b64decode(enemy_data))
-
-            byte_data.append(((level_offset, object_data), (enemy_offset, enemy_data)))
-
-        self.level_ref.changed = bool(base64_data)
-        self.level_ref.import_undo_stack_data(undo_index, byte_data)
-
-    def _go_to_jump_destination(self):
-        if not self.safe_to_change():
+        if self.manager.controller is None:
             return
-
-        level_address = self.level_ref.level.next_area_objects
-        enemy_address = self.level_ref.level.next_area_enemies + 1
-        object_set = self.level_ref.level.next_area_object_set
-
-        world, level = world_and_level_for_level_address(level_address)
-
-        self.update_level(f"Level {world}-{level}", level_address, enemy_address, object_set)
+        self.manager.controller.level_ref.changed = bool(base64_data)
+        self.manager.controller.level_ref.do(((level_offset, object_data), (enemy_offset, enemy_data)))
 
     def on_play(self):
         """
@@ -431,12 +289,6 @@ class MainWindow(QMainWindow):
         rom = SMB3Rom(bytearray(data))
         return rom
 
-    def _show_jump_dest(self):
-        header_editor = HeaderEditor(self, self.level_ref)
-        header_editor.tab_widget.setCurrentIndex(3)
-
-        header_editor.exec_()
-
     def _put_current_level_to_level_1_1(self, rom) -> bool:
         # load world data
         world = SMB3World.from_world_number(rom, SETTINGS["default_starting_world"])
@@ -451,7 +303,7 @@ class MainWindow(QMainWindow):
             )
             return False
 
-        if not self.level_ref.level.attached_to_rom:
+        if self.manager.controller is not None and not self.manager.controller.level_ref.level.attached_to_rom:
             QMessageBox.critical(
                 self,
                 "Couldn't place level",
@@ -460,12 +312,17 @@ class MainWindow(QMainWindow):
             return False
 
         # write level and enemy data of current level
-        (layout_address, layout_bytes), (enemy_address, enemy_bytes) = self.level_ref.level.to_bytes()
+        if self.manager.controller is None:
+            return False
+        (layout_address, layout_bytes), (
+            enemy_address,
+            enemy_bytes,
+        ) = self.manager.controller.level_ref.level.to_bytes()
         rom.write(layout_address, layout_bytes)
         rom.write(enemy_address, enemy_bytes)
 
         # replace level information with that of current level
-        object_set_number = self.level_ref.level.object_set_number
+        object_set_number = self.manager.controller.level_ref.level.object_set_number
 
         world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
 
@@ -529,10 +386,7 @@ class MainWindow(QMainWindow):
         rom.write(Map_Power_DispResetLocation, bytes([nop, nop, nop]))
 
     def on_screenshot(self, _) -> bool:
-        if self.level_view is None:
-            return False
-
-        recommended_file = f"{os.path.expanduser('~')}/{ROM.name} - {self.level_view.level_ref.name}.png"
+        recommended_file = f"{os.path.expanduser('~')}/{ROM.name} - {self.manager.title_suggestion}.png"
 
         pathname, _ = QFileDialog.getSaveFileName(
             self, caption="Save Screenshot", dir=recommended_file, filter=IMG_FILE_FILTER
@@ -542,17 +396,12 @@ class MainWindow(QMainWindow):
             return False
 
         # Proceed loading the file chosen by the user
-        self.level_view.make_screenshot().save(pathname)
+        self.manager.screenshot.save(pathname)
 
         return True
 
     def update_title(self):
-        if self.level_view.level_ref is not None and ROM is not None:
-            title = f"{self.level_view.level_ref.level.name} - {ROM.name}"
-        else:
-            title = "SMB3Foundry"
-
-        self.setWindowTitle(title)
+        self.setWindowTitle(self.manager.title_suggestion if self.manager.enabled else "SMB3Foundry")
 
     def on_open_rom(self, path_to_rom="") -> bool:
         if not self.safe_to_change():
@@ -562,10 +411,6 @@ class MainWindow(QMainWindow):
             # otherwise ask the user what new file to open
             path_to_rom, _ = QFileDialog.getOpenFileName(self, caption="Open ROM", filter=ROM_FILE_FILTER)
 
-            if not path_to_rom:
-                self._enable_disable_gui_elements()
-                return False
-
         # Proceed loading the file chosen by the user
         try:
             ROM.load_from_file(path_to_rom)
@@ -574,13 +419,11 @@ class MainWindow(QMainWindow):
                 self._load_auto_save()
             else:
                 self._save_auto_rom()
-                return self.open_level_selector(None)
-
+                self.manager.on_select()
+            return True
         except IOError as exp:
             QMessageBox.warning(self, type(exp).__name__, f"Cannot open file '{path_to_rom}'.")
             return False
-        finally:
-            self._enable_disable_gui_elements()
 
     def on_open_m3l(self, _) -> bool:
         if not self.safe_to_change():
@@ -602,23 +445,15 @@ class MainWindow(QMainWindow):
 
             return False
 
-        self.load_m3l(m3l_data, pathname)
-        self.save_m3l(auto_save_m3l_path, self.level_ref.level.to_m3l())
+        self.manager.load_m3l(m3l_data, pathname)
+        self.save_m3l(auto_save_m3l_path, self.manager.to_m3l())
 
         return True
 
-    def load_m3l(self, m3l_data: bytearray, pathname: str):
-        self.level_ref.level.from_m3l(m3l_data)
-
-        self.level_view.level_ref.level.name = os.path.basename(pathname)
-
-        self.update_gui_for_level()
-
     def safe_to_change(self) -> bool:
-        if not self.level_ref:
+        if self.manager.safe_to_change:
             return True
-
-        if self.level_ref.level.changed:
+        else:
             answer = QMessageBox.question(
                 self,
                 "Please confirm",
@@ -628,8 +463,6 @@ class MainWindow(QMainWindow):
             )
 
             return answer == QMessageBox.Yes
-        else:
-            return True
 
     def _ask_for_palette_save(self) -> bool:
         """
@@ -657,7 +490,7 @@ class MainWindow(QMainWindow):
             save_all_palette_groups()
         elif answer == QMessageBox.RestoreDefaults:
             restore_all_palettes()
-            self.level_ref.level.reload()
+            self.manager.refresh()
 
         return True
 
@@ -668,7 +501,7 @@ class MainWindow(QMainWindow):
         self.save_rom(True)
 
     def save_rom(self, is_save_as):
-        safe_to_save, reason, additional_info = self.level_view.level_safe_to_save()
+        safe_to_save, reason, additional_info = self.manager.stable_changes
 
         if not safe_to_save:
             answer = QMessageBox.warning(
@@ -682,7 +515,7 @@ class MainWindow(QMainWindow):
             if answer == QMessageBox.No:
                 return
 
-        if not self.level_ref.level.attached_to_rom:
+        if not self.manager.is_attached:
             QMessageBox.information(
                 self,
                 "Importing M3L into ROM",
@@ -696,14 +529,12 @@ class MainWindow(QMainWindow):
             answer = level_selector.exec_()
 
             if answer == QMessageBox.Accepted:
-                self.level_view.level_ref.attach_to_rom(
-                    level_selector.object_data_offset, level_selector.enemy_data_offset
-                )
+                self.manager.attach(level_selector.object_data_offset, level_selector.enemy_data_offset)
 
                 if is_save_as:
                     # if we save to another rom, don't consider the level
                     # attached (to the current rom)
-                    self.level_view.level_ref.attached_to_rom = False
+                    self.manager.is_attached = False
                 else:
                     # the m3l is saved to the current ROM, we can get rid of the auto save
                     auto_save_m3l_path.unlink(missing_ok=True)
@@ -730,11 +561,11 @@ class MainWindow(QMainWindow):
         self.update_title()
 
         if not is_save_as:
-            self.level_ref.level.changed = False
+            self.manager.safe_to_change = True
 
     def _save_current_changes_to_file(self, pathname: str, set_new_path):
-        for offset, data in self.level_ref.level.to_bytes():
-            ROM().bulk_write(data, offset)
+        for data in self.manager.to_data():
+            ROM().bulk_write(bytearray(data.data), data.location)
 
         try:
             ROM().save_to_file(pathname, set_new_path)
@@ -744,7 +575,7 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, f"{type(exp).__name__}", f"Cannot save ROM data to file '{pathname}'.")
 
     def on_save_m3l(self, _):
-        suggested_file = self.level_view.level_ref.name
+        suggested_file = self.manager.title_suggestion
 
         if not suggested_file.endswith(".m3l"):
             suggested_file += ".m3l"
@@ -756,7 +587,7 @@ class MainWindow(QMainWindow):
         if not pathname:
             return
 
-        m3l_bytes = self.level_view.level_ref.level.to_m3l()
+        m3l_bytes = self.manager.to_m3l()
 
         self.save_m3l(pathname, m3l_bytes)
 
@@ -798,95 +629,38 @@ class MainWindow(QMainWindow):
 
         self.setCursor(Qt.ArrowCursor)
 
+    def reload_level(self):
+        self.manager.refresh()
+
     def on_menu(self, action: QAction):
         item_id = action.property(ID_PROP)
 
         if item_id in CHECKABLE_MENU_ITEMS:
             self.on_menu_item_checked(action)
-            self.level_view.update()
 
             # if setting a checkbox, keep the menu open
             menu_of_action: QMenu = self.sender()
             menu_of_action.exec_()
 
-        elif item_id in self.context_menu.get_all_menu_item_ids():
-            x, y = self.context_menu.get_position()
+        elif item_id in self.manager.actions:
+            x, y = self.manager.last_position
 
             if item_id == CMAction.REMOVE:
-                self.remove_selected_objects()
+                self.manager.delete()
             elif item_id == CMAction.ADD_OBJECT:
-                selected_object = self.object_dropdown.currentIndex()
-
-                if selected_object != -1:
-                    self.place_object_from_dropdown((x, y))
-                else:
-                    self.create_object_at(x, y)
-
+                self.manager.create_object_from_suggestion
             elif item_id == CMAction.CUT:
-                self._cut_objects()
+                self.manager.cut()
             elif item_id == CMAction.COPY:
-                self._copy_objects()
+                self.manager.copy()
             elif item_id == CMAction.PASTE:
-                self._paste_objects(x, y)
+                self.manager.paste(x, y)
             elif item_id == CMAction.FOREGROUND:
-                self.bring_objects_to_foreground()
+                self.manager.to_foreground()
             elif item_id == CMAction.BACKGROUND:
-                self.bring_objects_to_background()
+                self.manager.to_background()
 
-        self.level_view.update()
-
-    def reload_level(self):
-        if not self.safe_to_change():
-            return
-
-        level_name = self.level_view.level_ref.level.name
-        object_data = self.level_view.level_ref.level.header_offset
-        enemy_data = self.level_view.level_ref.level.enemy_offset
-        object_set = self.level_view.level_ref.level.object_set_number
-
-        self.update_level(level_name, object_data, enemy_data, object_set)
-
-    def _on_placeable_object_selected(self, level_object: Union[LevelObject, EnemyObject]):
-        if self.sender() is self.object_toolbar:
-            self.object_dropdown.select_object(level_object)
-        else:
-            self.object_toolbar.select_object(level_object)
-
-    @undoable
-    def bring_objects_to_foreground(self):
-        self.level_ref.level.bring_to_foreground(self.level_ref.selected_objects)
-
-    @undoable
-    def bring_objects_to_background(self):
-        self.level_ref.level.bring_to_background(self.level_ref.selected_objects)
-
-    @undoable
-    def create_object_at(self, x, y):
-        self.level_view.create_object_at(x, y)
-
-    @undoable
-    def create_enemy_at(self, x, y):
-        self.level_view.create_enemy_at(x, y)
-
-    def _cut_objects(self):
-        self._copy_objects()
-        self.remove_selected_objects()
-
-    def _copy_objects(self):
-        selected_objects = self.level_view.get_selected_objects().copy()
-
-        if selected_objects:
-            self.context_menu.set_copied_objects(selected_objects)
-
-    @undoable
-    def _paste_objects(self, x=None, y=None):
-        self.level_view.paste_objects_at(self.context_menu.get_copied_objects(), x, y)
-
-    @undoable
-    def remove_selected_objects(self):
-        self.level_view.remove_selected_objects()
-        self.level_view.update()
-        self.spinner_panel.disable_all()
+        self.manager.update()
 
     def on_menu_item_checked(self, action: QAction):
         item_id = action.property(ID_PROP)
@@ -900,228 +674,32 @@ class MainWindow(QMainWindow):
 
         save_settings()
 
-    @undoable
-    def on_spin(self, _):
-        selected_objects = self.level_ref.selected_objects
-
-        if len(selected_objects) != 1:
-            logging.error(selected_objects, RuntimeWarning)
-            return
-
-        selected_object = selected_objects[0]
-
-        obj_type = self.spinner_panel.get_type()
-
-        if isinstance(selected_object, LevelObject):
-            domain = self.spinner_panel.get_domain()
-
-            if selected_object.is_4byte:
-                length = self.spinner_panel.get_length()
-            else:
-                length = None
-
-            self.level_view.replace_object(selected_object, domain, obj_type, length)
-        else:
-            self.level_view.replace_enemy(selected_object, obj_type)
-
-        self.level_ref.data_changed.emit()
-
-    def fill_object_list(self):
-        self.object_list.Clear()
-
-        self.object_list.SetItems(self.level_view.get_object_names())
-
     def open_level_selector(self, _):
-        if not self.safe_to_change():
-            return
+        self.manager.on_select()
 
-        level_selector = LevelSelector(self, start_level=self.level_selector_last_level)
-
-        level_was_selected = level_selector.exec_() == QDialog.Accepted
-
-        self.level_selector_last_level = level_selector.current_level_index
-
-        if level_was_selected:
-            self.update_level(
-                level_selector.level_name,
-                level_selector.object_data_offset,
-                level_selector.enemy_data_offset,
-                level_selector.object_set,
-            )
-
-        return level_was_selected
+    def on_object_viewer(self):
+        self.manager.display_object_viewer()
 
     def on_block_viewer(self, _):
-        if self.block_viewer is None:
-            self.block_viewer = BlockViewer(parent=self)
-
-        if self.level_ref.level is not None:
-            self.block_viewer.object_set = self.level_ref.level.object_set.number
-            self.block_viewer.palette_group = self.level_ref.level.object_palette_index
-
-        self.block_viewer.show()
-
-    def on_object_viewer(self, _):
-        if self.object_viewer is None:
-            self.object_viewer = ObjectViewer(parent=self)
-
-        if self.level_ref.level is not None:
-            object_set = self.level_ref.level.object_set.number
-            graphics_set = self.level_ref.level.graphic_set
-
-            self.object_viewer.set_object_and_graphic_set(object_set, graphics_set)
-
-            if len(self.level_view.get_selected_objects()) == 1:
-                selected_object = self.level_view.get_selected_objects()[0]
-
-                if isinstance(selected_object, LevelObject):
-                    self.object_viewer.set_object(
-                        selected_object.domain, selected_object.obj_index, selected_object.length
-                    )
-
-        self.object_viewer.show()
+        self.manager.display_block_viewer()
 
     def on_palette_viewer(self, _):
-        PaletteViewer(self, self.level_ref).exec_()
+        self.manager.display_palette_viewer()
 
     def on_edit_autoscroll(self, _):
-        AutoScrollEditor(self, self.level_ref).exec_()
+        self.manager.display_autoscroll_editor()
 
     def on_header_editor(self, _):
-        HeaderEditor(self, self.level_ref).exec_()
-
-    def update_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, object_set: int):
-        try:
-            self.level_ref.load_level(level_name, object_data_offset, enemy_data_offset, object_set)
-        except IndexError:
-            QMessageBox.critical(self, "Please confirm", "Failed loading level. The level offsets don't match.")
-
-            return
-
-        self.update_gui_for_level()
-
-    def update_gui_for_level(self):
-        restore_all_palettes()
-
-        self._enable_disable_gui_elements()
-
-        self.update_title()
-        self.jump_list.update()
-
-        is_a_world_map = isinstance(self.level_ref.level, WorldMap)
-
-        self.save_m3l_action.setEnabled(not is_a_world_map)
-        self.edit_header_action.setEnabled(not is_a_world_map)
-
-        if is_a_world_map:
-            self.object_dropdown.Clear()
-            self.object_dropdown.setEnabled(False)
-
-            self.jump_list.setEnabled(False)
-            self.jump_list.Clear()
-        else:
-            self.object_dropdown.setEnabled(True)
-            self.object_dropdown.set_object_set(
-                self.level_ref.level.object_set_number, self.level_ref.level.graphic_set
-            )
-
-            self.jump_list.setEnabled(True)
-
-        self.object_toolbar.set_object_set(self.level_ref.level.object_set_number, self.level_ref.level.graphic_set)
-
-        self.level_view.update()
-
-    def _enable_disable_gui_elements(self):
-        # actions and widgets, that depend on whether the ROM is loaded
-        rom_elements = [
-            # entries in file menu
-            self.open_m3l_action,
-            self.save_rom_action,
-            self.save_rom_as_action,
-            # entry in level menu
-            self.select_level_action,
-        ]
-
-        # actions and widgets, that depend on whether a level is loaded or not
-        level_elements = [
-            # entry in file menu
-            self.save_m3l_action,
-            # top toolbar
-            self.menu_toolbar,
-            # other gui elements
-            self.level_view,
-            self.spinner_panel,
-            self.object_toolbar,
-            self.level_size_bar,
-            self.enemy_size_bar,
-            self.object_list,
-            self.jump_list,
-            self.object_toolbar,
-        ]
-
-        level_elements.extend(self.level_menu.actions())
-        level_elements.remove(self.select_level_action)
-
-        level_elements.extend(self.object_menu.actions())
-        level_elements.extend(self.view_menu.actions())
-
-        for gui_element in rom_elements:
-            gui_element.setEnabled(ROM.is_loaded())
-
-        for gui_element in level_elements:
-            gui_element.setEnabled(ROM.is_loaded() and self.level_ref.level.fully_loaded)
+        self.manager.display_header_editor()
 
     def on_jump_edit(self):
-        index = self.jump_list.currentIndex().row()
-
-        updated_jump = JumpEditor.edit_jump(
-            self, self.level_view.level_ref.level.jumps[index], not self.level_view.level_ref.level.is_vertical
-        )
-
-        self.on_jump_edited(updated_jump)
-
-    @undoable
-    def on_jump_added(self):
-        self.level_view.add_jump()
-
-    @undoable
-    def on_jump_removed(self):
-        self.level_view.remove_jump(self.jump_list.currentIndex().row())
-
-    @undoable
-    def on_jump_edited(self, jump):
-        index = self.jump_list.currentIndex().row()
-
-        assert index >= 0
-
-        if isinstance(self.level_ref.level, Level):
-            self.level_view.level_ref.level.jumps[index] = jump
-            self.jump_list.item(index).setText(str(jump))
-
-    def on_jump_list_change(self, event):
-        self.jump_list.set_jumps(event)
+        self.manager.display_jump_editor()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if event.button() == Qt.MiddleButton:
-            pos = self.level_view.mapFromGlobal(self.mapToGlobal(event.position())).toTuple()
-
-            self.place_object_from_dropdown(pos)
-
-    @undoable
-    def place_object_from_dropdown(self, pos: Tuple[int, int]) -> None:
-        # the dropdown is synchronized with the toolbar, so it doesn't matter where to take it from
-        level_object = self.object_dropdown.currentData(Qt.UserRole)
-
-        self.object_toolbar.add_recent_object(level_object)
-
-        if isinstance(level_object, LevelObject):
-            self.level_view.create_object_at(*pos, level_object.domain, level_object.obj_index)
-        elif isinstance(level_object, EnemyObject):
-            self.level_view.add_enemy(level_object.obj_index, *pos, -1)
+        self.manager.middle_mouse_release(self.mapToGlobal(event.position()))
 
     def on_about(self, _):
         about = AboutDialog(self)
-
         about.show()
 
     def closeEvent(self, event: QCloseEvent):

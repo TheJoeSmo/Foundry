@@ -16,15 +16,15 @@ def test_level_reload_action(main_window):
     # GIVEN the reload level action, that is visible from the menu and a level that was changed
     reload_action = main_window.reload_action
 
-    main_window.level_ref.level.changed = True
+    main_window.manager.controller.level_ref.level.changed = True
 
-    assert main_window.level_ref.level.changed
+    assert main_window.manager.controller.level_ref.level.changed
 
     # WHEN the reload action is clicked/triggered
     reload_action.trigger()
 
     # THEN the level is not changed anymore
-    assert not main_window.level_ref.level.changed
+    assert not main_window.manager.controller.level_ref.level.changed
 
 
 def test_load_m3l(main_window, qtbot):
@@ -44,8 +44,8 @@ def test_load_m3l(main_window, qtbot):
     m3l_data[0] = 1
     m3l_data[1] = 1
 
-    assert not main_window.level_ref.level.attached_to_rom
-    assert main_window.level_ref.level.to_m3l() == m3l_data
+    assert not main_window.manager.controller.level_ref.level.attached_to_rom
+    assert main_window.manager.controller.level_ref.level.to_m3l() == m3l_data
 
     # also the current rom was not overwritten with any data
     assert ROM.rom_data == rom_data_before_load

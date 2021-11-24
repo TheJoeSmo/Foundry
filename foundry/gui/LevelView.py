@@ -9,6 +9,7 @@ from PySide6.QtGui import (
     QMouseEvent,
     QPainter,
     QPaintEvent,
+    QPixmap,
     Qt,
     QWheelEvent,
 )
@@ -712,7 +713,7 @@ class LevelView(QWidget):
 
         self.level_ref.level.add_enemy(enemy_index, level_x, level_y, index)
 
-    def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: int):
+    def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: Optional[int]):
         self.remove_object(obj)
 
         x, y = obj.get_position()
@@ -771,9 +772,8 @@ class LevelView(QWidget):
     def get_object_names(self):
         return self.level_ref.level.get_object_names()
 
-    def make_screenshot(self):
-        if self.level_ref is None:
-            return
+    def make_screenshot(self) -> QPixmap:
+        assert self.level_ref is not None
 
         return self.grab()
 

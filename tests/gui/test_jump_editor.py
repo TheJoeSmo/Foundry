@@ -16,7 +16,7 @@ def test_on_ok(main_window):
     _jump_index = 0
 
     # GIVEN a jump to be edited and the JumpEditor
-    jump_before = main_window.level_ref.level.jumps[_jump_index]
+    jump_before = main_window.manager.controller.level_ref.level.jumps[_jump_index]
 
     jump_editor = JumpEditor(None, jump_before, True)
 
