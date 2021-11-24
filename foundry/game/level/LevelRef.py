@@ -70,10 +70,10 @@ class LevelRef(QObject):
 
         return self._undo_controller.state
 
-    def do(self, level_data: LevelByteData):
+    def do(self, level_data: LevelByteData) -> LevelByteData:
         assert self._undo_controller is not None
 
-        self._undo_controller.do(level_data)
+        return self._undo_controller.do(level_data)
 
     @property
     def can_undo(self) -> bool:
@@ -81,11 +81,12 @@ class LevelRef(QObject):
 
         return self._undo_controller.can_undo
 
-    def undo(self):
+    def undo(self) -> LevelByteData:
         assert self._undo_controller is not None
 
-        if self._undo_controller.can_undo:
-            self.set_level_state(*self._undo_controller.undo())
+        new_state = self._undo_controller.undo()
+        self.set_level_state(*new_state)
+        return new_state
 
     @property
     def can_redo(self) -> bool:
@@ -93,11 +94,12 @@ class LevelRef(QObject):
 
         return self._undo_controller.can_redo
 
-    def redo(self):
+    def redo(self) -> LevelByteData:
         assert self._undo_controller is not None
 
-        if self._undo_controller.can_redo:
-            self.set_level_state(*self._undo_controller.redo())
+        new_state = self._undo_controller.redo()
+        self.set_level_state(*new_state)
+        return new_state
 
     def set_level_state(self, object_data, enemy_data):
         self.level.from_bytes(object_data, enemy_data, new_level=False)

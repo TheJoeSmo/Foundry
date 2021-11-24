@@ -20,6 +20,8 @@ def main_window(qtbot):
 
 
 def mocked_open_rom_and_level_select(self: MainWindow, _):
-    self.update_level("Level 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET)
+    self.manager.controller.update_level(
+        "Level 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET
+    )
 
     return True
