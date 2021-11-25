@@ -43,6 +43,7 @@ class PaletteGroupEditor(QWidget):
 
     @palette_group.setter
     def palette_group(self, palette_group: PaletteGroup):
+        self._palette_group = palette_group
         for idx in range(PALETTES_PER_PALETTES_GROUP):
             for color in range(COLORS_PER_PALETTE):
                 self.palette_group[idx][color] = palette_group[idx][color]
@@ -63,7 +64,6 @@ class PaletteGroupEditor(QWidget):
                 self.palette_group[short_palette_index][index] = color_index
 
             self.palette_group.changed = True
-
             self.palette_updated.emit(self.palette_group)
 
         return color_update
