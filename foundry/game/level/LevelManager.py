@@ -20,7 +20,7 @@ from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
-from foundry.gui.PaletteViewer import SidePalette
+from foundry.gui.PaletteEditor import PaletteEditor
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.Toolbar import create_toolbar
 from foundry.gui.WarningList import WarningList
@@ -130,7 +130,7 @@ class LevelManager:
 
         level_ref.data_changed.connect(update_enemy_size_bar)
 
-        self.parent.side_palette = SidePalette(level_ref)
+        self.parent.side_palette = PaletteEditor(level_ref)
 
         self.parent.jump_list = JumpList(self.parent, level_ref)
         self.parent.jump_list.add_jump.connect(self.controller.on_jump_added)

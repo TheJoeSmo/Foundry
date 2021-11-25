@@ -9,7 +9,7 @@ from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectDropdown import ObjectDropdown
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectToolBar import ObjectToolBar
-from foundry.gui.PaletteViewer import SidePalette
+from foundry.gui.PaletteEditor import PaletteEditor
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.WarningList import WarningList
 
@@ -22,7 +22,7 @@ class LevelControlled(Protocol):
     object_dropdown: ObjectDropdown
     level_size_bar: LevelSizeBar
     enemy_size_bar: LevelSizeBar
-    side_palette: SidePalette
+    side_palette: PaletteEditor
     jump_list: JumpList
     object_toolbar: ObjectToolBar
     warning_list: WarningList
