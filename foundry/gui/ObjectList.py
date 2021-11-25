@@ -9,8 +9,9 @@ class ObjectList(QListWidget):
     def __init__(self, parent: QWindow, level_ref: LevelRef, context_menu: ContextMenu):
         super(ObjectList, self).__init__(parent=parent)
 
-        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
+        self.setWordWrap(True)
 
         self.setSelectionMode(self.ExtendedSelection)
 
@@ -31,6 +32,11 @@ class ObjectList(QListWidget):
             "Note: While Jumps are technically level objects, they are omitted here, since they are "
             "listed in a separate list below."
         )
+
+    def sizeHint(self):
+        hint = super().sizeHint()
+        hint.setWidth(100)
+        return hint
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == Qt.RightButton:
