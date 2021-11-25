@@ -122,6 +122,7 @@ class LevelSelector(QDialog):
 
             world_map_select = WorldMapLevelSelect(world_number)
             world_map_select.level_selected.connect(self._on_level_selected_via_world_map)
+            world_map_select.accepted.connect(self.on_ok)
 
             self.source_selector.addTab(world_map_select, f"W{world_number}")
 
@@ -217,12 +218,11 @@ class LevelSelector(QDialog):
 
         self._fill_in_data(object_set, layout_address, enemy_address)
 
-        self.on_ok()
+        level_is_overworld = object_set == OVERWORLD_MAPS_INDEX
+        self.button_ok.setDisabled(level_is_overworld)
+        self.enemy_data_spinner.setDisabled(level_is_overworld)
 
     def on_ok(self, _=None):
-        if self.world_list.currentRow() == OVERWORLD_MAPS_INDEX:
-            return
-
         self.object_set = self.object_set_dropdown.currentIndex()
         self.object_data_offset = self.object_data_spinner.value()
         # skip the first byte, because it seems useless
@@ -235,7 +235,8 @@ class LevelSelector(QDialog):
 
 
 class WorldMapLevelSelect(QScrollArea):
-    level_selected: SignalInstance = Signal(str, int, int, int)
+    level_selected: SignalInstance = Signal(str, int, int, int)  # type: ignore
+    accepted: SignalInstance = Signal()  # type: ignore
 
     def __init__(self, world_number: int):
         super(WorldMapLevelSelect, self).__init__()
@@ -296,6 +297,10 @@ class WorldMapLevelSelect(QScrollArea):
 
         if level_info is not None:
             self.level_selected.emit(self.world.level_name_at_position(x, y), *level_info)
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent):
+        self.mouseReleaseEvent(event)
+        self.accepted.emit()
 
     def sizeHint(self) -> QSize:
         orig_size = super(WorldMapLevelSelect, self).sizeHint()
