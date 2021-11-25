@@ -11,7 +11,7 @@ from foundry.core.Data import Data, DataProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
-from foundry.game.gfx.Palette import PaletteGroup, restore_all_palettes
+from foundry.game.gfx.Palette import restore_all_palettes
 from foundry.game.level.Level import Level, world_and_level_for_level_address
 from foundry.game.level.LevelControlled import LevelControlled
 from foundry.game.level.LevelRef import LevelRef
@@ -125,11 +125,12 @@ class LevelController:
     def safe_to_change(self) -> bool:
         if not self.level_ref.is_loaded:
             return True
-        return not self.level_ref.level.changed
+        return not self.level_ref.level.changed and not self.parent.side_palette.changed
 
     @safe_to_change.setter
     def safe_to_change(self, value: bool):
         self.level_ref.level.changed = not value
+        self.parent.side_palette.changed = not value
 
     @property
     def stable_changes(self) -> tuple[bool, str, str]:
@@ -262,14 +263,16 @@ class LevelController:
         self.parent.redo_action.setEnabled(self.level_ref.can_redo)
 
         self.parent.jump_destination_action.setEnabled(self.level_ref.level.has_next_area)
+        print(self.parent.side_palette.changed)
         self.parent.menu_toolbar_save_action.setEnabled(
-            self.level_ref.level.changed or not self.level_ref.level.attached_to_rom or PaletteGroup.changed
+            self.level_ref.level.changed or not self.level_ref.level.attached_to_rom or self.parent.side_palette.changed
         )
 
     def update_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, object_set: int):
         self.level_ref.load_level(level_name, object_data_offset, enemy_data_offset, object_set)
         self.update_gui_for_level()
         self.parent.update_title()
+        self.parent.side_palette.load_from_level(self.level_ref.level)
 
     def update_gui_for_level(self):
         restore_all_palettes()
