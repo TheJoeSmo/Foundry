@@ -263,7 +263,6 @@ class LevelController:
         self.parent.redo_action.setEnabled(self.level_ref.can_redo)
 
         self.parent.jump_destination_action.setEnabled(self.level_ref.level.has_next_area)
-        print(self.parent.side_palette.changed)
         self.parent.menu_toolbar_save_action.setEnabled(
             self.level_ref.level.changed or not self.level_ref.level.attached_to_rom or self.parent.side_palette.changed
         )
