@@ -130,7 +130,11 @@ class LevelManager:
 
         level_ref.data_changed.connect(update_enemy_size_bar)
 
-        self.parent.side_palette = PaletteEditor(level_ref)
+        self.parent.side_palette = PaletteEditor(self.parent)
+        self.parent.side_palette.palette_updated.connect(lambda *_: print("changed"))
+        self.parent.side_palette.palette_updated.connect(
+            lambda *_: self.controller.on_level_data_changed() if self.controller is not None else None
+        )
 
         self.parent.jump_list = JumpList(self.parent, level_ref)
         self.parent.jump_list.add_jump.connect(self.controller.on_jump_added)

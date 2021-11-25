@@ -1,64 +1,82 @@
-from typing import Callable
+from typing import Optional
 
-from PySide6.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtCore import Signal, SignalInstance
+from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.game.gfx.Palette import (
-    PALETTES_PER_PALETTES_GROUP,
-    PaletteGroup,
-    load_palette_group,
-)
-from foundry.game.level.LevelRef import LevelRef
-from foundry.gui.PaletteViewer import PaletteWidget
-from foundry.gui.util import clear_layout
+from foundry.game.gfx.Palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
+from foundry.game.level.Level import Level
+from foundry.gui.PaletteGroupEditor import PaletteGroupEditor
 
 
 class PaletteEditor(QWidget):
-    def __init__(self, level_ref: LevelRef):
-        super(PaletteEditor, self).__init__()
+    palette_updated: SignalInstance = Signal(PaletteGroup, PaletteGroup)  # type: ignore
 
-        self.level_ref = level_ref
-
-        self.level_ref.data_changed.connect(self.update)
-
-        self.setLayout(QVBoxLayout(self))
-        self.layout().setSpacing(0)
-
-        self.setWhatsThis(
-            "<b>Object Palettes</b><br/>"
-            "This shows the current palette group of the level, which can be changed in the level header "
-            "editor.<br/>"
-            "By clicking on the individual colors, you can change them.<br/><br/>"
-            ""
-            "Note: The first color (the left most one) is always the same among all 4 palettes."
+    def __init__(
+        self,
+        parent: Optional[QWidget],
+        bg_palette_group: Optional[PaletteGroup] = None,
+        spr_palette_group: Optional[PaletteGroup] = None,
+    ):
+        super().__init__(parent=parent)
+        self._bg_palette_group = (
+            bg_palette_group
+            if bg_palette_group is not None
+            else PaletteGroup(0, 0, [bytearray([0] * 4) for i in range(4)])
+        )
+        self._spr_palette_group = (
+            spr_palette_group
+            if spr_palette_group is not None
+            else PaletteGroup(0, 0, [bytearray([0] * 4) for i in range(4)])
         )
 
-    def update(self):
-        clear_layout(self.layout())
+        layout = QHBoxLayout()
+        layout.setSpacing(0)
+        self.background_palette_widget = PaletteGroupEditor(self, self.bg_palette_group)
+        self.background_palette_widget.palette_updated.connect(lambda *_: self.on_palette_update())
+        layout.addWidget(self.background_palette_widget)
+        self.sprite_palette_widget = PaletteGroupEditor(self, self.spr_palette_group)
+        self.sprite_palette_widget.palette_updated.connect(lambda *_: self.on_palette_update())
+        layout.addWidget(self.sprite_palette_widget)
+        self.setLayout(layout)
 
-        palette_group_index = self.level_ref.level.object_palette_index
-        palette_group = load_palette_group(self.level_ref.level.object_set_number, palette_group_index)
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.parent}, {self.bg_palette_group}, {self.spr_palette_group})"
 
-        for palette_no in range(PALETTES_PER_PALETTES_GROUP):
-            widget = PaletteWidget(palette_group, palette_no)
-            widget.color_changed.connect(self.color_changer(palette_group, palette_no))
-            widget.clickable = True
+    def load_from_level(self, level: Level):
+        self.background_palette_widget.load(level.object_set_number, level.object_palette_index)
+        self._bg_palette_group = self.background_palette_widget.palette_group
+        self.sprite_palette_widget.load(
+            level.object_set_number, level.enemy_palette_index + PALETTE_GROUPS_PER_OBJECT_SET
+        )
+        self._spr_palette_group = self.sprite_palette_widget.palette_group
 
-            self.layout().addWidget(widget)
+    @property
+    def changed(self) -> bool:
+        return self.bg_palette_group.changed or self.spr_palette_group.changed
 
-    def color_changer(self, palette_group: PaletteGroup, palette_no: int) -> Callable:
-        def actual_changer(index_in_palette, index_in_nes_color_table):
-            if palette_group[palette_no][index_in_palette] == index_in_nes_color_table:
-                return
+    @changed.setter
+    def changed(self, value: bool):
+        self.bg_palette_group.changed = value
+        self.spr_palette_group.changed = value
 
-            # colors at index 0 are shared among all palettes of a palette group
-            if index_in_palette == 0:
-                for palette in palette_group.palettes:
-                    palette[0] = index_in_nes_color_table
-            else:
-                palette_group[palette_no][index_in_palette] = index_in_nes_color_table
+    @property
+    def bg_palette_group(self) -> PaletteGroup:
+        return self._bg_palette_group
 
-            PaletteGroup.changed = True
+    @bg_palette_group.setter
+    def bg_palette_group(self, palette: PaletteGroup):
+        self._bg_palette_group = palette
+        self.background_palette_widget.palette_group = palette
 
-            self.level_ref.level.reload()
+    @property
+    def spr_palette_group(self) -> PaletteGroup:
+        return self._spr_palette_group
 
-        return actual_changer
+    @spr_palette_group.setter
+    def spr_palette_group(self, palette: PaletteGroup):
+        self._spr_palette_group = palette
+        self.sprite_palette_widget.palette_group = palette
+
+    def on_palette_update(self):
+        self.palette_updated.emit(self.bg_palette_group, self.spr_palette_group)
+        self.changed
