@@ -101,7 +101,7 @@ class PaletteWidget(QWidget):
 
     def _update_colors(self):
         for color_index, color_square in zip(self._palette_group[self._palette_number], self._color_squares):
-            color = NESPalette[color_index]
+            color = NESPalette[color_index % 0x40]
 
             color_square.set_color(color)
 
