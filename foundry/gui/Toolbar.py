@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QMainWindow, QSizePolicy, QToolBar, QWidget
+from PySide6.QtWidgets import QMainWindow, QToolBar, QWidget
 
 
 def create_toolbar(
@@ -29,7 +29,6 @@ def create_toolbar(
 
     toolbar = QToolBar(name, parent)
     toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
-    toolbar.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
     toolbar.setOrientation(Qt.Horizontal)
     toolbar.setFloatable(True)
     toolbar.setAllowedAreas(Qt.LeftToolBarArea | Qt.RightToolBarArea)

@@ -5,11 +5,14 @@ from PySide6.QtWidgets import QScrollArea, QTabWidget
 
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
-from foundry.gui.ObjectToolBox import ObjectIcon, ObjectToolBox
+from foundry.gui.ObjectIcon import ObjectButton
+from foundry.gui.ObjectToolBox import ObjectToolBox
 
 
 class TabbedToolBox(QTabWidget):
-    object_icon_clicked: SignalInstance = Signal(ObjectIcon)
+    selected: SignalInstance = Signal(ObjectButton)  # type: ignore
+    selected_index: SignalInstance = Signal(int, int)  # type: ignore
+    object_placed: SignalInstance = Signal(ObjectButton)  # type: ignore
 
     def __init__(self, parent=None):
         super(TabbedToolBox, self).__init__(parent)
@@ -17,16 +20,23 @@ class TabbedToolBox(QTabWidget):
         self.setTabPosition(self.East)
 
         self._recent_toolbox = ObjectToolBox(self)
-        self._recent_toolbox.object_icon_clicked.connect(self.object_icon_clicked)
+        self._recent_toolbox.object_icon_clicked.connect(self.selected)
+        self._recent_toolbox.object_selected.connect(lambda index: self.selected_index.emit(0, index))
         self._recent_toolbox.object_placed.connect(self._on_object_dragged)
 
         self._objects_toolbox = ObjectToolBox(self)
-        self._objects_toolbox.object_icon_clicked.connect(self.object_icon_clicked)
+        self._objects_toolbox.object_icon_clicked.connect(self.selected)
+        self._objects_toolbox.object_selected.connect(lambda index: self.selected_index.emit(1, index))
         self._objects_toolbox.object_placed.connect(self._on_object_dragged)
 
         self._enemies_toolbox = ObjectToolBox(self)
-        self._enemies_toolbox.object_icon_clicked.connect(self.object_icon_clicked)
+        self._enemies_toolbox.object_icon_clicked.connect(self.selected)
+        self._enemies_toolbox.object_selected.connect(lambda index: self.selected_index.emit(2, index))
         self._enemies_toolbox.object_placed.connect(self._on_object_dragged)
+
+        self._recent_scroll_area = QScrollArea(self)
+        self._recent_scroll_area.setWidgetResizable(True)
+        self._recent_scroll_area.setWidget(self._recent_toolbox)
 
         self._object_scroll_area = QScrollArea(self)
         self._object_scroll_area.setWidgetResizable(True)
@@ -36,7 +46,7 @@ class TabbedToolBox(QTabWidget):
         self._enemies_scroll_area.setWidgetResizable(True)
         self._enemies_scroll_area.setWidget(self._enemies_toolbox)
 
-        self.addTab(self._recent_toolbox, "Recent")
+        self.addTab(self._recent_scroll_area, "Recent")
         self.addTab(self._object_scroll_area, "Objects")
         self.addTab(self._enemies_scroll_area, "Enemies")
 
@@ -61,7 +71,7 @@ class TabbedToolBox(QTabWidget):
         width = max(width, self._enemies_toolbox.sizeHint().width())
 
         size.setWidth(
-            max(width, size.width()) + self.tabBar().width() + self._object_scroll_area.verticalScrollBar().width() + 5
+            max(width, size.width()) + self.tabBar().width() + self._object_scroll_area.verticalScrollBar().width() + 10
         )
 
         return size
@@ -75,15 +85,13 @@ class TabbedToolBox(QTabWidget):
     def show_enemy_item_tab(self):
         self.setCurrentIndex(self.indexOf(self._enemies_scroll_area))
 
-    def select_object(self, level_object):
-        recent_tab_showing = self.currentIndex() == self.indexOf(self._recent_toolbox)
-
-        if self._recent_toolbox.has_object(level_object) and recent_tab_showing:
-            pass
-        elif isinstance(level_object, LevelObject):
-            self.show_level_object_tab()
-        elif isinstance(level_object, EnemyObject):
-            self.show_enemy_item_tab()
+    def select_object(self, tab_index: int, object_index: int) -> Union[LevelObject, EnemyObject]:
+        if tab_index == 0:
+            return self._recent_toolbox.objects[object_index]
+        elif tab_index == 1:
+            return self._objects_toolbox.objects[object_index]
+        else:
+            return self._enemies_toolbox.objects[object_index]
 
     def set_object_set(self, object_set_index, graphic_set_index=-1):
         self._recent_toolbox.clear()
@@ -96,5 +104,5 @@ class TabbedToolBox(QTabWidget):
     def add_recent_object(self, level_object: Union[EnemyObject, LevelObject]):
         self._recent_toolbox.place_at_front(level_object)
 
-    def _on_object_dragged(self, object_icon: ObjectIcon):
-        self.add_recent_object(object_icon.object)
+    def _on_object_dragged(self, object_icon: ObjectButton):
+        self.add_recent_object(object_icon.item)

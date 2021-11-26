@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple
 from warnings import warn
 
 from PySide6.QtCore import QRect, QSize
@@ -7,7 +7,6 @@ from PySide6.QtGui import QImage, QPainter
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
     EXPANDS_HORIZ,
@@ -56,34 +55,6 @@ BLANK = -1
 
 SCREEN_HEIGHT = 15
 SCREEN_WIDTH = 16
-
-
-def get_minimal_icon_object(
-    level_object: Union["LevelObject", EnemyObject]
-) -> Optional[Union["LevelObject", EnemyObject]]:
-    """
-    Returns the object with a length, so that every block is rendered. E. g. clouds with length 0, don't have a face.
-    """
-
-    if not isinstance(level_object, (LevelObject, EnemyObject)):
-        return None
-
-    if isinstance(level_object, EnemyObject):
-        return level_object
-
-    level_object.ground_level = 3
-
-    while (
-        any(block not in level_object.rendered_blocks for block in level_object.blocks) and level_object.length < 0x10
-    ):
-        level_object.length += 1
-
-        if level_object.is_4byte:
-            level_object.secondary_length += 1
-
-        level_object.render()
-
-    return level_object
 
 
 class LevelObject(ObjectLike):

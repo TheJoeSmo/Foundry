@@ -16,6 +16,8 @@ from foundry.gui.JumpList import JumpList
 from foundry.gui.LevelSizeBar import LevelSizeBar
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectDropdown import ObjectDropdown
+from foundry.gui.ObjectIcon import ObjectIcon
+from foundry.gui.ObjectIcon import ObjectViewer as ObjectToolbarViewer
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
@@ -160,8 +162,14 @@ class LevelManager:
         create_toolbar(self.parent, "Splitter", [splitter], Qt.RightToolBarArea)
 
         self.parent.object_toolbar = ObjectToolBar(self.parent)
-        self.parent.object_toolbar.object_selected.connect(self.parent.object_toolbar.select_object)
+        self.parent.object_toolbar_viewer = ObjectToolbarViewer(self.parent)
 
+        def set_object_viewer(item):
+            self.parent.object_toolbar_viewer.icon = ObjectIcon(self.parent.object_toolbar_viewer, item)
+
+        self.parent.object_toolbar.selected.connect(set_object_viewer)
+
+        create_toolbar(self.parent, "Object Viewer", [self.parent.object_toolbar_viewer], Qt.LeftToolBarArea)
         create_toolbar(self.parent, "Object Toolbar", [self.parent.object_toolbar], Qt.LeftToolBarArea)
 
         # Warning List Creation
