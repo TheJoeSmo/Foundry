@@ -12,6 +12,7 @@ class ObjectList(QListWidget):
 
         self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
+        self.setSelectionMode(QListWidget.ExtendedSelection)
         scroll_bar = QScrollBar(self)
         self.setVerticalScrollBar(scroll_bar)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -21,7 +22,6 @@ class ObjectList(QListWidget):
 
         self.level_ref: LevelRef = level_ref
         self.level_ref.data_changed.connect(self.update_content)
-
         self.context_menu = context_menu
 
         self.itemSelectionChanged.connect(self.on_selection_changed)
@@ -78,6 +78,13 @@ class ObjectList(QListWidget):
         self.context_menu.as_list_menu().popup(event.globalPos())
 
     def update_content(self):
+        """
+        A new item has been selected, so select the new item.
+        """
+        prior_selection = self.currentIndex()
+        currently_selected = set(obj.row() for obj in self.selectedIndexes())
+        ignore_prior_selection = False
+
         level_objects = self.level_ref.level.get_all_objects()
 
         labels = [obj.name for obj in level_objects]
@@ -90,14 +97,18 @@ class ObjectList(QListWidget):
 
         for index, level_object in enumerate(level_objects):
             item = self.item(index)
-
             item.setData(Qt.UserRole, level_object)
             item.setSelected(level_object.selected)
+            if level_object.selected and index not in currently_selected:
+                ignore_prior_selection = True
 
         self.blockSignals(False)
 
         if self.selectedIndexes():
             self.scrollTo(self.selectedIndexes()[-1])
+
+        if not ignore_prior_selection:
+            self.setCurrentIndex(prior_selection)
 
     def selected_objects(self):
         return [self.item(index.row()).data(Qt.UserRole) for index in self.selectedIndexes()]
