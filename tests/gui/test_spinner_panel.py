@@ -1,30 +1,6 @@
 from foundry.game.gfx.objects.LevelObject import LevelObject
 
 
-def test_domain_spinner(main_window):
-    # GIVEN a spinner panel and a level with a selected object
-    level_ref = main_window.manager.controller.level_ref
-
-    level_object = level_ref.level.objects[0]
-    level_object.selected = True
-
-    assert level_ref.selected_objects == [level_object]
-
-    original_domain = level_object.domain
-
-    # WHEN the domain spinner is used to increase the domain by one
-    main_window.spinner_panel.spin_domain.setValue(level_object.domain + 1)
-
-    # THEN the domain spinner should show the increased domain
-    assert main_window.spinner_panel.spin_domain.value() == original_domain + 1
-
-    # WHEN the domain spinner is used to decrease the domain by one
-    main_window.spinner_panel.spin_domain.setValue(level_object.domain - 1)
-
-    # THEN the domain spinner should show the original domain
-    assert main_window.spinner_panel.spin_domain.value() == original_domain
-
-
 def test_object_selected(main_window):
     # GIVEN the main window containing the spinner panel
     level_ref = main_window.manager.controller.level_ref
