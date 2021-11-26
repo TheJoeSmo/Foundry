@@ -1,16 +1,20 @@
-from PySide6.QtGui import QMouseEvent, Qt, QWindow
-from PySide6.QtWidgets import QListWidget, QSizePolicy
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QMouseEvent, Qt
+from PySide6.QtWidgets import QListWidget, QScrollBar, QSizePolicy, QWidget
 
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.ContextMenu import ContextMenu
 
 
 class ObjectList(QListWidget):
-    def __init__(self, parent: QWindow, level_ref: LevelRef, context_menu: ContextMenu):
+    def __init__(self, parent: QWidget, level_ref: LevelRef, context_menu: ContextMenu):
         super(ObjectList, self).__init__(parent=parent)
 
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
+        scroll_bar = QScrollBar(self)
+        self.setVerticalScrollBar(scroll_bar)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setWordWrap(True)
 
         self.setSelectionMode(self.ExtendedSelection)
@@ -34,9 +38,7 @@ class ObjectList(QListWidget):
         )
 
     def sizeHint(self):
-        hint = super().sizeHint()
-        hint.setWidth(100)
-        return hint
+        return QSize(100, 200)
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == Qt.RightButton:
