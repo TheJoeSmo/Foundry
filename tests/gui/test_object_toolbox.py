@@ -2,7 +2,8 @@ import pytest
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
-from foundry.gui.ObjectToolBox import ObjectIcon, ObjectToolBox
+from foundry.gui.ObjectIcon import ObjectIcon
+from foundry.gui.ObjectToolBox import ObjectToolBox
 from foundry.smb3parse.objects.object_set import PLAINS_GRAPHICS_SET, PLAINS_OBJECT_SET
 
 
@@ -16,7 +17,7 @@ def test_object_icon(domain, obj_index, qtbot):
     widget.setLayout(QVBoxLayout())
 
     widget.layout().addStretch()
-    widget.layout().addWidget(ObjectIcon(level_object))
+    widget.layout().addWidget(ObjectIcon(None, level_object))
     widget.layout().addStretch()
 
     widget.show()
