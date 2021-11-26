@@ -7,8 +7,8 @@ import pytest
 from git.repo.base import Repo
 
 from foundry.game.File import ROM
-from foundry.game.gfx.objects.LevelObject import get_minimal_icon_object
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
+from foundry.gui.ObjectIcon import get_minimal_icon_object
 from foundry.gui.ObjectViewer import ObjectDrawArea
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ID_VALUE
 from foundry.smb3parse.objects.object_set import (
