@@ -639,7 +639,7 @@ class LevelView(QWidget):
 
         found_level = levels_by_enemy_offset[level_index]
 
-        if found_level.enemy_offset == self.level_ref.level.enemy_offset:
+        if found_level.enemy_pointer == self.level_ref.level.enemy_offset:
             return ""
         else:
             return (
@@ -661,7 +661,7 @@ class LevelView(QWidget):
 
         found_level = Level.sorted_offsets[level_index]
 
-        if found_level.rom_level_offset == self.level_ref.level.object_offset:
+        if found_level.generator_pointer == self.level_ref.level.object_offset:
             return ""
         else:
             return (
