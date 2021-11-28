@@ -225,7 +225,7 @@ class BlockArray(QWidget):
                 block_index,
                 self.level_object.palette_group,
                 self.level_object.graphics_set,
-                self.level_object.tsa_data,
+                bytes(self.level_object.tsa_data),
             )
             self.layout().addWidget(BlockArea(block))
 
