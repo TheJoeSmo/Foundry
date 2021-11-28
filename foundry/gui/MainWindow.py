@@ -412,7 +412,6 @@ class MainWindow(QMainWindow):
             path_to_rom, _ = QFileDialog.getOpenFileName(self, caption="Open ROM", filter=ROM_FILE_FILTER)
         if not path_to_rom:
             return False
-        print(path_to_rom)
 
         # Proceed loading the file chosen by the user
         try:
