@@ -1,7 +1,14 @@
 from math import ceil
 
 from PySide6.QtCore import QPoint, QRect, QSize
-from PySide6.QtGui import QBrush, QMouseEvent, QPainter, QPaintEvent, QResizeEvent
+from PySide6.QtGui import (
+    QBrush,
+    QCloseEvent,
+    QMouseEvent,
+    QPainter,
+    QPaintEvent,
+    QResizeEvent,
+)
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
@@ -61,6 +68,10 @@ class BlockViewer(CustomChildWindow):
         self.setStatusBar(QStatusBar(self))
 
         return
+
+    def closeEvent(self, event: QCloseEvent):
+        self.toolbar.close()
+        super().closeEvent(event)
 
     @property
     def object_set(self):
