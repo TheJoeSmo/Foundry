@@ -24,7 +24,7 @@ class AutoScrollEditor(CustomDialog):
         super(AutoScrollEditor, self).__init__(parent, title="Autoscroll Editor")
         self.level_ref = level_ref
 
-        self.original_autoscroll_item = _get_autoscroll(self.level_ref.enemies)
+        self.original_autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
         QVBoxLayout(self)
 
@@ -43,7 +43,7 @@ class AutoScrollEditor(CustomDialog):
         self.update()
 
     def update(self):
-        autoscroll_item = _get_autoscroll(self.level_ref.enemies)
+        autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
         self.enabled_checkbox.setChecked(autoscroll_item is not None)
         self.y_position_spinner.setEnabled(autoscroll_item is not None)
@@ -55,7 +55,7 @@ class AutoScrollEditor(CustomDialog):
             self.auto_scroll_type_label.setText(AUTOSCROLL_LABELS[autoscroll_item.y_position >> 4])
 
     def _update_y_position(self, _):
-        autoscroll_item = _get_autoscroll(self.level_ref.enemies)
+        autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
         autoscroll_item.y_position = self.y_position_spinner.value()
 
@@ -64,13 +64,13 @@ class AutoScrollEditor(CustomDialog):
         self.update()
 
     def _insert_autoscroll_object(self, should_insert: bool):
-        autoscroll_item = _get_autoscroll(self.level_ref.enemies)
+        autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
         if autoscroll_item is not None:
-            self.level_ref.enemies.remove(autoscroll_item)
+            self.level_ref.level.enemies.remove(autoscroll_item)
 
         if should_insert:
-            self.level_ref.enemies.insert(0, self._create_autoscroll_object())
+            self.level_ref.level.enemies.insert(0, self._create_autoscroll_object())
 
         self.level_ref.data_changed.emit()
 
@@ -82,7 +82,7 @@ class AutoScrollEditor(CustomDialog):
         )
 
     def closeEvent(self, event):
-        current_autoscroll_item = _get_autoscroll(self.level_ref.enemies)
+        current_autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
         if not (self.original_autoscroll_item is None and current_autoscroll_item is None):
             added_or_removed_autoscroll = self.original_autoscroll_item is None or current_autoscroll_item is None
