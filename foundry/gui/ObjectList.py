@@ -24,6 +24,7 @@ class ObjectList(QListWidget):
         self.level_ref.data_changed.connect(self.update_content)
         self.context_menu = context_menu
 
+        self._on_selection_changed_ongoing = False
         self.itemSelectionChanged.connect(self.on_selection_changed)
 
         self.setWhatsThis(
@@ -114,11 +115,9 @@ class ObjectList(QListWidget):
         return [self.item(index.row()).data(Qt.UserRole) for index in self.selectedIndexes()]
 
     def on_selection_changed(self):
-        selected_objects = self.selected_objects()
-
-        selection_not_changed = selected_objects == self.level_ref.selected_objects
-
-        if selection_not_changed:
+        if self._on_selection_changed_ongoing:
             return
-        else:
-            self.level_ref.selected_objects = selected_objects
+
+        self._on_selection_changed_ongoing = True
+        self.level_ref.selected_objects = self.selected_objects()
+        self._on_selection_changed_ongoing = False
