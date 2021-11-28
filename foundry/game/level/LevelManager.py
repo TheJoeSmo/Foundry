@@ -166,7 +166,9 @@ class LevelManager:
         def set_object_viewer(item):
             self.parent.object_toolbar_viewer.icon = ObjectIcon(self.parent.object_toolbar_viewer, item)
 
+        self.parent.object_dropdown.object_selected.connect(set_object_viewer)
         self.parent.object_toolbar.selected.connect(set_object_viewer)
+        self.parent.object_toolbar.selected.connect(self.parent.object_dropdown.select_object)
 
         create_toolbar(self.parent, "Object Viewer", [self.parent.object_toolbar_viewer], Qt.LeftToolBarArea)
         create_toolbar(self.parent, "Object Toolbar", [self.parent.object_toolbar], Qt.LeftToolBarArea)
