@@ -151,7 +151,7 @@ class BlockBank(QWidget):
         self.setFixedSize(new_size)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        x, y = event.position().toTuple()
+        x, y = event.pos().toTuple()
 
         block_length = Block.WIDTH * self.zoom
 
