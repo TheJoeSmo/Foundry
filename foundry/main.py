@@ -36,10 +36,11 @@ def main(path_to_rom: str = ""):
                 None, "Auto Save recovered", "Don't forget to save the loaded ROM under a new name!"
             )
 
-    MainWindow(path_to_rom)
-    app.exec_()
-
-    save_settings()
+    window = MainWindow(path_to_rom)
+    if window.loaded:
+        del window.loaded
+        app.exec_()
+        save_settings()
 
 
 if __name__ == "__main__":
