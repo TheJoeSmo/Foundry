@@ -502,20 +502,21 @@ class LevelView(QWidget):
         self.last_mouse_position = level_x, level_y
 
         clicked_object = self.object_at(x, y)
-
         clicked_on_background = clicked_object is None
 
-        if clicked_on_background:
+        if clicked_on_background and not event.modifiers() & Qt.ShiftModifier:
             self._select_object(None)
         else:
             self.mouse_mode = MODE_DRAG
 
             selected_objects = self.get_selected_objects()
-
             nothing_selected = not selected_objects
-
-            if nothing_selected or clicked_object not in selected_objects:
-                self._select_object(clicked_object)
+            if nothing_selected or (
+                not event.modifiers() & Qt.ShiftModifier and not event.modifiers() & Qt.ControlModifier
+            ):
+                self._select_object([clicked_object])
+            else:
+                self._select_object([clicked_object] + selected_objects)  # type: ignore
 
         return not clicked_on_background
 
@@ -560,9 +561,9 @@ class LevelView(QWidget):
     def select_all(self):
         self.select_objects(self.level_ref.level.get_all_objects())
 
-    def _select_object(self, obj=None):
-        if obj is not None:
-            self.select_objects([obj])
+    def _select_object(self, objects: Optional[list]):
+        if objects is not None:
+            self.select_objects(objects)
         else:
             self.select_objects([])
 
