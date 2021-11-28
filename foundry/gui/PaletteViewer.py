@@ -1,4 +1,5 @@
 from itertools import product
+from typing import Optional
 
 from PySide6.QtCore import QSize, Signal, SignalInstance
 from PySide6.QtGui import QColor, QMouseEvent, QPixmap, Qt
@@ -49,7 +50,7 @@ class PaletteViewer(CustomDialog):
             palette = load_palette_group(self.level_ref.level.object_set_number, palette_group)
 
             for palette_no in range(PALETTES_PER_PALETTES_GROUP):
-                group_box_layout.addWidget(PaletteWidget(palette, palette_no))
+                group_box_layout.addWidget(PaletteWidget(self, palette, palette_no))
 
             row = palette_group // self.palettes_per_row
             col = palette_group % self.palettes_per_row
@@ -61,8 +62,8 @@ class PaletteWidget(QWidget):
     # index in palette, color index in NES palette
     color_changed: SignalInstance = Signal(int, int)
 
-    def __init__(self, palette_group: PaletteGroup, palette_number: int):
-        super(PaletteWidget, self).__init__()
+    def __init__(self, parent: Optional[QWidget], palette_group: PaletteGroup, palette_number: int):
+        super().__init__(parent)
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(1, 2, 0, 2)
@@ -75,7 +76,7 @@ class PaletteWidget(QWidget):
         self._color_squares = []
 
         for color_index in range(COLORS_PER_PALETTE):
-            square = ColorSquare()
+            square = ColorSquare(self)
             square.clicked.connect(self._open_color_table)
 
             self._color_squares.append(square)
@@ -88,7 +89,7 @@ class PaletteWidget(QWidget):
         if not self.clickable:
             return
 
-        color_table = ColorTable()
+        color_table = ColorTable(self)
         return_code = color_table.exec_()
 
         if return_code == QDialog.Accepted:
@@ -109,8 +110,8 @@ class PaletteWidget(QWidget):
 class ColorSquare(QLabel):
     clicked: SignalInstance = Signal()
 
-    def __init__(self, color: QColor = QColor(Qt.white), square_length=16):
-        super(ColorSquare, self).__init__()
+    def __init__(self, parent: Optional[QWidget], color: QColor = QColor(Qt.white), square_length=16):
+        super().__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
@@ -155,12 +156,12 @@ class ColorTable(QDialog):
 
     ok_clicked: SignalInstance = Signal(int)
 
-    def __init__(self):
-        super(ColorTable, self).__init__()
+    def __init__(self, parent: Optional[QWidget]):
+        super().__init__(parent)
 
         self.setWindowTitle("NES Color Table")
 
-        self._currently_selected_square: ColorSquare = ColorSquare(QColor(Qt.white))
+        self._currently_selected_square: ColorSquare = ColorSquare(self, QColor(Qt.white))
         self.selected_color_index = 0
         """Index into the NES Palette, that was selected."""
 
@@ -172,7 +173,7 @@ class ColorTable(QDialog):
         for row, column in product(range(self.table_rows), range(self.table_columns)):
             color = NESPalette[row * self.table_columns + column]
 
-            square = ColorSquare(color, self.square_length)
+            square = ColorSquare(self, color, self.square_length)
             square.setLineWidth(0)
 
             square.clicked.connect(self._on_click)
