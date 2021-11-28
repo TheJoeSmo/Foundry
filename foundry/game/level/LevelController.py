@@ -295,7 +295,10 @@ class LevelController:
         index = self.parent.jump_list.currentIndex().row()
 
         updated_jump = JumpEditor.edit_jump(
-            self.parent, self.level_ref.level.jumps[index], not self.level_ref.level.is_vertical  # type: ignore
+            self.parent,  # type: ignore
+            self.level_ref.level.jumps[index],
+            not self.level_ref.level.is_vertical,
+            (self.level_ref.level.length // 0x10) - 1,
         )
 
         self.on_jump_edited(updated_jump)
