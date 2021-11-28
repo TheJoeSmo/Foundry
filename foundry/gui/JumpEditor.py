@@ -34,13 +34,15 @@ MAX_HORIZ_POSITION = 0xFF
 
 
 class JumpEditor(CustomDialog):
-    def __init__(self, parent: Optional[QWidget], jump: Jump, is_horizontal: bool):
+    def __init__(
+        self, parent: Optional[QWidget], jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX
+    ):
         super(JumpEditor, self).__init__(parent, "Jump Editor")
 
         self.jump = jump
         self.is_horizontal = is_horizontal
 
-        self.screen_spinner = Spinner(parent=self, maximum=MAX_SCREEN_INDEX, base=10)
+        self.screen_spinner = Spinner(parent=self, maximum=suggested_max_size, base=10)
 
         position_layout = QFormLayout()
         position_layout.addRow("Jump on screen:", self.screen_spinner)
@@ -86,8 +88,10 @@ class JumpEditor(CustomDialog):
         self.exit_vertical.setCurrentIndex(self.jump.exit_vertical & 0b111)
 
     @staticmethod
-    def edit_jump(parent: Optional[QWidget], jump: Jump, is_horizontal: bool):
-        jump_editor = JumpEditor(parent, jump, is_horizontal)
+    def edit_jump(
+        parent: Optional[QWidget], jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX
+    ):
+        jump_editor = JumpEditor(parent, jump, is_horizontal, suggested_max_size)
 
         jump_editor.exec_()
 
