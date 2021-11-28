@@ -161,7 +161,6 @@ class ColorTable(QDialog):
 
         self.setWindowTitle("NES Color Table")
 
-        self._currently_selected_square: ColorSquare = ColorSquare(self, QColor(Qt.white))
         self.selected_color_index = 0
         """Index into the NES Palette, that was selected."""
 
@@ -176,9 +175,12 @@ class ColorTable(QDialog):
             square = ColorSquare(self, color, self.square_length)
             square.setLineWidth(0)
 
-            square.clicked.connect(self._on_click)
+            square.clicked.connect(lambda square=square, idx=row * 0x10 + column: self._on_click(square, idx))
 
             self.color_table_layout.addWidget(square, row, column)
+            if row == 0 and column == 0:
+                self._currently_selected_square = square
+                square.select(True)
 
         self.buttons = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.buttons.clicked.connect(self._on_button)
@@ -188,21 +190,17 @@ class ColorTable(QDialog):
 
         layout.addWidget(self.buttons, alignment=Qt.AlignCenter)
 
-    def _on_click(self):
-        self.select_square(self.sender())
+    def _on_click(self, square: ColorSquare, index: int):
+        self.select_square(square)
+        self.selected_color_index = index
 
     def select_square(self, color_square: ColorSquare):
         self._currently_selected_square.select(False)
-
         color_square.select(True)
-
         self._currently_selected_square = color_square
 
     def _on_button(self, button: QAbstractButton):
         if button is self.buttons.button(QDialogButtonBox.Ok):  # ok button
-            color_index = self.color_table_layout.indexOf(self._currently_selected_square)
-
-            self.selected_color_index = color_index
             self.accept()
         else:
             self.reject()
