@@ -648,7 +648,7 @@ class MainWindow(QMainWindow):
             if item_id == CMAction.REMOVE:
                 self.manager.delete()
             elif item_id == CMAction.ADD_OBJECT:
-                self.manager.create_object_from_suggestion
+                self.manager.create_object_from_suggestion((x, y))
             elif item_id == CMAction.CUT:
                 self.manager.cut()
             elif item_id == CMAction.COPY:
