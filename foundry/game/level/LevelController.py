@@ -287,7 +287,7 @@ class LevelController:
         self.parent.level_view.update()
 
     def display_header_editor(self):
-        header_editor = HeaderEditor(None, self.level_ref)
+        header_editor = HeaderEditor(self.parent, self.level_ref)  # type: ignore
         header_editor.tab_widget.setCurrentIndex(3)
         header_editor.exec_()
 
