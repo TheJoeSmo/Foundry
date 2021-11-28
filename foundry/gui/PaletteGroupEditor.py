@@ -23,7 +23,7 @@ class PaletteGroupEditor(QWidget):
         layout.setSpacing(0)
         self.palettes = []
         for short_palette_index in range(PALETTES_PER_PALETTES_GROUP):
-            widget = PaletteWidget(palette_group, short_palette_index)
+            widget = PaletteWidget(self, palette_group, short_palette_index)
             widget.color_changed.connect(self.on_color_update(short_palette_index))
             widget.clickable = True
             self.palettes.append(widget)
