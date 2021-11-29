@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import traceback
+from argparse import ArgumentParser, BooleanOptionalAction
 
 import pretty_errors  # noqa: F401 is used to provide nicer messages throughout the project.
 from PySide6.QtWidgets import QApplication, QMessageBox
@@ -19,6 +20,22 @@ if hasattr(sys, "_MEIPASS"):
     os.chdir(getattr(sys, "_MEIPASS"))
 
 from foundry.gui.MainWindow import MainWindow  # noqa: E402
+
+
+def start():
+    parser = ArgumentParser(description="The future of editing SMB3!")
+    parser.add_argument("--path", dest="path", type=str, help="The path to the ROM", default="")
+    parser.add_argument(
+        "--dev", default=False, action=BooleanOptionalAction, type=bool, help="Override path with system path"
+    )
+
+    args = parser.parse_args()
+    path: str = args.path
+    if args.dev:
+        dev_path = os.getenv("SMB3_TEST_ROM")
+        if dev_path is not None:
+            path = dev_path
+    main(path)
 
 
 def main(path_to_rom: str = ""):
