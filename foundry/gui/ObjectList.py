@@ -90,6 +90,14 @@ class ObjectList(QListWidget):
 
         labels = [obj.name for obj in level_objects]
 
+        has_changes = False
+        for index, level_object in enumerate(level_objects):
+            if level_object.selected and index not in currently_selected:
+                has_changes = True
+                break
+        if not has_changes:
+            return
+
         self.blockSignals(True)
 
         self.clear()
