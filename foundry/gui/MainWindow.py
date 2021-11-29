@@ -81,7 +81,7 @@ MODE_RESIZE = 2
 class MainWindow(QMainWindow):
     level_selector_last_level: Optional[tuple[int, int]]
 
-    def __init__(self, path_to_rom=""):
+    def __init__(self, path_to_rom="", world=None, level=None):
         super(MainWindow, self).__init__()
 
         self.setWindowIcon(icon(main_window_flags["icon"]))
@@ -169,7 +169,7 @@ class MainWindow(QMainWindow):
         QShortcut(QKeySequence(Qt.CTRL + Qt.Key_A), self, self.manager.select_all)
         QShortcut(QKeySequence(Qt.CTRL + Qt.Key_L), self, self.manager.focus_selected)
 
-        self.loaded = self.on_open_rom(path_to_rom)
+        self.loaded = self.on_open_rom(path_to_rom, world, level)
 
         self.showMaximized()
 
@@ -403,7 +403,7 @@ class MainWindow(QMainWindow):
     def update_title(self):
         self.setWindowTitle(self.manager.title_suggestion if self.manager.enabled else "SMB3Foundry")
 
-    def on_open_rom(self, path_to_rom="") -> bool:
+    def on_open_rom(self, path_to_rom="", world: Optional[int] = None, level: Optional[int] = None) -> bool:
         if not self.safe_to_change():
             return False
 
@@ -421,7 +421,10 @@ class MainWindow(QMainWindow):
                 self._load_auto_save()
             else:
                 self._save_auto_rom()
-                self.manager.on_select()
+                if world is not None and level is not None:
+                    self.manager.force_select(world, level)
+                else:
+                    self.manager.on_select()
             return True
         except IOError as exp:
             QMessageBox.warning(self, type(exp).__name__, f"Cannot open file '{path_to_rom}'.")
