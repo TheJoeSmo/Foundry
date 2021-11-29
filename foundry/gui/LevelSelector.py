@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (
 
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.Level import Level
+from foundry.game.level.util import Level as LevelMeta
 from foundry.game.level.util import get_world_levels
 from foundry.game.level.WorldMap import WorldMap
 from foundry.gui.Spinner import Spinner
@@ -60,6 +61,10 @@ OBJECT_SET_ITEMS = [
 
 OVERWORLD_MAPS_INDEX = 0
 WORLD_1_INDEX = 1
+
+
+def select_by_world_and_level(world: int, level: int) -> LevelMeta:
+    return get_world_levels(world, Level.offsets)[level]
 
 
 class LevelSelector(QDialog):

@@ -13,6 +13,7 @@ from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.ContextMenu import ContextMenu
 from foundry.gui.JumpCreator import JumpCreator
 from foundry.gui.JumpList import JumpList
+from foundry.gui.LevelSelector import select_by_world_and_level
 from foundry.gui.LevelSizeBar import LevelSizeBar
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectDropdown import ObjectDropdown
@@ -225,6 +226,16 @@ class LevelManager:
     @require_enabled
     def update(self, controller: LevelController):
         controller.update()
+
+    @require_enabled
+    def force_select(self, world: int, level: int, *, controller: LevelController):
+        selection = select_by_world_and_level(world, level)
+        controller.update_level(
+            selection.display_information.name if selection.display_information.name is not None else "",
+            selection.generator_pointer - 9,
+            selection.enemy_pointer,
+            selection.tileset,
+        )
 
     @require_enabled
     def on_select(self, controller: LevelController):

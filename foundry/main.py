@@ -28,6 +28,8 @@ def start():
     parser.add_argument(
         "--dev", default=False, action=BooleanOptionalAction, type=bool, help="Override path with system path"
     )
+    parser.add_argument("--level", type=int, help="Level index", default=None)
+    parser.add_argument("--world", type=int, help="World Index", default=None)
 
     args = parser.parse_args()
     path: str = args.path
@@ -35,10 +37,10 @@ def start():
         dev_path = os.getenv("SMB3_TEST_ROM")
         if dev_path is not None:
             path = dev_path
-    main(path)
+    main(path, args.world, args.level)
 
 
-def main(path_to_rom: str = ""):
+def main(path_to_rom: str = "", world=None, level=None):
     load_settings()
 
     app = QApplication()
@@ -53,7 +55,7 @@ def main(path_to_rom: str = ""):
                 None, "Auto Save recovered", "Don't forget to save the loaded ROM under a new name!"
             )
 
-    window = MainWindow(path_to_rom)
+    window = MainWindow(path_to_rom, world, level)
     if window.loaded:
         del window.loaded
         app.exec_()
