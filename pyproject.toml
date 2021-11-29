@@ -32,7 +32,7 @@ isort = "^5.9.3"
 pyinstaller = "^4.5.1"
 
 [tool.poetry.scripts]
-foundry = "foundry.main:main"
+foundry = "foundry.main:start"
 
 [tool.isort]
 profile = "black"
