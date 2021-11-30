@@ -1,7 +1,9 @@
 from enum import Enum
-from typing import List
+from json import loads
 
-from foundry import data_dir
+from pydantic import BaseModel
+
+from foundry import tileset_definitions
 from foundry.smb3parse.objects.object_set import (
     AIR_SHIP_OBJECT_SET,
     CLOUDY_OBJECT_SET,
@@ -64,78 +66,35 @@ class EndType(Enum):
 ENEMY_OBJECT_DEFINITION = 12
 
 
-class ObjectDefinition:
-    def __init__(self, string):
-        string = string.rstrip().replace("<", "").replace(">", "")
+class TilesetDefinition(BaseModel):
+    domain: int
+    min_value: int
+    max_value: int
+    bmp_width: int
+    bmp_height: int
+    object_design: list[int]
+    object_design2: list[int]
+    rom_object_design: list[int]
+    orientation: int
+    ending: int
+    is_4byte: bool
+    description: str
 
-        (
-            self.domain,
-            self.min_value,
-            self.max_value,
-            self.bmp_width,
-            self.bmp_height,
-            *self.object_design,
-            self.orientation,
-            self.ending,
-            self.is_4byte,
-            self.description,
-        ) = string.split(",")
-
-        self.bmp_width = int(self.bmp_width)
-        self.bmp_height = int(self.bmp_height)
-        self.orientation = int(self.orientation)
-        self.ending = int(self.ending)
-        self.is_4byte = self.is_4byte == "1"
-        self.description = self.description.replace(";;", ",")
-
-        self.object_design2 = []
-        self.rom_object_design = []
-
-        for index, item in enumerate(self.object_design):
-            self.object_design[index] = int(item)  # original data
-            self.object_design2.append(0)  # data after trimming through romobjset*.dat file?
-            self.rom_object_design.append(self.object_design[index])
-            self.object_design_length = index + 1  # todo necessary when we have len()?
-
-        self.description = self.description.split("|")[0]
-
-    def __repr__(self):
-        return f"ObjectDefinition: {self.description}"
+    @property
+    def object_design_length(self) -> int:
+        return len(self.object_design)
 
 
-object_metadata: List[List[ObjectDefinition]] = [[]]
-enemy_handle_x = []
-enemy_handle_x2 = []
-enemy_handle_y = []
+class Tileset(BaseModel):
+    __root__: list[TilesetDefinition]
 
-with open(data_dir.joinpath("data.dat"), "r") as f:
-    first_index = 0  # todo what are they symbolizing? object tables?
-    second_index = 0
 
-    for line in f.readlines():
-        if line.startswith(";"):  # is a comment
-            continue
+class Tilesets(BaseModel):
+    __root__: list[Tileset]
 
-        if line.rstrip() == "":
-            object_metadata.append([])
 
-            first_index += 1
-            second_index = 0
-            continue
-
-        object_metadata[first_index].append(ObjectDefinition(line))
-
-        if first_index == ENEMY_OBJECT_DEFINITION and second_index <= 236:
-            if line.find("|") >= 0:
-                x, y, x2 = line.split("|")[1].split(" ")
-            else:
-                x, y, x2 = "0 0 0".split(" ")
-
-            enemy_handle_x.append(int(x))
-            enemy_handle_x2.append(int(x2))
-            enemy_handle_y.append(int(y))
-
-        second_index += 1
+with open(tileset_definitions, "r") as f:
+    object_metadata = Tilesets(__root__=loads(f.read()))
 
 
 object_set_to_definition = {
@@ -157,61 +116,3 @@ object_set_to_definition = {
     UNDERGROUND_OBJECT_SET: 11,
     ENEMY_ITEM_OBJECT_SET: ENEMY_OBJECT_DEFINITION,
 }
-
-
-def load_object_definitions(object_set):
-    global object_metadata
-
-    object_definition = object_set_to_definition[object_set]
-
-    if object_definition == ENEMY_OBJECT_DEFINITION:
-        return object_metadata[object_definition]
-
-    with open(data_dir.joinpath(f"romobjs{object_definition}.dat"), "rb") as obj_def:
-        data = obj_def.read()
-
-    assert len(data) > 0
-
-    object_count = data[0]
-
-    if object_definition != 0 and object_count < 0xF7:
-        # first byte did not represent the object_count
-        object_count = 0xFF
-        position = 0
-    else:
-        position = 1
-
-    for object_index in range(object_count):
-        object_design_length = data[position]
-
-        object_metadata[object_definition][object_index].object_design_length = object_design_length
-
-        position += 1
-
-        for i in range(object_design_length):
-            block_index = data[position]
-
-            if block_index == 0xFF:
-                block_index = (data[position + 1] << 16) + (data[position + 2] << 8) + data[position + 3]
-
-                position += 3
-
-            object_metadata[object_definition][object_index].rom_object_design[i] = block_index
-
-            position += 1
-
-    # read overlay data
-    if position >= len(data):
-        return
-
-    for object_index in range(object_count):
-        object_design_length = object_metadata[object_definition][object_index].object_design_length
-
-        object_metadata[object_definition][object_index].object_design2 = []
-
-        for i in range(object_design_length):
-            if i <= object_design_length:
-                object_metadata[object_definition][object_index].object_design2.append(data[position])
-                position += 1
-
-    return object_metadata[object_definition]
