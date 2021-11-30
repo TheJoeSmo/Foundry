@@ -10,6 +10,7 @@ from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.FlowLayout import FlowLayout
 from foundry.gui.ObjectIcon import ObjectButton
+from foundry.gui.util import clear_layout
 from foundry.smb3parse.objects import MAX_DOMAIN, MAX_ENEMY_ITEM_ID, MAX_ID_VALUE
 
 
@@ -58,8 +59,7 @@ class ObjectToolBox(QWidget):
         self.update()
 
     def add_from_enemy_set(self, object_set_index: int):
-        self._layout.clear()
-
+        self.clear()
         factory = EnemyItemFactory(object_set_index, 0)
 
         for obj_index in range(MAX_ENEMY_ITEM_ID + 1):
@@ -72,6 +72,7 @@ class ObjectToolBox(QWidget):
         self.update()
 
     def clear(self):
+        clear_layout(self._layout)
         self._layout.clear()
         self.objects = []
 
