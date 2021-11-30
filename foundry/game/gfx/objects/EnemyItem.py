@@ -44,7 +44,7 @@ class EnemyObject(ObjectLike):
     def rect(self):
         return QRect(
             self.x_position,
-            self.y_position,
+            self.y_position - (self.height - 1),
             self.width,
             self.height,
         )
@@ -78,6 +78,9 @@ class EnemyObject(ObjectLike):
         for i, image in enumerate(self.blocks):
             x = self.x_position + (i % self.width)
             y = self.y_position + (i // self.width)
+
+            y_offset = self.height - 1
+            y -= y_offset
 
             block = image.copy()
 
