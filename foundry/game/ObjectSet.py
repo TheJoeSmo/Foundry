@@ -1,4 +1,8 @@
-from foundry.game.ObjectDefinitions import ObjectDefinition, load_object_definitions
+from foundry.game.ObjectDefinitions import (
+    TilesetDefinition,
+    object_metadata,
+    object_set_to_definition,
+)
 from foundry.smb3parse.constants import TILESET_ENDINGS, TILESET_NAMES
 from foundry.smb3parse.objects.object_set import ENEMY_ITEM_OBJECT_SET
 
@@ -12,7 +16,7 @@ class ObjectSet:
         else:
             self.name = TILESET_NAMES[self.number]
 
-        self.definitions = load_object_definitions(self.number)
+        self.definitions = object_metadata.__root__[object_set_to_definition[self.number]]
 
     def object_type(self, domain: int, index: int) -> int:
         if self.number == ENEMY_ITEM_OBJECT_SET:
@@ -25,8 +29,8 @@ class ObjectSet:
         else:
             return (index >> 4) + domain_offset + 16 - 1
 
-    def get_definition_of(self, object_id: int) -> ObjectDefinition:
-        return self.definitions[object_id]
+    def get_definition_of(self, object_id: int) -> TilesetDefinition:
+        return self.definitions.__root__[object_id]
 
     def get_ending_offset(self) -> int:
         if self.number == ENEMY_ITEM_OBJECT_SET:
