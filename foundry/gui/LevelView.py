@@ -388,14 +388,9 @@ class LevelView(QWidget):
 
         self.update()
 
-    def _on_right_mouse_button_up(self, event):
+    def _on_right_mouse_button_up(self, event: QMouseEvent):
         if self.resizing_happened:
-            x, y = event.position().toPoint().toTuple()
-
-            resize_end_x, _ = self._to_level_point(x, y)
-
-            if self.resize_mouse_start_x != resize_end_x:
-                self._stop_resize(event)
+            self._on_resize_happened_mouse_up(event)
         else:
             if self.get_selected_objects():
                 menu = self.context_menu.as_object_menu()
@@ -421,7 +416,9 @@ class LevelView(QWidget):
         self.setCursor(Qt.ArrowCursor)
 
     def _on_left_mouse_button_down(self, event: QMouseEvent):
-        if self._select_objects_on_click(event):
+        if self.resizing_happened:
+            self._on_resize_happened_mouse_up(event)
+        elif self._select_objects_on_click(event):
             x, y = event.position().toPoint().toTuple()
 
             obj = self.object_at(x, y)
@@ -436,6 +433,13 @@ class LevelView(QWidget):
                     self.drag_start_point = obj.x_position, obj.y_position
         else:
             self._start_selection_square(event.position().toPoint())
+
+    def _on_resize_happened_mouse_up(self, event: QMouseEvent):
+        x, y = event.pos().x(), event.pos().y()
+
+        resize_end_x, _ = self._to_level_point(x, y)
+        if self.resize_mouse_start_x != resize_end_x:
+            self._stop_resize(event)
 
     @staticmethod
     def _resize_mode_from_edge(edge: int):
