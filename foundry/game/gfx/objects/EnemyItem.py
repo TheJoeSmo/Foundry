@@ -6,11 +6,6 @@ from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.gfx.Palette import PaletteGroup
-from foundry.game.ObjectDefinitions import (
-    enemy_handle_x,
-    enemy_handle_x2,
-    enemy_handle_y,
-)
 from foundry.game.ObjectSet import ObjectSet
 from foundry.smb3parse.objects.object_set import (
     ENEMY_ITEM_GRAPHICS_SET,
@@ -29,7 +24,7 @@ class EnemyObject(ObjectLike):
         self.length = 0
 
         self.obj_index = data[0]
-        self.x_position = data[1] - enemy_handle_x2[self.obj_index]
+        self.x_position = data[1]
         self.y_position = data[2]
 
         self.domain = 0
@@ -48,8 +43,8 @@ class EnemyObject(ObjectLike):
     @property
     def rect(self):
         return QRect(
-            self.x_position + enemy_handle_x[self.obj_index],
-            self.y_position + enemy_handle_y[self.obj_index],
+            self.x_position,
+            self.y_position,
             self.width,
             self.height,
         )
@@ -83,12 +78,6 @@ class EnemyObject(ObjectLike):
         for i, image in enumerate(self.blocks):
             x = self.x_position + (i % self.width)
             y = self.y_position + (i // self.width)
-
-            x_offset = enemy_handle_x[self.obj_index]
-            y_offset = enemy_handle_y[self.obj_index]
-
-            x += x_offset
-            y += y_offset
 
             block = image.copy()
 
@@ -155,9 +144,7 @@ class EnemyObject(ObjectLike):
         self._setup()
 
     def to_bytes(self):
-        return bytearray(
-            [self.obj_index, int(self.x_position) + int(enemy_handle_x2[self.obj_index]), int(self.y_position)]
-        )
+        return bytearray([self.obj_index, int(self.x_position), int(self.y_position)])
 
     def as_image(self) -> QImage:
         image = QImage(
