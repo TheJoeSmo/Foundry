@@ -868,15 +868,8 @@ class LevelObject(ObjectLike):
     def decrement_type(self):
         self.change_type(False)
 
-    def change_type(self, increment: int):
-        if self.obj_index < 0x10 or self.obj_index == 0x10 and not increment:
-            value = 1
-        else:
-            self.obj_index = self.obj_index // 0x10 * 0x10
-            value = 0x10
-
-        if not increment:
-            value *= -1
+    def change_type(self, increment: bool):
+        value = 1 if increment else -1
 
         new_type = self.obj_index + value
 
