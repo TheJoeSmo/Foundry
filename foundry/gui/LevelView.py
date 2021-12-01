@@ -307,16 +307,14 @@ class LevelView(QWidget):
 
     @undoable
     def _change_object_on_mouse_wheel(self, cursor_position: QPoint, y_delta: int):
-        x, y = cursor_position.toTuple()
+        x, y = cursor_position.x(), cursor_position.y()
 
-        obj_under_cursor = self.object_at(x, y)
+        obj = self.object_at(x, y)
 
-        if y_delta > 0:
-            obj_under_cursor.increment_type()
-        else:
-            obj_under_cursor.decrement_type()
-
-        obj_under_cursor.selected = True
+        if obj is None:
+            return
+        obj.increment_type() if y_delta > 0 else obj.decrement_type()
+        obj.selected = True
 
     def sizeHint(self) -> QSize:
         if not self.level_ref:
