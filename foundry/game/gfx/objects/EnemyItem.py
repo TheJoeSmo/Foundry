@@ -62,7 +62,7 @@ class EnemyObject(ObjectLike):
     def _render(self, obj_def):
         self.blocks = []
 
-        block_ids = obj_def.rom_object_design
+        block_ids = obj_def.blocks
 
         for block_id in block_ids:
             x = (block_id % 64) * Block.WIDTH

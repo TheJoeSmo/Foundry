@@ -135,7 +135,7 @@ class LevelObject(ObjectLike):
         self.ending = EndType(object_data.ending)
         self.name = object_data.description
 
-        self.blocks = [int(block) for block in object_data.rom_object_design]
+        self.blocks = [int(block) for block in object_data.blocks]
 
         self.block_cache = {}
 

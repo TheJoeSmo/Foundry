@@ -72,7 +72,7 @@ class TilesetDefinition(BaseModel):
     max_value: int
     bmp_width: int
     bmp_height: int
-    rom_object_design: list[int]
+    blocks: list[int]
     orientation: int
     ending: int
     is_4byte: bool
@@ -80,7 +80,7 @@ class TilesetDefinition(BaseModel):
 
     @property
     def object_design_length(self) -> int:
-        return len(self.rom_object_design)
+        return len(self.blocks)
 
 
 class Tileset(BaseModel):
