@@ -1,6 +1,7 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.Position import Position, PositionProtocol
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -101,22 +102,21 @@ class EnemyObject(ObjectLike):
     def point_in(self, x, y):
         return self.rect.contains(x, y)
 
-    def set_position(self, x, y):
-        # todo also check for the upper bounds
-        x = max(0, x)
-        y = max(0, y)
-
-        self.x_position = x
-        self.y_position = y
-
     def move_by(self, dx, dy):
         new_x = self.x_position + dx
         new_y = self.y_position + dy
 
-        self.set_position(new_x, new_y)
+        self.position = Position(new_x, new_y)
 
-    def get_position(self):
-        return self.x_position, self.y_position
+    @property
+    def position(self) -> PositionProtocol:
+        return Position(self.x_position, self.y_position)
+
+    @position.setter
+    def position(self, position: PositionProtocol):
+        position.x = max(0, position.x)
+        position.y = max(0, position.y)
+        self.x_position, self.y_position = position.x, position.y
 
     def resize_by(self, dx, dy):
         pass

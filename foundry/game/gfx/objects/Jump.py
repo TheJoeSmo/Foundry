@@ -1,5 +1,6 @@
 from PySide6.QtCore import QRect
 
+from foundry.core.Position import PositionProtocol
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
 
@@ -61,14 +62,16 @@ class Jump(GeneratorObject):
     def get_status_info(self):
         return []
 
-    def set_position(self, x, y):
+    @property
+    def position(self) -> PositionProtocol:
+        pass
+
+    @position.setter
+    def position(self, position: PositionProtocol) -> None:
         pass
 
     def move_by(self, dx, dy):
         pass
-
-    def get_position(self):
-        return 0, 0
 
     def resize_by(self, dx, dy):
         pass
