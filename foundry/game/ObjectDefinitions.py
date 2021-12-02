@@ -75,12 +75,16 @@ class TilesetDefinition(BaseModel):
     blocks: list[int]
     orientation: GeneratorType
     ending: EndType
-    is_4byte: bool
+    size: int = 3
     description: str
 
     @property
     def object_design_length(self) -> int:
         return len(self.blocks)
+
+    @property
+    def is_4byte(self) -> bool:
+        return self.size == 4
 
     class Config:
         use_enum_values = True
