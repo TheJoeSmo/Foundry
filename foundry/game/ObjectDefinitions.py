@@ -25,7 +25,7 @@ from foundry.smb3parse.objects.object_set import (
 )
 
 
-class GeneratorType(Enum):
+class GeneratorType(int, Enum):
     """
     Level objects are generated using different methods, depending on their generator type. Some objects extend until
     they hit another object, some extend up to the sky. To identify in what way a specific type of level object is
@@ -49,7 +49,7 @@ class GeneratorType(Enum):
     ENDING = 14
 
 
-class EndType(Enum):
+class EndType(int, Enum):
     """
     Some level objects have blocks designated to be used at their ends. For example pipes, which can be extended, but
     always end at one side with the same couple of blocks. To keep track of where those special blocks are to be placed,
@@ -73,14 +73,17 @@ class TilesetDefinition(BaseModel):
     bmp_width: int
     bmp_height: int
     blocks: list[int]
-    orientation: int
-    ending: int
+    orientation: GeneratorType
+    ending: EndType
     is_4byte: bool
     description: str
 
     @property
     def object_design_length(self) -> int:
         return len(self.blocks)
+
+    class Config:
+        use_enum_values = True
 
 
 class Tileset(BaseModel):
