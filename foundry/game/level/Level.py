@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List, Optional, Tuple, Union, overload
 
 from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
@@ -145,20 +146,10 @@ class Level(LevelLike):
         self.data_changed.emit()
 
     def current_object_size(self):
-        size = 0
-
-        for obj in self.objects:
-            if obj.is_4byte:
-                size += 4
-            else:
-                size += 3
-
-        size += Jump.SIZE * len(self.jumps)
-
-        return size
+        return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.objects], 0)
 
     def current_enemies_size(self):
-        return len(self.enemies) * ENEMY_SIZE
+        return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.enemies], 0)
 
     def _parse_header(self):
         self.header = LevelHeader(self.header_bytes, self.object_set_number)

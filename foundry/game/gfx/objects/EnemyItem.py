@@ -17,11 +17,7 @@ MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 class EnemyObject(ObjectLike):
     def __init__(self, data, png_data, palette_group: PaletteGroup):
-        super(EnemyObject, self).__init__()
-
-        self.is_4byte = False
-        self.is_single_block = True
-        self.length = 0
+        super().__init__()
 
         self.obj_index = data[0]
         self.x_position = data[1]

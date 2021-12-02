@@ -7,16 +7,10 @@ from foundry.game.gfx.objects.ObjectLike import ObjectLike
 class Jump(ObjectLike):
     POINTER_DOMAIN = 0b111
 
-    SIZE = 3  # bytes
-
     def __init__(self, data):
         self.data = data
 
-        # domain: 0b1110
-        # unused: 0b0001
-
         self.blocks = []
-        self.is_4byte = False
         self.name = "Jump object"
 
         assert self.is_jump(data)
