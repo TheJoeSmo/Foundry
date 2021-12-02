@@ -10,7 +10,6 @@ EXPANDS_BOTH = EXPANDS_HORIZ | EXPANDS_VERT
 
 class ObjectLike(abc.ABC):
     obj_index: int
-    domain: int
     name: str
 
     rect: QRect

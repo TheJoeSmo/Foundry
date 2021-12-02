@@ -1,10 +1,10 @@
 from PySide6.QtCore import QRect
 
+from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
-from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
 
-class Jump(ObjectLike):
+class Jump(GeneratorObject):
     POINTER_DOMAIN = 0b111
 
     def __init__(self, data):

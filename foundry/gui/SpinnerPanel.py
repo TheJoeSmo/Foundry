@@ -51,7 +51,10 @@ class SpinnerPanel(QWidget):
 
         self.set_type(obj.obj_index)
 
-        self.enable_domain(isinstance(obj, LevelObject), obj.domain)
+        if isinstance(obj, LevelObject):
+            self.enable_domain(True, obj.domain)
+        else:
+            self.enable_domain(False)
 
         if isinstance(obj, LevelObject) and obj.is_4byte:
             self.set_length(obj.length)
