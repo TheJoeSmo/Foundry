@@ -63,13 +63,13 @@ class WarningList(QWidget):
         # level objects to ground hitting the level edge
         for obj in level.objects:
             if obj.orientation in [GeneratorType.HORIZ_TO_GROUND, GeneratorType.PYRAMID_TO_GROUND]:
-                if obj.y_position + obj.rendered_height == GROUND:
+                if obj.position.y + obj.rendered_height == GROUND:
                     self.warnings.append((f"{obj} extends until the level bottom. This can crash the game.", [obj]))
 
         # autoscroll objects
         for item in level.enemies:
             if item.obj_index == OBJ_AUTOSCROLL:
-                if item.y_position >= 0x60:
+                if item.position.y >= 0x60:
                     self.warnings.append((f"{item}'s y-position is too low. Maximum is 95 or 0x5F.", [item]))
 
                 if level.header.scroll_type_index != 0:
@@ -91,8 +91,7 @@ class WarningList(QWidget):
             if obj.name == "MSG_CRASH":
                 self.warnings.append(
                     (
-                        f"Object at {obj.get_position()} will likely cause the game to crash, when loading or on "
-                        f"screen.",
+                        f"Object at {obj.position} will likely cause the game to crash, when loading or on " f"screen.",
                         [obj],
                     )
                 )

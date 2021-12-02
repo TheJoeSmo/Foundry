@@ -263,7 +263,7 @@ class LevelDrawer:
                 # center() is one pixel off for some reason
                 pos = rect.topLeft() + QPoint(*(rect.size() / 2).toTuple())
 
-                trigger_position = level_object.get_position()
+                trigger_position = (level_object.position.x, level_object.position.y)
 
                 if "left" in name:
                     image = LEFT_ARROW
@@ -310,7 +310,7 @@ class LevelDrawer:
 
                 pos.setY(rect.top() - self.block_length)
 
-                x, y = level_object.get_position()
+                x, y = level_object.position.x, level_object.position.y
 
                 # jumps seemingly trigger on the bottom block
                 if not self._object_in_jump_area(level, (x, y + 1)):

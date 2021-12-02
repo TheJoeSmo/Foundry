@@ -15,6 +15,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
+from foundry.core.Position import Position
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -724,9 +725,9 @@ class LevelView(QWidget):
     def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: Optional[int]):
         self.remove_object(obj)
 
-        x, y = obj.get_position()
-
-        new_obj = self.level_ref.level.add_object(domain, obj_index, x, y, length, obj.index_in_level)
+        new_obj = self.level_ref.level.add_object(
+            domain, obj_index, obj.position.x, obj.position.y, length, obj.index_in_level
+        )
         new_obj.selected = obj.selected
 
     def replace_enemy(self, old_enemy: EnemyObject, enemy_index: int):
@@ -734,9 +735,9 @@ class LevelView(QWidget):
 
         self.remove_object(old_enemy)
 
-        x, y = old_enemy.get_position()
-
-        new_enemy = self.level_ref.level.add_enemy(enemy_index, x, y, index_in_level)
+        new_enemy = self.level_ref.level.add_enemy(
+            enemy_index, old_enemy.position.x, old_enemy.position.y, index_in_level
+        )
 
         new_enemy.selected = old_enemy.selected
 
@@ -766,9 +767,7 @@ class LevelView(QWidget):
         pasted_objects = []
 
         for obj in objects:
-            obj_x, obj_y = obj.get_position()
-
-            offset_x, offset_y = obj_x - ori_x, obj_y - ori_y
+            offset_x, offset_y = obj.position.x - ori_x, obj.position.y - ori_y
 
             try:
                 pasted_objects.append(self.level_ref.level.paste_object_at(level_x + offset_x, level_y + offset_y, obj))
@@ -794,7 +793,7 @@ class LevelView(QWidget):
 
         level_object = self._object_from_mime_data(event.mimeData())
 
-        level_object.set_position(x, y)
+        level_object.position = Position(x, y)
 
         self.currently_dragged_object = level_object
 

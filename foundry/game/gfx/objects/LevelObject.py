@@ -4,6 +4,7 @@ from warnings import warn
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QImage, QPainter
 
+from foundry.core.Position import Position, PositionProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -721,7 +722,20 @@ class LevelObject(GeneratorObject):
             transparent=transparent,
         )
 
-    def set_position(self, x, y):
+    def move_by(self, dx: int, dy: int):
+        new_x = self.rendered_base_x + dx
+        new_y = self.rendered_base_y + dy
+
+        self.position = Position(new_x, new_y)
+
+    @property
+    def position(self) -> PositionProtocol:
+        return Position(self.x_position, self.y_position)
+
+    @position.setter
+    def position(self, position: PositionProtocol) -> None:
+        x, y = position.x, position.y
+
         # todo also check for the upper bounds
         x = max(0, x)
 
@@ -740,15 +754,6 @@ class LevelObject(GeneratorObject):
         self.y_position = self.rendered_base_y + y_diff
 
         self._render()
-
-    def move_by(self, dx: int, dy: int):
-        new_x = self.rendered_base_x + dx
-        new_y = self.rendered_base_y + dy
-
-        self.set_position(new_x, new_y)
-
-    def get_position(self):
-        return self.x_position, self.y_position
 
     def expands(self):
         expands = EXPANDS_NOT
