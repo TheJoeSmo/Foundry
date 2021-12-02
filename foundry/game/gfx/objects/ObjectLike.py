@@ -1,4 +1,4 @@
-import abc
+from abc import ABC, abstractmethod
 
 from PySide6.QtCore import QRect
 
@@ -8,41 +8,41 @@ EXPANDS_VERT = 0b10
 EXPANDS_BOTH = EXPANDS_HORIZ | EXPANDS_VERT
 
 
-class ObjectLike(abc.ABC):
+class ObjectLike(ABC):
     obj_index: int
     name: str
 
     rect: QRect
 
-    @abc.abstractmethod
+    @abstractmethod
     def render(self):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def draw(self, dc, zoom, transparent):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def get_status_info(self):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def set_position(self, x, y):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def move_by(self, dx, dy):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def get_position(self):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def resize_by(self, dx, dy):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def point_in(self, x, y):
         pass
 
@@ -60,15 +60,15 @@ class ObjectLike(abc.ABC):
         else:
             return self.rect
 
-    @abc.abstractmethod
+    @abstractmethod
     def change_type(self, new_type):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def __contains__(self, point):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def to_bytes(self):
         pass
 
