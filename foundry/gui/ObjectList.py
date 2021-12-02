@@ -24,6 +24,7 @@ class ObjectList(QListWidget):
         self.level_ref.data_changed.connect(self.update_content)
         self.context_menu = context_menu
 
+        self.labels = []
         self._on_selection_changed_ongoing = False
         self.itemSelectionChanged.connect(self.on_selection_changed)
 
@@ -89,6 +90,21 @@ class ObjectList(QListWidget):
         level_objects = self.level_ref.level.get_all_objects()
 
         labels = [obj.name for obj in level_objects]
+        if labels != self.labels:
+            self.labels = labels
+
+            self.blockSignals(True)
+            self.clear()
+            self.addItems(labels)
+
+            for index, level_object in enumerate(level_objects):
+                item = self.item(index)
+                item.setData(Qt.UserRole, level_object)
+                item.setSelected(level_object.selected)
+                if level_object.selected and index not in currently_selected:
+                    ignore_prior_selection = True
+
+            self.blockSignals(False)
 
         has_changes = False
         for index, level_object in enumerate(level_objects):
@@ -97,21 +113,6 @@ class ObjectList(QListWidget):
                 break
         if not has_changes:
             return
-
-        self.blockSignals(True)
-
-        self.clear()
-
-        self.addItems(labels)
-
-        for index, level_object in enumerate(level_objects):
-            item = self.item(index)
-            item.setData(Qt.UserRole, level_object)
-            item.setSelected(level_object.selected)
-            if level_object.selected and index not in currently_selected:
-                ignore_prior_selection = True
-
-        self.blockSignals(False)
 
         if self.selectedIndexes():
             self.scrollTo(self.selectedIndexes()[-1])
