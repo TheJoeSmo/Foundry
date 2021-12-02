@@ -232,7 +232,10 @@ class LevelView(QWidget):
         level_object = self.object_at(*event.position().toTuple())
 
         if level_object is not None:
-            is_resizable = not level_object.is_single_block
+            if isinstance(level_object, LevelObject):
+                is_resizable = not level_object.is_single_block
+            else:
+                is_resizable = False
 
             edges = self._cursor_on_edge_of_object(level_object, event.position().toPoint())
 

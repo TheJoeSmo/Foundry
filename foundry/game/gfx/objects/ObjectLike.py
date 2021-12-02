@@ -15,8 +15,6 @@ class ObjectLike(abc.ABC):
 
     rect: QRect
 
-    is_4byte: bool
-
     @abc.abstractmethod
     def render(self):
         pass
