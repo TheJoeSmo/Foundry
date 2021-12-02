@@ -23,8 +23,6 @@ class EnemyObject(ObjectLike):
         self.x_position = data[1]
         self.y_position = data[2]
 
-        self.domain = 0
-
         self.graphics_set = GraphicsSet(ENEMY_ITEM_GRAPHICS_SET)
         self.palette_group = palette_group
 

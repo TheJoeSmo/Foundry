@@ -2,6 +2,7 @@ import pytest
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import Qt, QWheelEvent
 
+from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.LevelView import LevelView
 from foundry.gui.settings import SETTINGS
@@ -31,7 +32,8 @@ def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain,
 
     assert level_object
     assert level_object.obj_index == obj_index
-    assert level_object.domain == domain
+    if isinstance(level_object, LevelObject):
+        assert level_object.domain == domain
     assert level_object.object_set.number == object_set_number
 
 

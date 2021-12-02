@@ -22,7 +22,10 @@ def test_object_selected(main_window):
         length_spinner = main_window.spinner_panel.spin_length
 
         assert type_spinner.isEnabled() and type_spinner.value() == obj.obj_index
-        assert domain_spinner.isEnabled() == isinstance(obj, LevelObject) and domain_spinner.value() == obj.domain
-        assert length_spinner.isEnabled() == obj.is_4byte and length_spinner.value() == 0
+        if isinstance(obj, LevelObject):
+            assert domain_spinner.isEnabled() == isinstance(obj, LevelObject) and domain_spinner.value() == obj.domain
+            assert length_spinner.isEnabled() == obj.is_4byte and length_spinner.value() == 0
+        else:
+            assert not domain_spinner.isEnabled()
 
         obj.selected = False

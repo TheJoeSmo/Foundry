@@ -146,7 +146,9 @@ class Level(LevelLike):
         self.data_changed.emit()
 
     def current_object_size(self):
-        return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.objects], 0)
+        return reduce(
+            lambda count, element: count + len(element), [obj.to_bytes() for obj in self.objects + self.jumps], 0
+        )
 
     def current_enemies_size(self):
         return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.enemies], 0)

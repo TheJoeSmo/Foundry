@@ -7,12 +7,12 @@ from PySide6.QtGui import QImage, QPainter
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
     EXPANDS_HORIZ,
     EXPANDS_NOT,
     EXPANDS_VERT,
-    ObjectLike,
 )
 from foundry.game.gfx.Palette import PaletteGroup, bg_color_for_object_set
 from foundry.game.ObjectDefinitions import EndType, GeneratorType
@@ -57,7 +57,7 @@ SCREEN_HEIGHT = 15
 SCREEN_WIDTH = 16
 
 
-class LevelObject(ObjectLike):
+class LevelObject(GeneratorObject):
     def __init__(
         self,
         data: bytearray,
