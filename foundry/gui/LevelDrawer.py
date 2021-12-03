@@ -214,13 +214,13 @@ class LevelDrawer:
 
             if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS:
                 width = LEVEL_MAX_LENGTH
-                height = GROUND - level_object.y_position
+                height = GROUND - level_object.position.y
 
                 blocks_to_draw = [level_object.blocks[0]] * width * height
 
                 for index, block_index in enumerate(blocks_to_draw):
-                    x = level_object.x_position + index % width
-                    y = level_object.y_position + index // width
+                    x = level_object.position.x + index % width
+                    y = level_object.position.y + index // width
 
                     level_object._draw_block(painter, block_index, x, y, self.block_length, False)
             else:

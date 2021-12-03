@@ -690,7 +690,7 @@ class Level(LevelLike):
         m3l_bytes.append(0xFF)
         m3l_bytes.append(0x01)
 
-        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.x_position):
+        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.position.x):
             m3l_bytes.extend(enemy.to_bytes())
 
         m3l_bytes.append(0xFF)
@@ -747,9 +747,9 @@ class Level(LevelLike):
         enemies = bytearray()
 
         if self.is_vertical:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.y_position)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.y)
         else:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.x_position)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.x)
 
         for enemy in enemies_objects:
             enemies.extend(enemy.to_bytes())

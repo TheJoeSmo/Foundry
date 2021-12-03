@@ -361,7 +361,7 @@ class LevelView(QWidget):
         obj = self.object_at(x, y)
 
         if obj is not None:
-            self.resize_obj_start_point = obj.x_position, obj.y_position
+            self.resize_obj_start_point = obj.position.x, obj.position.y
 
     def _resizing(self, event: QMouseEvent):
         self.resizing_happened = True
@@ -430,7 +430,7 @@ class LevelView(QWidget):
 
                     self._try_start_resize(self._resize_mode_from_edge(edge), event)
                 else:
-                    self.drag_start_point = obj.x_position, obj.y_position
+                    self.drag_start_point = obj.position.x, obj.position.y
         else:
             self._start_selection_square(event.position().toPoint())
 
@@ -483,7 +483,7 @@ class LevelView(QWidget):
             obj = self.object_at(x, y)
 
             if obj is not None:
-                drag_end_point = obj.x_position, obj.y_position
+                drag_end_point = obj.position.x, obj.position.y
 
                 if self.drag_start_point != drag_end_point:
                     self._stop_drag()
@@ -597,8 +597,8 @@ class LevelView(QWidget):
         if not objects:
             return
 
-        min_x = min([obj.x_position for obj in objects]) * self.block_length
-        min_y = min([obj.y_position for obj in objects]) * self.block_length
+        min_x = min([obj.position.x for obj in objects]) * self.block_length
+        min_y = min([obj.position.y for obj in objects]) * self.block_length
 
         self.parent().parent().ensureVisible(min_x, min_y)
 
