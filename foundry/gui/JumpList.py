@@ -21,6 +21,7 @@ class JumpList(QListWidget):
 
         self._level_ref.data_changed.connect(self.update)
         self.itemDoubleClicked.connect(lambda _: self.edit_jump.emit())
+        self.add_jump.connect(self.scrollToBottom)
 
         self.setWhatsThis(
             "<b>Jump List</b><br/>"
