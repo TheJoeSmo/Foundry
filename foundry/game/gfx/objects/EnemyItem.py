@@ -5,6 +5,7 @@ from foundry.core.Position import Position, PositionProtocol
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.gfx.Palette import PaletteGroup
 from foundry.game.ObjectSet import ObjectSet
@@ -19,10 +20,7 @@ MASK_COLOR = [0xFF, 0x33, 0xFF]
 class EnemyObject(ObjectLike):
     def __init__(self, data, png_data, palette_group: PaletteGroup):
         super().__init__()
-
-        self.obj_index = data[0]
-        self.x_position = data[1]
-        self.y_position = data[2]
+        self.enemy = Enemy.from_bytes(data)
 
         self.graphics_set = GraphicsSet(ENEMY_ITEM_GRAPHICS_SET)
         self.palette_group = palette_group
@@ -38,8 +36,8 @@ class EnemyObject(ObjectLike):
     @property
     def rect(self):
         return QRect(
-            self.x_position,
-            self.y_position - (self.height - 1),
+            self.position.x,
+            self.position.y - (self.height - 1),
             self.width,
             self.height,
         )
@@ -71,8 +69,8 @@ class EnemyObject(ObjectLike):
 
     def draw(self, painter: QPainter, block_length, _):
         for i, image in enumerate(self.blocks):
-            x = self.x_position + (i % self.width)
-            y = self.y_position + (i // self.width)
+            x = self.position.x + (i % self.width)
+            y = self.position.y + (i // self.width)
 
             y_offset = self.height - 1
             y -= y_offset
@@ -92,7 +90,7 @@ class EnemyObject(ObjectLike):
             painter.drawImage(x * block_length, y * block_length, block)
 
     def get_status_info(self):
-        return [("Name", self.name), ("X", self.x_position), ("Y", self.y_position)]
+        return [("Name", self.name), ("X", self.position.x), ("Y", self.position.y)]
 
     def __contains__(self, item):
         x, y = item
@@ -103,45 +101,44 @@ class EnemyObject(ObjectLike):
         return self.rect.contains(x, y)
 
     def move_by(self, dx, dy):
-        new_x = self.x_position + dx
-        new_y = self.y_position + dy
-
-        self.position = Position(new_x, new_y)
+        self.position = Position(self.position.x + dx, self.position.y + dy)
 
     @property
     def position(self) -> PositionProtocol:
-        return Position(self.x_position, self.y_position)
+        return self.enemy.position
 
     @position.setter
     def position(self, position: PositionProtocol):
-        position.x = max(0, position.x)
-        position.y = max(0, position.y)
-        self.x_position, self.y_position = position.x, position.y
+        self.enemy.position = Position(max(0, position.x), max(0, position.y))
 
     def resize_by(self, dx, dy):
         pass
 
     @property
+    def obj_index(self):
+        return self.enemy.type
+
+    @property
     def type(self):
-        return self.obj_index
+        return self.enemy.type
 
     def change_type(self, new_type):
-        self.obj_index = new_type
+        self.enemy.type = new_type
 
         self._setup()
 
     def increment_type(self):
-        self.obj_index = min(0xFF, self.obj_index + 1)
+        self.enemy.type = min(0xFF, self.obj_index + 1)
 
         self._setup()
 
     def decrement_type(self):
-        self.obj_index = max(0, self.obj_index - 1)
+        self.enemy.type = max(0, self.obj_index - 1)
 
         self._setup()
 
     def to_bytes(self):
-        return bytearray([self.obj_index, int(self.x_position), int(self.y_position)])
+        return bytes(self.enemy)
 
     def as_image(self) -> QImage:
         image = QImage(
@@ -158,7 +155,7 @@ class EnemyObject(ObjectLike):
         return image
 
     def __str__(self):
-        return f"{self.name} at {self.x_position}, {self.y_position}"
+        return f"{self.name} at {self.position.x}, {self.position.y}"
 
     def __repr__(self):
         return f"EnemyObject: {self}"
