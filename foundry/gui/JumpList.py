@@ -21,6 +21,7 @@ class JumpList(QListWidget):
 
         self._level_ref.data_changed.connect(self.update)
         self.itemDoubleClicked.connect(lambda _: self.edit_jump.emit())
+        self.add_jump.connect(self.scrollToBottom)
 
         self.setWhatsThis(
             "<b>Jump List</b><br/>"
@@ -42,6 +43,13 @@ class JumpList(QListWidget):
         jumps = self._level_ref.level.jumps
 
         self.addItems([str(jump) for jump in jumps])
+
+    def delete(self):
+        currently_selected = set(obj.row() for obj in self.selectedIndexes())
+        jumps = self._level_ref.level.jumps
+        for idx, jump in enumerate(jumps):
+            if idx in currently_selected:
+                self._level_ref.level.remove_jump(jump)
 
     def contextMenuEvent(self, event: QContextMenuEvent):
         item = self.itemAt(event.pos())
