@@ -94,4 +94,5 @@ class ObjectToolBox(QWidget):
                 self.objects.pop(idx)
                 break
         self.objects.insert(0, object)
+        clear_layout(self._layout)
         self.update()
