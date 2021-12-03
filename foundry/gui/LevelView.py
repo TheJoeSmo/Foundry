@@ -2,7 +2,7 @@ from bisect import bisect_right
 from typing import List, Optional, Tuple, Union
 from warnings import warn
 
-from PySide6.QtCore import QMimeData, QPoint, QSize
+from PySide6.QtCore import QMimeData, QPoint, QSize, Signal, SignalInstance
 from PySide6.QtGui import (
     QDragEnterEvent,
     QDragMoveEvent,
@@ -53,6 +53,8 @@ def undoable(func):
 
 
 class LevelView(QWidget):
+    objects_selected: SignalInstance = Signal(object)  # type: ignore
+
     def __init__(self, parent: Optional[QWidget], level: LevelRef, context_menu: ContextMenu):
         super(LevelView, self).__init__(parent)
 
@@ -564,8 +566,10 @@ class LevelView(QWidget):
     def _select_object(self, objects: Optional[list]):
         if objects is not None:
             self.select_objects(objects)
+            self.objects_selected.emit(objects)
         else:
             self.select_objects([])
+            self.objects_selected.emit([])
 
     def select_objects(self, objects):
         self._set_selected_objects(objects)
