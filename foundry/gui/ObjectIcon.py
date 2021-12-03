@@ -112,36 +112,6 @@ class ObjectIcon(QWidget, Generic[T]):
         return super(ObjectIcon, self).paintEvent(event)
 
 
-class ObjectViewer(QWidget):
-    def __init__(self, parent: Optional[QWidget], icon: Optional[ObjectIcon] = None):
-        super().__init__(parent)
-        self.icon = icon
-        self.layout_ = QVBoxLayout()
-        self.setLayout(self.layout_)
-        self.setWhatsThis(
-            "<b>Current Object</b><br/>"
-            "Shows the currently selected object and its name. It can be placed by "
-            "clicking the middle mouse button anywhere in the level."
-        )
-
-    @property
-    def icon(self) -> Optional[ObjectIcon]:
-        return self._icon
-
-    @icon.setter
-    def icon(self, icon: Optional[ObjectIcon]):
-        self._icon = icon
-        if icon is not None:
-            clear_layout(self.layout_)
-            icon.setFixedSize(QSize(64, 64))
-            name = QLabel(icon.item.name)
-            name.setWordWrap(True)
-            name.setAlignment(Qt.AlignCenter)
-            name.setContentsMargins(0, 0, 0, 0)
-            self.layout_.addWidget(icon)
-            self.layout_.addWidget(name)
-
-
 class ObjectButton(ObjectIcon):
     selected: SignalInstance = Signal()  # type: ignore
     object_created: SignalInstance = Signal()  # type: ignore
@@ -165,3 +135,33 @@ class ObjectButton(ObjectIcon):
         self.selected.emit()
 
         return super().mouseReleaseEvent(event)
+
+
+class ObjectViewer(QWidget):
+    def __init__(self, parent: Optional[QWidget], icon: Optional[ObjectButton] = None):
+        super().__init__(parent)
+        self.icon = icon
+        self.layout_ = QVBoxLayout()
+        self.setLayout(self.layout_)
+        self.setWhatsThis(
+            "<b>Current Object</b><br/>"
+            "Shows the currently selected object and its name. It can be placed by "
+            "clicking the middle mouse button anywhere in the level."
+        )
+
+    @property
+    def icon(self) -> Optional[ObjectButton]:
+        return self._icon
+
+    @icon.setter
+    def icon(self, icon: Optional[ObjectButton]):
+        self._icon = icon
+        if icon is not None:
+            clear_layout(self.layout_)
+            icon.setFixedSize(QSize(64, 64))
+            name = QLabel(icon.item.name)
+            name.setWordWrap(True)
+            name.setAlignment(Qt.AlignCenter)
+            name.setContentsMargins(0, 0, 0, 0)
+            self.layout_.addWidget(icon)
+            self.layout_.addWidget(name)
