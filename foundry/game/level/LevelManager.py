@@ -17,7 +17,7 @@ from foundry.gui.LevelSelector import select_by_world_and_level
 from foundry.gui.LevelSizeBar import LevelSizeBar
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectDropdown import ObjectDropdown
-from foundry.gui.ObjectIcon import ObjectIcon
+from foundry.gui.ObjectIcon import ObjectButton
 from foundry.gui.ObjectIcon import ObjectViewer as ObjectToolbarViewer
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectStatusBar import ObjectStatusBar
@@ -165,11 +165,11 @@ class LevelManager:
         self.parent.object_toolbar_viewer = ObjectToolbarViewer(self.parent)
 
         def set_object_viewer(item):
-            self.parent.object_toolbar_viewer.icon = ObjectIcon(self.parent.object_toolbar_viewer, item)
+            self.parent.object_toolbar_viewer.icon = ObjectButton(self.parent.object_toolbar_viewer, item)
 
         def set_object_viewer_from_selected(items):
             if len(items) == 1:
-                self.parent.object_toolbar_viewer.icon = ObjectIcon(self.parent.object_toolbar_viewer, items[0])
+                self.parent.object_toolbar_viewer.icon = ObjectButton(self.parent.object_toolbar_viewer, items[0])
 
         self.parent.object_dropdown.object_selected.connect(set_object_viewer)
         self.parent.level_view.objects_selected.connect(set_object_viewer_from_selected)
