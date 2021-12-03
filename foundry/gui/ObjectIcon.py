@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QLabel, QSizePolicy, QVBoxLayout, QWidget
 
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
+from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.gfx.Palette import bg_color_for_palette_group
 from foundry.gui.util import clear_layout
 
@@ -17,22 +18,45 @@ def get_minimal_icon_object(level_object: T) -> T:
     Returns the object with a length, so that every block is rendered. E. g. clouds with length 0, don't have a face.
     """
 
-    if isinstance(level_object, EnemyObject):
+    if not isinstance(level_object, LevelObject):
         return level_object
 
-    level_object.ground_level = 3
+    factory = LevelObjectFactory(
+        level_object.object_set.number,
+        level_object.graphics_set.number,
+        0,
+        [],
+        vertical_level=False,
+        size_minimal=True,
+    )
 
-    while (
-        any(block not in level_object.rendered_blocks for block in level_object.blocks) and level_object.length < 0x10
-    ):
-        level_object.length += 1
+    if level_object.obj_index >= 0x1F:
+        obj = factory.from_properties(
+            domain=level_object.domain,
+            object_index=(level_object.obj_index // 0x10) * 0x10,
+            x=0,
+            y=0,
+            length=None,
+            index=0,
+        )
+    else:
+        obj = factory.from_properties(
+            domain=level_object.domain, object_index=level_object.obj_index, x=0, y=0, length=None, index=0
+        )
+    if not isinstance(obj, LevelObject):
+        return level_object
 
-        if level_object.is_4byte:
-            level_object.secondary_length += 1
+    obj.ground_level = 3
 
-        level_object.render()
+    while any(block not in obj.rendered_blocks for block in obj.blocks) and obj.length < 0x10:
+        obj.length += 1
 
-    return level_object
+        if obj.is_4byte:
+            obj.secondary_length += 1
+
+        obj.render()
+
+    return obj
 
 
 class ObjectIcon(QWidget, Generic[T]):
