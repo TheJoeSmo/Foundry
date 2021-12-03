@@ -198,6 +198,7 @@ class LevelController:
 
     @undoable
     def delete(self):
+        self.parent.jump_list.delete()
         self.parent.level_view.remove_selected_objects()
         self.parent.level_view.update()
         self.parent.spinner_panel.disable_all()
