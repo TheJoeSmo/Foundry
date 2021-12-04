@@ -32,6 +32,10 @@ class Sprite(BaseModel):
 class EnemyDefinition(BaseModel):
     bmp_width: int = 1
     bmp_height: int = 1
+    rect_width: int = 0
+    rect_height: int = 0
+    rect_x_offset: int = 0
+    rect_y_offset: int = 0
     sprites: list[Sprite] = Field(default_factory=list)
     blocks: list[int] = Field(default_factory=list)
     pages: list[int] = Field(default_factory=list)
