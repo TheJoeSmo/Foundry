@@ -7,7 +7,7 @@ from PySide6.QtGui import QImage, QPainter
 from foundry.core.Position import Position, PositionProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
@@ -64,7 +64,7 @@ class LevelObject(GeneratorObject):
         data: bytearray,
         object_set: int,
         palette_group: PaletteGroup,
-        graphics_set: GraphicsSet,
+        graphics_set: GraphicsSetProtocol,
         objects_ref: List["LevelObject"],
         is_vertical: bool,
         index: int,

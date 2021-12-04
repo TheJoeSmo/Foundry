@@ -1,6 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import (
     SCREEN_HEIGHT,
@@ -15,20 +15,24 @@ class LevelObjectFactory:
     graphic_set: int
     palette_group_index: int
 
-    graphics_set: Optional[GraphicsSet] = None
+    graphics_set: Optional[GraphicsSetProtocol] = None
     palette_group: list = []
 
     def __init__(
         self,
         object_set: int,
-        graphic_set: int,
+        graphic_set: Union[int, GraphicsSetProtocol],
         palette_group_index: int,
         objects_ref: List[LevelObject],
         vertical_level: bool,
         size_minimal: bool = False,
     ):
         self.set_object_set(object_set)
-        self.set_graphic_set(graphic_set)
+        if isinstance(graphic_set, int):
+            self.set_graphic_set(graphic_set)
+        else:
+            self.graphic_set = 0
+            self.graphics_set = graphic_set
         self.set_palette_group_index(palette_group_index)
         self.objects_ref = objects_ref
         self.vertical_level = vertical_level
@@ -40,7 +44,7 @@ class LevelObjectFactory:
 
     def set_graphic_set(self, graphic_set: int):
         self.graphic_set = graphic_set
-        self.graphics_set = GraphicsSet(self.graphic_set)
+        self.graphics_set = GraphicsSet.from_tileset(self.graphic_set)
 
     def set_palette_group_index(self, palette_group_index: int):
         self.palette_group_index = palette_group_index

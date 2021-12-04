@@ -6,9 +6,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
 from foundry.game.gfx.Palette import NESPalette, PaletteGroup
-from foundry.smb3parse.objects.object_set import CLOUDY_GRAPHICS_SET
 
 
 @lru_cache(2 ** 10)
@@ -16,7 +15,7 @@ def get_sprite(
     index: int,
     palette_group: PaletteGroup,
     palette_index: int,
-    graphics_set: GraphicsSet,
+    graphics_set: GraphicsSetProtocol,
     horizontal_mirror: bool = False,
     vertical_mirror: bool = False,
 ):
@@ -40,21 +39,18 @@ class Sprite:
         index: int,
         palette_group: PaletteGroup,
         palette_index: int,
-        graphics_set: GraphicsSet,
+        graphics_set: GraphicsSetProtocol,
         horizontal_mirror: bool = False,
         vertical_mirror: bool = False,
     ):
         self.index = index
         self.horizontal_mirror = horizontal_mirror
         self.vertical_mirror = vertical_mirror
+        self.palette_group = palette_group
+        self.palette_index = palette_index
 
         # can't hash list, so turn it into a string instead
-        self._sprite_id = (index, str(palette_group), graphics_set.number)
-
-        if graphics_set.number == CLOUDY_GRAPHICS_SET:
-            self.bg_color = NESPalette[palette_group[palette_index][2]]
-        else:
-            self.bg_color = NESPalette[palette_group[palette_index][0]]
+        self._sprite_id = (index, str(palette_group), graphics_set)
 
         self.top_tile = Tile(index, palette_group, palette_index, graphics_set)
         self.bottom_tile = Tile(index + 1, palette_group, palette_index, graphics_set)
@@ -106,7 +102,7 @@ class Sprite:
     def _replace_transparent_with_background(self, image):
         # draw image on background layer, to fill transparent pixels
         background = image.copy()
-        background.fill(self.bg_color)
+        background.fill(NESPalette[self.palette_group[self.palette_index][0]])
 
         _painter = QPainter(background)
         _painter.drawImage(QPoint(), image)
