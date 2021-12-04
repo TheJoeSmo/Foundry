@@ -9,7 +9,6 @@ from foundry.smb3parse.objects.object_set import (
     CLOUDY_OBJECT_SET,
     DESERT_OBJECT_SET,
     DUNGEON_OBJECT_SET,
-    ENEMY_ITEM_OBJECT_SET,
     GIANT_OBJECT_SET,
     HILLY_OBJECT_SET,
     ICE_OBJECT_SET,
@@ -61,9 +60,6 @@ class EndType(int, Enum):
     END_ON_TOP_OR_LEFT = 1
     END_ON_BOTTOM_OR_RIGHT = 2
     TWO_ENDS = 3
-
-
-ENEMY_OBJECT_DEFINITION = 12
 
 
 class TilesetDefinition(BaseModel):
@@ -119,5 +115,4 @@ object_set_to_definition = {
     GIANT_OBJECT_SET: 9,
     ICE_OBJECT_SET: 10,
     UNDERGROUND_OBJECT_SET: 11,
-    ENEMY_ITEM_OBJECT_SET: ENEMY_OBJECT_DEFINITION,
 }
