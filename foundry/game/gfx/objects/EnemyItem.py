@@ -96,6 +96,8 @@ class EnemyObject(ObjectLike):
 
             x = (self.position.x * 2) + (i % self.width) if use_position else (i % self.width)
             y = self.position.y + (i // self.width) if use_position else (i // self.width)
+            x += sprite_info.x_offset / 16
+            y -= sprite_info.y_offset / 16
 
             if use_position:
                 y_offset = self.height - 1
