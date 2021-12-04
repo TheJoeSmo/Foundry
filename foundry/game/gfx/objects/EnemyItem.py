@@ -10,7 +10,7 @@ from foundry.game.EnemyDefinitions import (
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.drawable.Sprite import Sprite, get_sprite
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.gfx.Palette import PaletteGroup
@@ -46,6 +46,9 @@ class EnemyObject(ObjectLike):
 
     def _setup(self):
         obj_def = enemy_definitions.__root__[self.obj_index]
+
+        if GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
+            self.graphics_set = GraphicsSet(tuple(GraphicalPage(page) for page in obj_def.pages))
 
         self.name = obj_def.description
 

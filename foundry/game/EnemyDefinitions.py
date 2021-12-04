@@ -31,6 +31,7 @@ class EnemyDefinition(BaseModel):
     bmp_height: int = 1
     sprites: list[Sprite] = Field(default_factory=list)
     blocks: list[int] = Field(default_factory=list)
+    pages: list[int] = Field(default_factory=list)
     orientation: GeneratorType = GeneratorType.SINGLE_BLOCK_OBJECT
     description: str
 
