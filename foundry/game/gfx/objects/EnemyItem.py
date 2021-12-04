@@ -101,7 +101,7 @@ class EnemyObject(ObjectLike):
             sprite = get_sprite(
                 sprite_info.index,
                 self.palette_group,
-                1,
+                sprite_info.palette_index,
                 self.graphics_set,
                 sprite_info.horizontal_mirror,
                 sprite_info.vertical_mirror,
