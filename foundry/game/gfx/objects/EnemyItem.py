@@ -81,15 +81,15 @@ class EnemyObject(ObjectLike):
         # nothing to re-render since enemies are just copied over
         pass
 
-    def draw(self, painter: QPainter, block_length, _, *, use_position=True):
+    def draw(self, painter: QPainter, block_length, transparency, *, use_position=True):
         obj_def = enemy_definitions.__root__[self.obj_index]
 
         if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
             self.draw_blocks(painter, block_length, use_position)
         else:
-            self.draw_sprites(painter, block_length // 2, use_position)
+            self.draw_sprites(painter, block_length // 2, transparency, use_position)
 
-    def draw_sprites(self, painter: QPainter, scale_factor, use_position):
+    def draw_sprites(self, painter: QPainter, scale_factor, transparency, use_position):
         for i, sprite_info in enumerate(self.sprites):
             x = (self.position.x * 2) + (i % self.width) if use_position else (i % self.width)
             y = self.position.y + (i // self.width) if use_position else (i // self.width)
@@ -106,7 +106,15 @@ class EnemyObject(ObjectLike):
                 sprite_info.horizontal_mirror,
                 sprite_info.vertical_mirror,
             )
-            sprite.draw(painter, x * scale_factor, y * scale_factor * 2, scale_factor, scale_factor * 2, self.selected)
+            sprite.draw(
+                painter,
+                x * scale_factor,
+                y * scale_factor * 2,
+                scale_factor,
+                scale_factor * 2,
+                self.selected,
+                transparency,
+            )
 
     def draw_blocks(self, painter: QPainter, block_length, use_position):
         for i, image in enumerate(self.blocks):
