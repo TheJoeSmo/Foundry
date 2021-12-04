@@ -2,17 +2,14 @@ from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.Position import Position, PositionProtocol
+from foundry.game.EnemyDefinitions import enemy_definitions
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.gfx.Palette import PaletteGroup
-from foundry.game.ObjectSet import ObjectSet
-from foundry.smb3parse.objects.object_set import (
-    ENEMY_ITEM_GRAPHICS_SET,
-    ENEMY_ITEM_OBJECT_SET,
-)
+from foundry.smb3parse.objects.object_set import ENEMY_ITEM_GRAPHICS_SET
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 
@@ -24,8 +21,6 @@ class EnemyObject(ObjectLike):
 
         self.graphics_set = GraphicsSet(ENEMY_ITEM_GRAPHICS_SET)
         self.palette_group = palette_group
-
-        self.object_set = ObjectSet(ENEMY_ITEM_OBJECT_SET)
 
         self.png_data = png_data
 
@@ -43,7 +38,7 @@ class EnemyObject(ObjectLike):
         )
 
     def _setup(self):
-        obj_def = self.object_set.get_definition_of(self.obj_index)
+        obj_def = enemy_definitions.__root__[self.obj_index]
 
         self.name = obj_def.description
 
@@ -67,13 +62,14 @@ class EnemyObject(ObjectLike):
         # nothing to re-render since enemies are just copied over
         pass
 
-    def draw(self, painter: QPainter, block_length, _):
+    def draw(self, painter: QPainter, block_length, _, *, use_position=True):
         for i, image in enumerate(self.blocks):
-            x = self.position.x + (i % self.width)
-            y = self.position.y + (i // self.width)
+            x = self.position.x + (i % self.width) if use_position else (i % self.width)
+            y = self.position.y + (i // self.width) if use_position else (i // self.width)
 
-            y_offset = self.height - 1
-            y -= y_offset
+            if use_position:
+                y_offset = self.height - 1
+                y -= y_offset
 
             block = image.copy()
 
@@ -150,7 +146,7 @@ class EnemyObject(ObjectLike):
 
         painter = QPainter(image)
 
-        self.draw(painter, Block.SIDE_LENGTH, True)
+        self.draw(painter, Block.SIDE_LENGTH, True, use_position=False)
 
         return image
 

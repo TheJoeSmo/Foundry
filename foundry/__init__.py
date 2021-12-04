@@ -25,6 +25,7 @@ data_dir = root_dir / "data"
 main_window_flags_path = data_dir / "main_window_flags.json"
 jump_creator_flags_path = data_dir / "jump_creator_flags.json"
 spinner_panel_flags_path = data_dir / "spinner_panel_flags.json"
+enemy_definitions = data_dir / "enemy_definitions.json"
 tileset_definitions = data_dir / "definitions.json"
 tileset_data_path = data_dir / "tilesets.json"
 doc_dir = root_dir.joinpath("doc")

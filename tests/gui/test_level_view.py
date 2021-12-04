@@ -6,10 +6,7 @@ from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.LevelView import LevelView
 from foundry.gui.settings import SETTINGS
-from foundry.smb3parse.objects.object_set import (
-    ENEMY_ITEM_OBJECT_SET,
-    PLAINS_OBJECT_SET,
-)
+from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
 
 @pytest.fixture
@@ -22,7 +19,7 @@ def level_view(main_window, qtbot):
     [
         ((0, 0), 0x03, 0x00, PLAINS_OBJECT_SET),  # background symbols
         ((361, 283), 0xE2, 0x00, PLAINS_OBJECT_SET),  # background cloud
-        ((233, 409), 0x72, 0x00, ENEMY_ITEM_OBJECT_SET),  # goomba
+        ((233, 409), 0x72, 0x00, None),  # goomba
     ],
 )
 def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain, object_set_number):
@@ -34,7 +31,7 @@ def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain,
     assert level_object.obj_index == obj_index
     if isinstance(level_object, LevelObject):
         assert level_object.domain == domain
-    assert level_object.object_set.number == object_set_number
+        assert level_object.object_set.number == object_set_number
 
 
 def test_level_larger(level_view):
