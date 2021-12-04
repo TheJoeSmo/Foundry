@@ -23,6 +23,8 @@ class Sprite(BaseModel):
 
     index: int
     palette_index: int = 1
+    x_offset: int = 0
+    y_offset: int = 0
     horizontal_mirror: bool = False
     vertical_mirror: bool = False
 
