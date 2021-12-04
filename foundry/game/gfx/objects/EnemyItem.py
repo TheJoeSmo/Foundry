@@ -2,9 +2,14 @@ from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.Position import Position, PositionProtocol
-from foundry.game.EnemyDefinitions import enemy_definitions
+from foundry.game.EnemyDefinitions import (
+    EnemyDefinition,
+    GeneratorType,
+    enemy_definitions,
+)
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
+from foundry.game.gfx.drawable.Sprite import Sprite, get_sprite
 from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
@@ -30,10 +35,12 @@ class EnemyObject(ObjectLike):
 
     @property
     def rect(self):
+        obj_def = enemy_definitions.__root__[self.obj_index]
+
         return QRect(
             self.position.x,
             self.position.y - (self.height - 1),
-            self.width,
+            self.width if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation else self.width // 2,
             self.height,
         )
 
@@ -47,7 +54,16 @@ class EnemyObject(ObjectLike):
 
         self._render(obj_def)
 
-    def _render(self, obj_def):
+    def _render(self, obj_def: EnemyDefinition):
+        if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
+            self._render_blocks(obj_def)
+        else:
+            self._render_sprites(obj_def)
+
+    def _render_sprites(self, obj_def: EnemyDefinition):
+        self.sprites = obj_def.sprites
+
+    def _render_blocks(self, obj_def: EnemyDefinition):
         self.blocks = []
 
         block_ids = obj_def.blocks
@@ -63,6 +79,33 @@ class EnemyObject(ObjectLike):
         pass
 
     def draw(self, painter: QPainter, block_length, _, *, use_position=True):
+        obj_def = enemy_definitions.__root__[self.obj_index]
+
+        if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
+            self.draw_blocks(painter, block_length, use_position)
+        else:
+            self.draw_sprites(painter, block_length // 2, use_position)
+
+    def draw_sprites(self, painter: QPainter, scale_factor, use_position):
+        for i, sprite_info in enumerate(self.sprites):
+            x = (self.position.x * 2) + (i % self.width) if use_position else (i % self.width)
+            y = self.position.y + (i // self.width) if use_position else (i // self.width)
+
+            if use_position:
+                y_offset = self.height - 1
+                y -= y_offset
+
+            sprite = get_sprite(
+                sprite_info.index,
+                self.palette_group,
+                1,
+                self.graphics_set,
+                sprite_info.horizontal_mirror,
+                sprite_info.vertical_mirror,
+            )
+            sprite.draw(painter, x * scale_factor, y * scale_factor * 2, scale_factor, scale_factor * 2, self.selected)
+
+    def draw_blocks(self, painter: QPainter, block_length, use_position):
         for i, image in enumerate(self.blocks):
             x = self.position.x + (i % self.width) if use_position else (i % self.width)
             y = self.position.y + (i // self.width) if use_position else (i // self.width)
@@ -137,10 +180,16 @@ class EnemyObject(ObjectLike):
         return bytes(self.enemy)
 
     def as_image(self) -> QImage:
-        image = QImage(
-            QSize(self.width * Block.SIDE_LENGTH, self.height * Block.SIDE_LENGTH),
-            QImage.Format_RGBA8888,
-        )
+        if not GeneratorType.SINGLE_SPRITE_OBJECT == enemy_definitions.__root__[self.obj_index].orientation:
+            image = QImage(
+                QSize(self.width * Block.SIDE_LENGTH, self.height * Block.SIDE_LENGTH),
+                QImage.Format_RGBA8888,
+            )
+        else:
+            image = QImage(
+                QSize(self.width * Sprite.WIDTH, self.height * Sprite.HEIGHT),
+                QImage.Format_RGBA8888,
+            )
 
         image.fill(QColor(0, 0, 0, 0))
 
