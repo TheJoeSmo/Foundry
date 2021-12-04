@@ -6,9 +6,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
 from foundry.game.gfx.Palette import NESPalette, PaletteGroup
-from foundry.smb3parse.objects.object_set import CLOUDY_GRAPHICS_SET
 
 TSA_BANK_0 = 0 * 256
 TSA_BANK_1 = 1 * 256
@@ -17,7 +16,7 @@ TSA_BANK_3 = 3 * 256
 
 
 @lru_cache(2 ** 10)
-def get_block(block_index: int, palette_group: PaletteGroup, graphics_set: GraphicsSet, tsa_data: bytes):
+def get_block(block_index: int, palette_group: PaletteGroup, graphics_set: GraphicsSetProtocol, tsa_data: bytes):
     if block_index > 0xFF:
         rom_block_index = ROM().get_byte(block_index)  # block_index is an offset into the graphic memory
         block = Block(rom_block_index, palette_group, graphics_set, tsa_data)
@@ -42,36 +41,31 @@ class Block:
         self,
         block_index: int,
         palette_group: PaletteGroup,
-        graphics_set: GraphicsSet,
+        graphics_set: GraphicsSetProtocol,
         tsa_data: bytes,
         mirrored: bool = False,
     ):
         self.index = block_index
-
-        palette_index = (block_index & 0b1100_0000) >> 6
-
-        if graphics_set.number == CLOUDY_GRAPHICS_SET:
-            self.bg_color = NESPalette[palette_group[palette_index][2]]
-        else:
-            self.bg_color = NESPalette[palette_group[palette_index][0]]
+        self.palette_group = palette_group
+        self.palette_index = (block_index & 0b1100_0000) >> 6
 
         # can't hash list, so turn it into a string instead
-        self._block_id = (block_index, str(palette_group), graphics_set.number)
+        self._block_id = (block_index, str(palette_group), graphics_set)
 
         lu = tsa_data[TSA_BANK_0 + block_index]
         ld = tsa_data[TSA_BANK_1 + block_index]
         ru = tsa_data[TSA_BANK_2 + block_index]
         rd = tsa_data[TSA_BANK_3 + block_index]
 
-        self.lu_tile = Tile(lu, palette_group, palette_index, graphics_set)
-        self.ld_tile = Tile(ld, palette_group, palette_index, graphics_set)
+        self.lu_tile = Tile(lu, palette_group, self.palette_index, graphics_set)
+        self.ld_tile = Tile(ld, palette_group, self.palette_index, graphics_set)
 
         if mirrored:
-            self.ru_tile = Tile(lu, palette_group, palette_index, graphics_set, mirrored=True)
-            self.rd_tile = Tile(ld, palette_group, palette_index, graphics_set, mirrored=True)
+            self.ru_tile = Tile(lu, palette_group, self.palette_index, graphics_set, mirrored=True)
+            self.rd_tile = Tile(ld, palette_group, self.palette_index, graphics_set, mirrored=True)
         else:
-            self.ru_tile = Tile(ru, palette_group, palette_index, graphics_set)
-            self.rd_tile = Tile(rd, palette_group, palette_index, graphics_set)
+            self.ru_tile = Tile(ru, palette_group, self.palette_index, graphics_set)
+            self.rd_tile = Tile(rd, palette_group, self.palette_index, graphics_set)
 
         self.image = QImage(Block.WIDTH, Block.HEIGHT, QImage.Format_RGB888)
         painter = QPainter(self.image)
@@ -111,10 +105,11 @@ class Block:
 
         painter.drawImage(x, y, Block._block_cache[block_attributes])
 
-    def _replace_transparent_with_background(self, image):
+    def _replace_transparent_with_background(self, image: QImage):
         # draw image on background layer, to fill transparent pixels
         background = image.copy()
-        background.fill(self.bg_color)
+        color = NESPalette[self.palette_group[self.palette_index][0]]
+        background.fill(color)
 
         _painter = QPainter(background)
         _painter.drawImage(QPoint(), image)

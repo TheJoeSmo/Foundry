@@ -24,7 +24,7 @@ class EnemyObject(ObjectLike):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
-        self.graphics_set = GraphicsSet(ENEMY_ITEM_GRAPHICS_SET)
+        self.graphics_set = GraphicsSet.from_tileset(ENEMY_ITEM_GRAPHICS_SET)
         self.palette_group = palette_group
 
         self.png_data = png_data

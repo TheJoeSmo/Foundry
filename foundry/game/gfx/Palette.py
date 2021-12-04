@@ -133,7 +133,7 @@ with open(palette_file, "rb") as f:
 
 offset = 0x18  # first color position
 
-NESPalette = []
+NESPalette: list[QColor] = []
 COLOR_COUNT = 64
 BYTES_IN_COLOR = 3 + 1  # bytes + separator
 

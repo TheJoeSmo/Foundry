@@ -23,7 +23,7 @@ def get_minimal_icon_object(level_object: T) -> T:
 
     factory = LevelObjectFactory(
         level_object.object_set.number,
-        level_object.graphics_set.number,
+        level_object.graphics_set,
         0,
         [],
         vertical_level=False,
