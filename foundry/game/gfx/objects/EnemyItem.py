@@ -91,6 +91,9 @@ class EnemyObject(ObjectLike):
 
     def draw_sprites(self, painter: QPainter, scale_factor, transparency, use_position):
         for i, sprite_info in enumerate(self.sprites):
+            if sprite_info.index < 0:
+                continue
+
             x = (self.position.x * 2) + (i % self.width) if use_position else (i % self.width)
             y = self.position.y + (i // self.width) if use_position else (i // self.width)
 
