@@ -50,7 +50,7 @@ class Sprite:
         self.palette_index = palette_index
 
         # can't hash list, so turn it into a string instead
-        self._sprite_id = (index, str(palette_group), graphics_set)
+        self._sprite_id = (index, str(palette_group), palette_index, graphics_set)
 
         self.top_tile = Tile(index, palette_group, palette_index, graphics_set)
         self.bottom_tile = Tile(index + 1, palette_group, palette_index, graphics_set)
