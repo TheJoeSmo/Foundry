@@ -36,13 +36,15 @@ class EnemyObject(ObjectLike):
     @property
     def rect(self):
         obj_def = enemy_definitions.__root__[self.obj_index]
-
-        return QRect(
-            self.position.x,
-            self.position.y - (self.height - 1),
-            self.width if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation else self.width // 2,
-            self.height,
+        bmp_width = (
+            obj_def.bmp_width
+            if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation
+            else obj_def.bmp_width // 2
         )
+        width = obj_def.rect_width if obj_def.rect_width != 0 else bmp_width
+        height = obj_def.rect_height if obj_def.rect_height != 0 else obj_def.bmp_height
+
+        return QRect(self.position.x - obj_def.rect_x_offset, self.position.y - obj_def.rect_y_offset, width, height)
 
     def _setup(self):
         obj_def = enemy_definitions.__root__[self.obj_index]
