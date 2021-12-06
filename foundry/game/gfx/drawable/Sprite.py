@@ -102,7 +102,11 @@ class Sprite:
     def _replace_transparent_with_background(self, image):
         # draw image on background layer, to fill transparent pixels
         background = image.copy()
-        background.fill(NESPalette[self.palette_group[self.palette_index][0]])
+        try:
+            index = NESPalette[self.palette_group[self.palette_index][0]]
+        except IndexError:
+            return image
+        background.fill(index)
 
         _painter = QPainter(background)
         _painter.drawImage(QPoint(), image)
