@@ -12,7 +12,7 @@ from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.Palette import restore_all_palettes
-from foundry.game.level.Level import Level, world_and_level_for_level_address
+from foundry.game.level.Level import Level, get_level_name_suggestion
 from foundry.game.level.LevelControlled import LevelControlled
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.AutoScrollEditor import AutoScrollEditor
@@ -83,9 +83,9 @@ class LevelController:
         enemy_address = self.level_ref.level.next_area_enemies + 1
         object_set = self.level_ref.level.next_area_object_set
 
-        world, level = world_and_level_for_level_address(level_address)
-
-        self.update_level(f"Level {world}-{level}", level_address, enemy_address, object_set)
+        self.update_level(
+            f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
+        )
 
     @require_safe_to_change
     def on_select(self):

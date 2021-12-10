@@ -30,12 +30,15 @@ LEVEL_DEFAULT_HEIGHT = 27
 LEVEL_DEFAULT_WIDTH = 16
 
 
-def world_and_level_for_level_address(level_address: int):
+def get_level_name_suggestion(level_address: int) -> str:
     for level in Level.offsets:
         if level.generator_pointer == level_address:
-            return level.display_information.locations[0].world, level.display_information.locations[0].index
+            name = level.display_information.name
+            if name is not None:
+                return name
+            return "Unspecified"
     else:
-        return -1, -1
+        return "Unknown"
 
 
 class LevelSignaller(QObject):
