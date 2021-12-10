@@ -79,6 +79,7 @@
   {
     "bmp_width": 4,
     "bmp_height": 3,
+    "icon_y_offset": 0,
     "rect_y_offset": 2,
     "orientation": 0,
     "sprites": [
@@ -226,6 +227,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 0,
     "rect_y_offset": 1,
     "orientation": 0,
     "sprites": [
@@ -246,6 +248,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 36,
     "rect_height": 2,
     "orientation": 0,
     "sprites": [
@@ -273,6 +276,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 0,
     "rect_y_offset": 1,
     "orientation": 0,
     "sprites": [
@@ -307,6 +311,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 0,
+    "icon_x_offset": 8,
     "rect_y_offset": 1,
     "rect_width": 2,
     "orientation": 0,
@@ -353,6 +359,7 @@
   },
   {
     "bmp_width": 2,
+    "icon_y_offset": 4,
     "orientation": 0,
     "sprites": [
       { "index": 168, "palette_index": 1, "y_offset": -4 },
@@ -363,6 +370,7 @@
   },
   {
     "bmp_width": 2,
+    "icon_y_offset": -4,
     "orientation": 0,
     "sprites": [
       {
@@ -508,6 +516,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 0,
     "rect_y_offset": 1,
     "orientation": 0,
     "sprites": [
@@ -584,6 +593,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 32,
     "rect_height": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -653,6 +663,7 @@
   {
     "bmp_width": 4,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "orientation": 0,
     "sprites": [
       { "index": -1, "palette_index": 3, "y_offset": -16 },
@@ -686,6 +697,7 @@
   {
     "bmp_width": 4,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "orientation": 0,
     "sprites": [
       { "index": -1, "palette_index": 3, "y_offset": -16 },
@@ -721,6 +733,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_height": 1,
     "rect_y_offset": 2,
     "orientation": 0,
     "sprites": [
@@ -788,6 +801,7 @@
   {
     "bmp_width": 4,
     "orientation": 0,
+    "icon_x_offset": 64,
     "rect_height": 2,
     "rect_x_offset": 2,
     "sprites": [
@@ -802,6 +816,7 @@
   {
     "bmp_width": 4,
     "orientation": 0,
+    "icon_x_offset": -32,
     "rect_height": 2,
     "rect_x_offset": -1,
     "sprites": [
@@ -859,6 +874,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 0,
     "rect_y_offset": 2,
     "orientation": 0,
     "sprites": [
@@ -934,6 +950,7 @@
   },
   {
     "bmp_width": 5,
+    "icon_height": 2,
     "rect_width": 1,
     "orientation": 0,
     "sprites": [
@@ -959,6 +976,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 0,
+    "icon_x_offset": 8,
     "rect_y_offset": 1,
     "rect_width": 2,
     "orientation": 0,
@@ -988,6 +1007,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
     "rect_height": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -1039,6 +1060,10 @@
   },
   {
     "bmp_width": 6,
+    "icon_width": 2,
+    "icon_height": 2,
+    "icon_x_offset": 11,
+    "icon_y_offset": -8,
     "rect_width": 1,
     "orientation": 0,
     "sprites": [
@@ -1168,6 +1193,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_height": 2,
     "rect_height": 1,
     "orientation": 0,
     "sprites": [
@@ -1188,6 +1214,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 3,
+    "icon_height": 2,
+    "icon_y_offset": 16,
     "rect_height": 1,
     "orientation": 0,
     "sprites": [
@@ -1275,6 +1303,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
     "rect_width": 2,
     "rect_height": 2,
     "orientation": 0,
@@ -1292,6 +1322,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
     "rect_width": 2,
     "rect_height": 2,
     "orientation": 0,
@@ -1309,6 +1341,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
     "rect_width": 2,
     "rect_height": 2,
     "orientation": 0,
@@ -1326,6 +1360,9 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": -16,
+    "icon_x_offset": -8,
+    "icon_width": 2,
     "rect_width": 1,
     "rect_x_offset": -1,
     "rect_y_offset": 2,
@@ -1356,6 +1393,8 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
     "rect_width": 2,
     "rect_height": 2,
     "orientation": 0,
@@ -1373,6 +1412,9 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": -16,
+    "icon_x_offset": -8,
+    "icon_width": 2,
     "rect_width": 1,
     "rect_x_offset": -1,
     "rect_y_offset": 2,
@@ -1421,6 +1463,9 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "icon_width": 2,
     "rect_height": 2,
     "orientation": 0,
     "sprites": [
@@ -1451,6 +1496,9 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "icon_width": 2,
     "rect_height": 2,
     "orientation": 0,
     "sprites": [
@@ -1479,6 +1527,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 0,
     "rect_y_offset": 1,
     "orientation": 0,
     "sprites": [
@@ -1523,6 +1572,8 @@
   {
     "bmp_height": 3,
     "bmp_width": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
     "rect_width": 2,
     "rect_height": 2,
     "orientation": 0,
@@ -1557,6 +1608,9 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 32,
+    "icon_width": 2,
     "rect_height": 2,
     "orientation": 0,
     "sprites": [
@@ -1597,6 +1651,8 @@
   {
     "bmp_width": 2,
     "bmp_height": 3,
+    "icon_height": 2,
+    "icon_y_offset": 0,
     "rect_y_offset": 2,
     "orientation": 0,
     "sprites": [
@@ -1613,6 +1669,7 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "rect_width": 2,
     "orientation": 0,
     "sprites": [
@@ -1641,6 +1698,7 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "rect_width": 2,
     "orientation": 0,
     "sprites": [
@@ -1670,6 +1728,7 @@
     "bmp_width": 3,
     "bmp_height": 2,
     "rect_width": 2,
+    "icon_y_offset": 16,
     "orientation": 0,
     "sprites": [
       { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
@@ -1697,6 +1756,7 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "rect_width": 2,
     "orientation": 0,
     "sprites": [
@@ -1725,6 +1785,7 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "rect_width": 2,
     "orientation": 0,
     "sprites": [
@@ -1753,6 +1814,7 @@
   {
     "bmp_width": 3,
     "bmp_height": 2,
+    "icon_y_offset": 16,
     "rect_width": 2,
     "orientation": 0,
     "sprites": [
@@ -1856,6 +1918,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": -16,
     "rect_y_offset": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -1883,6 +1946,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 32,
     "rect_width": 2,
     "rect_y_offset": -1,
     "orientation": 0,
@@ -1924,6 +1988,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": -16,
     "rect_y_offset": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -1951,6 +2016,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 32,
     "rect_width": 2,
     "rect_y_offset": -1,
     "orientation": 0,
@@ -1992,6 +2058,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": -16,
     "rect_y_offset": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -2018,6 +2085,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 32,
     "rect_y_offset": -1,
     "rect_width": 2,
     "orientation": 0,
@@ -2058,6 +2126,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": -16,
     "rect_y_offset": 2,
     "rect_width": 2,
     "orientation": 0,
@@ -2084,6 +2153,7 @@
   {
     "bmp_width": 2,
     "bmp_height": 2,
+    "icon_y_offset": 32,
     "rect_y_offset": -1,
     "rect_width": 2,
     "orientation": 0,
