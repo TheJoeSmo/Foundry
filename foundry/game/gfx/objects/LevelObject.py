@@ -4,15 +4,16 @@ from warnings import warn
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QImage, QPainter
 
+from foundry.core.Position import Position, PositionProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
-from foundry.game.gfx.GraphicsSet import GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
+from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
     EXPANDS_HORIZ,
     EXPANDS_NOT,
     EXPANDS_VERT,
-    ObjectLike,
 )
 from foundry.game.gfx.Palette import PaletteGroup, bg_color_for_object_set
 from foundry.game.ObjectDefinitions import EndType, GeneratorType
@@ -57,13 +58,13 @@ SCREEN_HEIGHT = 15
 SCREEN_WIDTH = 16
 
 
-class LevelObject(ObjectLike):
+class LevelObject(GeneratorObject):
     def __init__(
         self,
         data: bytearray,
         object_set: int,
         palette_group: PaletteGroup,
-        graphics_set: GraphicsSet,
+        graphics_set: GraphicsSetProtocol,
         objects_ref: List["LevelObject"],
         is_vertical: bool,
         index: int,
@@ -721,7 +722,20 @@ class LevelObject(ObjectLike):
             transparent=transparent,
         )
 
-    def set_position(self, x, y):
+    def move_by(self, dx: int, dy: int):
+        new_x = self.rendered_base_x + dx
+        new_y = self.rendered_base_y + dy
+
+        self.position = Position(new_x, new_y)
+
+    @property
+    def position(self) -> PositionProtocol:
+        return Position(self.x_position, self.y_position)
+
+    @position.setter
+    def position(self, position: PositionProtocol) -> None:
+        x, y = position.x, position.y
+
         # todo also check for the upper bounds
         x = max(0, x)
 
@@ -740,15 +754,6 @@ class LevelObject(ObjectLike):
         self.y_position = self.rendered_base_y + y_diff
 
         self._render()
-
-    def move_by(self, dx: int, dy: int):
-        new_x = self.rendered_base_x + dx
-        new_y = self.rendered_base_y + dy
-
-        self.set_position(new_x, new_y)
-
-    def get_position(self):
-        return self.x_position, self.y_position
 
     def expands(self):
         expands = EXPANDS_NOT

@@ -1,22 +1,17 @@
 from PySide6.QtCore import QRect
 
+from foundry.core.Position import PositionProtocol
+from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
-from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
 
-class Jump(ObjectLike):
+class Jump(GeneratorObject):
     POINTER_DOMAIN = 0b111
-
-    SIZE = 3  # bytes
 
     def __init__(self, data):
         self.data = data
 
-        # domain: 0b1110
-        # unused: 0b0001
-
         self.blocks = []
-        self.is_4byte = False
         self.name = "Jump object"
 
         assert self.is_jump(data)
@@ -67,14 +62,16 @@ class Jump(ObjectLike):
     def get_status_info(self):
         return []
 
-    def set_position(self, x, y):
+    @property
+    def position(self) -> PositionProtocol:
+        pass
+
+    @position.setter
+    def position(self, position: PositionProtocol) -> None:
         pass
 
     def move_by(self, dx, dy):
         pass
-
-    def get_position(self):
-        return 0, 0
 
     def resize_by(self, dx, dy):
         pass

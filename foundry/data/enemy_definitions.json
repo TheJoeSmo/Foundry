@@ -1,0 +1,2339 @@
+[
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [148], "description": "Weird thing, can slip on" },
+  { "blocks": [148], "description": "Makes you bounce at beginning of level" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [148], "description": "Weird enemy" },
+  { "blocks": [148], "description": "Weird enemy" },
+  { "blocks": [20], "description": "Colored note block" },
+  {
+    "blocks": [70],
+    "description": "Mushroom House with Warp Whistle entrance"
+  },
+  {
+    "bmp_height": 2,
+    "blocks": [42, 43],
+    "description": "Invisible door (appears when you hit a P-switch)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "blocks": [0, 262, 0, 259, 260, 261],
+    "description": "Ship Anchor"
+  },
+  { "blocks": [148], "description": "Weird enemy" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 16, "palette_index": 2 },
+      { "index": 16, "palette_index": 2, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Stray 1-up"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 20, "palette_index": 0 },
+      { "index": 20, "palette_index": 0, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Stray Star"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 16, "palette_index": 1 },
+      { "index": 16, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Stray Mushroom"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [7, 8, 23, 24],
+    "description": "World x Boss (where x = world)"
+  },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 184, "palette_index": 3 },
+      { "index": 186, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Spiky Cheep-Cheep"
+  },
+  {
+    "bmp_width": 4,
+    "bmp_height": 3,
+    "icon_y_offset": 0,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 3 },
+      { "index": 130, "palette_index": 3 },
+      { "index": 132, "palette_index": 3 },
+      { "index": -1 },
+      { "index": 134, "palette_index": 3 },
+      { "index": 136, "palette_index": 3 },
+      { "index": 138, "palette_index": 3 },
+      { "index": 140, "palette_index": 3 },
+      { "index": 142, "palette_index": 3 },
+      { "index": 144, "palette_index": 3 },
+      { "index": 146, "palette_index": 3 },
+      { "index": 148, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 58, 0],
+    "description": "Bowser"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 18, "palette_index": 2 },
+      { "index": 18, "palette_index": 2, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Stray Flower"
+  },
+  { "blocks": [148], "description": "Weird" },
+  { "blocks": [20], "description": "Colored note block" },
+  { "blocks": [6], "description": "Stray Mushroom" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 28, "palette_index": 1 },
+      { "index": 30, "palette_index": 1 }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Stray Leaf"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 224, "palette_index": 2 },
+      { "index": 224, "palette_index": 2, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Stray Vine"
+  },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 16, "palette_index": 0 },
+      { "index": 16, "palette_index": 0, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Flashing Mushroom"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 18, "palette_index": 0 },
+      { "index": 18, "palette_index": 0, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Flashing Flower"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 20, "palette_index": 0 },
+      { "index": 20, "palette_index": 0, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Flashing Star"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 132, "palette_index": 1 },
+      { "index": 134, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Leftward-moving cloud platform (fast)"
+  },
+  {
+    "blocks": [146],
+    "description": "Changes exit location on map (works on warp pipe levels)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Still wooden platform (moves right when stepped on)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wooden platform - moves back and forth (a lot)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wooden platform - moves up and down (a lot)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 2, "y_offset": -2 },
+      {
+        "index": 148,
+        "palette_index": 2,
+        "y_offset": -2,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      { "index": 150, "palette_index": 2 },
+      { "index": 152, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Spike"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 36,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 2, "y_offset": -2 },
+      {
+        "index": 148,
+        "palette_index": 2,
+        "y_offset": -2,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      { "index": 224, "palette_index": 1, "y_offset": -24 },
+      {
+        "index": 224,
+        "palette_index": 1,
+        "y_offset": -24,
+        "horizontal_mirror": true
+      },
+      { "index": 188, "palette_index": 2, "y_offset": -24 },
+      { "index": 190, "palette_index": 2, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 10, 79],
+    "description": "Ptooie"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 216, "palette_index": 3, "y_offset": -8, "x_offset": 1 },
+      {
+        "index": 216,
+        "palette_index": 3,
+        "y_offset": -8,
+        "x_offset": 1,
+        "horizontal_mirror": true
+      },
+      { "index": 168, "palette_index": 2 },
+      { "index": 172, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 11, 79],
+    "description": "Kuribo's Goomba"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 132, "palette_index": 1 },
+      { "index": 134, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Leftward-moving cloud platform (slow)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "icon_x_offset": 8,
+    "rect_y_offset": 1,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 132, "palette_index": 1 },
+      { "index": 134, "palette_index": 1 },
+      { "index": 136, "palette_index": 1 },
+      { "index": 138, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Boss Bass (surface)"
+  },
+  {
+    "bmp_width": 4,
+    "orientation": 0,
+    "sprites": [
+      { "index": 224, "palette_index": 2 },
+      { "index": 226, "palette_index": 2 },
+      { "index": 224, "palette_index": 2 },
+      { "index": 226, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 0, 19],
+    "description": "Upward-moving Circle Block platform"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 184, "palette_index": 1 },
+      { "index": 190, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Boo Diddley"
+  },
+  {
+    "bmp_width": 1,
+    "rect_width": 1,
+    "orientation": 0,
+    "sprites": [{ "index": 134, "palette_index": 1, "x_offset": 8 }],
+    "pages": [0, 0, 18, 0],
+    "description": "Hot Foot"
+  },
+  {
+    "bmp_width": 2,
+    "icon_y_offset": 4,
+    "orientation": 0,
+    "sprites": [
+      { "index": 168, "palette_index": 1, "y_offset": -4 },
+      { "index": 170, "palette_index": 1, "y_offset": -4 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Top Stretch"
+  },
+  {
+    "bmp_width": 2,
+    "icon_y_offset": -4,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 168,
+        "palette_index": 1,
+        "y_offset": 4,
+        "vertical_mirror": true
+      },
+      {
+        "index": 170,
+        "palette_index": 1,
+        "y_offset": 4,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Bottom Stretch"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 172, "palette_index": 2 },
+      { "index": 174, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Nipper Plant"
+  },
+  { "blocks": [148], "description": "Toad & Message" },
+  { "blocks": [148], "description": "Automatically Clear Stage" },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wooden platform - moves left,falls when stepped on"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wooden platform - moves back and forth (a little)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wooden platform - moves up and down (a little)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 164, "palette_index": 2 },
+      { "index": 166, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Walking Nipper Plant"
+  },
+  {
+    "bmp_width": 4,
+    "orientation": 0,
+    "sprites": [
+      { "index": 224, "palette_index": 2 },
+      { "index": 226, "palette_index": 2 },
+      { "index": 224, "palette_index": 2 },
+      { "index": 226, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 0, 19],
+    "description": "Falling Circle Block platform"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 1 },
+      { "index": 232, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Surface Cheep-Cheep (swims along surface)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Wired platform (follows platform wires)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 168, "palette_index": 2 },
+      { "index": 170, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Walking Ptooie (spits fireballs)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Floating platform (floats in water)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 136, "palette_index": 2 },
+      { "index": 138, "palette_index": 2 },
+      { "index": 140, "palette_index": 2 },
+      { "index": 142, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 19, 0],
+    "description": "Dry Bones"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 3 },
+      { "index": 178, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Buster Beetle"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 18, "palette_index": 1 },
+      { "index": 18, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [60, 0, 0, 0],
+    "description": "Goal Card"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 1 },
+      { "index": 232, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Jumping Cheep-Cheep (3 jumps, up and right)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 1 },
+      { "index": 232, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Jumping Cheep-Cheep (2 jumps, down and right)"
+  },
+  {
+    "bmp_width": 6,
+    "orientation": 0,
+    "sprites": [
+      { "index": 142, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3 },
+      { "index": 158, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Falling Platform (falls when stepped on)"
+  },
+  {
+    "bmp_width": 1,
+    "rect_width": 1,
+    "orientation": 0,
+    "sprites": [{ "index": 128, "palette_index": 1, "x_offset": 8 }],
+    "pages": [0, 0, 18, 0],
+    "description": "Smart Hot Foot"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 32,
+    "rect_height": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 2, "x_offset": 16, "y_offset": -2 },
+      {
+        "index": 148,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -2,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      { "index": 224, "palette_index": 1, "x_offset": 16, "y_offset": -16 },
+      {
+        "index": 224,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 226, "palette_index": 2, "x_offset": 16, "y_offset": -16 },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 10, 79],
+    "description": "Pipe Ptooie"
+  },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 146, "palette_index": 1 },
+      { "index": 148, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Baby Cheep-Cheep"
+  },
+  {
+    "bmp_width": 4,
+    "orientation": 0,
+    "sprites": [
+      { "index": 182, "palette_index": 1 },
+      { "index": 184, "palette_index": 1 },
+      { "index": 184, "palette_index": 1, "horizontal_mirror": true },
+      { "index": 182, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 54, 0],
+    "description": "Background Cloud"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 188, "palette_index": 1 },
+      { "index": 190, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 19, 0],
+    "description": "Magic Ball"
+  },
+  {
+    "bmp_width": 4,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "orientation": 0,
+    "sprites": [
+      { "index": -1, "palette_index": 3, "y_offset": -16 },
+      { "index": 128, "palette_index": 3, "y_offset": -16 },
+      {
+        "index": 128,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": -1 },
+
+      { "index": 138, "palette_index": 3, "y_offset": -16 },
+      { "index": 140, "palette_index": 3, "y_offset": -16 },
+      {
+        "index": 140,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      {
+        "index": 138,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 51, 77],
+    "description": "Boom Boom"
+  },
+  {
+    "bmp_width": 4,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "orientation": 0,
+    "sprites": [
+      { "index": -1, "palette_index": 3, "y_offset": -16 },
+      { "index": 128, "palette_index": 3, "y_offset": -16 },
+      {
+        "index": 128,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": -1 },
+
+      { "index": 138, "palette_index": 3, "y_offset": -16 },
+      { "index": 140, "palette_index": 3, "y_offset": -16 },
+      {
+        "index": 140,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      {
+        "index": 138,
+        "palette_index": 3,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 77, 0],
+    "description": "Flying Boom Boom"
+  },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_height": 1,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 154, "palette_index": 3, "x_offset": 8, "y_offset": 4 },
+      { "index": 154, "palette_index": 3, "x_offset": -8, "y_offset": -6 },
+      { "index": 154, "palette_index": 3, "x_offset": 8 },
+      { "index": -1 },
+      { "index": 156, "palette_index": 1 },
+      { "index": 158, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Jumping Chomp"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 156, "palette_index": 0 },
+      { "index": 190, "palette_index": 0 }
+    ],
+    "pages": [0, 0, 54, 0],
+    "description": "Bob-Omb (about to blow up)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Double Rotodisc (rotates counterclockwise)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 170, "palette_index": 3 },
+      { "index": 172, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 5, 0],
+    "description": "Treasure Chest"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 180, "palette_index": 1 },
+      { "index": 180, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Stray Podoboo"
+  },
+  { "blocks": [148], "description": "Weird Block" },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 180, "palette_index": 3 },
+      { "index": 182, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Bob-Omb"
+  },
+  {
+    "bmp_width": 4,
+    "orientation": 0,
+    "icon_x_offset": 64,
+    "rect_height": 2,
+    "rect_x_offset": 2,
+    "sprites": [
+      { "index": 134, "palette_index": 1, "x_offset": -64, "y_offset": -8 },
+      { "index": 136, "palette_index": 1, "x_offset": -64, "y_offset": -8 },
+      { "index": 132, "palette_index": 2, "x_offset": -64, "y_offset": -8 },
+      { "index": 132, "palette_index": 2, "x_offset": -64, "y_offset": -8 }
+    ],
+    "pages": [0, 0, 90, 0],
+    "description": "Leftward Piranha Plant"
+  },
+  {
+    "bmp_width": 4,
+    "orientation": 0,
+    "icon_x_offset": -32,
+    "rect_height": 2,
+    "rect_x_offset": -1,
+    "sprites": [
+      {
+        "index": 132,
+        "palette_index": 2,
+        "x_offset": 32,
+        "y_offset": -8,
+        "horizontal_mirror": true
+      },
+      {
+        "index": 132,
+        "palette_index": 2,
+        "x_offset": 32,
+        "y_offset": -8,
+        "horizontal_mirror": true
+      },
+      {
+        "index": 136,
+        "palette_index": 1,
+        "x_offset": 32,
+        "y_offset": -8,
+        "horizontal_mirror": true
+      },
+      {
+        "index": 134,
+        "palette_index": 1,
+        "x_offset": 32,
+        "y_offset": -8,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 90, 0],
+    "description": "Rightward Piranha Plant"
+  },
+  {
+    "bmp_width": 5,
+    "rect_width": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 1 },
+      { "index": 150, "palette_index": 1 },
+      { "index": 38, "palette_index": 1, "x_offset": 5, "y_offset": 3 },
+      {
+        "index": 36,
+        "palette_index": 1,
+        "y_offset": 12,
+        "vertical_mirror": true
+      },
+      { "index": 36, "palette_index": 1, "x_offset": -13, "y_offset": 24 }
+    ],
+    "pages": [60, 0, 14, 0],
+    "description": "Fire Chomp"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 0,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 160, "palette_index": 1, "y_offset": -32 },
+      { "index": 162, "palette_index": 1, "y_offset": -32 },
+      { "index": 138, "palette_index": 1, "x_offset": 8, "y_offset": -4 },
+      { "index": 136, "palette_index": 1, "x_offset": -8, "y_offset": 3 },
+      { "index": 138, "palette_index": 1, "x_offset": 8, "y_offset": 34 },
+      { "index": 136, "palette_index": 1, "x_offset": -8, "y_offset": 30 }
+    ],
+    "pages": [0, 0, 14, 0],
+    "description": "Fire Snake"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Single Rotodisc (rotates clockwise)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Single Rotodisc (rotates counterclockwise)"
+  },
+  { "blocks": [148], "description": "Instantly broken brick" },
+  {
+    "bmp_width": 4,
+    "bmp_height": 8,
+    "blocks": [
+      118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 118, 0, 0, 118, 118,
+      118, 0, 118, 118, 0, 0, 118, 118, 0, 0, 0, 118, 0, 0, 118, 0, 0
+    ],
+    "description": "Tornado"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Double Rotodisc (rotates both ways, starting at sides)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Double Rotodisc (rotates both ways, starting at top)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 3 },
+      { "index": 154, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Double Rotodisc (rotates clockwise)"
+  },
+  {
+    "bmp_width": 5,
+    "icon_height": 2,
+    "rect_width": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 178, "palette_index": 3 },
+      { "index": 178, "palette_index": 3, "horizontal_mirror": true },
+      { "index": 180, "palette_index": 3, "x_offset": -24, "y_offset": -11 },
+      { "index": 182, "palette_index": 3, "x_offset": -40, "y_offset": -19 },
+      { "index": 180, "palette_index": 3, "x_offset": -56, "y_offset": -27 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Blooper (with babies)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 3 },
+      { "index": 176, "palette_index": 3, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Blooper"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "icon_x_offset": 8,
+    "rect_y_offset": 1,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 },
+      { "index": 132, "palette_index": 1 },
+      { "index": 134, "palette_index": 1 },
+      { "index": 136, "palette_index": 1 },
+      { "index": 138, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Big Bertha (underwater)"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 1 },
+      { "index": 232, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Surface Cheep-Cheep (jumps out of water)"
+  },
+  { "blocks": [129], "description": "Upward Current" },
+  { "blocks": [130], "description": "Downward Current" },
+  {
+    "bmp_width": 3,
+    "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "rect_height": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 216, "palette_index": 1, "x_offset": 8, "y_offset": -44 },
+      { "index": 218, "palette_index": 1, "y_offset": -44 },
+      { "index": 216, "palette_index": 1, "x_offset": -8, "y_offset": -44 },
+
+      { "index": 192, "palette_index": 2, "y_offset": -18 },
+      { "index": 196, "palette_index": 2, "y_offset": -18 },
+      {
+        "index": 192,
+        "palette_index": 2,
+        "y_offset": -18,
+        "horizontal_mirror": true
+      },
+
+      { "index": 194, "palette_index": 2, "y_offset": -18 },
+      { "index": 198, "palette_index": 2, "y_offset": -18 },
+      {
+        "index": 194,
+        "palette_index": 2,
+        "y_offset": -18,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 27],
+    "description": "Lava Lotus"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 3, "vertical_mirror": true },
+      { "index": 150, "palette_index": 3, "vertical_mirror": true }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Upside-down Buzzy Beetle"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1, "vertical_mirror": true },
+      { "index": 130, "palette_index": 1, "vertical_mirror": true }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Upside-down Spiny"
+  },
+  {
+    "bmp_width": 6,
+    "icon_width": 2,
+    "icon_height": 2,
+    "icon_x_offset": 11,
+    "icon_y_offset": -8,
+    "rect_width": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 178, "palette_index": 3 },
+      { "index": 178, "palette_index": 3, "horizontal_mirror": true },
+      { "index": 180, "palette_index": 3, "x_offset": -43, "y_offset": 9 },
+      { "index": 182, "palette_index": 3, "x_offset": -58, "y_offset": -11 },
+      { "index": 182, "palette_index": 3, "x_offset": -28, "y_offset": 8 },
+      { "index": 180, "palette_index": 3, "x_offset": -42, "y_offset": -10 }
+    ],
+    "pages": [0, 0, 26, 0],
+    "description": "Blooper Nanny"
+  },
+  {
+    "bmp_width": 3,
+    "orientation": 0,
+    "sprites": [
+      { "index": 52, "palette_index": 3 },
+      { "index": 52, "palette_index": 3, "horizontal_mirror": true },
+      { "index": 254, "palette_index": 3, "x_offset": -24 }
+    ],
+    "pages": [60, 0, 0, 79],
+    "description": "Pile Driver Micro-Goomba"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 2,
+    "rect_width": 1,
+    "rect_height": 2,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 192, "palette_index": 3, "y_offset": -12 },
+      { "index": -1 },
+      { "index": 194, "palette_index": 3, "y_offset": -12 },
+      { "index": 196, "palette_index": 2, "y_offset": -12 },
+      { "index": 248, "palette_index": 3, "y_offset": -12 },
+      { "index": 250, "palette_index": 3, "y_offset": -12 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Koopa Troopa"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 2,
+    "rect_width": 1,
+    "rect_height": 2,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 192, "palette_index": 3, "y_offset": -12 },
+      { "index": -1 },
+      { "index": 194, "palette_index": 3, "y_offset": -12 },
+      { "index": 196, "palette_index": 1, "y_offset": -12 },
+      { "index": 248, "palette_index": 3, "y_offset": -12 },
+      { "index": 250, "palette_index": 3, "y_offset": -12 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Koopa Troopa"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 2,
+    "rect_width": 1,
+    "rect_height": 2,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 192, "palette_index": 3, "y_offset": -12 },
+      { "index": 204, "palette_index": 2, "y_offset": -18 },
+      { "index": 194, "palette_index": 3, "y_offset": -12 },
+      { "index": 196, "palette_index": 2, "y_offset": -12 },
+      { "index": 248, "palette_index": 3, "y_offset": -12 },
+      { "index": 250, "palette_index": 3, "y_offset": -12 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Koopa Paratroopa (bounces)"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 2,
+    "rect_width": 1,
+    "rect_height": 2,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 192, "palette_index": 3, "y_offset": -12 },
+      { "index": 204, "palette_index": 2, "y_offset": -18 },
+      { "index": 194, "palette_index": 3, "y_offset": -12 },
+      { "index": 196, "palette_index": 1, "y_offset": -12 },
+      { "index": 248, "palette_index": 3, "y_offset": -12 },
+      { "index": 250, "palette_index": 3, "y_offset": -12 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Koopa Paratroopa"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 148, "palette_index": 3 },
+      { "index": 150, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Buzzy Beetle"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 1 },
+      { "index": 130, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Spiny"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 216, "palette_index": 3 },
+      { "index": 216, "palette_index": 3, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Goomba"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_height": 2,
+    "rect_height": 1,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 204,
+        "palette_index": 2,
+        "x_offset": -1,
+        "y_offset": -6,
+        "horizontal_mirror": true
+      },
+      { "index": 204, "palette_index": 2, "x_offset": 1, "y_offset": -6 },
+      { "index": 216, "palette_index": 1 },
+      { "index": 216, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Para-Goomba"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 3,
+    "icon_height": 2,
+    "icon_y_offset": 16,
+    "rect_height": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": -1 },
+      { "index": 254, "palette_index": 3, "x_offset": -7 },
+      { "index": -1 },
+      {
+        "index": 204,
+        "palette_index": 2,
+        "x_offset": -1,
+        "y_offset": -6,
+        "horizontal_mirror": true
+      },
+      { "index": 204, "palette_index": 2, "x_offset": 1, "y_offset": -6 },
+      {
+        "index": 254,
+        "palette_index": 3,
+        "x_offset": 7,
+        "y_offset": 8,
+        "horizontal_mirror": true
+      },
+      { "index": 216, "palette_index": 3 },
+      { "index": 216, "palette_index": 3, "horizontal_mirror": true },
+      {
+        "index": 254,
+        "palette_index": 3,
+        "x_offset": 15,
+        "y_offset": 7,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Para-Goomba with Micro-Goombas"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 242, "palette_index": 1 },
+      { "index": 244, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 58, 59],
+    "description": "Bowser's Fireballs"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 1 },
+      { "index": 232, "palette_index": 1 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Falling Cheep-Cheep"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 2 },
+      { "index": 232, "palette_index": 2 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Cheep-Cheep"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 220, "palette_index": 3 },
+      { "index": 222, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Still Bullet Bill"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 220, "palette_index": 0 },
+      { "index": 222, "palette_index": 0 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Stray Missile Bill"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
+    "rect_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 140, "palette_index": 3, "y_offset": -16 },
+      { "index": 142, "palette_index": 2, "y_offset": -24 },
+      { "index": 144, "palette_index": 2, "y_offset": -24 },
+      { "index": 146, "palette_index": 3, "y_offset": -16 },
+      { "index": 148, "palette_index": 3, "y_offset": -24 },
+      { "index": 150, "palette_index": 3, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Green Koopa Troopa"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
+    "rect_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 140, "palette_index": 3, "y_offset": -16 },
+      { "index": 142, "palette_index": 1, "y_offset": -24 },
+      { "index": 144, "palette_index": 1, "y_offset": -24 },
+      { "index": 146, "palette_index": 3, "y_offset": -16 },
+      { "index": 148, "palette_index": 3, "y_offset": -24 },
+      { "index": 150, "palette_index": 3, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Red Koopa Troopa"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
+    "rect_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 128, "palette_index": 3, "y_offset": -24 },
+      { "index": 130, "palette_index": 3, "y_offset": -24 },
+      { "index": 132, "palette_index": 3, "y_offset": -24 },
+      { "index": 134, "palette_index": 3, "y_offset": -24 },
+      { "index": 136, "palette_index": 3, "y_offset": -24 },
+      { "index": 138, "palette_index": 3, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Goomba"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "icon_x_offset": -8,
+    "icon_width": 2,
+    "rect_width": 1,
+    "rect_x_offset": -1,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 168, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      { "index": 170, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 168,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      },
+      { "index": 172, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      { "index": 174, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 172,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Green Piranha Plant"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "icon_x_offset": 8,
+    "rect_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 140, "palette_index": 3, "y_offset": -16 },
+      { "index": 142, "palette_index": 2, "y_offset": -24 },
+      { "index": 184, "palette_index": 2, "y_offset": -24 },
+      { "index": 146, "palette_index": 3, "y_offset": -16 },
+      { "index": 148, "palette_index": 3, "y_offset": -24 },
+      { "index": 150, "palette_index": 3, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Green Koopa Paratroopa"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "icon_x_offset": -8,
+    "icon_width": 2,
+    "rect_width": 1,
+    "rect_x_offset": -1,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 168, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      { "index": 170, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 168,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      },
+      { "index": 172, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      { "index": 174, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 172,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 61, 0],
+    "description": "Giant Red Piranha Plant"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 2,
+    "rect_width": 1,
+    "rect_height": 2,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 192, "palette_index": 3, "y_offset": -12 },
+      { "index": 204, "palette_index": 2, "y_offset": -18 },
+      { "index": 194, "palette_index": 3, "y_offset": -12 },
+      { "index": 196, "palette_index": 2, "y_offset": -12 },
+      { "index": 248, "palette_index": 3, "y_offset": -12 },
+      { "index": 250, "palette_index": 3, "y_offset": -12 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Koopa Paratroopa (doesn't bounce)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "icon_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 184,
+        "palette_index": 3,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -45,
+        "x_offset": 23
+      },
+      {
+        "index": 174,
+        "palette_index": 3,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -45,
+        "x_offset": 23
+      },
+      { "index": 188, "palette_index": 3, "y_offset": -24 },
+      { "index": 190, "palette_index": 3, "y_offset": -24 },
+      { "index": 186, "palette_index": 3, "y_offset": -24 },
+      { "index": 182, "palette_index": 3, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 78, 0],
+    "description": "Hammer Brother"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "icon_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 140,
+        "palette_index": 1,
+        "y_offset": -36,
+        "x_offset": 20,
+        "vertical_mirror": true
+      },
+      {
+        "index": 142,
+        "palette_index": 1,
+        "y_offset": -36,
+        "x_offset": 20,
+        "vertical_mirror": true
+      },
+      { "index": 188, "palette_index": 2, "y_offset": -24 },
+      { "index": 190, "palette_index": 2, "y_offset": -24 },
+      { "index": 186, "palette_index": 2, "y_offset": -24 },
+      { "index": 182, "palette_index": 2, "y_offset": -24 }
+    ],
+    "pages": [0, 0, 78, 0],
+    "description": "Boomerang Brother"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 0,
+    "rect_y_offset": 1,
+    "orientation": 0,
+    "sprites": [
+      { "index": 156, "palette_index": 3 },
+      { "index": 156, "palette_index": 3, "horizontal_mirror": true },
+      { "index": 158, "palette_index": 1 },
+      { "index": 158, "palette_index": 1, "horizontal_mirror": true }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Lakitu"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 1 },
+      {
+        "index": 152,
+        "palette_index": 1,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Red Spiny Egg"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 152, "palette_index": 2 },
+      {
+        "index": 152,
+        "palette_index": 2,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 11, 0],
+    "description": "Green Spiny Egg"
+  },
+  {
+    "bmp_height": 3,
+    "bmp_width": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 8,
+    "rect_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": -1 },
+      {
+        "index": 184,
+        "palette_index": 3,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -36,
+        "x_offset": 23
+      },
+      {
+        "index": 174,
+        "palette_index": 3,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -36,
+        "x_offset": 23
+      },
+      { "index": 144, "palette_index": 2, "y_offset": -18 },
+      { "index": 146, "palette_index": 2, "y_offset": -18 },
+      { "index": 148, "palette_index": 2, "y_offset": -18 },
+      { "index": 150, "palette_index": 2, "y_offset": -18 },
+      { "index": 152, "palette_index": 2, "y_offset": -18 },
+      { "index": 154, "palette_index": 2, "y_offset": -18 }
+    ],
+    "pages": [0, 0, 78, 0],
+    "description": "Sledge Brother"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_y_offset": 32,
+    "icon_x_offset": 32,
+    "icon_width": 2,
+    "rect_height": 2,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 36,
+        "palette_index": 1,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -37,
+        "x_offset": -73
+      },
+      {
+        "index": 38,
+        "palette_index": 1,
+        "horizontal_mirror": true,
+        "vertical_mirror": true,
+        "y_offset": -52,
+        "x_offset": -43
+      },
+      { "index": 132, "palette_index": 1, "y_offset": -24 },
+      { "index": 134, "palette_index": 1, "y_offset": -24 },
+      { "index": 186, "palette_index": 1, "y_offset": -24 },
+      { "index": 182, "palette_index": 1, "y_offset": -24 }
+    ],
+    "pages": [60, 0, 78, 0],
+    "description": "Fire Brother"
+  },
+  {
+    "bmp_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 230, "palette_index": 3 },
+      { "index": 232, "palette_index": 3 }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Yellow Cheep-Cheep"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 3,
+    "icon_height": 2,
+    "icon_y_offset": 0,
+    "rect_y_offset": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 156, "palette_index": 1 },
+      { "index": 158, "palette_index": 1 },
+      { "index": 154, "palette_index": 3, "x_offset": 8, "y_offset": 4 },
+      { "index": 154, "palette_index": 3, "x_offset": -8, "y_offset": -6 },
+      { "index": 154, "palette_index": 3, "x_offset": 8 },
+      { "index": -1 }
+    ],
+    "pages": [0, 0, 10, 0],
+    "description": "Chain Chomp"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (normal)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (moves left)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "rect_width": 2,
+    "icon_y_offset": 16,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (moves right)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (moves up)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (moves diagonally up and left)"
+  },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "icon_y_offset": 16,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 176, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 178, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 176,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      },
+      { "index": 186, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      { "index": 188, "palette_index": 2, "x_offset": 8, "y_offset": -16 },
+      {
+        "index": 186,
+        "palette_index": 2,
+        "x_offset": 8,
+        "y_offset": -16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 18, 0],
+    "description": "Thwomp (moves diagonally down and left)"
+  },
+  {
+    "bmp_width": 4,
+    "blocks": [246, 245, 244, 245],
+    "orientation": 10,
+    "description": "Spinning Platform (step-activated)"
+  },
+  {
+    "bmp_width": 4,
+    "blocks": [246, 245, 247, 245],
+    "orientation": 10,
+    "description": "Spinning Platform (constant)"
+  },
+  {
+    "bmp_width": 4,
+    "blocks": [246, 245, 248, 245],
+    "orientation": 10,
+    "description": "Spinning Platform (periodical clockwise)"
+  },
+  {
+    "bmp_width": 4,
+    "blocks": [246, 245, 249, 245],
+    "orientation": 10,
+    "description": "Spinning Platform (periodical counterclockwise)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [236, 237, 252, 253],
+    "description": "Giant '?' Block with 3 1-ups"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [238, 239, 254, 255],
+    "description": "Giant '?' Block with Mushroom"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [234, 235, 250, 251],
+    "description": "Giant '?' Block with Flower"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [216, 217, 232, 233],
+    "description": "Giant '?' Block with Leaf"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [214, 215, 230, 231],
+    "description": "Giant '?' Block with Tanooki Suit"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [226, 227, 242, 243],
+    "description": "Giant '?' Block with Frog Suit"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [224, 225, 240, 241],
+    "description": "Giant '?' Block with Hammer Bros. Suit"
+  },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_height": 3,
+    "blocks": [28, 44, 60],
+    "description": "Upward Rocket Engine"
+  },
+  { "blocks": [103], "description": "Podoboo (comes out of lava)" },
+  { "blocks": [221], "description": "Para-Beetle" },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "rect_y_offset": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 224, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 224,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      },
+      { "index": 226, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Piranha Plant (upward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 32,
+    "rect_width": 2,
+    "rect_y_offset": -1,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      {
+        "index": 224,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 224,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Piranha Plant (downward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "rect_y_offset": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 224, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 224,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      },
+      { "index": 226, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Piranha Plant (upward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 32,
+    "rect_width": 2,
+    "rect_y_offset": -1,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      {
+        "index": 224,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 224,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Piranha Plant (downward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "rect_y_offset": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 240, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 242,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16
+      },
+      { "index": 226, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Venus Fire Trap (upward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 32,
+    "rect_y_offset": -1,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      {
+        "index": 240,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 242,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Green Venus Fire Trap (downward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": -16,
+    "rect_y_offset": 2,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      { "index": 240, "palette_index": 1, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 242,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": 16
+      },
+      { "index": 226, "palette_index": 2, "x_offset": 16, "y_offset": 16 },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": 16,
+        "horizontal_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Venus Fire Trap (upward)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "icon_y_offset": 32,
+    "rect_y_offset": -1,
+    "rect_width": 2,
+    "orientation": 0,
+    "sprites": [
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 226,
+        "palette_index": 2,
+        "x_offset": 16,
+        "y_offset": -32,
+        "horizontal_mirror": true,
+        "vertical_mirror": true
+      },
+      {
+        "index": 240,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      },
+      {
+        "index": 242,
+        "palette_index": 1,
+        "x_offset": 16,
+        "y_offset": -32,
+        "vertical_mirror": true
+      }
+    ],
+    "pages": [0, 0, 0, 79],
+    "description": "Red Venus Fire Trap (downward)"
+  },
+  {
+    "bmp_width": 2,
+    "blocks": [13, 14],
+    "description": "Auto-moving upward directional platform"
+  },
+  {
+    "bmp_width": 2,
+    "blocks": [29, 30],
+    "description": "Auto-moving multi-directional platform"
+  },
+  { "bmp_height": 3, "blocks": [256, 257, 258], "description": "Propeller" },
+  { "blocks": [146], "description": "MSG_NOTHING" },
+  {
+    "bmp_width": 3,
+    "blocks": [34, 35, 36],
+    "description": "Leftward Rocket Engine"
+  },
+  { "blocks": [27], "description": "Brown Rocky Wrench" },
+  {
+    "bmp_width": 2,
+    "blocks": [85, 86],
+    "description": "Nut (use with corkscrew)"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [125, 126, 141, 142],
+    "description": "The Angry Sun"
+  },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [212, 213, 228, 229],
+    "description": "Still Big Bullet"
+  },
+  {
+    "bmp_width": 3,
+    "blocks": [120, 121, 122],
+    "description": "Rightward Rocket Engine"
+  },
+  {
+    "bmp_height": 3,
+    "blocks": [101, 117, 100],
+    "description": "Downward Rocket Engine"
+  },
+  { "blocks": [148], "description": "Weird flashing enemy" },
+  { "blocks": [164], "description": "Infinite flying Cheep-Cheeps" },
+  { "blocks": [26], "description": "Infinite Spiky Cheep-Cheeps" },
+  { "blocks": [61], "description": "Lakitu boundary" },
+  { "blocks": [73], "description": "Infinite Para-Beetles" },
+  {
+    "bmp_width": 2,
+    "blocks": [92, 93],
+    "description": "Moving Background Clouds"
+  },
+  {
+    "bmp_width": 3,
+    "blocks": [55, 127, 57],
+    "description": "Infinite leftward-moving falling platforms"
+  },
+  { "blocks": [146], "description": "Exit on get treasure chest" },
+  {
+    "blocks": [146],
+    "description": "Stops infinite flying or spiky Cheep-Cheeps"
+  },
+  { "blocks": [166], "description": "Bullet Bills" },
+  { "blocks": [167], "description": "Missile Bills" },
+  { "blocks": [18], "description": "Rocky Wrench" },
+  { "blocks": [119], "description": "Cross-shaped bullet shots" },
+  { "blocks": [95], "description": "Infinite Goombas (leftward)" },
+  { "blocks": [95], "description": "Infinite Goombas (rightward)" },
+  { "blocks": [119], "description": "Bullet Shots (leftward)" },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [212, 213, 228, 229],
+    "description": "Big Bullet Shots (leftward)"
+  },
+  { "blocks": [119], "description": "Bullet Shots (up/left)" },
+  { "blocks": [119], "description": "Bullet Shots (up/right)" },
+  { "blocks": [119], "description": "Bullet Shots (down/left)" },
+  { "blocks": [119], "description": "Bullet Shots (down/right)" },
+  { "blocks": [119], "description": "Bullet Shots (up/left)" },
+  { "blocks": [119], "description": "Bullet Shots (up/right)" },
+  { "blocks": [119], "description": "Bullet Shots (down/left)" },
+  { "blocks": [119], "description": "Bullet Shots (down/right)" },
+  { "blocks": [119], "description": "Bullet Shots (rightward)" },
+  {
+    "bmp_width": 2,
+    "bmp_height": 2,
+    "blocks": [212, 213, 228, 229],
+    "description": "Big Bullet Shots (rightward)"
+  },
+  {
+    "blocks": [22],
+    "description": "Infinite Bob-Ombs (leftward) (use with bullet shooters)"
+  },
+  {
+    "blocks": [22],
+    "description": "Infinite Bob-Ombs (rightward) (use with bullet shooters)"
+  },
+  { "blocks": [76], "description": "Lasers (use with Bowser statues)" },
+  {
+    "bmp_width": 3,
+    "bmp_height": 2,
+    "blocks": [140, 140, 140, 156, 156, 156],
+    "description": "3 Green Koopa Paratroopas"
+  },
+  {
+    "bmp_height": 3,
+    "blocks": [205, 205, 205],
+    "description": "3 Yellow Cheep-Cheeps"
+  },
+  { "blocks": [147], "description": "Autoscrolling" },
+  {
+    "blocks": [71],
+    "description": "White Mushroom House (X pos must be uneven, Y pos=amount of coins required)"
+  },
+  { "blocks": [148], "description": "'The king has been transformed' message" },
+  {
+    "blocks": [146],
+    "description": "Puts item in treasure chest (Y pos. determines item; see docs/items.txt)"
+  },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" },
+  { "blocks": [145], "description": "MSG_CRASH" }
+]

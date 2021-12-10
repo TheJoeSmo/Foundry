@@ -98,7 +98,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     """
 
     palette_group = load_palette_group(level.object_set_number, level.header.object_palette_index)
-    graphics_set = GraphicsSet(level.header.graphic_set_index)
+    graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
     return Block(block_index, palette_group, graphics_set, tsa_data)
@@ -214,13 +214,13 @@ class LevelDrawer:
 
             if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS:
                 width = LEVEL_MAX_LENGTH
-                height = GROUND - level_object.y_position
+                height = GROUND - level_object.position.y
 
                 blocks_to_draw = [level_object.blocks[0]] * width * height
 
                 for index, block_index in enumerate(blocks_to_draw):
-                    x = level_object.x_position + index % width
-                    y = level_object.y_position + index // width
+                    x = level_object.position.x + index % width
+                    y = level_object.position.y + index // width
 
                     level_object._draw_block(painter, block_index, x, y, self.block_length, False)
             else:
@@ -263,7 +263,7 @@ class LevelDrawer:
                 # center() is one pixel off for some reason
                 pos = rect.topLeft() + QPoint(*(rect.size() / 2).toTuple())
 
-                trigger_position = level_object.get_position()
+                trigger_position = (level_object.position.x, level_object.position.y)
 
                 if "left" in name:
                     image = LEFT_ARROW
@@ -310,7 +310,7 @@ class LevelDrawer:
 
                 pos.setY(rect.top() - self.block_length)
 
-                x, y = level_object.get_position()
+                x, y = level_object.position.x, level_object.position.y
 
                 # jumps seemingly trigger on the bottom block
                 if not self._object_in_jump_area(level, (x, y + 1)):

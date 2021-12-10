@@ -74,7 +74,7 @@ class ContextMenu(QMenu):
         min_x, min_y = MAX_ORIGIN
 
         for obj in objects:
-            obj_x, obj_y = obj.get_position()
+            obj_x, obj_y = obj.position.x, obj.position.y
 
             min_x = min(min_x, obj_x)
             min_y = min(min_y, obj_y)

@@ -133,7 +133,7 @@ with open(palette_file, "rb") as f:
 
 offset = 0x18  # first color position
 
-NESPalette = []
+NESPalette: list[QColor] = []
 COLOR_COUNT = 64
 BYTES_IN_COLOR = 3 + 1  # bytes + separator
 
@@ -150,4 +150,4 @@ def bg_color_for_object_set(object_set_number: int, palette_group_index: int) ->
 
 
 def bg_color_for_palette_group(palette_group: PaletteGroup) -> QColor:
-    return NESPalette[palette_group[0][0]]
+    return NESPalette[palette_group[0][0] & 0x3F]

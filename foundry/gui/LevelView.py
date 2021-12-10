@@ -15,6 +15,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
+from foundry.core.Position import Position
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -232,7 +233,10 @@ class LevelView(QWidget):
         level_object = self.object_at(*event.position().toTuple())
 
         if level_object is not None:
-            is_resizable = not level_object.is_single_block
+            if isinstance(level_object, LevelObject):
+                is_resizable = not level_object.is_single_block
+            else:
+                is_resizable = False
 
             edges = self._cursor_on_edge_of_object(level_object, event.position().toPoint())
 
@@ -357,7 +361,7 @@ class LevelView(QWidget):
         obj = self.object_at(x, y)
 
         if obj is not None:
-            self.resize_obj_start_point = obj.x_position, obj.y_position
+            self.resize_obj_start_point = obj.position.x, obj.position.y
 
     def _resizing(self, event: QMouseEvent):
         self.resizing_happened = True
@@ -426,7 +430,7 @@ class LevelView(QWidget):
 
                     self._try_start_resize(self._resize_mode_from_edge(edge), event)
                 else:
-                    self.drag_start_point = obj.x_position, obj.y_position
+                    self.drag_start_point = obj.position.x, obj.position.y
         else:
             self._start_selection_square(event.position().toPoint())
 
@@ -479,7 +483,7 @@ class LevelView(QWidget):
             obj = self.object_at(x, y)
 
             if obj is not None:
-                drag_end_point = obj.x_position, obj.y_position
+                drag_end_point = obj.position.x, obj.position.y
 
                 if self.drag_start_point != drag_end_point:
                     self._stop_drag()
@@ -593,8 +597,8 @@ class LevelView(QWidget):
         if not objects:
             return
 
-        min_x = min([obj.x_position for obj in objects]) * self.block_length
-        min_y = min([obj.y_position for obj in objects]) * self.block_length
+        min_x = min([obj.position.x for obj in objects]) * self.block_length
+        min_y = min([obj.position.y for obj in objects]) * self.block_length
 
         self.parent().parent().ensureVisible(min_x, min_y)
 
@@ -721,9 +725,9 @@ class LevelView(QWidget):
     def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: Optional[int]):
         self.remove_object(obj)
 
-        x, y = obj.get_position()
-
-        new_obj = self.level_ref.level.add_object(domain, obj_index, x, y, length, obj.index_in_level)
+        new_obj = self.level_ref.level.add_object(
+            domain, obj_index, obj.position.x, obj.position.y, length, obj.index_in_level
+        )
         new_obj.selected = obj.selected
 
     def replace_enemy(self, old_enemy: EnemyObject, enemy_index: int):
@@ -731,9 +735,9 @@ class LevelView(QWidget):
 
         self.remove_object(old_enemy)
 
-        x, y = old_enemy.get_position()
-
-        new_enemy = self.level_ref.level.add_enemy(enemy_index, x, y, index_in_level)
+        new_enemy = self.level_ref.level.add_enemy(
+            enemy_index, old_enemy.position.x, old_enemy.position.y, index_in_level
+        )
 
         new_enemy.selected = old_enemy.selected
 
@@ -763,9 +767,7 @@ class LevelView(QWidget):
         pasted_objects = []
 
         for obj in objects:
-            obj_x, obj_y = obj.get_position()
-
-            offset_x, offset_y = obj_x - ori_x, obj_y - ori_y
+            offset_x, offset_y = obj.position.x - ori_x, obj.position.y - ori_y
 
             try:
                 pasted_objects.append(self.level_ref.level.paste_object_at(level_x + offset_x, level_y + offset_y, obj))
@@ -791,7 +793,7 @@ class LevelView(QWidget):
 
         level_object = self._object_from_mime_data(event.mimeData())
 
-        level_object.set_position(x, y)
+        level_object.position = Position(x, y)
 
         self.currently_dragged_object = level_object
 

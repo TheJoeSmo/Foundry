@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List, Optional, Tuple, Union, overload
 
 from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
@@ -145,20 +146,12 @@ class Level(LevelLike):
         self.data_changed.emit()
 
     def current_object_size(self):
-        size = 0
-
-        for obj in self.objects:
-            if obj.is_4byte:
-                size += 4
-            else:
-                size += 3
-
-        size += Jump.SIZE * len(self.jumps)
-
-        return size
+        return reduce(
+            lambda count, element: count + len(element), [obj.to_bytes() for obj in self.objects + self.jumps], 0
+        )
 
     def current_enemies_size(self):
-        return len(self.enemies) * ENEMY_SIZE
+        return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.enemies], 0)
 
     def _parse_header(self):
         self.header = LevelHeader(self.header_bytes, self.object_set_number)
@@ -697,7 +690,7 @@ class Level(LevelLike):
         m3l_bytes.append(0xFF)
         m3l_bytes.append(0x01)
 
-        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.x_position):
+        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.position.x):
             m3l_bytes.extend(enemy.to_bytes())
 
         m3l_bytes.append(0xFF)
@@ -754,9 +747,9 @@ class Level(LevelLike):
         enemies = bytearray()
 
         if self.is_vertical:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.y_position)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.y)
         else:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.x_position)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.x)
 
         for enemy in enemies_objects:
             enemies.extend(enemy.to_bytes())

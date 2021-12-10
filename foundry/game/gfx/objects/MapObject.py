@@ -1,5 +1,6 @@
 from PySide6.QtCore import QRect
 
+from foundry.core.Position import Position, PositionProtocol
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
 map_object_names = {
@@ -146,17 +147,14 @@ class MapObject(ObjectLike):
 
         self.selected = False
 
-    def set_position(self, x, y):
-        x = int(x)
-        y = int(y)
+    @property
+    def position(self) -> PositionProtocol:
+        return Position(self.x_position, self.y_position)
 
-        self.rect = QRect(x, y, 1, 1)
-
-        self.x_position = x
-        self.y_position = y
-
-    def get_position(self):
-        return self.x_position, self.y_position
+    @position.setter
+    def position(self, position: PositionProtocol):
+        self.x_position, self.y_position = position.x, position.y
+        self.rect = QRect(position.x, position.y, 1, 1)
 
     def render(self):
         pass
@@ -178,7 +176,7 @@ class MapObject(ObjectLike):
         return self.block.index
 
     def move_by(self, dx, dy):
-        self.set_position(self.x_position + dx, self.y_position + dy)
+        self.position = Position(self.x_position + dx, self.y_position + dy)
 
     def resize_to(self, x, y):
         return
