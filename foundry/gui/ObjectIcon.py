@@ -160,6 +160,7 @@ class ObjectViewer(QWidget):
             clear_layout(self.layout_)
             icon.setFixedSize(QSize(64, 64))
             name = QLabel(icon.item.name)
+            name.setFixedWidth(64)
             name.setWordWrap(True)
             name.setAlignment(Qt.AlignCenter)
             name.setContentsMargins(0, 0, 0, 0)
