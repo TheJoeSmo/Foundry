@@ -170,6 +170,7 @@ class LevelManager:
         def set_object_viewer_from_selected(items):
             if len(items) == 1:
                 self.parent.object_toolbar_viewer.icon = ObjectButton(self.parent.object_toolbar_viewer, items[0])
+                self.parent.object_dropdown.select_object(items[0])
 
         self.parent.object_dropdown.object_selected.connect(set_object_viewer)
         self.parent.level_view.objects_selected.connect(set_object_viewer_from_selected)
