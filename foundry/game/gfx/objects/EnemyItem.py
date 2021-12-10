@@ -9,7 +9,7 @@ from foundry.game.EnemyDefinitions import (
 )
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.drawable.Sprite import Sprite, get_sprite
+from foundry.game.gfx.drawable.Sprite import get_sprite
 from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
@@ -83,25 +83,30 @@ class EnemyObject(ObjectLike):
         # nothing to re-render since enemies are just copied over
         pass
 
-    def draw(self, painter: QPainter, block_length, transparency, *, use_position=True):
+    def draw(self, painter: QPainter, block_length, transparency, *, is_icon=False):
         obj_def = enemy_definitions.__root__[self.obj_index]
 
         if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
-            self.draw_blocks(painter, block_length, use_position)
+            self.draw_blocks(painter, block_length, is_icon)
         else:
-            self.draw_sprites(painter, block_length // 2, transparency, use_position)
+            self.draw_sprites(painter, block_length // 2, transparency, is_icon)
 
-    def draw_sprites(self, painter: QPainter, scale_factor, transparency, use_position):
+    def draw_sprites(self, painter: QPainter, scale_factor, transparency, is_icon):
         for i, sprite_info in enumerate(self.sprites):
             if sprite_info.index < 0:
                 continue
 
-            x = (self.position.x * 2) + (i % self.width) if use_position else (i % self.width)
-            y = self.position.y + (i // self.width) if use_position else (i // self.width)
+            x = (self.position.x * 2) + (i % self.width) if not is_icon else (i % self.width)
+            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
             x += sprite_info.x_offset / 16
             y -= sprite_info.y_offset / 16
 
-            if use_position:
+            if is_icon:
+                definition = enemy_definitions.__root__[self.obj_index]
+                x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
+                x += x_offset / 16
+                y -= y_offset / 16
+            if not is_icon:
                 y_offset = self.height - 1
                 y -= y_offset
 
@@ -123,12 +128,16 @@ class EnemyObject(ObjectLike):
                 transparency,
             )
 
-    def draw_blocks(self, painter: QPainter, block_length, use_position):
+    def draw_blocks(self, painter: QPainter, block_length, is_icon):
         for i, image in enumerate(self.blocks):
-            x = self.position.x + (i % self.width) if use_position else (i % self.width)
-            y = self.position.y + (i // self.width) if use_position else (i // self.width)
+            x = self.position.x + (i % self.width) if not is_icon else (i % self.width)
+            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
 
-            if use_position:
+            if is_icon:
+                definition = enemy_definitions.__root__[self.obj_index]
+                x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
+                x -= x_offset
+            if not is_icon:
                 y_offset = self.height - 1
                 y -= y_offset
 
@@ -198,22 +207,15 @@ class EnemyObject(ObjectLike):
         return bytes(self.enemy)
 
     def as_image(self) -> QImage:
-        if not GeneratorType.SINGLE_SPRITE_OBJECT == enemy_definitions.__root__[self.obj_index].orientation:
-            image = QImage(
-                QSize(self.width * Block.SIDE_LENGTH, self.height * Block.SIDE_LENGTH),
-                QImage.Format_RGBA8888,
-            )
-        else:
-            image = QImage(
-                QSize(self.width * Sprite.WIDTH, self.height * Sprite.HEIGHT),
-                QImage.Format_RGBA8888,
-            )
+        definition = enemy_definitions.__root__[self.obj_index]
+        width, height = definition.suggested_icon_width * 16, definition.suggested_icon_height * 16
 
+        image = QImage(QSize(width, height), QImage.Format_RGBA8888)
         image.fill(QColor(0, 0, 0, 0))
 
         painter = QPainter(image)
 
-        self.draw(painter, Block.SIDE_LENGTH, True, use_position=False)
+        self.draw(painter, Block.SIDE_LENGTH, True, is_icon=True)
 
         return image
 
