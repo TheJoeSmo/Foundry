@@ -1,10 +1,13 @@
 from enum import Enum
+from functools import cache
 from json import loads
 from typing import Optional
 
 from pydantic import BaseModel, Field
 
 from foundry import enemy_definitions
+from foundry.core.warnings.Warning import Warning
+from foundry.game.Definitions import Definition
 
 
 class GeneratorType(int, Enum):
@@ -30,7 +33,7 @@ class Sprite(BaseModel):
     vertical_mirror: bool = False
 
 
-class EnemyDefinition(BaseModel):
+class EnemyDefinition(Definition):
     bmp_width: int = 1
     bmp_height: int = 1
     rect_width: int = 0
@@ -45,10 +48,8 @@ class EnemyDefinition(BaseModel):
     blocks: list[int] = Field(default_factory=list)
     pages: list[int] = Field(default_factory=list)
     orientation: GeneratorType = GeneratorType.SINGLE_BLOCK_OBJECT
-    description: str
-
-    class Config:
-        use_enum_values = True
+    check_level_bounds: bool = True
+    check_compatibility: bool = True
 
     @property
     def suggested_icon_width(self) -> int:
@@ -116,10 +117,28 @@ class EnemyDefinition(BaseModel):
             offset = self.rect_y_offset * 16
         return offset
 
+    def get_warnings(self) -> list[Warning]:
+        warnings: list[Warning] = [warning.to_warning() for warning in self.warnings.copy()]  # type: ignore
+        if self.check_compatibility:
+            from foundry.core.warnings.EnemyCompatibilityWarning import (
+                EnemyCompatibilityWarning,
+            )
+
+            warnings.append(EnemyCompatibilityWarning())
+        if self.check_level_bounds:
+            from foundry.core.warnings.OutsideLevelBoundsWarning import (
+                OutsideLevelBoundsWarning,
+            )
+
+            warnings.append(OutsideLevelBoundsWarning())
+        return warnings
+
 
 class EnemyDefinitions(BaseModel):
     __root__: list[EnemyDefinition]
 
 
-with open(enemy_definitions, "r") as f:
-    enemy_definitions = EnemyDefinitions(__root__=loads(f.read()))
+@cache
+def get_enemy_metadata() -> EnemyDefinitions:
+    with open(enemy_definitions, "r") as f:
+        return EnemyDefinitions(__root__=loads(f.read()))

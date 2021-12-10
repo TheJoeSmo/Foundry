@@ -1,6 +1,7 @@
 from PySide6.QtCore import QRect
 
 from foundry.core.Position import Position, PositionProtocol
+from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
 map_object_names = {
@@ -146,6 +147,10 @@ class MapObject(ObjectLike):
             self.name = str(hex(self.block.index))
 
         self.selected = False
+
+    @property
+    def definition(self) -> Definition:
+        return Definition(description="Map Object", warnings=[])
 
     @property
     def position(self) -> PositionProtocol:

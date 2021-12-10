@@ -5,7 +5,7 @@ from foundry.core.Position import Position, PositionProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
-    enemy_definitions,
+    get_enemy_metadata,
 )
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
@@ -34,20 +34,28 @@ class EnemyObject(ObjectLike):
         self._setup()
 
     @property
-    def rect(self):
-        obj_def = enemy_definitions.__root__[self.obj_index]
-        bmp_width = (
-            obj_def.bmp_width
-            if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation
-            else obj_def.bmp_width // 2
-        )
-        width = obj_def.rect_width if obj_def.rect_width != 0 else bmp_width
-        height = obj_def.rect_height if obj_def.rect_height != 0 else obj_def.bmp_height
+    def definition(self) -> EnemyDefinition:
+        return get_enemy_metadata().__root__[self.obj_index]
 
-        return QRect(self.position.x - obj_def.rect_x_offset, self.position.y - obj_def.rect_y_offset, width, height)
+    @property
+    def rect(self):
+        bmp_width = (
+            self.definition.bmp_width
+            if not GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation
+            else self.definition.bmp_width // 2
+        )
+        width = self.definition.rect_width if self.definition.rect_width != 0 else bmp_width
+        height = self.definition.rect_height if self.definition.rect_height != 0 else self.definition.bmp_height
+
+        return QRect(
+            self.position.x - self.definition.rect_x_offset,
+            self.position.y - self.definition.rect_y_offset,
+            width,
+            height,
+        )
 
     def _setup(self):
-        obj_def = enemy_definitions.__root__[self.obj_index]
+        obj_def = get_enemy_metadata().__root__[self.obj_index]
 
         if GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
             self.graphics_set = GraphicsSet(tuple(GraphicalPage(page) for page in obj_def.pages))
@@ -84,9 +92,7 @@ class EnemyObject(ObjectLike):
         pass
 
     def draw(self, painter: QPainter, block_length, transparency, *, is_icon=False):
-        obj_def = enemy_definitions.__root__[self.obj_index]
-
-        if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
+        if not GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation:
             self.draw_blocks(painter, block_length, is_icon)
         else:
             self.draw_sprites(painter, block_length // 2, transparency, is_icon)
@@ -102,7 +108,7 @@ class EnemyObject(ObjectLike):
             y -= sprite_info.y_offset / 16
 
             if is_icon:
-                definition = enemy_definitions.__root__[self.obj_index]
+                definition = get_enemy_metadata().__root__[self.obj_index]
                 x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
                 x += x_offset / 16
                 y -= y_offset / 16
@@ -134,7 +140,7 @@ class EnemyObject(ObjectLike):
             y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
 
             if is_icon:
-                definition = enemy_definitions.__root__[self.obj_index]
+                definition = get_enemy_metadata().__root__[self.obj_index]
                 x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
                 x -= x_offset
             if not is_icon:
@@ -207,7 +213,7 @@ class EnemyObject(ObjectLike):
         return bytes(self.enemy)
 
     def as_image(self) -> QImage:
-        definition = enemy_definitions.__root__[self.obj_index]
+        definition = get_enemy_metadata().__root__[self.obj_index]
         width, height = definition.suggested_icon_width * 16, definition.suggested_icon_height * 16
 
         image = QImage(QSize(width, height), QImage.Format_RGBA8888)

@@ -1,6 +1,10 @@
+from json import loads
+
 from PySide6.QtCore import QRect
 
+from foundry import warp_definitions
 from foundry.core.Position import PositionProtocol
+from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
 
@@ -61,6 +65,11 @@ class Jump(GeneratorObject):
 
     def get_status_info(self):
         return []
+
+    @property
+    def definition(self) -> Definition:
+        with open(warp_definitions, "r") as f:
+            return Definition(__root__=loads(f.read()))
 
     @property
     def position(self) -> PositionProtocol:

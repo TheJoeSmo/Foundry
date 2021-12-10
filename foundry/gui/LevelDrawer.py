@@ -465,6 +465,6 @@ class LevelDrawer:
         else:
             return
 
-        drawer = AutoScrollDrawer(item.y_position, level)
+        drawer = AutoScrollDrawer(item.position.y, level)
 
         drawer.draw(painter, self.block_length)
