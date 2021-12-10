@@ -1,20 +1,14 @@
-import json
 from typing import List, Tuple
 
 from PySide6.QtCore import QEvent, QRect, Qt, Signal, SignalInstance
 from PySide6.QtGui import QCursor, QFocusEvent
 from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
 
-from foundry import data_dir
-from foundry.game.gfx.objects.EnemyItem import EnemyObject
-from foundry.game.gfx.objects.LevelObject import GROUND, LevelObject
+from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level.LevelRef import LevelRef
-from foundry.game.ObjectDefinitions import GeneratorType
-from foundry.gui.HeaderEditor import SCROLL_DIRECTIONS
 from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.util import clear_layout
-from foundry.smb3parse.constants import OBJ_AUTOSCROLL
 
 
 class WarningList(QWidget):
@@ -34,7 +28,6 @@ class WarningList(QWidget):
         self.layout().setContentsMargins(5, 5, 5, 5)
 
         self._enemy_dict = {}
-        self._build_enemy_clan_dict()
 
         self.warnings: List[Tuple[str, List[LevelObject]]] = []
 
@@ -43,88 +36,13 @@ class WarningList(QWidget):
 
         level = self.level_ref.level
 
-        # check, that all jumps are inside the level
-        for jump in level.jumps:
-            if not level.get_rect(1).contains(jump.get_rect(1, level.is_vertical)):
-                self.warnings.append((f"{jump} is outside of the level bounds.", []))
-
-        # jump set without a next area
-        if level.jumps and not level.has_next_area:
-            self.warnings.append(("Level has jumps set, but no Jump Destination in Level Header.", []))
-
-        # level objects and enemies are inside the level
-        for obj in level.get_all_objects():
-            if isinstance(obj, EnemyObject) and obj.obj_index == OBJ_AUTOSCROLL:
-                continue
-
-            if not level.get_rect().contains(obj.get_rect()):
-                self.warnings.append((f"{obj} is outside of level bounds.", [obj]))
-
-        # level objects to ground hitting the level edge
-        for obj in level.objects:
-            if obj.orientation in [GeneratorType.HORIZ_TO_GROUND, GeneratorType.PYRAMID_TO_GROUND]:
-                if obj.position.y + obj.rendered_height == GROUND:
-                    self.warnings.append((f"{obj} extends until the level bottom. This can crash the game.", [obj]))
-
-        # autoscroll objects
-        for item in level.enemies:
-            if item.obj_index == OBJ_AUTOSCROLL:
-                if item.position.y >= 0x60:
-                    self.warnings.append((f"{item}'s y-position is too low. Maximum is 95 or 0x5F.", [item]))
-
-                if level.header.scroll_type_index != 0:
-                    self.warnings.append(
-                        (
-                            f"Level has auto scrolling enabled, but the scrolling type in the level header is not "
-                            f"'{SCROLL_DIRECTIONS[0]}. This might not work as expected.",
-                            [],
-                        )
-                    )
-
-        autoscroll_items = [item for item in level.enemies if item.obj_index == OBJ_AUTOSCROLL]
-
-        if len(autoscroll_items) > 1:
-            self.warnings.append(("Level has more than one AutoScrolling items. Does that work?", autoscroll_items))
-
-        # no items, that would crash the game
-        for obj in level.objects:
-            if obj.name == "MSG_CRASH":
-                self.warnings.append(
-                    (
-                        f"Object at {obj.position} will likely cause the game to crash, when loading or on " f"screen.",
-                        [obj],
-                    )
-                )
-
-        # incompatible enemies
-        enemies_in_level = [enemy for enemy in level.enemies if enemy.name in self._enemy_dict]
-
-        for enemy in enemies_in_level.copy():
-            enemies_in_level.pop(0)
-
-            clan, group = self._enemy_dict[enemy.name]
-
-            for other_enemy in enemies_in_level:
-                other_clan, other_group = self._enemy_dict[other_enemy.name]
-
-                if clan == other_clan and group != other_group:
-                    self.warnings.append(
-                        (f"{enemy} incompatible with {other_enemy}, when on same screen", [enemy, other_enemy])
-                    )
+        for index, obj in enumerate(level.objects + level.enemies + level.jumps):
+            for warning in obj.definition.get_warnings():
+                if warning.check_object(obj, level=level, index=index):
+                    self.warnings.append((warning.get_message(obj), [obj]))
 
         self.update()
         self.warnings_updated.emit(bool(self.warnings))
-
-    def _build_enemy_clan_dict(self):
-        with open(data_dir / "enemy_data.json", "r") as enemy_data_file:
-            enemy_data = json.loads(enemy_data_file.read())
-
-            self._enemy_dict.clear()
-
-            for clan, groups in enemy_data.items():
-                for group, enemy_list in groups.items():
-                    for enemy in enemy_list:
-                        self._enemy_dict[enemy] = (clan, group)
 
     def update(self):
         self.hide()

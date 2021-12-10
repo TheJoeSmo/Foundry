@@ -1,9 +1,13 @@
 from enum import Enum
+from functools import cache
 from json import loads
 
 from pydantic import BaseModel
 
 from foundry import tileset_definitions
+from foundry.core.warnings.OutsideLevelBoundsWarning import OutsideLevelBoundsWarning
+from foundry.core.warnings.Warning import Warning
+from foundry.game.Definitions import Definition
 from foundry.smb3parse.objects.object_set import (
     AIR_SHIP_OBJECT_SET,
     CLOUDY_OBJECT_SET,
@@ -62,7 +66,7 @@ class EndType(int, Enum):
     TWO_ENDS = 3
 
 
-class TilesetDefinition(BaseModel):
+class TilesetDefinition(Definition):
     domain: int
     min_value: int
     max_value: int
@@ -72,7 +76,7 @@ class TilesetDefinition(BaseModel):
     orientation: GeneratorType
     ending: EndType
     size: int = 3
-    description: str
+    check_level_bounds: bool = True
 
     @property
     def object_design_length(self) -> int:
@@ -82,8 +86,11 @@ class TilesetDefinition(BaseModel):
     def is_4byte(self) -> bool:
         return self.size == 4
 
-    class Config:
-        use_enum_values = True
+    def get_warnings(self) -> list[Warning]:
+        warnings: list[Warning] = [warning.to_warning() for warning in self.warnings.copy()]  # type: ignore
+        if self.check_level_bounds:
+            warnings.append(OutsideLevelBoundsWarning())
+        return warnings
 
 
 class Tileset(BaseModel):
@@ -94,8 +101,10 @@ class Tilesets(BaseModel):
     __root__: list[Tileset]
 
 
-with open(tileset_definitions, "r") as f:
-    object_metadata = Tilesets(__root__=loads(f.read()))
+@cache
+def get_object_metadata() -> Tilesets:
+    with open(tileset_definitions, "r") as f:
+        return Tilesets(__root__=loads(f.read()))
 
 
 object_set_to_definition = {

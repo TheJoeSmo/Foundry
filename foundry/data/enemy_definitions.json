@@ -2304,7 +2304,11 @@
     "blocks": [205, 205, 205],
     "description": "3 Yellow Cheep-Cheeps"
   },
-  { "blocks": [147], "description": "Autoscrolling" },
+  {
+    "blocks": [147],
+    "description": "Autoscrolling",
+    "warnings": [{ "type": "INVALID POSITION", "max_y": 95, "max_x": 0 }]
+  },
   {
     "blocks": [71],
     "description": "White Mushroom House (X pos must be uneven, Y pos=amount of coins required)"
@@ -2314,26 +2318,114 @@
     "blocks": [146],
     "description": "Puts item in treasure chest (Y pos. determines item; see docs/items.txt)"
   },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" },
-  { "blocks": [145], "description": "MSG_CRASH" }
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  },
+  {
+    "blocks": [145],
+    "description": "MSG_CRASH",
+    "warnings": [{ "type": "INVALID OBJECT" }]
+  }
 ]

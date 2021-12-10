@@ -51,13 +51,14 @@ class AutoScrollEditor(CustomDialog):
         if autoscroll_item is None:
             self.auto_scroll_type_label.setText(AUTOSCROLL_LABELS[-1])
         else:
-            self.y_position_spinner.setValue(autoscroll_item.y_position)
-            self.auto_scroll_type_label.setText(AUTOSCROLL_LABELS[autoscroll_item.y_position >> 4])
+            self.y_position_spinner.setValue(autoscroll_item.position.y)
+            self.auto_scroll_type_label.setText(AUTOSCROLL_LABELS[autoscroll_item.position.y >> 4])
 
     def _update_y_position(self, _):
         autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
 
-        autoscroll_item.y_position = self.y_position_spinner.value()
+        if autoscroll_item is not None:
+            autoscroll_item.position.y = self.y_position_spinner.value()
 
         self.level_ref.data_changed.emit()
 
@@ -89,7 +90,7 @@ class AutoScrollEditor(CustomDialog):
 
             if (
                 added_or_removed_autoscroll
-                or self.original_autoscroll_item.y_position != current_autoscroll_item.y_position
+                or self.original_autoscroll_item.position.y != current_autoscroll_item.position.y  # type: ignore
             ):
                 self.level_ref.save_level_state()
 
