@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from PySide6.QtCore import QRect
 
 from foundry.core.Position import PositionProtocol
+from foundry.game.Definitions import Definition
 
 EXPANDS_NOT = 0b00
 EXPANDS_HORIZ = 0b01
@@ -30,6 +31,11 @@ class ObjectLike(ABC):
 
     @abstractmethod
     def move_by(self, dx, dy):
+        pass
+
+    @property
+    @abstractmethod
+    def definition(self) -> Definition:
         pass
 
     @property

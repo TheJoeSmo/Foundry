@@ -1,6 +1,6 @@
 from foundry.game.ObjectDefinitions import (
     TilesetDefinition,
-    object_metadata,
+    get_object_metadata,
     object_set_to_definition,
 )
 from foundry.smb3parse.constants import TILESET_ENDINGS, TILESET_NAMES
@@ -12,7 +12,7 @@ class ObjectSet:
 
         self.name = TILESET_NAMES[self.number]
 
-        self.definitions = object_metadata.__root__[object_set_to_definition[self.number]]
+        self.definitions = get_object_metadata().__root__[object_set_to_definition[self.number]]
 
     def object_type(self, domain: int, index: int) -> int:
         domain_offset = domain * 0x1F

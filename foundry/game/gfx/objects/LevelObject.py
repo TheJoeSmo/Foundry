@@ -16,7 +16,7 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_VERT,
 )
 from foundry.game.gfx.Palette import PaletteGroup, bg_color_for_object_set
-from foundry.game.ObjectDefinitions import EndType, GeneratorType
+from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
 from foundry.game.ObjectSet import ObjectSet
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
@@ -155,6 +155,10 @@ class LevelObject(GeneratorObject):
         self.rect = QRect()
 
         self._render()
+
+    @property
+    def definition(self) -> TilesetDefinition:
+        return self.object_set.get_definition_of(self.type)
 
     @property
     def obj_index(self):
