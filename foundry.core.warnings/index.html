@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>foundry.core.warnings package &#8212; Foundry 0.4.2 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../">
+  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
+</a>      
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../modules/">
+  foundry
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../license/">
+  License
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contributing/">
+  How To Contribute
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../changelog/">
+  Changelog
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../enemy_compatibility/">
+  Enemy Compatibility
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-enemycompatibilitywarning-module">
+   foundry.core.warnings.EnemyCompatibilityWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-extendtogroundwarning-module">
+   foundry.core.warnings.ExtendToGroundWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidobjectwarning-module">
+   foundry.core.warnings.InvalidObjectWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidpositionwarning-module">
+   foundry.core.warnings.InvalidPositionWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidwarpwarning-module">
+   foundry.core.warnings.InvalidWarpWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-outsidelevelboundswarning-module">
+   foundry.core.warnings.OutsideLevelBoundsWarning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-warning-module">
+   foundry.core.warnings.Warning module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-warningcreator-module">
+   foundry.core.warnings.WarningCreator module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-warningtype-module">
+   foundry.core.warnings.WarningType module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#foundry-core-warnings-util-module">
+   foundry.core.warnings.util module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="foundry-core-warnings-package">
+<h1>foundry.core.warnings package<a class="headerlink" href="#foundry-core-warnings-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-enemycompatibilitywarning-module">
+<h2>foundry.core.warnings.EnemyCompatibilityWarning module<a class="headerlink" href="#foundry-core-warnings-enemycompatibilitywarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-extendtogroundwarning-module">
+<h2>foundry.core.warnings.ExtendToGroundWarning module<a class="headerlink" href="#foundry-core-warnings-extendtogroundwarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-invalidobjectwarning-module">
+<h2>foundry.core.warnings.InvalidObjectWarning module<a class="headerlink" href="#foundry-core-warnings-invalidobjectwarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-invalidpositionwarning-module">
+<h2>foundry.core.warnings.InvalidPositionWarning module<a class="headerlink" href="#foundry-core-warnings-invalidpositionwarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-invalidwarpwarning-module">
+<h2>foundry.core.warnings.InvalidWarpWarning module<a class="headerlink" href="#foundry-core-warnings-invalidwarpwarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-outsidelevelboundswarning-module">
+<h2>foundry.core.warnings.OutsideLevelBoundsWarning module<a class="headerlink" href="#foundry-core-warnings-outsidelevelboundswarning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-warning-module">
+<h2>foundry.core.warnings.Warning module<a class="headerlink" href="#foundry-core-warnings-warning-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-warningcreator-module">
+<h2>foundry.core.warnings.WarningCreator module<a class="headerlink" href="#foundry-core-warnings-warningcreator-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-warningtype-module">
+<h2>foundry.core.warnings.WarningType module<a class="headerlink" href="#foundry-core-warnings-warningtype-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-warnings-util-module">
+<h2>foundry.core.warnings.util module<a class="headerlink" href="#foundry-core-warnings-util-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, TheJoeSmo.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
