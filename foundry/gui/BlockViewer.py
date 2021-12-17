@@ -143,6 +143,10 @@ class BlockViewerController(CustomChildWindow):
         self.view.object_set = self.tileset
         self.tileset_changed.emit(self.tileset)
         self.view.update()
+        if self.editor is not None:
+            self.editor.silent_update_tsa_data(self.tsa_data)
+            self.editor.palette_group = load_palette_group(self.tileset, self.palette_group)
+            self.editor.graphics_set = GraphicsSet.from_tileset(self.tileset)
 
     @property
     def palette_group(self) -> int:
@@ -154,6 +158,8 @@ class BlockViewerController(CustomChildWindow):
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
+        if self.editor is not None:
+            self.editor.palette_group = load_palette_group(self.tileset, value)
 
     def _on_block_selected(self, index: int):
         if self.editor is None:
