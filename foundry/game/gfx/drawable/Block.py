@@ -82,6 +82,10 @@ class Block:
         else:
             self._whole_block_is_transparent = False
 
+    @classmethod
+    def clear_cache(cls):
+        cls._block_cache.clear()
+
     def draw(self, painter: QPainter, x, y, block_length, selected=False, transparent=False):
         block_attributes = (self._block_id, block_length, selected, transparent)
 

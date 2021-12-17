@@ -1,6 +1,7 @@
 from typing import Protocol
 
 from attr import attrs
+from PySide6.QtCore import QPoint
 
 
 class PositionProtocol(Protocol):
@@ -35,3 +36,7 @@ class Position:
 
     x: int
     y: int
+
+    @classmethod
+    def from_qpoint(cls, point: QPoint):
+        return cls(point.x(), point.y())

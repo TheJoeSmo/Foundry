@@ -1,6 +1,5 @@
-from math import ceil
-
-from PySide6.QtCore import QPoint, QRect, QSize
+from attr import attrs
+from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
@@ -12,6 +11,8 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.Position import Position
+from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -20,42 +21,82 @@ from foundry.game.gfx.Palette import (
     bg_color_for_object_set,
     load_palette_group,
 )
+from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
 from foundry.gui.Spinner import Spinner
 
 
-class BlockViewer(CustomChildWindow):
+@attrs(slots=True, auto_attribs=True)
+class BlockViewerModel:
+    tileset: int
+    palette_group: int
+
+
+class BlockViewerController(CustomChildWindow):
+    tile_square_assembly_changed: SignalInstance = Signal(bytearray)  # type: ignore
+    tileset_changed: SignalInstance = Signal(int)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(int)  # type: ignore
+    destroyed: SignalInstance = Signal()  # type: ignore
+
     def __init__(self, parent):
-        super(BlockViewer, self).__init__(parent, "Block Viewer")
+        super().__init__(parent, "Block Viewer")
 
-        self._object_set = 0
-        self.sprite_bank = BlockBank(parent=self)
-
-        self.setCentralWidget(self.sprite_bank)
-
+        self.model = BlockViewerModel(0, 0)
+        self.view = BlockViewerView(parent=self)
+        self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
+        self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
+        self.editor = None
 
+        self.view.block_selected.connect(self._on_block_selected)
+        self.view.destroyed.connect(self.destroy)  # type: ignore
+
+        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
+        self.redo_action = self.toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
         self.prev_os_action = self.toolbar.addAction(icon("arrow-left.svg"), "Previous object set")
-        self.prev_os_action.triggered.connect(self.prev_object_set)
-
         self.next_os_action = self.toolbar.addAction(icon("arrow-right.svg"), "Next object set")
-        self.next_os_action.triggered.connect(self.next_object_set)
-
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_out_action.triggered.connect(self.sprite_bank.zoom_out)
-
         self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
-        self.zoom_in_action.triggered.connect(self.sprite_bank.zoom_in)
+
+        def change_tileset(offset: int):
+            self.tileset += offset
+
+        def change_zoom(offset: int):
+            self.view.zoom += offset
+
+        def undo(*_):
+            self.undo_controller.undo()
+            self._update_tsa_data()
+
+        def redo(*_):
+            self.undo_controller.redo()
+            self._update_tsa_data()
+
+        self.undo_action.triggered.connect(undo)  # type: ignore
+        self.undo_action.setEnabled(False)
+        self.redo_action.triggered.connect(redo)  # type: ignore
+        self.redo_action.setEnabled(False)
+        self.prev_os_action.triggered.connect(lambda *_: change_tileset(-1))  # type: ignore
+        self.next_os_action.triggered.connect(lambda *_: change_tileset(1))  # type: ignore
+        self.zoom_out_action.triggered.connect(lambda *_: change_zoom(-1))  # type: ignore
+        self.zoom_in_action.triggered.connect(lambda *_: change_zoom(1))  # type: ignore
+
+        def on_combo(*_):
+            self.tileset = self.bank_dropdown.currentIndex()
 
         self.bank_dropdown = QComboBox(parent=self.toolbar)
         self.bank_dropdown.addItems(OBJECT_SET_ITEMS)
         self.bank_dropdown.setCurrentIndex(0)
+        self.bank_dropdown.currentIndexChanged.connect(on_combo)  # type: ignore
+        self.tileset_changed.connect(self.bank_dropdown.setCurrentIndex)
 
-        self.bank_dropdown.currentIndexChanged.connect(self.on_combo)
+        def on_palette(value):
+            self.palette_group = value
 
         self.palette_group_spinner = Spinner(self, maximum=PALETTE_GROUPS_PER_OBJECT_SET - 1, base=10)
-        self.palette_group_spinner.valueChanged.connect(self.on_palette)
+        self.palette_group_spinner.valueChanged.connect(on_palette)  # type: ignore
+        self.palette_group_changed.connect(self.palette_group_spinner.setValue)
 
         self.toolbar.addWidget(self.bank_dropdown)
         self.toolbar.addWidget(QLabel(" Object Palette: "))
@@ -67,103 +108,135 @@ class BlockViewer(CustomChildWindow):
 
         self.setStatusBar(QStatusBar(self))
 
-        return
-
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
+        if self.editor is not None:
+            self.editor.close()
+        self.destroyed.emit()
         super().closeEvent(event)
 
     @property
-    def object_set(self):
-        return self._object_set
+    def tsa_data(self) -> bytearray:
+        return self.undo_controller.state
 
-    @object_set.setter
-    def object_set(self, value):
-        self._object_set = value
+    @tsa_data.setter
+    def tsa_data(self, tsa_data: bytearray):
+        self.undo_controller.do(tsa_data)
+        self._update_tsa_data()
 
-        self._after_object_set()
+    def _update_tsa_data(self):
+        ROM.write_tsa_data(self.tileset, self.tsa_data)
+        Block.clear_cache()
+        self.undo_action.setEnabled(self.undo_controller.can_undo)
+        self.redo_action.setEnabled(self.undo_controller.can_redo)
+        self.tile_square_assembly_changed.emit(self.tsa_data)
+        self.view.update()
 
     @property
-    def palette_group(self):
-        return self.palette_group_spinner.value()
+    def tileset(self) -> int:
+        return self.model.tileset
+
+    @tileset.setter
+    def tileset(self, value: int):
+        self.model.tileset = min(max(value, 0), 0xE)
+        self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
+        self.view.object_set = self.tileset
+        self.tileset_changed.emit(self.tileset)
+        self.view.update()
+        if self.editor is not None:
+            self.editor.silent_update_tsa_data(self.tsa_data)
+            self.editor.palette_group = load_palette_group(self.tileset, self.palette_group)
+            self.editor.graphics_set = GraphicsSet.from_tileset(self.tileset)
+
+    @property
+    def palette_group(self) -> int:
+        return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value):
-        self.palette_group_spinner.setValue(value)
+    def palette_group(self, value: int):
+        self.model.palette_group = value
+        self.view.palette_group = value
+        self.palette_group_changed.emit(self.palette_group)
+        self.view.update()
+        if self.editor is not None:
+            self.editor.palette_group = load_palette_group(self.tileset, value)
 
-    def prev_object_set(self):
-        self.object_set = max(self.object_set - 1, 0)
+    def _on_block_selected(self, index: int):
+        if self.editor is None:
+            self.editor = BlockEditor(
+                self,
+                ROM.get_tsa_data(self.tileset),
+                index,
+                GraphicsSet.from_tileset(self.tileset),
+                load_palette_group(self.tileset, self.palette_group),
+                index // 0x40,
+            )
 
-    def next_object_set(self):
-        self.object_set = min(self.object_set + 1, 0xE)
+            def change_tsa_data(tsa_data: bytearray):
+                self.tsa_data = tsa_data
 
-    def _after_object_set(self):
-        self.sprite_bank.object_set = self.object_set
+            def remove_editor(*_):
+                self.editor = None
 
-        self.bank_dropdown.setCurrentIndex(self.object_set)
-
-        self.sprite_bank.update()
-
-    def on_combo(self, _):
-        self.object_set = self.bank_dropdown.currentIndex()
-
-        self.sprite_bank.object_set = self.object_set
-
-        self.sprite_bank.update()
-
-    def on_palette(self, value):
-        self.sprite_bank.palette_group = value
-        self.sprite_bank.update()
+            self.editor.tile_square_assembly_changed.connect(change_tsa_data)
+            self.editor.destroyed.connect(remove_editor)
+            self.tile_square_assembly_changed.connect(self.editor.silent_update_tsa_data)
+            self.editor.show()
+        else:
+            self.editor.block_index = index
 
 
-class BlockBank(QWidget):
+class BlockViewerView(QWidget):
+    block_selected: SignalInstance = Signal(int)  # type: ignore
+
+    BLOCKS = 256
+    BLOCKS_PER_ROW = 16
+    BLOCKS_PER_COLUMN = 16
+
     def __init__(self, parent, object_set=0, palette_group=0, zoom=2):
-        super(BlockBank, self).__init__(parent)
-        self.setMouseTracking(True)
+        super().__init__(parent)
 
-        self.sprites = 256
-        self.zoom_step = 256
-        self.sprites_horiz = 16
-        self.sprites_vert = ceil(self.sprites / self.sprites_horiz)
+        self.setMouseTracking(True)
 
         self.object_set = object_set
         self.palette_group = palette_group
         self.zoom = zoom
 
-        self._size = QSize(self.sprites_horiz * Block.WIDTH * self.zoom, self.sprites_vert * Block.HEIGHT * self.zoom)
-
-        self.setFixedSize(self._size)
-
     def resizeEvent(self, event: QResizeEvent):
         self.update()
 
-    def zoom_in(self):
-        self.zoom += 1
-        self._after_zoom()
+    @property
+    def zoom(self) -> int:
+        return self._zoom
 
-    def zoom_out(self):
-        self.zoom = max(self.zoom - 1, 1)
-        self._after_zoom()
+    @zoom.setter
+    def zoom(self, value: int):
+        self._zoom = value
+        self.setFixedSize(
+            self.BLOCKS_PER_ROW * Block.WIDTH * self.zoom, self.BLOCKS_PER_COLUMN * Block.HEIGHT * self.zoom
+        )
 
-    def _after_zoom(self):
-        new_size = QSize(self.sprites_horiz * Block.WIDTH * self.zoom, self.sprites_vert * Block.HEIGHT * self.zoom)
-
-        self.setFixedSize(new_size)
+    @property
+    def block_scale(self) -> int:
+        return Block.WIDTH * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        x, y = event.pos().toTuple()
+        pos = Position.from_qpoint(event.pos())
+        pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
-        block_length = Block.WIDTH * self.zoom
-
-        column = x // block_length
-        row = y // block_length
-
-        dec_index = row * self.sprites_horiz + column
+        dec_index = pos.y * self.BLOCKS_PER_ROW + pos.x
         hex_index = hex(dec_index).upper().replace("X", "x")
 
-        status_message = f"Row: {row}, Column: {column}, Index: {dec_index} / {hex_index}"
+        status_message = f"Row: {pos.y}, Column: {pos.x}, Index: {dec_index} / {hex_index}"
 
-        self.parent().statusBar().showMessage(status_message)
+        self.parent().statusBar().showMessage(status_message)  # type: ignore
+
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+        pos = Position.from_qpoint(event.pos())
+        pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
+
+        index = pos.y * self.BLOCKS_PER_ROW + pos.x
+        self.block_selected.emit(index)
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
@@ -177,16 +250,10 @@ class BlockBank(QWidget):
         palette = load_palette_group(self.object_set, self.palette_group)
         tsa_data = ROM.get_tsa_data(self.object_set)
 
-        horizontal = self.sprites_horiz
-
-        block_length = Block.WIDTH * self.zoom
-
-        for i in range(self.sprites):
+        for i in range(self.BLOCKS):
             block = Block(i, palette, graphics_set, tsa_data)
 
-            x = (i % horizontal) * block_length
-            y = (i // horizontal) * block_length
+            x = (i % self.BLOCKS_PER_ROW) * self.block_scale
+            y = (i // self.BLOCKS_PER_ROW) * self.block_scale
 
-            block.draw(painter, x, y, block_length)
-
-        return
+            block.draw(painter, x, y, self.block_scale)
