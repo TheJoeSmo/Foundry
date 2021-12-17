@@ -8,6 +8,7 @@ class ObjectLike:
     x: int = 0
     y: int = 0
     name: str = ""
+    rendered_width: int = 0
     rendered_height: int = 0
 
     def get_rect(self):
