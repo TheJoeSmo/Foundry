@@ -54,6 +54,20 @@ class ROM(Rom):
         return rom.read(tsa_start, TSA_TABLE_SIZE)
 
     @staticmethod
+    def write_tsa_data(object_set: int, tsa_data: bytearray):
+        rom = ROM()
+
+        tsa_index = rom.int(TSA_OS_LIST + object_set)
+
+        if object_set == 0:
+            # todo why is the tsa index in the wrong (seemingly) false?
+            tsa_index += 1
+
+        tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
+
+        rom.bulk_write(tsa_data, tsa_start)
+
+    @staticmethod
     def load_from_file(path: str):
         with open(path, "rb") as rom:
             data = bytearray(rom.read())

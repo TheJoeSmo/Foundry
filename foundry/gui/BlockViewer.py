@@ -20,6 +20,7 @@ from foundry.game.gfx.Palette import (
     bg_color_for_object_set,
     load_palette_group,
 )
+from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
 from foundry.gui.Spinner import Spinner
@@ -42,6 +43,8 @@ class BlockViewerController(CustomChildWindow):
         self.view = BlockViewerView(parent=self)
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
+
+        self.view.block_selected.connect(self._on_block_selected)
 
         self.prev_os_action = self.toolbar.addAction(icon("arrow-left.svg"), "Previous object set")
         self.next_os_action = self.toolbar.addAction(icon("arrow-right.svg"), "Next object set")
@@ -111,8 +114,27 @@ class BlockViewerController(CustomChildWindow):
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
 
+    def _on_block_selected(self, index: int):
+        editor = BlockEditor(
+            self,
+            ROM.get_tsa_data(self.tileset),
+            index,
+            GraphicsSet.from_tileset(self.tileset),
+            load_palette_group(self.tileset, self.palette_group),
+            index // 0x40,
+        )
+        editor.tile_square_assembly_changed.connect(self._on_tile_square_assembly_changed)
+        editor.show()
+
+    def _on_tile_square_assembly_changed(self, tsa_data: bytearray):
+        ROM.write_tsa_data(self.tileset, tsa_data)
+        Block.clear_cache()
+        self.update()
+
 
 class BlockViewerView(QWidget):
+    block_selected: SignalInstance = Signal(int)  # type: ignore
+
     BLOCKS = 256
     BLOCKS_PER_ROW = 16
     BLOCKS_PER_COLUMN = 16
@@ -154,6 +176,13 @@ class BlockViewerView(QWidget):
         status_message = f"Row: {pos.y}, Column: {pos.x}, Index: {dec_index} / {hex_index}"
 
         self.parent().statusBar().showMessage(status_message)  # type: ignore
+
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+        pos = Position.from_qpoint(event.pos())
+        pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
+
+        index = pos.y * self.BLOCKS_PER_ROW + pos.x
+        self.block_selected.emit(index)
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
