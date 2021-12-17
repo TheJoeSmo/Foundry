@@ -192,6 +192,7 @@ class LevelController:
 
     def select_all(self):
         self.parent.level_view.select_all()
+        self.parent.object_list.selectAll()
 
     def focus_selected(self):
         self.parent.object_dropdown.setFocus()
