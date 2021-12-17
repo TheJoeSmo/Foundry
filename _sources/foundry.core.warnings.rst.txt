@@ -36,6 +36,14 @@ foundry.core.warnings.InvalidPositionWarning module
    :undoc-members:
    :show-inheritance:
 
+foundry.core.warnings.InvalidSizeWarning module
+-----------------------------------------------
+
+.. automodule:: foundry.core.warnings.InvalidSizeWarning
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.core.warnings.InvalidWarpWarning module
 -----------------------------------------------
 
