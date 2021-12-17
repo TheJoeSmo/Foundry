@@ -12,6 +12,7 @@ from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, 
 
 from foundry import icon
 from foundry.core.Position import Position
+from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -33,6 +34,7 @@ class BlockViewerModel:
 
 
 class BlockViewerController(CustomChildWindow):
+    tile_square_assembly_changed: SignalInstance = Signal(bytearray)  # type: ignore
     tileset_changed: SignalInstance = Signal(int)  # type: ignore
     palette_group_changed: SignalInstance = Signal(int)  # type: ignore
 
@@ -41,11 +43,14 @@ class BlockViewerController(CustomChildWindow):
 
         self.model = BlockViewerModel(0, 0)
         self.view = BlockViewerView(parent=self)
+        self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
         self.view.block_selected.connect(self._on_block_selected)
 
+        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
+        self.redo_action = self.toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
         self.prev_os_action = self.toolbar.addAction(icon("arrow-left.svg"), "Previous object set")
         self.next_os_action = self.toolbar.addAction(icon("arrow-right.svg"), "Next object set")
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
@@ -57,6 +62,18 @@ class BlockViewerController(CustomChildWindow):
         def change_zoom(offset: int):
             self.view.zoom += offset
 
+        def undo(*_):
+            self.undo_controller.undo()
+            self._update_tsa_data()
+
+        def redo(*_):
+            self.undo_controller.redo()
+            self._update_tsa_data()
+
+        self.undo_action.triggered.connect(undo)  # type: ignore
+        self.undo_action.setEnabled(False)
+        self.redo_action.triggered.connect(redo)  # type: ignore
+        self.redo_action.setEnabled(False)
         self.prev_os_action.triggered.connect(lambda *_: change_tileset(-1))  # type: ignore
         self.next_os_action.triggered.connect(lambda *_: change_tileset(1))  # type: ignore
         self.zoom_out_action.triggered.connect(lambda *_: change_zoom(-1))  # type: ignore
@@ -93,12 +110,30 @@ class BlockViewerController(CustomChildWindow):
         super().closeEvent(event)
 
     @property
+    def tsa_data(self) -> bytearray:
+        return self.undo_controller.state
+
+    @tsa_data.setter
+    def tsa_data(self, tsa_data: bytearray):
+        self.undo_controller.do(tsa_data)
+        self._update_tsa_data()
+
+    def _update_tsa_data(self):
+        ROM.write_tsa_data(self.tileset, self.tsa_data)
+        Block.clear_cache()
+        self.undo_action.setEnabled(self.undo_controller.can_undo)
+        self.redo_action.setEnabled(self.undo_controller.can_redo)
+        self.tile_square_assembly_changed.emit(self.tsa_data)
+        self.view.update()
+
+    @property
     def tileset(self) -> int:
         return self.model.tileset
 
     @tileset.setter
     def tileset(self, value: int):
         self.model.tileset = min(max(value, 0), 0xE)
+        self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
         self.view.object_set = self.tileset
         self.tileset_changed.emit(self.tileset)
         self.view.update()
@@ -123,13 +158,13 @@ class BlockViewerController(CustomChildWindow):
             load_palette_group(self.tileset, self.palette_group),
             index // 0x40,
         )
-        editor.tile_square_assembly_changed.connect(self._on_tile_square_assembly_changed)
-        editor.show()
 
-    def _on_tile_square_assembly_changed(self, tsa_data: bytearray):
-        ROM.write_tsa_data(self.tileset, tsa_data)
-        Block.clear_cache()
-        self.update()
+        def change_tsa_data(tsa_data: bytearray):
+            self.tsa_data = tsa_data
+
+        editor.tile_square_assembly_changed.connect(change_tsa_data)
+        self.tile_square_assembly_changed.connect(editor.silent_update_tsa_data)
+        editor.show()
 
 
 class BlockViewerView(QWidget):

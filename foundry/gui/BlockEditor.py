@@ -84,6 +84,11 @@ class BlockEditorController(CustomChildWindow):
         self.tile_square_assembly_changed.emit(self.tsa_data)
         self.view.update()
 
+    def silent_update_tsa_data(self, value: bytearray):
+        self.model.tile_square_assembly = value
+        self.view.tsa_data = self.tsa_data
+        self.view.update()
+
     @property
     def block_index(self) -> int:
         return self.model.block_index
