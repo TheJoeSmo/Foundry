@@ -315,6 +315,7 @@ class LevelController:
         block_viewer = BlockViewer(parent=self.parent)
         block_viewer.tileset = self.level_ref.level.object_set.number
         block_viewer.palette_group = self.level_ref.level.object_palette_index
+        block_viewer.tile_square_assembly_changed.connect(self.update)
         block_viewer.show()
 
     def display_warnings(self):
