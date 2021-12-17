@@ -34,6 +34,7 @@ class PatternViewerController(CustomChildWindow):
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
+    pattern_selected: SignalInstance = Signal(int)  # type: ignore
 
     def __init__(
         self, parent: Optional[QWidget], graphics_set: GraphicsSet, palette_group: PaletteGroup, palette_index: int
@@ -44,6 +45,8 @@ class PatternViewerController(CustomChildWindow):
         self.view = PatternViewerView(self, graphics_set, palette_group, palette_index)
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
+
+        self.view.pattern_selected.connect(self.pattern_selected.emit)
 
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
         self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
@@ -98,6 +101,8 @@ class PatternViewerController(CustomChildWindow):
 
 
 class PatternViewerView(QWidget):
+    pattern_selected: SignalInstance = Signal(int)  # type: ignore
+
     PATTERNS = 256
     PATTERNS_PER_ROW = 16
     PATTERNS_PER_COLUMN = 16
@@ -148,6 +153,13 @@ class PatternViewerView(QWidget):
         status_message = f"Row: {pos.y}, Column: {pos.x}, Index: {dec_index} / {hex_index}"
 
         self.parent().statusBar().showMessage(status_message)  # type: ignore
+
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+        pos = Position.from_qpoint(event.pos())
+        pos.x, pos.y = pos.x // self.pattern_scale, pos.y // self.pattern_scale
+
+        index = pos.y * self.PATTERNS_PER_ROW + pos.x
+        self.pattern_selected.emit(index)
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
