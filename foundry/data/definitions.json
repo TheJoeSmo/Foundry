@@ -2943,7 +2943,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Flat Ground"
+      "description": "Flat Ground",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -2955,7 +2956,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Underwater Flat Ground"
+      "description": "Underwater Flat Ground",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -7575,7 +7577,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Flat Ground with green on top (SMAS only)"
+      "description": "Flat Ground with green on top (SMAS only)",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 5,
@@ -14315,7 +14318,8 @@
       "blocks": [226, 228, 229],
       "orientation": 0,
       "ending": 3,
-      "description": "Wooden Ship Beam"
+      "description": "Wooden Ship Beam",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -14327,7 +14331,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Wooden Ship Beam"
+      "description": "Wooden Ship Beam",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -14339,7 +14344,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Wooden Ship Beam with 2 strips of wood"
+      "description": "Wooden Ship Beam with 2 strips of wood",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -28695,7 +28701,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Icy flat ground"
+      "description": "Icy flat ground",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 0,
@@ -33444,7 +33451,8 @@
       "orientation": 0,
       "ending": 3,
       "size": 4,
-      "description": "Flat Ground with green on top (SMAS only)"
+      "description": "Flat Ground with green on top (SMAS only)",
+      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
     },
     {
       "domain": 5,
