@@ -75,6 +75,8 @@ class BlockEditorController(CustomChildWindow):
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
+        if self.pattern_viewer is not None:
+            self.pattern_viewer.close()
         self.destroyed.emit()
         super().closeEvent(event)
 
