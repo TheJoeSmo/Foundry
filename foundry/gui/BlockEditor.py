@@ -36,6 +36,7 @@ class BlockEditorController(CustomChildWindow):
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
+    destroyed: SignalInstance = Signal()  # type: ignore
 
     def __init__(
         self,
@@ -50,10 +51,13 @@ class BlockEditorController(CustomChildWindow):
 
         self.model = BlockEditorModel(tsa_data, block_index, graphics_set, palette_group, palette_index)
         self.view = BlockEditorView(self, tsa_data, block_index, graphics_set, palette_group, palette_index)
+        self.pattern_viewer = None
+        self._last_x = 0
+        self._last_y = 0
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
-        self.view.block_pattern_change.connect(lambda values: self._on_block_pattern_change(*values))
+        self.view.pattern_selected.connect(lambda values: self._on_pattern_selected(*values))
 
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
         self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
@@ -71,6 +75,7 @@ class BlockEditorController(CustomChildWindow):
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
+        self.destroyed.emit()
         super().closeEvent(event)
 
     @property
@@ -99,6 +104,7 @@ class BlockEditorController(CustomChildWindow):
         self.view.block_index = value
         self.graphics_set_changed.emit(self.block_index)
         self.view.update()
+        self.palette_index = value // 0x40
 
     @property
     def graphics_set(self) -> GraphicsSet:
@@ -110,6 +116,8 @@ class BlockEditorController(CustomChildWindow):
         self.view.graphics_set = value
         self.graphics_set_changed.emit(self.graphics_set)
         self.view.update()
+        if self.pattern_viewer is not None:
+            self.pattern_viewer.graphics_set = value
 
     @property
     def palette_group(self) -> PaletteGroup:
@@ -121,6 +129,8 @@ class BlockEditorController(CustomChildWindow):
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
+        if self.pattern_viewer is not None:
+            self.pattern_viewer.palette_group = value
 
     @property
     def palette_index(self) -> int:
@@ -132,6 +142,20 @@ class BlockEditorController(CustomChildWindow):
         self.view.palette_index = value
         self.palette_index_changed.emit(self.palette_index)
         self.view.update()
+        if self.pattern_viewer is not None:
+            self.pattern_viewer.palette_index = value
+
+    def _on_pattern_selected(self, x: int, y: int):
+        self._last_x = x
+        self._last_y = y
+        if self.pattern_viewer is None:
+            self.pattern_viewer = PatternViewer(self, self.graphics_set, self.palette_group, self.block_index // 0x40)
+            self.pattern_viewer.pattern_selected.connect(
+                lambda ptn: self._on_block_pattern_change(self._last_x, self._last_y, ptn)
+            )
+            self.pattern_viewer.show()
+        else:
+            self.pattern_viewer.palette_index = self.block_index // 0x40
 
     def _on_block_pattern_change(self, x: int, y: int, pattern: int):
         index = self.block_index + 0x100 * (x * 2 + y)
@@ -141,7 +165,7 @@ class BlockEditorController(CustomChildWindow):
 
 
 class BlockEditorView(QWidget):
-    block_pattern_change: SignalInstance = Signal(object)  # type: ignore
+    pattern_selected: SignalInstance = Signal(object)  # type: ignore
 
     def __init__(
         self,
@@ -181,10 +205,7 @@ class BlockEditorView(QWidget):
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
         pos = Position.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // (self.block_scale // 2), pos.y // (self.block_scale // 2)
-
-        pattern_viewer = PatternViewer(self, self.graphics_set, self.palette_group, self.block_index // 0x40)
-        pattern_viewer.pattern_selected.connect(lambda ptn: self.block_pattern_change.emit((pos.x, pos.y, ptn)))
-        pattern_viewer.show()
+        self.pattern_selected.emit((pos.x, pos.y))
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
