@@ -25,6 +25,7 @@ def type_to_pydantic_warning() -> dict[WarningType, Type[PydanticWarning]]:
     from foundry.core.warnings.InvalidPositionWarning import (
         PydanticInvalidPositionWarning,
     )
+    from foundry.core.warnings.InvalidSizeWarning import PydanticInvalidSizeWarning
     from foundry.core.warnings.InvalidWarpWarning import PydanticInvalidWarpWarning
     from foundry.core.warnings.OutsideLevelBoundsWarning import (
         PydanticOutsideLevelBoundsWarning,
@@ -35,6 +36,7 @@ def type_to_pydantic_warning() -> dict[WarningType, Type[PydanticWarning]]:
         WarningType.invalid_extension_to_ground: PydanticExtendToGroundWarning,
         WarningType.invalid_type: PydanticInvalidObjectWarning,
         WarningType.invalid_position: PydanticInvalidPositionWarning,
+        WarningType.invalid_size: PydanticInvalidSizeWarning,
         WarningType.invalid_warp: PydanticInvalidWarpWarning,
         WarningType.outside_level_bounds: PydanticOutsideLevelBoundsWarning,
     }
@@ -56,6 +58,7 @@ def type_to_warning() -> dict[WarningType, Type[Warning]]:
     from foundry.core.warnings.ExtendToGroundWarning import ExtendToGroundWarning
     from foundry.core.warnings.InvalidObjectWarning import InvalidObjectWarning
     from foundry.core.warnings.InvalidPositionWarning import InvalidPositionWarning
+    from foundry.core.warnings.InvalidSizeWarning import InvalidSizeWarning
     from foundry.core.warnings.InvalidWarpWarning import InvalidWarpWarning
     from foundry.core.warnings.OutsideLevelBoundsWarning import (
         OutsideLevelBoundsWarning,
@@ -66,6 +69,7 @@ def type_to_warning() -> dict[WarningType, Type[Warning]]:
         WarningType.invalid_extension_to_ground: ExtendToGroundWarning,
         WarningType.invalid_type: InvalidObjectWarning,
         WarningType.invalid_position: InvalidPositionWarning,
+        WarningType.invalid_size: InvalidSizeWarning,
         WarningType.invalid_warp: InvalidWarpWarning,
         WarningType.outside_level_bounds: OutsideLevelBoundsWarning,
     }
