@@ -16,7 +16,7 @@ from foundry.game.level.Level import Level, get_level_name_suggestion
 from foundry.game.level.LevelControlled import LevelControlled
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.AutoScrollEditor import AutoScrollEditor
-from foundry.gui.BlockViewer import BlockViewer
+from foundry.gui.BlockViewer import BlockViewerController as BlockViewer
 from foundry.gui.HeaderEditor import HeaderEditor
 from foundry.gui.JumpEditor import JumpEditor
 from foundry.gui.LevelSelector import LevelSelector
@@ -313,7 +313,7 @@ class LevelController:
 
     def display_block_viewer(self):
         block_viewer = BlockViewer(parent=self.parent)
-        block_viewer.object_set = self.level_ref.level.object_set.number
+        block_viewer.tileset = self.level_ref.level.object_set.number
         block_viewer.palette_group = self.level_ref.level.object_palette_index
         block_viewer.show()
 
