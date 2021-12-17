@@ -1,6 +1,7 @@
 from math import ceil
 
-from PySide6.QtCore import QPoint, QRect, QSize
+from attr import attrs
+from PySide6.QtCore import QPoint, QRect, QSize, Signal, SignalInstance
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
@@ -25,37 +26,52 @@ from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
 from foundry.gui.Spinner import Spinner
 
 
-class BlockViewer(CustomChildWindow):
+@attrs(slots=True, auto_attribs=True)
+class BlockViewerModel:
+    tileset: int
+    palette_group: int
+
+
+class BlockViewerController(CustomChildWindow):
+    tileset_changed: SignalInstance = Signal(int)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(int)  # type: ignore
+
     def __init__(self, parent):
-        super(BlockViewer, self).__init__(parent, "Block Viewer")
+        super().__init__(parent, "Block Viewer")
 
-        self._object_set = 0
-        self.sprite_bank = BlockBank(parent=self)
-
-        self.setCentralWidget(self.sprite_bank)
-
+        self.model = BlockViewerModel(0, 0)
+        self.view = BlockBank(parent=self)
+        self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
         self.prev_os_action = self.toolbar.addAction(icon("arrow-left.svg"), "Previous object set")
-        self.prev_os_action.triggered.connect(self.prev_object_set)
-
         self.next_os_action = self.toolbar.addAction(icon("arrow-right.svg"), "Next object set")
-        self.next_os_action.triggered.connect(self.next_object_set)
-
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_out_action.triggered.connect(self.sprite_bank.zoom_out)
-
         self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
-        self.zoom_in_action.triggered.connect(self.sprite_bank.zoom_in)
+
+        def change_tileset(offset: int):
+            self.tileset += offset
+
+        self.prev_os_action.triggered.connect(lambda *_: change_tileset(-1))  # type: ignore
+        self.next_os_action.triggered.connect(lambda *_: change_tileset(1))  # type: ignore
+        self.zoom_out_action.triggered.connect(self.view.zoom_out)  # type: ignore
+        self.zoom_in_action.triggered.connect(self.view.zoom_in)  # type: ignore
+
+        def on_combo(*_):
+            self.tileset = self.bank_dropdown.currentIndex()
 
         self.bank_dropdown = QComboBox(parent=self.toolbar)
         self.bank_dropdown.addItems(OBJECT_SET_ITEMS)
         self.bank_dropdown.setCurrentIndex(0)
+        self.bank_dropdown.currentIndexChanged.connect(on_combo)  # type: ignore
+        self.tileset_changed.connect(self.bank_dropdown.setCurrentIndex)
 
-        self.bank_dropdown.currentIndexChanged.connect(self.on_combo)
+        def on_palette(value):
+            self.palette_group = value
 
         self.palette_group_spinner = Spinner(self, maximum=PALETTE_GROUPS_PER_OBJECT_SET - 1, base=10)
-        self.palette_group_spinner.valueChanged.connect(self.on_palette)
+        self.palette_group_spinner.valueChanged.connect(on_palette)  # type: ignore
+        self.palette_group_changed.connect(self.palette_group_spinner.setValue)
 
         self.toolbar.addWidget(self.bank_dropdown)
         self.toolbar.addWidget(QLabel(" Object Palette: "))
@@ -67,53 +83,31 @@ class BlockViewer(CustomChildWindow):
 
         self.setStatusBar(QStatusBar(self))
 
-        return
-
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
         super().closeEvent(event)
 
     @property
-    def object_set(self):
-        return self._object_set
+    def tileset(self) -> int:
+        return self.model.tileset
 
-    @object_set.setter
-    def object_set(self, value):
-        self._object_set = value
-
-        self._after_object_set()
+    @tileset.setter
+    def tileset(self, value: int):
+        self.model.tileset = min(max(value, 0), 0xE)
+        self.view.object_set = self.tileset
+        self.tileset_changed.emit(self.tileset)
+        self.view.update()
 
     @property
-    def palette_group(self):
-        return self.palette_group_spinner.value()
+    def palette_group(self) -> int:
+        return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value):
-        self.palette_group_spinner.setValue(value)
-
-    def prev_object_set(self):
-        self.object_set = max(self.object_set - 1, 0)
-
-    def next_object_set(self):
-        self.object_set = min(self.object_set + 1, 0xE)
-
-    def _after_object_set(self):
-        self.sprite_bank.object_set = self.object_set
-
-        self.bank_dropdown.setCurrentIndex(self.object_set)
-
-        self.sprite_bank.update()
-
-    def on_combo(self, _):
-        self.object_set = self.bank_dropdown.currentIndex()
-
-        self.sprite_bank.object_set = self.object_set
-
-        self.sprite_bank.update()
-
-    def on_palette(self, value):
-        self.sprite_bank.palette_group = value
-        self.sprite_bank.update()
+    def palette_group(self, value: int):
+        self.model.palette_group = value
+        self.view.palette_group = value
+        self.palette_group_changed.emit(self.palette_group)
+        self.view.update()
 
 
 class BlockBank(QWidget):

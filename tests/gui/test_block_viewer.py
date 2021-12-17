@@ -1,6 +1,6 @@
 import pytest
 
-from foundry.gui.BlockViewer import BlockViewer
+from foundry.gui.BlockViewer import BlockViewerController as BlockViewer
 
 
 @pytest.fixture
