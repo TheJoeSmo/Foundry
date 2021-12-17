@@ -113,7 +113,7 @@ class PatternViewerView(QWidget):
         graphics_set: GraphicsSet,
         palette_group: PaletteGroup,
         palette_index: int,
-        zoom: int = 2,
+        zoom: int = 4,
     ):
         super().__init__(parent)
 
