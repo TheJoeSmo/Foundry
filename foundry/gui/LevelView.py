@@ -55,6 +55,7 @@ def undoable(func):
 
 class LevelView(QWidget):
     objects_selected: SignalInstance = Signal(object)  # type: ignore
+    object_created: SignalInstance = Signal(object)  # type: ignore
 
     def __init__(self, parent: Optional[QWidget], level: LevelRef, context_menu: ContextMenu):
         super(LevelView, self).__init__(parent)
@@ -819,6 +820,7 @@ class LevelView(QWidget):
 
         self.currently_dragged_object = None
 
+        self.object_created.emit(level_object)
         self.level_ref.data_changed.emit()
 
     def _object_from_mime_data(self, mime_data: QMimeData) -> Union[LevelObject, EnemyObject]:

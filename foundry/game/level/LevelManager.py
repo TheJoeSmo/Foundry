@@ -172,6 +172,8 @@ class LevelManager:
                 self.parent.object_toolbar_viewer.icon = ObjectButton(self.parent.object_toolbar_viewer, items[0])
                 self.parent.object_dropdown.select_object(items[0])
 
+        self.parent.level_view.object_created.connect(set_object_viewer)
+        self.parent.level_view.object_created.connect(self.parent.object_dropdown.select_object)
         self.parent.object_dropdown.object_selected.connect(set_object_viewer)
         self.parent.level_view.objects_selected.connect(set_object_viewer_from_selected)
         self.parent.object_toolbar.selected.connect(set_object_viewer)
