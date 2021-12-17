@@ -1,7 +1,5 @@
-from math import ceil
-
 from attr import attrs
-from PySide6.QtCore import QPoint, QRect, QSize, Signal, SignalInstance
+from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
@@ -13,6 +11,7 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.Position import Position
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
@@ -40,7 +39,7 @@ class BlockViewerController(CustomChildWindow):
         super().__init__(parent, "Block Viewer")
 
         self.model = BlockViewerModel(0, 0)
-        self.view = BlockBank(parent=self)
+        self.view = BlockViewerView(parent=self)
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
@@ -52,10 +51,13 @@ class BlockViewerController(CustomChildWindow):
         def change_tileset(offset: int):
             self.tileset += offset
 
+        def change_zoom(offset: int):
+            self.view.zoom += offset
+
         self.prev_os_action.triggered.connect(lambda *_: change_tileset(-1))  # type: ignore
         self.next_os_action.triggered.connect(lambda *_: change_tileset(1))  # type: ignore
-        self.zoom_out_action.triggered.connect(self.view.zoom_out)  # type: ignore
-        self.zoom_in_action.triggered.connect(self.view.zoom_in)  # type: ignore
+        self.zoom_out_action.triggered.connect(lambda *_: change_zoom(-1))  # type: ignore
+        self.zoom_in_action.triggered.connect(lambda *_: change_zoom(1))  # type: ignore
 
         def on_combo(*_):
             self.tileset = self.bank_dropdown.currentIndex()
@@ -110,54 +112,48 @@ class BlockViewerController(CustomChildWindow):
         self.view.update()
 
 
-class BlockBank(QWidget):
-    def __init__(self, parent, object_set=0, palette_group=0, zoom=2):
-        super(BlockBank, self).__init__(parent)
-        self.setMouseTracking(True)
+class BlockViewerView(QWidget):
+    BLOCKS = 256
+    BLOCKS_PER_ROW = 16
+    BLOCKS_PER_COLUMN = 16
 
-        self.sprites = 256
-        self.zoom_step = 256
-        self.sprites_horiz = 16
-        self.sprites_vert = ceil(self.sprites / self.sprites_horiz)
+    def __init__(self, parent, object_set=0, palette_group=0, zoom=2):
+        super().__init__(parent)
+
+        self.setMouseTracking(True)
 
         self.object_set = object_set
         self.palette_group = palette_group
         self.zoom = zoom
 
-        self._size = QSize(self.sprites_horiz * Block.WIDTH * self.zoom, self.sprites_vert * Block.HEIGHT * self.zoom)
-
-        self.setFixedSize(self._size)
-
     def resizeEvent(self, event: QResizeEvent):
         self.update()
 
-    def zoom_in(self):
-        self.zoom += 1
-        self._after_zoom()
+    @property
+    def zoom(self) -> int:
+        return self._zoom
 
-    def zoom_out(self):
-        self.zoom = max(self.zoom - 1, 1)
-        self._after_zoom()
+    @zoom.setter
+    def zoom(self, value: int):
+        self._zoom = value
+        self.setFixedSize(
+            self.BLOCKS_PER_ROW * Block.WIDTH * self.zoom, self.BLOCKS_PER_COLUMN * Block.HEIGHT * self.zoom
+        )
 
-    def _after_zoom(self):
-        new_size = QSize(self.sprites_horiz * Block.WIDTH * self.zoom, self.sprites_vert * Block.HEIGHT * self.zoom)
-
-        self.setFixedSize(new_size)
+    @property
+    def block_scale(self) -> int:
+        return Block.WIDTH * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        x, y = event.pos().toTuple()
+        pos = Position.from_qpoint(event.pos())
+        pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
-        block_length = Block.WIDTH * self.zoom
-
-        column = x // block_length
-        row = y // block_length
-
-        dec_index = row * self.sprites_horiz + column
+        dec_index = pos.y * self.BLOCKS_PER_ROW + pos.x
         hex_index = hex(dec_index).upper().replace("X", "x")
 
-        status_message = f"Row: {row}, Column: {column}, Index: {dec_index} / {hex_index}"
+        status_message = f"Row: {pos.y}, Column: {pos.x}, Index: {dec_index} / {hex_index}"
 
-        self.parent().statusBar().showMessage(status_message)
+        self.parent().statusBar().showMessage(status_message)  # type: ignore
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
@@ -171,16 +167,10 @@ class BlockBank(QWidget):
         palette = load_palette_group(self.object_set, self.palette_group)
         tsa_data = ROM.get_tsa_data(self.object_set)
 
-        horizontal = self.sprites_horiz
-
-        block_length = Block.WIDTH * self.zoom
-
-        for i in range(self.sprites):
+        for i in range(self.BLOCKS):
             block = Block(i, palette, graphics_set, tsa_data)
 
-            x = (i % horizontal) * block_length
-            y = (i // horizontal) * block_length
+            x = (i % self.BLOCKS_PER_ROW) * self.block_scale
+            y = (i // self.BLOCKS_PER_ROW) * self.block_scale
 
-            block.draw(painter, x, y, block_length)
-
-        return
+            block.draw(painter, x, y, self.block_scale)
