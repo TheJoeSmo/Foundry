@@ -35,6 +35,7 @@ class PatternViewerController(CustomChildWindow):
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     pattern_selected: SignalInstance = Signal(int)  # type: ignore
+    destroyed: SignalInstance = Signal()  # type: ignore
 
     def __init__(
         self, parent: Optional[QWidget], graphics_set: GraphicsSet, palette_group: PaletteGroup, palette_index: int
@@ -64,6 +65,7 @@ class PatternViewerController(CustomChildWindow):
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
+        self.destroyed.emit()
         super().closeEvent(event)
 
     @property

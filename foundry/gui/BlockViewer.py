@@ -37,6 +37,7 @@ class BlockViewerController(CustomChildWindow):
     tile_square_assembly_changed: SignalInstance = Signal(bytearray)  # type: ignore
     tileset_changed: SignalInstance = Signal(int)  # type: ignore
     palette_group_changed: SignalInstance = Signal(int)  # type: ignore
+    destroyed: SignalInstance = Signal()  # type: ignore
 
     def __init__(self, parent):
         super().__init__(parent, "Block Viewer")
@@ -46,8 +47,10 @@ class BlockViewerController(CustomChildWindow):
         self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
+        self.editor = None
 
         self.view.block_selected.connect(self._on_block_selected)
+        self.view.destroyed.connect(self.destroy)  # type: ignore
 
         self.undo_action = self.toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
         self.redo_action = self.toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
@@ -107,6 +110,7 @@ class BlockViewerController(CustomChildWindow):
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
+        self.destroyed.emit()
         super().closeEvent(event)
 
     @property
@@ -150,21 +154,28 @@ class BlockViewerController(CustomChildWindow):
         self.view.update()
 
     def _on_block_selected(self, index: int):
-        editor = BlockEditor(
-            self,
-            ROM.get_tsa_data(self.tileset),
-            index,
-            GraphicsSet.from_tileset(self.tileset),
-            load_palette_group(self.tileset, self.palette_group),
-            index // 0x40,
-        )
+        if self.editor is None:
+            self.editor = BlockEditor(
+                self,
+                ROM.get_tsa_data(self.tileset),
+                index,
+                GraphicsSet.from_tileset(self.tileset),
+                load_palette_group(self.tileset, self.palette_group),
+                index // 0x40,
+            )
 
-        def change_tsa_data(tsa_data: bytearray):
-            self.tsa_data = tsa_data
+            def change_tsa_data(tsa_data: bytearray):
+                self.tsa_data = tsa_data
 
-        editor.tile_square_assembly_changed.connect(change_tsa_data)
-        self.tile_square_assembly_changed.connect(editor.silent_update_tsa_data)
-        editor.show()
+            def remove_editor(*_):
+                self.editor = None
+
+            self.editor.tile_square_assembly_changed.connect(change_tsa_data)
+            self.editor.destroyed.connect(remove_editor)
+            self.tile_square_assembly_changed.connect(self.editor.silent_update_tsa_data)
+            self.editor.show()
+        else:
+            self.editor.block_index = index
 
 
 class BlockViewerView(QWidget):
