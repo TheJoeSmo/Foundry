@@ -19,7 +19,7 @@ from foundry.core.Position import Position
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import PaletteGroup
+from foundry.game.gfx.Palette import NESPalette, PaletteGroup
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 
@@ -166,7 +166,7 @@ class PatternViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        bg_color = self.palette_group[self.palette_index][0]
+        bg_color = NESPalette[self.palette_group[self.palette_index][0]]
         painter.setBrush(QBrush(bg_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
