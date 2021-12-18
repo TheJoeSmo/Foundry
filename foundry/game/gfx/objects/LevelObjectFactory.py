@@ -7,7 +7,7 @@ from foundry.game.gfx.objects.LevelObject import (
     SCREEN_WIDTH,
     LevelObject,
 )
-from foundry.game.gfx.Palette import load_palette_group
+from foundry.game.gfx.Palette import PaletteGroup
 
 
 class LevelObjectFactory:
@@ -48,7 +48,7 @@ class LevelObjectFactory:
 
     def set_palette_group_index(self, palette_group_index: int):
         self.palette_group_index = palette_group_index
-        self.palette_group = load_palette_group(self.object_set, self.palette_group_index)
+        self.palette_group = PaletteGroup.from_tileset(self.object_set, self.palette_group_index)
 
     def from_data(self, data: bytearray, index: int):
         if Jump.is_jump(data):

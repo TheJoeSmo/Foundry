@@ -1,6 +1,7 @@
-from typing import Dict, List, Optional, Tuple
+from functools import cache
+from typing import Protocol
 
-from attr import dataclass
+from attr import attrs
 from PySide6.QtGui import QColor
 
 from foundry import root_dir
@@ -31,99 +32,178 @@ PALETTE_DATA_SIZE = (
 )
 
 
-@dataclass(eq=False)
+class PaletteProtocol(Protocol):
+    color_indexes: list[int]
+
+    def __bytes__(self) -> bytes:
+        ...
+
+    def __getitem__(self, item: int) -> int:
+        ...
+
+    def __setitem__(self, key: int, value: int):
+        ...
+
+    @property
+    def colors(self) -> list[QColor]:
+        ...
+
+
+class PaletteGroupProtocol(Protocol):
+    palettes: list[PaletteProtocol]
+
+    def __bytes__(self) -> bytes:
+        ...
+
+    def __getitem__(self, item: int) -> PaletteProtocol:
+        ...
+
+    def __setitem__(self, key: int, value: PaletteProtocol):
+        ...
+
+    @property
+    def background_color(self) -> QColor:
+        ...
+
+
+@attrs(slots=True, auto_attribs=True)
+class Palette:
+    color_indexes: list[int]
+
+    def __bytes__(self) -> bytes:
+        return bytes([i & 0xFF for i in self.color_indexes])
+
+    def __getitem__(self, item: int) -> int:
+        return self.color_indexes[item]
+
+    def __setitem__(self, key: int, value: int):
+        self.color_indexes[key] = value
+
+    @classmethod
+    def as_empty(cls):
+        """
+        Makes an empty palette of default values
+
+        Returns
+        -------
+        Palette
+            A Palette filled with default values.
+        """
+        return cls([0, 0, 0, 0])
+
+    @classmethod
+    def from_rom(cls, address: int):
+        """
+        Creates a palette from an absolute address in ROM.
+
+        Parameters
+        ----------
+        address : int
+            The absolute address into the ROM.
+
+        Returns
+        -------
+        Palette
+            The Palette that represents the absolute address in ROM.
+        """
+        return cls([int(i) for i in ROM().read(address, COLORS_PER_PALETTE)])
+
+    @property
+    def colors(self) -> list[QColor]:
+        return [NESPalette[c & 0x3F] for c in self.color_indexes]
+
+
+@cache
+def get_internal_palette_offset(tileset: int) -> int:
+    """
+    Provides the absolute internal position of the palette group offset from ROM.
+
+    Parameters
+    ----------
+    tileset : int
+        The tileset to find the absolute internal position of.
+
+    Returns
+    -------
+    int
+        The absolute internal position of the tileset's palette group.
+    """
+    return PALETTE_BASE_ADDRESS + ROM().little_endian(PALETTE_OFFSET_LIST + (tileset * PALETTE_OFFSET_SIZE))
+
+
+@attrs(slots=True, auto_attribs=True)
 class PaletteGroup:
-    object_set: int
-    index: int
-    palettes: List[bytearray]
+    palettes: list[PaletteProtocol]
 
-    changed = False
+    def __bytes__(self) -> bytes:
+        b = bytearray()
+        for palette in self.palettes:
+            b.extend(bytes(palette))
+        return bytes(b)
 
-    def restore(self):
-        new_palette_group = load_palette_group(self.object_set, self.index, use_cache=False)
-
-        self.palettes = new_palette_group.palettes
-
-    def __getitem__(self, item):
+    def __getitem__(self, item: int) -> PaletteProtocol:
         return self.palettes[item]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: int, value: PaletteProtocol):
         self.palettes[key] = value
 
-    def __eq__(self, other):
-        if not isinstance(other, PaletteGroup):
-            raise TypeError(f"Cannot compare PaletteGroup with {type(other)}.")
+    @property
+    def background_color(self) -> QColor:
+        return self.palettes[0].colors[0]
 
-        return self.object_set == other.object_set and self.index == other.index
+    @classmethod
+    def as_empty(cls):
+        """
+        Makes an empty palette group of default values
 
-    def __hash__(self):
-        return hash((self.object_set, self.index))
+        Returns
+        -------
+        PaletteGroup
+            A PaletteGroup filled with default values.
+        """
+        return cls([Palette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
 
-    def save(self, rom: Optional[ROM] = None):
-        if rom is None:
-            rom = ROM()
+    @classmethod
+    def from_rom(cls, address: int):
+        """
+        Creates a palette group from an absolute address in ROM.
 
-        palette_offset_position = PALETTE_OFFSET_LIST + (self.object_set * PALETTE_OFFSET_SIZE)
-        palette_offset = rom.little_endian(palette_offset_position)
+        Parameters
+        ----------
+        address : int
+            The absolute address into the ROM.
 
-        palette_address = PALETTE_BASE_ADDRESS + palette_offset
-        palette_address += self.index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
+        Returns
+        -------
+        PaletteGroup
+            The PaletteGroup that represents the absolute address in ROM.
+        """
+        return cls(
+            [
+                Palette.from_rom(address + offset)
+                for offset in [COLORS_PER_PALETTE * i for i in range(PALETTES_PER_PALETTES_GROUP)]
+            ]
+        )
 
-        palettes = []
+    @classmethod
+    def from_tileset(cls, tileset: int, index: int):
+        """
+        Loads a palette group from a tileset with a given index.
 
-        for palette in self.palettes:
-            palettes.append(rom.write(palette_address, palette))
+        Parameters
+        ----------
+        tileset : int
+            The index of the tileset.
+        index : int
+            The index of the palette group inside the tileset.
 
-            palette_address += COLORS_PER_PALETTE
-
-
-_palette_group_cache: Dict[Tuple[int, int], PaletteGroup] = {}
-
-
-def load_palette_group(object_set: int, palette_group_index: int, use_cache=True) -> PaletteGroup:
-    """
-    Basically does, what the Setup_PalData routine does.
-    :param object_set: Level_Tileset in the disassembly.
-    :param palette_group_index: Palette_By_Tileset. Defined in the level header.
-    :param use_cache: Whether to use a cached version, or read from ROM.
-    :return: A list of 4 groups of 4 colors.
-    """
-    key = (object_set, palette_group_index)
-
-    if key not in _palette_group_cache or not use_cache:
-        rom = ROM()
-
-        palette_offset_position = PALETTE_OFFSET_LIST + (object_set * PALETTE_OFFSET_SIZE)
-        palette_offset = rom.little_endian(palette_offset_position)
-
-        palette_address = PALETTE_BASE_ADDRESS + palette_offset
-        palette_address += palette_group_index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
-
-        palettes = []
-
-        for _ in range(PALETTES_PER_PALETTES_GROUP):
-            palettes.append(rom.read(palette_address, COLORS_PER_PALETTE))
-
-            palette_address += COLORS_PER_PALETTE
-
-        _palette_group_cache[key] = PaletteGroup(object_set, palette_group_index, palettes)
-
-    return _palette_group_cache[key]
-
-
-def save_all_palette_groups(rom: Optional[ROM] = None):
-    for palette_group in _palette_group_cache.values():
-        palette_group.save(rom)
-
-    if rom is None:
-        PaletteGroup.changed = False
-
-
-def restore_all_palettes():
-    for palette_group in _palette_group_cache.values():
-        palette_group.restore()
-
-    PaletteGroup.changed = False
+        Returns
+        -------
+        PaletteGroup
+            The PaletteGroup that represents the tileset's palette group at the provided offset.
+        """
+        offset = get_internal_palette_offset(tileset) + index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
+        return cls.from_rom(offset)
 
 
 palette_file = root_dir.joinpath("data", "Default.pal")
@@ -141,13 +221,3 @@ for i in range(COLOR_COUNT):
     NESPalette.append(QColor(color_data[offset], color_data[offset + 1], color_data[offset + 2]))
 
     offset += BYTES_IN_COLOR
-
-
-def bg_color_for_object_set(object_set_number: int, palette_group_index: int) -> QColor:
-    palette_group = load_palette_group(object_set_number, palette_group_index)
-
-    return bg_color_for_palette_group(palette_group)
-
-
-def bg_color_for_palette_group(palette_group: PaletteGroup) -> QColor:
-    return NESPalette[palette_group[0][0] & 0x3F]

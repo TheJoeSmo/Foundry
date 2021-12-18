@@ -4,7 +4,7 @@ from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.MapObject import MapObject
-from foundry.game.gfx.Palette import load_palette_group
+from foundry.game.gfx.Palette import PaletteGroup
 from foundry.game.level.LevelLike import LevelLike
 from foundry.smb3parse.levels.world_map import (
     WORLD_MAP_HEIGHT,
@@ -26,7 +26,7 @@ class WorldMap(LevelLike):
         self.name = f"World {world_index} - Overworld"
 
         self.graphics_set = GraphicsSet.from_tileset(OVERWORLD_GRAPHIC_SET)
-        self.palette_group = load_palette_group(WORLD_MAP_OBJECT_SET, 0)
+        self.palette_group = PaletteGroup.from_tileset(WORLD_MAP_OBJECT_SET, 0)
 
         self.object_set = WORLD_MAP_OBJECT_SET
         self.tsa_data = ROM.get_tsa_data(self.object_set)
@@ -49,7 +49,12 @@ class WorldMap(LevelLike):
             x = screen_offset + (index % WORLD_MAP_SCREEN_WIDTH)
             y = (index // WORLD_MAP_SCREEN_WIDTH) % WORLD_MAP_HEIGHT
 
-            block = Block(world_position.tile(), self.palette_group, self.graphics_set, self.tsa_data)
+            block = Block(
+                world_position.tile(),
+                tuple(tuple(c for c in pal) for pal in self.palette_group),
+                self.graphics_set,
+                self.tsa_data,
+            )
 
             self.objects.append(MapObject(block, x, y))
 

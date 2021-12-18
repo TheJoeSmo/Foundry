@@ -15,7 +15,7 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_NOT,
     EXPANDS_VERT,
 )
-from foundry.game.gfx.Palette import PaletteGroup, bg_color_for_object_set
+from foundry.game.gfx.Palette import PaletteGroup
 from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
 from foundry.game.ObjectSet import ObjectSet
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
@@ -713,7 +713,12 @@ class LevelObject(GeneratorObject):
             self._draw_block(painter, block_index, x, y, block_length, transparent)
 
     def _draw_block(self, painter: QPainter, block_index, x, y, block_length, transparent):
-        block = get_block(block_index, self.palette_group, self.graphics_set, bytes(self.tsa_data))
+        block = get_block(
+            block_index,
+            tuple(tuple(c for c in pal) for pal in self.palette_group),
+            self.graphics_set,
+            bytes(self.tsa_data),
+        )
 
         block.draw(
             painter,
@@ -929,7 +934,7 @@ class LevelObject(GeneratorObject):
             QImage.Format_RGB888,
         )
 
-        bg_color = bg_color_for_object_set(self.object_set.number, 0)
+        bg_color = self.palette_group.background_color
 
         image.fill(bg_color)
 
