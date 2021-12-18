@@ -16,11 +16,7 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_HORIZ,
     EXPANDS_VERT,
 )
-from foundry.game.gfx.Palette import (
-    NESPalette,
-    bg_color_for_object_set,
-    load_palette_group,
-)
+from foundry.game.gfx.Palette import NESPalette, PaletteGroup
 from foundry.game.level.Level import Level
 from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
 from foundry.gui.settings import SETTINGS
@@ -97,7 +93,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     :return:
     """
 
-    palette_group = load_palette_group(level.object_set_number, level.header.object_palette_index)
+    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
@@ -159,9 +155,13 @@ class LevelDrawer:
         painter.save()
 
         if level.object_set_number == CLOUDY_OBJECT_SET:
-            bg_color = NESPalette[load_palette_group(level.object_set_number, level.header.object_palette_index)[3][2]]
+            bg_color = NESPalette[
+                PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3][2]
+            ]
         else:
-            bg_color = bg_color_for_object_set(level.object_set_number, level.header.object_palette_index)
+            bg_color = PaletteGroup.from_tileset(
+                level.object_set_number, level.header.object_palette_index
+            ).background_color
 
         painter.fillRect(level.get_rect(self.block_length), bg_color)
 
@@ -209,7 +209,15 @@ class LevelDrawer:
             bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
 
     def _draw_objects(self, painter: QPainter, level: Level):
+        bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+        spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
+        for level_object in level.objects:
+            level_object.palette_group = bg_palette_group
+        for enemy in level.enemies:
+            enemy.palette_group = spr_palette_group
+
         for level_object in level.get_all_objects():
+
             level_object.render()
 
             if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS:
