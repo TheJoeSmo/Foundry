@@ -7,7 +7,6 @@ from PySide6.QtWidgets import QLabel, QSizePolicy, QVBoxLayout, QWidget
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
-from foundry.game.gfx.Palette import bg_color_for_palette_group
 from foundry.gui.util import clear_layout
 
 T = TypeVar("T", LevelObject, EnemyObject)
@@ -100,7 +99,7 @@ class ObjectIcon(QWidget, Generic[T]):
         painter = QPainter(self)
 
         if self.background_color:
-            painter.fillRect(event.rect(), bg_color_for_palette_group(self.item.palette_group))
+            painter.fillRect(event.rect(), self.item.palette_group.background_color)
 
         scaled_image = get_minimal_icon_object(self.item).as_image().scaled(self.size(), aspectMode=Qt.KeepAspectRatio)
 

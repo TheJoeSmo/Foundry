@@ -16,11 +16,7 @@ from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import (
-    PALETTE_GROUPS_PER_OBJECT_SET,
-    bg_color_for_object_set,
-    load_palette_group,
-)
+from foundry.game.gfx.Palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
 from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
@@ -145,7 +141,7 @@ class BlockViewerController(CustomChildWindow):
         self.view.update()
         if self.editor is not None:
             self.editor.silent_update_tsa_data(self.tsa_data)
-            self.editor.palette_group = load_palette_group(self.tileset, self.palette_group)
+            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, self.palette_group)
             self.editor.graphics_set = GraphicsSet.from_tileset(self.tileset)
 
     @property
@@ -159,7 +155,7 @@ class BlockViewerController(CustomChildWindow):
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
         if self.editor is not None:
-            self.editor.palette_group = load_palette_group(self.tileset, value)
+            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, value)
 
     def _on_block_selected(self, index: int):
         if self.editor is None:
@@ -168,7 +164,7 @@ class BlockViewerController(CustomChildWindow):
                 ROM.get_tsa_data(self.tileset),
                 index,
                 GraphicsSet.from_tileset(self.tileset),
-                load_palette_group(self.tileset, self.palette_group),
+                PaletteGroup.from_tileset(self.tileset, self.palette_group),
                 index // 0x40,
             )
 
@@ -241,13 +237,13 @@ class BlockViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        bg_color = bg_color_for_object_set(self.object_set, 0)
+        palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
+        bg_color = palette.background_color
         painter.setBrush(QBrush(bg_color))
 
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         graphics_set = GraphicsSet.from_tileset(self.object_set)
-        palette = load_palette_group(self.object_set, self.palette_group)
         tsa_data = ROM.get_tsa_data(self.object_set)
 
         for i in range(self.BLOCKS):

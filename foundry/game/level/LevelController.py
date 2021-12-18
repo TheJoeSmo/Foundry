@@ -11,7 +11,6 @@ from foundry.core.Data import Data, DataProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
-from foundry.game.gfx.Palette import restore_all_palettes
 from foundry.game.level.Level import Level, get_level_name_suggestion
 from foundry.game.level.LevelControlled import LevelControlled
 from foundry.game.level.LevelRef import LevelRef
@@ -276,7 +275,7 @@ class LevelController:
         self.parent.side_palette.load_from_level(self.level_ref.level)
 
     def update_gui_for_level(self):
-        restore_all_palettes()
+        self.parent.side_palette.load_from_level(self.level_ref.level)
 
         self.parent.jump_list.update()
         self.parent.object_dropdown.set_object_set(

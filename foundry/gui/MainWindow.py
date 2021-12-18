@@ -31,11 +31,6 @@ from foundry import (
     releases_link,
 )
 from foundry.game.File import ROM
-from foundry.game.gfx.Palette import (
-    PaletteGroup,
-    restore_all_palettes,
-    save_all_palette_groups,
-)
 from foundry.game.level.LevelManager import LevelManager
 from foundry.gui.AboutWindow import AboutDialog
 from foundry.gui.ContextMenu import CMAction
@@ -251,7 +246,7 @@ class MainWindow(QMainWindow):
         self._put_current_level_to_level_1_1(temp_rom)
         self._set_default_powerup(temp_rom)
 
-        save_all_palette_groups(temp_rom)
+        self.side_palette.save(temp_rom)
 
         temp_rom.write(
             Title_PrepForWorldMap - 0x8,
@@ -476,7 +471,7 @@ class MainWindow(QMainWindow):
         Saving or restoring Object Palettes is done inside the function if necessary.
         :return: False, if Cancel was chosen. True, if Palettes were restored or saved to ROM.
         """
-        if not PaletteGroup.changed:
+        if hasattr(self, "side_palette") and not self.side_palette.changed:
             return True
 
         answer = QMessageBox.question(
@@ -489,12 +484,14 @@ class MainWindow(QMainWindow):
         )
 
         if answer == QMessageBox.Cancel:
+            self.side_palette.restore()
+            self.manager.refresh()
             return False
 
         if answer == QMessageBox.Yes:
-            save_all_palette_groups()
+            self.side_palette.save()
         elif answer == QMessageBox.RestoreDefaults:
-            restore_all_palettes()
+            self.side_palette.restore()
             self.manager.refresh()
 
         return True
@@ -519,6 +516,7 @@ class MainWindow(QMainWindow):
 
             if answer == QMessageBox.No:
                 return
+        self._ask_for_palette_save()
 
         if not self.manager.is_attached:
             QMessageBox.information(

@@ -46,7 +46,7 @@ class Block:
         mirrored: bool = False,
     ):
         self.index = block_index
-        self.palette_group = palette_group
+        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
         self.palette_index = (block_index & 0b1100_0000) >> 6
 
         # can't hash list, so turn it into a string instead
@@ -57,15 +57,15 @@ class Block:
         ru = tsa_data[TSA_BANK_2 + block_index]
         rd = tsa_data[TSA_BANK_3 + block_index]
 
-        self.lu_tile = Tile(lu, palette_group, self.palette_index, graphics_set)
-        self.ld_tile = Tile(ld, palette_group, self.palette_index, graphics_set)
+        self.lu_tile = Tile(lu, self.palette_group, self.palette_index, graphics_set)
+        self.ld_tile = Tile(ld, self.palette_group, self.palette_index, graphics_set)
 
         if mirrored:
-            self.ru_tile = Tile(lu, palette_group, self.palette_index, graphics_set, mirrored=True)
-            self.rd_tile = Tile(ld, palette_group, self.palette_index, graphics_set, mirrored=True)
+            self.ru_tile = Tile(lu, self.palette_group, self.palette_index, graphics_set, mirrored=True)
+            self.rd_tile = Tile(ld, self.palette_group, self.palette_index, graphics_set, mirrored=True)
         else:
-            self.ru_tile = Tile(ru, palette_group, self.palette_index, graphics_set)
-            self.rd_tile = Tile(rd, palette_group, self.palette_index, graphics_set)
+            self.ru_tile = Tile(ru, self.palette_group, self.palette_index, graphics_set)
+            self.rd_tile = Tile(rd, self.palette_group, self.palette_index, graphics_set)
 
         self.image = QImage(Block.WIDTH, Block.HEIGHT, QImage.Format_RGB888)
         painter = QPainter(self.image)

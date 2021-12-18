@@ -1,69 +1,52 @@
-from typing import Callable, Optional
+from typing import Optional
 
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
-from foundry.game.gfx.Palette import (
-    COLORS_PER_PALETTE,
-    PALETTES_PER_PALETTES_GROUP,
-    PaletteGroup,
-    load_palette_group,
-)
-from foundry.gui.PaletteViewer import PaletteWidget
+from foundry.game.gfx.Palette import PaletteGroupProtocol
+from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 
 
 class PaletteGroupEditor(QWidget):
-    palette_updated: SignalInstance = Signal(PaletteGroup)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(PaletteGroupProtocol)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], palette_group: PaletteGroup):
-        super().__init__(parent=parent)
+    def __init__(self, parent: Optional[QWidget], palette_group: PaletteGroupProtocol):
+        super().__init__(parent)
         self._palette_group = palette_group
 
         layout = QVBoxLayout()
         layout.setSpacing(0)
-        self.palettes = []
-        for short_palette_index in range(PALETTES_PER_PALETTES_GROUP):
-            widget = PaletteWidget(self, palette_group, short_palette_index)
-            widget.color_changed.connect(self.on_color_update(short_palette_index))
-            widget.clickable = True
-            self.palettes.append(widget)
+
+        self._palettes: list[PaletteEditorWidget] = []
+        for idx, palette in enumerate(palette_group.palettes):
+            widget = PaletteEditorWidget(self, palette)
+            widget.palette_changed.connect(lambda *_, idx=idx: self._on_palette_changed(idx))
+            self._palettes.append(widget)
             layout.addWidget(widget)
 
         self.setLayout(layout)
 
-    def load(self, object_set: int, palette_group_index: int):
-        self._palette_group = load_palette_group(object_set, palette_group_index)
-        for palette in self.palettes:
-            palette._palette_group = self._palette_group
-            palette._update_colors()
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent}, {self.palette_group})"
 
     @property
-    def palette_group(self) -> PaletteGroup:
+    def palette_group(self) -> PaletteGroupProtocol:
         return self._palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: PaletteGroup):
+    def palette_group(self, palette_group: PaletteGroupProtocol):
         self._palette_group = palette_group
-        for idx in range(PALETTES_PER_PALETTES_GROUP):
-            for color in range(COLORS_PER_PALETTE):
-                self.palette_group[idx][color] = palette_group[idx][color]
+        self.palette_group_changed.emit(palette_group)
+        self._update()
 
-        self.palette_group.changed = True
+    def _update(self):
+        for idx, palette in enumerate(self._palettes):
+            palette._palette = self._palette_group[idx]
+            palette._update()
 
-    def on_color_update(self, short_palette_index: int) -> Callable[[int, int], None]:
-        def color_update(index: int, color_index: int):
-            if self.palette_group[short_palette_index][index] == color_index:
-                return
-
-            # colors at index 0 are shared among all palettes of a palette group
-            if index == 0:
-                for idx, palette in enumerate(self.palette_group):  # type: ignore
-                    palette[0] = color_index
-                    self.palettes[idx]._update_colors()
-            else:
-                self.palette_group[short_palette_index][index] = color_index
-
-            self.palette_group.changed = True
-            self.palette_updated.emit(self.palette_group)
-
-        return color_update
+    def _on_palette_changed(self, palette_index: int):
+        palette_group = self.palette_group
+        palette_group.palettes[palette_index] = self._palettes[palette_index].palette
+        for palette in palette_group:
+            palette[0] = palette_group[palette_index][0]
+        self.palette_group = palette_group
