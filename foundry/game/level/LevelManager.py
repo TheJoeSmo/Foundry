@@ -24,6 +24,7 @@ from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
 from foundry.gui.PaletteGroupController import PaletteGroupController
+from foundry.gui.PlayerViewer import PlayerViewerController as PlayerViewer
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.Toolbar import create_toolbar
 from foundry.gui.WarningList import WarningList
@@ -38,6 +39,9 @@ class Manager(Protocol):
         ...
 
     def display_object_viewer(self) -> None:
+        ...
+
+    def display_player_viewer(self) -> None:
         ...
 
 
@@ -72,6 +76,10 @@ class LevelManager:
     def has_warnings(self, value: bool) -> None:
         self._has_warnings
         self.parent.warning_action.setEnabled(value)
+
+    def display_player_viewer(self):
+        player_viewer = PlayerViewer(self.parent)
+        player_viewer.show()
 
     def display_object_viewer(self):
         object_viewer = ObjectViewer(parent=self.parent)
