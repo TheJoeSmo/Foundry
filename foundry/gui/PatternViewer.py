@@ -171,7 +171,9 @@ class PatternViewerView(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
+            tile = Tile(
+                i, tuple(tuple(c for c in pal) for pal in self.palette_group), self.palette_index, self.graphics_set
+            )
 
             x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
             y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale

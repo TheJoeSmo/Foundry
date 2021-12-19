@@ -227,7 +227,7 @@ class BlockArray(QWidget):
         for block_index in self.level_object.blocks:
             block = get_block(
                 block_index,
-                self.level_object.palette_group,
+                tuple(tuple(c for c in pal) for pal in self.level_object.palette_group),
                 self.level_object.graphics_set,
                 bytes(self.level_object.tsa_data),
             )
