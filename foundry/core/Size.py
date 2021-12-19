@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from attr import attrib, attrs
+from attr import attrs
 
 
 class SizeProtocol(Protocol):
@@ -19,7 +19,7 @@ class SizeProtocol(Protocol):
     height: int
 
 
-@attrs(slots=True)
+@attrs(slots=True, auto_attribs=True)
 class Size:
     """
     A two dimensional representation of a size, that uses ``attrs`` to create a basic
@@ -33,5 +33,5 @@ class Size:
         The height of the object being represented.
     """
 
-    width = attrib(type=int)
-    height = attrib(type=int)
+    width: int
+    height: int
