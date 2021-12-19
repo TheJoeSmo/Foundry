@@ -150,11 +150,16 @@ class BlockEditorController(CustomChildWindow):
     def _on_pattern_selected(self, x: int, y: int):
         self._last_x = x
         self._last_y = y
+
+        def remove_viewer(*_):
+            self.pattern_viewer = None
+
         if self.pattern_viewer is None:
             self.pattern_viewer = PatternViewer(self, self.graphics_set, self.palette_group, self.block_index // 0x40)
             self.pattern_viewer.pattern_selected.connect(
                 lambda ptn: self._on_block_pattern_change(self._last_x, self._last_y, ptn)
             )
+            self.pattern_viewer.destroyed.connect(remove_viewer)
             self.pattern_viewer.show()
         else:
             self.pattern_viewer.palette_index = self.block_index // 0x40
