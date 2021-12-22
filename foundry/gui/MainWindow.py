@@ -680,6 +680,9 @@ class MainWindow(QMainWindow):
     def open_level_selector(self, _):
         self.manager.on_select()
 
+    def on_player_viewer(self):
+        self.manager.display_player_viewer()
+
     def on_object_viewer(self):
         self.manager.display_object_viewer()
 

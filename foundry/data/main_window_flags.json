@@ -1,215 +1,221 @@
 {
-    "icon": "foundry.ico",
-    "style": "gui_style",
+  "icon": "foundry.ico",
+  "style": "gui_style",
 
-    "menu": {
-        "file": {
-            "name": "File",
-            "type": "actions",
-            "attribute": true,
-            "options": [
-                {
-                    "open_rom": {
-                        "name": "&Open ROM",
-                        "action": "on_open_rom"
-                    },
-                    "open_m3l": {
-                        "name": "&Open M3L",
-                        "action": "on_open_m3l",
-                        "attribute": true
-                    }
-                },
-                {
-                    "save_rom": {
-                        "name": "&Save ROM",
-                        "action": "on_save_rom",
-                        "attribute": true
-                    },
-                    "save_rom_as": {
-                        "name": "&Save ROM as ...",
-                        "action": "on_save_rom_as",
-                        "attribute": true
-                    },
-                    "save_m3l": {
-                        "name": "&Save M3L",
-                        "action": "on_save_m3l",
-                        "attribute": true
-                    }
-                },
-                {
-                    "settings": {
-                        "name": "&Settings",
-                        "action": "_on_show_settings"
-                    }
-                },
-                {
-                    "screen_shot": {
-                        "name": "&Save Screenshot of Level",
-                        "action": "on_screenshot"
-                    }
-                },
-                {
-                    "exit": {
-                        "name": "&Exit",
-                        "action": "close",
-                        "wrapped": true
-                    }
-                }
-            ]
+  "menu": {
+    "file": {
+      "name": "File",
+      "type": "actions",
+      "attribute": true,
+      "options": [
+        {
+          "open_rom": {
+            "name": "&Open ROM",
+            "action": "on_open_rom"
+          },
+          "open_m3l": {
+            "name": "&Open M3L",
+            "action": "on_open_m3l",
+            "attribute": true
+          }
         },
-        "level": {
-            "name": "Level",
-            "type": "actions",
-            "attribute": true,
-            "options": [
-                {
-                    "select_level": {
-                        "name": "&Select Level",
-                        "action": "open_level_selector",
-                        "attribute": true
-                    },
-                    "reload": {
-                        "name": "&Reload Level",
-                        "action": "reload_level",
-                        "attribute": true
-                    }
-                },
-                {
-                    "edit_header": {
-                        "name": "&Edit Header",
-                        "action": "on_header_editor",
-                        "attribute": true
-                    },
-                    "edit_autoscroll": {
-                        "name": "Edit Autoscrolling",
-                        "action": "on_edit_autoscroll",
-                        "attribute": true
-                    }
-                }
-            ]
+        {
+          "save_rom": {
+            "name": "&Save ROM",
+            "action": "on_save_rom",
+            "attribute": true
+          },
+          "save_rom_as": {
+            "name": "&Save ROM as ...",
+            "action": "on_save_rom_as",
+            "attribute": true
+          },
+          "save_m3l": {
+            "name": "&Save M3L",
+            "action": "on_save_m3l",
+            "attribute": true
+          }
         },
-        "object": {
-            "name": "Objects",
-            "type": "actions",
-            "attribute": true,
-            "options": [
-                {
-                    "view_blocks": {
-                        "name": "&View Blocks",
-                        "action": "on_block_viewer"
-                    },
-                    "view_objects": {
-                        "name": "&View Objects",
-                        "action": "on_object_viewer"
-                    }
-                },
-                {
-                    "view_palettes": {
-                        "name": "View Object Palette",
-                        "action": "on_palette_viewer"
-                    }
-                }
-            ]
+        {
+          "settings": {
+            "name": "&Settings",
+            "action": "_on_show_settings"
+          }
         },
-        "view": {
-            "name": "View",
-            "type": "settings",
-            "attribute": true,
-            "action": "on_menu",
-            "options": [
-                {
-                    "ID_MARIO": {
-                        "id": 510,
-                        "attribute": "draw_mario",
-                        "name": "draw_mario",
-                        "display_name": "Mario"
-                    },
-                    "ID_JUMP_OBJECTS": {
-                        "id": 512,
-                        "attribute": "draw_jumps_on_objects",
-                        "name": "draw_jump_on_objects",
-                        "display_name": "&Jumps on objects"
-                    },
-                    "ID_ITEM_BLOCKS": {
-                        "id": 513,
-                        "attribute": "draw_items_in_blocks",
-                        "name": "draw_items_in_blocks",
-                        "display_name": "Items in blocks"
-                    },
-                    "ID_INVISIBLE_ITEMS": {
-                        "id": 514,
-                        "attribute": "draw_invisible_items",
-                        "name": "draw_invisible_items",
-                        "display_name": "Invisible items"
-                    },
-                    "ID_AUTOSCROLL": {
-                        "id": 515,
-                        "attribute": "draw_autoscroll",
-                        "name": "draw_autoscroll",
-                        "display_name": "Autoscroll Path"
-                    }
-                },
-                {
-                    "ID_JUMPS": {
-                        "id": 509,
-                        "attribute": "draw_jumps",
-                        "name": "draw_jumps",
-                        "display_name": "Jump Zones"
-                    },
-                    "ID_GRID_LINES": {
-                        "id": 501,
-                        "attribute": "draw_grid",
-                        "name": "draw_grid",
-                        "display_name": "&Grid lines"
-                    },
-                    "ID_RESIZE_TYPE": {
-                        "id": 511,
-                        "attribute": "draw_expansions",
-                        "name": "draw_expansion",
-                        "display_name": "Resize Type"
-                    }
-                },
-                {
-                    "ID_TRANSPARENCY": {
-                        "id": 508,
-                        "attribute": "transparency",
-                        "name": "block_transparency",
-                        "display_name": "&Block Transparency"
-                    }
-                }
-            ]
+        {
+          "screen_shot": {
+            "name": "&Save Screenshot of Level",
+            "action": "on_screenshot"
+          }
         },
-        "help": {
-            "name": "Help",
-            "type": "actions",
-            "options": [
-                {
-                    "update": {
-                        "name": "Check for updates",
-                        "action": "on_check_for_update"
-                    }
-                },
-                {
-                    "video": {
-                        "name": "Feature Video on YouTube",
-                        "link": "https://www.youtube.com/watch?v=7_22cAffMmE"
-                    },
-                    "github": {
-                        "name": "Github Repository",
-                        "link": "https://github.com/TheJoeSmo/Foundry"
-                    },
-                    "discord": {
-                        "name": "SMB3 Rom Hacking Discord",
-                        "link": "https://discord.gg/pm87gm7"
-                    }
-                },
-                {
-                    "about": {
-                        "name": "About",
-                        "action": "on_about"
-                    }
-                }
-            ]
+        {
+          "exit": {
+            "name": "&Exit",
+            "action": "close",
+            "wrapped": true
+          }
         }
-    }   
+      ]
+    },
+    "level": {
+      "name": "Level",
+      "type": "actions",
+      "attribute": true,
+      "options": [
+        {
+          "select_level": {
+            "name": "&Select Level",
+            "action": "open_level_selector",
+            "attribute": true
+          },
+          "reload": {
+            "name": "&Reload Level",
+            "action": "reload_level",
+            "attribute": true
+          }
+        },
+        {
+          "edit_header": {
+            "name": "&Edit Header",
+            "action": "on_header_editor",
+            "attribute": true
+          },
+          "edit_autoscroll": {
+            "name": "Edit Autoscrolling",
+            "action": "on_edit_autoscroll",
+            "attribute": true
+          }
+        }
+      ]
+    },
+    "object": {
+      "name": "Objects",
+      "type": "actions",
+      "attribute": true,
+      "options": [
+        {
+          "view_blocks": {
+            "name": "&View Blocks",
+            "action": "on_block_viewer"
+          },
+          "view_objects": {
+            "name": "&View Objects",
+            "action": "on_object_viewer"
+          }
+        },
+        {
+          "view_palettes": {
+            "name": "View Object Palette",
+            "action": "on_palette_viewer"
+          }
+        },
+        {
+          "view_player_animations": {
+            "name": "View Player Animations",
+            "action": "on_player_viewer"
+          }
+        }
+      ]
+    },
+    "view": {
+      "name": "View",
+      "type": "settings",
+      "attribute": true,
+      "action": "on_menu",
+      "options": [
+        {
+          "ID_MARIO": {
+            "id": 510,
+            "attribute": "draw_mario",
+            "name": "draw_mario",
+            "display_name": "Mario"
+          },
+          "ID_JUMP_OBJECTS": {
+            "id": 512,
+            "attribute": "draw_jumps_on_objects",
+            "name": "draw_jump_on_objects",
+            "display_name": "&Jumps on objects"
+          },
+          "ID_ITEM_BLOCKS": {
+            "id": 513,
+            "attribute": "draw_items_in_blocks",
+            "name": "draw_items_in_blocks",
+            "display_name": "Items in blocks"
+          },
+          "ID_INVISIBLE_ITEMS": {
+            "id": 514,
+            "attribute": "draw_invisible_items",
+            "name": "draw_invisible_items",
+            "display_name": "Invisible items"
+          },
+          "ID_AUTOSCROLL": {
+            "id": 515,
+            "attribute": "draw_autoscroll",
+            "name": "draw_autoscroll",
+            "display_name": "Autoscroll Path"
+          }
+        },
+        {
+          "ID_JUMPS": {
+            "id": 509,
+            "attribute": "draw_jumps",
+            "name": "draw_jumps",
+            "display_name": "Jump Zones"
+          },
+          "ID_GRID_LINES": {
+            "id": 501,
+            "attribute": "draw_grid",
+            "name": "draw_grid",
+            "display_name": "&Grid lines"
+          },
+          "ID_RESIZE_TYPE": {
+            "id": 511,
+            "attribute": "draw_expansions",
+            "name": "draw_expansion",
+            "display_name": "Resize Type"
+          }
+        },
+        {
+          "ID_TRANSPARENCY": {
+            "id": 508,
+            "attribute": "transparency",
+            "name": "block_transparency",
+            "display_name": "&Block Transparency"
+          }
+        }
+      ]
+    },
+    "help": {
+      "name": "Help",
+      "type": "actions",
+      "options": [
+        {
+          "update": {
+            "name": "Check for updates",
+            "action": "on_check_for_update"
+          }
+        },
+        {
+          "video": {
+            "name": "Feature Video on YouTube",
+            "link": "https://www.youtube.com/watch?v=7_22cAffMmE"
+          },
+          "github": {
+            "name": "Github Repository",
+            "link": "https://github.com/TheJoeSmo/Foundry"
+          },
+          "discord": {
+            "name": "SMB3 Rom Hacking Discord",
+            "link": "https://discord.gg/pm87gm7"
+          }
+        },
+        {
+          "about": {
+            "name": "About",
+            "action": "on_about"
+          }
+        }
+      ]
+    }
+  }
 }

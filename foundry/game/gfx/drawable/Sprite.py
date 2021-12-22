@@ -7,13 +7,13 @@ from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import NESPalette, PaletteGroup
+from foundry.game.gfx.Palette import NESPalette, PaletteGroupProtocol
 
 
 @lru_cache(2 ** 10)
 def get_sprite(
     index: int,
-    palette_group: PaletteGroup,
+    palette_group: PaletteGroupProtocol,
     palette_index: int,
     graphics_set: GraphicsSetProtocol,
     horizontal_mirror: bool = False,
@@ -37,7 +37,7 @@ class Sprite:
     def __init__(
         self,
         index: int,
-        palette_group: PaletteGroup,
+        palette_group: PaletteGroupProtocol,
         palette_index: int,
         graphics_set: GraphicsSetProtocol,
         horizontal_mirror: bool = False,
