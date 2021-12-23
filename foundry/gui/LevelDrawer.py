@@ -402,7 +402,7 @@ class LevelDrawer:
                 continue
 
             if fill_object:
-                for x in range(level_object.rendered_width):
+                for x in range(level_object.rendered_size.width):
                     adapted_pos = QPoint(pos)
                     adapted_pos.setX(pos.x() + x * self.block_length)
 
