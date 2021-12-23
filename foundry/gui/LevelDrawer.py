@@ -10,7 +10,12 @@ from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.EnemyItem import MASK_COLOR, EnemyObject
-from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
+from foundry.game.gfx.objects.LevelObject import (
+    GROUND,
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    LevelObject,
+)
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
     EXPANDS_HORIZ,
@@ -84,6 +89,15 @@ SPECIAL_BACKGROUND_OBJECTS = [
 ]
 
 
+def get_blocks(level: Level) -> list[Block]:
+    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+    palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+    graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
+    tsa_data = ROM().get_tsa_data(level.object_set_number)
+
+    return [Block(i, palette_group, graphics_set, tsa_data) for i in range(0x100)]
+
+
 def _block_from_index(block_index: int, level: Level) -> Block:
     """
     Returns the block at the given index, from the TSA table for the given level.
@@ -97,7 +111,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
-    return Block(block_index, palette_group, graphics_set, tsa_data)
+    return Block(block_index, tuple(tuple(c for c in pal) for pal in palette_group), graphics_set, tsa_data)
 
 
 class LevelDrawer:
@@ -209,18 +223,26 @@ class LevelDrawer:
             bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
 
     def _draw_objects(self, painter: QPainter, level: Level):
-        bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-        spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
+        bg_palette_group = tuple(
+            tuple(c for c in pal)
+            for pal in PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+        )
+        spr_palette_group = tuple(
+            tuple(c for c in pal)
+            for pal in PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
+        )
+
+        blocks = get_blocks(level)
         for level_object in level.objects:
-            level_object.palette_group = tuple(tuple(c for c in pal) for pal in bg_palette_group)
+            level_object.palette_group = bg_palette_group
         for enemy in level.enemies:
-            enemy.palette_group = tuple(tuple(c for c in pal) for pal in spr_palette_group)
+            enemy.palette_group = spr_palette_group
 
         for level_object in level.get_all_objects():
 
             level_object.render()
 
-            if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS:
+            if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS and isinstance(level_object, LevelObject):
                 width = LEVEL_MAX_LENGTH
                 height = GROUND - level_object.position.y
 
@@ -230,9 +252,12 @@ class LevelDrawer:
                     x = level_object.position.x + index % width
                     y = level_object.position.y + index // width
 
-                    level_object._draw_block(painter, block_index, x, y, self.block_length, False)
+                    level_object._draw_block(painter, block_index, x, y, self.block_length, False, blocks=blocks)
             else:
-                level_object.draw(painter, self.block_length, self.transparency)
+                if isinstance(level_object, LevelObject):
+                    level_object.draw(painter, self.block_length, self.transparency, blocks=blocks)
+                else:
+                    level_object.draw(painter, self.block_length, self.transparency)
 
             if level_object.selected:
                 painter.save()

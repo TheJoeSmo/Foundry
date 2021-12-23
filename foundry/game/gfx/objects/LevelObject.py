@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 from warnings import warn
 
 from PySide6.QtCore import QRect, QSize
@@ -702,7 +702,7 @@ class LevelObject(GeneratorObject):
 
         self.rect = QRect(self.rendered_base_x, self.rendered_base_y, self.rendered_width, self.rendered_height)
 
-    def draw(self, painter: QPainter, block_length, transparent):
+    def draw(self, painter: QPainter, block_length, transparent, blocks: Optional[list[Block]] = None):
         for index, block_index in enumerate(self.rendered_blocks):
             if block_index == BLANK:
                 continue
@@ -710,15 +710,20 @@ class LevelObject(GeneratorObject):
             x = self.rendered_base_x + index % self.rendered_width
             y = self.rendered_base_y + index // self.rendered_width
 
-            self._draw_block(painter, block_index, x, y, block_length, transparent)
+            self._draw_block(painter, block_index, x, y, block_length, transparent, blocks=blocks)
 
-    def _draw_block(self, painter: QPainter, block_index, x, y, block_length, transparent):
-        block = get_block(
-            block_index,
-            self.palette_group,
-            self.graphics_set,
-            bytes(self.tsa_data),
-        )
+    def _draw_block(
+        self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: Optional[list[Block]] = None
+    ):
+        if blocks is not None:
+            block = blocks[block_index if block_index <= 0xFF else ROM().get_byte(block_index)]
+        else:
+            block = get_block(
+                block_index,
+                self.palette_group,
+                self.graphics_set,
+                bytes(self.tsa_data),
+            )
 
         block.draw(
             painter,
