@@ -50,7 +50,7 @@ class Block:
         self.palette_index = (block_index & 0b1100_0000) >> 6
 
         # can't hash list, so turn it into a string instead
-        self._block_id = (block_index, str(palette_group), graphics_set)
+        self._block_id = (block_index, palette_group, graphics_set)
 
         lu = tsa_data[TSA_BANK_0 + block_index]
         ld = tsa_data[TSA_BANK_1 + block_index]
