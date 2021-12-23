@@ -238,6 +238,7 @@ class BlockViewerView(QWidget):
         painter = QPainter(self)
 
         palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
+        frozen_palette = tuple(tuple(c for c in pal) for pal in palette)
         bg_color = palette.background_color
         painter.setBrush(QBrush(bg_color))
 
@@ -247,7 +248,7 @@ class BlockViewerView(QWidget):
         tsa_data = ROM.get_tsa_data(self.object_set)
 
         for i in range(self.BLOCKS):
-            block = Block(i, palette, graphics_set, tsa_data)
+            block = Block(i, frozen_palette, graphics_set, tsa_data)
 
             x = (i % self.BLOCKS_PER_ROW) * self.block_scale
             y = (i // self.BLOCKS_PER_ROW) * self.block_scale
