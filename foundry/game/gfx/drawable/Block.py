@@ -40,17 +40,17 @@ class Block:
     def __init__(
         self,
         block_index: int,
-        palette_group: PaletteGroup,
+        palette_group: tuple[tuple[int, ...], ...],
         graphics_set: GraphicsSetProtocol,
         tsa_data: bytes,
         mirrored: bool = False,
     ):
         self.index = block_index
-        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+        self.palette_group = palette_group
         self.palette_index = (block_index & 0b1100_0000) >> 6
 
         # can't hash list, so turn it into a string instead
-        self._block_id = (block_index, palette_group, graphics_set)
+        self._block_id = hash((block_index, palette_group, graphics_set))
 
         lu = tsa_data[TSA_BANK_0 + block_index]
         ld = tsa_data[TSA_BANK_1 + block_index]
