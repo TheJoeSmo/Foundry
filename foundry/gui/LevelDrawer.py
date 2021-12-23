@@ -212,9 +212,9 @@ class LevelDrawer:
         bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
         spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
         for level_object in level.objects:
-            level_object.palette_group = bg_palette_group
+            level_object.palette_group = tuple(tuple(c for c in pal) for pal in bg_palette_group)
         for enemy in level.enemies:
-            enemy.palette_group = spr_palette_group
+            enemy.palette_group = tuple(tuple(c for c in pal) for pal in spr_palette_group)
 
         for level_object in level.get_all_objects():
 

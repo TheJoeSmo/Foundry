@@ -80,7 +80,7 @@ class LevelObject(GeneratorObject):
         self.rendered_base_x = 0
         self.rendered_base_y = 0
 
-        self.palette_group = palette_group
+        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
 
         self.index_in_level = index
         self.objects_ref = objects_ref
@@ -715,7 +715,7 @@ class LevelObject(GeneratorObject):
     def _draw_block(self, painter: QPainter, block_index, x, y, block_length, transparent):
         block = get_block(
             block_index,
-            tuple(tuple(c for c in pal) for pal in self.palette_group),
+            self.palette_group,
             self.graphics_set,
             bytes(self.tsa_data),
         )
@@ -934,7 +934,7 @@ class LevelObject(GeneratorObject):
             QImage.Format_RGB888,
         )
 
-        bg_color = self.palette_group.background_color
+        bg_color = self.palette_group[0][0]
 
         image.fill(bg_color)
 
