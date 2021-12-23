@@ -99,7 +99,7 @@ class ObjectIcon(QWidget, Generic[T]):
         painter = QPainter(self)
 
         if self.background_color:
-            painter.fillRect(event.rect(), self.item.palette_group.background_color)
+            painter.fillRect(event.rect(), self.item.palette_group[0][0])
 
         scaled_image = get_minimal_icon_object(self.item).as_image().scaled(self.size(), aspectMode=Qt.KeepAspectRatio)
 

@@ -25,7 +25,7 @@ class EnemyObject(ObjectLike):
         self.enemy = Enemy.from_bytes(data)
 
         self.graphics_set = GraphicsSet.from_tileset(ENEMY_ITEM_GRAPHICS_SET)
-        self.palette_group = palette_group
+        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
 
         self.png_data = png_data
 
@@ -118,7 +118,7 @@ class EnemyObject(ObjectLike):
 
             sprite = get_sprite(
                 sprite_info.index,
-                tuple(tuple(c for c in pal) for pal in self.palette_group),
+                self.palette_group,
                 sprite_info.palette_index,
                 self.graphics_set,
                 sprite_info.horizontal_mirror,
