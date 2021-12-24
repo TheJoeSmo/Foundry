@@ -220,5 +220,10 @@ class BlockEditorView(QWidget):
         bg_color = self.palette_group[0][0]
         painter.setBrush(QBrush(bg_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
-        block = Block(self.block_index, self.palette_group, self.graphics_set, self.tsa_data)
+        block = Block(
+            self.block_index,
+            tuple(tuple(c for c in pal) for pal in self.palette_group),
+            self.graphics_set,
+            self.tsa_data,
+        )
         block.draw(painter, 0, 0, self.block_scale)

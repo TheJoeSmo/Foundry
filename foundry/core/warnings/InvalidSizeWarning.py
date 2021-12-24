@@ -33,24 +33,28 @@ class InvalidSizeWarning(Warning):
         """
         return (
             self.max_width is not None
-            and obj.rendered_width > self.max_width
+            and obj.rendered_size.width > self.max_width
             or self.min_width is not None
-            and obj.rendered_width < self.min_width
+            and obj.rendered_size.width < self.min_width
             or self.max_height is not None
-            and obj.rendered_height > self.max_height
+            and obj.rendered_size.height > self.max_height
             or self.min_height is not None
-            and obj.rendered_height < self.min_height
+            and obj.rendered_size.height < self.min_height
         )
 
     def get_message(self, obj: LevelObject) -> str:
-        if self.max_width is not None and obj.rendered_width > self.max_width:
-            return f"{obj.name} width of {obj.rendered_width} is more than its safe maximum of {self.max_width}."
-        if self.min_width is not None and obj.rendered_width < self.min_width:
-            return f"{obj.name} width of {obj.rendered_width} is less than its safe minimum of {self.min_width}."
-        if self.max_height is not None and obj.rendered_height > self.max_height:
-            return f"{obj.name} height of {obj.rendered_height} is more than its safe maximum of {self.max_height}."
-        if self.min_height is not None and obj.rendered_height < self.min_height:
-            return f"{obj.name} height of {obj.rendered_height} is less than its safe maximum of {self.min_height}."
+        if self.max_width is not None and obj.rendered_size.width > self.max_width:
+            return f"{obj.name} width of {obj.rendered_size.width} is more than its safe maximum of {self.max_width}."
+        if self.min_width is not None and obj.rendered_size.width < self.min_width:
+            return f"{obj.name} width of {obj.rendered_size.width} is less than its safe minimum of {self.min_width}."
+        if self.max_height is not None and obj.rendered_size.height > self.max_height:
+            return (
+                f"{obj.name} height of {obj.rendered_size.height} is more than its safe maximum of {self.max_height}."
+            )
+        if self.min_height is not None and obj.rendered_size.height < self.min_height:
+            return (
+                f"{obj.name} height of {obj.rendered_size.height} is less than its safe maximum of {self.min_height}."
+            )
         raise NotImplementedError
 
 
