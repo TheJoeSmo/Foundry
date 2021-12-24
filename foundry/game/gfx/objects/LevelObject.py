@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple
 from warnings import warn
 
 from PySide6.QtCore import QRect, QSize
-from PySide6.QtGui import QImage, QPainter
+from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.Position import Position, PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
@@ -57,6 +57,8 @@ BLANK = -1
 
 SCREEN_HEIGHT = 15
 SCREEN_WIDTH = 16
+
+MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 
 class LevelObject(GeneratorObject):
@@ -905,9 +907,11 @@ class LevelObject(GeneratorObject):
             QImage.Format_RGB888,
         )
 
-        bg_color = self.palette_group[0][0]
+        bg_color = QColor(*MASK_COLOR).rgb()
 
         image.fill(bg_color)
+        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+        image.setAlphaChannel(mask)
 
         painter = QPainter(image)
 
