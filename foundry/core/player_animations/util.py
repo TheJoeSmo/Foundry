@@ -88,6 +88,10 @@ def load_power_up_offsets() -> list[int]:
 def load_player_animations() -> list[PlayerAnimation]:
     frame_data = ROM().bulk_read(SPRITES_PER_FRAME * PLAYER_FRAMES, PLAYER_FRAME_START)
     offset_data = ROM().bulk_read(PLAYER_FRAMES, PLAYER_FRAME_PAGE_OFFSET)
+    return load_animations(frame_data, offset_data)
+
+
+def load_animations(frame_data: bytes, offset_data: bytes) -> list[PlayerAnimation]:
     animations = []
     for i in range(PLAYER_FRAMES):
         animations.append(PlayerAnimation(bytearray(f - 1 for f in frame_data[i * 6 : (i + 1) * 6]), offset_data[i]))
