@@ -13,6 +13,8 @@ WORLD_MAP = 0
 SPADE_ROULETTE = 16
 N_SPADE = 17
 VS_2P = 18
+HILLY = 3
+CORRECTED_HILLY = 19
 
 BG_PAGE_COUNT = Level_BG_Pages2 - Level_BG_Pages1  # 23 in stock rom
 
@@ -143,6 +145,8 @@ class GraphicsSet:
             return cls(
                 (GraphicalPage(index), GraphicalPage(index + 1), GraphicalPage(index + 2), GraphicalPage(index + 3))
             )
+        if index == HILLY:
+            index = CORRECTED_HILLY
 
         graphic_page_index_1 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages1)
         graphic_page_index_2 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages2)
