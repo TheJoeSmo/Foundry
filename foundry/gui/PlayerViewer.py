@@ -19,6 +19,7 @@ from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
     get_animations_palette_index,
+    load_animations,
     load_player_animation_data,
     load_player_animations,
     load_power_up_offsets,
@@ -30,7 +31,12 @@ from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
 from foundry.core.UndoController import UndoController
-from foundry.game.gfx.Palette import PaletteGroupProtocol, PaletteProtocol
+from foundry.game.gfx.Palette import (
+    Palette,
+    PaletteGroup,
+    PaletteGroupProtocol,
+    PaletteProtocol,
+)
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 from foundry.gui.PlayerFrameEditor import (
@@ -74,6 +80,24 @@ class PlayerViewerModel:
             power_up_offsets or load_power_up_offsets(),
             palette_group or load_power_up_palettes(),
             animations or load_player_animations(),
+        )
+
+    @classmethod
+    def from_bytes(
+        cls,
+        is_mario: bool,
+        power_up: int,
+        power_up_offsets: bytes,
+        palette_group: bytes,
+        animations: bytes,
+        page_offsets: bytes,
+    ):
+        return cls(
+            is_mario,
+            power_up,
+            [i for i in power_up_offsets],
+            PaletteGroup([Palette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]),
+            load_animations(animations, page_offsets),
         )
 
     def to_bytes(self) -> tuple[bytes, bytes, bytes, bytes]:
@@ -144,11 +168,11 @@ class PlayerViewerController(CustomChildWindow):
             self.view.zoom += offset
 
         def undo(*_):
-            self.undo_controller.undo()
+            self.model = PlayerViewerModel.from_bytes(self.is_mario, self.power_up, *self.undo_controller.undo())
             self._update()
 
         def redo(*_):
-            self.undo_controller.redo()
+            self.model = PlayerViewerModel.from_bytes(self.is_mario, self.power_up, *self.undo_controller.redo())
             self._update()
 
         def set_power_up(value: int):
