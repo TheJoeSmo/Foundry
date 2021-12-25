@@ -279,7 +279,10 @@ class LevelController:
 
         self.parent.jump_list.update()
         self.parent.object_dropdown.set_object_set(
-            self.level_ref.level.object_set_number, self.level_ref.level.graphic_set
+            self.level_ref.level.object_set_number,
+            self.level_ref.level.graphic_set,
+            self.level_ref.level.object_palette_index,
+            self.level_ref.level.enemy_palette_index,
         )
         self.parent.object_toolbar.set_object_set(
             self.level_ref.level.object_set_number,
