@@ -42,6 +42,9 @@ def get_minimal_icon_object(level_object: T) -> T:
         obj = factory.from_properties(
             domain=level_object.domain, object_index=level_object.obj_index, x=0, y=0, length=None, index=0
         )
+
+    obj.palette_group = level_object.palette_group  # transfer old palette group
+
     if not isinstance(obj, LevelObject):
         return level_object
 
