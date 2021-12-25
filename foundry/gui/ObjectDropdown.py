@@ -51,12 +51,16 @@ class ObjectDropdown(QComboBox):
 
         self.lineEdit().selectAll()
 
-    def set_object_set(self, object_set_index: int, graphic_set_index: int) -> None:
+    def set_object_set(
+        self, object_set_index: int, graphic_set_index: int, bg_palette_index: int = 0, spr_palette_index: int = 0
+    ) -> None:
         factory = LevelObjectFactory(
-            object_set_index, graphic_set_index, 0, [], vertical_level=False, size_minimal=True
+            object_set_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
         )
 
-        self._on_object_factory_change(factory)
+        enemy_factory = EnemyItemFactory(object_set_index, spr_palette_index)
+
+        self._on_object_factory_change(factory, enemy_factory)
 
     def _on_object_selected(self, _):
         if self.currentIndex() == -1:
@@ -82,7 +86,7 @@ class ObjectDropdown(QComboBox):
         self.setCurrentIndex(index_of_object)
         self.blockSignals(was_blocked)
 
-    def _on_object_factory_change(self, object_factory: LevelObjectFactory) -> None:
+    def _on_object_factory_change(self, object_factory: LevelObjectFactory, enemy_factory: EnemyItemFactory) -> None:
         self.clear()
 
         self._object_factory = object_factory
@@ -113,11 +117,8 @@ class ObjectDropdown(QComboBox):
         # insert visual separator between level objects and enemies/items
         self.insertSeparator(self.count())
 
-        # adds enemies and items
-        factory = EnemyItemFactory(object_factory.object_set, 0)
-
         for obj_index in range(MAX_ENEMY_ITEM_ID + 1):
-            enemy_item = factory.from_properties(obj_index, x=0, y=0)
+            enemy_item = enemy_factory.from_properties(obj_index, x=0, y=0)
 
             self._add_item(enemy_item)
 
