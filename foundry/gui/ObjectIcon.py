@@ -63,7 +63,7 @@ class ObjectIcon(QWidget, Generic[T]):
         self,
         parent: Optional[QWidget],
         item: T,
-        background_color: bool = True,
+        background_color: bool = False,
     ):
         super().__init__(parent)
 
