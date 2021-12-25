@@ -21,17 +21,27 @@ class ObjectToolBar(QWidget):
         self.setMinimumHeight(200)
         self.setMinimumWidth(50)
         self.tileset = -1
+        self.bg_palette_index = 0
+        self.spr_palette_index = 0
 
         self.tool_box = TabbedToolBox()
         self.tool_box.selected_index.connect(self.select_object)
 
         layout.addWidget(self.tool_box, stretch=1)
 
-    def set_object_set(self, object_set_index: int, graphic_set_index: int = -1):
-        if self.tileset == object_set_index:
+    def set_object_set(
+        self, object_set_index: int, graphic_set_index: int = -1, bg_palette_index: int = 0, spr_palette_index: int = 0
+    ):
+        if (
+            self.tileset == object_set_index
+            and self.bg_palette_index == bg_palette_index
+            and self.spr_palette_index == spr_palette_index
+        ):
             return
         self.tileset = object_set_index
-        self.tool_box.set_object_set(object_set_index, graphic_set_index)
+        self.bg_palette_index = bg_palette_index
+        self.spr_palette_index = spr_palette_index
+        self.tool_box.set_object_set(object_set_index, graphic_set_index, bg_palette_index, spr_palette_index)
 
     def select_object(self, tab_index: int, object_index: int):
         item = self.tool_box.select_object(tab_index, object_index)

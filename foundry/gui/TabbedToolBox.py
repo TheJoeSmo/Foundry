@@ -93,13 +93,15 @@ class TabbedToolBox(QTabWidget):
         else:
             return self._enemies_toolbox.objects[object_index]
 
-    def set_object_set(self, object_set_index, graphic_set_index=-1):
+    def set_object_set(
+        self, object_set_index, graphic_set_index=-1, bg_palette_index: int = 0, spr_palette_index: int = 0
+    ):
         self._recent_toolbox.clear()
         self._objects_toolbox.clear()
-        self._objects_toolbox.add_from_object_set(object_set_index, graphic_set_index)
+        self._objects_toolbox.add_from_object_set(object_set_index, graphic_set_index, bg_palette_index)
 
         self._enemies_toolbox.clear()
-        self._enemies_toolbox.add_from_enemy_set(object_set_index)
+        self._enemies_toolbox.add_from_enemy_set(object_set_index, spr_palette_index)
 
     def add_recent_object(self, level_object: Union[EnemyObject, LevelObject]):
         self._recent_toolbox.place_at_front(level_object)
