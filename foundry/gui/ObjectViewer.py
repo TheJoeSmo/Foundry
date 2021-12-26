@@ -176,7 +176,10 @@ class ObjectDrawArea(QWidget):
             return
 
         self.setMinimumSize(
-            QSize(self.current_object.rendered_width * Block.WIDTH, self.current_object.rendered_height * Block.HEIGHT)
+            QSize(
+                self.current_object.rendered_size.width * Block.WIDTH,
+                self.current_object.rendered_size.height * Block.HEIGHT,
+            )
         )
 
     def update_object(self, object_data: Union[bytearray, LevelObject, Jump] = None):
@@ -198,7 +201,8 @@ class ObjectDrawArea(QWidget):
 
         painter.translate(
             QPoint(
-                -Block.WIDTH * self.current_object.rendered_base_x, -Block.HEIGHT * self.current_object.rendered_base_y
+                -Block.WIDTH * self.current_object.rendered_position.x,
+                -Block.HEIGHT * self.current_object.rendered_position.y,
             )
         )
 
