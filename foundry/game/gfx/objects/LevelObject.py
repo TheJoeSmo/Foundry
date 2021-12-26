@@ -447,9 +447,12 @@ class LevelObject(GeneratorObject):
         elif self.orientation in [GeneratorType.HORIZONTAL, GeneratorType.HORIZ_TO_GROUND, GeneratorType.HORIZONTAL_2]:
             if self.ending == EndType.UNIFORM and not self.is_4byte:
                 for y in range(self.rendered_size.height):
-                    blocks_to_draw.extend(
-                        self.blocks[y * self.scale.width : (y + 1) * self.scale.width] * (self.length + 1)
-                    )
+                    if self.is_single_block:
+                        blocks_to_draw.extend(self.blocks[: self.scale.width])
+                    else:
+                        blocks_to_draw.extend(
+                            self.blocks[y * self.scale.width : (y + 1) * self.scale.width] * (self.length + 1)
+                        )
 
             elif self.ending == EndType.UNIFORM and self.is_4byte:
                 # 4 byte objects
