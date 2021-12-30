@@ -10,11 +10,10 @@ from foundry.game.EnemyDefinitions import (
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.drawable.Sprite import get_sprite
-from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet
+from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.gfx.Palette import PaletteGroup
-from foundry.smb3parse.objects.object_set import ENEMY_ITEM_GRAPHICS_SET
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 
@@ -24,14 +23,13 @@ class EnemyObject(ObjectLike):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
-        self.graphics_set = GraphicsSet.from_tileset(ENEMY_ITEM_GRAPHICS_SET)
         self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
 
         self.png_data = png_data
 
         self.selected = False
 
-        self._setup()
+        self._render()
 
     @property
     def definition(self) -> EnemyDefinition:
@@ -54,32 +52,38 @@ class EnemyObject(ObjectLike):
             height,
         )
 
-    def _setup(self):
-        obj_def = get_enemy_metadata().__root__[self.obj_index]
-
-        if GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
-            self.graphics_set = GraphicsSet(tuple(GraphicalPage(page) for page in obj_def.pages))
-
-        self.name = obj_def.description
-
-        self.width = obj_def.bmp_width
-        self.height = obj_def.bmp_height
-
-        self._render(obj_def)
-
-    def _render(self, obj_def: EnemyDefinition):
-        if not GeneratorType.SINGLE_SPRITE_OBJECT == obj_def.orientation:
-            self._render_blocks(obj_def)
+    @property
+    def graphics_set(self) -> GraphicsSetProtocol:
+        if GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation:
+            return GraphicsSet(tuple(GraphicalPage(page) for page in self.definition.pages))
         else:
-            self._render_sprites(obj_def)
+            raise NotImplementedError
 
-    def _render_sprites(self, obj_def: EnemyDefinition):
-        self.sprites = obj_def.sprites
+    @property
+    def name(self) -> str:
+        return self.definition.description
 
-    def _render_blocks(self, obj_def: EnemyDefinition):
+    @property
+    def width(self) -> int:
+        return self.definition.bmp_width
+
+    @property
+    def height(self) -> int:
+        return self.definition.bmp_height
+
+    def _render(self):
+        if not GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation:
+            self._render_blocks()
+        else:
+            self._render_sprites()
+
+    def _render_sprites(self):
+        self.sprites = self.definition.sprites
+
+    def _render_blocks(self):
         self.blocks = []
 
-        block_ids = obj_def.blocks
+        block_ids = self.definition.blocks
 
         for block_id in block_ids:
             x = (block_id % 64) * Block.WIDTH
@@ -193,21 +197,6 @@ class EnemyObject(ObjectLike):
     @property
     def type(self):
         return self.enemy.type
-
-    def change_type(self, new_type):
-        self.enemy.type = new_type
-
-        self._setup()
-
-    def increment_type(self):
-        self.enemy.type = min(0xFF, self.obj_index + 1)
-
-        self._setup()
-
-    def decrement_type(self):
-        self.enemy.type = max(0, self.obj_index - 1)
-
-        self._setup()
 
     def to_bytes(self):
         return bytes(self.enemy)

@@ -71,10 +71,6 @@ class ObjectLike(ABC):
             return self.rect
 
     @abstractmethod
-    def change_type(self, new_type):
-        pass
-
-    @abstractmethod
     def __contains__(self, point):
         pass
 

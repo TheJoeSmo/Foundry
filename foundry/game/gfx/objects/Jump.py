@@ -88,9 +88,6 @@ class Jump(GeneratorObject):
     def point_in(self, x, y):
         return False
 
-    def change_type(self, new_type):
-        pass
-
     def get_rect(self, block_length=1, vertical=False) -> QRect:
         if vertical:
             return QRect(
