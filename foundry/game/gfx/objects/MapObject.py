@@ -192,9 +192,6 @@ class MapObject(ObjectLike):
     def point_in(self, x, y):
         return self.rect.contains(x, y)
 
-    def change_type(self, new_type):
-        pass
-
     def get_rect(self):
         return self.rect
 

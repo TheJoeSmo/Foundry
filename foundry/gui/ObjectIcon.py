@@ -58,6 +58,9 @@ def get_minimal_icon_object(level_object: T) -> T:
 
         obj.render()
 
+        if obj.is_single_block:
+            break
+
     return obj
 
 

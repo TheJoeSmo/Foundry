@@ -96,110 +96,109 @@ class LevelObject(GeneratorObject):
         else:
             self.ground_level = GROUND
 
-        self._length = 0
-        self.secondary_length = 0
+        self.render()
 
-        self._setup()
+    @property
+    def domain(self) -> int:
+        return (self.data[0] & 0b1110_0000) >> 5
 
-    def _setup(self):
-        data = self.data
+    @property
+    def orientation(self) -> GeneratorType:
+        return GeneratorType(self.definition.orientation)
 
-        # where to look for the graphic data?
-        self.domain = (data[0] & 0b1110_0000) >> 5
+    @property
+    def ending(self) -> EndType:
+        return EndType(self.definition.ending)
 
-        # position relative to the start of the level (top)
-        self.original_y = data[0] & 0b0001_1111
-        self.position.y = self.original_y
+    @property
+    def name(self) -> str:
+        return self.definition.description
 
-        # position relative to the start of the level (left)
-        self.original_x = data[1]
-        self.position.x = self.original_x
+    @property
+    def blocks(self) -> list[int]:
+        return self.definition.blocks
 
-        if self.vertical_level:
-            offset = (self.position.x // SCREEN_WIDTH) * SCREEN_HEIGHT
+    @property
+    def size(self) -> int:
+        return self.definition.size
 
-            self.position.y += offset
-            self.position.x %= SCREEN_WIDTH
-
-        # describes what object it is
-        self._obj_index = 0x00
-
-        self.obj_index = data[2]
-
-        object_data = self.object_set.get_definition_of(self.type)
-
-        self.orientation = GeneratorType(object_data.orientation)
-        self.ending = EndType(object_data.ending)
-        self.name = object_data.description
-
-        self.blocks = [int(block) for block in object_data.blocks]
-
-        self.is_4byte = object_data.is_4byte
-
-        if self.is_4byte and len(self.data) == 3:
-            self.data.append(0)
-        elif not self.is_4byte and len(data) == 4:
-            del self.data[3]
-
-        self._length = 0
-        self.secondary_length = 0
-
-        self._calculate_lengths()
-
-        self.rect = QRect()
-
-        self._render()
+    @property
+    def is_4byte(self) -> bool:
+        return self.size == 4
 
     @property
     def tsa_data(self) -> bytearray:
         return ROM.get_tsa_data(self.object_set.number)
 
     @property
+    def is_single_block(self) -> bool:
+        return self.obj_index <= 0x0F
+
+    @property
+    def type(self) -> int:
+        domain_offset = self.domain * 0x1F
+
+        if self.is_single_block:
+            return self.obj_index + domain_offset
+        else:
+            return (self.obj_index >> 4) + domain_offset + 16 - 1
+
+    @property
     def definition(self) -> TilesetDefinition:
         return self.object_set.get_definition_of(self.type)
 
     @property
-    def obj_index(self):
-        return self._obj_index
+    def obj_index(self) -> int:
+        return self.data[2]
 
     @obj_index.setter
-    def obj_index(self, value):
-        self._obj_index = value
-
-        self.is_single_block = self.obj_index <= 0x0F
-
-        domain_offset = self.domain * 0x1F
-
-        if self.is_single_block:
-            self.type = self.obj_index + domain_offset
-        else:
-            self.type = (self.obj_index >> 4) + domain_offset + 16 - 1
+    def obj_index(self, value: int):
+        self.data[2] = value
 
     @property
     def object_info(self):
         return self.object_set.number, self.domain, self.obj_index
 
     @property
-    def length(self):
-        return self._length
+    def length(self) -> int:
+        if self.is_single_block:
+            return 1
+        if self.size == 3:
+            return self.obj_index & 0x0F
+        else:
+            try:
+                return self.data[3]
+            except IndexError:
+                return 0
 
     @length.setter
-    def length(self, value):
-        if not self.is_4byte and not self.is_single_block:
-            self._obj_index &= 0xF0
-            self._obj_index |= value & 0x0F
+    def length(self, value: int):
+        if not self.is_single_block:
+            if not self.is_4byte:
+                index = self.obj_index
+                index &= 0xF0
+                index |= value & 0x0F
+                self.obj_index = index
+            else:
+                try:
+                    self.data[3] = value
+                except IndexError:
+                    self.data.append(value)
 
-        self._length = value
-
-    def _calculate_lengths(self):
-        if self.is_single_block:
-            self._length = 1
+    @property
+    def secondary_length(self) -> int:
+        if self.size == 3:
+            return 1
         else:
-            self._length = self.obj_index & 0b0000_1111
+            return self.obj_index & 0x0F
 
-        if self.is_4byte:
-            self.secondary_length = self.length
-            self.length = self.data[3]
+    @secondary_length.setter
+    def secondary_length(self, value: int):
+        if self.size >= 4:
+            index = self.obj_index
+            index &= 0xF0
+            index |= value & 0x0F
+            self.obj_index = index
 
     def render(self):
         self._render()
@@ -586,7 +585,16 @@ class LevelObject(GeneratorObject):
 
     @property
     def position(self) -> PositionProtocol:
-        return self._position
+        y = self.data[0] & 0b0001_1111
+        x = self.data[1]
+
+        if self.vertical_level:
+            offset = (x // SCREEN_WIDTH) * SCREEN_HEIGHT
+
+            y += offset
+            x %= SCREEN_WIDTH
+
+        return Position(x, y)
 
     @position.setter
     def position(self, position: PositionProtocol) -> None:
@@ -595,12 +603,19 @@ class LevelObject(GeneratorObject):
         # todo also check for the upper bounds
         x = max(0, x)
 
-        if self.orientation == GeneratorType.TO_THE_SKY:
-            y = self.rendered_position.y + y
-        else:
-            y = max(0, y)
+        if self.vertical_level:
+            # todo from vertical to non-vertical is bugged, because it
+            # seems like you can't convert the coordinates 1:1
+            # there seems to be ambiguity
 
-        self._position = position
+            offset = y // SCREEN_HEIGHT
+
+            x += offset * SCREEN_WIDTH
+            y %= SCREEN_HEIGHT
+
+        self.data[0] = (self.data[0] & 0b1110_0000) + y
+        self.data[1] = x
+
         self._render()
 
     @property
@@ -709,7 +724,7 @@ class LevelObject(GeneratorObject):
                 # floating platforms seem to just be one shorter for some reason
                 size.width -= 1
             else:
-                size.height = self.scale.height + self.secondary_length
+                size.height = self.scale.height * (self.secondary_length)
 
             if self.ending == EndType.UNIFORM and not self.is_4byte:
                 size.width *= self.scale.width  # in case of giant blocks
@@ -809,8 +824,6 @@ class LevelObject(GeneratorObject):
             else:
                 raise ValueError("Resize impossible", self)
 
-        self._calculate_lengths()
-
         self._render()
 
     def resize_y(self, y: int):
@@ -837,8 +850,6 @@ class LevelObject(GeneratorObject):
             else:
                 raise ValueError("Resize impossible", self)
 
-        self._calculate_lengths()
-
         self._render()
 
     def resize_by(self, dx: int, dy: int):
@@ -847,36 +858,6 @@ class LevelObject(GeneratorObject):
 
         if dy:
             self.resize_y(self.position.y + dy)
-
-    def increment_type(self):
-        self.change_type(True)
-
-    def decrement_type(self):
-        self.change_type(False)
-
-    def change_type(self, increment: bool):
-        value = 1 if increment else -1
-
-        new_type = self.obj_index + value
-
-        if new_type < 0 and self.domain > 0:
-            new_domain = self.domain - 1
-            new_type = 0xF0
-        elif new_type > 0xFF and self.domain < 7:
-            new_domain = self.domain + 1
-            new_type = 0x00
-        else:
-            new_type = min(0xFF, new_type)
-            new_type = max(0, new_type)
-
-            new_domain = self.domain
-
-        self.data[0] &= 0b0001_1111
-        self.data[0] |= new_domain << 5
-
-        self.data[2] = new_type
-
-        self._setup()
 
     def __contains__(self, item: Tuple[int, int]) -> bool:
         x, y = item
@@ -946,12 +927,7 @@ class LevelObject(GeneratorObject):
         data.append((self.domain << 5) | y_position)
         data.append(x_position)
 
-        if not self.is_4byte and not self.is_single_block:
-            third_byte = (self.obj_index & 0xF0) + self.length
-        else:
-            third_byte = self.obj_index
-
-        data.append(third_byte)
+        data.append(self.obj_index)
 
         if self.is_4byte:
             data.append(self.length)

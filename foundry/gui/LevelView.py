@@ -24,6 +24,7 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_HORIZ,
     EXPANDS_VERT,
 )
+from foundry.game.gfx.objects.util import decrement_type, increment_type
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.game.level.WorldMap import WorldMap
@@ -320,7 +321,10 @@ class LevelView(QWidget):
 
         if obj is None:
             return
-        obj.increment_type() if y_delta > 0 else obj.decrement_type()
+        if y_delta > 0:
+            increment_type(obj)
+        else:
+            decrement_type(obj)
         obj.selected = True
 
     def sizeHint(self) -> QSize:
