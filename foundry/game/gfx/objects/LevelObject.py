@@ -751,6 +751,14 @@ class LevelObject(GeneratorObject):
             return Size(SCREEN_WIDTH, SCREEN_HEIGHT)
         return self.scale
 
+    @property
+    def horizontally_expands(self) -> bool:
+        return bool(self.expands() & EXPANDS_HORIZ)
+
+    @property
+    def vertically_expands(self) -> bool:
+        return bool(self.expands() & EXPANDS_VERT)
+
     def expands(self):
         expands = EXPANDS_NOT
 
@@ -799,65 +807,6 @@ class LevelObject(GeneratorObject):
                 return EXPANDS_VERT
         else:
             return EXPANDS_BOTH
-
-    def resize_x(self, x: int):
-        if self.expands() & EXPANDS_HORIZ == 0:
-            return
-
-        if self.primary_expansion() == EXPANDS_HORIZ:
-            length = x - self.position.x
-
-            length = max(0, length)
-            length = min(length, 0x0F)
-
-            base_index = (self.obj_index // 0x10) * 0x10
-
-            self.obj_index = base_index + length
-            self.data[2] = self.obj_index
-        else:
-            length = x - self.position.x
-            length = max(0, length)
-            length = min(length, 0xFF)
-
-            if self.is_4byte:
-                self.data[3] = length
-            else:
-                raise ValueError("Resize impossible", self)
-
-        self._render()
-
-    def resize_y(self, y: int):
-        if self.expands() & EXPANDS_VERT == 0:
-            return
-
-        if self.primary_expansion() == EXPANDS_VERT:
-            length = y - self.position.y
-
-            length = max(0, length)
-            length = min(length, 0x0F)
-
-            base_index = (self.obj_index // 0x10) * 0x10
-
-            self.obj_index = base_index + length
-            self.data[2] = self.obj_index
-        else:
-            length = y - self.position.y
-            length = max(0, length)
-            length = min(length, 0xFF)
-
-            if self.is_4byte:
-                self.data[3] = length
-            else:
-                raise ValueError("Resize impossible", self)
-
-        self._render()
-
-    def resize_by(self, dx: int, dy: int):
-        if dx:
-            self.resize_x(self.position.x + dx)
-
-        if dy:
-            self.resize_y(self.position.y + dy)
 
     def __contains__(self, item: Tuple[int, int]) -> bool:
         x, y = item

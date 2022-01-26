@@ -82,9 +82,6 @@ class Jump(GeneratorObject):
     def move_by(self, dx, dy):
         pass
 
-    def resize_by(self, dx, dy):
-        pass
-
     def point_in(self, x, y):
         return False
 
