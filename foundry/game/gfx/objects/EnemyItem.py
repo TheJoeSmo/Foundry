@@ -187,9 +187,6 @@ class EnemyObject(ObjectLike):
     def position(self, position: PositionProtocol):
         self.enemy.position = Position(max(0, position.x), max(0, position.y))
 
-    def resize_by(self, dx, dy):
-        pass
-
     @property
     def obj_index(self):
         return self.enemy.type

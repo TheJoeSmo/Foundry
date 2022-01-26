@@ -49,10 +49,6 @@ class ObjectLike(ABC):
         pass
 
     @abstractmethod
-    def resize_by(self, dx, dy):
-        pass
-
-    @abstractmethod
     def point_in(self, x, y):
         pass
 

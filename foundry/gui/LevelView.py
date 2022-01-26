@@ -24,7 +24,11 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_HORIZ,
     EXPANDS_VERT,
 )
-from foundry.game.gfx.objects.util import decrement_type, increment_type
+from foundry.game.gfx.objects.util import (
+    decrement_type,
+    increment_type,
+    resize_level_object,
+)
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.game.level.WorldMap import WorldMap
@@ -391,7 +395,7 @@ class LevelView(QWidget):
         selected_objects = self.get_selected_objects()
 
         for obj in selected_objects:
-            obj.resize_by(dx, dy)
+            resize_level_object(obj, dx, dy)
 
             self.level_ref.level.changed = True
 

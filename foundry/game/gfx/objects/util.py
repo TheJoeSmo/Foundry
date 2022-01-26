@@ -2,6 +2,7 @@ from typing import Union
 
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
+from foundry.game.gfx.objects.ObjectLike import EXPANDS_HORIZ, EXPANDS_VERT
 
 
 def increment_type(item: Union[LevelObject, EnemyObject]):
@@ -49,3 +50,45 @@ def change_level_object_type(item: LevelObject, increment: bool):
 def change_enemy_object_type(item: EnemyObject, increment: bool):
     item.enemy.type = max(0, min(0xFF, item.obj_index + (1 if increment else -1)))
     item.render()
+
+
+def set_level_object_width(item: LevelObject, width: int, *, render: bool = True):
+    if not item.horizontally_expands:
+        return
+
+    if item.primary_expansion() == EXPANDS_HORIZ:
+        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, width - item.position.x))
+    else:
+        if item.is_4byte:
+            item.data[3] = max(0, min(0xFF, width - item.position.x))
+        else:
+            raise NotImplementedError(f"Resize is not possible for {item}")
+
+    if render:
+        item._render()
+
+
+def set_level_object_height(item: LevelObject, height: int, *, render: bool = True):
+    if not item.vertically_expands:
+        return
+
+    if item.primary_expansion() == EXPANDS_VERT:
+        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, height - item.position.y))
+    else:
+        if item.is_4byte:
+            item.data[3] = max(0, min(0xFF, height - item.position.y))
+        else:
+            raise NotImplementedError(f"Resize is not possible for {item}")
+
+    if render:
+        item._render()
+
+
+def resize_level_object(item: LevelObject, width_difference: int, height_difference: int):
+    if width_difference:
+        set_level_object_width(item, item.position.x + width_difference, render=False)
+
+    if height_difference:
+        set_level_object_height(item, item.position.y + height_difference, render=False)
+
+    item._render()
