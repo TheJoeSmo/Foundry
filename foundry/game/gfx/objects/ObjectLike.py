@@ -49,10 +49,6 @@ class ObjectLike(ABC):
         pass
 
     @abstractmethod
-    def resize_by(self, dx, dy):
-        pass
-
-    @abstractmethod
     def point_in(self, x, y):
         pass
 
@@ -69,10 +65,6 @@ class ObjectLike(ABC):
             return QRect(x, y, w, h)
         else:
             return self.rect
-
-    @abstractmethod
-    def change_type(self, new_type):
-        pass
 
     @abstractmethod
     def __contains__(self, point):
