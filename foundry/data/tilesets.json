@@ -1,114 +1,130 @@
 [
-    {
-        "location": "0x0000", 
-        "name": "Map Screen", 
-        "start": "0x18010", 
-        "end": "0x1A00F",
-        "ending": 0
-    },
-    {
-        "location": "0x4000", 
-        "name": "Plains", 
-        "start": "0x1E512", 
-        "end": "0x2000F",
-        "ending": 0
-    },
-    {
-        "location": "0x10000", 
-        "name": "Dungeon", 
-        "start": "0x2A7F7", 
-        "end": "0x2C00F",
-        "ending": 0
-    },
-    {
-        "location": "0x6000", 
-        "name": "Hilly", 
-        "start": "0x20587", 
-        "end": "0x2200F",
-        "ending": 0
-    },
-    {
-        "location": "0x8000", 
-        "name": "Sky", 
-        "start": "0x227E0", 
-        "end": "0x2400F",
-        "ending": 1
-    },
-    {
-        "location": "0xC000", 
-        "name": "Piranha Plant", 
-        "start": "0x26A6F", 
-        "end": "0x2800F",
-        "ending": 2
-    },
-    {
-        "location": "0xA000", 
-        "name": "Water", 
-        "start": "0x24BA7", 
-        "end": "0x2600F",
-        "ending": 3
-    },
-    {
-        "location": "0x0000", 
-        "name": "Mushroom House", 
-        "start": "0x0000", 
-        "end": "0x0000",
-        "ending": 0
-    },
-    {
-        "location": "0xA000", 
-        "name": "Pipe", 
-        "start": "0x24BA7", 
-        "end": "0x2600F",
-        "ending": 3
-    },
-    {
-        "location": "0xE000", 
-        "name": "Desert", 
-        "start": "0x28F3F", 
-        "end": "0x2A00F",
-        "ending": 2
-    },
-    {
-        "location": "0x14000", 
-        "name": "Ship", 
-        "start": "0x2EC07", 
-        "end": "0x3000F",
-        "ending": 0
-    },
-    {
-        "location": "0xC000", 
-        "name": "Giant", 
-        "start": "0x26A6F", 
-        "end": "0x2800F",
-        "ending": 2
-    },
-    {
-        "location": "0x8000", 
-        "name": "Ice", 
-        "start": "0x227E0", 
-        "end": "0x2400F",
-        "ending": 1
-    },
-    {
-        "location": "0xC000", 
-        "name": "Cloudy", 
-        "start": "0x26A6F", 
-        "end": "0x2800F",
-        "ending": 0
-    },
-    {
-        "location": "0x0000", 
-        "name": "Underground", 
-        "start": "0x1A587", 
-        "end": "0x1C00F",
-        "ending": 0
-    },
-    {
-        "location": "0x0000", 
-        "name": "Spade House", 
-        "start": "0xA010", 
-        "end": "0xC00F",
-        "ending": 0
-    }
+  {
+    "location": "0x0000",
+    "name": "Map Screen",
+    "start": "0x18010",
+    "end": "0x1A00F",
+    "ending": 0,
+    "background_block": "0xFF"
+  },
+  {
+    "location": "0x4000",
+    "name": "Plains",
+    "start": "0x1E512",
+    "end": "0x2000F",
+    "ending": 0,
+    "background_block": "0x80"
+  },
+  {
+    "location": "0x10000",
+    "name": "Dungeon",
+    "start": "0x2A7F7",
+    "end": "0x2C00F",
+    "ending": 0,
+    "background_block": "0x02"
+  },
+  {
+    "location": "0x6000",
+    "name": "Hilly",
+    "start": "0x20587",
+    "end": "0x2200F",
+    "ending": 0,
+    "background_block": "0x80"
+  },
+  {
+    "location": "0x8000",
+    "name": "Sky",
+    "start": "0x227E0",
+    "end": "0x2400F",
+    "ending": 1,
+    "background_block": "0xFC"
+  },
+  {
+    "location": "0xC000",
+    "name": "Piranha Plant",
+    "start": "0x26A6F",
+    "end": "0x2800F",
+    "ending": 2,
+    "background_block": "0x80"
+  },
+  {
+    "location": "0xA000",
+    "name": "Water",
+    "start": "0x24BA7",
+    "end": "0x2600F",
+    "ending": 3,
+    "background_block": "0x8A"
+  },
+  {
+    "location": "0x0000",
+    "name": "Mushroom House",
+    "start": "0x0000",
+    "end": "0x0000",
+    "ending": 0,
+    "background_block": "0x8A"
+  },
+  {
+    "location": "0xA000",
+    "name": "Pipe",
+    "start": "0x24BA7",
+    "end": "0x2600F",
+    "ending": 3,
+    "background_block": "0x8A"
+  },
+  {
+    "location": "0xE000",
+    "name": "Desert",
+    "start": "0x28F3F",
+    "end": "0x2A00F",
+    "ending": 2,
+    "background_block": "0xFC"
+  },
+  {
+    "location": "0x14000",
+    "name": "Ship",
+    "start": "0x2EC07",
+    "end": "0x3000F",
+    "ending": 0,
+    "background_block": "0x06"
+  },
+  {
+    "location": "0xC000",
+    "name": "Giant",
+    "start": "0x26A6F",
+    "end": "0x2800F",
+    "ending": 2,
+    "background_block": "0xFC"
+  },
+  {
+    "location": "0x8000",
+    "name": "Ice",
+    "start": "0x227E0",
+    "end": "0x2400F",
+    "ending": 1,
+    "background_block": "0x80"
+  },
+  {
+    "location": "0xC000",
+    "name": "Cloudy",
+    "start": "0x26A6F",
+    "end": "0x2800F",
+    "ending": 0,
+    "background_block": "0xCC"
+  },
+  {
+    "location": "0x0000",
+    "name": "Underground",
+    "start": "0x1A587",
+    "end": "0x1C00F",
+    "ending": 0,
+    "background_block": "0xFC"
+  },
+  {
+    "location": "0x0000",
+    "name": "Spade House",
+    "start": "0xA010",
+    "end": "0xC00F",
+    "ending": 0,
+    "background_block": "0xFF"
+  }
 ]
