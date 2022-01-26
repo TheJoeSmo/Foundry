@@ -14,7 +14,9 @@ SPADE_ROULETTE = 16
 N_SPADE = 17
 VS_2P = 18
 HILLY = 3
-CORRECTED_HILLY = 19
+CORRECTED_HILLY = 3
+UNDERGROUND = 14
+CORRECTED_UNDERGROUND = 19
 
 BG_PAGE_COUNT = Level_BG_Pages2 - Level_BG_Pages1  # 23 in stock rom
 
@@ -147,6 +149,8 @@ class GraphicsSet:
             )
         if index == HILLY:
             index = CORRECTED_HILLY
+        if index == UNDERGROUND:
+            index = CORRECTED_UNDERGROUND
 
         graphic_page_index_1 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages1)
         graphic_page_index_2 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages2)
