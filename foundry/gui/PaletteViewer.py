@@ -14,7 +14,7 @@ class PaletteViewer(CustomDialog):
     palettes_per_row = 4
 
     def __init__(self, parent, level_ref: LevelRef):
-        title = f"Palette Groups for Object Set {level_ref.level.object_set_number}"
+        title = f"MutablePalette Groups for Object Set {level_ref.level.object_set_number}"
 
         super(PaletteViewer, self).__init__(parent, title=title)
 
@@ -24,7 +24,7 @@ class PaletteViewer(CustomDialog):
 
         for palette_group in range(PALETTE_GROUPS_PER_OBJECT_SET):
             group_box = QGroupBox()
-            group_box.setTitle(f"Palette Group {palette_group}")
+            group_box.setTitle(f"MutablePalette Group {palette_group}")
 
             group_box_layout = QVBoxLayout(group_box)
             group_box_layout.setSpacing(0)
