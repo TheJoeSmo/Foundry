@@ -2,8 +2,7 @@ from typing import Optional
 
 from attr import attrs
 
-from foundry.game.File import ROM
-from foundry.game.gfx.Palette import (
+from foundry.core.palette.Palette import (
     COLORS_PER_PALETTE,
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
@@ -11,6 +10,7 @@ from foundry.game.gfx.Palette import (
     PaletteGroupProtocol,
     get_internal_palette_offset,
 )
+from foundry.game.File import ROM
 
 
 @attrs(slots=True, auto_attribs=True)

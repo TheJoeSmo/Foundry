@@ -87,7 +87,7 @@ class Palette:
         Returns
         -------
         Palette
-            A Palette filled with default values.
+            A palette filled with default values.
         """
         return cls([0, 0, 0, 0])
 
@@ -104,7 +104,7 @@ class Palette:
         Returns
         -------
         Palette
-            The Palette that represents the absolute address in ROM.
+            The palette that represents the absolute address in ROM.
         """
         return cls([int(i) for i in ROM().read(address, COLORS_PER_PALETTE)])
 

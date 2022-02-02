@@ -1,5 +1,6 @@
 from typing import List, Optional, Union
 
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.game.gfx.GraphicsSet import GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import (
@@ -7,7 +8,6 @@ from foundry.game.gfx.objects.LevelObject import (
     SCREEN_WIDTH,
     LevelObject,
 )
-from foundry.game.gfx.Palette import PaletteGroup
 
 
 class LevelObjectFactory:

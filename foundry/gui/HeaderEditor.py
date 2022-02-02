@@ -182,8 +182,8 @@ class HeaderEditor(CustomDialog):
         form = QFormLayout()
         form.setFormAlignment(Qt.AlignCenter)
 
-        form.addRow("Object Palette: ", self.object_palette_spinner)
-        form.addRow("Enemy Palette: ", self.enemy_palette_spinner)
+        form.addRow("Object palette: ", self.object_palette_spinner)
+        form.addRow("Enemy palette: ", self.enemy_palette_spinner)
         form.addRow("Graphic Set: ", self.graphic_set_dropdown)
 
         widget = QWidget()

@@ -5,6 +5,7 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir
+from foundry.core.palette.Palette import NESPalette, PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
@@ -21,7 +22,6 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_HORIZ,
     EXPANDS_VERT,
 )
-from foundry.game.gfx.Palette import NESPalette, PaletteGroup
 from foundry.game.level.Level import Level
 from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
 from foundry.gui.settings import SETTINGS

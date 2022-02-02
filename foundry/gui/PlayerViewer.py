@@ -15,6 +15,12 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import icon
+from foundry.core.palette.Palette import (
+    Palette,
+    PaletteGroup,
+    PaletteGroupProtocol,
+    PaletteProtocol,
+)
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
@@ -31,12 +37,6 @@ from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
 from foundry.core.UndoController import UndoController
-from foundry.game.gfx.Palette import (
-    Palette,
-    PaletteGroup,
-    PaletteGroupProtocol,
-    PaletteProtocol,
-)
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 from foundry.gui.PlayerFrameEditor import (
@@ -207,7 +207,7 @@ class PlayerViewerController(CustomChildWindow):
         side_toolbar_layout = QFormLayout(self)
         side_toolbar_layout.addRow("Power Up", self.powerup_combo_box)
         side_toolbar_layout.addRow("Mario or Luigi", self.is_mario_check_box)
-        side_toolbar_layout.addRow("Palette Editor", self.palette_editor)
+        side_toolbar_layout.addRow("palette Editor", self.palette_editor)
         side_toolbar_layout.addRow("Page Offset", self.power_up_offset_spinner)
 
         class LayoutWidget(QWidget):

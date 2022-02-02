@@ -1,6 +1,7 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
@@ -13,7 +14,6 @@ from foundry.game.gfx.drawable.Sprite import get_sprite
 from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
-from foundry.game.gfx.Palette import PaletteGroup
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 

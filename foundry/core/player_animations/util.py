@@ -1,3 +1,9 @@
+from foundry.core.palette.Palette import (
+    COLORS_PER_PALETTE,
+    Palette,
+    PaletteGroup,
+    PaletteGroupProtocol,
+)
 from foundry.core.player_animations import (
     PLAYER_FRAME_PAGE_OFFSET,
     PLAYER_FRAME_START,
@@ -12,12 +18,6 @@ from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.PlayerAnimationData import PlayerAnimationData
 from foundry.game.File import ROM
 from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet
-from foundry.game.gfx.Palette import (
-    COLORS_PER_PALETTE,
-    Palette,
-    PaletteGroup,
-    PaletteGroupProtocol,
-)
 
 
 def load_animations_graphic_set(animation: PlayerAnimation, power_up: int, offsets: list[int]) -> GraphicsSet:

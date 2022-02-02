@@ -164,7 +164,7 @@ class LevelManager:
 
         create_toolbar(self.parent, "Generator Editor", [self.parent.spinner_panel], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Generator Dropdown", [self.parent.object_dropdown], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "Palette", [self.parent.side_palette], Qt.RightToolBarArea)
+        create_toolbar(self.parent, "palette", [self.parent.side_palette], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Level Size", [self.parent.level_size_bar], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Enemy Size", [self.parent.enemy_size_bar], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Splitter", [splitter], Qt.RightToolBarArea)
