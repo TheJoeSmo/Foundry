@@ -21,10 +21,10 @@ foundry.game.gfx.GraphicsSet module
    :undoc-members:
    :show-inheritance:
 
-foundry.game.gfx.Palette module
+foundry.game.gfx.MutablePalette module
 -------------------------------
 
-.. automodule:: foundry.game.gfx.Palette
+.. automodule:: foundry.game.gfx.MutablePalette
    :members:
    :undoc-members:
    :show-inheritance:

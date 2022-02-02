@@ -4,20 +4,20 @@ from attr import attrs
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
-from foundry.core.palette.Palette import Palette, PaletteProtocol
+from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
 from foundry.core.palette.util import get_internal_palette_offset
 
 
 class PaletteGroupProtocol(Protocol):
-    palettes: list[PaletteProtocol]
+    palettes: list[MutablePaletteProtocol]
 
     def __bytes__(self) -> bytes:
         ...
 
-    def __getitem__(self, item: int) -> PaletteProtocol:
+    def __getitem__(self, item: int) -> MutablePaletteProtocol:
         ...
 
-    def __setitem__(self, key: int, value: PaletteProtocol):
+    def __setitem__(self, key: int, value: MutablePaletteProtocol):
         ...
 
     @property
@@ -27,7 +27,7 @@ class PaletteGroupProtocol(Protocol):
 
 @attrs(slots=True, auto_attribs=True)
 class PaletteGroup:
-    palettes: list[PaletteProtocol]
+    palettes: list[MutablePaletteProtocol]
 
     def __bytes__(self) -> bytes:
         b = bytearray()
@@ -35,10 +35,10 @@ class PaletteGroup:
             b.extend(bytes(palette))
         return bytes(b)
 
-    def __getitem__(self, item: int) -> PaletteProtocol:
+    def __getitem__(self, item: int) -> MutablePaletteProtocol:
         return self.palettes[item]
 
-    def __setitem__(self, key: int, value: PaletteProtocol):
+    def __setitem__(self, key: int, value: MutablePaletteProtocol):
         self.palettes[key] = value
 
     @property
@@ -55,7 +55,7 @@ class PaletteGroup:
         PaletteGroup
             A PaletteGroup filled with default values.
         """
-        return cls([Palette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
+        return cls([MutablePalette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
 
     @classmethod
     def from_rom(cls, address: int):
@@ -74,7 +74,7 @@ class PaletteGroup:
         """
         return cls(
             [
-                Palette.from_rom(address + offset)
+                MutablePalette.from_rom(address + offset)
                 for offset in [COLORS_PER_PALETTE * i for i in range(PALETTES_PER_PALETTES_GROUP)]
             ]
         )

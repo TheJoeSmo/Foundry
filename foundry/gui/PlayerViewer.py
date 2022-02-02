@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import icon
-from foundry.core.palette.Palette import Palette, PaletteProtocol
+from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
 from foundry.core.palette.PaletteGroup import PaletteGroup, PaletteGroupProtocol
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
@@ -92,7 +92,9 @@ class PlayerViewerModel:
             is_mario,
             power_up,
             [i for i in power_up_offsets],
-            PaletteGroup([Palette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]),
+            PaletteGroup(
+                [MutablePalette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]
+            ),
             load_animations(animations, page_offsets),
         )
 
@@ -177,7 +179,7 @@ class PlayerViewerController(CustomChildWindow):
         def set_is_mario(value: bool):
             self.is_mario = value
 
-        def set_palette(value: PaletteProtocol):
+        def set_palette(value: MutablePaletteProtocol):
             self.palette = value
 
         def set_power_up_offset(value: int):
@@ -271,11 +273,11 @@ class PlayerViewerController(CustomChildWindow):
         self.power_up_offsets_changed.emit(offsets)
 
     @property
-    def palette(self) -> PaletteProtocol:
+    def palette(self) -> MutablePaletteProtocol:
         return self.palette_group[get_animations_palette_index(self.is_mario, self.power_up)]
 
     @palette.setter
-    def palette(self, palette: PaletteProtocol):
+    def palette(self, palette: MutablePaletteProtocol):
         palette_group = self.palette_group
         palette_group[get_animations_palette_index(self.is_mario, self.power_up)] = palette
         self.palette_group = palette_group

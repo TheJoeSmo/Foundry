@@ -1,6 +1,6 @@
 from foundry.core.graphics_set.GraphicsSet import GraphicalPage, GraphicsSet
 from foundry.core.palette import COLORS_PER_PALETTE
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette.Palette import MutablePalette
 from foundry.core.palette.PaletteGroup import PaletteGroup, PaletteGroupProtocol
 from foundry.core.player_animations import (
     PLAYER_FRAME_PAGE_OFFSET,
@@ -72,7 +72,7 @@ def load_player_animation_data(
 def load_power_up_palettes() -> PaletteGroupProtocol:
     return PaletteGroup(
         [
-            Palette.from_rom(PLAYER_POWER_UPS_PALETTES + address * COLORS_PER_PALETTE)
+            MutablePalette.from_rom(PLAYER_POWER_UPS_PALETTES + address * COLORS_PER_PALETTE)
             for address in range(PLAYER_POWER_UPS_PALETTE_COUNT)
         ]
     )

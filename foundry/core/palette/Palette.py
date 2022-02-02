@@ -7,7 +7,7 @@ from foundry.core.palette import COLORS_PER_PALETTE, NESPalette
 from foundry.game.File import ROM
 
 
-class PaletteProtocol(Protocol):
+class MutablePaletteProtocol(Protocol):
     color_indexes: list[int]
 
     def __bytes__(self) -> bytes:
@@ -25,7 +25,7 @@ class PaletteProtocol(Protocol):
 
 
 @attrs(slots=True, auto_attribs=True)
-class Palette:
+class MutablePalette:
     color_indexes: list[int]
 
     def __bytes__(self) -> bytes:
@@ -44,7 +44,7 @@ class Palette:
 
         Returns
         -------
-        Palette
+        MutablePalette
             A palette filled with default values.
         """
         return cls([0, 0, 0, 0])
@@ -61,7 +61,7 @@ class Palette:
 
         Returns
         -------
-        Palette
+        MutablePalette
             The palette that represents the absolute address in ROM.
         """
         return cls([int(i) for i in ROM().read(address, COLORS_PER_PALETTE)])
