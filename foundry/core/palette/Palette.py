@@ -1,35 +1,15 @@
-from functools import cache
 from typing import Protocol
 
 from attr import attrs
 from PySide6.QtGui import QColor
 
-from foundry import root_dir
-from foundry.game.File import ROM
-from foundry.smb3parse.constants import Palette_By_Tileset, PalSet_Maps
-from foundry.smb3parse.levels import BASE_OFFSET
-
-MAP_PALETTE_ADDRESS = PalSet_Maps
-
-PRG_SIZE = 0x2000
-PALETTE_PRG_NO = 22
-
-PALETTE_BASE_ADDRESS = BASE_OFFSET + PALETTE_PRG_NO * PRG_SIZE
-PALETTE_OFFSET_LIST = Palette_By_Tileset
-PALETTE_OFFSET_SIZE = 2  # bytes
-
-PALETTE_GROUPS_PER_OBJECT_SET = 8
-ENEMY_PALETTE_GROUPS_PER_OBJECT_SET = 4
-PALETTES_PER_PALETTES_GROUP = 4
-
-COLORS_PER_PALETTE = 4
-COLOR_SIZE = 1  # byte
-
-PALETTE_DATA_SIZE = (
-    (PALETTE_GROUPS_PER_OBJECT_SET + ENEMY_PALETTE_GROUPS_PER_OBJECT_SET)
-    * PALETTES_PER_PALETTES_GROUP
-    * COLORS_PER_PALETTE
+from foundry.core.palette import (
+    COLORS_PER_PALETTE,
+    PALETTES_PER_PALETTES_GROUP,
+    NESPalette,
 )
+from foundry.core.palette.util import get_internal_palette_offset
+from foundry.game.File import ROM
 
 
 class PaletteProtocol(Protocol):
@@ -113,24 +93,6 @@ class Palette:
         return [NESPalette[c & 0x3F] for c in self.color_indexes]
 
 
-@cache
-def get_internal_palette_offset(tileset: int) -> int:
-    """
-    Provides the absolute internal position of the palette group offset from ROM.
-
-    Parameters
-    ----------
-    tileset : int
-        The tileset to find the absolute internal position of.
-
-    Returns
-    -------
-    int
-        The absolute internal position of the tileset's palette group.
-    """
-    return PALETTE_BASE_ADDRESS + ROM().little_endian(PALETTE_OFFSET_LIST + (tileset * PALETTE_OFFSET_SIZE))
-
-
 @attrs(slots=True, auto_attribs=True)
 class PaletteGroup:
     palettes: list[PaletteProtocol]
@@ -204,20 +166,3 @@ class PaletteGroup:
         """
         offset = get_internal_palette_offset(tileset) + index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
         return cls.from_rom(offset)
-
-
-palette_file = root_dir.joinpath("data", "Default.pal")
-
-with open(palette_file, "rb") as f:
-    color_data = f.read()
-
-offset = 0x18  # first color position
-
-NESPalette: list[QColor] = []
-COLOR_COUNT = 64
-BYTES_IN_COLOR = 3 + 1  # bytes + separator
-
-for i in range(COLOR_COUNT):
-    NESPalette.append(QColor(color_data[offset], color_data[offset + 1], color_data[offset + 2]))
-
-    offset += BYTES_IN_COLOR

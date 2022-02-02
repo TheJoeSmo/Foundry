@@ -4,7 +4,8 @@ from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import NESPalette, PaletteGroup
+from foundry.core.palette import NESPalette
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile

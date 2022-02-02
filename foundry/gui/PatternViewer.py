@@ -16,7 +16,8 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.Palette import NESPalette, PaletteGroup
+from foundry.core.palette import NESPalette
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.core.Position import Position
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile

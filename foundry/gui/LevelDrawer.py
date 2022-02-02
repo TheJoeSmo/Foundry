@@ -6,7 +6,8 @@ from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.Palette import NESPalette, PaletteGroup
+from foundry.core.palette import NESPalette
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block

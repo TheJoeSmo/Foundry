@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.core.palette.Palette import NESPalette
+from foundry.core.palette import NESPalette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 from foundry.gui.CustomDialog import CustomDialog
 
