@@ -2,14 +2,13 @@ from typing import Optional
 
 from attr import attrs
 
-from foundry.core.palette.Palette import (
+from foundry.core.palette import (
     COLORS_PER_PALETTE,
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
-    PaletteGroup,
-    PaletteGroupProtocol,
-    get_internal_palette_offset,
 )
+from foundry.core.palette.Palette import PaletteGroup, PaletteGroupProtocol
+from foundry.core.palette.util import get_internal_palette_offset
 from foundry.game.File import ROM
 
 

@@ -1,10 +1,6 @@
 from foundry.core.graphics_set.GraphicsSet import GraphicalPage, GraphicsSet
-from foundry.core.palette.Palette import (
-    COLORS_PER_PALETTE,
-    Palette,
-    PaletteGroup,
-    PaletteGroupProtocol,
-)
+from foundry.core.palette import COLORS_PER_PALETTE
+from foundry.core.palette.Palette import Palette, PaletteGroup, PaletteGroupProtocol
 from foundry.core.player_animations import (
     PLAYER_FRAME_PAGE_OFFSET,
     PLAYER_FRAME_START,
