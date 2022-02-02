@@ -5,11 +5,11 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette.Palette import NESPalette, PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.EnemyItem import MASK_COLOR, EnemyObject
 from foundry.game.gfx.objects.LevelObject import (
     GROUND,

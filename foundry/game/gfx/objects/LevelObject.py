@@ -4,12 +4,12 @@ from warnings import warn
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.Palette import PaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
-from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,

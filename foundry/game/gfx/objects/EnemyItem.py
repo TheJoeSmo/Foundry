@@ -1,6 +1,11 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.graphics_set.GraphicsSet import (
+    GraphicalPage,
+    GraphicsSet,
+    GraphicsSetProtocol,
+)
 from foundry.core.palette.Palette import PaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.game.EnemyDefinitions import (
@@ -11,7 +16,6 @@ from foundry.game.EnemyDefinitions import (
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.drawable.Sprite import get_sprite
-from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
