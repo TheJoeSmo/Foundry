@@ -6,12 +6,12 @@ from PySide6.QtGui import QCloseEvent, QMouseEvent, QPainter, QPaintEvent, QResi
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.palette.Palette import PaletteGroupProtocol
 from foundry.core.Position import Position
 from foundry.core.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import PaletteGroupProtocol
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 

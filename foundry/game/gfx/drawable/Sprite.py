@@ -3,11 +3,11 @@ from functools import lru_cache
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.palette.Palette import NESPalette, PaletteGroupProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import NESPalette, PaletteGroupProtocol
 
 
 @lru_cache(2 ** 10)

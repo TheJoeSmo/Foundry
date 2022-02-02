@@ -3,7 +3,7 @@ from typing import Optional
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.game.gfx.Palette import PaletteProtocol
+from foundry.core.palette.Palette import PaletteProtocol
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 
 
@@ -13,7 +13,7 @@ class PaletteWidget(QWidget):
 
     Attributes
     ----------
-    palette_changed: Signal[Palette]
+    palette_changed: Signal[palette]
         Slot associated with the palette viewer changing its palette.
     """
 

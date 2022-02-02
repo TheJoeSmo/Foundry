@@ -15,11 +15,11 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.palette.Palette import NESPalette, PaletteGroup
 from foundry.core.Position import Position
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import NESPalette, PaletteGroup
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 

@@ -4,6 +4,7 @@ from warnings import warn
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.palette.Palette import PaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.game.File import ROM
@@ -16,7 +17,6 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_NOT,
     EXPANDS_VERT,
 )
-from foundry.game.gfx.Palette import PaletteGroup
 from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
 from foundry.game.ObjectSet import ObjectSet
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET

@@ -1,8 +1,8 @@
 from attr import attrs
 
+from foundry.core.palette.Palette import PaletteGroupProtocol
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import PaletteGroupProtocol
 
 
 @attrs(slots=True, auto_attribs=True)

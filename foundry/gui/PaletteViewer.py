@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QVBoxLayout
 
-from foundry.game.gfx.Palette import (
+from foundry.core.palette.Palette import (
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
     PaletteGroup,

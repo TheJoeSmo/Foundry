@@ -6,6 +6,7 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QHBoxLayout, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.palette.Palette import PaletteGroupProtocol
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
@@ -16,7 +17,6 @@ from foundry.core.Position import Position
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
-from foundry.game.gfx.Palette import PaletteGroupProtocol
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.Spinner import Spinner
 from foundry.gui.SpriteViewer import SpriteViewerController as SpriteViewer
