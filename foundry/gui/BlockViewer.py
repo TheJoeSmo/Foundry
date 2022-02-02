@@ -13,7 +13,7 @@ from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, 
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
-from foundry.core.palette.Palette import PaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.Position import Position
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM

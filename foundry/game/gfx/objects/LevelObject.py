@@ -5,7 +5,7 @@ from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import PaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.game.File import ROM

@@ -4,7 +4,7 @@ from foundry.core.palette import (
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
 )
-from foundry.core.palette.Palette import PaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.PaletteWidget import PaletteWidget

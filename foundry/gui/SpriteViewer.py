@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
 from foundry.core.Position import Position
 from foundry.core.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE

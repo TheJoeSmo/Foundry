@@ -6,7 +6,7 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QHBoxLayout, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
-from foundry.core.palette.Palette import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (

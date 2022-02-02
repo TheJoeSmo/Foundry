@@ -3,7 +3,7 @@ from typing import Optional
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
-from foundry.core.palette.Palette import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 
 

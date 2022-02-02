@@ -1,7 +1,7 @@
 from PySide6.QtCore import QPoint, QSize
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.Palette import PaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.MapObject import MapObject
