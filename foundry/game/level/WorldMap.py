@@ -1,9 +1,9 @@
 from PySide6.QtCore import QPoint, QSize
 
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette.Palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.GraphicsSet import GraphicsSet
 from foundry.game.gfx.objects.MapObject import MapObject
 from foundry.game.level.LevelLike import LevelLike
 from foundry.smb3parse.levels.world_map import (

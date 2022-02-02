@@ -1,3 +1,4 @@
+from foundry.core.graphics_set.GraphicsSet import GraphicalPage, GraphicsSet
 from foundry.core.palette.Palette import (
     COLORS_PER_PALETTE,
     Palette,
@@ -17,7 +18,6 @@ from foundry.core.player_animations import (
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.PlayerAnimationData import PlayerAnimationData
 from foundry.game.File import ROM
-from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet
 
 
 def load_animations_graphic_set(animation: PlayerAnimation, power_up: int, offsets: list[int]) -> GraphicsSet:

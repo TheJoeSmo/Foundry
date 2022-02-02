@@ -3,6 +3,7 @@ from typing import Protocol
 from attr import attrs
 from PySide6.QtGui import QColor, QImage, QPainter
 
+from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.Palette import PaletteGroupProtocol
 from foundry.core.Position import PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
@@ -10,7 +11,6 @@ from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
-from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
 
 
 class SpriteGroupProtocol(Protocol):

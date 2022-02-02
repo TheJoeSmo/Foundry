@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.game.gfx.GraphicsSet import GRAPHIC_SET_NAMES
+from foundry.core.graphics_set.GraphicsSet import GRAPHIC_SET_NAMES
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
