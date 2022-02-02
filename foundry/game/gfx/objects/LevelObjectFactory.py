@@ -1,7 +1,7 @@
 from typing import List, Optional, Union
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
-from foundry.core.palette.Palette import PaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import (
     SCREEN_HEIGHT,

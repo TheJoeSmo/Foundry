@@ -4,7 +4,7 @@ from attr import attrs
 from PySide6.QtGui import QColor, QImage, QPainter
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
 from foundry.core.Position import PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
