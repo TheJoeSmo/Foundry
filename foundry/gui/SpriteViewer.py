@@ -9,7 +9,7 @@ from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
 from foundry.core.point.Point import Point
-from foundry.core.Size import Size, SizeProtocol
+from foundry.core.size.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.gui.CustomChildWindow import CustomChildWindow
