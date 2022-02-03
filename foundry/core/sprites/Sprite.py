@@ -2,11 +2,11 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.Position import PositionProtocol
+from foundry.core.point.Point import PointProtocol
 
 
 class SpriteProtocol(Protocol):
-    position: PositionProtocol
+    position: PointProtocol
     index: int
     palette_index: int
     horizontal_mirror: bool
@@ -21,8 +21,8 @@ class Sprite:
 
     Attributes
     ----------
-    position: PositionProtocol
-        The position of the sprite.
+    point: PointProtocol
+        The point of the sprite.
     index: int
         The index into the graphics set of the sprite.
     palette_index: int
@@ -35,7 +35,7 @@ class Sprite:
         If the sprite should not render.
     """
 
-    position: PositionProtocol
+    position: PointProtocol
     index: int
     palette_index: int
     horizontal_mirror: bool = False

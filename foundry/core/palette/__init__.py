@@ -23,7 +23,7 @@ COLOR_COUNT = 64
 BYTES_IN_COLOR = 3 + 1  # bytes + separator
 palette_file = root_dir.joinpath("data", "Default.pal")
 
-offset = 0x18  # first color position
+offset = 0x18  # first color point
 NESPalette: list[QColor] = []
 with open(palette_file, "rb") as f:
     color_data = f.read()

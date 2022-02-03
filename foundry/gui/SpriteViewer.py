@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
-from foundry.core.Position import Position
+from foundry.core.point.Point import Point
 from foundry.core.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
@@ -145,7 +145,7 @@ class SpriteViewerView(QWidget):
         return Size(SPRITE_SIZE.width * self.zoom, SPRITE_SIZE.height * self.zoom)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.sprite_size.width, pos.y // self.sprite_size.height
 
         dec_index = pos.y * self.SPRITES_PER_ROW + pos.x
@@ -154,7 +154,7 @@ class SpriteViewerView(QWidget):
         self.mouse_moved.emit(pos.x, pos.y, dec_index, hex_index)
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.sprite_size.width, pos.y // self.sprite_size.height
 
         index = pos.y * self.SPRITES_PER_ROW + pos.x

@@ -87,7 +87,7 @@ def test_level_insert_in_vertical_level(level):
 
     level.add_object(domain, object_index, x, y, None)
 
-    # THEN that object is still the same and at the correct position
+    # THEN that object is still the same and at the correct point
     added_object = level.objects[0]
 
     assert added_object.domain == domain

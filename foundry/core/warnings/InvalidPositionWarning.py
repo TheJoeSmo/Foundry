@@ -19,7 +19,7 @@ class InvalidPositionWarning(Warning):
 
     def check_object(self, obj: ObjectLike, *args, **kwargs) -> bool:
         """
-        Determines if the object should emit a warning for having an invalid position.
+        Determines if the object should emit a warning for having an invalid point.
 
         Parameters
         ----------
@@ -44,13 +44,13 @@ class InvalidPositionWarning(Warning):
 
     def get_message(self, obj: ObjectLike) -> str:
         if self.max_x is not None and obj.position.x > self.max_x:
-            return f"{obj.name} x position of {obj.position.x} is more than its safe maximum of {self.max_x}."
+            return f"{obj.name} x point of {obj.position.x} is more than its safe maximum of {self.max_x}."
         if self.min_x is not None and obj.position.x < self.min_x:
-            return f"{obj.name} x position of {obj.position.x} is less than its safe minimum of {self.min_x}."
+            return f"{obj.name} x point of {obj.position.x} is less than its safe minimum of {self.min_x}."
         if self.max_y is not None and obj.position.y > self.max_y:
-            return f"{obj.name} y position of {obj.position.y} is more than its safe maximum of {self.max_y}."
+            return f"{obj.name} y point of {obj.position.y} is more than its safe maximum of {self.max_y}."
         if self.min_y is not None and obj.position.y < self.min_y:
-            return f"{obj.name} x position of {obj.position.y} is less than its safe maximum of {self.min_y}."
+            return f"{obj.name} x point of {obj.position.y} is less than its safe maximum of {self.min_y}."
         raise NotImplementedError
 
 

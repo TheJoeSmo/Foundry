@@ -6,7 +6,7 @@ from typing import Optional, Protocol
 
 import attr
 
-from foundry.core.Position import Position, PositionProtocol
+from foundry.core.point.Point import Point, PointProtocol
 
 MIN_DOMAIN = 0
 MAX_DOMAIN = 7
@@ -33,13 +33,13 @@ class LevelComponentProtocol(Protocol):
     index: int
         The specific byte of data that determines a limited amount of information with regard to
         the component.
-    position: int
+    point: int
         The location inside the level that the component is housed.
     """
 
     domain: int
     index: int
-    position: PositionProtocol
+    position: PointProtocol
 
 
 def domain_check(instance, attribute, value):
@@ -78,7 +78,7 @@ def index_check(instance, attribute, value):
 
 def position_check(instance, attribute, value):
     """
-    A check to ensure that the position of a given object has an x and y
+    A check to ensure that the point of a given object has an x and y
     that are between 0 and 255.
 
     Raises
@@ -86,7 +86,7 @@ def position_check(instance, attribute, value):
     ValueError
         Will be raised if either the x or y is not between 0 and 255.
     AttributeError
-        Will be raised if the position does not contain a field for x or y.
+        Will be raised if the point does not contain a field for x or y.
     """
     try:
         if 0 > value.x < 0xFF:
@@ -114,14 +114,14 @@ class LevelComponent:
         The specific byte of data that determines a limited amount of information with regard to
         the component.
         Must be between 0 and 255.
-    position: int
+    point: int
         The location inside the level that the component is housed.
         Both x and y must be between 0 and 255.
     """
 
     domain: int = attr.ib(validator=domain_check, default=0)
     index: int = attr.ib(validator=index_check, default=0)
-    position: Position = attr.ib(validator=position_check, default=attr.Factory(lambda: Position(0, 0)))
+    position: Point = attr.ib(validator=position_check, default=attr.Factory(lambda: Point(0, 0)))
 
 
 class InLevelObject(ABC):

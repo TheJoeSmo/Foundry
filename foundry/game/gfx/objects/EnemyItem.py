@@ -7,7 +7,7 @@ from foundry.core.graphics_set.GraphicsSet import (
     GraphicsSetProtocol,
 )
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.Position import Position, PositionProtocol
+from foundry.core.point.Point import Point, PointProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
@@ -181,15 +181,15 @@ class EnemyObject(ObjectLike):
         return self.rect.contains(x, y)
 
     def move_by(self, dx, dy):
-        self.position = Position(self.position.x + dx, self.position.y + dy)
+        self.position = Point(self.position.x + dx, self.position.y + dy)
 
     @property
-    def position(self) -> PositionProtocol:
+    def position(self) -> PointProtocol:
         return self.enemy.position
 
     @position.setter
-    def position(self, position: PositionProtocol):
-        self.enemy.position = Position(max(0, position.x), max(0, position.y))
+    def position(self, position: PointProtocol):
+        self.enemy.position = Point(max(0, position.x), max(0, position.y))
 
     @property
     def obj_index(self):

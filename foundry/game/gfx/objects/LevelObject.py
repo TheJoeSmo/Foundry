@@ -6,7 +6,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.Position import Position, PositionProtocol
+from foundry.core.point.Point import Point, PointProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
@@ -76,7 +76,7 @@ class LevelObject(GeneratorObject):
         self.object_set = ObjectSet(object_set)
 
         self.graphics_set = graphics_set
-        self._position = Position(0, 0)
+        self._position = Point(0, 0)
         self._ignore_rendered_position = False
 
         self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
@@ -581,10 +581,10 @@ class LevelObject(GeneratorObject):
         )
 
     def move_by(self, dx: int, dy: int):
-        self.position = Position(self.position.x + dx, self.position.y + dy)
+        self.position = Point(self.position.x + dx, self.position.y + dy)
 
     @property
-    def position(self) -> PositionProtocol:
+    def position(self) -> PointProtocol:
         y = self.data[0] & 0b0001_1111
         x = self.data[1]
 
@@ -594,10 +594,10 @@ class LevelObject(GeneratorObject):
             y += offset
             x %= SCREEN_WIDTH
 
-        return Position(x, y)
+        return Point(x, y)
 
     @position.setter
-    def position(self, position: PositionProtocol) -> None:
+    def position(self, position: PointProtocol) -> None:
         x, y = position.x, position.y
 
         # todo also check for the upper bounds
@@ -619,23 +619,23 @@ class LevelObject(GeneratorObject):
         self._render()
 
     @property
-    def rendered_position(self) -> PositionProtocol:
+    def rendered_position(self) -> PointProtocol:
         if self._ignore_rendered_position:
-            return Position(0, 0)
+            return Point(0, 0)
         elif self.orientation == GeneratorType.TO_THE_SKY:
-            return Position(self.position.x, SKY)
+            return Point(self.position.x, SKY)
         elif self.orientation in [GeneratorType.DIAG_UP_RIGHT]:
-            return Position(self.position.x, self.position.y - self.rendered_size.height + 1)
+            return Point(self.position.x, self.position.y - self.rendered_size.height + 1)
         elif self.orientation in [GeneratorType.DIAG_DOWN_LEFT]:
             if self.object_set.number == 3 or self.object_set.number == 14:  # Sky or Hilly tileset
-                return Position(self.position.x - (self.rendered_size.width - self.scale.width + 1), self.position.y)
+                return Point(self.position.x - (self.rendered_size.width - self.scale.width + 1), self.position.y)
             else:
-                return Position(self.position.x - (self.rendered_size.width - self.scale.width), self.position.y)
+                return Point(self.position.x - (self.rendered_size.width - self.scale.width), self.position.y)
 
         elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
-            return Position(self.position.x - (self.rendered_size.width // 2) + 1, self.position.y)
+            return Point(self.position.x - (self.rendered_size.width // 2) + 1, self.position.y)
         elif self.name.lower() == "black boss room background":
-            return Position(self.position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
+            return Point(self.position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
         return self.position
 
     @property

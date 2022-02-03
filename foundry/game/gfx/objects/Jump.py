@@ -3,7 +3,7 @@ from json import loads
 from PySide6.QtCore import QRect
 
 from foundry import warp_definitions
-from foundry.core.Position import PositionProtocol
+from foundry.core.point.Point import PointProtocol
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
@@ -72,11 +72,11 @@ class Jump(GeneratorObject):
             return Definition(__root__=loads(f.read()))
 
     @property
-    def position(self) -> PositionProtocol:
+    def position(self) -> PointProtocol:
         pass
 
     @position.setter
-    def position(self, position: PositionProtocol) -> None:
+    def position(self, position: PointProtocol) -> None:
         pass
 
     def move_by(self, dx, dy):
