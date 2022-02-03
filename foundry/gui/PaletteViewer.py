@@ -4,7 +4,7 @@ from foundry.core.palette import (
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
 )
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.PaletteWidget import PaletteWidget
@@ -29,7 +29,7 @@ class PaletteViewer(CustomDialog):
             group_box_layout = QVBoxLayout(group_box)
             group_box_layout.setSpacing(0)
 
-            pal = PaletteGroup.from_tileset(self.level_ref.level.object_set_number, palette_group)
+            pal = MutablePaletteGroup.from_tileset(self.level_ref.level.object_set_number, palette_group)
 
             for idx in range(PALETTES_PER_PALETTES_GROUP):
                 group_box_layout.addWidget(PaletteWidget(self, pal[idx]))

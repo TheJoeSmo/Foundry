@@ -5,7 +5,7 @@ from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.game.File import ROM
@@ -66,7 +66,7 @@ class LevelObject(GeneratorObject):
         self,
         data: bytearray,
         object_set: int,
-        palette_group: PaletteGroup,
+        palette_group: MutablePaletteGroup,
         graphics_set: GraphicsSetProtocol,
         objects_ref: List["LevelObject"],
         is_vertical: bool,

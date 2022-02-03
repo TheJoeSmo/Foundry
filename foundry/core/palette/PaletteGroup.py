@@ -1,23 +1,32 @@
-from typing import Protocol
+from abc import ABC, abstractmethod
+from typing import ClassVar, Protocol, Sequence, Type, TypeVar
 
 from attr import attrs
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
-from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
+from foundry.core.palette.Palette import (
+    AbstractPalette,
+    HashablePaletteProtocol,
+    MutablePalette,
+    MutablePaletteProtocol,
+    Palette,
+    PaletteProtocol,
+)
 from foundry.core.palette.util import get_internal_palette_offset
 
 
 class PaletteGroupProtocol(Protocol):
-    palettes: list[MutablePaletteProtocol]
+    """
+    A representation of a group of palettes.
+    """
+
+    palettes: Sequence[PaletteProtocol]
 
     def __bytes__(self) -> bytes:
         ...
 
-    def __getitem__(self, item: int) -> MutablePaletteProtocol:
-        ...
-
-    def __setitem__(self, key: int, value: MutablePaletteProtocol):
+    def __getitem__(self, item: int) -> PaletteProtocol:
         ...
 
     @property
@@ -25,9 +34,36 @@ class PaletteGroupProtocol(Protocol):
         ...
 
 
-@attrs(slots=True, auto_attribs=True)
-class PaletteGroup:
-    palettes: list[MutablePaletteProtocol]
+class MutablePaletteGroupProtocol(PaletteGroupProtocol, Protocol):
+    """
+    A mutable representation of a group of palettes.
+    """
+
+    def __setitem__(self, key: int, value: PaletteProtocol):
+        ...
+
+
+class HashablePaletteGroupProtocol(PaletteGroupProtocol, Protocol):
+    """
+    A hashable and immutable representation of a group of palettes.
+    """
+
+    def __hash__(self) -> int:
+        ...
+
+
+_T = TypeVar("_T", bound="AbstractPaletteGroup")
+
+
+class AbstractPaletteGroup(ABC):
+    """
+    A partial implementation of a palette group that implements the critical parts of a palette group
+    independent of its mutability or ability to be hashed.
+    """
+
+    palettes: Sequence[PaletteProtocol]
+
+    PALETTE_TYPE: ClassVar[Type[AbstractPalette]] = AbstractPalette
 
     def __bytes__(self) -> bytes:
         b = bytearray()
@@ -35,30 +71,57 @@ class PaletteGroup:
             b.extend(bytes(palette))
         return bytes(b)
 
-    def __getitem__(self, item: int) -> MutablePaletteProtocol:
+    def __getitem__(self, item: int) -> PaletteProtocol:
         return self.palettes[item]
-
-    def __setitem__(self, key: int, value: MutablePaletteProtocol):
-        self.palettes[key] = value
 
     @property
     def background_color(self) -> QColor:
         return self.palettes[0].colors[0]
 
     @classmethod
-    def as_empty(cls):
+    @abstractmethod
+    def from_values(cls: Type[_T], *values: PaletteProtocol) -> _T:
         """
-        Makes an empty palette group of default values
+        A generalized way to create itself from a series of values.
 
         Returns
         -------
-        PaletteGroup
-            A PaletteGroup filled with default values.
+        AbstractPaletteGroup
+            The created palette group from the series.
         """
-        return cls([MutablePalette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
+        ...
 
     @classmethod
-    def from_rom(cls, address: int):
+    def from_palette_group(cls: Type[_T], palette_group: PaletteGroupProtocol) -> _T:
+        """
+        Generates a AbstractPaletteGroup of this type from another PaletteGroupProtocol.
+
+        Parameters
+        ----------
+        palette_group : PaletteGroupProtocol
+            The palette to be converted to this type.
+
+        Returns
+        -------
+        AbstractPaletteGroup
+            A palette group that is equal to the original palette group.
+        """
+        return cls.from_values(*palette_group.palettes)
+
+    @classmethod
+    def as_empty(cls: Type[_T]) -> _T:
+        """
+        Makes an empty palette group of default values.
+
+        Returns
+        -------
+        AbstractPaletteGroup
+            The palette group filled with default values.
+        """
+        return cls.from_values(*[cls.PALETTE_TYPE.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
+
+    @classmethod
+    def from_rom(cls: Type[_T], address: int) -> _T:
         """
         Creates a palette group from an absolute address in ROM.
 
@@ -69,12 +132,12 @@ class PaletteGroup:
 
         Returns
         -------
-        PaletteGroup
-            The PaletteGroup that represents the absolute address in ROM.
+        AbstractPaletteGroup
+            The palette group that represents the absolute address in ROM.
         """
-        return cls(
-            [
-                MutablePalette.from_rom(address + offset)
+        return cls.from_values(
+            *[
+                cls.PALETTE_TYPE.from_rom(address + offset)
                 for offset in [COLORS_PER_PALETTE * i for i in range(PALETTES_PER_PALETTES_GROUP)]
             ]
         )
@@ -93,8 +156,47 @@ class PaletteGroup:
 
         Returns
         -------
-        PaletteGroup
+        MutablePaletteGroup
             The PaletteGroup that represents the tileset's palette group at the provided offset.
         """
         offset = get_internal_palette_offset(tileset) + index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
         return cls.from_rom(offset)
+
+
+_MT = TypeVar("_MT", bound="MutablePaletteGroup")
+
+
+@attrs(slots=True, auto_attribs=True, eq=True)
+class MutablePaletteGroup(AbstractPaletteGroup):
+    """
+    A concrete implementation of a mutable group of palettes.
+    """
+
+    palettes: list[MutablePaletteProtocol]
+
+    PALETTE_TYPE: ClassVar[Type[MutablePalette]] = MutablePalette
+
+    def __setitem__(self, key: int, value: MutablePaletteProtocol):
+        self.palettes[key] = value
+
+    @classmethod
+    def from_values(cls: Type[_MT], *values: PaletteProtocol) -> _MT:
+        return cls([cls.PALETTE_TYPE.from_palette(palette) for palette in values])
+
+
+_PT = TypeVar("_PT", bound="PaletteGroup")
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class PaletteGroup(AbstractPaletteGroup):
+    """
+    A concrete implementation of a hashable and immutable group of palettes.
+    """
+
+    palettes: tuple[HashablePaletteProtocol]
+
+    PALETTE_TYPE: ClassVar[Type[Palette]] = Palette
+
+    @classmethod
+    def from_values(cls: Type[_PT], *values: PaletteProtocol) -> _PT:
+        return cls(tuple(cls.PALETTE_TYPE.from_palette(palette) for palette in values))

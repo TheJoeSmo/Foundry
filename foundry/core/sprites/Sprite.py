@@ -26,7 +26,7 @@ class Sprite:
     index: int
         The index into the graphics set of the sprite.
     palette_index: int
-        The palette index of the sprite into the PaletteGroupProtocol.
+        The palette index of the sprite into the MutablePaletteGroupProtocol.
     horizontal_mirror: bool
         If the sprite should be horizontally flipped.
     vertical_mirror: bool

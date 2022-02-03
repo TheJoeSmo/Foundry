@@ -14,7 +14,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.core.Position import Position
 from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.CustomChildWindow import CustomChildWindow
@@ -26,7 +26,7 @@ class BlockEditorModel:
     tile_square_assembly: bytearray
     block_index: int
     graphics_set: GraphicsSet
-    palette_group: PaletteGroup
+    palette_group: MutablePaletteGroup
     palette_index: int
 
 
@@ -34,7 +34,7 @@ class BlockEditorController(CustomChildWindow):
     tile_square_assembly_changed: SignalInstance = Signal(bytearray)  # type: ignore
     block_index_changed: SignalInstance = Signal(int)  # type: ignore
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
 
@@ -44,7 +44,7 @@ class BlockEditorController(CustomChildWindow):
         tsa_data: bytearray,
         block_index: int,
         graphics_set: GraphicsSet,
-        palette_group: PaletteGroup,
+        palette_group: MutablePaletteGroup,
         palette_index: int,
     ):
         super().__init__(parent, "Block Editor")
@@ -122,11 +122,11 @@ class BlockEditorController(CustomChildWindow):
             self.pattern_viewer.graphics_set = value
 
     @property
-    def palette_group(self) -> PaletteGroup:
+    def palette_group(self) -> MutablePaletteGroup:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value: PaletteGroup):
+    def palette_group(self, value: MutablePaletteGroup):
         self.model.palette_group = value
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
@@ -180,7 +180,7 @@ class BlockEditorView(QWidget):
         tsa_data: bytearray,
         block_index: int,
         graphics_set: GraphicsSet,
-        palette_group: PaletteGroup,
+        palette_group: MutablePaletteGroup,
         palette_index: int,
         zoom: int = 16,
     ):
