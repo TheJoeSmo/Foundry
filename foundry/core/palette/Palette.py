@@ -112,7 +112,10 @@ class AbstractPalette(ABC):
         return cls.from_values(*tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
 
 
-@attrs(slots=True, auto_attribs=True)
+_MT = TypeVar("_MT", bound="MutablePalette")
+
+
+@attrs(slots=True, auto_attribs=True, eq=True)
 class MutablePalette(AbstractPalette):
     color_indexes: list[int]
 
@@ -120,14 +123,17 @@ class MutablePalette(AbstractPalette):
         self.color_indexes[key] = value
 
     @classmethod
-    def from_values(cls: Type[_T], *values: int) -> _T:
-        return cls(list(values))  # type: ignore
+    def from_values(cls: Type[_MT], *values: int) -> _MT:
+        return cls(list(values))
 
 
-@attrs(slots=True, auto_attribs=True, frozen=True, hash=True)
+_PT = TypeVar("_PT", bound="Palette")
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
 class Palette(AbstractPalette):
     color_indexes: tuple[int, ...]
 
     @classmethod
-    def from_values(cls: Type[_T], *values: int) -> _T:
-        return cls(values)  # type: ignore
+    def from_values(cls: Type[_PT], *values: int) -> _PT:
+        return cls(values)

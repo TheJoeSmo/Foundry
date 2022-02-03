@@ -16,7 +16,10 @@ from PySide6.QtWidgets import (
 
 from foundry import icon
 from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroup, PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import (
+    MutablePaletteGroup,
+    MutablePaletteGroupProtocol,
+)
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
@@ -58,7 +61,7 @@ class PlayerViewerModel:
     is_mario: bool
     power_up: int
     power_up_offsets: list[int]
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
     animations: list[PlayerAnimation]
 
     @classmethod
@@ -67,7 +70,7 @@ class PlayerViewerModel:
         is_mario: bool = True,
         power_up: int = 0,
         power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[PaletteGroupProtocol] = None,
+        palette_group: Optional[MutablePaletteGroupProtocol] = None,
         animations: Optional[list[PlayerAnimation]] = None,
     ):
         return cls(
@@ -92,7 +95,7 @@ class PlayerViewerModel:
             is_mario,
             power_up,
             [i for i in power_up_offsets],
-            PaletteGroup(
+            MutablePaletteGroup(
                 [MutablePalette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]
             ),
             load_animations(animations, page_offsets),
@@ -118,7 +121,7 @@ class PlayerViewerModel:
 class PlayerViewerController(CustomChildWindow):
     power_up_changed: SignalInstance = Signal(int)  # type: ignore
     is_mario_changed: SignalInstance = Signal(bool)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(PaletteGroupProtocol)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
     power_up_offsets_changed: SignalInstance = Signal(object)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
 
@@ -129,7 +132,7 @@ class PlayerViewerController(CustomChildWindow):
         is_mario: bool = True,
         power_up: int = 0,
         power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[PaletteGroupProtocol] = None,
+        palette_group: Optional[MutablePaletteGroupProtocol] = None,
         animations: Optional[list[PlayerAnimation]] = None,
     ):
         super().__init__(parent, title)
@@ -283,11 +286,11 @@ class PlayerViewerController(CustomChildWindow):
         self.palette_group = palette_group
 
     @property
-    def palette_group(self) -> PaletteGroupProtocol:
+    def palette_group(self) -> MutablePaletteGroupProtocol:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: PaletteGroupProtocol):
+    def palette_group(self, palette_group: MutablePaletteGroupProtocol):
         self.model.palette_group = palette_group
         self.undo_controller.do(self.model.to_bytes())
         self._update()

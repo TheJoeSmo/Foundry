@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.core.Position import Position
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
@@ -27,19 +27,23 @@ from foundry.gui.CustomChildWindow import CustomChildWindow
 @attrs(slots=True, auto_attribs=True)
 class PatternViewerModel:
     graphics_set: GraphicsSet
-    palette_group: PaletteGroup
+    palette_group: MutablePaletteGroup
     palette_index: int
 
 
 class PatternViewerController(CustomChildWindow):
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     pattern_selected: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
 
     def __init__(
-        self, parent: Optional[QWidget], graphics_set: GraphicsSet, palette_group: PaletteGroup, palette_index: int
+        self,
+        parent: Optional[QWidget],
+        graphics_set: GraphicsSet,
+        palette_group: MutablePaletteGroup,
+        palette_index: int,
     ):
         super().__init__(parent, "Pattern Viewer")
 
@@ -81,11 +85,11 @@ class PatternViewerController(CustomChildWindow):
         self.view.update()
 
     @property
-    def palette_group(self) -> PaletteGroup:
+    def palette_group(self) -> MutablePaletteGroup:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value: PaletteGroup):
+    def palette_group(self, value: MutablePaletteGroup):
         self.model.palette_group = value
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
@@ -114,7 +118,7 @@ class PatternViewerView(QWidget):
         self,
         parent: Optional[QWidget],
         graphics_set: GraphicsSet,
-        palette_group: PaletteGroup,
+        palette_group: MutablePaletteGroup,
         palette_index: int,
         zoom: int = 4,
     ):

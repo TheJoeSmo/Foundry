@@ -4,7 +4,7 @@ from attr import attrs
 from PySide6.QtGui import QColor, QImage, QPainter
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
 from foundry.core.Position import PositionProtocol
 from foundry.core.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
@@ -17,7 +17,7 @@ class SpriteGroupProtocol(Protocol):
     position: PositionProtocol
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
 
     @property
     def size(self) -> SizeProtocol:
@@ -40,14 +40,14 @@ class SpriteGroup:
         The sprites that compose the sprite group.
     graphics_set: GraphicsSetProtocol
         The graphics to render the sprites with.
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
         The palettes to render the sprites with.
     """
 
     position: PositionProtocol
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
 
     @property
     def size(self) -> SizeProtocol:

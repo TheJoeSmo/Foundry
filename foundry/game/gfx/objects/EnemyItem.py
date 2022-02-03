@@ -6,7 +6,7 @@ from foundry.core.graphics_set.GraphicsSet import (
     GraphicsSet,
     GraphicsSetProtocol,
 )
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.core.Position import Position, PositionProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
@@ -23,7 +23,7 @@ MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 
 class EnemyObject(ObjectLike):
-    def __init__(self, data, png_data, palette_group: PaletteGroup):
+    def __init__(self, data, png_data, palette_group: MutablePaletteGroup):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 

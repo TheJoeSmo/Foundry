@@ -3,7 +3,7 @@ from typing import Optional
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level
 from foundry.gui.PaletteGroupEditor import PaletteGroupEditor
@@ -11,7 +11,7 @@ from foundry.gui.PaletteGroupModel import PaletteGroupModel
 
 
 class PaletteGroupController(QWidget):
-    palette_group_changed: SignalInstance = Signal(PaletteGroup, PaletteGroup)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroup, MutablePaletteGroup)  # type: ignore
 
     def __init__(
         self,
@@ -19,8 +19,8 @@ class PaletteGroupController(QWidget):
         tileset: int = 0,
         bg_offset: int = 0,
         spr_offset: int = 0,
-        bg_palette_group: Optional[PaletteGroup] = None,
-        spr_palette_group: Optional[PaletteGroup] = None,
+        bg_palette_group: Optional[MutablePaletteGroup] = None,
+        spr_palette_group: Optional[MutablePaletteGroup] = None,
     ):
         super().__init__(parent)
 
@@ -28,8 +28,8 @@ class PaletteGroupController(QWidget):
             tileset,
             bg_offset,
             spr_offset,
-            bg_palette_group if bg_palette_group is not None else PaletteGroup.as_empty(),
-            spr_palette_group if spr_palette_group is not None else PaletteGroup.as_empty(),
+            bg_palette_group if bg_palette_group is not None else MutablePaletteGroup.as_empty(),
+            spr_palette_group if spr_palette_group is not None else MutablePaletteGroup.as_empty(),
         )
 
         layout = QHBoxLayout()

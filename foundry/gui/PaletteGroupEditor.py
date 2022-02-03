@@ -3,14 +3,14 @@ from typing import Optional
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
-from foundry.core.palette.PaletteGroup import PaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 
 
 class PaletteGroupEditor(QWidget):
-    palette_group_changed: SignalInstance = Signal(PaletteGroupProtocol)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], palette_group: PaletteGroupProtocol):
+    def __init__(self, parent: Optional[QWidget], palette_group: MutablePaletteGroupProtocol):
         super().__init__(parent)
         self._palette_group = palette_group
 
@@ -30,11 +30,11 @@ class PaletteGroupEditor(QWidget):
         return f"{self.__class__.__name__}({self.parent}, {self.palette_group})"
 
     @property
-    def palette_group(self) -> PaletteGroupProtocol:
+    def palette_group(self) -> MutablePaletteGroupProtocol:
         return self._palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: PaletteGroupProtocol):
+    def palette_group(self, palette_group: MutablePaletteGroupProtocol):
         self._palette_group = palette_group
         self.palette_group_changed.emit(palette_group)
         self._update()

@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
@@ -17,7 +17,7 @@ TSA_BANK_3 = 3 * 256
 
 
 @lru_cache(2 ** 10)
-def get_block(block_index: int, palette_group: PaletteGroup, graphics_set: GraphicsSetProtocol, tsa_data: bytes):
+def get_block(block_index: int, palette_group: MutablePaletteGroup, graphics_set: GraphicsSetProtocol, tsa_data: bytes):
     if block_index > 0xFF:
         rom_block_index = ROM().get_byte(block_index)  # block_index is an offset into the graphic memory
         block = Block(rom_block_index, palette_group, graphics_set, tsa_data)
