@@ -1,4 +1,5 @@
-from foundry.core.graphics_set.GraphicsSet import GraphicalPage, GraphicsSet
+from foundry.core.graphics_set.GraphicsPage import GraphicalPage
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import COLORS_PER_PALETTE
 from foundry.core.palette.Palette import MutablePalette
 from foundry.core.palette.PaletteGroup import (

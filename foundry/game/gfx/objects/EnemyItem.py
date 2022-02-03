@@ -1,11 +1,8 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.graphics_set.GraphicsSet import (
-    GraphicalPage,
-    GraphicsSet,
-    GraphicsSetProtocol,
-)
+from foundry.core.graphics_set.GraphicsPage import GraphicalPage
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.core.point.Point import Point, PointProtocol
 from foundry.game.EnemyDefinitions import (
