@@ -1,6 +1,6 @@
 from attr import attrs
 
-from foundry.core.Position import Position
+from foundry.core.point.Point import Point
 from foundry.core.Size import Size
 
 
@@ -16,8 +16,8 @@ class ObjectLike:
         return True
 
     @property
-    def position(self) -> Position:
-        return Position(self.x, self.y)
+    def position(self) -> Point:
+        return Point(self.x, self.y)
 
     @property
     def rendered_size(self) -> Size:

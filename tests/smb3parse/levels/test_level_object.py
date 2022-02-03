@@ -79,7 +79,7 @@ def test_parsing_y(all_zero_3_byte_object_data, all_zero_4_byte_object_data):
         level_object_3_byte = LevelObject(all_zero_3_byte_object_data)
         level_object_4_byte = LevelObject(all_zero_4_byte_object_data)
 
-        # THEN the resulting object should have the expected y position
+        # THEN the resulting object should have the expected y point
         check_object_for_0s(level_object_3_byte, "y", expected_y)
         check_object_for_0s(level_object_4_byte, "y", expected_y)
 
@@ -115,7 +115,7 @@ def test_parsing_x(all_zero_3_byte_object_data, all_zero_4_byte_object_data):
         level_object_3_byte = LevelObject(all_zero_3_byte_object_data)
         level_object_4_byte = LevelObject(all_zero_4_byte_object_data)
 
-        # THEN the resulting object should have the expected x position
+        # THEN the resulting object should have the expected x point
         check_object_for_0s(level_object_3_byte, "x", expected_x)
         check_object_for_0s(level_object_4_byte, "x", expected_x)
 

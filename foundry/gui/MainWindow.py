@@ -288,7 +288,7 @@ class MainWindow(QMainWindow):
         # load world data
         world = SMB3World.from_world_number(rom, SETTINGS["default_starting_world"])
 
-        # find position of "level 1" tile in world map
+        # find point of "level 1" tile in world map
         for position in world.gen_positions():
             if position.tile() == TILE_LEVEL_1:
                 break

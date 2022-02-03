@@ -47,7 +47,7 @@ class JumpEditor(CustomDialog):
         position_layout = QFormLayout()
         position_layout.addRow("Jump on screen:", self.screen_spinner)
 
-        level_group_box = QGroupBox("Level position")
+        level_group_box = QGroupBox("Level point")
         level_group_box.setLayout(position_layout)
 
         self.exit_action = QComboBox(self)
@@ -60,8 +60,8 @@ class JumpEditor(CustomDialog):
 
         exit_layout = QFormLayout()
         exit_layout.addRow("Exit action:", self.exit_action)
-        exit_layout.addRow("Exit position x:", self.exit_horizontal)
-        exit_layout.addRow("Exit position y:", self.exit_vertical)
+        exit_layout.addRow("Exit point x:", self.exit_horizontal)
+        exit_layout.addRow("Exit point y:", self.exit_vertical)
 
         exit_group_box = QGroupBox("Exit options")
         exit_group_box.setLayout(exit_layout)

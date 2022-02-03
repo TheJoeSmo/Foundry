@@ -4,7 +4,7 @@ from attr import attrs
 from PySide6.QtCore import QPoint
 
 
-class PositionProtocol(Protocol):
+class PointProtocol(Protocol):
     """
     A two dimensional representation of a point on a plain.
 
@@ -21,7 +21,7 @@ class PositionProtocol(Protocol):
 
 
 @attrs(slots=True, auto_attribs=True)
-class Position:
+class Point:
     """
     A two dimensional representation of a point on a plain, that uses ``attrs`` to create a basic
     implementation.

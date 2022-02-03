@@ -11,7 +11,7 @@ def test_find_first_level_coordinates(rom: Rom):
     # get world 1 date
     world_1 = WorldMap.from_world_number(rom, 1)
 
-    # find position of level 1
+    # find point of level 1
     for coordinate in world_1.gen_positions():
         if coordinate.tile() == TILE_LEVEL_1:
             break
