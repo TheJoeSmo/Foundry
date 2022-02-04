@@ -4,4 +4,9 @@ foundry
 .. toctree::
    :maxdepth: 4
 
-   foundry
+.. automodule:: foundry
+   :imported-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
