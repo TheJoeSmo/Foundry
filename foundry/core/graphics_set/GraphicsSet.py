@@ -3,7 +3,7 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.graphics_set.GraphicsPage import GraphicalPageProtocol
+from foundry.core.graphics_page.GraphicsPage import GraphicsPageProtocol
 from foundry.core.graphics_set.util import get_graphics_pages_from_tileset
 
 
@@ -13,11 +13,11 @@ class GraphicsSetProtocol(Protocol):
 
     Attributes
     ----------
-    pages: tuple[GraphicalPageProtocol, ...]
+    pages: tuple[GraphicsPageProtocol, ...]
         The pages that compose the graphical set.
     """
 
-    pages: tuple[GraphicalPageProtocol, ...]
+    pages: tuple[GraphicsPageProtocol, ...]
 
     def __bytes__(self) -> bytes:
         ...
@@ -31,11 +31,11 @@ class GraphicsSet:
 
     Attributes
     ----------
-    pages: tuple[GraphicalPageProtocol, ...]
+    pages: tuple[GraphicsPageProtocol, ...]
         The pages that compose the graphical set.
     """
 
-    pages: tuple[GraphicalPageProtocol, ...]
+    pages: tuple[GraphicsPageProtocol, ...]
 
     def __bytes__(self) -> bytes:
         return bytes(chain.from_iterable([bytes(page) for page in self.pages]))

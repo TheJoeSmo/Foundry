@@ -1,4 +1,4 @@
-from foundry.core.graphics_set.GraphicsPage import GraphicalPage
+from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import COLORS_PER_PALETTE
 from foundry.core.palette.Palette import MutablePalette
@@ -24,10 +24,10 @@ from foundry.game.File import ROM
 def load_animations_graphic_set(animation: PlayerAnimation, power_up: int, offsets: list[int]) -> GraphicsSet:
     return GraphicsSet(
         (
-            GraphicalPage(animation.offset + offsets[power_up]),
-            GraphicalPage(animation.offset + offsets[power_up]),
-            GraphicalPage(animation.offset + offsets[power_up]),
-            GraphicalPage(animation.offset + offsets[power_up]),
+            GraphicsPage(animation.offset + offsets[power_up]),
+            GraphicsPage(animation.offset + offsets[power_up]),
+            GraphicsPage(animation.offset + offsets[power_up]),
+            GraphicsPage(animation.offset + offsets[power_up]),
         )
     )
 
