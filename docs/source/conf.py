@@ -18,8 +18,26 @@ from single_source import get_version
 
 root_dir = Path(__file__).parent.parent
 
-sys.path.append(os.path.abspath("../../foundry"))
 sys.path.append(os.path.abspath("../.."))
+sys.path.append(os.path.abspath("../../foundry"))
+sys.path.append(os.path.abspath("../../foundry/core"))
+sys.path.append(os.path.abspath("../../foundry/core/graphics_page"))
+sys.path.append(os.path.abspath("../../foundry/core/graphics_set"))
+sys.path.append(os.path.abspath("../../foundry/core/palette"))
+sys.path.append(os.path.abspath("../../foundry/core/player_animations"))
+sys.path.append(os.path.abspath("../../foundry/core/point"))
+sys.path.append(os.path.abspath("../../foundry/core/size"))
+sys.path.append(os.path.abspath("../../foundry/core/warnings"))
+sys.path.append(os.path.abspath("../../foundry/game"))
+sys.path.append(os.path.abspath("../../foundry/game/gfx"))
+sys.path.append(os.path.abspath("../../foundry/game/gfx/drawable"))
+sys.path.append(os.path.abspath("../../foundry/game/gfx/objects"))
+sys.path.append(os.path.abspath("../../foundry/game/level"))
+sys.path.append(os.path.abspath("../../foundry/gui"))
+sys.path.append(os.path.abspath("../../foundry/smb3parse"))
+sys.path.append(os.path.abspath("../../foundry/smb3parse/levels"))
+sys.path.append(os.path.abspath("../../foundry/smb3parse/objects"))
+sys.path.append(os.path.abspath("../../foundry/smb3parse/util"))
 
 source_suffix = ".rst"
 
