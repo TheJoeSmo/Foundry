@@ -1,4 +1,4 @@
-from foundry.core.graphics_set.GraphicsPage import GraphicalPage, GraphicalPageProtocol
+from foundry.core.graphics_page.GraphicsPage import GraphicsPage, GraphicsPageProtocol
 from foundry.game.File import ROM
 from foundry.smb3parse.constants import Level_BG_Pages1, Level_BG_Pages2
 
@@ -49,24 +49,24 @@ GRAPHIC_SET_NAMES = [
 ]
 
 
-def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicalPageProtocol, ...]:
+def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicsPageProtocol, ...]:
     if tileset == WORLD_MAP:
         return (
-            GraphicalPage(0x14),
-            GraphicalPage(0x15),
-            GraphicalPage(0x16),
-            GraphicalPage(0x17),
-            GraphicalPage(0x20),
-            GraphicalPage(0x21),
-            GraphicalPage(0x22),
-            GraphicalPage(0x23),
+            GraphicsPage(0x14),
+            GraphicsPage(0x15),
+            GraphicsPage(0x16),
+            GraphicsPage(0x17),
+            GraphicsPage(0x20),
+            GraphicsPage(0x21),
+            GraphicsPage(0x22),
+            GraphicsPage(0x23),
         )
     if tileset not in range(BG_PAGE_COUNT):
         return (
-            GraphicalPage(tileset),
-            GraphicalPage(tileset + 1),
-            GraphicalPage(tileset + 2),
-            GraphicalPage(tileset + 3),
+            GraphicsPage(tileset),
+            GraphicsPage(tileset + 1),
+            GraphicsPage(tileset + 2),
+            GraphicsPage(tileset + 3),
         )
     if tileset == HILLY:
         tileset = CORRECTED_HILLY
@@ -76,19 +76,19 @@ def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicalPageProtocol
     graphic_page_index_1 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages1)
     graphic_page_index_2 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages2)
     pages = [
-        GraphicalPage(graphic_page_index_1[tileset]),
-        GraphicalPage(graphic_page_index_1[tileset] + 1),
-        GraphicalPage(graphic_page_index_2[tileset]),
-        GraphicalPage(graphic_page_index_2[tileset] + 1),
+        GraphicsPage(graphic_page_index_1[tileset]),
+        GraphicsPage(graphic_page_index_1[tileset] + 1),
+        GraphicsPage(graphic_page_index_2[tileset]),
+        GraphicsPage(graphic_page_index_2[tileset] + 1),
     ]
 
     if tileset == SPADE_ROULETTE:
-        pages.extend([GraphicalPage(0x20), GraphicalPage(0x21), GraphicalPage(0x22), GraphicalPage(0x23)])
+        pages.extend([GraphicsPage(0x20), GraphicsPage(0x21), GraphicsPage(0x22), GraphicsPage(0x23)])
     elif tileset == N_SPADE:
-        pages.extend([GraphicalPage(0x28), GraphicalPage(0x29), GraphicalPage(0x5A), GraphicalPage(0x31)])
+        pages.extend([GraphicsPage(0x28), GraphicsPage(0x29), GraphicsPage(0x5A), GraphicsPage(0x31)])
     elif tileset == VS_2P:
-        pages.extend([GraphicalPage(0x04), GraphicalPage(0x05), GraphicalPage(0x06), GraphicalPage(0x07)])
+        pages.extend([GraphicsPage(0x04), GraphicsPage(0x05), GraphicsPage(0x06), GraphicsPage(0x07)])
     else:
-        pages.extend([GraphicalPage(0x00), GraphicalPage(0x00), GraphicalPage(0x00), GraphicalPage(0x00)])
+        pages.extend([GraphicsPage(0x00), GraphicsPage(0x00), GraphicsPage(0x00), GraphicsPage(0x00)])
 
     return tuple(pages)
