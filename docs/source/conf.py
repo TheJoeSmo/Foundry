@@ -18,7 +18,8 @@ from single_source import get_version
 
 root_dir = Path(__file__).parent.parent
 
-sys.path.insert(0, os.path.abspath(".../foundry"))
+sys.path.append(os.path.abspath("../../foundry"))
+sys.path.append(os.path.abspath("../.."))
 
 source_suffix = ".rst"
 
