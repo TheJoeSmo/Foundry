@@ -2,9 +2,6 @@ from foundry.core.graphics_set.GraphicsPage import GraphicalPage, GraphicalPageP
 from foundry.game.File import ROM
 from foundry.smb3parse.constants import Level_BG_Pages1, Level_BG_Pages2
 
-CHR_ROM_OFFSET = 0x40010
-CHR_ROM_SEGMENT_SIZE = 0x400
-
 WORLD_MAP = 0
 SPADE_ROULETTE = 16
 N_SPADE = 17

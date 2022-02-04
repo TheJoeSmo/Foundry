@@ -2,8 +2,10 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.graphics_set.GraphicsSet import CHR_ROM_OFFSET, CHR_ROM_SEGMENT_SIZE
 from foundry.game.File import ROM
+
+CHR_ROM_OFFSET = 0x40010
+CHR_ROM_SEGMENT_SIZE = 0x400
 
 
 class GraphicalPageProtocol(Protocol):
