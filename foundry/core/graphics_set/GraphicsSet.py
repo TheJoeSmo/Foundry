@@ -2,8 +2,12 @@ from itertools import chain
 from typing import Protocol
 
 from attr import attrs
+from pydantic import BaseModel
 
-from foundry.core.graphics_page.GraphicsPage import GraphicsPageProtocol
+from foundry.core.graphics_page.GraphicsPage import (
+    GraphicsPageProtocol,
+    PydanticGraphicsPage,
+)
 from foundry.core.graphics_set.util import get_graphics_pages_from_tileset
 
 
@@ -44,3 +48,19 @@ class GraphicsSet:
     def from_tileset(cls, index: int):
         cls.number = index
         return cls(get_graphics_pages_from_tileset(index))
+
+
+class PydanticGraphicsPage(BaseModel):
+    """
+    A JSON model of a generic GraphicsSet through Pydantic.
+
+    Attributes
+    ----------
+    pages: list[PydanticGraphicsPage]
+        The pages that compose the graphical set.
+    """
+
+    pages: list[PydanticGraphicsPage]
+
+    def to_graphics_set(self) -> GraphicsSetProtocol:
+        return GraphicsSet(tuple(page.to_graphics_page() for page in self.pages))
