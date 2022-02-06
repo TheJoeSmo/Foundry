@@ -61,7 +61,7 @@ class AbstractPalette(ABC):
     @property
     def colors(self) -> Sequence[QColor]:
         return [
-            self.color_palette.colors[index & len(self.color_palette.colors)].qcolor for index in self.color_indexes
+            self.color_palette.colors[index % len(self.color_palette.colors)].qcolor for index in self.color_indexes
         ]
 
     @classmethod
