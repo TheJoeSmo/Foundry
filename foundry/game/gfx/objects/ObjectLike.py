@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from PySide6.QtCore import QRect
 
-from foundry.core.Position import PositionProtocol
+from foundry.core.point.Point import PointProtocol
 from foundry.game.Definitions import Definition
 
 EXPANDS_NOT = 0b00
@@ -40,12 +40,12 @@ class ObjectLike(ABC):
 
     @property
     @abstractmethod
-    def position(self) -> PositionProtocol:
+    def position(self) -> PointProtocol:
         pass
 
     @position.setter
     @abstractmethod
-    def position(self, position: PositionProtocol) -> None:
+    def position(self, position: PointProtocol) -> None:
         pass
 
     @abstractmethod

@@ -15,6 +15,11 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import icon
+from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
+from foundry.core.palette.PaletteGroup import (
+    MutablePaletteGroup,
+    MutablePaletteGroupProtocol,
+)
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
@@ -26,17 +31,11 @@ from foundry.core.player_animations.util import (
     load_power_up_palettes,
     save_player_animations_to_rom,
 )
-from foundry.core.Position import Position
+from foundry.core.point.Point import Point
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
 from foundry.core.UndoController import UndoController
-from foundry.game.gfx.Palette import (
-    Palette,
-    PaletteGroup,
-    PaletteGroupProtocol,
-    PaletteProtocol,
-)
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 from foundry.gui.PlayerFrameEditor import (
@@ -62,7 +61,7 @@ class PlayerViewerModel:
     is_mario: bool
     power_up: int
     power_up_offsets: list[int]
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
     animations: list[PlayerAnimation]
 
     @classmethod
@@ -71,7 +70,7 @@ class PlayerViewerModel:
         is_mario: bool = True,
         power_up: int = 0,
         power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[PaletteGroupProtocol] = None,
+        palette_group: Optional[MutablePaletteGroupProtocol] = None,
         animations: Optional[list[PlayerAnimation]] = None,
     ):
         return cls(
@@ -96,7 +95,9 @@ class PlayerViewerModel:
             is_mario,
             power_up,
             [i for i in power_up_offsets],
-            PaletteGroup([Palette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]),
+            MutablePaletteGroup(
+                [MutablePalette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]
+            ),
             load_animations(animations, page_offsets),
         )
 
@@ -120,7 +121,7 @@ class PlayerViewerModel:
 class PlayerViewerController(CustomChildWindow):
     power_up_changed: SignalInstance = Signal(int)  # type: ignore
     is_mario_changed: SignalInstance = Signal(bool)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(PaletteGroupProtocol)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
     power_up_offsets_changed: SignalInstance = Signal(object)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
 
@@ -131,7 +132,7 @@ class PlayerViewerController(CustomChildWindow):
         is_mario: bool = True,
         power_up: int = 0,
         power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[PaletteGroupProtocol] = None,
+        palette_group: Optional[MutablePaletteGroupProtocol] = None,
         animations: Optional[list[PlayerAnimation]] = None,
     ):
         super().__init__(parent, title)
@@ -181,7 +182,7 @@ class PlayerViewerController(CustomChildWindow):
         def set_is_mario(value: bool):
             self.is_mario = value
 
-        def set_palette(value: PaletteProtocol):
+        def set_palette(value: MutablePaletteProtocol):
             self.palette = value
 
         def set_power_up_offset(value: int):
@@ -207,7 +208,7 @@ class PlayerViewerController(CustomChildWindow):
         side_toolbar_layout = QFormLayout(self)
         side_toolbar_layout.addRow("Power Up", self.powerup_combo_box)
         side_toolbar_layout.addRow("Mario or Luigi", self.is_mario_check_box)
-        side_toolbar_layout.addRow("Palette Editor", self.palette_editor)
+        side_toolbar_layout.addRow("palette Editor", self.palette_editor)
         side_toolbar_layout.addRow("Page Offset", self.power_up_offset_spinner)
 
         class LayoutWidget(QWidget):
@@ -275,21 +276,21 @@ class PlayerViewerController(CustomChildWindow):
         self.power_up_offsets_changed.emit(offsets)
 
     @property
-    def palette(self) -> PaletteProtocol:
+    def palette(self) -> MutablePaletteProtocol:
         return self.palette_group[get_animations_palette_index(self.is_mario, self.power_up)]
 
     @palette.setter
-    def palette(self, palette: PaletteProtocol):
+    def palette(self, palette: MutablePaletteProtocol):
         palette_group = self.palette_group
         palette_group[get_animations_palette_index(self.is_mario, self.power_up)] = palette
         self.palette_group = palette_group
 
     @property
-    def palette_group(self) -> PaletteGroupProtocol:
+    def palette_group(self) -> MutablePaletteGroupProtocol:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: PaletteGroupProtocol):
+    def palette_group(self, palette_group: MutablePaletteGroupProtocol):
         self.model.palette_group = palette_group
         self.undo_controller.do(self.model.to_bytes())
         self._update()
@@ -311,7 +312,7 @@ class PlayerViewerController(CustomChildWindow):
             for idx, sprite in enumerate(animation.frames):
                 sprites.append(
                     Sprite(
-                        Position(
+                        Point(
                             (idx % ANIMATION_WIDTH) * SPRITE_SIZE.width,
                             (idx // ANIMATION_WIDTH) * SPRITE_SIZE.height,
                         ),
@@ -322,7 +323,7 @@ class PlayerViewerController(CustomChildWindow):
                     )
                 )
 
-            sprite_groups.append(SpriteGroup(Position(0, 0), sprites, animation.graphics_set, animation.palette_group))
+            sprite_groups.append(SpriteGroup(Point(0, 0), sprites, animation.graphics_set, animation.palette_group))
 
         return sprite_groups
 

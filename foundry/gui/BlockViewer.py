@@ -11,12 +11,13 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
-from foundry.core.Position import Position
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.point.Point import Point
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.GraphicsSet import GraphicsSet
-from foundry.game.gfx.Palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
 from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
@@ -95,7 +96,7 @@ class BlockViewerController(CustomChildWindow):
         self.palette_group_changed.connect(self.palette_group_spinner.setValue)
 
         self.toolbar.addWidget(self.bank_dropdown)
-        self.toolbar.addWidget(QLabel(" Object Palette: "))
+        self.toolbar.addWidget(QLabel(" Object palette: "))
         self.toolbar.addWidget(self.palette_group_spinner)
 
         self.addToolBar(self.toolbar)
@@ -141,7 +142,7 @@ class BlockViewerController(CustomChildWindow):
         self.view.update()
         if self.editor is not None:
             self.editor.silent_update_tsa_data(self.tsa_data)
-            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, self.palette_group)
+            self.editor.palette_group = MutablePaletteGroup.from_tileset(self.tileset, self.palette_group)
             self.editor.graphics_set = GraphicsSet.from_tileset(self.tileset)
 
     @property
@@ -155,7 +156,7 @@ class BlockViewerController(CustomChildWindow):
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
         if self.editor is not None:
-            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, value)
+            self.editor.palette_group = MutablePaletteGroup.from_tileset(self.tileset, value)
 
     def _on_block_selected(self, index: int):
         if self.editor is None:
@@ -164,7 +165,7 @@ class BlockViewerController(CustomChildWindow):
                 ROM.get_tsa_data(self.tileset),
                 index,
                 GraphicsSet.from_tileset(self.tileset),
-                PaletteGroup.from_tileset(self.tileset, self.palette_group),
+                MutablePaletteGroup.from_tileset(self.tileset, self.palette_group),
                 index // 0x40,
             )
 
@@ -217,7 +218,7 @@ class BlockViewerView(QWidget):
         return Block.WIDTH * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
         dec_index = pos.y * self.BLOCKS_PER_ROW + pos.x
@@ -228,7 +229,7 @@ class BlockViewerView(QWidget):
         self.parent().statusBar().showMessage(status_message)  # type: ignore
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
         index = pos.y * self.BLOCKS_PER_ROW + pos.x
@@ -237,7 +238,7 @@ class BlockViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
+        palette = MutablePaletteGroup.from_tileset(self.object_set, self.palette_group)
         frozen_palette = tuple(tuple(c for c in pal) for pal in palette)
         bg_color = palette.background_color
         painter.setBrush(QBrush(bg_color))

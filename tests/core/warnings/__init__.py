@@ -1,7 +1,7 @@
 from attr import attrs
 
-from foundry.core.Position import Position
-from foundry.core.Size import Size
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 
 
 @attrs(slots=True, frozen=True, auto_attribs=True)
@@ -16,8 +16,8 @@ class ObjectLike:
         return True
 
     @property
-    def position(self) -> Position:
-        return Position(self.x, self.y)
+    def position(self) -> Point:
+        return Point(self.x, self.y)
 
     @property
     def rendered_size(self) -> Size:

@@ -1,7 +1,10 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.Position import Position, PositionProtocol
+from foundry.core.graphics_page.GraphicsPage import GraphicsPage
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
+from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.point.Point import Point, PointProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
@@ -10,16 +13,14 @@ from foundry.game.EnemyDefinitions import (
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.drawable.Sprite import get_sprite
-from foundry.game.gfx.GraphicsSet import GraphicalPage, GraphicsSet, GraphicsSetProtocol
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
-from foundry.game.gfx.Palette import PaletteGroup
 
 MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 
 class EnemyObject(ObjectLike):
-    def __init__(self, data, png_data, palette_group: PaletteGroup):
+    def __init__(self, data, png_data, palette_group: MutablePaletteGroup):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
@@ -55,7 +56,7 @@ class EnemyObject(ObjectLike):
     @property
     def graphics_set(self) -> GraphicsSetProtocol:
         if GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation:
-            return GraphicsSet(tuple(GraphicalPage(page) for page in self.definition.pages))
+            return GraphicsSet(tuple(GraphicsPage(page) for page in self.definition.pages))
         else:
             raise NotImplementedError
 
@@ -177,15 +178,15 @@ class EnemyObject(ObjectLike):
         return self.rect.contains(x, y)
 
     def move_by(self, dx, dy):
-        self.position = Position(self.position.x + dx, self.position.y + dy)
+        self.position = Point(self.position.x + dx, self.position.y + dy)
 
     @property
-    def position(self) -> PositionProtocol:
+    def position(self) -> PointProtocol:
         return self.enemy.position
 
     @position.setter
-    def position(self, position: PositionProtocol):
-        self.enemy.position = Position(max(0, position.x), max(0, position.y))
+    def position(self, position: PointProtocol):
+        self.enemy.position = Point(max(0, position.x), max(0, position.y))
 
     @property
     def obj_index(self):

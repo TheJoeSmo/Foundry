@@ -2,7 +2,7 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.Position import Position, PositionProtocol
+from foundry.core.point.Point import Point, PointProtocol
 
 
 class EnemyProtocol(Protocol):
@@ -13,12 +13,12 @@ class EnemyProtocol(Protocol):
     ----------
     type: int
         The type of enemy
-    position: PositionProtocol
-        The position of the enemy
+    point: PointProtocol
+        The point of the enemy
     """
 
     type: int
-    position: PositionProtocol
+    position: PointProtocol
 
     def __bytes__(self) -> bytes:
         ...
@@ -37,16 +37,16 @@ class Enemy:
     ----------
     type: int
         The type of enemy
-    position: PositionProtocol
-        The position of the enemy
+    point: PointProtocol
+        The point of the enemy
     """
 
     type: int
-    position: PositionProtocol
+    position: PointProtocol
 
     def __bytes__(self) -> bytes:
         return bytes([self.type, self.position.x, self.position.y])
 
     @classmethod
     def from_bytes(cls, data: bytes):
-        return cls(data[0], Position(data[1], data[2]))
+        return cls(data[0], Point(data[1], data[2]))

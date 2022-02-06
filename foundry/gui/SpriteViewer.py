@@ -6,25 +6,25 @@ from PySide6.QtGui import QCloseEvent, QMouseEvent, QPainter, QPaintEvent, QResi
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
-from foundry.core.Position import Position
-from foundry.core.Size import Size, SizeProtocol
+from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
+from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
-from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import PaletteGroupProtocol
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 
 @attrs(slots=True, auto_attribs=True)
 class SpriteViewerModel:
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
     palette_index: int
 
 
 class SpriteViewerController(CustomChildWindow):
     graphics_set_changed: SignalInstance = Signal(GraphicsSetProtocol)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(PaletteGroupProtocol)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     sprite_selected: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
@@ -33,7 +33,7 @@ class SpriteViewerController(CustomChildWindow):
         self,
         parent: Optional[QWidget],
         graphics_set: GraphicsSetProtocol,
-        palette_group: PaletteGroupProtocol,
+        palette_group: MutablePaletteGroupProtocol,
         palette_index: int,
     ):
         super().__init__(parent, "Sprite Viewer")
@@ -78,11 +78,11 @@ class SpriteViewerController(CustomChildWindow):
         self.view.update()
 
     @property
-    def palette_group(self) -> PaletteGroupProtocol:
+    def palette_group(self) -> MutablePaletteGroupProtocol:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value: PaletteGroupProtocol):
+    def palette_group(self, value: MutablePaletteGroupProtocol):
         self.model.palette_group = value
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
@@ -112,7 +112,7 @@ class SpriteViewerView(QWidget):
         self,
         parent: Optional[QWidget],
         graphics_set: GraphicsSetProtocol,
-        palette_group: PaletteGroupProtocol,
+        palette_group: MutablePaletteGroupProtocol,
         palette_index: int,
         zoom: int = 4,
     ):
@@ -145,7 +145,7 @@ class SpriteViewerView(QWidget):
         return Size(SPRITE_SIZE.width * self.zoom, SPRITE_SIZE.height * self.zoom)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.sprite_size.width, pos.y // self.sprite_size.height
 
         dec_index = pos.y * self.SPRITES_PER_ROW + pos.x
@@ -154,7 +154,7 @@ class SpriteViewerView(QWidget):
         self.mouse_moved.emit(pos.x, pos.y, dec_index, hex_index)
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Position.from_qpoint(event.pos())
+        pos = Point.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.sprite_size.width, pos.y // self.sprite_size.height
 
         index = pos.y * self.SPRITES_PER_ROW + pos.x

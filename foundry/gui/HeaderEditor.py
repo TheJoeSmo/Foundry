@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.game.gfx.GraphicsSet import GRAPHIC_SET_NAMES
+from foundry.core.graphics_set.util import GRAPHIC_SET_NAMES
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
@@ -182,8 +182,8 @@ class HeaderEditor(CustomDialog):
         form = QFormLayout()
         form.setFormAlignment(Qt.AlignCenter)
 
-        form.addRow("Object Palette: ", self.object_palette_spinner)
-        form.addRow("Enemy Palette: ", self.enemy_palette_spinner)
+        form.addRow("Object palette: ", self.object_palette_spinner)
+        form.addRow("Enemy palette: ", self.enemy_palette_spinner)
         form.addRow("Graphic Set: ", self.graphic_set_dropdown)
 
         widget = QWidget()

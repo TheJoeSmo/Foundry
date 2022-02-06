@@ -3,21 +3,21 @@ from typing import Protocol
 from attr import attrs
 from PySide6.QtGui import QColor, QImage, QPainter
 
-from foundry.core.Position import PositionProtocol
-from foundry.core.Size import Size, SizeProtocol
+from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
+from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.point.Point import PointProtocol
+from foundry.core.size.Size import Size, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
-from foundry.game.gfx.GraphicsSet import GraphicsSetProtocol
-from foundry.game.gfx.Palette import PaletteGroupProtocol
 
 
 class SpriteGroupProtocol(Protocol):
-    position: PositionProtocol
+    position: PointProtocol
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
 
     @property
     def size(self) -> SizeProtocol:
@@ -34,20 +34,20 @@ class SpriteGroup:
 
     Attributes
     ----------
-    position: PositionProtocol
-        The position of the sprite group.
+    point: PointProtocol
+        The point of the sprite group.
     sprites: list[SpriteProtocol]
         The sprites that compose the sprite group.
     graphics_set: GraphicsSetProtocol
         The graphics to render the sprites with.
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
         The palettes to render the sprites with.
     """
 
-    position: PositionProtocol
+    position: PointProtocol
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: MutablePaletteGroupProtocol
 
     @property
     def size(self) -> SizeProtocol:

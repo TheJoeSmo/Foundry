@@ -81,7 +81,7 @@ class SettingsDialog(CustomDialog):
 
         label = QLabel("Show object names on hover:")
         label.setToolTip(
-            "When hovering your cursor over an object in a level, its name and position is shown in a tooltip."
+            "When hovering your cursor over an object in a level, its name and point is shown in a tooltip."
         )
         self._tooltip_check_box = QCheckBox("Enabled")
         self._tooltip_check_box.setChecked(SETTINGS["object_tooltip_enabled"])

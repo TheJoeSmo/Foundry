@@ -30,7 +30,7 @@ class JumpList(QListWidget):
             "and how to enter that level can be defined multiple times with multiple jumps.<br/>"
             "A jump is valid for one screen, a 16-block wide/high section of the level, depending on if the level is "
             "vertical or not, and all objects within that section, capable of handling a jump, will jump to the same "
-            "position in the same way. To see where these jump zones are, enable the Jump Zone option in the View menu."
+            "point in the same way. To see where these jump zones are, enable the Jump Zone option in the View menu."
             "<br/><br/>"
             "Tip: By having multiple jumps with different entry positions, you could make it look, like you are "
             "jumping to two different levels, when, in fact, you are jumping to two different sections of the same "

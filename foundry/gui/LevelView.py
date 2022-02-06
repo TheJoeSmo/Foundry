@@ -15,7 +15,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
-from foundry.core.Position import Position
+from foundry.core.point.Point import Point
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -691,13 +691,13 @@ class LevelView(QWidget):
 
     def object_at(self, x: int, y: int) -> Optional[Union[LevelObject, EnemyObject]]:
         """
-        Returns an enemy or level object at the position. The x and y is relative to the View (for example, when you
+        Returns an enemy or level object at the point. The x and y is relative to the View (for example, when you
         receive a mouse event) and will be converted into level coordinates internally.
 
-        :param int x: X position on the View, where the object is queried at.
-        :param int y: Y position on the View, where the object is queried at.
+        :param int x: X point on the View, where the object is queried at.
+        :param int y: Y point on the View, where the object is queried at.
 
-        :return: An enemy/level object, or None, if none is at the position.
+        :return: An enemy/level object, or None, if none is at the point.
         """
         level_x, level_y = self._to_level_point(x, y)
 
@@ -802,7 +802,7 @@ class LevelView(QWidget):
 
         level_object = self._object_from_mime_data(event.mimeData())
 
-        level_object.position = Position(x, y)
+        level_object.position = Point(x, y)
 
         self.currently_dragged_object = level_object
 

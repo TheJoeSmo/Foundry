@@ -73,7 +73,7 @@ def test_level_smaller(level_view):
 @pytest.mark.parametrize("coordinates", [(233, 409)])  # goomba
 @pytest.mark.parametrize("wheel_delta, type_change", [(10, 1), (-10, -1)])  # scroll wheel up  # scroll wheel down
 def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_window, qtbot):
-    # GIVEN a level view and a cursor position over an object
+    # GIVEN a level view and a cursor point over an object
     x, y = coordinates
 
     level_view = main_window.level_view
