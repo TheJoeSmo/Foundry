@@ -12,6 +12,10 @@ class ColorProtocol(Protocol):
     green: int
     alpha: int
 
+    @cached_property
+    def qcolor(self) -> QColor:
+        return QColor(self.red, self.green, self.blue, self.alpha)
+
 
 def _check_in_color_range(inst, attr, value):
     if not 0 <= value <= 0xFF:

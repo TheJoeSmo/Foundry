@@ -1,15 +1,17 @@
 from abc import ABC, abstractmethod
-from typing import Protocol, Sequence, Type, TypeVar
+from typing import Optional, Protocol, Sequence, Type, TypeVar
 
 from attr import attrs
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, NESPalette
+from foundry.core.palette.ColorPalette import ColorPaletteCreator, ColorPaletteProtocol
 from foundry.game.File import ROM
 
 
 class PaletteProtocol(Protocol):
     color_indexes: Sequence[int]
+    color_palette: ColorPaletteProtocol
 
     def __bytes__(self) -> bytes:
         ...
@@ -41,6 +43,7 @@ class AbstractPalette(ABC):
     """
 
     color_indexes: Sequence[int]
+    color_palette: ColorPaletteProtocol
 
     def __bytes__(self) -> bytes:
         return bytes([i & 0xFF for i in self.color_indexes])
@@ -54,7 +57,9 @@ class AbstractPalette(ABC):
 
     @classmethod
     @abstractmethod
-    def from_values(cls: Type[_T], *values: int) -> _T:
+    def from_values(
+        cls: Type[_T], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+    ) -> _T:
         """
         A generalized way to create itself from a series of values.
 
@@ -80,7 +85,7 @@ class AbstractPalette(ABC):
         AbstractPalette
             A palette that is equal to the original palette.
         """
-        return cls.from_values(*palette.color_indexes)
+        return cls.from_values(palette.color_indexes, palette.color_palette)
 
     @classmethod
     def as_empty(cls: Type[_T]) -> _T:
@@ -92,7 +97,7 @@ class AbstractPalette(ABC):
         AbstractPalette
             A palette filled with default values.
         """
-        return cls.from_values(0, 0, 0, 0)
+        return cls.from_values([0, 0, 0, 0])
 
     @classmethod
     def from_rom(cls: Type[_T], address: int) -> _T:
@@ -109,7 +114,7 @@ class AbstractPalette(ABC):
         AbstractPalette
             The palette that represents the absolute address in ROM.
         """
-        return cls.from_values(*tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
+        return cls.from_values(tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
 
 
 _MT = TypeVar("_MT", bound="MutablePalette")
@@ -118,13 +123,19 @@ _MT = TypeVar("_MT", bound="MutablePalette")
 @attrs(slots=True, auto_attribs=True, eq=True)
 class MutablePalette(AbstractPalette):
     color_indexes: list[int]
+    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
 
     def __setitem__(self, key: int, value: int):
         self.color_indexes[key] = value
 
     @classmethod
-    def from_values(cls: Type[_MT], *values: int) -> _MT:
-        return cls(list(values))
+    def from_values(
+        cls: Type[_MT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+    ) -> _MT:
+        if color_palette is None:
+            return cls(list(color_indexes))
+        else:
+            return cls(list(color_indexes), color_palette)
 
 
 _PT = TypeVar("_PT", bound="Palette")
@@ -133,7 +144,13 @@ _PT = TypeVar("_PT", bound="Palette")
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
 class Palette(AbstractPalette):
     color_indexes: tuple[int, ...]
+    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
 
     @classmethod
-    def from_values(cls: Type[_PT], *values: int) -> _PT:
-        return cls(values)
+    def from_values(
+        cls: Type[_PT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+    ) -> _PT:
+        if color_palette is None:
+            return cls(tuple(color_indexes))
+        else:
+            return cls(tuple(color_indexes), color_palette)
