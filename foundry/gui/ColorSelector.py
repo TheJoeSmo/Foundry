@@ -10,7 +10,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.core.palette import NESPalette
+from foundry.core.palette.ColorPalette import (
+    ColorPaletteProtocol,
+    PydanticDefaultColorPalette,
+)
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 from foundry.gui.CustomDialog import CustomDialog
 
@@ -21,10 +24,19 @@ class ColorSelector(CustomDialog):
 
     ok_clicked: SignalInstance = Signal(int)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], title: str = "NES Color Table", size: Optional[QSize] = None):
+    def __init__(
+        self,
+        parent: Optional[QWidget],
+        title: str = "NES Color Table",
+        size: Optional[QSize] = None,
+        color_palette: Optional[ColorPaletteProtocol] = None,
+    ):
         super().__init__(parent, title=title)
 
         self.size_ = size if not None else QSize(24, 24)
+        self.color_palette = (
+            color_palette if color_palette is not None else PydanticDefaultColorPalette(type="DEFAULT").color_palette
+        )
 
         self._selected_button = 0
 
@@ -34,8 +46,8 @@ class ColorSelector(CustomDialog):
         self._color_buttons = []
         for row in range(self.ROWS):
             for column in range(self.COLUMNS):
-                color = NESPalette[row * self.COLUMNS + column]
-                button = ColorButtonWidget(self, color, self.size_)
+                color = self.color_palette.colors[row * self.COLUMNS + column]
+                button = ColorButtonWidget(self, color.qcolor, self.size_)
                 button.setLineWidth(0)
                 self._color_buttons.append(button)
                 self.layout_.addWidget(button, row, column)
