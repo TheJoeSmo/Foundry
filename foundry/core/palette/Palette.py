@@ -4,7 +4,7 @@ from typing import Optional, Protocol, Sequence, Type, TypeVar
 from attr import attrs
 from PySide6.QtGui import QColor
 
-from foundry.core.palette import COLORS_PER_PALETTE, NESPalette
+from foundry.core.palette import COLORS_PER_PALETTE
 from foundry.core.palette.ColorPalette import ColorPaletteCreator, ColorPaletteProtocol
 from foundry.game.File import ROM
 
@@ -53,7 +53,9 @@ class AbstractPalette(ABC):
 
     @property
     def colors(self) -> Sequence[QColor]:
-        return [NESPalette[c & 0x3F] for c in self.color_indexes]
+        return [
+            self.color_palette.colors[index & len(self.color_palette.colors)].qcolor for index in self.color_indexes
+        ]
 
     @classmethod
     @abstractmethod
