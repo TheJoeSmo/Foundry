@@ -1,6 +1,6 @@
 from PySide6.QtGui import QColor
 
-from foundry import root_dir
+from foundry import data_dir, root_dir
 from foundry.smb3parse.constants import BASE_OFFSET, Palette_By_Tileset, PalSet_Maps
 
 MAP_PALETTE_ADDRESS = PalSet_Maps
@@ -21,8 +21,10 @@ PALETTE_DATA_SIZE = (
 )
 COLOR_COUNT = 64
 BYTES_IN_COLOR = 3 + 1  # bytes + separator
+PALETTE_FILE_PATH = data_dir / "palette.json"
 palette_file = root_dir.joinpath("data", "Default.pal")
 
+PALETTE_FILE_COLOR_OFFSET = 0x18
 offset = 0x18  # first color point
 NESPalette: list[QColor] = []
 with open(palette_file, "rb") as f:
