@@ -12,7 +12,7 @@ class ColorProtocol(Protocol):
     green: int
     alpha: int
 
-    @cached_property
+    @property
     def qcolor(self) -> QColor:
         return QColor(self.red, self.green, self.blue, self.alpha)
 
@@ -30,7 +30,7 @@ class Color:
     green: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     alpha: int = field(default=255, validator=[validators.instance_of(int), _check_in_color_range])
 
-    @cached_property
+    @property
     def qcolor(self) -> QColor:
         return QColor(self.red, self.green, self.blue, self.alpha)
 
