@@ -8,8 +8,8 @@ from PySide6.QtGui import QColor
 
 class ColorProtocol(Protocol):
     red: int
-    blue: int
     green: int
+    blue: int
     alpha: int
 
     @property
@@ -26,8 +26,8 @@ def _check_in_color_range(inst, attr, value):
 @attrs(slots=True, frozen=True, eq=True, hash=True)
 class Color:
     red: int = field(validator=[validators.instance_of(int), _check_in_color_range])
-    blue: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     green: int = field(validator=[validators.instance_of(int), _check_in_color_range])
+    blue: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     alpha: int = field(default=255, validator=[validators.instance_of(int), _check_in_color_range])
 
     @property
