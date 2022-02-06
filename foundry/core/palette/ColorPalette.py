@@ -1,5 +1,6 @@
 from enum import Enum
 from functools import cached_property
+from json import loads
 from pathlib import Path
 from typing import Protocol, Sequence
 
@@ -33,6 +34,7 @@ class ColorPaletteType(str, Enum):
     default = "DEFAULT"
     colors = "COLORS"
     palette_file = "PALETTE FILE"
+    json_file = "JSON FILE"
 
     @classmethod
     def has_value(cls, value):
@@ -155,6 +157,49 @@ class PydanticPaletteFileColorPalette(PydanticColorPalette):
         return palette_file_to_color_palette(self.path)
 
 
+def json_file_to_color_palette(path: Path) -> ColorPaletteProtocol:
+    """
+    Generates a color palette from a JSON file.
+
+    Parameters
+    ----------
+    path : Path
+        The path to the JSON file.
+
+    Returns
+    -------
+    ColorPaletteProtocol
+        The color palette that represents the JSON file.
+    """
+    with open(path, "r") as f:
+        return ColorPaletteCreator.generate_color_palette(loads(f.read())).color_palette
+
+
+class PydanticJSONFileColorPalette(PydanticColorPalette):
+    """
+    A color palette which generates itself from another file.
+
+    Attributes
+    ----------
+    path: FilePath
+        A JSON file to be converted to a color palette.
+    """
+
+    path: FilePath
+
+    @cached_property
+    def color_palette(self) -> ColorPaletteProtocol:
+        """
+        Provides the representation of a color palette from the Pydantic version.
+
+        Returns
+        -------
+        ColorPaletteProtocol
+            The corresponding color palette.
+        """
+        return json_file_to_color_palette(self.path)
+
+
 class PydanticDefaultColorPalette(PydanticColorPalette):
     """
     A color palette which represents the NES colors inside the game.
@@ -170,7 +215,7 @@ class PydanticDefaultColorPalette(PydanticColorPalette):
         ColorPaletteProtocol
             The corresponding color palette.
         """
-        return PydanticPaletteFileColorPalette(type="PALETTE FILE", path=PALETTE_FILE_PATH).color_palette
+        return PydanticJSONFileColorPalette(type="JSON FILE", path=PALETTE_FILE_PATH).color_palette
 
 
 class ColorPaletteCreator(BaseModel):
@@ -218,6 +263,8 @@ class ColorPaletteCreator(BaseModel):
             return PydanticColorsColorPalette(**v)
         if type_ == ColorPaletteType.palette_file:
             return PydanticPaletteFileColorPalette(**v)
+        if type_ == ColorPaletteType.json_file:
+            return PydanticJSONFileColorPalette(**v)
         raise NotImplementedError(f"There is no color palette of type {type_}")
 
     @classmethod
