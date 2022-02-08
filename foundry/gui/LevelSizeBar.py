@@ -73,7 +73,7 @@ class LevelSizeBar(QWidget):
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         self.setWhatsThis(
-            "<b>Size Bar</b><br/>"
+            "<b>MutableSize Bar</b><br/>"
             "This bar shows, how much of the available space inside the level is currently taken up. It will turn "
             "red, when too many level objects have been placed (or if the level objects would result in more bytes, "
             "than the level originally had)."

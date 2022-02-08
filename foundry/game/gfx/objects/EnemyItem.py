@@ -4,7 +4,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point, PointProtocol
+from foundry.core.point.Point import MutablePoint, PointProtocol
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
@@ -178,7 +178,7 @@ class EnemyObject(ObjectLike):
         return self.rect.contains(x, y)
 
     def move_by(self, dx, dy):
-        self.position = Point(self.position.x + dx, self.position.y + dy)
+        self.position = MutablePoint(self.position.x + dx, self.position.y + dy)
 
     @property
     def position(self) -> PointProtocol:
@@ -186,7 +186,7 @@ class EnemyObject(ObjectLike):
 
     @position.setter
     def position(self, position: PointProtocol):
-        self.enemy.position = Point(max(0, position.x), max(0, position.y))
+        self.enemy.position = MutablePoint(max(0, position.x), max(0, position.y))
 
     @property
     def obj_index(self):

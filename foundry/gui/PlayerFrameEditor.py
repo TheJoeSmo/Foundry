@@ -13,7 +13,7 @@ from foundry.core.player_animations.util import (
     get_animations_palette_index,
     load_player_animation,
 )
-from foundry.core.point.Point import Point
+from foundry.core.point.Point import MutablePoint
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
@@ -155,7 +155,7 @@ class PlayerFrameEditorController(CustomChildWindow):
             for idx, sprite in enumerate(animation.frames):
                 sprites.append(
                     Sprite(
-                        Point(
+                        MutablePoint(
                             (idx % ANIMATION_WIDTH) * SPRITE_SIZE.width,
                             (idx // ANIMATION_WIDTH) * SPRITE_SIZE.height,
                         ),
@@ -166,7 +166,9 @@ class PlayerFrameEditorController(CustomChildWindow):
                     )
                 )
 
-            sprite_groups.append(SpriteGroup(Point(0, 0), sprites, animation.graphics_set, animation.palette_group))
+            sprite_groups.append(
+                SpriteGroup(MutablePoint(0, 0), sprites, animation.graphics_set, animation.palette_group)
+            )
 
         return sprite_groups
 
