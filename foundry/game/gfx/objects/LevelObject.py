@@ -6,8 +6,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point, PointProtocol
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.point.Point import MutablePoint, PointProtocol
+from foundry.core.size.Size import MutableSize, SizeProtocol
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
@@ -76,7 +76,7 @@ class LevelObject(GeneratorObject):
         self.object_set = ObjectSet(object_set)
 
         self.graphics_set = graphics_set
-        self._position = Point(0, 0)
+        self._position = MutablePoint(0, 0)
         self._ignore_rendered_position = False
 
         self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
@@ -581,7 +581,7 @@ class LevelObject(GeneratorObject):
         )
 
     def move_by(self, dx: int, dy: int):
-        self.position = Point(self.position.x + dx, self.position.y + dy)
+        self.position = MutablePoint(self.position.x + dx, self.position.y + dy)
 
     @property
     def position(self) -> PointProtocol:
@@ -594,7 +594,7 @@ class LevelObject(GeneratorObject):
             y += offset
             x %= SCREEN_WIDTH
 
-        return Point(x, y)
+        return MutablePoint(x, y)
 
     @position.setter
     def position(self, position: PointProtocol) -> None:
@@ -621,34 +621,36 @@ class LevelObject(GeneratorObject):
     @property
     def rendered_position(self) -> PointProtocol:
         if self._ignore_rendered_position:
-            return Point(0, 0)
+            return MutablePoint(0, 0)
         elif self.orientation == GeneratorType.TO_THE_SKY:
-            return Point(self.position.x, SKY)
+            return MutablePoint(self.position.x, SKY)
         elif self.orientation in [GeneratorType.DIAG_UP_RIGHT]:
-            return Point(self.position.x, self.position.y - self.rendered_size.height + 1)
+            return MutablePoint(self.position.x, self.position.y - self.rendered_size.height + 1)
         elif self.orientation in [GeneratorType.DIAG_DOWN_LEFT]:
             if self.object_set.number == 3 or self.object_set.number == 14:  # Sky or Hilly tileset
-                return Point(self.position.x - (self.rendered_size.width - self.scale.width + 1), self.position.y)
+                return MutablePoint(
+                    self.position.x - (self.rendered_size.width - self.scale.width + 1), self.position.y
+                )
             else:
-                return Point(self.position.x - (self.rendered_size.width - self.scale.width), self.position.y)
+                return MutablePoint(self.position.x - (self.rendered_size.width - self.scale.width), self.position.y)
 
         elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
-            return Point(self.position.x - (self.rendered_size.width // 2) + 1, self.position.y)
+            return MutablePoint(self.position.x - (self.rendered_size.width // 2) + 1, self.position.y)
         elif self.name.lower() == "black boss room background":
-            return Point(self.position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
+            return MutablePoint(self.position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
         return self.position
 
     @property
     def scale(self) -> SizeProtocol:
-        return Size(self.definition.bmp_width, self.definition.bmp_height)
+        return MutableSize(self.definition.bmp_width, self.definition.bmp_height)
 
     @property
     def rendered_size(self) -> SizeProtocol:
         if self.orientation == GeneratorType.TO_THE_SKY:
-            return Size(self.scale.width, self.position.y + self.scale.height - 1)
+            return MutableSize(self.scale.width, self.position.y + self.scale.height - 1)
         elif self.orientation == GeneratorType.DESERT_PIPE_BOX:
             segments = (self.length + 1) * 2
-            return Size(segments * self.scale.width + 1, 4 * self.scale.height)
+            return MutableSize(segments * self.scale.width + 1, 4 * self.scale.height)
         elif self.orientation in [
             GeneratorType.DIAG_DOWN_LEFT,
             GeneratorType.DIAG_DOWN_RIGHT,
@@ -656,15 +658,15 @@ class LevelObject(GeneratorObject):
             GeneratorType.DIAG_WEIRD,
         ]:
             if self.ending == EndType.UNIFORM:
-                return Size((self.length + 1) * self.scale.width, (self.length + 1) * self.scale.height)
+                return MutableSize((self.length + 1) * self.scale.width, (self.length + 1) * self.scale.height)
             elif self.ending == EndType.END_ON_TOP_OR_LEFT:
-                return Size((self.length + 1) * (self.scale.width - 1), (self.length + 1))
+                return MutableSize((self.length + 1) * (self.scale.width - 1), (self.length + 1))
             else:
-                return Size((self.length + 1) * (self.scale.width - 1), (self.length + 1) * self.scale.height)
+                return MutableSize((self.length + 1) * (self.scale.width - 1), (self.length + 1) * self.scale.height)
         elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
-            size = Size(1, 1)
+            size = MutableSize(1, 1)
             for y in range(self.position.y, self.ground_level):
-                size = Size(2 * (y - self.position.y), (y - self.position.y))
+                size = MutableSize(2 * (y - self.position.y), (y - self.position.y))
                 bottom_row = QRect(self.position.x, y, size.width, 1)
                 if any(
                     [
@@ -677,9 +679,9 @@ class LevelObject(GeneratorObject):
         elif self.orientation == GeneratorType.ENDING:
             page_width = 16
             page_limit = page_width - self.position.x % page_width
-            return Size(page_width + page_limit, (GROUND - 1) - SKY)
+            return MutableSize(page_width + page_limit, (GROUND - 1) - SKY)
         elif self.orientation == GeneratorType.VERTICAL:
-            size = Size(self.scale.width, self.length + 1)
+            size = MutableSize(self.scale.width, self.length + 1)
 
             if self.ending == EndType.UNIFORM:
                 if self.is_4byte:
@@ -691,7 +693,7 @@ class LevelObject(GeneratorObject):
                 size.height *= self.scale.height
             return size
         elif self.orientation in [GeneratorType.HORIZONTAL, GeneratorType.HORIZ_TO_GROUND, GeneratorType.HORIZONTAL_2]:
-            size = Size(self.length + 1, self.scale.height)
+            size = MutableSize(self.length + 1, self.scale.height)
 
             downwards_extending_vine = 1, 0, 0x06
             wooden_sky_pole = 4, 0, 0x04
@@ -748,7 +750,7 @@ class LevelObject(GeneratorObject):
                         size.height = self.secondary_length + 1
             return size
         elif self.name.lower() == "black boss room background":
-            return Size(SCREEN_WIDTH, SCREEN_HEIGHT)
+            return MutableSize(SCREEN_WIDTH, SCREEN_HEIGHT)
         return self.scale
 
     @property

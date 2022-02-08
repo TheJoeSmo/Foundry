@@ -14,7 +14,7 @@ from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point
+from foundry.core.point.Point import MutablePoint
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
@@ -218,7 +218,7 @@ class BlockViewerView(QWidget):
         return Block.WIDTH * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Point.from_qpoint(event.pos())
+        pos = MutablePoint.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
         dec_index = pos.y * self.BLOCKS_PER_ROW + pos.x
@@ -229,7 +229,7 @@ class BlockViewerView(QWidget):
         self.parent().statusBar().showMessage(status_message)  # type: ignore
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Point.from_qpoint(event.pos())
+        pos = MutablePoint.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.block_scale, pos.y // self.block_scale
 
         index = pos.y * self.BLOCKS_PER_ROW + pos.x

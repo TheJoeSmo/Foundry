@@ -2,7 +2,7 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.point.Point import Point, PointProtocol
+from foundry.core.point.Point import MutablePoint, PointProtocol
 
 
 class EnemyProtocol(Protocol):
@@ -49,4 +49,4 @@ class Enemy:
 
     @classmethod
     def from_bytes(cls, data: bytes):
-        return cls(data[0], Point(data[1], data[2]))
+        return cls(data[0], MutablePoint(data[1], data[2]))

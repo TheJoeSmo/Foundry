@@ -18,7 +18,7 @@ from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import NESPalette
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point
+from foundry.core.point.Point import MutablePoint
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.gui.CustomChildWindow import CustomChildWindow
@@ -151,7 +151,7 @@ class PatternViewerView(QWidget):
         return Tile.WIDTH * self.zoom  # type: ignore
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Point.from_qpoint(event.pos())
+        pos = MutablePoint.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.pattern_scale, pos.y // self.pattern_scale
 
         dec_index = pos.y * self.PATTERNS_PER_ROW + pos.x
@@ -162,7 +162,7 @@ class PatternViewerView(QWidget):
         self.parent().statusBar().showMessage(status_message)  # type: ignore
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Point.from_qpoint(event.pos())
+        pos = MutablePoint.from_qpoint(event.pos())
         pos.x, pos.y = pos.x // self.pattern_scale, pos.y // self.pattern_scale
 
         index = pos.y * self.PATTERNS_PER_ROW + pos.x
