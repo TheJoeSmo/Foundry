@@ -514,23 +514,29 @@ entered.</p>
 <p>If that is the case, the x and y coordinates are used to look up the object set and address of the level. The
 object set is necessary to find the right base offset for the level address and to correctly parse its object
 data.</p>
-<p>Using the tile information it should be possible to correctly name almost all levels, for example Level <a href="#id1"><span class="problematic" id="id2">*</span></a>-1 will
+<p>Using the tile information it should be possible to correctly name almost all levels, for example Level 1 will
 be located in the list at the offset pointed to by the “Level 1” tile in that world.</p>
 <p>That means, that all levels should be able to be collected, by iterating over all possible tiles and following
 the same procedure as the rom.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>screen</strong> – </p></li>
-<li><p><strong>player_row</strong> – </p></li>
-<li><p><strong>player_column</strong> – </p></li>
-</ul>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>screen</strong><span class="classifier">int</span></dt><dd><p>The screen index of the level to acquire.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A tuple of the object set number, the absolute level address, pointing to the objects and the enemy</p>
+<dt><strong>player_row</strong><span class="classifier">int</span></dt><dd><p>The row of the player.</p>
+</dd>
+<dt><strong>player_column</strong><span class="classifier">int</span></dt><dd><p>The column of the player.</p>
 </dd>
 </dl>
-<p>address. Or None, if there is no level at the map point.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Any</dt><dd><p>A tuple of the object set number, the absolute level address, pointing to the objects and the enemy</p>
+</dd>
+<dt>address. Or None, if there is no level at the map point.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
