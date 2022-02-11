@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>foundry.gui package &#8212; Foundry 0.4.11 documentation</title>
+    <title>foundry.gui package &#8212; Foundry 0.4.13 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -25,6 +25,7 @@
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
     
   <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
@@ -3714,9 +3715,9 @@ dropdown. This is not the selected object inside the level!</p>
 </section>
 <section id="module-foundry.gui.util">
 <span id="foundry-gui-util-module"></span><h2>foundry.gui.util module<a class="headerlink" href="#module-foundry.gui.util" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.BoxLayout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BoxLayout</span></span><a class="headerlink" href="#foundry.gui.util.BoxLayout" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BoxLayout</span></span><a class="headerlink" href="#foundry.gui.util.BoxLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.gui.util.LayoutMeta" title="foundry.gui.util.LayoutMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.gui.util.LayoutMeta</span></code></a></p>
 <p>A layout which the widgets are laid in a linear fashion in a single direction.</p>
 <dl class="field-list simple">
@@ -3728,6 +3729,65 @@ layout’s ending point.</p>
 </dl>
 </dd>
 </dl>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;BoxLayout&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A layout which the widgets are laid in a linear fashion in a single direction.\n\nAttributes\n----------\nwidgets: list[WidgetCreator]\n    A list of widgets that are inside the layout, which will start from the origin to the\n    layout&#39;s ending point.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/LayoutType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;widgets&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Widgets&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetCreator&quot;</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;widgets&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;LayoutType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the layouts possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;HORIZONTAL&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;VERTICLE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FORM&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;WidgetCreator&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetCreator&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.Widget`.  Creates the widget dynamically from\nits type attribute to provide it additional information required to be a subclass of\nwidget.\n\nFor example a widget of type button will become a button, instead of a plain widget.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.BoxLayout.widgets" title="foundry.gui.util.BoxLayout.widgets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">widgets</span> <span class="pre">(list[foundry.gui.util.WidgetCreator])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.gui.util.BoxLayout.widgets">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">widgets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.WidgetCreator" title="foundry.gui.util.WidgetCreator"><span class="pre">foundry.gui.util.WidgetCreator</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.BoxLayout.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.util.BoxLayout.get_widgets">
 <span class="sig-name descname"><span class="pre">get_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><span class="pre">foundry.gui.util.Widget</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.gui.util.BoxLayout.get_widgets" title="Permalink to this definition">¶</a></dt>
@@ -3742,16 +3802,11 @@ layout’s ending point.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.BoxLayout.widgets">
-<span class="sig-name descname"><span class="pre">widgets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.WidgetCreator" title="foundry.gui.util.WidgetCreator"><span class="pre">foundry.gui.util.WidgetCreator</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.BoxLayout.widgets" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.Button">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Button</span></span><a class="headerlink" href="#foundry.gui.util.Button" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Button</span></span><a class="headerlink" href="#foundry.gui.util.Button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.gui.util.Widget</span></code></a></p>
 <p>A button representation of <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide6.QtWidgets.QPushButton</span></code>.</p>
 <dl class="field-list simple">
@@ -3764,21 +3819,93 @@ layout’s ending point.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Button&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A button representation of :class:`PySide6.QtWidgets.QPushButton`.\n\nAttributes\n----------\nname: str\n    The text that appears on the button.\naction: Optional[str]\n    The name of the callable that will be acted upon when clicked.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;parent_attribute_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Parent Attribute Name&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;what_is_this&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WhatIsThis&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Action&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WidgetType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the widgets possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;BUTTON&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SPINNER&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;WhatIsThis&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WhatIsThis&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of the what&#39;s this description.  This enables a multi-line\ndescription to easily transfer from JSON and similar formats.\n\nAttributes\n----------\nelements: list[str]\n    A list of strings that represent each line of the description.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;elements&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Elements&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">},</span>
+         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;elements&quot;</span>
+         <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.Button.action" title="foundry.gui.util.Button.action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">action</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Button.name" title="foundry.gui.util.Button.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Button.action">
-<span class="sig-name descname"><span class="pre">action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Button.action" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Button.action" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Button.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.gui.util.Button.name" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Button.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.Form">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Form</span></span><a class="headerlink" href="#foundry.gui.util.Form" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Form</span></span><a class="headerlink" href="#foundry.gui.util.Form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A layout which sets a series of widgets adjacent to their respective labels.</p>
 <dl class="field-list simple">
@@ -3791,6 +3918,53 @@ layout’s ending point.</p>
 </dl>
 </dd>
 </dl>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Form&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A layout which sets a series of widgets adjacent to their respective labels.\n\nAttributes\n----------\nlabel: str\n    The description of the following widget to its side.\nwidget: WidgetCreator\n    The widget that is displayed in the given form.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;widget&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetCreator&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;widget&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WidgetCreator&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetCreator&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.Widget`.  Creates the widget dynamically from\nits type attribute to provide it additional information required to be a subclass of\nwidget.\n\nFor example a widget of type button will become a button, instead of a plain widget.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.Form.label" title="foundry.gui.util.Form.label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Form.widget" title="foundry.gui.util.Form.widget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">widget</span> <span class="pre">(foundry.gui.util.WidgetCreator)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.gui.util.Form.label">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Form.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.gui.util.Form.widget">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.WidgetCreator" title="foundry.gui.util.WidgetCreator"><span class="pre">foundry.gui.util.WidgetCreator</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Form.widget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.util.Form.get_widget">
 <span class="sig-name descname"><span class="pre">get_widget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><span class="pre">foundry.gui.util.Widget</span></a></span></span><a class="headerlink" href="#foundry.gui.util.Form.get_widget" title="Permalink to this definition">¶</a></dt>
@@ -3805,21 +3979,11 @@ layout’s ending point.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.Form.label">
-<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.gui.util.Form.label" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.Form.widget">
-<span class="sig-name descname"><span class="pre">widget</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.WidgetCreator" title="foundry.gui.util.WidgetCreator"><span class="pre">foundry.gui.util.WidgetCreator</span></a></em><a class="headerlink" href="#foundry.gui.util.Form.widget" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.FormLayout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FormLayout</span></span><a class="headerlink" href="#foundry.gui.util.FormLayout" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FormLayout</span></span><a class="headerlink" href="#foundry.gui.util.FormLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.gui.util.LayoutMeta" title="foundry.gui.util.LayoutMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.gui.util.LayoutMeta</span></code></a></p>
 <p>A layout which widgets are adjacent to their respective labels.</p>
 <dl class="field-list simple">
@@ -3830,16 +3994,88 @@ layout’s ending point.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;FormLayout&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A layout which widgets are adjacent to their respective labels.\n\nAttributes\n----------\nforms: list[Form]\n    The respective forms that compose the layout with their respective widgets and labels.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/LayoutType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;forms&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Forms&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/Form&quot;</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;forms&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;LayoutType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the layouts possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;HORIZONTAL&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;VERTICLE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FORM&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;WidgetCreator&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetCreator&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.Widget`.  Creates the widget dynamically from\nits type attribute to provide it additional information required to be a subclass of\nwidget.\n\nFor example a widget of type button will become a button, instead of a plain widget.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;Form&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Form&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A layout which sets a series of widgets adjacent to their respective labels.\n\nAttributes\n----------\nlabel: str\n    The description of the following widget to its side.\nwidget: WidgetCreator\n    The widget that is displayed in the given form.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;widget&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetCreator&quot;</span>
+            <span class="p">}</span>
+         <span class="p">},</span>
+         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;label&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;widget&quot;</span>
+         <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.FormLayout.forms" title="foundry.gui.util.FormLayout.forms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forms</span> <span class="pre">(list[foundry.gui.util.Form])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.FormLayout.forms">
-<span class="sig-name descname"><span class="pre">forms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.Form" title="foundry.gui.util.Form"><span class="pre">foundry.gui.util.Form</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.FormLayout.forms" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.Form" title="foundry.gui.util.Form"><span class="pre">foundry.gui.util.Form</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.FormLayout.forms" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.Layout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Layout</span></span><a class="headerlink" href="#foundry.gui.util.Layout" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Layout</span></span><a class="headerlink" href="#foundry.gui.util.Layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A helper class to allow for easier use of <a class="reference internal" href="#foundry.gui.util.LayoutCreator" title="foundry.gui.util.LayoutCreator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayoutCreator</span></code></a> as
 it does not provide type hints.</p>
@@ -3852,6 +4088,42 @@ creator.</p>
 </dl>
 </dd>
 </dl>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Layout&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A helper class to allow for easier use of :class:`~foundry.gui.util.LayoutCreator` as\nit does not provide type hints.\n\nAttributes\n----------\nlayout: LayoutCreator\n    The layout creator, which generates the layout automatically in accordance to layout\n    creator.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;layout&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/LayoutCreator&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;layout&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;LayoutCreator&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutCreator&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.LayoutMeta`.  Creates the layout dynamically\nfrom its type attribute to provide it additional information required to be a subclass of\nlayout.\n\nFor example a layout of type horizontal will become a box layout, instead of a plain layout.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.Layout.layout" title="foundry.gui.util.Layout.layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layout</span> <span class="pre">(foundry.gui.util.LayoutCreator)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.gui.util.Layout.layout">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.LayoutCreator" title="foundry.gui.util.LayoutCreator"><span class="pre">foundry.gui.util.LayoutCreator</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Layout.layout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.util.Layout.get_layout">
 <span class="sig-name descname"><span class="pre">get_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.gui.util.LayoutMeta" title="foundry.gui.util.LayoutMeta"><span class="pre">foundry.gui.util.LayoutMeta</span></a></span></span><a class="headerlink" href="#foundry.gui.util.Layout.get_layout" title="Permalink to this definition">¶</a></dt>
@@ -3866,22 +4138,26 @@ creator.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.Layout.layout">
-<span class="sig-name descname"><span class="pre">layout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.LayoutCreator" title="foundry.gui.util.LayoutCreator"><span class="pre">foundry.gui.util.LayoutCreator</span></a></em><a class="headerlink" href="#foundry.gui.util.Layout.layout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.LayoutCreator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LayoutCreator</span></span><a class="headerlink" href="#foundry.gui.util.LayoutCreator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LayoutCreator</span></span><a class="headerlink" href="#foundry.gui.util.LayoutCreator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A generator for a <a class="reference internal" href="#foundry.gui.util.LayoutMeta" title="foundry.gui.util.LayoutMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayoutMeta</span></code></a>.  Creates the layout dynamically
 from its type attribute to provide it additional information required to be a subclass of
 layout.</p>
 <p>For example a layout of type horizontal will become a box layout, instead of a plain layout.</p>
-<dl class="py method">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutCreator&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.LayoutMeta`.  Creates the layout dynamically\nfrom its type attribute to provide it additional information required to be a subclass of\nlayout.\n\nFor example a layout of type horizontal will become a box layout, instead of a plain layout.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.util.LayoutCreator.generate_layout">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.gui.util.LayoutMeta" title="foundry.gui.util.LayoutMeta"><span class="pre">foundry.gui.util.LayoutMeta</span></a></span></span><a class="headerlink" href="#foundry.gui.util.LayoutCreator.generate_layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor for each specific layout.</p>
@@ -3939,9 +4215,9 @@ layout.</p>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.LayoutMeta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LayoutMeta</span></span><a class="headerlink" href="#foundry.gui.util.LayoutMeta" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LayoutMeta</span></span><a class="headerlink" href="#foundry.gui.util.LayoutMeta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A generic representation of <code class="xref py py-class docutils literal notranslate"><span class="pre">QLayout</span></code>.</p>
 <dl class="field-list simple">
@@ -3953,20 +4229,49 @@ will treat the layout, often providing it additional parameters.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.gui.util.LayoutMeta.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#foundry.gui.util.LayoutMeta.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.LayoutMeta.Config.use_enum_values">
-<span class="sig-name descname"><span class="pre">use_enum_values</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#foundry.gui.util.LayoutMeta.Config.use_enum_values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutMeta&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of :class:`~PySide6.QtWidgets.QLayout`.\n\nAttributes\n----------\ntype: LayoutType\n    The type of layout this layout represents.  This determines how constructors\n    will treat the layout, often providing it additional parameters.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/LayoutType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;LayoutType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LayoutType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the layouts possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;HORIZONTAL&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;VERTICLE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FORM&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.LayoutMeta.type" title="foundry.gui.util.LayoutMeta.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.gui.util.LayoutType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.LayoutMeta.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.LayoutType" title="foundry.gui.util.LayoutType"><span class="pre">foundry.gui.util.LayoutType</span></a></em><a class="headerlink" href="#foundry.gui.util.LayoutMeta.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.LayoutType" title="foundry.gui.util.LayoutType"><span class="pre">foundry.gui.util.LayoutType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.LayoutMeta.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4015,9 +4320,9 @@ will treat the layout, often providing it additional parameters.</p>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spinner</span></span><a class="headerlink" href="#foundry.gui.util.Spinner" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Spinner</span></span><a class="headerlink" href="#foundry.gui.util.Spinner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.gui.util.Widget</span></code></a></p>
 <p>A spinner representation of <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide6.QtWidgets.QSpinBox</span></code>.</p>
 <dl class="field-list simple">
@@ -4036,36 +4341,141 @@ will treat the layout, often providing it additional parameters.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Spinner&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A spinner representation of :class:`PySide6.QtWidgets.QSpinBox`.\n\n\nAttributes\n----------\nenabled: bool\n    Decides if the spinner will be activated on start.\nminimum: Optional[int]\n    Will provide a lower bound that will be applied to the spinner, if present.\nmaximum: Optional[int]\n    Will provide an upper bound that will be applied to the spinner, if present.\nhexadecimal: bool\n    Decides if the spinner should use hex as its base.\nvalue_change_action: Optional[str]\n    The name of the callable that will be acted upon when the value changes.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;parent_attribute_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Parent Attribute Name&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;what_is_this&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WhatIsThis&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Enabled&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;default_factor&quot;</span><span class="p">:</span> <span class="s2">&quot;default=True extra={}&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Minimum&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;maximum&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Maximum&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;hexadecimal&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Hexadecimal&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;default_factor&quot;</span><span class="p">:</span> <span class="s2">&quot;default=False extra={}&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;value_change_action&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Value Change Action&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;hexadecimal&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WidgetType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the widgets possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;BUTTON&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SPINNER&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;WhatIsThis&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WhatIsThis&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of the what&#39;s this description.  This enables a multi-line\ndescription to easily transfer from JSON and similar formats.\n\nAttributes\n----------\nelements: list[str]\n    A list of strings that represent each line of the description.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;elements&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Elements&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">},</span>
+         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;elements&quot;</span>
+         <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.Spinner.enabled" title="foundry.gui.util.Spinner.enabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enabled</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Spinner.hexadecimal" title="foundry.gui.util.Spinner.hexadecimal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hexadecimal</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Spinner.maximum" title="foundry.gui.util.Spinner.maximum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maximum</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Spinner.minimum" title="foundry.gui.util.Spinner.minimum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimum</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Spinner.value_change_action" title="foundry.gui.util.Spinner.value_change_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value_change_action</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner.enabled">
-<span class="sig-name descname"><span class="pre">enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.gui.util.Spinner.enabled" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Spinner.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default_factor</strong> = default=True extra={}</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner.hexadecimal">
-<span class="sig-name descname"><span class="pre">hexadecimal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.gui.util.Spinner.hexadecimal" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hexadecimal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Spinner.hexadecimal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Constraints</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default_factor</strong> = default=False extra={}</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner.maximum">
-<span class="sig-name descname"><span class="pre">maximum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Spinner.maximum" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maximum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Spinner.maximum" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner.minimum">
-<span class="sig-name descname"><span class="pre">minimum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Spinner.minimum" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimum</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Spinner.minimum" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Spinner.value_change_action">
-<span class="sig-name descname"><span class="pre">value_change_action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Spinner.value_change_action" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value_change_action</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Spinner.value_change_action" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.WhatIsThis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WhatIsThis</span></span><a class="headerlink" href="#foundry.gui.util.WhatIsThis" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WhatIsThis</span></span><a class="headerlink" href="#foundry.gui.util.WhatIsThis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A generic representation of the what’s this description.  This enables a multi-line
 description to easily transfer from JSON and similar formats.</p>
@@ -4077,6 +4487,38 @@ description to easily transfer from JSON and similar formats.</p>
 </dl>
 </dd>
 </dl>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WhatIsThis&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of the what&#39;s this description.  This enables a multi-line\ndescription to easily transfer from JSON and similar formats.\n\nAttributes\n----------\nelements: list[str]\n    A list of strings that represent each line of the description.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;elements&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Elements&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;elements&quot;</span>
+   <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.WhatIsThis.elements" title="foundry.gui.util.WhatIsThis.elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">elements</span> <span class="pre">(list[str])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.gui.util.WhatIsThis.elements">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.WhatIsThis.elements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.gui.util.WhatIsThis.description">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.gui.util.WhatIsThis.description" title="Permalink to this definition">¶</a></dt>
@@ -4091,16 +4533,11 @@ description to easily transfer from JSON and similar formats.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.WhatIsThis.elements">
-<span class="sig-name descname"><span class="pre">elements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.WhatIsThis.elements" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.Widget">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Widget</span></span><a class="headerlink" href="#foundry.gui.util.Widget" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Widget</span></span><a class="headerlink" href="#foundry.gui.util.Widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A generic representation of <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code>.</p>
 <dl class="field-list simple">
@@ -4116,43 +4553,106 @@ will treat the widget, often providing it additional parameters.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.gui.util.Widget.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#foundry.gui.util.Widget.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.gui.util.Widget.Config.use_enum_values">
-<span class="sig-name descname"><span class="pre">use_enum_values</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#foundry.gui.util.Widget.Config.use_enum_values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Widget&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of :class:`~PySide6.QtWidgets.QWidget`.\n\nAttributes\n----------\ntype: WidgetType\n    The type of widget this widget represents.  This determines how constructors\n    will treat the widget, often providing it additional parameters.\nparent_attribute_name: Optional[str]\n    If provided, will be used to set this widget to its parent&#39;s name.\nwhat_is_this: Optional[WhatIsThis]\n    The type hint for the given widget, if provided.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WidgetType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;parent_attribute_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Parent Attribute Name&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;what_is_this&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WhatIsThis&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WidgetType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the widgets possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;BUTTON&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SPINNER&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;WhatIsThis&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WhatIsThis&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of the what&#39;s this description.  This enables a multi-line\ndescription to easily transfer from JSON and similar formats.\n\nAttributes\n----------\nelements: list[str]\n    A list of strings that represent each line of the description.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;elements&quot;</span><span class="p">:</span> <span class="p">{</span>
+               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Elements&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">},</span>
+         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;elements&quot;</span>
+         <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.gui.util.Widget.parent_attribute_name" title="foundry.gui.util.Widget.parent_attribute_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parent_attribute_name</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Widget.type" title="foundry.gui.util.Widget.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.gui.util.WidgetType)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.gui.util.Widget.what_is_this" title="foundry.gui.util.Widget.what_is_this"><code class="xref py py-obj docutils literal notranslate"><span class="pre">what_is_this</span> <span class="pre">(Optional[foundry.gui.util.WhatIsThis])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Widget.parent_attribute_name">
-<span class="sig-name descname"><span class="pre">parent_attribute_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Widget.parent_attribute_name" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent_attribute_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Widget.parent_attribute_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Widget.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.WidgetType" title="foundry.gui.util.WidgetType"><span class="pre">foundry.gui.util.WidgetType</span></a></em><a class="headerlink" href="#foundry.gui.util.Widget.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.gui.util.WidgetType" title="foundry.gui.util.WidgetType"><span class="pre">foundry.gui.util.WidgetType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Widget.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.gui.util.Widget.what_is_this">
-<span class="sig-name descname"><span class="pre">what_is_this</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.WhatIsThis" title="foundry.gui.util.WhatIsThis"><span class="pre">foundry.gui.util.WhatIsThis</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.gui.util.Widget.what_is_this" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">what_is_this</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.gui.util.WhatIsThis" title="foundry.gui.util.WhatIsThis"><span class="pre">foundry.gui.util.WhatIsThis</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.gui.util.Widget.what_is_this" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.gui.util.WidgetCreator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WidgetCreator</span></span><a class="headerlink" href="#foundry.gui.util.WidgetCreator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WidgetCreator</span></span><a class="headerlink" href="#foundry.gui.util.WidgetCreator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A generator for a <a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a>.  Creates the widget dynamically from
 its type attribute to provide it additional information required to be a subclass of
 widget.</p>
 <p>For example a widget of type button will become a button, instead of a plain widget.</p>
-<dl class="py method">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WidgetCreator&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.gui.util.Widget`.  Creates the widget dynamically from\nits type attribute to provide it additional information required to be a subclass of\nwidget.\n\nFor example a widget of type button will become a button, instead of a plain widget.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.util.WidgetCreator.generate_widget">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.gui.util.Widget" title="foundry.gui.util.Widget"><span class="pre">foundry.gui.util.Widget</span></a></span></span><a class="headerlink" href="#foundry.gui.util.WidgetCreator.generate_widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor for each specific widget.</p>

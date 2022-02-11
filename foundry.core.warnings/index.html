@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>foundry.core.warnings package &#8212; Foundry 0.4.11 documentation</title>
+    <title>foundry.core.warnings package &#8212; Foundry 0.4.13 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -25,6 +25,7 @@
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
     
   <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
@@ -443,14 +444,58 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticEnemyCompatibilityWarning</span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticEnemyCompatibilityWarning</span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that checks that the graphics of enemies do not conflict.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticEnemyCompatibilityWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that checks that the graphics of enemies do not conflict.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type" title="foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -525,14 +570,58 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticExtendToGroundWarning</span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticExtendToGroundWarning</span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that checks that an object does not extend to the ground.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticExtendToGroundWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that checks that an object does not extend to the ground.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type" title="foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -567,14 +656,58 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidObjectWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidObjectWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that notifies the user of an invalid object.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticInvalidObjectWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that notifies the user of an invalid object.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type" title="foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -649,29 +782,92 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidPositionWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidPositionWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that checks for an object being in a positional range.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticInvalidPositionWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that checks for an object being in a positional range.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;max_x&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Max X&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;min_x&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Min X&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;max_y&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Y&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;min_y&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Min Y&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x" title="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_x</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y" title="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_y</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x" title="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_x</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y" title="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_y</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x">
-<span class="sig-name descname"><span class="pre">max_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y">
-<span class="sig-name descname"><span class="pre">max_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x">
-<span class="sig-name descname"><span class="pre">min_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y">
-<span class="sig-name descname"><span class="pre">min_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -746,29 +942,92 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidSizeWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidSizeWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that checks for an object being in a size range.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticInvalidSizeWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that checks for an object being in a size range.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;max_width&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Width&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;min_width&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Min Width&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;max_height&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Max Height&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;min_height&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Min Height&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height" title="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_height</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width" title="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_width</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height" title="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_height</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width" title="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_width</span> <span class="pre">(Optional[int])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height">
-<span class="sig-name descname"><span class="pre">max_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width">
-<span class="sig-name descname"><span class="pre">max_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height">
-<span class="sig-name descname"><span class="pre">min_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width">
-<span class="sig-name descname"><span class="pre">min_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -827,14 +1086,58 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidWarpWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidWarpWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that ensures that for a given jump it has a place to warp to.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticInvalidWarpWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that ensures that for a given jump it has a place to warp to.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type" title="foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -893,14 +1196,58 @@
 
 </dd></dl>
 
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticOutsideLevelBoundsWarning</span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticOutsideLevelBoundsWarning</span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
 <p>A JSON model of a warning that ensures that an object is inside the bounds of the level.</p>
-<dl class="py attribute">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticOutsideLevelBoundsWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a warning that ensures that an object is inside the bounds of the level.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type" title="foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -908,9 +1255,9 @@
 </section>
 <section id="module-foundry.core.warnings.Warning">
 <span id="foundry-core-warnings-warning-module"></span><h2>foundry.core.warnings.Warning module<a class="headerlink" href="#module-foundry.core.warnings.Warning" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticWarning</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticWarning</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A JSON model of a generic Warning through Pydantic</p>
 <dl class="field-list simple">
@@ -921,16 +1268,54 @@
 </dl>
 </dd>
 </dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.Config.use_enum_values">
-<span class="sig-name descname"><span class="pre">use_enum_values</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.Config.use_enum_values" title="Permalink to this definition">¶</a></dt>
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticWarning&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A JSON model of a generic Warning through Pydantic\n\nAttributes\n----------\ntype: WarningType\n    The type of warning.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/WarningType&quot;</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;WarningType&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningType&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An enumeration.&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;INVALID OBJECT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID POSITION&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID SIZE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID EXTENSION TO GROUND&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OUTSIDE LEVEL BOUNDS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ENEMY COMPATIBILITY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INVALID WARP&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="field-list simple">
+<dt class="field-odd">Config</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning.type" title="foundry.core.warnings.Warning.PydanticWarning.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.warnings.WarningType.WarningType)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.type">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.to_warning">
@@ -945,11 +1330,6 @@
 </dd>
 </dl>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.type">
-<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -1003,11 +1383,19 @@
 </section>
 <section id="module-foundry.core.warnings.WarningCreator">
 <span id="foundry-core-warnings-warningcreator-module"></span><h2>foundry.core.warnings.WarningCreator module<a class="headerlink" href="#module-foundry.core.warnings.WarningCreator" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="foundry.core.warnings.WarningCreator.WarningCreator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WarningCreator</span></span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WarningCreator</span></span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
-<dl class="py method">
+<p><details  class="autodoc_pydantic_collapsable_json">
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;WarningCreator&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</details></p><dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.warnings.WarningCreator.WarningCreator.generate_warning">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator.generate_warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>The constructor for each specific warning.</p>
