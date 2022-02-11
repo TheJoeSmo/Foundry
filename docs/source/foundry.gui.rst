@@ -36,10 +36,34 @@ foundry.gui.AutoScrollEditor module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.BlockEditor module
+------------------------------
+
+.. automodule:: foundry.gui.BlockEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.BlockViewer module
 ------------------------------
 
 .. automodule:: foundry.gui.BlockViewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.ColorButtonWidget module
+------------------------------------
+
+.. automodule:: foundry.gui.ColorButtonWidget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.ColorSelector module
+--------------------------------
+
+.. automodule:: foundry.gui.ColorSelector
    :members:
    :undoc-members:
    :show-inheritance:
@@ -68,6 +92,14 @@ foundry.gui.CustomDialog module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.FlowLayout module
+-----------------------------
+
+.. automodule:: foundry.gui.FlowLayout
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.HeaderEditor module
 -------------------------------
 
@@ -80,6 +112,14 @@ foundry.gui.HorizontalLine module
 ---------------------------------
 
 .. automodule:: foundry.gui.HorizontalLine
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.JumpCreator module
+------------------------------
+
+.. automodule:: foundry.gui.JumpCreator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -148,6 +188,14 @@ foundry.gui.ObjectDropdown module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.ObjectIcon module
+-----------------------------
+
+.. automodule:: foundry.gui.ObjectIcon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.ObjectList module
 -----------------------------
 
@@ -188,10 +236,74 @@ foundry.gui.ObjectViewer module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.PaletteEditorWidget module
+--------------------------------------
+
+.. automodule:: foundry.gui.PaletteEditorWidget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PaletteGroupController module
+-----------------------------------------
+
+.. automodule:: foundry.gui.PaletteGroupController
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PaletteGroupEditor module
+-------------------------------------
+
+.. automodule:: foundry.gui.PaletteGroupEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PaletteGroupModel module
+------------------------------------
+
+.. automodule:: foundry.gui.PaletteGroupModel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.PaletteViewer module
 --------------------------------
 
 .. automodule:: foundry.gui.PaletteViewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PaletteWidget module
+--------------------------------
+
+.. automodule:: foundry.gui.PaletteWidget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PatternViewer module
+--------------------------------
+
+.. automodule:: foundry.gui.PatternViewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PlayerFrameEditor module
+------------------------------------
+
+.. automodule:: foundry.gui.PlayerFrameEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.PlayerViewer module
+-------------------------------
+
+.. automodule:: foundry.gui.PlayerViewer
    :members:
    :undoc-members:
    :show-inheritance:
@@ -228,6 +340,22 @@ foundry.gui.SpinnerPanel module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.SpriteViewer module
+-------------------------------
+
+.. automodule:: foundry.gui.SpriteViewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.SpriteViewerWidget module
+-------------------------------------
+
+.. automodule:: foundry.gui.SpriteViewerWidget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.TabbedToolBox module
 --------------------------------
 
@@ -236,10 +364,10 @@ foundry.gui.TabbedToolBox module
    :undoc-members:
    :show-inheritance:
 
-foundry.gui.UndoStack module
-----------------------------
+foundry.gui.Toolbar module
+--------------------------
 
-.. automodule:: foundry.gui.UndoStack
+.. automodule:: foundry.gui.Toolbar
    :members:
    :undoc-members:
    :show-inheritance:

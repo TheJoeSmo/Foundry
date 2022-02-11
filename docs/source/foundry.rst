@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   foundry.core
    foundry.game
    foundry.gui
    foundry.smb3parse

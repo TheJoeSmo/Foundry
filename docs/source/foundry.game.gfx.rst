@@ -10,25 +10,6 @@ Subpackages
    foundry.game.gfx.drawable
    foundry.game.gfx.objects
 
-Submodules
-----------
-
-foundry.game.gfx.GraphicsSet module
------------------------------------
-
-.. automodule:: foundry.game.gfx.GraphicsSet
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-foundry.game.gfx.MutablePalette module
--------------------------------
-
-.. automodule:: foundry.game.gfx.MutablePalette
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
