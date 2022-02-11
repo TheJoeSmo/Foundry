@@ -62,6 +62,7 @@ release = get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
 extensions = [
     "sphinx.ext.autodoc",
     "numpydoc",
+    "sphinxcontrib.autodoc_pydantic",
     "sphinx.ext.intersphinx",
     "sphinx.ext.coverage",
     "sphinx.ext.doctest",
