@@ -186,17 +186,25 @@ class WorldMap(LevelBase):
         object set is necessary to find the right base offset for the level address and to correctly parse its object
         data.
 
-        Using the tile information it should be possible to correctly name almost all levels, for example Level *-1 will
+        Using the tile information it should be possible to correctly name almost all levels, for example Level 1 will
         be located in the list at the offset pointed to by the "Level 1" tile in that world.
 
         That means, that all levels should be able to be collected, by iterating over all possible tiles and following
         the same procedure as the rom.
 
-        :param screen:
-        :param player_row:
-        :param player_column:
+        Parameters
+        ----------
+        screen : int
+            The screen index of the level to acquire.
+        player_row : int
+            The row of the player.
+        player_column : int
+            The column of the player.
 
-        :return: A tuple of the object set number, the absolute level address, pointing to the objects and the enemy
+        Returns
+        -------
+        Any
+            A tuple of the object set number, the absolute level address, pointing to the objects and the enemy
         address. Or None, if there is no level at the map point.
         """
         assert isinstance(screen, int)
