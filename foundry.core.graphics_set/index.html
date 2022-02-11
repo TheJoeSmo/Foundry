@@ -161,17 +161,17 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-graphics-set-graphicsset-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.graphics_set.GraphicsSet">
    foundry.core.graphics_set.GraphicsSet module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-graphics-set-util-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.graphics_set.util">
    foundry.core.graphics_set.util module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-contents">
+  <a class="reference internal nav-link" href="#module-foundry.core.graphics_set">
    Module contents
   </a>
  </li>
@@ -201,14 +201,90 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="foundry-core-graphics-set-graphicsset-module">
-<h2>foundry.core.graphics_set.GraphicsSet module<a class="headerlink" href="#foundry-core-graphics-set-graphicsset-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.graphics_set.GraphicsSet">
+<span id="foundry-core-graphics-set-graphicsset-module"></span><h2>foundry.core.graphics_set.GraphicsSet module<a class="headerlink" href="#module-foundry.core.graphics_set.GraphicsSet" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.GraphicsSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GraphicsSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol"><span class="pre">foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a series of graphical pages inside the ROM, that uses <code class="docutils literal notranslate"><span class="pre">attrs</span></code> to create
+a basic implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pages: tuple[GraphicsPageProtocol, …]</strong></dt><dd><p>The pages that compose the graphical set.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.GraphicsSet.from_tileset">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSet.from_tileset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.GraphicsSet.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol"><span class="pre">foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSet.pages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GraphicsSetProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>A representation of a series of graphical pages inside the ROM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pages: tuple[GraphicsPageProtocol, …]</strong></dt><dd><p>The pages that compose the graphical set.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol"><span class="pre">foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol.pages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticGraphicsPage</span></span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
+<p>A JSON model of a generic GraphicsSet through Pydantic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pages: list[PydanticGraphicsPage]</strong></dt><dd><p>The pages that compose the graphical set.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages">
+<span class="sig-name descname"><span class="pre">pages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage" title="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage"><span class="pre">foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.to_graphics_set">
+<span class="sig-name descname"><span class="pre">to_graphics_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></span></span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.to_graphics_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-graphics-set-util-module">
-<h2>foundry.core.graphics_set.util module<a class="headerlink" href="#foundry-core-graphics-set-util-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.graphics_set.util">
+<span id="foundry-core-graphics-set-util-module"></span><h2>foundry.core.graphics_set.util module<a class="headerlink" href="#module-foundry.core.graphics_set.util" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.util.get_graphics_pages_from_tileset">
+<span class="sig-name descname"><span class="pre">get_graphics_pages_from_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol"><span class="pre">foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.graphics_set.util.get_graphics_pages_from_tileset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.graphics_set">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.graphics_set" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 

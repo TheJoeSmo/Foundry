@@ -161,17 +161,17 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-sprites-sprite-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.sprites.Sprite">
    foundry.core.sprites.Sprite module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-sprites-spritegroup-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.sprites.SpriteGroup">
    foundry.core.sprites.SpriteGroup module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-contents">
+  <a class="reference internal nav-link" href="#module-foundry.core.sprites">
    Module contents
   </a>
  </li>
@@ -201,14 +201,192 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="foundry-core-sprites-sprite-module">
-<h2>foundry.core.sprites.Sprite module<a class="headerlink" href="#foundry-core-sprites-sprite-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.sprites.Sprite">
+<span id="foundry-core-sprites-sprite-module"></span><h2>foundry.core.sprites.Sprite module<a class="headerlink" href="#module-foundry.core.sprites.Sprite" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sprite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_mirror</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_mirror</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_not_render</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a Sprite inside the game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point: PointProtocol</strong></dt><dd><p>The point of the sprite.</p>
+</dd>
+<dt><strong>index: int</strong></dt><dd><p>The index into the graphics set of the sprite.</p>
+</dd>
+<dt><strong>palette_index: int</strong></dt><dd><p>The palette index of the sprite into the MutablePaletteGroupProtocol.</p>
+</dd>
+<dt><strong>horizontal_mirror: bool</strong></dt><dd><p>If the sprite should be horizontally flipped.</p>
+</dd>
+<dt><strong>vertical_mirror: bool</strong></dt><dd><p>If the sprite should be vertically flipped.</p>
+</dd>
+<dt><strong>do_not_render: bool</strong></dt><dd><p>If the sprite should not render.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.do_not_render">
+<span class="sig-name descname"><span class="pre">do_not_render</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.do_not_render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.horizontal_mirror">
+<span class="sig-name descname"><span class="pre">horizontal_mirror</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.horizontal_mirror" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.palette_index">
+<span class="sig-name descname"><span class="pre">palette_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.palette_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.position">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.Sprite.vertical_mirror">
+<span class="sig-name descname"><span class="pre">vertical_mirror</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.Sprite.vertical_mirror" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpriteProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.do_not_render">
+<span class="sig-name descname"><span class="pre">do_not_render</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.do_not_render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.horizontal_mirror">
+<span class="sig-name descname"><span class="pre">horizontal_mirror</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.horizontal_mirror" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.palette_index">
+<span class="sig-name descname"><span class="pre">palette_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.palette_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.position">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.Sprite.SpriteProtocol.vertical_mirror">
+<span class="sig-name descname"><span class="pre">vertical_mirror</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.sprites.Sprite.SpriteProtocol.vertical_mirror" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-sprites-spritegroup-module">
-<h2>foundry.core.sprites.SpriteGroup module<a class="headerlink" href="#foundry-core-sprites-spritegroup-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.sprites.SpriteGroup">
+<span id="foundry-core-sprites-spritegroup-module"></span><h2>foundry.core.sprites.SpriteGroup module<a class="headerlink" href="#module-foundry.core.sprites.SpriteGroup" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpriteGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprites</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.sprites.Sprite.SpriteProtocol" title="foundry.core.sprites.Sprite.SpriteProtocol"><span class="pre">foundry.core.sprites.Sprite.SpriteProtocol</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a group of sprites inside the game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point: PointProtocol</strong></dt><dd><p>The point of the sprite group.</p>
+</dd>
+<dt><strong>sprites: list[SpriteProtocol]</strong></dt><dd><p>The sprites that compose the sprite group.</p>
+</dd>
+<dt><strong>graphics_set: GraphicsSetProtocol</strong></dt><dd><p>The graphics to render the sprites with.</p>
+</dd>
+<dt><strong>palette_group: MutablePaletteGroupProtocol</strong></dt><dd><p>The palettes to render the sprites with.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.graphics_set">
+<span class="sig-name descname"><span class="pre">graphics_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.graphics_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.image">
+<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.palette_group">
+<span class="sig-name descname"><span class="pre">palette_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.palette_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.position">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.size/#foundry.core.size.Size.SizeProtocol" title="foundry.core.size.Size.SizeProtocol"><span class="pre">foundry.core.size.Size.SizeProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroup.sprites">
+<span class="sig-name descname"><span class="pre">sprites</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.sprites.Sprite.SpriteProtocol" title="foundry.core.sprites.Sprite.SpriteProtocol"><span class="pre">foundry.core.sprites.Sprite.SpriteProtocol</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroup.sprites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpriteGroupProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.graphics_set">
+<span class="sig-name descname"><span class="pre">graphics_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.graphics_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.image">
+<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.palette_group">
+<span class="sig-name descname"><span class="pre">palette_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.palette_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.position">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.point/#foundry.core.point.Point.PointProtocol" title="foundry.core.point.Point.PointProtocol"><span class="pre">foundry.core.point.Point.PointProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.size/#foundry.core.size.Size.SizeProtocol" title="foundry.core.size.Size.SizeProtocol"><span class="pre">foundry.core.size.Size.SizeProtocol</span></a></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.sprites">
+<span class="sig-name descname"><span class="pre">sprites</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.sprites.Sprite.SpriteProtocol" title="foundry.core.sprites.Sprite.SpriteProtocol"><span class="pre">foundry.core.sprites.Sprite.SpriteProtocol</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.sprites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.sprites">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.sprites" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 

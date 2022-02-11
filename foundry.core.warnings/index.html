@@ -161,62 +161,62 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-enemycompatibilitywarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.EnemyCompatibilityWarning">
    foundry.core.warnings.EnemyCompatibilityWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-extendtogroundwarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.ExtendToGroundWarning">
    foundry.core.warnings.ExtendToGroundWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidobjectwarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.InvalidObjectWarning">
    foundry.core.warnings.InvalidObjectWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidpositionwarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.InvalidPositionWarning">
    foundry.core.warnings.InvalidPositionWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidsizewarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.InvalidSizeWarning">
    foundry.core.warnings.InvalidSizeWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-invalidwarpwarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.InvalidWarpWarning">
    foundry.core.warnings.InvalidWarpWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-outsidelevelboundswarning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.OutsideLevelBoundsWarning">
    foundry.core.warnings.OutsideLevelBoundsWarning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-warning-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.Warning">
    foundry.core.warnings.Warning module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-warningcreator-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.WarningCreator">
    foundry.core.warnings.WarningCreator module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-warningtype-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.WarningType">
    foundry.core.warnings.WarningType module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-warnings-util-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings.util">
    foundry.core.warnings.util module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-contents">
+  <a class="reference internal nav-link" href="#module-foundry.core.warnings">
    Module contents
   </a>
  </li>
@@ -246,41 +246,775 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="foundry-core-warnings-enemycompatibilitywarning-module">
-<h2>foundry.core.warnings.EnemyCompatibilityWarning module<a class="headerlink" href="#foundry-core-warnings-enemycompatibilitywarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.EnemyCompatibilityWarning">
+<span id="foundry-core-warnings-enemycompatibilitywarning-module"></span><h2>foundry.core.warnings.EnemyCompatibilityWarning module<a class="headerlink" href="#module-foundry.core.warnings.EnemyCompatibilityWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnemyCompatibilityWarning</span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning to ensure that an that checks that the graphics of enemies do not conflict.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the object should emit a warning for having graphical conflicts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">EnemyObject</span></dt><dd><p>The object to check.</p>
+</dd>
+<dt><strong>level</strong><span class="classifier">Level</span></dt><dd><p>The level the object is housed inside.</p>
+</dd>
+<dt><strong>index</strong><span class="classifier">int</span></dt><dd><p>The index into the level enemies obj is housed.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.EnemyCompatibilityWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticEnemyCompatibilityWarning</span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that checks that the graphics of enemies do not conflict.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.PydanticEnemyCompatibilityWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.warnings.EnemyCompatibilityWarning.find_incompatibilities">
+<span class="sig-name descname"><span class="pre">find_incompatibilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enemies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.warnings.EnemyCompatibilityWarning.find_incompatibilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if there are any incompatibilities with enemy graphics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>enemies</strong><span class="classifier">list[EnemyObject]</span></dt><dd><p>The enemies to check compatibility of.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>tuple[bool, bool]</dt><dd><p>If there are any incompatibilities between the 5th and 6th page, respectively.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-extendtogroundwarning-module">
-<h2>foundry.core.warnings.ExtendToGroundWarning module<a class="headerlink" href="#foundry-core-warnings-extendtogroundwarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.ExtendToGroundWarning">
+<span id="foundry-core-warnings-extendtogroundwarning-module"></span><h2>foundry.core.warnings.ExtendToGroundWarning module<a class="headerlink" href="#module-foundry.core.warnings.ExtendToGroundWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExtendToGroundWarning</span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning to ensure that an object does not extend to the ground.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the object should emit a warning for extending to the ground.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">LevelObject</span></dt><dd><p>The object to check.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticExtendToGroundWarning</span></span><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that checks that an object does not extend to the ground.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.ExtendToGroundWarning.PydanticExtendToGroundWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-invalidobjectwarning-module">
-<h2>foundry.core.warnings.InvalidObjectWarning module<a class="headerlink" href="#foundry-core-warnings-invalidobjectwarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.InvalidObjectWarning">
+<span id="foundry-core-warnings-invalidobjectwarning-module"></span><h2>foundry.core.warnings.InvalidObjectWarning module<a class="headerlink" href="#module-foundry.core.warnings.InvalidObjectWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.InvalidObjectWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidObjectWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.InvalidObjectWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning for an object that is invalid.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.InvalidObjectWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.InvalidObjectWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidObjectWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that notifies the user of an invalid object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.InvalidObjectWarning.PydanticInvalidObjectWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-invalidpositionwarning-module">
-<h2>foundry.core.warnings.InvalidPositionWarning module<a class="headerlink" href="#foundry-core-warnings-invalidpositionwarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.InvalidPositionWarning">
+<span id="foundry-core-warnings-invalidpositionwarning-module"></span><h2>foundry.core.warnings.InvalidPositionWarning module<a class="headerlink" href="#module-foundry.core.warnings.InvalidPositionWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidPositionWarning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning for an object exceeding its valid positional range.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the object should emit a warning for having an invalid point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to check.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.max_x">
+<span class="sig-name descname"><span class="pre">max_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.max_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.max_y">
+<span class="sig-name descname"><span class="pre">max_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.max_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.min_x">
+<span class="sig-name descname"><span class="pre">min_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.min_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.min_y">
+<span class="sig-name descname"><span class="pre">min_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.InvalidPositionWarning.min_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidPositionWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that checks for an object being in a positional range.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x">
+<span class="sig-name descname"><span class="pre">max_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y">
+<span class="sig-name descname"><span class="pre">max_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.max_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x">
+<span class="sig-name descname"><span class="pre">min_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y">
+<span class="sig-name descname"><span class="pre">min_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidPositionWarning.PydanticInvalidPositionWarning.min_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-invalidsizewarning-module">
-<h2>foundry.core.warnings.InvalidSizeWarning module<a class="headerlink" href="#foundry-core-warnings-invalidsizewarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.InvalidSizeWarning">
+<span id="foundry-core-warnings-invalidsizewarning-module"></span><h2>foundry.core.warnings.InvalidSizeWarning module<a class="headerlink" href="#module-foundry.core.warnings.InvalidSizeWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidSizeWarning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning for an object exceeding its valid size range.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the object should emit a warning for having an invalid size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to check.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.max_height">
+<span class="sig-name descname"><span class="pre">max_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.max_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.max_width">
+<span class="sig-name descname"><span class="pre">max_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.max_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.min_height">
+<span class="sig-name descname"><span class="pre">min_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.min_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.min_width">
+<span class="sig-name descname"><span class="pre">min_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.InvalidSizeWarning.min_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidSizeWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that checks for an object being in a size range.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height">
+<span class="sig-name descname"><span class="pre">max_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width">
+<span class="sig-name descname"><span class="pre">max_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.max_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height">
+<span class="sig-name descname"><span class="pre">min_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width">
+<span class="sig-name descname"><span class="pre">min_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.warnings.InvalidSizeWarning.PydanticInvalidSizeWarning.min_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-invalidwarpwarning-module">
-<h2>foundry.core.warnings.InvalidWarpWarning module<a class="headerlink" href="#foundry-core-warnings-invalidwarpwarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.InvalidWarpWarning">
+<span id="foundry-core-warnings-invalidwarpwarning-module"></span><h2>foundry.core.warnings.InvalidWarpWarning module<a class="headerlink" href="#module-foundry.core.warnings.InvalidWarpWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidWarpWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning for jumps not having a valid warp.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Jump.Jump" title="foundry.game.gfx.objects.Jump.Jump"><span class="pre">foundry.game.gfx.objects.Jump.Jump</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if a jump should emit a warning for not having a place to warp to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">Jump</span></dt><dd><p>The jump to check.</p>
+</dd>
+<dt><strong>level</strong><span class="classifier">Optional[Level]</span></dt><dd><p>The level to check the warps of.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the jump should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If not level is provided, no warning will be emitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.InvalidWarpWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticInvalidWarpWarning</span></span><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that ensures that for a given jump it has a place to warp to.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.InvalidWarpWarning.PydanticInvalidWarpWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-outsidelevelboundswarning-module">
-<h2>foundry.core.warnings.OutsideLevelBoundsWarning module<a class="headerlink" href="#foundry-core-warnings-outsidelevelboundswarning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.OutsideLevelBoundsWarning">
+<span id="foundry-core-warnings-outsidelevelboundswarning-module"></span><h2>foundry.core.warnings.OutsideLevelBoundsWarning module<a class="headerlink" href="#module-foundry.core.warnings.OutsideLevelBoundsWarning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OutsideLevelBoundsWarning</span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.Warning</span></code></a></p>
+<p>A warning for objects going outside the level bounds.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if an object should emit a warning for being outside the level bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to check.</p>
+</dd>
+<dt><strong>level</strong><span class="classifier">Optional[Level]</span></dt><dd><p>The level to check the bounds of.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If not level is provided, no warning will be emitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><span class="pre">foundry.game.gfx.objects.ObjectLike.ObjectLike</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticOutsideLevelBoundsWarning</span></span><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></code></a></p>
+<p>A JSON model of a warning that ensures that an object is inside the bounds of the level.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.OutsideLevelBoundsWarning.PydanticOutsideLevelBoundsWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-warning-module">
-<h2>foundry.core.warnings.Warning module<a class="headerlink" href="#foundry-core-warnings-warning-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.Warning">
+<span id="foundry-core-warnings-warning-module"></span><h2>foundry.core.warnings.Warning module<a class="headerlink" href="#module-foundry.core.warnings.Warning" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticWarning</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
+<p>A JSON model of a generic Warning through Pydantic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>type: WarningType</strong></dt><dd><p>The type of warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.Config.use_enum_values">
+<span class="sig-name descname"><span class="pre">use_enum_values</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.Config.use_enum_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.to_warning">
+<span class="sig-name descname"><span class="pre">to_warning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><span class="pre">foundry.core.warnings.Warning.Warning</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.to_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts self to a warning with respect to its type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Warning</dt><dd><p>That represents self.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.PydanticWarning.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a></em><a class="headerlink" href="#foundry.core.warnings.Warning.PydanticWarning.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.Warning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Warning</span></span><a class="headerlink" href="#foundry.core.warnings.Warning.Warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A generic dataclass to represent a given warning.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.Warning.check_object">
+<span class="sig-name descname"><span class="pre">check_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.Warning.Warning.check_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the object should emit a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to check.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the object should emit a warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.Warning.Warning.get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.Warning.Warning.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a message for an object with a warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">ObjectLike</span></dt><dd><p>The object to provide a warning for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The warning for the object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-warningcreator-module">
-<h2>foundry.core.warnings.WarningCreator module<a class="headerlink" href="#foundry-core-warnings-warningcreator-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.WarningCreator">
+<span id="foundry-core-warnings-warningcreator-module"></span><h2>foundry.core.warnings.WarningCreator module<a class="headerlink" href="#module-foundry.core.warnings.WarningCreator" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningCreator.WarningCreator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WarningCreator</span></span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningCreator.WarningCreator.generate_warning">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator.generate_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor for each specific warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dictionary to create the warning.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Warning</dt><dd><p>The created warning as defined by <cite>v[“type”]</cite></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>NotImplementedError</dt><dd><p>If the constructor does not have a valid constructor for <cite>v[“type”]</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningCreator.WarningCreator.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.warnings.WarningCreator.WarningCreator.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-warningtype-module">
-<h2>foundry.core.warnings.WarningType module<a class="headerlink" href="#foundry-core-warnings-warningtype-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.WarningType">
+<span id="foundry-core-warnings-warningtype-module"></span><h2>foundry.core.warnings.WarningType module<a class="headerlink" href="#module-foundry.core.warnings.WarningType" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WarningType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.enemy_compatibility">
+<span class="sig-name descname"><span class="pre">enemy_compatibility</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ENEMY</span> <span class="pre">COMPATIBILITY'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.enemy_compatibility" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.has_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.has_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience method to quickly determine if a value is a valid enumeration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>value</strong><span class="classifier">str</span></dt><dd><p>The value to check against the enumeration.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the value is inside the enumeration.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.invalid_extension_to_ground">
+<span class="sig-name descname"><span class="pre">invalid_extension_to_ground</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INVALID</span> <span class="pre">EXTENSION</span> <span class="pre">TO</span> <span class="pre">GROUND'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.invalid_extension_to_ground" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.invalid_position">
+<span class="sig-name descname"><span class="pre">invalid_position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INVALID</span> <span class="pre">POSITION'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.invalid_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.invalid_size">
+<span class="sig-name descname"><span class="pre">invalid_size</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INVALID</span> <span class="pre">SIZE'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.invalid_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.invalid_type">
+<span class="sig-name descname"><span class="pre">invalid_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INVALID</span> <span class="pre">OBJECT'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.invalid_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.invalid_warp">
+<span class="sig-name descname"><span class="pre">invalid_warp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INVALID</span> <span class="pre">WARP'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.invalid_warp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.warnings.WarningType.WarningType.outside_level_bounds">
+<span class="sig-name descname"><span class="pre">outside_level_bounds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OUTSIDE</span> <span class="pre">LEVEL</span> <span class="pre">BOUNDS'</span></em><a class="headerlink" href="#foundry.core.warnings.WarningType.WarningType.outside_level_bounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-warnings-util-module">
-<h2>foundry.core.warnings.util module<a class="headerlink" href="#foundry-core-warnings-util-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings.util">
+<span id="foundry-core-warnings-util-module"></span><h2>foundry.core.warnings.util module<a class="headerlink" href="#module-foundry.core.warnings.util" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.warnings.util.convert_pydantic_to_warning">
+<span class="sig-name descname"><span class="pre">convert_pydantic_to_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><span class="pre">foundry.core.warnings.Warning.Warning</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.warnings.util.convert_pydantic_to_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the class alternative for a given pydantic warning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>warning</strong><span class="classifier">PydanticWarning</span></dt><dd><p>The pydantic warning to find the warning alternative of.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Type[Warning]</dt><dd><p>The class that represents the pydantic warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.warnings.util.type_to_pydantic_warning">
+<span class="sig-name descname"><span class="pre">type_to_pydantic_warning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Type" title="(in Python v3.11)"><span class="pre">typing.Type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.warnings.Warning.PydanticWarning" title="foundry.core.warnings.Warning.PydanticWarning"><span class="pre">foundry.core.warnings.Warning.PydanticWarning</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.warnings.util.type_to_pydantic_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a dictionary to easily convert between a given warning type and pydantic warning</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>dict[WarningType, Type[PydanticWarning]]</dt><dd><p>A dict containing a warning type and its corresponding pydantic warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.warnings.util.type_to_warning">
+<span class="sig-name descname"><span class="pre">type_to_warning</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.warnings.WarningType.WarningType" title="foundry.core.warnings.WarningType.WarningType"><span class="pre">foundry.core.warnings.WarningType.WarningType</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Type" title="(in Python v3.11)"><span class="pre">typing.Type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.warnings.Warning.Warning" title="foundry.core.warnings.Warning.Warning"><span class="pre">foundry.core.warnings.Warning.Warning</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.warnings.util.type_to_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a dictionary to easily convert between a given warning type and warning</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>dict[WarningType, Type[Warning]]</dt><dd><p>A dict containing a warning type and its corresponding warning.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.warnings">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.warnings" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 

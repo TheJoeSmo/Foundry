@@ -161,22 +161,22 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-player-animations-playeranimation-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.player_animations.PlayerAnimation">
    foundry.core.player_animations.PlayerAnimation module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-player-animations-playeranimationdata-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.player_animations.PlayerAnimationData">
    foundry.core.player_animations.PlayerAnimationData module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-player-animations-util-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.player_animations.util">
    foundry.core.player_animations.util module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-contents">
+  <a class="reference internal nav-link" href="#module-foundry.core.player_animations">
    Module contents
   </a>
  </li>
@@ -206,17 +206,136 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="foundry-core-player-animations-playeranimation-module">
-<h2>foundry.core.player_animations.PlayerAnimation module<a class="headerlink" href="#foundry-core-player-animations-playeranimation-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.player_animations.PlayerAnimation">
+<span id="foundry-core-player-animations-playeranimation-module"></span><h2>foundry.core.player_animations.PlayerAnimation module<a class="headerlink" href="#module-foundry.core.player_animations.PlayerAnimation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimation.PlayerAnimation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PlayerAnimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">animations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a single player animation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>animations: bytearray</strong></dt><dd><p>The frames inside animation.</p>
+</dd>
+<dt><strong>offset: int</strong></dt><dd><p>The page offset of its graphics, which applies to each power up of the player’s.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimation.PlayerAnimation.animations">
+<span class="sig-name descname"><span class="pre">animations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.11)"><span class="pre">bytearray</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation.animations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimation.PlayerAnimation.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation.offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimation.PlayerAnimation.to_bytes">
+<span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-player-animations-playeranimationdata-module">
-<h2>foundry.core.player_animations.PlayerAnimationData module<a class="headerlink" href="#foundry-core-player-animations-playeranimationdata-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.player_animations.PlayerAnimationData">
+<span id="foundry-core-player-animations-playeranimationdata-module"></span><h2>foundry.core.player_animations.PlayerAnimationData module<a class="headerlink" href="#module-foundry.core.player_animations.PlayerAnimationData" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PlayerAnimationData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_kicking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.animation">
+<span class="sig-name descname"><span class="pre">animation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.animation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.frames">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.frames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.graphics_set">
+<span class="sig-name descname"><span class="pre">graphics_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.graphics_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.horizontal_flip">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">horizontal_flip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.horizontal_flip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.is_kicking">
+<span class="sig-name descname"><span class="pre">is_kicking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.is_kicking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_group">
+<span class="sig-name descname"><span class="pre">palette_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_index">
+<span class="sig-name descname"><span class="pre">palette_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="foundry-core-player-animations-util-module">
-<h2>foundry.core.player_animations.util module<a class="headerlink" href="#foundry-core-player-animations-util-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.player_animations.util">
+<span id="foundry-core-player-animations-util-module"></span><h2>foundry.core.player_animations.util module<a class="headerlink" href="#module-foundry.core.player_animations.util" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.get_animations_palette_index">
+<span class="sig-name descname"><span class="pre">get_animations_palette_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_mario</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_up</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.core.player_animations.util.get_animations_palette_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_animations">
+<span class="sig-name descname"><span class="pre">load_animations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_animations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_animations_graphic_set">
+<span class="sig-name descname"><span class="pre">load_animations_graphic_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_up</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSet</span></a></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_animations_graphic_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_player_animation">
+<span class="sig-name descname"><span class="pre">load_player_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mario</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_up</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_kicking</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.player_animations.util.load_player_animation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_player_animation_data">
+<span class="sig-name descname"><span class="pre">load_player_animation_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">animations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_mario</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_up</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData" title="foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData"><span class="pre">foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_player_animation_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_player_animations">
+<span class="sig-name descname"><span class="pre">load_player_animations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.player_animations.PlayerAnimation.PlayerAnimation" title="foundry.core.player_animations.PlayerAnimation.PlayerAnimation"><span class="pre">foundry.core.player_animations.PlayerAnimation.PlayerAnimation</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_player_animations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_power_up_offsets">
+<span class="sig-name descname"><span class="pre">load_power_up_offsets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_power_up_offsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.load_power_up_palettes">
+<span class="sig-name descname"><span class="pre">load_power_up_palettes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.core.palette/#foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol" title="foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol"><span class="pre">foundry.core.palette.PaletteGroup.MutablePaletteGroupProtocol</span></a></span></span><a class="headerlink" href="#foundry.core.player_animations.util.load_power_up_palettes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.player_animations.util.save_player_animations_to_rom">
+<span class="sig-name descname"><span class="pre">save_player_animations_to_rom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">power_up_offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">animations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.player_animations.util.save_player_animations_to_rom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.player_animations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.player_animations" title="Permalink to this headline">¶</a></h2>
+<p>A series of constants useful for acquiring the player’s animations.</p>
 </section>
 </section>
 

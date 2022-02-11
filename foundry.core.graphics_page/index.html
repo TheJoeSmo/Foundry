@@ -161,12 +161,12 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#foundry-core-graphics-page-graphicspage-module">
+  <a class="reference internal nav-link" href="#module-foundry.core.graphics_page.GraphicsPage">
    foundry.core.graphics_page.GraphicsPage module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-contents">
+  <a class="reference internal nav-link" href="#module-foundry.core.graphics_page">
    Module contents
   </a>
  </li>
@@ -196,11 +196,96 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="foundry-core-graphics-page-graphicspage-module">
-<h2>foundry.core.graphics_page.GraphicsPage module<a class="headerlink" href="#foundry-core-graphics-page-graphicspage-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.graphics_page.GraphicsPage">
+<span id="foundry-core-graphics-page-graphicspage-module"></span><h2>foundry.core.graphics_page.GraphicsPage module<a class="headerlink" href="#module-foundry.core.graphics_page.GraphicsPage" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GraphicsPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a single page of graphics inside the ROM, that uses <code class="docutils literal notranslate"><span class="pre">attrs</span></code> to create a
+basic implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>index: int</strong></dt><dd><p>The index of the graphical page into the ROM.</p>
+</dd>
+<dt><strong>path: Optional[Path]</strong></dt><dd><p>The path to the file containing the bytes of the graphics page or ROM if None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPage.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPage.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPage.offset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPage.offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPage.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">pathlib.Path</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPage.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GraphicsPageProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>A representation of a single page of graphics inside the ROM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>index: int</strong></dt><dd><p>The index of the graphical page into the ROM.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticGraphicsPage</span></span><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
+<p>A JSON model of a generic GraphicsPage through Pydantic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>index: int</strong></dt><dd><p>The index of the graphical page into the ROM.</p>
+</dd>
+<dt><strong>path: Optional[FilePath]</strong></dt><dd><p>The path to the file containing the bytes of the graphics page or ROM if None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pydantic.types.FilePath</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.to_graphics_page">
+<span class="sig-name descname"><span class="pre">to_graphics_page</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol" title="foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol"><span class="pre">foundry.core.graphics_page.GraphicsPage.GraphicsPageProtocol</span></a></span></span><a class="headerlink" href="#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage.to_graphics_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<section id="module-foundry.core.graphics_page">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.graphics_page" title="Permalink to this headline">¶</a></h2>
 </section>
 </section>
 
