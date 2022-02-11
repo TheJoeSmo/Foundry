@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import ClassVar, Protocol, Sequence, Type, TypeVar
 
 from attr import attrs
+from pydantic import BaseModel
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
@@ -11,7 +12,9 @@ from foundry.core.palette.Palette import (
     MutablePalette,
     MutablePaletteProtocol,
     Palette,
+    PaletteCreator,
     PaletteProtocol,
+    PydanticPaletteProtocol,
 )
 from foundry.core.palette.util import get_internal_palette_offset
 
@@ -200,3 +203,24 @@ class PaletteGroup(AbstractPaletteGroup):
     @classmethod
     def from_values(cls: Type[_PT], *values: PaletteProtocol) -> _PT:
         return cls(tuple(cls.PALETTE_TYPE.from_palette(palette) for palette in values))
+
+
+class PydanticPaletteGroup(BaseModel):
+    """
+    A generic representation of :class:`~foundry.core.palette.PaletteGroup.PaletteGroup`.
+
+    Attributes
+    ----------
+    palettes: list[PaletteCreator]
+        The palettes that compose the palette group.
+    """
+
+    palettes: list[PaletteCreator]
+
+    @property
+    def palette_protocols(self) -> list[PydanticPaletteProtocol]:
+        return self.palettes  # type: ignore
+
+    @property
+    def palette_group(self) -> PaletteGroupProtocol:
+        return PaletteGroup.from_values(*[p.palette for p in self.palette_protocols])
