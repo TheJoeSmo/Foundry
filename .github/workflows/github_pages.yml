@@ -46,6 +46,12 @@ jobs:
       - name: Install library
         run: poetry install --no-interaction
 
+      # Install OpenGL so PySide6 works properly
+      - name: Install OpenGL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -o Acquire::Retries=3 freeglut3 freeglut3-dev
+
       # Building documentation
       - name: Build Documentation
         run: |

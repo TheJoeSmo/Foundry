@@ -4,6 +4,14 @@ foundry.game.gfx.objects package
 Submodules
 ----------
 
+foundry.game.gfx.objects.Enemy module
+-------------------------------------
+
+.. automodule:: foundry.game.gfx.objects.Enemy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.game.gfx.objects.EnemyItem module
 -----------------------------------------
 
@@ -16,6 +24,14 @@ foundry.game.gfx.objects.EnemyItemFactory module
 ------------------------------------------------
 
 .. automodule:: foundry.game.gfx.objects.EnemyItemFactory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.game.gfx.objects.GeneratorObject module
+-----------------------------------------------
+
+.. automodule:: foundry.game.gfx.objects.GeneratorObject
    :members:
    :undoc-members:
    :show-inheritance:
@@ -56,6 +72,14 @@ foundry.game.gfx.objects.ObjectLike module
 ------------------------------------------
 
 .. automodule:: foundry.game.gfx.objects.ObjectLike
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.game.gfx.objects.util module
+------------------------------------
+
+.. automodule:: foundry.game.gfx.objects.util
    :members:
    :undoc-members:
    :show-inheritance:

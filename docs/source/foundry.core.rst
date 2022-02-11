@@ -7,7 +7,13 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   foundry.core.graphics_page
+   foundry.core.graphics_set
+   foundry.core.painter
+   foundry.core.palette
    foundry.core.player_animations
+   foundry.core.point
+   foundry.core.size
    foundry.core.sprites
    foundry.core.warnings
 
@@ -18,22 +24,6 @@ foundry.core.Data module
 ------------------------
 
 .. automodule:: foundry.core.Data
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-foundry.core.Position module
-----------------------------
-
-.. automodule:: foundry.core.Position
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-foundry.core.Size module
-------------------------
-
-.. automodule:: foundry.core.Size
    :members:
    :undoc-members:
    :show-inheritance:

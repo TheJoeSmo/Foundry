@@ -21,6 +21,22 @@ foundry.game.Data module
    :undoc-members:
    :show-inheritance:
 
+foundry.game.Definitions module
+-------------------------------
+
+.. automodule:: foundry.game.Definitions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.game.EnemyDefinitions module
+------------------------------------
+
+.. automodule:: foundry.game.EnemyDefinitions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.game.File module
 ------------------------
 
