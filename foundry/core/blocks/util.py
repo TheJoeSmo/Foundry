@@ -13,8 +13,8 @@ from foundry.core.palette.PaletteGroup import (
     PaletteGroup,
     PaletteGroupProtocol,
 )
-from foundry.game.gfx.drawable import MASK_COLOR
-from foundry.game.gfx.drawable.Tile import Tile
+from foundry.core.tiles import MASK_COLOR
+from foundry.core.tiles.util import cached_tile_to_image
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
@@ -61,10 +61,13 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
     """
     image = QImage(BLOCK_SIZE.width, BLOCK_SIZE.height, QImage.Format_RGB888)
     image.fill(QColor(*MASK_COLOR))
-    patterns = [Tile(index, block.palette_group, block.palette_index, block.graphics_set) for index in block.patterns]
+    patterns = [
+        cached_tile_to_image(index, block.palette_group[block.palette_index], block.graphics_set)
+        for index in block.patterns
+    ]
     with Painter(image) as p:
         for (pattern, position) in zip(patterns, PATTERN_LOCATIONS):
-            p.drawImage(QPoint(position.x, position.y), pattern.as_image())
+            p.drawImage(QPoint(position.x, position.y), pattern)
     return image.scaled(scale_factor, scale_factor)
 
 
