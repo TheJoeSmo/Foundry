@@ -27,9 +27,5 @@ class Drawable(BaseModel):
     type: DrawableType
     point_offset: PydanticPoint = PydanticPoint(x=0, y=0)
 
-    @property
-    def drawable(self) -> DrawableProtocol:
-        raise NotImplementedError
-
     class Config:
         use_enum_values = True

@@ -271,14 +271,22 @@ class LevelDrawer:
         painter.save()
 
         for level_object in level.get_all_objects():
+            pos = level_object.get_rect(self.block_length).topLeft()
+            rect = level_object.get_rect(self.block_length)
+
+            for overlay in level_object.definition.get_overlays():
+                drawable = overlay.drawable
+                painter.drawImage(
+                    drawable.point_offset.x + pos.x() * self.block_length,
+                    drawable.point_offset.y + pos.y() * self.block_length,
+                    drawable.image(self.block_length),
+                )
+
             name = level_object.name.lower()
 
             # only handle this specific enemy item for now
             if isinstance(level_object, EnemyObject) and "invisible door" not in name:
                 continue
-
-            pos = level_object.get_rect(self.block_length).topLeft()
-            rect = level_object.get_rect(self.block_length)
 
             # invisible coins, for example, expand and need to have multiple overlays drawn onto them
             # set true by default, since for most overlays it doesn't matter
