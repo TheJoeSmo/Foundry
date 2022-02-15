@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from foundry.core.drawable import DrawableType
 from foundry.core.drawable.BlockGroupDrawable import PydanticBlockGroupDrawable
 from foundry.core.drawable.Drawable import Drawable
+from foundry.core.drawable.ImageDrawable import PydanticImageDrawable
 
 
 class DrawableGeneratator(BaseModel):
@@ -34,7 +35,9 @@ class DrawableGeneratator(BaseModel):
             If the constructor does not have a valid constructor for `v["type"]`.
         """
         type_ = DrawableType(v["type"])
-        if type_ == DrawableType.BLOCK_GROUP:
+        if type_ == DrawableType.IMAGE_FROM_FILE:
+            return PydanticImageDrawable(**v)
+        elif type_ == DrawableType.BLOCK_GROUP:
             return PydanticBlockGroupDrawable(**v)
         raise NotImplementedError(f"There is no drawable of type {type_}")
 
