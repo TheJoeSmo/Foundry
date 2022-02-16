@@ -1,11 +1,13 @@
 from itertools import product
+from json import loads
 from typing import Tuple
 
 from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
-from foundry import data_dir
+from foundry import data_dir, namespace_path
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.namespace.Namespace import Namespace, generate_namespace
 from foundry.core.palette import NESPalette
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.game.File import ROM
@@ -35,6 +37,16 @@ from foundry.smb3parse.objects.object_set import (
     ICE_OBJECT_SET,
 )
 
+
+def load_namespace() -> Namespace:
+    with open(str(namespace_path), "r") as f:
+        return generate_namespace(loads(f.read()))
+
+
+namespace = load_namespace()
+level_images = namespace.children["graphics"].children["level_images"]
+
+
 png = QImage(str(data_dir / "gfx.png"))
 png.convertTo(QImage.Format_RGB888)
 
@@ -58,28 +70,28 @@ def _load_from_png(x: int, y: int):
     return image
 
 
-FIRE_FLOWER = _load_from_png(16, 53)
-LEAF = _load_from_png(17, 53)
-NORMAL_STAR = _load_from_png(18, 53)
-CONTINUOUS_STAR = _load_from_png(19, 53)
-MULTI_COIN = _load_from_png(20, 53)
-ONE_UP = _load_from_png(21, 53)
-COIN = _load_from_png(22, 53)
-VINE = _load_from_png(23, 53)
-P_SWITCH = _load_from_png(24, 53)
-SILVER_COIN = _load_from_png(25, 53)
-INVISIBLE_COIN = _load_from_png(26, 53)
-INVISIBLE_1_UP = _load_from_png(27, 53)
+FIRE_FLOWER = level_images["fire_flower"].drawable.image()
+LEAF = level_images["leaf"].drawable.image()
+NORMAL_STAR = level_images["star"].drawable.image()
+CONTINUOUS_STAR = level_images["star_continuous"].drawable.image()
+MULTI_COIN = level_images["coins_multiple"].drawable.image()
+ONE_UP = level_images["extra_life"].drawable.image()
+COIN = level_images["coin"].drawable.image()
+VINE = level_images["vine"].drawable.image()
+P_SWITCH = level_images["p_switch"].drawable.image()
+SILVER_COIN = level_images["coin_silver"].drawable.image()
+INVISIBLE_COIN = level_images["coin_invisible"].drawable.image()
+INVISIBLE_1_UP = level_images["coin_extra_life"].drawable.image()
 
-NO_JUMP = _load_from_png(32, 53)
-UP_ARROW = _load_from_png(33, 53)
-DOWN_ARROW = _load_from_png(34, 53)
-LEFT_ARROW = _load_from_png(35, 53)
-RIGHT_ARROW = _load_from_png(36, 53)
+NO_JUMP = level_images["no_jump"].drawable.image()
+UP_ARROW = level_images["up_arrow"].drawable.image()
+DOWN_ARROW = level_images["down_arrow"].drawable.image()
+LEFT_ARROW = level_images["left_arrow"].drawable.image()
+RIGHT_ARROW = level_images["right_arrow"].drawable.image()
 
-ITEM_ARROW = _load_from_png(53, 53)
+ITEM_ARROW = level_images["item_arrow"].drawable.image()
 
-EMPTY_IMAGE = _load_from_png(0, 53)
+EMPTY_IMAGE = level_images["empty"].drawable.image()
 
 
 SPECIAL_BACKGROUND_OBJECTS = [

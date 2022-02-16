@@ -70,5 +70,5 @@ class DrawableGeneratator(BaseModel):
         if "type" not in v:
             raise TypeError("Must have a type")
         if not DrawableType.has_value(type_ := v["type"]):
-            raise TypeError(f"{type_} is not a valid widget type")
+            raise TypeError(f"{type_} is not a valid drawable type")
         return cls.generate_drawable(v)
