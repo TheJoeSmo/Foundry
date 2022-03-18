@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from PySide6.QtGui import QPixmap, Qt
 from PySide6.QtWidgets import QBoxLayout, QLabel
 
@@ -6,6 +7,7 @@ from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from dataclasses import dataclass
+import copy
 
 @dataclass
 class UIStrings:
@@ -46,36 +48,49 @@ class Store():
 
     def __init__(self, rom: Rom):
         self.rom = rom
-        self.state = Store.__defaultState(rom)
+        self.state = self.__loadStateFromRom()
 
-    def __defaultState(rom: Rom) -> State:
+    def __loadStateFromRom(self) -> State:
         return State(   
-                        rom.read(Addresses.starting_lives, 1)[0],
-                        rom.read(Addresses.continue_lives, 1)[0]
+                        self.rom.read(Addresses.starting_lives, 1)[0],
+                        self.rom.read(Addresses.continue_lives, 1)[0]
                     )
 
     def getState(self) -> State:
         return self.state
 
     def dispatch(self, action: Action):
-        self.state = self.__reduce(self.state, action)
+        oldState = copy.deepcopy(self.state)
+        self.state = self.__reduce(copy.deepcopy(self.state), action)
+
+        if self.state != oldState:
+            self.__notifySubscribers()
+
+    def __notifySubscribers(self):
         for subscriber in self.subscribers:
             subscriber()
 
     def __reduce(self, state:State, action: Action) -> State:
+
         if state is None:
-            state = Store.__defaultState(self.rom)
+            state = self.__loadStateFromRom()
 
         if action.type == ActionNames.starting_lives:
-            state.starting_lives = action.payload
+            if(Store.__isBoundedInteger(action.payload, 0, 99)):
+                state.starting_lives = action.payload
 
         elif action.type == ActionNames.continue_lives:
-            state.continue_lives = action.payload
+            if(Store.__isBoundedInteger(action.payload, 0, 99)):
+                state.continue_lives = action.payload
 
         elif action.type == ActionNames.load:
-            state = Store.__defaultState(self.rom)
+            state = self.__loadStateFromRom()
 
         return state
+
+    def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> Boolean:
+        if isinstance(input, int) == False: return False
+        return (input >= lower_limit) & (input <= upper_limit)
 
     def subscribe(self, subscriber):
         self.subscribers.append(subscriber)
