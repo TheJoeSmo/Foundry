@@ -8,8 +8,18 @@ from foundry.gui.HorizontalLine import HorizontalLine
 from dataclasses import dataclass
 
 @dataclass
+class UIStrings:
+    title = "Player Lives"
+    starting_lives = "Starting Lives"
+    continue_lives = "Continue Lives"
+    reload = "Reload"
+    cancel = "cancel"
+    accept = "Accept"
+
+@dataclass
 class Addresses:
     starting_lives = 0x308E1
+    continue_lives = 0x3D2D6
 
 @dataclass
 class Action:
@@ -17,8 +27,17 @@ class Action:
     payload: any
 
 @dataclass
+class ActionNames:
+    load = "[PlayerLives] Load"
+    starting_lives = "[PlayerLives] StartingLives"
+    continue_lives = "[PlayerLives] ContinueLives"
+
+ACTION_LOAD = Action(ActionNames.load, None)
+
+@dataclass
 class State:
     starting_lives: int
+    continue_lives: int
 
 class Store():
     rom : Rom
@@ -30,7 +49,10 @@ class Store():
         self.state = Store.__defaultState(rom)
 
     def __defaultState(rom: Rom) -> State:
-        return State(rom.read(Addresses.starting_lives, 1)[0])
+        return State(   
+                        rom.read(Addresses.starting_lives, 1)[0],
+                        rom.read(Addresses.continue_lives, 1)[0]
+                    )
 
     def getState(self) -> State:
         return self.state
@@ -44,6 +66,15 @@ class Store():
         if state is None:
             state = Store.__defaultState(self.rom)
 
+        if action.type == ActionNames.starting_lives:
+            state.starting_lives = action.payload
+
+        elif action.type == ActionNames.continue_lives:
+            state.continue_lives = action.payload
+
+        elif action.type == ActionNames.load:
+            state = Store.__defaultState(self.rom)
+
         return state
 
     def subscribe(self, subscriber):
@@ -53,17 +84,18 @@ class View(CustomDialog):
     store : Store
 
     def __init__(self, parent, store: Store):
-        super(View, self).__init__(parent, title="Player Lives")
+        super(View, self).__init__(parent, title=UIStrings.title)
         self.store = store
         self.store.subscribe(self.render)
-        self.render(store.getState())
+        self.store.dispatch(ACTION_LOAD)
         self.show()
 
     def render(self):
         state = self.store.getState()
         main_layout = QBoxLayout(QBoxLayout.LeftToRight, self)
         text_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        text_layout.addWidget(QLabel(f"Starting Lives: {state.starting_lives}", self))
+        text_layout.addWidget(QLabel(f"{UIStrings.starting_lives}: {state.starting_lives}", self))
+        text_layout.addWidget(QLabel(f"{UIStrings.continue_lives}: {state.continue_lives}", self))
         main_layout.addLayout(text_layout)
 
 class PlayerLives():
