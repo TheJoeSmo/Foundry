@@ -13,10 +13,10 @@ def defaultStore() -> Store:
     rom.write(Addresses.continue_lives, [default_continue_lives])
     return Store(rom)
 
-def test_initialState():
-    initialState(defaultStore())
+def test_verifyDefaultState():
+    verifyDefaultState(defaultStore())
 
-def initialState(store : Store):
+def verifyDefaultState(store : Store):
     assert default_starting_lives == store.getState().starting_lives
     assert default_continue_lives == store.getState().continue_lives
 
@@ -91,7 +91,7 @@ def test_load():
     store = defaultStore()
     startingLivesAction(store, 1)
     store.dispatch(Action(ActionNames.load, None))
-    initialState(store)
+    verifyDefaultState(store)
 
 class CallbackTester:
     called = 0

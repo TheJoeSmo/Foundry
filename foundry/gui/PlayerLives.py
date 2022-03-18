@@ -1,6 +1,6 @@
 from xmlrpc.client import Boolean
 from PySide6.QtGui import QPixmap, Qt
-from PySide6.QtWidgets import QBoxLayout, QLabel
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QVBoxLayout
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
@@ -14,9 +14,6 @@ class UIStrings:
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
-    reload = "Reload"
-    cancel = "cancel"
-    accept = "Accept"
 
 @dataclass
 class Addresses:
@@ -94,11 +91,24 @@ class Store():
     def subscribe(self, subscriber):
         self.subscribers.append(subscriber)
 
+class Generator():
+    store : Store
+    rom : Rom
+
+    def __init__(self, store: Store, rom : Rom):
+        self.store = store
+        self.rom = rom
+
+    def render(self):
+        print("Didn't write to ROM yet")
+
 class View(CustomDialog):
     store : Store
+    generator : Generator
 
-    def __init__(self, parent, store: Store):
+    def __init__(self, parent, store : Store, generator : Generator):
         super(View, self).__init__(parent, title=UIStrings.title)
+        self.generator = generator
         self.store = store
         self.store.subscribe(self.render)
         self.store.dispatch(ACTION_LOAD)
@@ -106,14 +116,30 @@ class View(CustomDialog):
 
     def render(self):
         state = self.store.getState()
-        main_layout = QBoxLayout(QBoxLayout.LeftToRight, self)
+        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
         text_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        text_layout.addWidget(QLabel(f"{UIStrings.starting_lives}: {state.starting_lives}", self))
-        text_layout.addWidget(QLabel(f"{UIStrings.continue_lives}: {state.continue_lives}", self))
+        text_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99): {state.starting_lives}", self))
+        text_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99): {state.continue_lives}", self))
+        button_box = QDialogButtonBox()
+
+        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
+        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
+
         main_layout.addLayout(text_layout)
+        main_layout.addWidget(HorizontalLine())
+        main_layout.addWidget(button_box, alignment=Qt.AlignRight)
+
+    def __on_ok(self):
+        self.generator.render()
+        self.done(QDialogButtonBox.Apply)
+
+    def __on_cancel(self):
+        self.done(QDialogButtonBox.Cancel)
 
 class PlayerLives():
     def __init__(self, parent):
-        View(parent, Store(ROM()))
+        rom = ROM()
+        store = Store(rom)
+        View(parent, store, Generator(store, rom))
 
 
