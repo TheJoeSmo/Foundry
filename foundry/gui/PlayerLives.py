@@ -43,12 +43,11 @@ class State:
 
 class Store():
     rom : Rom
-    state : State
+    state : State = None
     subscribers = []
 
     def __init__(self, rom: Rom):
         self.rom = rom
-        self.state = self.__loadStateFromRom()
 
     def __loadStateFromRom(self) -> State:
         return State(   
