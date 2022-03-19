@@ -1,8 +1,5 @@
 from foundry.smb3parse.util.rom import Rom
-from foundry.gui.PlayerLives import Addresses
-from foundry.gui.PlayerLives import Store
-from foundry.gui.PlayerLives import Action
-from foundry.gui.PlayerLives import ActionNames
+from foundry.gui.PlayerLives import Addresses, Store, Action, ActionNames, Generator
 
 default_starting_lives = 5
 default_continue_lives = 4
@@ -92,6 +89,14 @@ def test_load():
     startingLivesAction(store, 1)
     store.dispatch(Action(ActionNames.load, None))
     verifyDefaultState(store)
+
+def test_generator():
+    store = defaultStore()
+    rom = Rom(bytearray([0] * 0x50000))
+    generator = Generator(store, rom)
+    generator.render()
+    assert default_starting_lives == rom.read(Addresses.starting_lives, 1)[0]
+    assert default_continue_lives == rom.read(Addresses.continue_lives, 1)[0]
 
 class CallbackTester:
     called = 0
