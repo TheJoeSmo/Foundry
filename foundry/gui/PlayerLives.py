@@ -45,6 +45,7 @@ class Store():
 
     def __init__(self, rom: Rom):
         self.rom = rom
+        self.state = self.__loadStateFromRom()
 
     def __loadStateFromRom(self) -> State:
         return State(   
@@ -100,7 +101,10 @@ class Generator():
         self.rom = rom
 
     def render(self):
-        print("Didn't write to ROM yet")
+        state = self.store.getState()
+        self.rom.write(Addresses.starting_lives, [state.starting_lives])
+        self.rom.write(Addresses.continue_lives, [state.continue_lives])
+        self.rom.save_to
 
 class View(CustomDialog):
     store : Store
@@ -142,8 +146,7 @@ class View(CustomDialog):
         main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
 
         self.store.subscribe(self.render)
-        self.store.dispatch(ACTION_LOAD)
-
+        self.render()
         self.show()
 
     def render(self):
@@ -159,7 +162,6 @@ class View(CustomDialog):
         self.done(QDialogButtonBox.Cancel)
 
     def __on_starting_lives(self, text : str):
-        print("Updated starting lives")
         self.store.dispatch(Action(ActionNames.starting_lives, int(text)))
 
     def __on_continue_lives(self, text : str):
