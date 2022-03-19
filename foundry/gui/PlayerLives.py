@@ -1,6 +1,6 @@
 from xmlrpc.client import Boolean
-from PySide6.QtGui import QPixmap, Qt
-from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QVBoxLayout
+from PySide6.QtGui import QPixmap, Qt, QIntValidator
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
@@ -105,8 +105,10 @@ class Generator():
 class View(CustomDialog):
     store : Store
     generator : Generator
-    starting_lives_label : QLabel
-    continue_lives_label : QLabel
+
+    starting_lives_edit : QLineEdit
+    continue_lives_edit : QLineEdit
+
     button_box : QDialogButtonBox
 
     def __init__(self, parent, store : Store, generator : Generator):
@@ -115,19 +117,27 @@ class View(CustomDialog):
         self.store = store
 
         main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
-        text_layout = QBoxLayout(QBoxLayout.TopToBottom)
 
-        self.starting_lives_label = QLabel(self)
-        self.continue_lives_label = QLabel(self)
+        starting_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self.starting_lives_edit = QLineEdit(self)
+        self.starting_lives_edit.setValidator(QIntValidator(0, 99, self))
+        self.starting_lives_edit.textEdited.connect(self.__on_starting_lives)
+        starting_lives_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99):", self))
+        starting_lives_layout.addWidget(self.starting_lives_edit)
 
-        text_layout.addWidget(self.starting_lives_label)
-        text_layout.addWidget(self.continue_lives_label)
+        continue_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self.continue_lives_edit = QLineEdit(self)
+        self.continue_lives_edit.setValidator(QIntValidator(0, 99, self))
+        self.continue_lives_edit.textEdited.connect(self.__on_continue_lives)
+        continue_lives_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self))
+        continue_lives_layout.addWidget(self.continue_lives_edit)
 
         self.button_box = QDialogButtonBox()
         self.button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
         self.button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
 
-        main_layout.addLayout(text_layout)
+        main_layout.addLayout(starting_lives_layout)
+        main_layout.addLayout(continue_lives_layout)
         main_layout.addWidget(HorizontalLine())
         main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
 
@@ -138,8 +148,8 @@ class View(CustomDialog):
 
     def render(self):
         state = self.store.getState()
-        self.starting_lives_label.setText(f"{UIStrings.starting_lives} (0-99): {state.starting_lives}")
-        self.continue_lives_label.setText(f"{UIStrings.continue_lives} (0-99): {state.continue_lives}")
+        self.starting_lives_edit.setText(f"{state.starting_lives}")
+        self.continue_lives_edit.setText(f"{state.continue_lives}")
 
     def __on_ok(self):
         self.generator.render()
@@ -147,6 +157,14 @@ class View(CustomDialog):
 
     def __on_cancel(self):
         self.done(QDialogButtonBox.Cancel)
+
+    def __on_starting_lives(self, text : str):
+        print("Updated starting lives")
+        self.store.dispatch(Action(ActionNames.starting_lives, int(text)))
+
+    def __on_continue_lives(self, text : str):
+        self.store.dispatch(Action(ActionNames.continue_lives, int(text)))
+    
 
 class PlayerLives():
     def __init__(self, parent):
