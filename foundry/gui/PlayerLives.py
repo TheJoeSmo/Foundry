@@ -105,29 +105,41 @@ class Generator():
 class View(CustomDialog):
     store : Store
     generator : Generator
+    starting_lives_label : QLabel
+    continue_lives_label : QLabel
+    button_box : QDialogButtonBox
 
     def __init__(self, parent, store : Store, generator : Generator):
         super(View, self).__init__(parent, title=UIStrings.title)
         self.generator = generator
         self.store = store
+
+        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+        text_layout = QBoxLayout(QBoxLayout.TopToBottom)
+
+        self.starting_lives_label = QLabel(self)
+        self.continue_lives_label = QLabel(self)
+
+        text_layout.addWidget(self.starting_lives_label)
+        text_layout.addWidget(self.continue_lives_label)
+
+        self.button_box = QDialogButtonBox()
+        self.button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
+        self.button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
+
+        main_layout.addLayout(text_layout)
+        main_layout.addWidget(HorizontalLine())
+        main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
+
         self.store.subscribe(self.render)
         self.store.dispatch(ACTION_LOAD)
+
         self.show()
 
     def render(self):
         state = self.store.getState()
-        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
-        text_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        text_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99): {state.starting_lives}", self))
-        text_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99): {state.continue_lives}", self))
-        button_box = QDialogButtonBox()
-
-        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
-        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
-
-        main_layout.addLayout(text_layout)
-        main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(button_box, alignment=Qt.AlignRight)
+        self.starting_lives_label.setText(f"{UIStrings.starting_lives} (0-99): {state.starting_lives}")
+        self.continue_lives_label.setText(f"{UIStrings.continue_lives} (0-99): {state.continue_lives}")
 
     def __on_ok(self):
         self.generator.render()
