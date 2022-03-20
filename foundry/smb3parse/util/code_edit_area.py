@@ -3,16 +3,16 @@ from foundry.smb3parse.util.rom import Rom
 
 @dataclass
 class CodeEditArea:
-    start_address: int
+    address: int
     length: int
     preamble: bytearray
     postamble: bytearray
 
-    def __validate(rom: Rom, address: int, data: bytearray):
+    def __validate(rom: Rom, testAddress: int, data: bytearray):
         if len(data) == 0: return True
-        return data == rom.read(address, len(data))
+        return data == rom.read(testAddress, len(data))
 
     def isValid(self, rom: Rom):
-        if CodeEditArea.__validate(rom, self.start_address - len(self.preamble), self.preamble) == False: return False
-        return CodeEditArea.__validate(rom, self.start_address + self.length, self.postamble) == True
+        if CodeEditArea.__validate(rom, self.address - len(self.preamble), self.preamble) == False: return False
+        return CodeEditArea.__validate(rom, self.address + self.length, self.postamble) == True
     
