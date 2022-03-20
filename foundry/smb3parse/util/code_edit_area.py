@@ -14,5 +14,5 @@ class CodeEditArea:
 
     def isValid(self, rom: Rom):
         if CodeEditArea.__validate(rom, self.start_address - len(self.preamble), self.preamble) == False: return False
-        return CodeEditArea.__validate(rom, self.start_address + len(self.postamble), self.postamble) == True
+        return CodeEditArea.__validate(rom, self.start_address + self.length, self.postamble) == True
     
