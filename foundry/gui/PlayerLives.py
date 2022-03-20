@@ -6,6 +6,7 @@ from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
+from foundry.smb3parse.util.code_edit_area import CodeEditArea
 from dataclasses import dataclass
 import copy
 
@@ -16,9 +17,9 @@ class UIStrings:
     continue_lives = "Continue Lives"
 
 @dataclass
-class Addresses:
-    starting_lives = 0x308E1
-    continue_lives = 0x3D2D6
+class CodeEditAreas:
+    starting_lives = CodeEditArea(0x308E1, 1, bytearray([]), bytearray([]))
+    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([]), bytearray([]))
 
 @dataclass
 class Action:
@@ -49,8 +50,8 @@ class Store():
 
     def __loadStateFromRom(self) -> State:
         return State(   
-                        self.rom.read(Addresses.starting_lives, 1)[0],
-                        self.rom.read(Addresses.continue_lives, 1)[0]
+                        self.rom.read(CodeEditAreas.starting_lives.address, 1)[0],
+                        self.rom.read(CodeEditAreas.continue_lives.address, 1)[0]
                     )
 
     def getState(self) -> State:
@@ -102,8 +103,8 @@ class Generator():
 
     def render(self):
         state = self.store.getState()
-        self.rom.write(Addresses.starting_lives, [state.starting_lives])
-        self.rom.write(Addresses.continue_lives, [state.continue_lives])
+        self.rom.write(CodeEditAreas.starting_lives.address, [state.starting_lives])
+        self.rom.write(CodeEditAreas.continue_lives.address, [state.continue_lives])
         self.rom.save_to
 
 class View(CustomDialog):
