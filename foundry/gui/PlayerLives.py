@@ -1,6 +1,6 @@
 from xmlrpc.client import Boolean
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
-from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
@@ -125,19 +125,13 @@ class View(CustomDialog):
 
         main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
 
-        starting_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
         self.starting_lives_edit = QLineEdit(self)
         self.starting_lives_edit.setValidator(QIntValidator(0, 99, self))
         self.starting_lives_edit.textEdited.connect(self.__on_starting_lives)
-        starting_lives_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99):", self))
-        starting_lives_layout.addWidget(self.starting_lives_edit)
 
-        continue_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
         self.continue_lives_edit = QLineEdit(self)
         self.continue_lives_edit.setValidator(QIntValidator(0, 99, self))
         self.continue_lives_edit.textEdited.connect(self.__on_continue_lives)
-        continue_lives_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self))
-        continue_lives_layout.addWidget(self.continue_lives_edit)
 
         invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
         self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
@@ -148,9 +142,14 @@ class View(CustomDialog):
         self.button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
         self.button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
 
+        fields_layout = QGridLayout()
+        fields_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99):", self), 0, 0)
+        fields_layout.addWidget(self.starting_lives_edit, 0, 1)
+        fields_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
+        fields_layout.addWidget(self.continue_lives_edit, 1, 1)
+
         main_layout.addLayout(invalid_rom_warning_layout)
-        main_layout.addLayout(starting_lives_layout)
-        main_layout.addLayout(continue_lives_layout)
+        main_layout.addLayout(fields_layout)
         main_layout.addWidget(HorizontalLine())
         main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
 
