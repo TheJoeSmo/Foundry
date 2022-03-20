@@ -18,8 +18,8 @@ class UIStrings:
 
 @dataclass
 class CodeEditAreas:
-    starting_lives = CodeEditArea(0x308E1, 1, bytearray([]), bytearray([]))
-    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([]), bytearray([]))
+    starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
+    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
 
 @dataclass
 class Action:
@@ -37,7 +37,9 @@ ACTION_LOAD = Action(ActionNames.load, None)
 @dataclass
 class State:
     starting_lives: int
+    starting_lives_area_valid: Boolean
     continue_lives: int
+    continue_lives_area_valid: Boolean
 
 class Store():
     rom : Rom
@@ -51,7 +53,9 @@ class Store():
     def __loadStateFromRom(self) -> State:
         return State(   
                         self.rom.read(CodeEditAreas.starting_lives.address, 1)[0],
-                        self.rom.read(CodeEditAreas.continue_lives.address, 1)[0]
+                        CodeEditAreas.starting_lives.isValid(self.rom),
+                        self.rom.read(CodeEditAreas.continue_lives.address, 1)[0],
+                        CodeEditAreas.continue_lives.isValid(self.rom)
                     )
 
     def getState(self) -> State:

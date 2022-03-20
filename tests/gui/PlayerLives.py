@@ -6,8 +6,13 @@ default_continue_lives = 4
 
 def defaultStore() -> Store:
     rom = Rom(bytearray([0] * 0x50000))
+    rom.write(CodeEditAreas.starting_lives.address - len(CodeEditAreas.starting_lives.preamble), CodeEditAreas.starting_lives.preamble)
     rom.write(CodeEditAreas.starting_lives.address, [default_starting_lives])
+    rom.write(CodeEditAreas.starting_lives.address + 1, CodeEditAreas.starting_lives.postamble)
+
+    rom.write(CodeEditAreas.continue_lives.address - len(CodeEditAreas.continue_lives.preamble), CodeEditAreas.continue_lives.preamble)
     rom.write(CodeEditAreas.continue_lives.address, [default_continue_lives])
+    rom.write(CodeEditAreas.continue_lives.address + 1, CodeEditAreas.continue_lives.postamble)
     return Store(rom)
 
 def test_verifyDefaultState():
@@ -83,6 +88,14 @@ def test_continueLivesAction():
     store = defaultStore()
     store.dispatch(Action(ActionNames.continue_lives, updated_continue_lives))
     assert updated_continue_lives == store.getState().continue_lives
+
+def test_warningStartLivesValid():
+    store = defaultStore()
+    assert True == store.getState().starting_lives_area_valid
+
+def test_warningContinueLivesValid():
+    store = defaultStore()
+    assert True == store.getState().starting_lives_area_valid
 
 def test_load():
     store = defaultStore()
