@@ -15,6 +15,7 @@ class UIStrings:
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
+    invalid_rom_warning = "The selected ROM has a code modification that is incompatible with this feature."
 
 @dataclass
 class CodeEditAreas:
@@ -37,9 +38,8 @@ ACTION_LOAD = Action(ActionNames.load, None)
 @dataclass
 class State:
     starting_lives: int
-    starting_lives_area_valid: Boolean
     continue_lives: int
-    continue_lives_area_valid: Boolean
+    valid_rom: Boolean
 
 class Store():
     rom : Rom
@@ -53,9 +53,8 @@ class Store():
     def __loadStateFromRom(self) -> State:
         return State(   
                         self.rom.read(CodeEditAreas.starting_lives.address, 1)[0],
-                        CodeEditAreas.starting_lives.isValid(self.rom),
                         self.rom.read(CodeEditAreas.continue_lives.address, 1)[0],
-                        CodeEditAreas.continue_lives.isValid(self.rom)
+                        CodeEditAreas.starting_lives.isValid(self.rom) & CodeEditAreas.continue_lives.isValid(self.rom)
                     )
 
     def getState(self) -> State:
@@ -109,7 +108,6 @@ class Generator():
         state = self.store.getState()
         self.rom.write(CodeEditAreas.starting_lives.address, [state.starting_lives])
         self.rom.write(CodeEditAreas.continue_lives.address, [state.continue_lives])
-        self.rom.save_to
 
 class View(CustomDialog):
     store : Store
@@ -117,8 +115,8 @@ class View(CustomDialog):
 
     starting_lives_edit : QLineEdit
     continue_lives_edit : QLineEdit
-
     button_box : QDialogButtonBox
+    invalid_rom_warning : QLabel
 
     def __init__(self, parent, store : Store, generator : Generator):
         super(View, self).__init__(parent, title=UIStrings.title)
@@ -141,10 +139,16 @@ class View(CustomDialog):
         continue_lives_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self))
         continue_lives_layout.addWidget(self.continue_lives_edit)
 
+        invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
+        self.invalid_rom_warning.setStyleSheet("QLabel { background-color : pink; }")   # I didn't see a style sheet to draw from, should probably create one?  Better way to do this?
+        invalid_rom_warning_layout.addWidget(self.invalid_rom_warning)
+
         self.button_box = QDialogButtonBox()
         self.button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
         self.button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
 
+        main_layout.addLayout(invalid_rom_warning_layout)
         main_layout.addLayout(starting_lives_layout)
         main_layout.addLayout(continue_lives_layout)
         main_layout.addWidget(HorizontalLine())
@@ -156,8 +160,15 @@ class View(CustomDialog):
 
     def render(self):
         state = self.store.getState()
+
+        self.starting_lives_edit.setReadOnly(state.valid_rom == False)
         self.starting_lives_edit.setText(f"{state.starting_lives}")
+
+        self.continue_lives_edit.setReadOnly(state.valid_rom == False)
         self.continue_lives_edit.setText(f"{state.continue_lives}")
+
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(state.valid_rom)
+        self.invalid_rom_warning.setVisible(state.valid_rom == False)       
 
     def __on_ok(self):
         self.generator.render()
