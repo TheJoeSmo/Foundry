@@ -11,6 +11,10 @@ def test_isValidNoGuards():
     test_area = CodeEditArea(0x100, 1, [], [])
     assert True == test_area.isValid(getTestRom())
 
-def test_isValid1BytePreGuardInvalid():
+def test_isValid1BytePreambleInvalid():
     test_area = CodeEditArea(0x100, 1, [0x11], [])
+    assert False == test_area.isValid(getTestRom())
+
+def test_isValid1BytePostambleInvalid():
+    test_area = CodeEditArea(0x100, 1, [], [0x11])
     assert False == test_area.isValid(getTestRom())
