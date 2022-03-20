@@ -97,19 +97,19 @@ def test_continueLivesAction():
 
 def test_warningStartLivesValid():
     store = defaultStore()
-    assert True == store.getState().starting_lives_area_valid
+    assert True == store.getState().valid_rom
 
 def test_warningContinueLivesValid():
     store = defaultStore()
-    assert True == store.getState().starting_lives_area_valid
+    assert True == store.getState().valid_rom
 
 def test_warningStartLivesInvalid():
     store = defaultInvalidStore()
-    assert False == store.getState().starting_lives_area_valid
+    assert False == store.getState().valid_rom
 
 def test_warningContinueLivesInvalid():
     store = defaultInvalidStore()
-    assert False == store.getState().starting_lives_area_valid
+    assert False == store.getState().valid_rom
 
 def test_load():
     store = defaultStore()
