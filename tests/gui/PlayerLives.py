@@ -15,6 +15,12 @@ def defaultStore() -> Store:
     rom.write(CodeEditAreas.continue_lives.address + 1, CodeEditAreas.continue_lives.postamble)
     return Store(rom)
 
+def defaultInvalidStore() -> Store:
+    rom = Rom(bytearray([0] * 0x50000))
+    rom.write(CodeEditAreas.starting_lives.address, [default_starting_lives])
+    rom.write(CodeEditAreas.continue_lives.address, [default_continue_lives])
+    return Store(rom)
+
 def test_verifyDefaultState():
     verifyDefaultState(defaultStore())
 
@@ -96,6 +102,14 @@ def test_warningStartLivesValid():
 def test_warningContinueLivesValid():
     store = defaultStore()
     assert True == store.getState().starting_lives_area_valid
+
+def test_warningStartLivesInvalid():
+    store = defaultInvalidStore()
+    assert False == store.getState().starting_lives_area_valid
+
+def test_warningContinueLivesInvalid():
+    store = defaultInvalidStore()
+    assert False == store.getState().starting_lives_area_valid
 
 def test_load():
     store = defaultStore()
