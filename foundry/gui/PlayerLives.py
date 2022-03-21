@@ -10,6 +10,9 @@ from foundry.smb3parse.util.code_edit_area import CodeEditArea
 from dataclasses import dataclass
 import copy
 
+DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
+DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
+
 @dataclass
 class UIStrings:
     title = "Player Lives"
@@ -58,13 +61,21 @@ class Store():
 
     def __loadStateFromRom(self) -> State:
         return State(   
-                        self.rom.read(CodeEditAreas.starting_lives.address, 1)[0],
+                        self.__readCodeEditArea(CodeEditAreas.starting_lives)[0],
                         CodeEditAreas.starting_lives.isValid(self.rom),
-                        self.rom.read(CodeEditAreas.continue_lives.address, 1)[0],
+                        self.__readCodeEditArea(CodeEditAreas.continue_lives)[0],
                         CodeEditAreas.continue_lives.isValid(self.rom),
-                        True,
-                        CodeEditAreas.death_takes_lives.isValid(self.rom)
+                        self.__readCodeEditArea(CodeEditAreas.death_takes_lives) == DEATH_TAKES_LIVES_VANILLA,
+                        self.__isDeathTakesLivesValid()
                     )
+
+    def __isDeathTakesLivesValid(self) -> Boolean:
+        code_area_data = self.__readCodeEditArea(CodeEditAreas.death_takes_lives)
+        known_value = (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
+        return CodeEditAreas.death_takes_lives.isValid(self.rom) & known_value
+
+    def __readCodeEditArea(self, area:CodeEditArea) -> bytearray:
+        return self.rom.read(area.address, area.length)
 
     def getState(self) -> State:
         return self.state
@@ -124,6 +135,12 @@ class Generator():
 
         if state.continue_lives_area_valid == True:
             self.rom.write(CodeEditAreas.continue_lives.address, [state.continue_lives])
+
+        if state.death_takes_lives_area_valid == True:
+            if state.death_takes_lives == True:             
+                self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
+            else:
+                self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
 
 class View(CustomDialog):
     store : Store
