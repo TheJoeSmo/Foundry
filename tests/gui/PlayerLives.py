@@ -133,6 +133,13 @@ def test_generatorInvalidDoesntWrite():
     assert 0 == rom.read(CodeEditAreas.starting_lives.address, 1)[0]
     assert 0 == rom.read(CodeEditAreas.continue_lives.address, 1)[0]
 
+def test_deathTakesLivesAction():
+    store = defaultStore()
+    store.dispatch(Action(ActionNames.death_takes_lives, False))
+    assert False == store.getState().death_takes_lives
+    store.dispatch(Action(ActionNames.death_takes_lives, True))
+    assert True == store.getState().death_takes_lives
+
 class CallbackTester:
     called = 0
     def function(self):
