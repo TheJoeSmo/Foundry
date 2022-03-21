@@ -97,19 +97,19 @@ def test_continueLivesAction():
 
 def test_warningStartLivesValid():
     store = defaultStore()
-    assert True == store.getState().valid_rom
+    assert True == store.getState().starting_lives_area_valid
 
 def test_warningContinueLivesValid():
     store = defaultStore()
-    assert True == store.getState().valid_rom
+    assert True == store.getState().continue_lives_area_valid
 
 def test_warningStartLivesInvalid():
     store = defaultInvalidStore()
-    assert False == store.getState().valid_rom
+    assert False == store.getState().starting_lives_area_valid
 
 def test_warningContinueLivesInvalid():
     store = defaultInvalidStore()
-    assert False == store.getState().valid_rom
+    assert False == store.getState().continue_lives_area_valid
 
 def test_load():
     store = defaultStore()
@@ -124,6 +124,14 @@ def test_generator():
     generator.render()
     assert default_starting_lives == rom.read(CodeEditAreas.starting_lives.address, 1)[0]
     assert default_continue_lives == rom.read(CodeEditAreas.continue_lives.address, 1)[0]
+
+def test_generatorInvalidDoesntWrite():
+    store = defaultInvalidStore()
+    rom = Rom(bytearray([0] * 0x50000))
+    generator = Generator(store, rom)
+    generator.render()
+    assert 0 == rom.read(CodeEditAreas.starting_lives.address, 1)[0]
+    assert 0 == rom.read(CodeEditAreas.continue_lives.address, 1)[0]
 
 class CallbackTester:
     called = 0
