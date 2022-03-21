@@ -1,6 +1,6 @@
 from xmlrpc.client import Boolean
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
-from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
@@ -15,12 +15,14 @@ class UIStrings:
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
-    invalid_rom_warning = "The selected ROM has a code modification that is incompatible with one or more features of this window. The affected features are visible but disabled."
+    invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
+    death_takes_lives = "Subtract a life when the player dies"
 
 @dataclass
 class CodeEditAreas:
-    starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
-    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+    starting_lives =    CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
+    continue_lives =    CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+    death_takes_lives = CodeEditArea(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
 @dataclass
 class Action:
@@ -32,6 +34,7 @@ class ActionNames:
     load = "[PlayerLives] Load"
     starting_lives = "[PlayerLives] StartingLives"
     continue_lives = "[PlayerLives] ContinueLives"
+    death_takes_lives = "[PlayerLives] DeathTakesLives"
 
 ACTION_LOAD = Action(ActionNames.load, None)
 
@@ -41,6 +44,8 @@ class State:
     starting_lives_area_valid: Boolean
     continue_lives: int
     continue_lives_area_valid: Boolean
+    death_takes_lives: Boolean
+    death_takes_lives_area_valid: Boolean
 
 class Store():
     rom : Rom
@@ -56,7 +61,9 @@ class Store():
                         self.rom.read(CodeEditAreas.starting_lives.address, 1)[0],
                         CodeEditAreas.starting_lives.isValid(self.rom),
                         self.rom.read(CodeEditAreas.continue_lives.address, 1)[0],
-                        CodeEditAreas.continue_lives.isValid(self.rom)
+                        CodeEditAreas.continue_lives.isValid(self.rom),
+                        True,
+                        CodeEditAreas.death_takes_lives.isValid(self.rom)
                     )
 
     def getState(self) -> State:
@@ -80,20 +87,23 @@ class Store():
 
         if action.type == ActionNames.starting_lives:
             if(Store.__isBoundedInteger(action.payload, 0, 99)):
-                state.starting_lives = action.payload
+                state.starting_lives = int(action.payload)
 
         elif action.type == ActionNames.continue_lives:
             if(Store.__isBoundedInteger(action.payload, 0, 99)):
-                state.continue_lives = action.payload
+                state.continue_lives = int(action.payload)
 
         elif action.type == ActionNames.load:
             state = self.__loadStateFromRom()
+
+        elif action.type == ActionNames.death_takes_lives:
+            state.death_takes_lives = action.payload
 
         return state
 
     def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> Boolean:
         if isinstance(input, int) == False: return False
-        return (input >= lower_limit) & (input <= upper_limit)
+        return (int(input) >= lower_limit) & (int(input) <= upper_limit)
 
     def subscribe(self, subscriber):
         self.subscribers.append(subscriber)
@@ -123,6 +133,7 @@ class View(CustomDialog):
     continue_lives_edit : QLineEdit
     button_box : QDialogButtonBox
     invalid_rom_warning : QLabel
+    death_takes_lives: QCheckBox
 
     def __init__(self, parent, store : Store, generator : Generator):
         super(View, self).__init__(parent, title=UIStrings.title)
@@ -156,8 +167,14 @@ class View(CustomDialog):
         fields_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
         fields_layout.addWidget(self.continue_lives_edit, 1, 1)
 
+        death_takes_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self.death_takes_lives = QCheckBox(f"{UIStrings.death_takes_lives}")
+        self.death_takes_lives.stateChanged.connect(self.__on_death_takes_lives)
+        death_takes_lives_layout.addWidget(self.death_takes_lives)
+
         main_layout.addLayout(invalid_rom_warning_layout)
         main_layout.addLayout(fields_layout)
+        main_layout.addLayout(death_takes_lives_layout)
         main_layout.addWidget(HorizontalLine())
         main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
 
@@ -168,16 +185,19 @@ class View(CustomDialog):
     def render(self):
         state = self.store.getState()
 
-        self.starting_lives_edit.setReadOnly(state.starting_lives_area_valid == False)
+        self.starting_lives_edit.setDisabled(state.starting_lives_area_valid == False)
         self.starting_lives_edit.setText(f"{state.starting_lives}")
 
-        self.continue_lives_edit.setReadOnly(state.continue_lives_area_valid == False)
+        self.continue_lives_edit.setDisabled(state.continue_lives_area_valid == False)
         self.continue_lives_edit.setText(f"{state.continue_lives}")
 
-        self.invalid_rom_warning.setVisible(View.allAreasValid(state) == False)       
+        self.invalid_rom_warning.setVisible(View.allAreasValid(state) == False)  
+
+        self.death_takes_lives.setDisabled(state.death_takes_lives_area_valid == False)
+        self.death_takes_lives.setChecked(state.death_takes_lives)     
 
     def allAreasValid(state : State) -> Boolean:
-        return state.starting_lives_area_valid & state.continue_lives_area_valid
+        return state.starting_lives_area_valid & state.continue_lives_area_valid & state.death_takes_lives_area_valid
 
     def __on_ok(self):
         self.generator.render()
@@ -187,10 +207,13 @@ class View(CustomDialog):
         self.done(QDialogButtonBox.Cancel)
 
     def __on_starting_lives(self, text : str):
-        self.store.dispatch(Action(ActionNames.starting_lives, int(text)))
+        self.store.dispatch(Action(ActionNames.starting_lives, text))
 
     def __on_continue_lives(self, text : str):
-        self.store.dispatch(Action(ActionNames.continue_lives, int(text)))
+        self.store.dispatch(Action(ActionNames.continue_lives, text))
+
+    def __on_death_takes_lives(self):
+        self.store.dispatch(Action(ActionNames.death_takes_lives, self.death_takes_lives.isChecked()))
     
 
 class PlayerLives():
