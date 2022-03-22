@@ -9,6 +9,7 @@ from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit_area import CodeEditArea
 from dataclasses import dataclass
 import copy
+from foundry.core.ReduxStore import ReduxStore, Action
 
 DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
 DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
@@ -28,11 +29,6 @@ class CodeEditAreas:
     death_takes_lives = CodeEditArea(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
 @dataclass
-class Action:
-    type: str
-    payload: any
-
-@dataclass
 class ActionNames:
     load = "[PlayerLives] Load"
     starting_lives = "[PlayerLives] StartingLives"
@@ -50,51 +46,35 @@ class State:
     death_takes_lives: Boolean
     death_takes_lives_area_valid: Boolean
 
-class Store():
+class Store(ReduxStore[State]):
     rom : Rom
-    state : State = None
-    subscribers = []
 
     def __init__(self, rom: Rom):
         self.rom = rom
-        self.state = self.__loadStateFromRom()
+        self.state = Store.__loadStateFromRom(rom)
 
-    def __loadStateFromRom(self) -> State:
+    def __loadStateFromRom(rom: Rom) -> State:
         return State(   
-                        self.__readCodeEditArea(CodeEditAreas.starting_lives)[0],
-                        CodeEditAreas.starting_lives.isValid(self.rom),
-                        self.__readCodeEditArea(CodeEditAreas.continue_lives)[0],
-                        CodeEditAreas.continue_lives.isValid(self.rom),
-                        self.__readCodeEditArea(CodeEditAreas.death_takes_lives) == DEATH_TAKES_LIVES_VANILLA,
-                        self.__isDeathTakesLivesValid()
+                        Store.__readCodeEditArea(rom, CodeEditAreas.starting_lives)[0],
+                        CodeEditAreas.starting_lives.isValid(rom),
+                        Store.__readCodeEditArea(rom, CodeEditAreas.continue_lives)[0],
+                        CodeEditAreas.continue_lives.isValid(rom),
+                        Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives) == DEATH_TAKES_LIVES_VANILLA,
+                        Store.__isDeathTakesLivesValid(rom)
                     )
 
-    def __isDeathTakesLivesValid(self) -> Boolean:
-        code_area_data = self.__readCodeEditArea(CodeEditAreas.death_takes_lives)
+    def __isDeathTakesLivesValid(rom: Rom) -> Boolean:
+        code_area_data = Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives)
         known_value = (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
-        return CodeEditAreas.death_takes_lives.isValid(self.rom) & known_value
+        return CodeEditAreas.death_takes_lives.isValid(rom) & known_value
 
-    def __readCodeEditArea(self, area:CodeEditArea) -> bytearray:
-        return self.rom.read(area.address, area.length)
+    def __readCodeEditArea(rom: Rom, area:CodeEditArea) -> bytearray:
+        return rom.read(area.address, area.length)
 
-    def getState(self) -> State:
-        return self.state
-
-    def dispatch(self, action: Action):
-        oldState = copy.deepcopy(self.state)
-        self.state = self.__reduce(copy.deepcopy(self.state), action)
-
-        if self.state != oldState:
-            self.__notifySubscribers()
-
-    def __notifySubscribers(self):
-        for subscriber in self.subscribers:
-            subscriber()
-
-    def __reduce(self, state:State, action: Action) -> State:
+    def reduce(self, state:State, action: Action) -> State:
 
         if state is None:
-            state = self.__loadStateFromRom()
+            state = Store.__loadStateFromRom(self.rom)
 
         if action.type == ActionNames.starting_lives:
             if(Store.__isBoundedInteger(action.payload, 0, 99)):
@@ -105,7 +85,7 @@ class Store():
                 state.continue_lives = int(action.payload)
 
         elif action.type == ActionNames.load:
-            state = self.__loadStateFromRom()
+            state = Store.__loadStateFromRom(self.rom)
 
         elif action.type == ActionNames.death_takes_lives:
             state.death_takes_lives = action.payload
@@ -115,9 +95,6 @@ class Store():
     def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> Boolean:
         if isinstance(input, int) == False: return False
         return (int(input) >= lower_limit) & (int(input) <= upper_limit)
-
-    def subscribe(self, subscriber):
-        self.subscribers.append(subscriber)
 
 class Generator():
     store : Store
