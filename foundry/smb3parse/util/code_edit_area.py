@@ -13,6 +13,6 @@ class CodeEditArea:
         return data == rom.read(testAddress, len(data))
 
     def isValid(self, rom: Rom):
-        if CodeEditArea.__validate(rom, self.address - len(self.preamble), self.preamble) == False: return False
-        return CodeEditArea.__validate(rom, self.address + self.length, self.postamble) == True
+        if not CodeEditArea.__validate(rom, self.address - len(self.preamble), self.preamble): return False
+        return CodeEditArea.__validate(rom, self.address + self.length, self.postamble)
     

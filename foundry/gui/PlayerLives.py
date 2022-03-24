@@ -1,14 +1,14 @@
-from xmlrpc.client import Boolean
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
 from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox
+
+from dataclasses import dataclass
+import copy
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit_area import CodeEditArea
-from dataclasses import dataclass
-import copy
 from foundry.core.ReduxStore import ReduxStore, Action
 
 DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
@@ -24,8 +24,8 @@ class UIStrings:
 
 @dataclass
 class CodeEditAreas:
-    starting_lives =    CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
-    continue_lives =    CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+    starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
+    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
     death_takes_lives = CodeEditArea(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
 @dataclass
@@ -40,11 +40,11 @@ ACTION_LOAD = Action(ActionNames.load, None)
 @dataclass
 class State:
     starting_lives: int
-    starting_lives_area_valid: Boolean
+    starting_lives_area_valid: bool
     continue_lives: int
-    continue_lives_area_valid: Boolean
-    death_takes_lives: Boolean
-    death_takes_lives_area_valid: Boolean
+    continue_lives_area_valid: bool
+    death_takes_lives: bool
+    death_takes_lives_area_valid: bool
 
 class Store(ReduxStore[State]):
     rom : Rom
@@ -63,7 +63,7 @@ class Store(ReduxStore[State]):
                         Store.__isDeathTakesLivesValid(rom)
                     )
 
-    def __isDeathTakesLivesValid(rom: Rom) -> Boolean:
+    def __isDeathTakesLivesValid(rom: Rom) -> bool:
         code_area_data = Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives)
         known_value = (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
         return CodeEditAreas.death_takes_lives.isValid(rom) & known_value
@@ -77,11 +77,11 @@ class Store(ReduxStore[State]):
             state = Store.__loadStateFromRom(self.rom)
 
         if action.type == ActionNames.starting_lives:
-            if(Store.__isBoundedInteger(action.payload, 0, 99)):
+            if Store.__isBoundedInteger(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
         elif action.type == ActionNames.continue_lives:
-            if(Store.__isBoundedInteger(action.payload, 0, 99)):
+            if Store.__isBoundedInteger(action.payload, 0, 99):
                 state.continue_lives = int(action.payload)
 
         elif action.type == ActionNames.load:
@@ -92,7 +92,7 @@ class Store(ReduxStore[State]):
 
         return state
 
-    def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> Boolean:
+    def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> bool:
         if isinstance(input, int) == False: return False
         return (int(input) >= lower_limit) & (int(input) <= upper_limit)
 
@@ -107,14 +107,14 @@ class Generator():
     def render(self):
         state = self.store.getState()
 
-        if state.starting_lives_area_valid == True:
+        if state.starting_lives_area_valid:
             self.rom.write(CodeEditAreas.starting_lives.address, [state.starting_lives])
 
-        if state.continue_lives_area_valid == True:
+        if state.continue_lives_area_valid:
             self.rom.write(CodeEditAreas.continue_lives.address, [state.continue_lives])
 
-        if state.death_takes_lives_area_valid == True:
-            if state.death_takes_lives == True:             
+        if state.death_takes_lives_area_valid:
+            if state.death_takes_lives:             
                 self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
             else:
                 self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
@@ -125,17 +125,20 @@ class View(CustomDialog):
 
     starting_lives_edit : QLineEdit
     continue_lives_edit : QLineEdit
-    button_box : QDialogButtonBox
     invalid_rom_warning : QLabel
     death_takes_lives: QCheckBox
 
-    def __init__(self, parent, store : Store, generator : Generator):
-        super(View, self).__init__(parent, title=UIStrings.title)
-        self.generator = generator
-        self.store = store
+    def __create_invalid_rom_layout(self) -> QBoxLayout:
+        invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
+        self.invalid_rom_warning.setWordWrap(True)
+        self.invalid_rom_warning.setFixedWidth(400)
+        self.invalid_rom_warning.setStyleSheet("QLabel { background-color : pink; }")   # I didn't see a style sheet to draw from, should probably create one?  Better way to do this?
+        invalid_rom_warning_layout.addWidget(self.invalid_rom_warning)
 
-        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+        return invalid_rom_warning_layout
 
+    def __create_lives_layout(self) -> QGridLayout:
         self.starting_lives_edit = QLineEdit(self)
         self.starting_lives_edit.setValidator(QIntValidator(0, 99, self))
         self.starting_lives_edit.textEdited.connect(self.__on_starting_lives)
@@ -144,33 +147,41 @@ class View(CustomDialog):
         self.continue_lives_edit.setValidator(QIntValidator(0, 99, self))
         self.continue_lives_edit.textEdited.connect(self.__on_continue_lives)
 
-        invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
-        self.invalid_rom_warning.setWordWrap(True)
-        self.invalid_rom_warning.setFixedWidth(400)
-        self.invalid_rom_warning.setStyleSheet("QLabel { background-color : pink; }")   # I didn't see a style sheet to draw from, should probably create one?  Better way to do this?
-        invalid_rom_warning_layout.addWidget(self.invalid_rom_warning)
-
-        self.button_box = QDialogButtonBox()
-        self.button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
-        self.button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
-
         fields_layout = QGridLayout()
         fields_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99):", self), 0, 0)
         fields_layout.addWidget(self.starting_lives_edit, 0, 1)
         fields_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
         fields_layout.addWidget(self.continue_lives_edit, 1, 1)
 
-        death_takes_lives_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        return fields_layout
+
+    def __create_death_options_layout(self) -> QBoxLayout:
+        layout = QBoxLayout(QBoxLayout.LeftToRight)
         self.death_takes_lives = QCheckBox(f"{UIStrings.death_takes_lives}")
         self.death_takes_lives.stateChanged.connect(self.__on_death_takes_lives)
-        death_takes_lives_layout.addWidget(self.death_takes_lives)
+        layout.addWidget(self.death_takes_lives)
 
-        main_layout.addLayout(invalid_rom_warning_layout)
-        main_layout.addLayout(fields_layout)
-        main_layout.addLayout(death_takes_lives_layout)
+        return layout
+
+    def __create_button_options_layout(self) -> QDialogButtonBox:
+        button_box = QDialogButtonBox()
+        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
+        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
+    
+        return button_box
+
+    def __init__(self, parent, store : Store, generator : Generator):
+        super(View, self).__init__(parent, title=UIStrings.title)
+        self.generator = generator
+        self.store = store
+
+        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+
+        main_layout.addLayout(self.__create_invalid_rom_layout())
+        main_layout.addLayout(self.__create_lives_layout())
+        main_layout.addLayout(self.__create_death_options_layout())
         main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(self.button_box, alignment=Qt.AlignRight)
+        main_layout.addWidget(self.__create_button_options_layout(), alignment=Qt.AlignRight)
 
         self.store.subscribe(self.render)
         self.render()
@@ -190,8 +201,10 @@ class View(CustomDialog):
         self.death_takes_lives.setDisabled(state.death_takes_lives_area_valid == False)
         self.death_takes_lives.setChecked(state.death_takes_lives)     
 
-    def allAreasValid(state : State) -> Boolean:
-        return state.starting_lives_area_valid & state.continue_lives_area_valid & state.death_takes_lives_area_valid
+    def allAreasValid(state : State) -> bool:
+        return state.starting_lives_area_valid &\
+            state.continue_lives_area_valid &\
+            state.death_takes_lives_area_valid
 
     def __on_ok(self):
         self.generator.render()
