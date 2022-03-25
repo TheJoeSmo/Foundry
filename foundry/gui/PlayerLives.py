@@ -47,14 +47,9 @@ class State:
     death_takes_lives_area_valid: bool
 
 class Store(ReduxStore[State]):
-    rom : Rom
-
-    def __init__(self, rom: Rom):
-        self.rom = rom
-        self.state = Store.__loadStateFromRom(rom)
-
-    def __loadStateFromRom(rom: Rom) -> State:
-        return State(   
+    @classmethod
+    def createFromRom(cls, rom: Rom) -> State:
+        state = State(   
                         Store.__readCodeEditArea(rom, CodeEditAreas.starting_lives)[0],
                         CodeEditAreas.starting_lives.isValid(rom),
                         Store.__readCodeEditArea(rom, CodeEditAreas.continue_lives)[0],
@@ -62,19 +57,19 @@ class Store(ReduxStore[State]):
                         Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives) == DEATH_TAKES_LIVES_VANILLA,
                         Store.__isDeathTakesLivesValid(rom)
                     )
+        return Store(state)
 
+    def __readCodeEditArea(rom: Rom, area:CodeEditArea) -> bytearray:
+        return rom.read(area.address, area.length)
+        
     def __isDeathTakesLivesValid(rom: Rom) -> bool:
         code_area_data = Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives)
         known_value = (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
         return CodeEditAreas.death_takes_lives.isValid(rom) & known_value
-
-    def __readCodeEditArea(rom: Rom, area:CodeEditArea) -> bytearray:
-        return rom.read(area.address, area.length)
-
+        
     def reduce(self, state:State, action: Action) -> State:
-
         if state is None:
-            state = Store.__loadStateFromRom(self.rom)
+            state = self.getDefault()
 
         if action.type == ActionNames.starting_lives:
             if Store.__isBoundedInteger(action.payload, 0, 99):
@@ -85,7 +80,7 @@ class Store(ReduxStore[State]):
                 state.continue_lives = int(action.payload)
 
         elif action.type == ActionNames.load:
-            state = Store.__loadStateFromRom(self.rom)
+            state = self.getDefault()
 
         elif action.type == ActionNames.death_takes_lives:
             state.death_takes_lives = action.payload
@@ -221,12 +216,11 @@ class View(CustomDialog):
 
     def __on_death_takes_lives(self):
         self.store.dispatch(Action(ActionNames.death_takes_lives, self.death_takes_lives.isChecked()))
-    
 
 class PlayerLives():
     def __init__(self, parent):
         rom = ROM()
-        store = Store(rom)
+        store = Store.createFromRom(rom)
         View(parent, store, Generator(store, rom))
 
 

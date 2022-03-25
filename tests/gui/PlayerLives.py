@@ -13,13 +13,13 @@ def defaultStore() -> Store:
     rom.write(CodeEditAreas.continue_lives.address - len(CodeEditAreas.continue_lives.preamble), CodeEditAreas.continue_lives.preamble)
     rom.write(CodeEditAreas.continue_lives.address, [default_continue_lives])
     rom.write(CodeEditAreas.continue_lives.address + 1, CodeEditAreas.continue_lives.postamble)
-    return Store(rom)
+    return Store.createFromRom(rom)
 
 def defaultInvalidStore() -> Store:
     rom = Rom(bytearray([0] * 0x50000))
     rom.write(CodeEditAreas.starting_lives.address, [default_starting_lives])
     rom.write(CodeEditAreas.continue_lives.address, [default_continue_lives])
-    return Store(rom)
+    return Store.createFromRom(rom)
 
 def test_verifyDefaultState():
     verifyDefaultState(defaultStore())

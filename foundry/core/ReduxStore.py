@@ -11,11 +11,16 @@ class Action:
 S = TypeVar('S')
 
 class ReduxStore(ABC, Generic[S]):
-    state : S = None
+    defaultState: S = None
+    state: S = None
     subscribers = []
 
     def __init__(self, state: S):
-        self.state = state
+        self.defaultState = state
+        self.state = copy.deepcopy(state)
+
+    def getDefault(self) -> S:
+        return copy.deepcopy(self.defaultState)
 
     def getState(self) -> S:
         return self.state
