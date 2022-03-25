@@ -6,13 +6,13 @@ default_continue_lives = 4
 
 def defaultStore() -> Store:
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(CodeEditAreas.starting_lives.address - len(CodeEditAreas.starting_lives.preamble), CodeEditAreas.starting_lives.preamble)
+    rom.write(CodeEditAreas.starting_lives.address - len(CodeEditAreas.starting_lives.prefix), CodeEditAreas.starting_lives.prefix)
     rom.write(CodeEditAreas.starting_lives.address, [default_starting_lives])
-    rom.write(CodeEditAreas.starting_lives.address + 1, CodeEditAreas.starting_lives.postamble)
+    rom.write(CodeEditAreas.starting_lives.address + 1, CodeEditAreas.starting_lives.postfix)
 
-    rom.write(CodeEditAreas.continue_lives.address - len(CodeEditAreas.continue_lives.preamble), CodeEditAreas.continue_lives.preamble)
+    rom.write(CodeEditAreas.continue_lives.address - len(CodeEditAreas.continue_lives.prefix), CodeEditAreas.continue_lives.prefix)
     rom.write(CodeEditAreas.continue_lives.address, [default_continue_lives])
-    rom.write(CodeEditAreas.continue_lives.address + 1, CodeEditAreas.continue_lives.postamble)
+    rom.write(CodeEditAreas.continue_lives.address + 1, CodeEditAreas.continue_lives.postfix)
     return Store.createFromRom(rom)
 
 def defaultInvalidStore() -> Store:

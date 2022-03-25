@@ -5,14 +5,14 @@ from foundry.smb3parse.util.rom import Rom
 class CodeEditArea:
     address: int
     length: int
-    preamble: bytearray
-    postamble: bytearray
+    prefix: bytearray
+    postfix: bytearray
 
-    def __validate(rom: Rom, testAddress: int, data: bytearray):
+    def __validateAffix(rom: Rom, testAddress: int, data: bytearray):
         if len(data) == 0: return True
         return data == rom.read(testAddress, len(data))
 
     def isValid(self, rom: Rom):
-        if not CodeEditArea.__validate(rom, self.address - len(self.preamble), self.preamble): return False
-        return CodeEditArea.__validate(rom, self.address + self.length, self.postamble)
+        if not CodeEditArea.__validateAffix(rom, self.address - len(self.prefix), self.prefix): return False
+        return CodeEditArea.__validateAffix(rom, self.address + self.length, self.postfix)
     
