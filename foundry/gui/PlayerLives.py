@@ -23,10 +23,22 @@ class UIStrings:
     death_takes_lives = "Subtract a life when the player dies"
 
 @dataclass
+class DeathTakesLives(CodeEditArea):
+    def isValid(self, rom: Rom):
+        if not super().isValid(rom): return False
+
+        code_area_data = rom.read(self.address, self.length)
+        return (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
+
+    def read(self, rom: Rom) -> bool:
+        return rom.read(self.address, self.length) == DEATH_TAKES_LIVES_VANILLA
+
+
+@dataclass
 class CodeEditAreas:
     starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
     continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
-    death_takes_lives = CodeEditArea(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+    death_takes_lives = DeathTakesLives(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
 @dataclass
 class ActionNames:
@@ -54,18 +66,13 @@ class Store(ReduxStore[State]):
                         CodeEditAreas.starting_lives.isValid(rom),
                         Store.__readCodeEditArea(rom, CodeEditAreas.continue_lives)[0],
                         CodeEditAreas.continue_lives.isValid(rom),
-                        Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives) == DEATH_TAKES_LIVES_VANILLA,
-                        Store.__isDeathTakesLivesValid(rom)
+                        CodeEditAreas.death_takes_lives.read(rom),
+                        CodeEditAreas.death_takes_lives.isValid(rom)
                     )
         return Store(state)
 
     def __readCodeEditArea(rom: Rom, area:CodeEditArea) -> bytearray:
         return rom.read(area.address, area.length)
-        
-    def __isDeathTakesLivesValid(rom: Rom) -> bool:
-        code_area_data = Store.__readCodeEditArea(rom, CodeEditAreas.death_takes_lives)
-        known_value = (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
-        return CodeEditAreas.death_takes_lives.isValid(rom) & known_value
         
     def reduce(self, state:State, action: Action) -> State:
         if state is None:
