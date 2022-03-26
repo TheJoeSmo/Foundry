@@ -22,23 +22,24 @@ class UIStrings:
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
 
-@dataclass
 class DeathTakesLives(CodeEditArea):
+    rom: Rom
+    def __init__(self, rom: Rom):
+        self.rom = rom
+        super().__init__(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+
     def isValid(self, rom: Rom):
         if not super().isValid(rom): return False
 
         code_area_data = rom.read(self.address, self.length)
         return (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
 
-    def read(self, rom: Rom) -> bool:
-        return rom.read(self.address, self.length) == DEATH_TAKES_LIVES_VANILLA
+    def read(self) -> bool:
+        return self.rom.read(self.address, self.length) == DEATH_TAKES_LIVES_VANILLA
 
-
-@dataclass
-class CodeEditAreas:
-    starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
-    continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
-    death_takes_lives = DeathTakesLives(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+starting_lives: CodeEditArea
+continue_lives: CodeEditArea
+death_takes_lives: DeathTakesLives
 
 @dataclass
 class ActionNames:
@@ -62,12 +63,12 @@ class Store(ReduxStore[State]):
     @classmethod
     def createFromRom(cls, rom: Rom) -> State:
         state = State(   
-                        Store.__readCodeEditArea(rom, CodeEditAreas.starting_lives)[0],
-                        CodeEditAreas.starting_lives.isValid(rom),
-                        Store.__readCodeEditArea(rom, CodeEditAreas.continue_lives)[0],
-                        CodeEditAreas.continue_lives.isValid(rom),
-                        CodeEditAreas.death_takes_lives.read(rom),
-                        CodeEditAreas.death_takes_lives.isValid(rom)
+                        Store.__readCodeEditArea(rom, starting_lives)[0],
+                        starting_lives.isValid(rom),
+                        Store.__readCodeEditArea(rom, continue_lives)[0],
+                        continue_lives.isValid(rom),
+                        death_takes_lives.read(rom),
+                        death_takes_lives.isValid(rom)
                     )
         return Store(state)
 
@@ -110,16 +111,16 @@ class Generator():
         state = self.store.getState()
 
         if state.starting_lives_area_valid:
-            self.rom.write(CodeEditAreas.starting_lives.address, [state.starting_lives])
+            self.rom.write(starting_lives.address, [state.starting_lives])
 
         if state.continue_lives_area_valid:
-            self.rom.write(CodeEditAreas.continue_lives.address, [state.continue_lives])
+            self.rom.write(continue_lives.address, [state.continue_lives])
 
         if state.death_takes_lives_area_valid:
             if state.death_takes_lives:             
-                self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
+                self.rom.write(death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
             else:
-                self.rom.write(CodeEditAreas.death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
+                self.rom.write(death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
 
 class View(CustomDialog):
     store : Store
@@ -226,8 +227,17 @@ class View(CustomDialog):
 
 class PlayerLives():
     def __init__(self, parent):
+        global death_takes_lives
+        global starting_lives
+        global continue_lives
+        
         rom = ROM()
         store = Store.createFromRom(rom)
+        
+        death_takes_lives = DeathTakesLives()
+        starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
+        continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+        
         View(parent, store, Generator(store, rom))
 
 
