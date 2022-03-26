@@ -60,11 +60,11 @@ class Store(ReduxStore[State]):
             if Store.__isBoundedInteger(action.payload, 0, 99):
                 state.continue_lives = int(action.payload)
 
-        elif action.type == ActionNames.load:
-            state = self.getDefault()
-
         elif action.type == ActionNames.death_takes_lives:
             state.death_takes_lives = action.payload
+
+        elif action.type == ActionNames.load:
+            state = self.getDefault()
 
         return state
 
@@ -86,8 +86,8 @@ class RomInterface():
             rom, 
             0x3D133, 
             3, 
-            bytearray([0x8B, 0x07, 0xD0, 0x05]), 
-            bytearray([0x30, 0x0b, 0xA9, 0x80]), 
+            bytearray([0x8B, 0x07, 0xD0, 0x05]),
+            bytearray([0x30, 0x0b, 0xA9, 0x80]),
             death_takes_lives_dict)
 
         self.starting_lives = CodeEditByte(
