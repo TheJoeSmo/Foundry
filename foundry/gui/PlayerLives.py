@@ -46,7 +46,6 @@ class Store(ReduxStore[State]):
             state = self.getDefault()
 
         if action.type == ActionNames.starting_lives:
-            print(action.payload)
             if Store.__isBoundedInteger(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
@@ -75,9 +74,26 @@ class RomInterface():
             True: bytearray([0xDE, 0x36, 0x07]),
             False: bytearray([0xEA, 0xEA, 0xEA])
         }
-        self.death_takes_lives = CodeEditDict(rom, 0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]), death_takes_lives_dict)
-        self.starting_lives = CodeEditByte(rom, 0x308E1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
-        self.continue_lives = CodeEditByte(rom, 0x3D2D6, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+        
+        self.death_takes_lives = CodeEditDict(
+            rom, 
+            0x3D133, 
+            3, 
+            bytearray([0x8B, 0x07, 0xD0, 0x05]), 
+            bytearray([0x30, 0x0b, 0xA9, 0x80]), 
+            death_takes_lives_dict)
+
+        self.starting_lives = CodeEditByte(
+            rom, 
+            0x308E1, 
+            bytearray([0xCA, 0x10, 0xF8, 0xA9]), 
+            bytearray([0x8D, 0x36, 0x07, 0x8D]))
+        
+        self.continue_lives = CodeEditByte(
+            rom, 
+            0x3D2D6, 
+            bytearray([0x08, 0xD0, 0x65, 0xA9]), 
+            bytearray([0x9D, 0x36, 0x07, 0xA5]))
         
     def readState(self) -> State:
         return State(   
