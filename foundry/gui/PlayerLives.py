@@ -41,11 +41,8 @@ ACTION_LOAD = Action(ActionNames.load, None)
 @dataclass
 class State:
     starting_lives: int
-    starting_lives_area_valid: bool
     continue_lives: int
-    continue_lives_area_valid: bool
     death_takes_lives: bool
-    death_takes_lives_area_valid: bool
 
 class Store(ReduxStore[State]):        
     def reduce(self, state:State, action: Action) -> State:
@@ -104,11 +101,8 @@ class RomInterface():
     def readState(self) -> State:
         return State(   
                         self.starting_lives.read(),
-                        self.starting_lives.isValid(),
                         self.continue_lives.read(),
-                        self.continue_lives.isValid(),
-                        self.death_takes_lives.read(),
-                        self.death_takes_lives.isValid()
+                        self.death_takes_lives.read()
                     )
 
     def writeState(self, state: State):
@@ -213,8 +207,7 @@ class View(CustomDialog):
     def render(self):
         state = self.store.getState()
 
-        self.starting_lives_edit.setDisabled(state.starting_lives_area_valid == False)
-        self.starting_lives_edit.setText(f"{state.starting_lives}")
+        View.renderLineEdit(self.starting_lives_edit, state.starting_lives)
 
         self.continue_lives_edit.setDisabled(state.continue_lives_area_valid == False)
         self.continue_lives_edit.setText(f"{state.continue_lives}")
@@ -225,7 +218,14 @@ class View(CustomDialog):
             self.death_takes_lives.setDisabled(True)
         else:
             self.death_takes_lives.setDisabled(False)
-            self.death_takes_lives.setChecked(state.death_takes_lives)     
+            self.death_takes_lives.setChecked(state.death_takes_lives)
+    
+    def stringOrDefault(string: str, default: str):
+        return default if string is None else string
+
+    def renderLineEdit(lineEdit: QLineEdit, text: str):
+        lineEdit.setDisabled(text == None)
+        lineEdit.setText(f"{View.stringOrDefault(text)}")
 
     def allAreasValid(state : State) -> bool:
         return state.starting_lives_area_valid and\

@@ -5,7 +5,7 @@ default_starting_lives = 5
 default_continue_lives = 4
 
 def defaultStore() -> Store:
-    return Store(State(default_starting_lives, True, default_continue_lives, True, True, True))
+    return Store(State(default_starting_lives, default_continue_lives, True))
 
 def test_subscribeOnInvalidAction():
     store = defaultStore()
@@ -73,11 +73,11 @@ def test_continueLivesAction():
 
 def test_warningStartLivesValid():
     store = defaultStore()
-    assert True == store.getState().starting_lives_area_valid
+    assert store.getState().starting_lives
 
 def test_warningContinueLivesValid():
     store = defaultStore()
-    assert True == store.getState().continue_lives_area_valid
+    assert store.getState().continue_lives
 
 def test_deathTakesLivesAction():
     store = defaultStore()
@@ -93,7 +93,7 @@ class CallbackTester:
 
 def test_readStateStartingLivesInvalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert False == RomInterface(rom).readState().starting_lives_area_valid
+    assert None == RomInterface(rom).readState().starting_lives
 
 def createStartingLivesRom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))
@@ -105,20 +105,18 @@ def createStartingLivesRom() -> Rom:
 
 def test_readStateStartingLivesValid():
     state = RomInterface(createStartingLivesRom()).readState()
-
-    assert True == state.starting_lives_area_valid
     assert 0x04 == state.starting_lives
 
 def test_writeStateStartingLives():
     romInterface = RomInterface(createStartingLivesRom())
-    state = State(0xAA, True, default_continue_lives, True, True, True)
+    state = State(0xAA, default_continue_lives, True)
     assert 0x04 == romInterface.readState().starting_lives
     romInterface.writeState(state)
     assert 0xAA == romInterface.readState().starting_lives
 
 def test_readStateContinueLivesInvalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert False == RomInterface(rom).readState().continue_lives_area_valid
+    assert None == RomInterface(rom).readState().continue_lives
 
 def createContinueLivesRom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))   
@@ -129,19 +127,18 @@ def createContinueLivesRom() -> Rom:
 
 def test_readStateContinueLivesValid():
     state = RomInterface(createContinueLivesRom()).readState()
-    assert True == state.continue_lives_area_valid
     assert 0x04 == state.continue_lives
 
 def test_writeStateContinueLives():
     romInterface = RomInterface(createContinueLivesRom())
-    state = State(0x00, True, 0xAA, True, True, True)
+    state = State(0x00, 0xAA, True)
     assert 0x04 == romInterface.readState().continue_lives
     romInterface.writeState(state)
     assert 0xAA == romInterface.readState().continue_lives
 
 def test_readStateDeathTakesLivesInvalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert False == RomInterface(rom).readState().death_takes_lives_area_valid
+    assert None == RomInterface(rom).readState().death_takes_lives
 
 def createDeathTakesLivesRom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -152,17 +149,15 @@ def createDeathTakesLivesRom(value):
 
 def test_readStateDeathTakesLivesLivesValidFalse():
     state = RomInterface(createDeathTakesLivesRom([0xEA, 0xEA, 0xEA])).readState()
-    assert True == state.death_takes_lives_area_valid
     assert False == state.death_takes_lives
 
 def test_readStateDeathTakesLivesLivesValidFalse():
     state = RomInterface(createDeathTakesLivesRom([0xDE, 0x36, 0x07])).readState()
-    assert True == state.death_takes_lives_area_valid
     assert True == state.death_takes_lives
 
 def test_writeStateContinueLives():
     romInterface = RomInterface(createDeathTakesLivesRom([0xEA, 0xEA, 0xEA]))
-    state = State(0x00, True, 0x00, True, True, True)
+    state = State(0x00, 0x00, True)
     assert False == romInterface.readState().death_takes_lives
     romInterface.writeState(state)
     assert True == romInterface.readState().death_takes_lives
