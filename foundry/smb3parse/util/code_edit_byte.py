@@ -6,6 +6,7 @@ class CodeEditByte(CodeEdit):
         super().__init__(rom, start_address, 1, prefix, postfix)
 
     def read(self) -> int:
+        if not self.isValid(): return None
         return self.rom.read(self.address, self.length)[0]
 
     def write(self, value: int):
