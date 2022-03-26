@@ -77,18 +77,17 @@ class Store(ReduxStore[State]):
 class RomInterface():
     def __init__(self, rom: Rom):
         self.rom = rom
-        death_takes_lives_dict = {
-            True: bytearray([0xDE, 0x36, 0x07]),
-            False: bytearray([0xEA, 0xEA, 0xEA])
-        }
         
         self.death_takes_lives = CodeEditDict(
             rom, 
             0x3D133, 
             3, 
             bytearray([0x8B, 0x07, 0xD0, 0x05]),
-            bytearray([0x30, 0x0b, 0xA9, 0x80]),
-            death_takes_lives_dict)
+            {
+                True: bytearray([0xDE, 0x36, 0x07]),
+                False: bytearray([0xEA, 0xEA, 0xEA])
+            },
+            bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
         self.starting_lives = CodeEditByte(
             rom, 
