@@ -21,6 +21,8 @@ class CodeEditDict(CodeEdit):
         return None
 
     def write(self, selection: Any):
-        value = self.options[selection]
-        if value is not None:
+        try:
+            value = self.options[selection]
             self.rom.write(self.address, value)
+        except:
+            pass
