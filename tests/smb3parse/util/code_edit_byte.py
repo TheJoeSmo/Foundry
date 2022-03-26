@@ -20,6 +20,10 @@ def test_read():
     edit = CodeEditByte(getTestRom(), 0x100, [], [])
     assert 0x5A == edit.read()
 
+def test_readInvalid():
+    edit = CodeEditByte(getTestRom(), 0x100, [0x11], [])
+    assert None == edit.read()
+
 def test_write():
     edit = CodeEditByte(getTestRom(), 0x100, long_prefix, long_postfix)
     assert 0x5A == edit.read()
@@ -27,7 +31,7 @@ def test_write():
     assert 0xA5 == edit.read()
 
 def test_writeBlockedWhenInvalid():
-    edit = CodeEditByte(getTestRom(), 0x100, [0x11], [])
-    assert 0x5A == edit.read()
+    rom = getTestRom()
+    edit = CodeEditByte(rom, 0x100, [0x11], [])
     edit.write(0xA5)
-    assert 0x5A == edit.read()
+    assert 0x5A == rom.read(0x100, 1)[0]
