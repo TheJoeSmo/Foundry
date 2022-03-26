@@ -5,7 +5,7 @@ default_starting_lives = 5
 default_continue_lives = 4
 
 def defaultStore() -> Store:
-    return Store(State(default_starting_lives, default_continue_lives, True))
+    return Store(State(default_starting_lives, default_continue_lives, True, True))
 
 def test_subscribeOnInvalidAction():
     store = defaultStore()
@@ -109,7 +109,7 @@ def test_readStateStartingLivesValid():
 
 def test_writeStateStartingLives():
     romInterface = RomInterface(createStartingLivesRom())
-    state = State(0xAA, default_continue_lives, True)
+    state = State(0xAA, default_continue_lives, True, True)
     assert 0x04 == romInterface.readState().starting_lives
     romInterface.writeState(state)
     assert 0xAA == romInterface.readState().starting_lives
@@ -131,7 +131,7 @@ def test_readStateContinueLivesValid():
 
 def test_writeStateContinueLives():
     romInterface = RomInterface(createContinueLivesRom())
-    state = State(0x00, 0xAA, True)
+    state = State(0x00, 0xAA, True, True)
     assert 0x04 == romInterface.readState().continue_lives
     romInterface.writeState(state)
     assert 0xAA == romInterface.readState().continue_lives
@@ -147,17 +147,37 @@ def createDeathTakesLivesRom(value):
     rom.write(0x3D133+3, [0x30, 0x0b, 0xA9, 0x80])
     return rom
 
-def test_readStateDeathTakesLivesLivesValidFalse():
+def test_readStateDeathTakesLivesFalse():
     state = RomInterface(createDeathTakesLivesRom([0xEA, 0xEA, 0xEA])).readState()
     assert False == state.death_takes_lives
 
-def test_readStateDeathTakesLivesLivesValidFalse():
+def test_readStateDeathTakesLivesTrue():
     state = RomInterface(createDeathTakesLivesRom([0xDE, 0x36, 0x07])).readState()
     assert True == state.death_takes_lives
 
-def test_writeStateContinueLives():
-    romInterface = RomInterface(createDeathTakesLivesRom([0xEA, 0xEA, 0xEA]))
-    state = State(0x00, 0x00, True)
-    assert False == romInterface.readState().death_takes_lives
+def test_readState100CoinsInvalid():
+    rom = Rom(bytearray([0] * 0x50000))
+    assert None == RomInterface(rom).readState().hundred_coins_1up
+
+def create100CoinsRom(value):
+    rom = Rom(bytearray([0] * 0x50000))
+    rom.write(0x350A7-4, [0x7d, 0xae, 0x26, 0x07])
+    rom.write(0x350A7, value)
+    rom.write(0x350A7+3, [0xa9, 0x40, 0x8d, 0xf2])
+    return rom
+
+def test_readState100CoinsFalse():
+    state = RomInterface(create100CoinsRom([0xEA, 0xEA, 0xEA])).readState()
+    assert False == state.hundred_coins_1up
+
+def test_readState100CoinsTrue():
+    state = RomInterface(create100CoinsRom([0xfe, 0x36, 0x07])).readState()
+    assert True == state.hundred_coins_1up
+
+def test_writeState100Coins():
+    romInterface = RomInterface(create100CoinsRom([0xEA, 0xEA, 0xEA]))
+    state = State(0x00, 0x00, True, True)
+    assert False == romInterface.readState().hundred_coins_1up
     romInterface.writeState(state)
-    assert True == romInterface.readState().death_takes_lives
+    assert True == romInterface.readState().hundred_coins_1up
+
