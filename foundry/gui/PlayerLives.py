@@ -1,6 +1,6 @@
 from email.policy import default
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
-from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox, QGroupBox
 
 from dataclasses import dataclass
 import copy
@@ -21,6 +21,13 @@ class UIStrings:
     continue_lives = "Continue Lives"
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
+    title_1up = "Add a life when player gets 1up from:"
+    end_card_1up = "End card"
+    mushroom_1up = "1up Mushroom"
+    dice_game_1up = "Dice Game"
+    roulette_1up = "Roulette Game"
+    card_game_1up = "Card Game"
+    hundred_coins_1up = "100 Coins"
 
 @dataclass
 class ActionNames:
@@ -118,6 +125,12 @@ class View(CustomDialog):
     continue_lives_edit : QLineEdit
     invalid_rom_warning : QLabel
     death_takes_lives: QCheckBox
+    end_card_1up: QCheckBox
+    mushroom_1up: QCheckBox
+    dice_game_1up: QCheckBox
+    roulette_1up: QCheckBox
+    card_game_1up: QCheckBox
+    hundred_coins_1up: QCheckBox
 
     def __create_invalid_rom_layout(self) -> QBoxLayout:
         invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
@@ -148,10 +161,7 @@ class View(CustomDialog):
 
     def __create_death_options_layout(self) -> QBoxLayout:
         layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self.death_takes_lives = QCheckBox(f"{UIStrings.death_takes_lives}")
-        self.death_takes_lives.stateChanged.connect(self.__on_death_takes_lives)
-        layout.addWidget(self.death_takes_lives)
-
+        self.death_takes_lives = View.__create_checkbox(UIStrings.death_takes_lives, self.__on_death_takes_lives, layout)
         return layout
 
     def __create_button_options_layout(self) -> QDialogButtonBox:
@@ -160,6 +170,28 @@ class View(CustomDialog):
         button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
     
         return button_box
+
+    def __create_1up_layout(self) -> QBoxLayout:
+        external_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        group = QGroupBox(f"{UIStrings.title_1up}")
+        internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        group.setLayout(internal_layout)
+
+        self.mushroom_1up = View.__create_checkbox(UIStrings.mushroom_1up, self.__on_mushroom_1up, internal_layout)
+        self.hundred_coins_1up = View.__create_checkbox(UIStrings.hundred_coins_1up, self.__on_hundred_coins_1up, internal_layout)
+        self.end_card_1up = View.__create_checkbox(UIStrings.end_card_1up, self.__on_end_card_1up, internal_layout)
+        self.card_game_1up = View.__create_checkbox(UIStrings.card_game_1up, self.__on_card_game_1up, internal_layout)
+        self.roulette_1up = View.__create_checkbox(UIStrings.roulette_1up, self.__on_roulette_1up, internal_layout)
+        self.dice_game_1up = View.__create_checkbox(UIStrings.dice_game_1up, self.__on_dice_game_1up, internal_layout)
+        
+        external_layout.addWidget(group)
+        return external_layout
+
+    def __create_checkbox(title: str, function, layout: QBoxLayout) -> QCheckBox:
+        checkbox = QCheckBox(f"{title}")
+        checkbox.stateChanged.connect(function)
+        layout.addWidget(checkbox)
+        return checkbox
 
     def __init__(self, parent, store : Store, romInterface : RomInterface):
         super(View, self).__init__(parent, title=UIStrings.title)
@@ -171,6 +203,7 @@ class View(CustomDialog):
         main_layout.addLayout(self.__create_invalid_rom_layout())
         main_layout.addLayout(self.__create_lives_layout())
         main_layout.addLayout(self.__create_death_options_layout())
+        main_layout.addLayout(self.__create_1up_layout())
         main_layout.addWidget(HorizontalLine())
         main_layout.addWidget(self.__create_button_options_layout(), alignment=Qt.AlignRight)
 
@@ -215,6 +248,24 @@ class View(CustomDialog):
 
     def __on_death_takes_lives(self):
         self.store.dispatch(Action(ActionNames.death_takes_lives, self.death_takes_lives.isChecked()))
+
+    def __on_end_card_1up(self):
+        pass
+
+    def __on_mushroom_1up(self):
+        pass
+
+    def __on_dice_game_1up(self):
+        pass
+
+    def __on_roulette_1up(self):
+        pass
+
+    def __on_card_game_1up(self):
+        pass
+
+    def __on_hundred_coins_1up(self):
+        pass
 
 class PlayerLives():
     def __init__(self, parent):
