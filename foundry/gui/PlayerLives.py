@@ -1,3 +1,4 @@
+from email.policy import default
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
 from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox
 
@@ -10,6 +11,7 @@ from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit import CodeEdit
 from foundry.smb3parse.util.code_edit_byte import CodeEditByte
+from foundry.smb3parse.util.code_edit_dict import CodeEditDict
 from foundry.core.ReduxStore import ReduxStore, Action
 
 @dataclass
@@ -19,30 +21,6 @@ class UIStrings:
     continue_lives = "Continue Lives"
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
-
-class DeathTakesLives(CodeEdit):
-    DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
-    DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
-
-    def isValid(self):
-        if not super().isValid(): return False
-
-        code_area_data = self.rom.read(self.address, self.length)
-        return (code_area_data == self.DEATH_TAKES_LIVES_INFINATE) | (code_area_data == self.DEATH_TAKES_LIVES_VANILLA)
-
-    def read(self) -> bool:
-        return self.rom.read(self.address, self.length) == self.DEATH_TAKES_LIVES_VANILLA
-
-    def write(self, enabled: bool):
-        if not self.isValid(): return
-        if enabled:             
-            self.rom.write(self.death_takes_lives.address, self.DEATH_TAKES_LIVES_VANILLA)
-        else:
-            self.rom.write(self.death_takes_lives.address, self.DEATH_TAKES_LIVES_INFINATE)
-
-starting_lives: CodeEditByte
-continue_lives: CodeEditByte
-death_takes_lives: DeathTakesLives
 
 @dataclass
 class ActionNames:
@@ -93,7 +71,11 @@ class Store(ReduxStore[State]):
 class RomInterface():
     def __init__(self, rom: Rom):
         self.rom = rom
-        self.death_takes_lives = DeathTakesLives(rom, 0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+        death_takes_lives_dict = {
+            True: bytearray([0xDE, 0x36, 0x07]),
+            False: bytearray([0xEA, 0xEA, 0xEA])
+        }
+        self.death_takes_lives = CodeEditDict(rom, 0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]), death_takes_lives_dict)
         self.starting_lives = CodeEditByte(rom, 0x308E1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
         self.continue_lives = CodeEditByte(rom, 0x3D2D6, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
         
@@ -108,9 +90,9 @@ class RomInterface():
                     )
 
     def writeState(self, state: State):
-        starting_lives.write(state.starting_lives)
-        continue_lives.write(state.continue_lives)
-        death_takes_lives.write(state.death_takes_lives)
+        self.starting_lives.write(state.starting_lives)
+        self.continue_lives.write(state.continue_lives)
+        self.death_takes_lives.write(state.death_takes_lives)    
 
 class View(CustomDialog):
     store : Store
@@ -191,12 +173,15 @@ class View(CustomDialog):
 
         self.invalid_rom_warning.setVisible(View.allAreasValid(state) == False)  
 
-        self.death_takes_lives.setDisabled(state.death_takes_lives_area_valid == False)
-        self.death_takes_lives.setChecked(state.death_takes_lives)     
+        if state.death_takes_lives_area_valid == False or state.death_takes_lives == None:
+            self.death_takes_lives.setDisabled(True)
+        else:
+            self.death_takes_lives.setDisabled(False)
+            self.death_takes_lives.setChecked(state.death_takes_lives)     
 
     def allAreasValid(state : State) -> bool:
-        return state.starting_lives_area_valid &\
-            state.continue_lives_area_valid &\
+        return state.starting_lives_area_valid and\
+            state.continue_lives_area_valid and\
             state.death_takes_lives_area_valid
 
     def __on_ok(self):
