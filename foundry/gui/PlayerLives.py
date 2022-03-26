@@ -8,7 +8,8 @@ from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
-from foundry.smb3parse.util.code_edit_area import CodeEditArea
+from foundry.smb3parse.util.code_edit import CodeEdit
+from foundry.smb3parse.util.code_edit_byte import CodeEditByte
 from foundry.core.ReduxStore import ReduxStore, Action
 
 @dataclass
@@ -19,18 +20,7 @@ class UIStrings:
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
 
-class CodeEditByte(CodeEditArea):
-    def __init__(self, rom: Rom, start_address: int, prefix: bytearray, postfix: bytearray):
-        super().__init__(rom, start_address, 1, prefix, postfix)
-
-    def read(self) -> int:
-        return self.rom.read(self.address, self.length)[0]
-
-    def write(self, value: int):
-        if not self.isValid(): return
-        self.rom.write(self.address, [value])
-
-class DeathTakesLives(CodeEditArea):
+class DeathTakesLives(CodeEdit):
     DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
     DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
 

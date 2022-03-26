@@ -1,8 +1,9 @@
 from dataclasses import dataclass
+from typing import Any
 from foundry.smb3parse.util.rom import Rom
 
 @dataclass
-class CodeEditArea:
+class CodeEdit:
     rom: Rom
     address: int
     length: int
@@ -16,4 +17,3 @@ class CodeEditArea:
     def isValid(self):
         if not self.__validateAffix(self.address - len(self.prefix), self.prefix): return False
         return self.__validateAffix(self.address + self.length, self.postfix)
-    
