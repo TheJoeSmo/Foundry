@@ -6,6 +6,13 @@ class CodeEditDict(CodeEdit):
     options: dict
 
     def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, postfix: bytearray, options: dict):
+        """
+        options: dict 
+            Needs to be of types: [Any, bytearray]
+            All of the values(bytearray) should be the same length
+            values(bytearray) are what will be written to memory or used to find the current setting
+            duplicates in values will return first found entry on read
+        """
         super().__init__(rom, start_address, length, prefix, postfix)
         self.options = options
 
