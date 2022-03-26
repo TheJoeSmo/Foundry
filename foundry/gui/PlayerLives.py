@@ -43,6 +43,7 @@ class State:
     starting_lives: int
     continue_lives: int
     death_takes_lives: bool
+    hundred_coins_1up: bool
 
 class Store(ReduxStore[State]):        
     def reduce(self, state:State, action: Action) -> State:
@@ -74,6 +75,8 @@ class Store(ReduxStore[State]):
 class RomInterface():
     def __init__(self, rom: Rom):
         self.rom = rom
+        NOP_X_3 = bytearray([0xEA, 0xEA, 0xEA])
+        INC_NUM_LIVES = bytearray([0xfe, 0x36, 0x07])
         
         self.death_takes_lives = CodeEditDict(
             rom, 
@@ -82,7 +85,7 @@ class RomInterface():
             bytearray([0x8B, 0x07, 0xD0, 0x05]),
             {
                 True: bytearray([0xDE, 0x36, 0x07]),
-                False: bytearray([0xEA, 0xEA, 0xEA])
+                False: NOP_X_3
             },
             bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
@@ -97,18 +100,31 @@ class RomInterface():
             0x3D2D6, 
             bytearray([0x08, 0xD0, 0x65, 0xA9]), 
             bytearray([0x9D, 0x36, 0x07, 0xA5]))
+
+        self.hundred_coins_1up = CodeEditDict(
+            rom, 
+            0x350A7, 
+            3, 
+            bytearray([0x7d, 0xae, 0x26, 0x07]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0xa9, 0x40, 0x8d, 0xf2]))
         
     def readState(self) -> State:
         return State(   
                         self.starting_lives.read(),
                         self.continue_lives.read(),
-                        self.death_takes_lives.read()
+                        self.death_takes_lives.read(),
+                        self.hundred_coins_1up.read()
                     )
 
     def writeState(self, state: State):
         self.starting_lives.write(state.starting_lives)
         self.continue_lives.write(state.continue_lives)
-        self.death_takes_lives.write(state.death_takes_lives)    
+        self.death_takes_lives.write(state.death_takes_lives)
+        self.hundred_coins_1up.write(state.hundred_coins_1up)    
 
 class View(CustomDialog):
     store : Store
@@ -211,7 +227,7 @@ class View(CustomDialog):
         View.__renderLineEdit(self.continue_lives_edit, state.continue_lives)
         View.__renderCheckbox(self.death_takes_lives, state.death_takes_lives)
 
-        self.invalid_rom_warning.setVisible(View.allAreasValid(state) == False)  
+        self.invalid_rom_warning.setVisible(View.__allAreasValid(state) == False)  
     
     def __intOrDefaultToString(value: str, default: str):
         return default if value is None else str(value)
@@ -224,7 +240,7 @@ class View(CustomDialog):
         checkBox.setDisabled(value is None)
         checkBox.setChecked(False if value is None else value)
 
-    def allAreasValid(state : State) -> bool:
+    def __allAreasValid(state : State) -> bool:
         return  state.starting_lives is not None and\
                 state.continue_lives is not None and\
                 state.death_takes_lives is not None
