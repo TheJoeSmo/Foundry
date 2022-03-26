@@ -207,30 +207,27 @@ class View(CustomDialog):
     def render(self):
         state = self.store.getState()
 
-        View.renderLineEdit(self.starting_lives_edit, state.starting_lives)
-
-        self.continue_lives_edit.setDisabled(state.continue_lives_area_valid == False)
-        self.continue_lives_edit.setText(f"{state.continue_lives}")
+        View.__renderLineEdit(self.starting_lives_edit, state.starting_lives)
+        View.__renderLineEdit(self.continue_lives_edit, state.continue_lives)
+        View.__renderCheckbox(self.death_takes_lives, state.death_takes_lives)
 
         self.invalid_rom_warning.setVisible(View.allAreasValid(state) == False)  
-
-        if state.death_takes_lives_area_valid == False or state.death_takes_lives == None:
-            self.death_takes_lives.setDisabled(True)
-        else:
-            self.death_takes_lives.setDisabled(False)
-            self.death_takes_lives.setChecked(state.death_takes_lives)
     
-    def stringOrDefault(string: str, default: str):
-        return default if string is None else string
+    def __intOrDefaultToString(value: str, default: str):
+        return default if value is None else str(value)
 
-    def renderLineEdit(lineEdit: QLineEdit, text: str):
-        lineEdit.setDisabled(text == None)
-        lineEdit.setText(f"{View.stringOrDefault(text)}")
+    def __renderLineEdit(lineEdit: QLineEdit, value: int):
+        lineEdit.setDisabled(value == None)
+        lineEdit.setText(View.__intOrDefaultToString(value, "?"))
+
+    def __renderCheckbox(checkBox: QCheckBox, value: bool):
+        checkBox.setDisabled(value is None)
+        checkBox.setChecked(False if value is None else value)
 
     def allAreasValid(state : State) -> bool:
-        return state.starting_lives_area_valid and\
-            state.continue_lives_area_valid and\
-            state.death_takes_lives_area_valid
+        return  state.starting_lives is not None and\
+                state.continue_lives is not None and\
+                state.death_takes_lives is not None
 
     def __on_ok(self):
         self.romInterface.writeState(self.store.getState())
