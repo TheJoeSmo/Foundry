@@ -19,7 +19,7 @@ def test_isValid():
         "default": default_value
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert True == edit.isValid()
 
 def test_isValidInvalidValue():
@@ -27,7 +27,7 @@ def test_isValidInvalidValue():
         "default": unknown_value
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert False == edit.isValid()
 
 def test_readValid():
@@ -35,7 +35,7 @@ def test_readValid():
         "default": default_value
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert "default" == edit.read()
 
 def test_readInvalidValue():
@@ -43,7 +43,7 @@ def test_readInvalidValue():
         "default": unknown_value
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert None == edit.read()
 
 def test_write():
@@ -53,7 +53,7 @@ def test_write():
         "test_2": bytearray([0x02, 0x02, 0x02])
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert True == edit.isValid()
     assert "default" == edit.read()
 
@@ -70,7 +70,7 @@ def test_writeInvalid():
         "test_2": bytearray([0x02, 0x02, 0x02])
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert True == edit.isValid()
     assert "default" == edit.read()
 
@@ -85,7 +85,7 @@ def test_writeValueIncorrectLength():
         "test_2": bytearray([0x02, 0x02, 0x02, 0x02])
     }
 
-    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, long_postfix, testdict)
+    edit = CodeEditDict(getTestRom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
     assert True == edit.isValid()
     assert "default" == edit.read()
 

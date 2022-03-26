@@ -5,7 +5,7 @@ from foundry.smb3parse.util.code_edit import CodeEdit
 class CodeEditDict(CodeEdit):
     options: dict
 
-    def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, postfix: bytearray, options: dict):
+    def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, options: dict, postfix: bytearray):
         """
         options: dict 
             * needs to be of types: [Any, bytearray]
