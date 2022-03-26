@@ -8,10 +8,11 @@ class CodeEditDict(CodeEdit):
     def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, postfix: bytearray, options: dict):
         """
         options: dict 
-            Needs to be of types: [Any, bytearray]
-            All of the values(bytearray) should be the same length
-            values(bytearray) are what will be written to memory or used to find the current setting
-            duplicates in values will return first found entry on read
+            * needs to be of types: [Any, bytearray]
+            * all of the values(bytearray) should be the same length
+            * values(bytearray) are what will be written to memory or used to find the current setting
+            * values(bytearray) need to be same length as length parameter
+            * duplicates in values will return first found entry on read
         """
         super().__init__(rom, start_address, length, prefix, postfix)
         self.options = options
@@ -30,6 +31,7 @@ class CodeEditDict(CodeEdit):
     def write(self, selection: Any):
         try:
             value = self.options[selection]
-            self.rom.write(self.address, value)
+            if len(value) is self.length:
+                self.rom.write(self.address, value)
         except:
             pass
