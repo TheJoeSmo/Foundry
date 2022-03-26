@@ -11,9 +11,6 @@ from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit_area import CodeEditArea
 from foundry.core.ReduxStore import ReduxStore, Action
 
-DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
-DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
-
 @dataclass
 class UIStrings:
     title = "Player Lives"
@@ -29,15 +26,29 @@ class CodeEditByte(CodeEditArea):
     def read(self) -> int:
         return self.rom.read(self.address, self.length)[0]
 
+    def write(self, value: int):
+        if not self.isValid(): return
+        self.rom.write(self.address, [value])
+
 class DeathTakesLives(CodeEditArea):
+    DEATH_TAKES_LIVES_VANILLA = bytearray([0xDE, 0x36, 0x07])
+    DEATH_TAKES_LIVES_INFINATE = bytearray([0xEA, 0xEA, 0xEA])
+
     def isValid(self):
         if not super().isValid(): return False
 
         code_area_data = self.rom.read(self.address, self.length)
-        return (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
+        return (code_area_data == self.DEATH_TAKES_LIVES_INFINATE) | (code_area_data == self.DEATH_TAKES_LIVES_VANILLA)
 
     def read(self) -> bool:
-        return self.rom.read(self.address, self.length) == DEATH_TAKES_LIVES_VANILLA
+        return self.rom.read(self.address, self.length) == self.DEATH_TAKES_LIVES_VANILLA
+
+    def write(self, enabled: bool):
+        if not self.isValid(): return
+        if enabled:             
+            self.rom.write(self.death_takes_lives.address, self.DEATH_TAKES_LIVES_VANILLA)
+        else:
+            self.rom.write(self.death_takes_lives.address, self.DEATH_TAKES_LIVES_INFINATE)
 
 starting_lives: CodeEditByte
 continue_lives: CodeEditByte
@@ -84,8 +95,10 @@ class Store(ReduxStore[State]):
         return state
 
     def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> bool:
-        if str.isdigit(input) == False: return False
-        return (int(input) >= lower_limit) & (int(input) <= upper_limit)
+        try:
+            return (int(input) >= lower_limit) & (int(input) <= upper_limit)
+        except ValueError:
+            return False
 
 class RomInterface():
     def __init__(self, rom: Rom):
@@ -105,17 +118,9 @@ class RomInterface():
                     )
 
     def writeState(self, state: State):
-        if state.starting_lives_area_valid:
-            self.rom.write(self.starting_lives.address, [state.starting_lives])
-
-        if state.continue_lives_area_valid:
-            self.rom.write(self.continue_lives.address, [state.continue_lives])
-
-        if state.death_takes_lives_area_valid:
-            if state.death_takes_lives:             
-                self.rom.write(self.death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
-            else:
-                self.rom.write(self.death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
+        starting_lives.write(state.starting_lives)
+        continue_lives.write(state.continue_lives)
+        death_takes_lives.write(state.death_takes_lives)
 
 class View(CustomDialog):
     store : Store
