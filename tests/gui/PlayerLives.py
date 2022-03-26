@@ -1,5 +1,5 @@
 from foundry.smb3parse.util.rom import Rom
-from foundry.gui.PlayerLives import Store, State, Action, ActionNames, Generator
+from foundry.gui.PlayerLives import Store, State, Action, ActionNames
 
 default_starting_lives = 5
 default_continue_lives = 4
@@ -26,7 +26,6 @@ def test_subscribeOnValidActionStateChange():
     assert 1 == callback.called
 
 def test_subscribeOnValidActionNoStateChange():
-    callback_called = False
     store = defaultStore()
     callback = CallbackTester()
     store.subscribe(callback.function)

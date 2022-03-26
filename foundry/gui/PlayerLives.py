@@ -22,23 +22,25 @@ class UIStrings:
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
 
+class CodeEditByte(CodeEditArea):
+    def __init__(self, rom: Rom, start_address: int, prefix: bytearray, postfix: bytearray):
+        super().__init__(rom, start_address, 1, prefix, postfix)
+
+    def read(self) -> int:
+        return self.rom.read(self.address, self.length)[0]
+
 class DeathTakesLives(CodeEditArea):
-    rom: Rom
-    def __init__(self, rom: Rom):
-        self.rom = rom
-        super().__init__(0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+    def isValid(self):
+        if not super().isValid(): return False
 
-    def isValid(self, rom: Rom):
-        if not super().isValid(rom): return False
-
-        code_area_data = rom.read(self.address, self.length)
+        code_area_data = self.rom.read(self.address, self.length)
         return (code_area_data == DEATH_TAKES_LIVES_INFINATE) | (code_area_data == DEATH_TAKES_LIVES_VANILLA)
 
     def read(self) -> bool:
         return self.rom.read(self.address, self.length) == DEATH_TAKES_LIVES_VANILLA
 
-starting_lives: CodeEditArea
-continue_lives: CodeEditArea
+starting_lives: CodeEditByte
+continue_lives: CodeEditByte
 death_takes_lives: DeathTakesLives
 
 @dataclass
@@ -59,27 +61,13 @@ class State:
     death_takes_lives: bool
     death_takes_lives_area_valid: bool
 
-class Store(ReduxStore[State]):
-    @classmethod
-    def createFromRom(cls, rom: Rom) -> State:
-        state = State(   
-                        Store.__readCodeEditArea(rom, starting_lives)[0],
-                        starting_lives.isValid(rom),
-                        Store.__readCodeEditArea(rom, continue_lives)[0],
-                        continue_lives.isValid(rom),
-                        death_takes_lives.read(rom),
-                        death_takes_lives.isValid(rom)
-                    )
-        return Store(state)
-
-    def __readCodeEditArea(rom: Rom, area:CodeEditArea) -> bytearray:
-        return rom.read(area.address, area.length)
-        
+class Store(ReduxStore[State]):        
     def reduce(self, state:State, action: Action) -> State:
         if state is None:
             state = self.getDefault()
 
         if action.type == ActionNames.starting_lives:
+            print(action.payload)
             if Store.__isBoundedInteger(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
@@ -96,35 +84,42 @@ class Store(ReduxStore[State]):
         return state
 
     def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> bool:
-        if isinstance(input, int) == False: return False
+        if str.isdigit(input) == False: return False
         return (int(input) >= lower_limit) & (int(input) <= upper_limit)
 
-class Generator():
-    store : Store
-    rom : Rom
-
-    def __init__(self, store: Store, rom : Rom):
-        self.store = store
+class RomInterface():
+    def __init__(self, rom: Rom):
         self.rom = rom
+        self.death_takes_lives = DeathTakesLives(rom, 0x3D133, 3, bytearray([0x8B, 0x07, 0xD0, 0x05]), bytearray([0x30, 0x0b, 0xA9, 0x80]))
+        self.starting_lives = CodeEditByte(rom, 0x308E1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
+        self.continue_lives = CodeEditByte(rom, 0x3D2D6, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
+        
+    def readState(self) -> State:
+        return State(   
+                        self.starting_lives.read(),
+                        self.starting_lives.isValid(),
+                        self.continue_lives.read(),
+                        self.continue_lives.isValid(),
+                        self.death_takes_lives.read(),
+                        self.death_takes_lives.isValid()
+                    )
 
-    def render(self):
-        state = self.store.getState()
-
+    def writeState(self, state: State):
         if state.starting_lives_area_valid:
-            self.rom.write(starting_lives.address, [state.starting_lives])
+            self.rom.write(self.starting_lives.address, [state.starting_lives])
 
         if state.continue_lives_area_valid:
-            self.rom.write(continue_lives.address, [state.continue_lives])
+            self.rom.write(self.continue_lives.address, [state.continue_lives])
 
         if state.death_takes_lives_area_valid:
             if state.death_takes_lives:             
-                self.rom.write(death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
+                self.rom.write(self.death_takes_lives.address, DEATH_TAKES_LIVES_VANILLA)
             else:
-                self.rom.write(death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
+                self.rom.write(self.death_takes_lives.address, DEATH_TAKES_LIVES_INFINATE)
 
 class View(CustomDialog):
     store : Store
-    generator : Generator
+    romInterface : RomInterface
 
     starting_lives_edit : QLineEdit
     continue_lives_edit : QLineEdit
@@ -173,9 +168,9 @@ class View(CustomDialog):
     
         return button_box
 
-    def __init__(self, parent, store : Store, generator : Generator):
+    def __init__(self, parent, store : Store, romInterface : RomInterface):
         super(View, self).__init__(parent, title=UIStrings.title)
-        self.generator = generator
+        self.romInterface = romInterface
         self.store = store
 
         main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
@@ -210,8 +205,8 @@ class View(CustomDialog):
             state.death_takes_lives_area_valid
 
     def __on_ok(self):
-        self.generator.render()
-        self.done(QDialogButtonBox.Apply)
+        self.romInterface.writeState(self.store.getState())
+        self.done(QDialogButtonBox.Ok)
 
     def __on_cancel(self):
         self.done(QDialogButtonBox.Cancel)
@@ -227,17 +222,6 @@ class View(CustomDialog):
 
 class PlayerLives():
     def __init__(self, parent):
-        global death_takes_lives
-        global starting_lives
-        global continue_lives
-        
-        rom = ROM()
-        store = Store.createFromRom(rom)
-        
-        death_takes_lives = DeathTakesLives()
-        starting_lives = CodeEditArea(0x308E1, 1, bytearray([0xCA, 0x10, 0xF8, 0xA9]), bytearray([0x8D, 0x36, 0x07, 0x8D]))
-        continue_lives = CodeEditArea(0x3D2D6, 1, bytearray([0x08, 0xD0, 0x65, 0xA9]), bytearray([0x9D, 0x36, 0x07, 0xA5]))
-        
-        View(parent, store, Generator(store, rom))
-
-
+        romInterface = RomInterface(ROM())        
+        store = Store(romInterface.readState())               
+        View(parent, store, romInterface)
