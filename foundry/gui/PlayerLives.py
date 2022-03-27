@@ -15,7 +15,7 @@ from foundry.smb3parse.util.code_edit_dict import CodeEditDict
 from foundry.core.ReduxStore import ReduxStore, Action
 
 @dataclass
-class UIStrings:
+class _UIStrings:
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
@@ -59,14 +59,14 @@ class State:
 class Store(ReduxStore[State]):        
     def reduce(self, state:State, action: Action) -> State:
         if state is None:
-            state = self.getDefault()
+            state = self.get_default_state()
 
         if action.type == ActionNames.starting_lives:
-            if Store.__isBoundedInteger(action.payload, 0, 99):
+            if Store._is_bounded_int(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
         elif action.type == ActionNames.continue_lives:
-            if Store.__isBoundedInteger(action.payload, 0, 99):
+            if Store._is_bounded_int(action.payload, 0, 99):
                 state.continue_lives = int(action.payload)
 
         elif action.type == ActionNames.death_takes_lives:
@@ -91,11 +91,11 @@ class Store(ReduxStore[State]):
             state.card_game_1up = action.payload
 
         elif action.type == ActionNames.load:
-            state = self.getDefault()
+            state = self.get_default_state()
 
         return state
 
-    def __isBoundedInteger(input, lower_limit: int, upper_limit: int) -> bool:
+    def _is_bounded_int(input, lower_limit: int, upper_limit: int) -> bool:
         try:
             return (int(input) >= lower_limit) & (int(input) <= upper_limit)
         except ValueError:
@@ -196,7 +196,7 @@ class RomInterface():
             },
             bytearray([0xa9, 0x40, 0x8d, 0xf2]))
 
-    def readState(self) -> State:
+    def read_state(self) -> State:
         return State(   
                         self.starting_lives.read(),
                         self.continue_lives.read(),
@@ -209,7 +209,7 @@ class RomInterface():
                         self.card_game_1up.read()
                     )
 
-    def writeState(self, state: State):
+    def write_state(self, state: State):
         self.starting_lives.write(state.starting_lives)
         self.continue_lives.write(state.continue_lives)
         self.death_takes_lives.write(state.death_takes_lives)
@@ -222,124 +222,124 @@ class RomInterface():
 
 class View(CustomDialog):
     store : Store
-    romInterface : RomInterface
+    rom_interface : RomInterface
 
-    starting_lives_edit : QLineEdit
-    continue_lives_edit : QLineEdit
-    invalid_rom_warning : QLabel
-    death_takes_lives: QCheckBox
-    hundred_coins_1up: QCheckBox
-    end_card_1up: QCheckBox
-    mushroom_1up: QCheckBox
-    dice_game_1up: QCheckBox
-    roulette_1up: QCheckBox
-    card_game_1up: QCheckBox
+    _starting_lives_edit : QLineEdit
+    _continue_lives_edit : QLineEdit
+    _invalid_rom_warning : QLabel
+    _death_takes_lives: QCheckBox
+    _hundred_coins_1up: QCheckBox
+    _end_card_1up: QCheckBox
+    _mushroom_1up: QCheckBox
+    _dice_game_1up: QCheckBox
+    _roulette_1up: QCheckBox
+    _card_game_1up: QCheckBox
 
     WARNING_STYLE = "QLabel { background-color : pink; }"
 
-    def __create_invalid_rom_layout(self) -> QBoxLayout:
-        invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
-        self.invalid_rom_warning.setWordWrap(True)
-        self.invalid_rom_warning.setFixedWidth(400)
-        self.invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
-        invalid_rom_warning_layout.addWidget(self.invalid_rom_warning)
+    def _create_invalid_rom_layout(self) -> QBoxLayout:
+        _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        self._invalid_rom_warning = QLabel(f"{_UIStrings.invalid_rom_warning}")
+        self._invalid_rom_warning.setWordWrap(True)
+        self._invalid_rom_warning.setFixedWidth(400)
+        self._invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
+        _invalid_rom_warning_layout.addWidget(self._invalid_rom_warning)
 
-        return invalid_rom_warning_layout
+        return _invalid_rom_warning_layout
 
-    def __create_lives_layout(self) -> QGridLayout:
-        self.starting_lives_edit = QLineEdit(self)
-        self.starting_lives_edit.setValidator(QIntValidator(0, 99, self))
-        self.starting_lives_edit.textEdited.connect(self.__on_starting_lives)
+    def _create_lives_layout(self) -> QGridLayout:
+        self._starting_lives_edit = QLineEdit(self)
+        self._starting_lives_edit.setValidator(QIntValidator(0, 99, self))
+        self._starting_lives_edit.textEdited.connect(self._on_starting_lives)
 
-        self.continue_lives_edit = QLineEdit(self)
-        self.continue_lives_edit.setValidator(QIntValidator(0, 99, self))
-        self.continue_lives_edit.textEdited.connect(self.__on_continue_lives)
+        self._continue_lives_edit = QLineEdit(self)
+        self._continue_lives_edit.setValidator(QIntValidator(0, 99, self))
+        self._continue_lives_edit.textEdited.connect(self._on_continue_lives)
 
         fields_layout = QGridLayout()
         fields_layout.addWidget(
-            QLabel(f"{UIStrings.starting_lives} (0-99):", self), 0, 0)
-        fields_layout.addWidget(self.starting_lives_edit, 0, 1)
+            QLabel(f"{_UIStrings.starting_lives} (0-99):", self), 0, 0)
+        fields_layout.addWidget(self._starting_lives_edit, 0, 1)
         fields_layout.addWidget(
-            QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
-        fields_layout.addWidget(self.continue_lives_edit, 1, 1)
+            QLabel(f"{_UIStrings.continue_lives} (0-99):", self), 1, 0)
+        fields_layout.addWidget(self._continue_lives_edit, 1, 1)
 
         return fields_layout
 
-    def __create_death_options_layout(self) -> QBoxLayout:
+    def _create_death_options_layout(self) -> QBoxLayout:
         layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self.death_takes_lives = View.__create_checkbox(
-            UIStrings.death_takes_lives, 
-            self.__on_death_takes_lives, 
+        self._death_takes_lives = View._create_checkbox(
+            _UIStrings.death_takes_lives, 
+            self._on_death_takes_lives, 
             layout)
         return layout
 
-    def __create_button_options_layout(self) -> QDialogButtonBox:
+    def _create_button_options_layout(self) -> QDialogButtonBox:
         button_box = QDialogButtonBox()
-        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self.__on_ok)
-        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self.__on_cancel)
+        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self._on_ok)
+        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self._on_cancel)
     
         return button_box
 
-    def __create_1up_layout(self) -> QBoxLayout:
+    def _create_1up_layout(self) -> QBoxLayout:
         external_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        group = QGroupBox(f"{UIStrings.title_1up}")
+        group = QGroupBox(f"{_UIStrings.title_1up}")
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group.setLayout(internal_layout)
 
-        self.mushroom_1up = View.__create_checkbox(
-            UIStrings.mushroom_1up, 
-            self.__on_mushroom_1up, 
+        self._mushroom_1up = View._create_checkbox(
+            _UIStrings.mushroom_1up, 
+            self._on_mushroom_1up, 
             internal_layout)
 
-        self.hundred_coins_1up = View.__create_checkbox(
-            UIStrings.hundred_coins_1up, 
-            self.__on_hundred_coins_1up, 
+        self._hundred_coins_1up = View._create_checkbox(
+            _UIStrings.hundred_coins_1up, 
+            self._on_hundred_coins_1up, 
             internal_layout)
 
-        self.end_card_1up = View.__create_checkbox(
-            UIStrings.end_card_1up, 
-            self.__on_end_card_1up, 
+        self._end_card_1up = View._create_checkbox(
+            _UIStrings.end_card_1up, 
+            self._on_end_card_1up, 
             internal_layout)
 
-        self.card_game_1up = View.__create_checkbox(
-            UIStrings.card_game_1up, 
-            self.__on_card_game_1up, 
+        self._card_game_1up = View._create_checkbox(
+            _UIStrings.card_game_1up, 
+            self._on_card_game_1up, 
             internal_layout)
 
-        self.roulette_1up = View.__create_checkbox(
-            UIStrings.roulette_1up, 
-            self.__on_roulette_1up, 
+        self._roulette_1up = View._create_checkbox(
+            _UIStrings.roulette_1up, 
+            self._on_roulette_1up, 
             internal_layout)
 
-        self.dice_game_1up = View.__create_checkbox(
-            UIStrings.dice_game_1up, 
-            self.__on_dice_game_1up, 
+        self._dice_game_1up = View._create_checkbox(
+            _UIStrings.dice_game_1up, 
+            self._on_dice_game_1up, 
             internal_layout)
         
         external_layout.addWidget(group)
         return external_layout
 
-    def __create_checkbox(title: str, function, layout: QBoxLayout) -> QCheckBox:
+    def _create_checkbox(title: str, function, layout: QBoxLayout) -> QCheckBox:
         checkbox = QCheckBox(f"{title}")
         checkbox.stateChanged.connect(function)
         layout.addWidget(checkbox)
         return checkbox
 
-    def __init__(self, parent, store : Store, romInterface : RomInterface):
-        super(View, self).__init__(parent, title=UIStrings.title)
-        self.romInterface = romInterface
+    def __init__(self, parent, store : Store, rom_interface : RomInterface):
+        super(View, self).__init__(parent, title=_UIStrings.title)
+        self.rom_interface = rom_interface
         self.store = store
 
         main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
 
-        main_layout.addLayout(self.__create_invalid_rom_layout())
-        main_layout.addLayout(self.__create_lives_layout())
-        main_layout.addLayout(self.__create_death_options_layout())
-        main_layout.addLayout(self.__create_1up_layout())
+        main_layout.addLayout(self._create_invalid_rom_layout())
+        main_layout.addLayout(self._create_lives_layout())
+        main_layout.addLayout(self._create_death_options_layout())
+        main_layout.addLayout(self._create_1up_layout())
         main_layout.addWidget(HorizontalLine())
         main_layout.addWidget(
-            self.__create_button_options_layout(), alignment=Qt.AlignRight)
+            self._create_button_options_layout(), alignment=Qt.AlignRight)
 
         self.store.subscribe(self.render)
         self.render()
@@ -348,31 +348,31 @@ class View(CustomDialog):
     def render(self):
         state = self.store.getState()
 
-        View.__renderLineEdit(self.starting_lives_edit, state.starting_lives)
-        View.__renderLineEdit(self.continue_lives_edit, state.continue_lives)
+        View._render_line_edit(self._starting_lives_edit, state.starting_lives)
+        View._render_line_edit(self._continue_lives_edit, state.continue_lives)
 
-        View.__renderCheckbox(self.death_takes_lives, state.death_takes_lives)
-        View.__renderCheckbox(self.hundred_coins_1up, state.hundred_coins_1up)
-        View.__renderCheckbox(self.end_card_1up, state.end_card_1up)
-        View.__renderCheckbox(self.mushroom_1up, state.mushroom_1up)
-        View.__renderCheckbox(self.dice_game_1up, state.dice_game_1up)
-        View.__renderCheckbox(self.roulette_1up, state.roulette_1up)
-        View.__renderCheckbox(self.card_game_1up, state.card_game_1up)
+        View._render_checkbox(self._death_takes_lives, state.death_takes_lives)
+        View._render_checkbox(self._hundred_coins_1up, state.hundred_coins_1up)
+        View._render_checkbox(self._end_card_1up, state.end_card_1up)
+        View._render_checkbox(self._mushroom_1up, state.mushroom_1up)
+        View._render_checkbox(self._dice_game_1up, state.dice_game_1up)
+        View._render_checkbox(self._roulette_1up, state.roulette_1up)
+        View._render_checkbox(self._card_game_1up, state.card_game_1up)
 
-        self.invalid_rom_warning.setVisible(View.__allAreasValid(state) == False)  
+        self._invalid_rom_warning.setVisible(View._all_areas_valid(state) == False)  
     
-    def __intOrDefaultToString(value: str, default: str):
+    def _int_or_default_string(value: str, default: str):
         return default if value is None else str(value)
 
-    def __renderLineEdit(lineEdit: QLineEdit, value: int):
+    def _render_line_edit(lineEdit: QLineEdit, value: int):
         lineEdit.setDisabled(value == None)
-        lineEdit.setText(View.__intOrDefaultToString(value, "?"))
+        lineEdit.setText(View._int_or_default_string(value, "?"))
 
-    def __renderCheckbox(checkBox: QCheckBox, value: bool):
+    def _render_checkbox(checkBox: QCheckBox, value: bool):
         checkBox.setDisabled(value is None)
         checkBox.setChecked(False if value is None else value)
 
-    def __allAreasValid(state : State) -> bool:
+    def _all_areas_valid(state : State) -> bool:
         return  state.starting_lives is not None and\
                 state.continue_lives is not None and\
                 state.death_takes_lives is not None and\
@@ -383,60 +383,60 @@ class View(CustomDialog):
                 state.roulette_1up is not None and\
                 state.card_game_1up is not None
 
-    def __on_ok(self):
-        self.romInterface.writeState(self.store.getState())
+    def _on_ok(self):
+        self.rom_interface.write_state(self.store.getState())
         self.done(QDialogButtonBox.Ok)
 
-    def __on_cancel(self):
+    def _on_cancel(self):
         self.done(QDialogButtonBox.Cancel)
 
-    def __on_starting_lives(self, text : str):
+    def _on_starting_lives(self, text : str):
         self.store.dispatch(Action(
             ActionNames.starting_lives, 
             text))
 
-    def __on_continue_lives(self, text : str):
+    def _on_continue_lives(self, text : str):
         self.store.dispatch(Action(
             ActionNames.continue_lives, 
             text))
 
-    def __on_death_takes_lives(self):
+    def _on_death_takes_lives(self):
         self.store.dispatch(Action(
             ActionNames.death_takes_lives, 
-            self.death_takes_lives.isChecked()))
+            self._death_takes_lives.isChecked()))
 
-    def __on_end_card_1up(self):
+    def _on_end_card_1up(self):
         self.store.dispatch(Action(
             ActionNames.end_card_1up, 
-            self.end_card_1up.isChecked()))
+            self._end_card_1up.isChecked()))
 
-    def __on_mushroom_1up(self):
+    def _on_mushroom_1up(self):
         self.store.dispatch(Action(
             ActionNames.mushroom_1up, 
-            self.mushroom_1up.isChecked()))
+            self._mushroom_1up.isChecked()))
 
-    def __on_dice_game_1up(self):
+    def _on_dice_game_1up(self):
         self.store.dispatch(Action(
             ActionNames.dice_game_1up, 
-            self.dice_game_1up.isChecked()))
+            self._dice_game_1up.isChecked()))
 
-    def __on_roulette_1up(self):
+    def _on_roulette_1up(self):
         self.store.dispatch(Action(
             ActionNames.roulette_1up, 
-            self.roulette_1up.isChecked()))
+            self._roulette_1up.isChecked()))
 
-    def __on_card_game_1up(self):
+    def _on_card_game_1up(self):
         self.store.dispatch(Action(
             ActionNames.card_game_1up, 
-            self.card_game_1up.isChecked()))
+            self._card_game_1up.isChecked()))
 
-    def __on_hundred_coins_1up(self):
+    def _on_hundred_coins_1up(self):
         self.store.dispatch(Action(
             ActionNames.hundred_coins_1up, 
-            self.hundred_coins_1up.isChecked()))
+            self._hundred_coins_1up.isChecked()))
 
 class PlayerLives():
     def __init__(self, parent):
-        romInterface = RomInterface(ROM())        
-        store = Store(romInterface.readState())               
-        View(parent, store, romInterface)
+        rom_interface = RomInterface(ROM())        
+        store = Store(rom_interface.read_state())               
+        View(parent, store, rom_interface)
