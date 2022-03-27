@@ -12,7 +12,7 @@ from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit import CodeEdit
 from foundry.smb3parse.util.code_edit_byte import CodeEditByte
 from foundry.smb3parse.util.code_edit_dict import CodeEditDict
-from foundry.core.ReduxStore import ReduxStore, Action
+from foundry.core.redux_store import ReduxStore, Action
 
 @dataclass
 class _UIStrings:
@@ -20,8 +20,8 @@ class _UIStrings:
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
     invalid_rom_warning = "The selected ROM has code modifications that are"  \
-        "incompatible with one or more features of this window. The affected" \
-        "features are visible but disabled."
+        " incompatible with one or more features of this window. The affected" \
+        " features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
     title_1up = "Add a life when player gets 1up from:"
     end_card_1up = "Level end card"
@@ -346,7 +346,7 @@ class View(CustomDialog):
         self.show()
 
     def render(self):
-        state = self.store.getState()
+        state = self.store.get_state()
 
         View._render_line_edit(self._starting_lives_edit, state.starting_lives)
         View._render_line_edit(self._continue_lives_edit, state.continue_lives)
@@ -384,7 +384,7 @@ class View(CustomDialog):
                 state.card_game_1up is not None
 
     def _on_ok(self):
-        self.rom_interface.write_state(self.store.getState())
+        self.rom_interface.write_state(self.store.get_state())
         self.done(QDialogButtonBox.Ok)
 
     def _on_cancel(self):

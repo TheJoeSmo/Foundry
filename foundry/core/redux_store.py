@@ -19,10 +19,10 @@ class ReduxStore(ABC, Generic[S]):
         self.defaultState = state
         self.state = copy.deepcopy(state)
 
-    def getDefault(self) -> S:
+    def get_default(self) -> S:
         return copy.deepcopy(self.defaultState)
 
-    def getState(self) -> S:
+    def get_state(self) -> S:
         return self.state
 
     def dispatch(self, action: Action):
@@ -30,9 +30,9 @@ class ReduxStore(ABC, Generic[S]):
         self.state = self.reduce(copy.deepcopy(self.state), action)
 
         if self.state != oldState:
-            self.__notifySubscribers()
+            self._notify_subscribers()
 
-    def __notifySubscribers(self):
+    def _notify_subscribers(self):
         for subscriber in self.subscribers:
             subscriber()
 
