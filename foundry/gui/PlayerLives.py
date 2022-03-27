@@ -22,8 +22,8 @@ class UIStrings:
     invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
     title_1up = "Add a life when player gets 1up from:"
-    end_card_1up = "End card"
-    mushroom_1up = "1up Mushroom"
+    end_card_1up = "Level end card"
+    mushroom_1up = "1up Mushroom / Jumps on enemies "
     dice_game_1up = "Dice Game"
     roulette_1up = "Roulette Game"
     card_game_1up = "Card Game"
@@ -36,6 +36,11 @@ class ActionNames:
     continue_lives = "[PlayerLives] ContinueLives"
     death_takes_lives = "[PlayerLives] DeathTakesLives"
     hundred_coins_1up = "[PlayerLives] 100Coins"
+    end_card_1up = "[PlayerLives] EndCard"
+    mushroom_1up = "[PlayerLives] Mushroom"
+    dice_game_1up = "[PlayerLives] DiceGame"
+    roulette_1up = "[PlayerLives] Roulette"
+    card_game_1up = "[PlayerLives] CardGame"
 
 ACTION_LOAD = Action(ActionNames.load, None)
 
@@ -45,6 +50,11 @@ class State:
     continue_lives: int
     death_takes_lives: bool
     hundred_coins_1up: bool
+    end_card_1up: bool
+    mushroom_1up: bool
+    dice_game_1up: bool
+    roulette_1up: bool
+    card_game_1up: bool
 
 class Store(ReduxStore[State]):        
     def reduce(self, state:State, action: Action) -> State:
@@ -64,6 +74,21 @@ class Store(ReduxStore[State]):
 
         elif action.type == ActionNames.hundred_coins_1up:
             state.hundred_coins_1up = action.payload
+
+        elif action.type == ActionNames.end_card_1up:
+            state.end_card_1up = action.payload
+
+        elif action.type == ActionNames.mushroom_1up:
+            state.mushroom_1up = action.payload
+
+        elif action.type == ActionNames.dice_game_1up:
+            state.dice_game_1up = action.payload
+
+        elif action.type == ActionNames.roulette_1up:
+            state.roulette_1up = action.payload
+
+        elif action.type == ActionNames.card_game_1up:
+            state.card_game_1up = action.payload
 
         elif action.type == ActionNames.load:
             state = self.getDefault()
@@ -116,12 +141,72 @@ class RomInterface():
             },
             bytearray([0xa9, 0x40, 0x8d, 0xf2]))
         
+        self.end_card_1up = CodeEditDict(
+            rom, 
+            0x5d99, 
+            3, 
+            bytearray([0x60, 0xae, 0x26, 0x07]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0xee, 0x40, 0x04, 0x60]))
+
+        self.mushroom_1up = CodeEditDict(
+            rom, 
+            0xeb0f, 
+            3, 
+            bytearray([0x36, 0x07, 0x30, 0x03]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0xa6, 0xcd, 0xbd, 0xa3]))
+
+        self.dice_game_1up = CodeEditDict(
+            rom, 
+            0x2cd78, 
+            3, 
+            bytearray([0x60, 0xae, 0x26, 0x07]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0xee, 0x40, 0x04, 0x60]))
+
+        self.roulette_1up = CodeEditDict(
+            rom, 
+            0x2d2be, 
+            3, 
+            bytearray([0x36, 0x07, 0x30, 0x03]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0x4c, 0xd2, 0xd2, 0xce]))
+
+        self.card_game_1up = CodeEditDict(
+            rom, 
+            0x2dd50, 
+            3, 
+            bytearray([0x0d, 0xae, 0x26, 0x07]),
+            {
+                True: INC_NUM_LIVES,
+                False: NOP_X_3
+            },
+            bytearray([0xa9, 0x40, 0x8d, 0xf2]))
+
     def readState(self) -> State:
         return State(   
                         self.starting_lives.read(),
                         self.continue_lives.read(),
                         self.death_takes_lives.read(),
-                        self.hundred_coins_1up.read()
+                        self.hundred_coins_1up.read(),
+                        self.end_card_1up.read(),
+                        self.mushroom_1up.read(),
+                        self.dice_game_1up.read(),
+                        self.roulette_1up.read(),
+                        self.card_game_1up.read()
                     )
 
     def writeState(self, state: State):
@@ -129,6 +214,11 @@ class RomInterface():
         self.continue_lives.write(state.continue_lives)
         self.death_takes_lives.write(state.death_takes_lives)
         self.hundred_coins_1up.write(state.hundred_coins_1up)    
+        self.end_card_1up.write(state.end_card_1up)
+        self.mushroom_1up.write(state.mushroom_1up)
+        self.dice_game_1up.write(state.dice_game_1up)
+        self.roulette_1up.write(state.roulette_1up)
+        self.card_game_1up.write(state.card_game_1up)
 
 class View(CustomDialog):
     store : Store
@@ -138,12 +228,13 @@ class View(CustomDialog):
     continue_lives_edit : QLineEdit
     invalid_rom_warning : QLabel
     death_takes_lives: QCheckBox
+    hundred_coins_1up: QCheckBox
     end_card_1up: QCheckBox
     mushroom_1up: QCheckBox
     dice_game_1up: QCheckBox
     roulette_1up: QCheckBox
     card_game_1up: QCheckBox
-    hundred_coins_1up: QCheckBox
+
 
     def __create_invalid_rom_layout(self) -> QBoxLayout:
         invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
@@ -229,8 +320,14 @@ class View(CustomDialog):
 
         View.__renderLineEdit(self.starting_lives_edit, state.starting_lives)
         View.__renderLineEdit(self.continue_lives_edit, state.continue_lives)
+
         View.__renderCheckbox(self.death_takes_lives, state.death_takes_lives)
         View.__renderCheckbox(self.hundred_coins_1up, state.hundred_coins_1up)
+        View.__renderCheckbox(self.end_card_1up, state.end_card_1up)
+        View.__renderCheckbox(self.mushroom_1up, state.mushroom_1up)
+        View.__renderCheckbox(self.dice_game_1up, state.dice_game_1up)
+        View.__renderCheckbox(self.roulette_1up, state.roulette_1up)
+        View.__renderCheckbox(self.card_game_1up, state.card_game_1up)
 
         self.invalid_rom_warning.setVisible(View.__allAreasValid(state) == False)  
     
@@ -249,7 +346,12 @@ class View(CustomDialog):
         return  state.starting_lives is not None and\
                 state.continue_lives is not None and\
                 state.death_takes_lives is not None and\
-                state.hundred_coins_1up is not None
+                state.hundred_coins_1up is not None and\
+                state.end_card_1up is not None and\
+                state.mushroom_1up is not None and\
+                state.dice_game_1up is not None and\
+                state.roulette_1up is not None and\
+                state.card_game_1up is not None
 
     def __on_ok(self):
         self.romInterface.writeState(self.store.getState())
@@ -268,19 +370,19 @@ class View(CustomDialog):
         self.store.dispatch(Action(ActionNames.death_takes_lives, self.death_takes_lives.isChecked()))
 
     def __on_end_card_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.end_card_1up, self.end_card_1up.isChecked()))
 
     def __on_mushroom_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.mushroom_1up, self.mushroom_1up.isChecked()))
 
     def __on_dice_game_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.dice_game_1up, self.dice_game_1up.isChecked()))
 
     def __on_roulette_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.roulette_1up, self.roulette_1up.isChecked()))
 
     def __on_card_game_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.card_game_1up, self.card_game_1up.isChecked()))
 
     def __on_hundred_coins_1up(self):
         self.store.dispatch(Action(ActionNames.hundred_coins_1up, self.hundred_coins_1up.isChecked()))
