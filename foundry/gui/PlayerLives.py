@@ -19,7 +19,9 @@ class UIStrings:
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
-    invalid_rom_warning = "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled."
+    invalid_rom_warning = "The selected ROM has code modifications that are"  \
+        "incompatible with one or more features of this window. The affected" \
+        "features are visible but disabled."
     death_takes_lives = "Subtract a life when the player dies"
     title_1up = "Add a life when player gets 1up from:"
     end_card_1up = "Level end card"
@@ -41,8 +43,6 @@ class ActionNames:
     dice_game_1up = "[PlayerLives] DiceGame"
     roulette_1up = "[PlayerLives] Roulette"
     card_game_1up = "[PlayerLives] CardGame"
-
-ACTION_LOAD = Action(ActionNames.load, None)
 
 @dataclass
 class State:
@@ -235,13 +235,14 @@ class View(CustomDialog):
     roulette_1up: QCheckBox
     card_game_1up: QCheckBox
 
+    WARNING_STYLE = "QLabel { background-color : pink; }"
 
     def __create_invalid_rom_layout(self) -> QBoxLayout:
         invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
         self.invalid_rom_warning = QLabel(f"{UIStrings.invalid_rom_warning}")
         self.invalid_rom_warning.setWordWrap(True)
         self.invalid_rom_warning.setFixedWidth(400)
-        self.invalid_rom_warning.setStyleSheet("QLabel { background-color : pink; }")   # I didn't see a style sheet to draw from, should probably create one?  Better way to do this?
+        self.invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
         invalid_rom_warning_layout.addWidget(self.invalid_rom_warning)
 
         return invalid_rom_warning_layout
@@ -256,16 +257,21 @@ class View(CustomDialog):
         self.continue_lives_edit.textEdited.connect(self.__on_continue_lives)
 
         fields_layout = QGridLayout()
-        fields_layout.addWidget(QLabel(f"{UIStrings.starting_lives} (0-99):", self), 0, 0)
+        fields_layout.addWidget(
+            QLabel(f"{UIStrings.starting_lives} (0-99):", self), 0, 0)
         fields_layout.addWidget(self.starting_lives_edit, 0, 1)
-        fields_layout.addWidget(QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
+        fields_layout.addWidget(
+            QLabel(f"{UIStrings.continue_lives} (0-99):", self), 1, 0)
         fields_layout.addWidget(self.continue_lives_edit, 1, 1)
 
         return fields_layout
 
     def __create_death_options_layout(self) -> QBoxLayout:
         layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self.death_takes_lives = View.__create_checkbox(UIStrings.death_takes_lives, self.__on_death_takes_lives, layout)
+        self.death_takes_lives = View.__create_checkbox(
+            UIStrings.death_takes_lives, 
+            self.__on_death_takes_lives, 
+            layout)
         return layout
 
     def __create_button_options_layout(self) -> QDialogButtonBox:
@@ -281,12 +287,35 @@ class View(CustomDialog):
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group.setLayout(internal_layout)
 
-        self.mushroom_1up = View.__create_checkbox(UIStrings.mushroom_1up, self.__on_mushroom_1up, internal_layout)
-        self.hundred_coins_1up = View.__create_checkbox(UIStrings.hundred_coins_1up, self.__on_hundred_coins_1up, internal_layout)
-        self.end_card_1up = View.__create_checkbox(UIStrings.end_card_1up, self.__on_end_card_1up, internal_layout)
-        self.card_game_1up = View.__create_checkbox(UIStrings.card_game_1up, self.__on_card_game_1up, internal_layout)
-        self.roulette_1up = View.__create_checkbox(UIStrings.roulette_1up, self.__on_roulette_1up, internal_layout)
-        self.dice_game_1up = View.__create_checkbox(UIStrings.dice_game_1up, self.__on_dice_game_1up, internal_layout)
+        self.mushroom_1up = View.__create_checkbox(
+            UIStrings.mushroom_1up, 
+            self.__on_mushroom_1up, 
+            internal_layout)
+
+        self.hundred_coins_1up = View.__create_checkbox(
+            UIStrings.hundred_coins_1up, 
+            self.__on_hundred_coins_1up, 
+            internal_layout)
+
+        self.end_card_1up = View.__create_checkbox(
+            UIStrings.end_card_1up, 
+            self.__on_end_card_1up, 
+            internal_layout)
+
+        self.card_game_1up = View.__create_checkbox(
+            UIStrings.card_game_1up, 
+            self.__on_card_game_1up, 
+            internal_layout)
+
+        self.roulette_1up = View.__create_checkbox(
+            UIStrings.roulette_1up, 
+            self.__on_roulette_1up, 
+            internal_layout)
+
+        self.dice_game_1up = View.__create_checkbox(
+            UIStrings.dice_game_1up, 
+            self.__on_dice_game_1up, 
+            internal_layout)
         
         external_layout.addWidget(group)
         return external_layout
@@ -309,7 +338,8 @@ class View(CustomDialog):
         main_layout.addLayout(self.__create_death_options_layout())
         main_layout.addLayout(self.__create_1up_layout())
         main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(self.__create_button_options_layout(), alignment=Qt.AlignRight)
+        main_layout.addWidget(
+            self.__create_button_options_layout(), alignment=Qt.AlignRight)
 
         self.store.subscribe(self.render)
         self.render()
@@ -361,31 +391,49 @@ class View(CustomDialog):
         self.done(QDialogButtonBox.Cancel)
 
     def __on_starting_lives(self, text : str):
-        self.store.dispatch(Action(ActionNames.starting_lives, text))
+        self.store.dispatch(Action(
+            ActionNames.starting_lives, 
+            text))
 
     def __on_continue_lives(self, text : str):
-        self.store.dispatch(Action(ActionNames.continue_lives, text))
+        self.store.dispatch(Action(
+            ActionNames.continue_lives, 
+            text))
 
     def __on_death_takes_lives(self):
-        self.store.dispatch(Action(ActionNames.death_takes_lives, self.death_takes_lives.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.death_takes_lives, 
+            self.death_takes_lives.isChecked()))
 
     def __on_end_card_1up(self):
-        self.store.dispatch(Action(ActionNames.end_card_1up, self.end_card_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.end_card_1up, 
+            self.end_card_1up.isChecked()))
 
     def __on_mushroom_1up(self):
-        self.store.dispatch(Action(ActionNames.mushroom_1up, self.mushroom_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.mushroom_1up, 
+            self.mushroom_1up.isChecked()))
 
     def __on_dice_game_1up(self):
-        self.store.dispatch(Action(ActionNames.dice_game_1up, self.dice_game_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.dice_game_1up, 
+            self.dice_game_1up.isChecked()))
 
     def __on_roulette_1up(self):
-        self.store.dispatch(Action(ActionNames.roulette_1up, self.roulette_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.roulette_1up, 
+            self.roulette_1up.isChecked()))
 
     def __on_card_game_1up(self):
-        self.store.dispatch(Action(ActionNames.card_game_1up, self.card_game_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.card_game_1up, 
+            self.card_game_1up.isChecked()))
 
     def __on_hundred_coins_1up(self):
-        self.store.dispatch(Action(ActionNames.hundred_coins_1up, self.hundred_coins_1up.isChecked()))
+        self.store.dispatch(Action(
+            ActionNames.hundred_coins_1up, 
+            self.hundred_coins_1up.isChecked()))
 
 class PlayerLives():
     def __init__(self, parent):
