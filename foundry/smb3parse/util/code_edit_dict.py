@@ -17,8 +17,8 @@ class CodeEditDict(CodeEdit):
         super().__init__(rom, start_address, length, prefix, postfix)
         self.options = options
 
-    def isValid(self):
-        if not super().isValid(): return False
+    def is_valid(self):
+        if not super().is_valid(): return False
         return self.read() is not None
 
     def read(self) -> Any:

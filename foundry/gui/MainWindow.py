@@ -33,7 +33,7 @@ from foundry import (
 from foundry.game.File import ROM
 from foundry.game.level.LevelManager import LevelManager
 from foundry.gui.AboutWindow import AboutDialog
-from foundry.gui.PlayerLives import PlayerLives
+from foundry.gui.player_lives import PlayerLives
 from foundry.gui.ContextMenu import CMAction
 from foundry.gui.LevelSelector import LevelSelector
 from foundry.gui.settings import GUI_STYLE, SETTINGS, save_settings
