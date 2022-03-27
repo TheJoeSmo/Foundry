@@ -35,6 +35,7 @@ class ActionNames:
     starting_lives = "[PlayerLives] StartingLives"
     continue_lives = "[PlayerLives] ContinueLives"
     death_takes_lives = "[PlayerLives] DeathTakesLives"
+    hundred_coins_1up = "[PlayerLives] 100Coins"
 
 ACTION_LOAD = Action(ActionNames.load, None)
 
@@ -60,6 +61,9 @@ class Store(ReduxStore[State]):
 
         elif action.type == ActionNames.death_takes_lives:
             state.death_takes_lives = action.payload
+
+        elif action.type == ActionNames.hundred_coins_1up:
+            state.hundred_coins_1up = action.payload
 
         elif action.type == ActionNames.load:
             state = self.getDefault()
@@ -226,6 +230,7 @@ class View(CustomDialog):
         View.__renderLineEdit(self.starting_lives_edit, state.starting_lives)
         View.__renderLineEdit(self.continue_lives_edit, state.continue_lives)
         View.__renderCheckbox(self.death_takes_lives, state.death_takes_lives)
+        View.__renderCheckbox(self.hundred_coins_1up, state.hundred_coins_1up)
 
         self.invalid_rom_warning.setVisible(View.__allAreasValid(state) == False)  
     
@@ -243,7 +248,8 @@ class View(CustomDialog):
     def __allAreasValid(state : State) -> bool:
         return  state.starting_lives is not None and\
                 state.continue_lives is not None and\
-                state.death_takes_lives is not None
+                state.death_takes_lives is not None and\
+                state.hundred_coins_1up is not None
 
     def __on_ok(self):
         self.romInterface.writeState(self.store.getState())
@@ -277,7 +283,7 @@ class View(CustomDialog):
         pass
 
     def __on_hundred_coins_1up(self):
-        pass
+        self.store.dispatch(Action(ActionNames.hundred_coins_1up, self.hundred_coins_1up.isChecked()))
 
 class PlayerLives():
     def __init__(self, parent):
