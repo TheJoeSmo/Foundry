@@ -14,6 +14,6 @@ class CodeEdit:
         if len(data) == 0: return True
         return data == self.rom.read(testAddress, len(data))
 
-    def isValid(self) -> bool:
+    def is_valid(self) -> bool:
         if not self._valid_affix(self.address - len(self.prefix), self.prefix): return False
         return self._valid_affix(self.address + self.length, self.postfix)

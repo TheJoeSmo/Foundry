@@ -20,7 +20,7 @@ def test_is_valid():
     }
 
     edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
-    assert True == edit.isValid()
+    assert True == edit.is_valid()
 
 def test_is_valid_invalid_value():
     testdict = {
@@ -28,7 +28,7 @@ def test_is_valid_invalid_value():
     }
 
     edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
-    assert False == edit.isValid()
+    assert False == edit.is_valid()
 
 def test_read_value():
     testdict = {
@@ -54,7 +54,7 @@ def test_write():
     }
 
     edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
-    assert True == edit.isValid()
+    assert True == edit.is_valid()
     assert "default" == edit.read()
 
     edit.write("test_1")
@@ -71,7 +71,7 @@ def test_write_invalid():
     }
 
     edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
-    assert True == edit.isValid()
+    assert True == edit.is_valid()
     assert "default" == edit.read()
 
     edit.write("invalid")
@@ -86,7 +86,7 @@ def test_write_value_incorrect_length():
     }
 
     edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), long_prefix, testdict, long_postfix)
-    assert True == edit.isValid()
+    assert True == edit.is_valid()
     assert "default" == edit.read()
 
     edit.write("test_2")
