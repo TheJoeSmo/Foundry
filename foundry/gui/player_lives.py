@@ -3,13 +3,10 @@ from PySide6.QtGui import QPixmap, Qt, QIntValidator
 from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox, QGroupBox
 
 from dataclasses import dataclass
-import copy
-
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
-from foundry.smb3parse.util.code_edit import CodeEdit
 from foundry.smb3parse.util.code_edit_byte import CodeEditByte
 from foundry.smb3parse.util.code_edit_dict import CodeEditDict
 from foundry.core.redux_store import ReduxStore, Action

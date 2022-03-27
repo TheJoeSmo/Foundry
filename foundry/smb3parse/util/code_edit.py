@@ -1,9 +1,49 @@
 from dataclasses import dataclass
-from typing import Any
+from abc import ABC, abstractmethod
+from typing import TypeVar, Generic
+
 from foundry.smb3parse.util.rom import Rom
 
+D = TypeVar('D')
+
 @dataclass
-class CodeEdit:
+class CodeEdit(ABC, Generic[D]):
+    """ Represents an area to edit to the ROM code.  
+
+    This class handles reading and writing the data of a specific code area for
+    possible code edits.  It will also check the ROM to see if the target
+    modification area has shifted due to other code modifications.
+
+    This is an abstract class.  Implementing classes will need to define the
+    read and write routines based on the type of code edit that needs to be
+    done.  The read/write routines use the Generic data type 'D' for their
+    operations.
+
+    Generic type 'D' is the abstract representation of the edit value and not
+    the literal data values (though they could be the same in some cases).  
+    See read/write for more details.
+
+    Parameters:
+        rom: Rom - the ROM to edit
+        address: int - the address of the edit
+        length: int - the length of the edit
+        prefix: int - the ROM data just before the edit.  This is used for
+            checking the validity of the target location.  This is useful for
+            when a code edit has been made that has shifted the code and
+            the target address is no longer valid.  This will help protect
+            invalid writes in that case.
+        postfix: int - the ROM data just after the edit.  This is used for
+            checking the validity of the target location.  This is useful for
+            when a code edit has been made that has shifted the code and
+            the target address is no longer valid.  This will help protect
+            invalid writes in that case.
+
+    A potential improvement in the future would be to check if the target
+    address is valid during initialization and if it isn't, search the adjacent
+    code areas (maybe 500 bytes or user specified) and try to find a matching
+    prefix/postfix with the correct offsets.  This would let this adapt to 
+    ROMs with code shifting modifications rather than rejecting them.
+    """
     rom: Rom
     address: int
     length: int
@@ -11,9 +51,45 @@ class CodeEdit:
     postfix: bytearray
 
     def _valid_affix(self, testAddress: int, data: bytearray) -> bool:
+        """ Verifies that the specified affix matches the ROM. """
         if len(data) == 0: return True
         return data == self.rom.read(testAddress, len(data))
 
     def is_valid(self) -> bool:
+        """ Verifies that both the prefix and postfix are valid.
+
+        This function can also be overwritten if only certain values are valid
+        so that the value of the target area is also checked if that is
+        important.
+        """
         if not self._valid_affix(self.address - len(self.prefix), self.prefix): return False
         return self._valid_affix(self.address + self.length, self.postfix)
+
+    @abstractmethod
+    def read(self) -> D:
+        """ Read the abstract representation of the target edit area. 
+        
+        The Generic return type 'D' here is the abstract representation of the 
+        code edit, not the actual data of the edit, though in some situations
+        these might be identical.  For example, if we are checking if the
+        players lives decrease when they die, the return value might be a
+        string "infinite lives" or "vanilla" or True/False while the actual
+        code edit might be the presence of an DEC NUM_LIVES instruction or a 
+        NOP section removing that code.
+        """
+        pass
+
+    @abstractmethod
+    def write(self, value: D):
+        """ Read the abstract representation of the target edit area. 
+        
+        The Generic return type 'D' here is the abstract representation of the 
+        code edit, not the actual data of the edit, though in some situations
+        these might be identical (see the read instruction documentation for
+        an example).
+
+        The implementation of this function is responsible for taking the 
+        abstract input and generating the corresponding code edit.
+        """
+        pass
+    

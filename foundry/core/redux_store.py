@@ -31,18 +31,18 @@ class ReduxStore(ABC, Generic[S]):
     In this implementation the state is a generic type 'S' to be defined by
     the developer.
     """
-    _defaultState: S = None
+    _default_state: S = None
     _state: S = None
     _subscribers = []
 
     def __init__(self, state: S):
         """ Initialize the store with the default state. """
-        self._defaultState = state
+        self._default_state = state
         self._state = copy.deepcopy(state)
 
-    def get_default(self) -> S:
+    def get_default_state(self) -> S:
         """ Returns the default state. """
-        return copy.deepcopy(self._defaultState)
+        return copy.deepcopy(self._default_state)
 
     def get_state(self) -> S:
         """ Get a copy of the current state. """
