@@ -13,6 +13,8 @@ from foundry.core.redux_store import ReduxStore, Action
 
 @dataclass
 class _UIStrings:
+    """ All string values used in the UI. """
+
     title = "Player Lives"
     starting_lives = "Starting Lives"
     continue_lives = "Continue Lives"
@@ -30,6 +32,8 @@ class _UIStrings:
 
 @dataclass
 class ActionNames:
+    """ All user actions that can be performed. """
+
     load = "[PlayerLives] Load"
     starting_lives = "[PlayerLives] StartingLives"
     continue_lives = "[PlayerLives] ContinueLives"
@@ -54,7 +58,14 @@ class State:
     card_game_1up: bool
 
 class Store(ReduxStore[State]):        
-    def reduce(self, state:State, action: Action) -> State:
+    def _reduce(self, state:State, action: Action) -> State:
+        """ Processes a user action into a new state.
+        
+        Processes user actions in the player_lives UI into new state data.  
+        This function should NEVER be called directly by the user.  To change
+        the state, do store.dispatch(Action()) instead.
+        
+        See ReduxStore for more information."""
         if state is None:
             state = self.get_default_state()
 
@@ -93,13 +104,21 @@ class Store(ReduxStore[State]):
         return state
 
     def _is_bounded_int(input, lower_limit: int, upper_limit: int) -> bool:
+        """ Checks if the input is an int and within a min/max boundary. """
         try:
             return (int(input) >= lower_limit) & (int(input) <= upper_limit)
         except ValueError:
             return False
 
 class RomInterface():
+    """ Handles all the read/write operations to the ROM.
+    
+    This reads out the initial state of the ROM into a new State object.  It 
+    can also take in a State object and write that into the ROM data.
+    """
+
     def __init__(self, rom: Rom):
+        """ Create all of the CodeEdit objects for all UI selections. """
         self.rom = rom
         NOP_X_3 = bytearray([0xEA, 0xEA, 0xEA])
         INC_NUM_LIVES = bytearray([0xfe, 0x36, 0x07])
@@ -194,6 +213,7 @@ class RomInterface():
             bytearray([0xa9, 0x40, 0x8d, 0xf2]))
 
     def read_state(self) -> State:
+        """ Reads the ROM and creates a cooresponding abstract State instance. """
         return State(   
                         self.starting_lives.read(),
                         self.continue_lives.read(),
@@ -207,6 +227,12 @@ class RomInterface():
                     )
 
     def write_state(self, state: State):
+        """ Takes in an abstract State instance, and writes to the ROM.
+        
+        NOTE: This writes to the specified ROM which is not writing to the
+        file itself.  The caller/user is responsible for requesting the changes
+        be saved to the file.
+        """
         self.starting_lives.write(state.starting_lives)
         self.continue_lives.write(state.continue_lives)
         self.death_takes_lives.write(state.death_takes_lives)
@@ -218,6 +244,13 @@ class RomInterface():
         self.card_game_1up.write(state.card_game_1up)
 
 class View(CustomDialog):
+    """ Creates the UI and sends actions to update the State
+    
+    The view operates only on the State variable.  It doesn't operate on the
+    ROM at all.  When the user clicks OK to submit the changes to the ROM, the
+    view will send a request to the RomInterface to have the state written to
+    the ROM.
+    """
     store : Store
     rom_interface : RomInterface
 
@@ -234,7 +267,43 @@ class View(CustomDialog):
 
     WARNING_STYLE = "QLabel { background-color : pink; }"
 
+    def __init__(self, parent, store : Store, rom_interface : RomInterface):
+        """ Creates the main layout and shows the form. 
+        
+        All UI elements will dispatch an action on change which will
+        update the internal state.  On "OK" the internal state will be written
+        to the ROM.  
+
+        The render() routine subscribes to the store so that whenever the 
+        state changes in the system, the UI will automatically re-render.
+        """
+
+        super(View, self).__init__(parent, title=_UIStrings.title)
+        self.rom_interface = rom_interface
+        self.store = store
+
+        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+
+        main_layout.addLayout(self._create_invalid_rom_layout())
+        main_layout.addLayout(self._create_lives_layout())
+        main_layout.addLayout(self._create_death_options_layout())
+        main_layout.addLayout(self._create_1up_layout())
+        main_layout.addWidget(HorizontalLine())
+        main_layout.addWidget(
+            self._create_button_options_layout(), alignment=Qt.AlignRight)
+
+        self.store.subscribe(self.render)
+        self.render()
+        self.show()
+
     def _create_invalid_rom_layout(self) -> QBoxLayout:
+        """ Create warning about the ROM having incompatible code modifications. 
+        
+        If the user has provided a ROM that has shifted some of the code, then 
+        some of the UI elements might not be able to work correctly.  This
+        creates a warning label to the user to let them know that some of the
+        features are unsupported. """
+
         _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
         self._invalid_rom_warning = QLabel(f"{_UIStrings.invalid_rom_warning}")
         self._invalid_rom_warning.setWordWrap(True)
@@ -245,6 +314,8 @@ class View(CustomDialog):
         return _invalid_rom_warning_layout
 
     def _create_lives_layout(self) -> QGridLayout:
+        """ Creates the inputs for the start and continue number of lives. """
+
         self._starting_lives_edit = QLineEdit(self)
         self._starting_lives_edit.setValidator(QIntValidator(0, 99, self))
         self._starting_lives_edit.textEdited.connect(self._on_starting_lives)
@@ -264,6 +335,8 @@ class View(CustomDialog):
         return fields_layout
 
     def _create_death_options_layout(self) -> QBoxLayout:
+        """ Creates layout for when a death occurs. """
+
         layout = QBoxLayout(QBoxLayout.LeftToRight)
         self._death_takes_lives = View._create_checkbox(
             _UIStrings.death_takes_lives, 
@@ -272,6 +345,8 @@ class View(CustomDialog):
         return layout
 
     def _create_button_options_layout(self) -> QDialogButtonBox:
+        """ Creates layout for the OK/CANCEL buttons. """
+
         button_box = QDialogButtonBox()
         button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self._on_ok)
         button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self._on_cancel)
@@ -279,6 +354,8 @@ class View(CustomDialog):
         return button_box
 
     def _create_1up_layout(self) -> QBoxLayout:
+        """ Creates the layout for all of the possible 1up sources. """
+
         external_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group = QGroupBox(f"{_UIStrings.title_1up}")
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
@@ -318,31 +395,21 @@ class View(CustomDialog):
         return external_layout
 
     def _create_checkbox(title: str, function, layout: QBoxLayout) -> QCheckBox:
+        """ Creates a checkbox with an stateChange callback and adds it to the specified layout"""
+
         checkbox = QCheckBox(f"{title}")
         checkbox.stateChanged.connect(function)
         layout.addWidget(checkbox)
         return checkbox
 
-    def __init__(self, parent, store : Store, rom_interface : RomInterface):
-        super(View, self).__init__(parent, title=_UIStrings.title)
-        self.rom_interface = rom_interface
-        self.store = store
-
-        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
-
-        main_layout.addLayout(self._create_invalid_rom_layout())
-        main_layout.addLayout(self._create_lives_layout())
-        main_layout.addLayout(self._create_death_options_layout())
-        main_layout.addLayout(self._create_1up_layout())
-        main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(
-            self._create_button_options_layout(), alignment=Qt.AlignRight)
-
-        self.store.subscribe(self.render)
-        self.render()
-        self.show()
-
     def render(self):
+        """ Updates the UI with the current state values. 
+
+        This function is the subscriber to the store so that whenever there is
+        a state change in the system, this render function is called
+        automatically and the new state is rendered on screen.
+        """
+
         state = self.store.get_state()
 
         View._render_line_edit(self._starting_lives_edit, state.starting_lives)
@@ -358,18 +425,25 @@ class View(CustomDialog):
 
         self._invalid_rom_warning.setVisible(View._all_areas_valid(state) == False)  
     
-    def _int_or_default_string(value: str, default: str):
+    def _int_to_str_or_default(value: str, default: str):
+        """ Converts an int to a str or provides a default if the int is None. """
+
         return default if value is None else str(value)
 
     def _render_line_edit(lineEdit: QLineEdit, value: int):
+        """ Render a line edit value. """
+
         lineEdit.setDisabled(value == None)
-        lineEdit.setText(View._int_or_default_string(value, "?"))
+        lineEdit.setText(View._int_to_str_or_default(value, "?"))
 
     def _render_checkbox(checkBox: QCheckBox, value: bool):
+        """ Render a checkbox value. """
+
         checkBox.setDisabled(value is None)
         checkBox.setChecked(False if value is None else value)
 
     def _all_areas_valid(state : State) -> bool:
+        """ Checks to make sure all state values are valid. """
         return  state.starting_lives is not None and\
                 state.continue_lives is not None and\
                 state.death_takes_lives is not None and\
@@ -381,58 +455,73 @@ class View(CustomDialog):
                 state.card_game_1up is not None
 
     def _on_ok(self):
+        """ Process UI press of OK button. """
         self.rom_interface.write_state(self.store.get_state())
         self.done(QDialogButtonBox.Ok)
 
     def _on_cancel(self):
+        """ Process UI press of CANCEL button. """
         self.done(QDialogButtonBox.Cancel)
 
     def _on_starting_lives(self, text : str):
+        """ Process UI change of number of starting lives """
         self.store.dispatch(Action(
             ActionNames.starting_lives, 
             text))
 
     def _on_continue_lives(self, text : str):
+        """ Process UI change of number of continue lives """
         self.store.dispatch(Action(
             ActionNames.continue_lives, 
             text))
 
     def _on_death_takes_lives(self):
+        """ Process UI change of on death checkbox """
         self.store.dispatch(Action(
             ActionNames.death_takes_lives, 
             self._death_takes_lives.isChecked()))
 
     def _on_end_card_1up(self):
+        """ Process UI change of end card 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.end_card_1up, 
             self._end_card_1up.isChecked()))
 
     def _on_mushroom_1up(self):
+        """ Process UI change of mushroom/enemy jumps 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.mushroom_1up, 
             self._mushroom_1up.isChecked()))
 
     def _on_dice_game_1up(self):
+        """ Process UI change of dice game 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.dice_game_1up, 
             self._dice_game_1up.isChecked()))
 
     def _on_roulette_1up(self):
+        """ Process UI change of roulette 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.roulette_1up, 
             self._roulette_1up.isChecked()))
 
     def _on_card_game_1up(self):
+        """ Process UI change of card game 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.card_game_1up, 
             self._card_game_1up.isChecked()))
 
     def _on_hundred_coins_1up(self):
+        """ Process UI change of 100 coins 1up checkbox """
         self.store.dispatch(Action(
             ActionNames.hundred_coins_1up, 
             self._hundred_coins_1up.isChecked()))
 
 class PlayerLives():
+    """ Main entry point from main menu. 
+    
+    This creates the Store, the View, and the RomInterface.
+    """
     def __init__(self, parent):
         rom_interface = RomInterface(ROM())        
         store = Store(rom_interface.read_state())               

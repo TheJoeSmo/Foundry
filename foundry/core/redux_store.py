@@ -57,7 +57,7 @@ class ReduxStore(ABC, Generic[S]):
         the action. 
         """
         oldState = copy.deepcopy(self._state)
-        self._state = self.reduce(copy.deepcopy(self._state), action)
+        self._state = self._reduce(copy.deepcopy(self._state), action)
 
         if self._state != oldState:
             self._notify_subscribers()
@@ -68,7 +68,7 @@ class ReduxStore(ABC, Generic[S]):
             subscriber()
 
     @abstractmethod
-    def reduce(self, state:S, action: Action) -> S:
+    def _reduce(self, state:S, action: Action) -> S:
         """ Creates a new state from the old state and a user action. 
         
         (current state, user action) -> new state
@@ -76,6 +76,12 @@ class ReduxStore(ABC, Generic[S]):
         This method is abstract as must be implemented by the implementing 
         class.  The state type is also the Generic type 'S' and must be defined
         by the implementing class.
+
+        This method should not be called directly by the user.  This should
+        only be called by the parent class.  If the user wants to update the
+        state, it should call store.dispatch(Action()) instead, otherwise the
+        actual stored state will not be updated and the associated subscribers
+        will not be notified.  DON'T DO IT!
         """
         pass
 
