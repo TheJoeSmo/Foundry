@@ -47,6 +47,16 @@ class ActionNames(Enum):
 
 @dataclass
 class State:
+    """ Stores the current state of the UI 
+    
+    The initial state is read from the ROM.  The final state is written to the
+    ROM.  The intermediate values are stored in this state object while the
+    user is modifying them.
+
+    NOTE: Some of these values may be optional/None if the search for these
+    code regions fails when reading to the ROM.  Invalid values written to the
+    state may also be rejected when trying to write the state to the ROM.
+    """
     starting_lives: int
     continue_lives: int
     death_takes_lives: bool
@@ -103,6 +113,7 @@ class Store(ReduxStore[State]):
 
         return state
 
+    @staticmethod
     def _is_bounded_int(input, lower_limit: int, upper_limit: int) -> bool:
         """ Checks if the input is an int and within a min/max boundary. """
         try:
@@ -394,6 +405,7 @@ class View(CustomDialog):
         external_layout.addWidget(group)
         return external_layout
 
+    @staticmethod
     def _create_checkbox(title: str, function, layout: QBoxLayout) -> QCheckBox:
         """ Creates a checkbox with an stateChange callback and adds it to the specified layout"""
 
@@ -424,24 +436,28 @@ class View(CustomDialog):
         View._render_checkbox(self._card_game_1up, state.card_game_1up)
 
         self._invalid_rom_warning.setVisible(View._all_areas_valid(state) == False)  
-    
+
+    @staticmethod
     def _int_to_str_or_default(value: str, default: str):
         """ Converts an int to a str or provides a default if the int is None. """
 
         return default if value is None else str(value)
 
+    @staticmethod
     def _render_line_edit(lineEdit: QLineEdit, value: int):
         """ Render a line edit value. """
 
         lineEdit.setDisabled(value == None)
         lineEdit.setText(View._int_to_str_or_default(value, "?"))
 
+    @staticmethod
     def _render_checkbox(checkBox: QCheckBox, value: bool):
         """ Render a checkbox value. """
 
         checkBox.setDisabled(value is None)
         checkBox.setChecked(False if value is None else value)
 
+    @staticmethod
     def _all_areas_valid(state : State) -> bool:
         """ Checks to make sure all state values are valid. """
         return  state.starting_lives is not None and\

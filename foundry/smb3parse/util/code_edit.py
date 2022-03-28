@@ -43,6 +43,14 @@ class CodeEdit(ABC, Generic[D]):
     code areas (maybe 500 bytes or user specified) and try to find a matching
     prefix/postfix with the correct offsets.  This would let this adapt to 
     ROMs with code shifting modifications rather than rejecting them.
+
+    The above paragraph is particularly true for expanded ROMs where bank 30/31
+    will always be shifted so edits in those banks will fail more often than
+    others.  Another possible enhancement might be to read the ROM header as
+    well to detect if the ROM is expanded to see if edits in banks 30/31 need
+    to be shifted (instead of searched) as this would provide more accurate and
+    quicker results.  A search could be done secondary after the shift if the
+    target code areas isn't found in the shifted target location.
     """
     rom: Rom
     address: int

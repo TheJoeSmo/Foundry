@@ -62,5 +62,5 @@ class CodeEditDict(CodeEdit[Any]):
             value = self._options[selection]
             if len(value) is self.length:
                 self.rom.write(self.address, value)
-        except:
+        except KeyError:
             pass
