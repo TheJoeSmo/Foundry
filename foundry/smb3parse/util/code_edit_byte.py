@@ -24,5 +24,4 @@ class CodeEditByte(CodeEdit[int]):
         Throws OverflowError if a value larger than a byte is given.
         """
         if not self.is_valid(): return
-        byte_to_write = value.to_bytes(1, 'little')
-        self.rom.write(self.address, bytes(byte_to_write))
+        self.rom.write(self.address, value.to_bytes(1, 'little'))
