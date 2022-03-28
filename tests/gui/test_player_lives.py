@@ -22,7 +22,7 @@ def test_subscribe_on_valid_action_state_change():
     store.subscribe(callback.function)
     assert 0 == callback.called
 
-    store.dispatch(Action(ActionNames.starting_lives, 1))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, 1))
     assert 1 == callback.called
 
 def test_subscribe_on_valid_action_no_state_change():
@@ -31,44 +31,44 @@ def test_subscribe_on_valid_action_no_state_change():
     store.subscribe(callback.function)
     assert 0 == callback.called
 
-    store.dispatch(Action(ActionNames.starting_lives, default_starting_lives))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, default_starting_lives))
     assert 0 == callback.called
 
 def test_starting_lives_action():
     startingLivesAction(default_store(), 1)
 
 def startingLivesAction(store: Store, updated_starting_lives):
-    store.dispatch(Action(ActionNames.starting_lives, updated_starting_lives))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, updated_starting_lives))
     assert updated_starting_lives == store.get_state().starting_lives
 
 def test_starting_lives_action_invalid_type():
     store = default_store()
-    store.dispatch(Action(ActionNames.starting_lives, "P"))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, "P"))
     assert default_starting_lives == store.get_state().starting_lives
 
 def test_starting_lives_action_invalid_values():
     store = default_store()
-    store.dispatch(Action(ActionNames.starting_lives, -1))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, -1))
     assert default_starting_lives == store.get_state().starting_lives
-    store.dispatch(Action(ActionNames.starting_lives, 100))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, 100))
     assert default_starting_lives == store.get_state().starting_lives
 
 def test_continue_lives_action_invalid_type():
     store = default_store()
-    store.dispatch(Action(ActionNames.continue_lives, "P"))
+    store.dispatch(Action(ActionNames.CONTINUE_LIVES, "P"))
     assert default_continue_lives == store.get_state().continue_lives
 
 def test_continue_lives_action_invalid_values():
     store = default_store()
-    store.dispatch(Action(ActionNames.continue_lives, -1))
+    store.dispatch(Action(ActionNames.CONTINUE_LIVES, -1))
     assert default_continue_lives == store.get_state().continue_lives
-    store.dispatch(Action(ActionNames.continue_lives, 100))
+    store.dispatch(Action(ActionNames.CONTINUE_LIVES, 100))
     assert default_continue_lives == store.get_state().continue_lives
 
 def test_continue_lives_action():
     updated_continue_lives = 2
     store = default_store()
-    store.dispatch(Action(ActionNames.continue_lives, updated_continue_lives))
+    store.dispatch(Action(ActionNames.CONTINUE_LIVES, updated_continue_lives))
     assert updated_continue_lives == store.get_state().continue_lives
 
 def test_warning_start_lives_valid():
@@ -81,9 +81,9 @@ def test_warning_continue_lives_valid():
 
 def test_death_takes_lives_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.death_takes_lives, False))
+    store.dispatch(Action(ActionNames.DEATH_TAKES_LIVES, False))
     assert False == store.get_state().death_takes_lives
-    store.dispatch(Action(ActionNames.death_takes_lives, True))
+    store.dispatch(Action(ActionNames.DEATH_TAKES_LIVES, True))
     assert True == store.get_state().death_takes_lives
 
 class CallbackTester:
@@ -185,9 +185,9 @@ def test_write_state_100_coins():
 
 def test_100CoinsAction():
     store = default_store()
-    store.dispatch(Action(ActionNames.hundred_coins_1up, False))
+    store.dispatch(Action(ActionNames.HUNDRED_COINS_1UP, False))
     assert False == store.get_state().hundred_coins_1up
-    store.dispatch(Action(ActionNames.hundred_coins_1up, True))
+    store.dispatch(Action(ActionNames.HUNDRED_COINS_1UP, True))
     assert True == store.get_state().hundred_coins_1up
 
 """ End Card """
@@ -220,9 +220,9 @@ def test_write_state_end_card():
 
 def test_end_card_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.end_card_1up, False))
+    store.dispatch(Action(ActionNames.END_CARD_1UP, False))
     assert False == store.get_state().end_card_1up
-    store.dispatch(Action(ActionNames.end_card_1up, True))
+    store.dispatch(Action(ActionNames.END_CARD_1UP, True))
     assert True == store.get_state().end_card_1up
 
 """ Mushroom 1up"""
@@ -255,9 +255,9 @@ def test_write_state_mushroom_1up():
 
 def test_mushroom_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.mushroom_1up, False))
+    store.dispatch(Action(ActionNames.MUSHROOM_1UP, False))
     assert False == store.get_state().mushroom_1up
-    store.dispatch(Action(ActionNames.mushroom_1up, True))
+    store.dispatch(Action(ActionNames.MUSHROOM_1UP, True))
     assert True == store.get_state().mushroom_1up
 
 """ Dice game """
@@ -290,9 +290,9 @@ def test_write_state_dice_game():
 
 def test_dice_game_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.dice_game_1up, False))
+    store.dispatch(Action(ActionNames.DICE_GAME_1UP, False))
     assert False == store.get_state().dice_game_1up
-    store.dispatch(Action(ActionNames.dice_game_1up, True))
+    store.dispatch(Action(ActionNames.DICE_GAME_1UP, True))
     assert True == store.get_state().dice_game_1up
 
 """ Roulette game """
@@ -325,9 +325,9 @@ def test_write_state_roulette_game():
 
 def test_roulette_game_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.roulette_1up, False))
+    store.dispatch(Action(ActionNames.ROULETTE_1UP, False))
     assert False == store.get_state().roulette_1up
-    store.dispatch(Action(ActionNames.roulette_1up, True))
+    store.dispatch(Action(ActionNames.ROULETTE_1UP, True))
     assert True == store.get_state().roulette_1up
 
 """ Card game """
@@ -360,7 +360,7 @@ def test_write_state_card_game():
 
 def test_card_game_action():
     store = default_store()
-    store.dispatch(Action(ActionNames.card_game_1up, False))
+    store.dispatch(Action(ActionNames.CARD_GAME_1UP, False))
     assert False == store.get_state().card_game_1up
-    store.dispatch(Action(ActionNames.card_game_1up, True))
+    store.dispatch(Action(ActionNames.CARD_GAME_1UP, True))
     assert True == store.get_state().card_game_1up
