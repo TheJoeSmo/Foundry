@@ -21,4 +21,9 @@ class CodeEditByte(CodeEdit[int]):
         If the prefix or postfix or not valid, the write is not allowed.
         """
         if not self.is_valid(): return
-        self.rom.write(self.address, [value])
+        try:
+            byte_to_write = value.to_bytes(1, 'little')
+        except OverflowError:
+            return
+        else:
+            self.rom.write(self.address, bytes(byte_to_write))

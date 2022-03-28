@@ -35,3 +35,9 @@ def test_write_blocked_when_invalid():
     edit = CodeEditByte(rom, 0x100, [0x11], [])
     edit.write(0xA5)
     assert 0x5A == rom.read(0x100, 1)[0]
+
+def test_write_larger_than_byte_does_nothing():
+    edit = CodeEditByte(get_test_rom(), 0x100, long_prefix, long_postfix)
+    assert 0x5A == edit.read()
+    edit.write(0x100)
+    assert 0x5A == edit.read()
