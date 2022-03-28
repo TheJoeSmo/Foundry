@@ -98,9 +98,9 @@ def test_read_state_starting_lives_invalid():
 def create_starting_lives_rom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))
     
-    rom.write(0x308E1-4, [0xCA, 0x10, 0xF8, 0xA9])
-    rom.write(0x308E1, [0x04])
-    rom.write(0x308E1+1, [0x8D, 0x36, 0x07, 0x8D])
+    rom.write(0x308E1-4, bytes([0xCA, 0x10, 0xF8, 0xA9]))
+    rom.write(0x308E1, bytes([0x04]))
+    rom.write(0x308E1+1, bytes([0x8D, 0x36, 0x07, 0x8D]))
     return rom
 
 def test_read_state_starting_lives_valid():
@@ -120,9 +120,9 @@ def test_read_state_continue_lives_invalid():
 
 def create_continue_lives_rom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))   
-    rom.write(0x3D2D6-4, [0x08, 0xD0, 0x65, 0xA9])
-    rom.write(0x3D2D6, [0x04])
-    rom.write(0x3D2D6+1, [0x9D, 0x36, 0x07, 0xA5])
+    rom.write(0x3D2D6-4, bytes([0x08, 0xD0, 0x65, 0xA9]))
+    rom.write(0x3D2D6, bytes([0x04]))
+    rom.write(0x3D2D6+1, bytes([0x9D, 0x36, 0x07, 0xA5]))
     return rom
 
 def test_read_state_continue_lives_valid():
@@ -142,9 +142,9 @@ def test_read_state_death_takes_lives_invalid():
 
 def create_death_takes_lives_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x3D133-4, [0x8B, 0x07, 0xD0, 0x05])
-    rom.write(0x3D133, value)
-    rom.write(0x3D133+3, [0x30, 0x0b, 0xA9, 0x80])
+    rom.write(0x3D133-4, bytes([0x8B, 0x07, 0xD0, 0x05]))
+    rom.write(0x3D133, bytes(value))
+    rom.write(0x3D133+3, bytes([0x30, 0x0b, 0xA9, 0x80]))
     return rom
 
 def test_read_state_death_takes_lives_false():
@@ -163,9 +163,9 @@ def test_read_state_100_coins_invalid():
 
 def create_100_coins_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x350A7-4, [0x7d, 0xae, 0x26, 0x07])
-    rom.write(0x350A7, value)
-    rom.write(0x350A7+3, [0xa9, 0x40, 0x8d, 0xf2])
+    rom.write(0x350A7-4, bytes([0x7d, 0xae, 0x26, 0x07]))
+    rom.write(0x350A7, bytes(value))
+    rom.write(0x350A7+3, bytes([0xa9, 0x40, 0x8d, 0xf2]))
     return rom
 
 def test_read_state_100_coins_false():
@@ -198,9 +198,9 @@ def test_read_state_end_card_invalid():
 
 def create_end_card_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x5d99-4, [0x60, 0xae, 0x26, 0x07])
-    rom.write(0x5d99, value)
-    rom.write(0x5d99+3, [0xee, 0x40, 0x04, 0x60])
+    rom.write(0x5d99-4, bytes([0x60, 0xae, 0x26, 0x07]))
+    rom.write(0x5d99, bytes(value))
+    rom.write(0x5d99+3, bytes([0xee, 0x40, 0x04, 0x60]))
     return rom
 
 def test_read_state_end_card_false():
@@ -233,9 +233,9 @@ def test_read_state_mushroom_1up_invalid():
 
 def create_mushroom_1up_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0xeb0f-4, [0x36, 0x07, 0x30, 0x03])
-    rom.write(0xeb0f, value)
-    rom.write(0xeb0f+3, [0xa6, 0xcd, 0xbd, 0xa3])
+    rom.write(0xeb0f-4, bytes([0x36, 0x07, 0x30, 0x03]))
+    rom.write(0xeb0f, bytes(value))
+    rom.write(0xeb0f+3, bytes([0xa6, 0xcd, 0xbd, 0xa3]))
     return rom
 
 def test_read_stateMushroom1upFalse():
@@ -268,9 +268,9 @@ def test_read_state_dice_game_invalid():
 
 def create_dice_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2cd78-4, [0x60, 0xae, 0x26, 0x07])
-    rom.write(0x2cd78, value)
-    rom.write(0x2cd78+3, [0xee, 0x40, 0x04, 0x60])
+    rom.write(0x2cd78-4, bytes([0x60, 0xae, 0x26, 0x07]))
+    rom.write(0x2cd78, bytes(value))
+    rom.write(0x2cd78+3, bytes([0xee, 0x40, 0x04, 0x60]))
     return rom
 
 def test_read_state_dice_game_false():
@@ -303,9 +303,9 @@ def test_read_state_roulette_game_invalid():
 
 def create_roulette_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2d2be-4, [0x36, 0x07, 0x30, 0x03])
-    rom.write(0x2d2be, value)
-    rom.write(0x2d2be+3, [0x4c, 0xd2, 0xd2, 0xce])
+    rom.write(0x2d2be-4, bytes([0x36, 0x07, 0x30, 0x03]))
+    rom.write(0x2d2be, bytes(value))
+    rom.write(0x2d2be+3, bytes([0x4c, 0xd2, 0xd2, 0xce]))
     return rom
 
 def test_read_state_roulette_game_false():
@@ -338,9 +338,9 @@ def test_read_state_card_game_invalid():
 
 def create_card_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2dd50-4, [0x0d, 0xae, 0x26, 0x07])
-    rom.write(0x2dd50, value)
-    rom.write(0x2dd50+3, [0xa9, 0x40, 0x8d, 0xf2])
+    rom.write(0x2dd50-4, bytes([0x0d, 0xae, 0x26, 0x07]))
+    rom.write(0x2dd50, bytes(value))
+    rom.write(0x2dd50+3, bytes([0xa9, 0x40, 0x8d, 0xf2]))
     return rom
 
 def test_read_state_card_game_false():

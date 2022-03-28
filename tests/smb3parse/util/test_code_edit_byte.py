@@ -8,7 +8,7 @@ empty_affix = bytearray([])
 def get_test_rom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))
     rom.write(0x100-len(long_prefix), long_prefix)
-    rom.write(0x100, [0x5A])
+    rom.write(0x100, bytes([0x5A]))
     rom.write(0x101, long_postfix)
     return rom
 
