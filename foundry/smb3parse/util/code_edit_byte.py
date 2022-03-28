@@ -20,11 +20,9 @@ class CodeEditByte(CodeEdit[int]):
         """ Writes the specified byte to the target address if valid. 
         
         If the prefix or postfix or not valid, the write is not allowed.
+
+        Throws OverflowError if a value larger than a byte is given.
         """
         if not self.is_valid(): return
-        try:
-            byte_to_write = value.to_bytes(1, 'little')
-        except OverflowError:
-            return
-        else:
-            self.rom.write(self.address, bytes(byte_to_write))
+        byte_to_write = value.to_bytes(1, 'little')
+        self.rom.write(self.address, bytes(byte_to_write))
