@@ -1,8 +1,9 @@
-from email.policy import default
+from dataclasses import dataclass
+from enum import Enum
+
 from PySide6.QtGui import QPixmap, Qt, QIntValidator
 from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox, QGroupBox
 
-from dataclasses import dataclass
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
@@ -11,39 +12,38 @@ from foundry.smb3parse.util.code_edit_byte import CodeEditByte
 from foundry.smb3parse.util.code_edit_dict import CodeEditDict
 from foundry.core.redux_store import ReduxStore, Action
 
-@dataclass
-class _UIStrings:
+
+class _UIStrings(Enum):
     """ All string values used in the UI. """
 
-    title = "Player Lives"
-    starting_lives = "Starting Lives"
-    continue_lives = "Continue Lives"
-    invalid_rom_warning = "The selected ROM has code modifications that are"  \
-        " incompatible with one or more features of this window. The affected" \
+    TITLE = "Player Lives"
+    STARTING_LIVES = "Starting Lives"
+    CONTINUE_LIVES = "Continue Lives"
+    INVALID_ROM_WARNING = "The selected ROM has code modifications that are"\
+        " incompatible with one or more features of this window. The affected"\
         " features are visible but disabled."
-    death_takes_lives = "Subtract a life when the player dies"
-    title_1up = "Add a life when player gets 1up from:"
-    end_card_1up = "Level end card"
-    mushroom_1up = "1up Mushroom / Jumps on enemies "
-    dice_game_1up = "Dice Game"
-    roulette_1up = "Roulette Game"
-    card_game_1up = "Card Game"
-    hundred_coins_1up = "100 Coins"
+    DEATH_TAKES_LIVES = "Subtract a life when the player dies"
+    TITLE_1UP = "Add a life when player gets 1up from:"
+    END_CARD_1UP = "Level end card"
+    MUSHROOM_1UP = "1up Mushroom / Jumps on enemies "
+    DICE_GAME_1UP = "Dice Game"
+    ROULETTE_1UP = "Roulette Game"
+    CARD_GAME_1UP = "Card Game"
+    HUNDRED_COINS_1UP = "100 Coins"
 
-@dataclass
-class ActionNames:
+class ActionNames(Enum):
     """ All user actions that can be performed. """
 
-    load = "[PlayerLives] Load"
-    starting_lives = "[PlayerLives] StartingLives"
-    continue_lives = "[PlayerLives] ContinueLives"
-    death_takes_lives = "[PlayerLives] DeathTakesLives"
-    hundred_coins_1up = "[PlayerLives] 100Coins"
-    end_card_1up = "[PlayerLives] EndCard"
-    mushroom_1up = "[PlayerLives] Mushroom"
-    dice_game_1up = "[PlayerLives] DiceGame"
-    roulette_1up = "[PlayerLives] Roulette"
-    card_game_1up = "[PlayerLives] CardGame"
+    LOAD = "[PlayerLives] Load"
+    STARTING_LIVES = "[PlayerLives] StartingLives"
+    CONTINUE_LIVES = "[PlayerLives] ContinueLives"
+    DEATH_TAKES_LIVES = "[PlayerLives] DeathTakesLives"
+    HUNDRED_COINS_1UP = "[PlayerLives] 100Coins"
+    END_CARD_1UP = "[PlayerLives] EndCard"
+    MUSHROOM_1UP = "[PlayerLives] Mushroom"
+    DICE_GAME_1UP = "[PlayerLives] DiceGame"
+    ROULETTE_1UP = "[PlayerLives] Roulette"
+    CARD_GAME_1UP = "[PlayerLives] CardGame"
 
 @dataclass
 class State:
@@ -69,36 +69,36 @@ class Store(ReduxStore[State]):
         if state is None:
             state = self.get_default_state()
 
-        if action.type == ActionNames.starting_lives:
+        if action.type == ActionNames.STARTING_LIVES:
             if Store._is_bounded_int(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
-        elif action.type == ActionNames.continue_lives:
+        elif action.type == ActionNames.CONTINUE_LIVES:
             if Store._is_bounded_int(action.payload, 0, 99):
                 state.continue_lives = int(action.payload)
 
-        elif action.type == ActionNames.death_takes_lives:
+        elif action.type == ActionNames.DEATH_TAKES_LIVES:
             state.death_takes_lives = action.payload
 
-        elif action.type == ActionNames.hundred_coins_1up:
+        elif action.type == ActionNames.HUNDRED_COINS_1UP:
             state.hundred_coins_1up = action.payload
 
-        elif action.type == ActionNames.end_card_1up:
+        elif action.type == ActionNames.END_CARD_1UP:
             state.end_card_1up = action.payload
 
-        elif action.type == ActionNames.mushroom_1up:
+        elif action.type == ActionNames.MUSHROOM_1UP:
             state.mushroom_1up = action.payload
 
-        elif action.type == ActionNames.dice_game_1up:
+        elif action.type == ActionNames.DICE_GAME_1UP:
             state.dice_game_1up = action.payload
 
-        elif action.type == ActionNames.roulette_1up:
+        elif action.type == ActionNames.ROULETTE_1UP:
             state.roulette_1up = action.payload
 
-        elif action.type == ActionNames.card_game_1up:
+        elif action.type == ActionNames.CARD_GAME_1UP:
             state.card_game_1up = action.payload
 
-        elif action.type == ActionNames.load:
+        elif action.type == ActionNames.LOAD:
             state = self.get_default_state()
 
         return state
@@ -278,7 +278,7 @@ class View(CustomDialog):
         state changes in the system, the UI will automatically re-render.
         """
 
-        super(View, self).__init__(parent, title=_UIStrings.title)
+        super(View, self).__init__(parent, title=_UIStrings.TITLE)
         self.rom_interface = rom_interface
         self.store = store
 
@@ -305,7 +305,7 @@ class View(CustomDialog):
         features are unsupported. """
 
         _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self._invalid_rom_warning = QLabel(f"{_UIStrings.invalid_rom_warning}")
+        self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING}")
         self._invalid_rom_warning.setWordWrap(True)
         self._invalid_rom_warning.setFixedWidth(400)
         self._invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
@@ -326,10 +326,10 @@ class View(CustomDialog):
 
         fields_layout = QGridLayout()
         fields_layout.addWidget(
-            QLabel(f"{_UIStrings.starting_lives} (0-99):", self), 0, 0)
+            QLabel(f"{_UIStrings.STARTING_LIVES} (0-99):", self), 0, 0)
         fields_layout.addWidget(self._starting_lives_edit, 0, 1)
         fields_layout.addWidget(
-            QLabel(f"{_UIStrings.continue_lives} (0-99):", self), 1, 0)
+            QLabel(f"{_UIStrings.CONTINUE_LIVES} (0-99):", self), 1, 0)
         fields_layout.addWidget(self._continue_lives_edit, 1, 1)
 
         return fields_layout
@@ -339,7 +339,7 @@ class View(CustomDialog):
 
         layout = QBoxLayout(QBoxLayout.LeftToRight)
         self._death_takes_lives = View._create_checkbox(
-            _UIStrings.death_takes_lives, 
+            _UIStrings.DEATH_TAKES_LIVES, 
             self._on_death_takes_lives, 
             layout)
         return layout
@@ -357,37 +357,37 @@ class View(CustomDialog):
         """ Creates the layout for all of the possible 1up sources. """
 
         external_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        group = QGroupBox(f"{_UIStrings.title_1up}")
+        group = QGroupBox(f"{_UIStrings.TITLE_1UP}")
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group.setLayout(internal_layout)
 
         self._mushroom_1up = View._create_checkbox(
-            _UIStrings.mushroom_1up, 
+            _UIStrings.MUSHROOM_1UP, 
             self._on_mushroom_1up, 
             internal_layout)
 
         self._hundred_coins_1up = View._create_checkbox(
-            _UIStrings.hundred_coins_1up, 
+            _UIStrings.HUNDRED_COINS_1UP, 
             self._on_hundred_coins_1up, 
             internal_layout)
 
         self._end_card_1up = View._create_checkbox(
-            _UIStrings.end_card_1up, 
+            _UIStrings.END_CARD_1UP, 
             self._on_end_card_1up, 
             internal_layout)
 
         self._card_game_1up = View._create_checkbox(
-            _UIStrings.card_game_1up, 
+            _UIStrings.CARD_GAME_1UP, 
             self._on_card_game_1up, 
             internal_layout)
 
         self._roulette_1up = View._create_checkbox(
-            _UIStrings.roulette_1up, 
+            _UIStrings.ROULETTE_1UP, 
             self._on_roulette_1up, 
             internal_layout)
 
         self._dice_game_1up = View._create_checkbox(
-            _UIStrings.dice_game_1up, 
+            _UIStrings.DICE_GAME_1UP, 
             self._on_dice_game_1up, 
             internal_layout)
         
@@ -466,55 +466,55 @@ class View(CustomDialog):
     def _on_starting_lives(self, text : str):
         """ Process UI change of number of starting lives """
         self.store.dispatch(Action(
-            ActionNames.starting_lives, 
+            ActionNames.STARTING_LIVES, 
             text))
 
     def _on_continue_lives(self, text : str):
         """ Process UI change of number of continue lives """
         self.store.dispatch(Action(
-            ActionNames.continue_lives, 
+            ActionNames.CONTINUE_LIVES, 
             text))
 
     def _on_death_takes_lives(self):
         """ Process UI change of on death checkbox """
         self.store.dispatch(Action(
-            ActionNames.death_takes_lives, 
+            ActionNames.DEATH_TAKES_LIVES, 
             self._death_takes_lives.isChecked()))
 
     def _on_end_card_1up(self):
         """ Process UI change of end card 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.end_card_1up, 
+            ActionNames.END_CARD_1UP, 
             self._end_card_1up.isChecked()))
 
     def _on_mushroom_1up(self):
         """ Process UI change of mushroom/enemy jumps 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.mushroom_1up, 
+            ActionNames.MUSHROOM_1UP, 
             self._mushroom_1up.isChecked()))
 
     def _on_dice_game_1up(self):
         """ Process UI change of dice game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.dice_game_1up, 
+            ActionNames.DICE_GAME_1UP, 
             self._dice_game_1up.isChecked()))
 
     def _on_roulette_1up(self):
         """ Process UI change of roulette 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.roulette_1up, 
+            ActionNames.ROULETTE_1UP, 
             self._roulette_1up.isChecked()))
 
     def _on_card_game_1up(self):
         """ Process UI change of card game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.card_game_1up, 
+            ActionNames.CARD_GAME_1UP, 
             self._card_game_1up.isChecked()))
 
     def _on_hundred_coins_1up(self):
         """ Process UI change of 100 coins 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.hundred_coins_1up, 
+            ActionNames.HUNDRED_COINS_1UP, 
             self._hundred_coins_1up.isChecked()))
 
 class PlayerLives():
