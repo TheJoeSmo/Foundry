@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Optional
 
 from foundry.smb3parse.util.rom import Rom
 
@@ -74,7 +74,7 @@ class CodeEdit(ABC, Generic[D]):
         return self._valid_affix(self.address + self.length, self.postfix)
 
     @abstractmethod
-    def read(self) -> D:
+    def read(self) -> Optional[D]:
         """ Read the abstract representation of the target edit area. 
         
         The Generic return type 'D' here is the abstract representation of the 
@@ -84,6 +84,9 @@ class CodeEdit(ABC, Generic[D]):
         string "infinite lives" or "vanilla" or True/False while the actual
         code edit might be the presence of an DEC NUM_LIVES instruction or a 
         NOP section removing that code.
+
+        This is an Optional[D] because if the code area is invalid, no value 
+        might be returned.
         """
         pass
 
