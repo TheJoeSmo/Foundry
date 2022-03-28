@@ -1,12 +1,13 @@
 from foundry.smb3parse.util.code_edit import CodeEdit
 from foundry.smb3parse.util.rom import Rom
+from typing import Optional
 
 class CodeEditByte(CodeEdit[int]):
     """ Edit a single byte of memory in the ROM. """
     def __init__(self, rom: Rom, start_address: int, prefix: bytearray, postfix: bytearray):
         super().__init__(rom, start_address, 1, prefix, postfix)
 
-    def read(self) -> int:
+    def read(self) -> Optional[int]:
         """ Reads the target byte out of the ROM.
         
         This reads the byte at the target code address if both the prefix and

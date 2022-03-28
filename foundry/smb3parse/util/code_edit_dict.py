@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 from foundry.smb3parse.util.rom import Rom
 from foundry.smb3parse.util.code_edit import CodeEdit
 
@@ -36,7 +36,7 @@ class CodeEditDict(CodeEdit[Any]):
         if not super().is_valid(): return False
         return self.read() is not None
 
-    def read(self) -> Any:
+    def read(self) -> Optional[Any]:
         """ Returns the abstract representation of target code area.
         
         This will read the current value in the ROM at the target address

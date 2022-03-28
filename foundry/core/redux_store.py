@@ -1,17 +1,20 @@
-from typing import TypeVar, Generic
+from typing import Any, TypeVar, Generic
 import copy
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
+
+class StateNoneError(Exception):
+    pass
 
 @dataclass
 class Action:
     """ User action that will be dispatched to the store for processing
     
     type: str - a unique id that defines what action is happening
-    payload: any - the data payload of the action, can be any type.
+    payload: Any - the data payload of the action, can be Any type.
     """
     type: str
-    payload: any
+    payload: Any
 
 S = TypeVar('S')
 
@@ -19,7 +22,7 @@ class ReduxStore(ABC, Generic[S]):
     """ An abstract Redux store for handing system state and user actions.
 
     Redux is a pattern used for handing system state storage/change based on
-    user interation.  More information can be found here:
+    user interaction.  More information can be found here:
     https://redux.js.org/introduction/core-concepts
 
     The basic principle is that the store hold the system state and accepts
@@ -31,12 +34,15 @@ class ReduxStore(ABC, Generic[S]):
     In this implementation the state is a generic type 'S' to be defined by
     the developer.
     """
-    _default_state: S = None
-    _state: S = None
     _subscribers = []
 
     def __init__(self, state: S):
-        """ Initialize the store with the default state. """
+        """ Initialize the store with the default state. 
+        
+        StateNoneError is raised if a None is provided for the default state
+        """
+        if not state: raise StateNoneError
+        
         self._default_state = state
         self._state = copy.deepcopy(state)
 
