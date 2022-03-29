@@ -1,8 +1,20 @@
+""" Implements a UI to modify the player lives.
+
+Supported editing various characteristics of the player lives such as the
+number of starting lives, the number of lives on continues, if a death lowers
+the life count, if a 1-up mushroom increases the life count, etc.
+
+This UI uses a Redux pattern instead of MVC to increase the testability of the
+code.  If you are if you want to try to reason about Redux in terms of MVC,
+then the Redux state is the model, the Redux reducer is the Controller, and
+obviously both still have a view.
+"""
 from dataclasses import dataclass
 from enum import Enum
 
-from PySide6.QtGui import QPixmap, Qt, QIntValidator
-from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox, QLineEdit, QGridLayout, QCheckBox, QGroupBox
+from PySide6.QtGui import Qt, QIntValidator
+from PySide6.QtWidgets import QBoxLayout, QLabel, QDialogButtonBox,\
+    QLineEdit, QGridLayout, QCheckBox, QGroupBox
 
 from foundry.smb3parse.util.rom import Rom
 from foundry.game.File import ROM
@@ -47,8 +59,8 @@ class ActionNames(Enum):
 
 @dataclass
 class State:
-    """ Stores the current state of the UI 
-    
+    """ Stores the current state of the UI
+
     The initial state is read from the ROM.  The final state is written to the
     ROM.  The intermediate values are stored in this state object while the
     user is modifying them.
@@ -67,14 +79,16 @@ class State:
     roulette_1up: bool
     card_game_1up: bool
 
-class Store(ReduxStore[State]):        
+class Store(ReduxStore[State]):
+    """ Concrete implementation of the ReduxStore for the PlayerLives UI """
+
     def _reduce(self, state:State, action: Action) -> State:
         """ Processes a user action into a new state.
-        
-        Processes user actions in the player_lives UI into new state data.  
+
+        Processes user actions in the player_lives UI into new state data.
         This function should NEVER be called directly by the user.  To change
         the state, do store.dispatch(Action()) instead.
-        
+
         See ReduxStore for more information."""
         if state is None:
             state = self.get_default_state()
@@ -114,118 +128,118 @@ class Store(ReduxStore[State]):
         return state
 
     @staticmethod
-    def _is_bounded_int(input, lower_limit: int, upper_limit: int) -> bool:
+    def _is_bounded_int(value, lower_limit: int, upper_limit: int) -> bool:
         """ Checks if the input is an int and within a min/max boundary. """
         try:
-            return (int(input) >= lower_limit) & (int(input) <= upper_limit)
+            return (int(value) >= lower_limit) & (int(value) <= upper_limit)
         except ValueError:
             return False
 
 class RomInterface():
     """ Handles all the read/write operations to the ROM.
-    
-    This reads out the initial state of the ROM into a new State object.  It 
+
+    This reads out the initial state of the ROM into a new State object.  It
     can also take in a State object and write that into the ROM data.
     """
 
     def __init__(self, rom: Rom):
         """ Create all of the CodeEdit objects for all UI selections. """
         self.rom = rom
-        NOP_X_3 = bytearray([0xEA, 0xEA, 0xEA])
-        INC_NUM_LIVES = bytearray([0xfe, 0x36, 0x07])
-        
+        nop_x_3 = bytearray([0xEA, 0xEA, 0xEA])
+        inc_num_lives = bytearray([0xfe, 0x36, 0x07])
+
         self.death_takes_lives = CodeEditDict(
-            rom, 
-            0x3D133, 
-            3, 
+            rom,
+            0x3D133,
+            3,
             bytearray([0x8B, 0x07, 0xD0, 0x05]),
             {
                 True: bytearray([0xDE, 0x36, 0x07]),
-                False: NOP_X_3
+                False: nop_x_3
             },
             bytearray([0x30, 0x0b, 0xA9, 0x80]))
 
         self.starting_lives = CodeEditByte(
-            rom, 
-            0x308E1, 
-            bytearray([0xCA, 0x10, 0xF8, 0xA9]), 
+            rom,
+            0x308E1,
+            bytearray([0xCA, 0x10, 0xF8, 0xA9]),
             bytearray([0x8D, 0x36, 0x07, 0x8D]))
-        
+
         self.continue_lives = CodeEditByte(
-            rom, 
-            0x3D2D6, 
-            bytearray([0x08, 0xD0, 0x65, 0xA9]), 
+            rom,
+            0x3D2D6,
+            bytearray([0x08, 0xD0, 0x65, 0xA9]),
             bytearray([0x9D, 0x36, 0x07, 0xA5]))
 
         self.hundred_coins_1up = CodeEditDict(
-            rom, 
-            0x350A7, 
-            3, 
+            rom,
+            0x350A7,
+            3,
             bytearray([0x7d, 0xae, 0x26, 0x07]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0xa9, 0x40, 0x8d, 0xf2]))
-        
+
         self.end_card_1up = CodeEditDict(
-            rom, 
-            0x5d99, 
-            3, 
+            rom,
+            0x5d99,
+            3,
             bytearray([0x60, 0xae, 0x26, 0x07]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0xee, 0x40, 0x04, 0x60]))
 
         self.mushroom_1up = CodeEditDict(
-            rom, 
-            0xeb0f, 
-            3, 
+            rom,
+            0xeb0f,
+            3,
             bytearray([0x36, 0x07, 0x30, 0x03]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0xa6, 0xcd, 0xbd, 0xa3]))
 
         self.dice_game_1up = CodeEditDict(
-            rom, 
-            0x2cd78, 
-            3, 
+            rom,
+            0x2cd78,
+            3,
             bytearray([0x60, 0xae, 0x26, 0x07]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0xee, 0x40, 0x04, 0x60]))
 
         self.roulette_1up = CodeEditDict(
-            rom, 
-            0x2d2be, 
-            3, 
+            rom,
+            0x2d2be,
+            3,
             bytearray([0x36, 0x07, 0x30, 0x03]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0x4c, 0xd2, 0xd2, 0xce]))
 
         self.card_game_1up = CodeEditDict(
-            rom, 
-            0x2dd50, 
-            3, 
+            rom,
+            0x2dd50,
+            3,
             bytearray([0x0d, 0xae, 0x26, 0x07]),
             {
-                True: INC_NUM_LIVES,
-                False: NOP_X_3
+                True: inc_num_lives,
+                False: nop_x_3
             },
             bytearray([0xa9, 0x40, 0x8d, 0xf2]))
 
     def read_state(self) -> State:
         """ Reads the ROM and creates a cooresponding abstract State instance. """
-        return State(   
+        return State(
                         self.starting_lives.read(),
                         self.continue_lives.read(),
                         self.death_takes_lives.read(),
@@ -239,7 +253,7 @@ class RomInterface():
 
     def write_state(self, state: State):
         """ Takes in an abstract State instance, and writes to the ROM.
-        
+
         NOTE: This writes to the specified ROM which is not writing to the
         file itself.  The caller/user is responsible for requesting the changes
         be saved to the file.
@@ -247,7 +261,7 @@ class RomInterface():
         self.starting_lives.write(state.starting_lives)
         self.continue_lives.write(state.continue_lives)
         self.death_takes_lives.write(state.death_takes_lives)
-        self.hundred_coins_1up.write(state.hundred_coins_1up)    
+        self.hundred_coins_1up.write(state.hundred_coins_1up)
         self.end_card_1up.write(state.end_card_1up)
         self.mushroom_1up.write(state.mushroom_1up)
         self.dice_game_1up.write(state.dice_game_1up)
@@ -256,7 +270,7 @@ class RomInterface():
 
 class View(CustomDialog):
     """ Creates the UI and sends actions to update the State
-    
+
     The view operates only on the State variable.  It doesn't operate on the
     ROM at all.  When the user clicks OK to submit the changes to the ROM, the
     view will send a request to the RomInterface to have the state written to
@@ -279,13 +293,13 @@ class View(CustomDialog):
     WARNING_STYLE = "QLabel { background-color : pink; }"
 
     def __init__(self, parent, store : Store, rom_interface : RomInterface):
-        """ Creates the main layout and shows the form. 
-        
+        """ Creates the main layout and shows the form.
+
         All UI elements will dispatch an action on change which will
         update the internal state.  On "OK" the internal state will be written
-        to the ROM.  
+        to the ROM.
 
-        The render() routine subscribes to the store so that whenever the 
+        The render() routine subscribes to the store so that whenever the
         state changes in the system, the UI will automatically re-render.
         """
 
@@ -308,9 +322,9 @@ class View(CustomDialog):
         self.show()
 
     def _create_invalid_rom_layout(self) -> QBoxLayout:
-        """ Create warning about the ROM having incompatible code modifications. 
-        
-        If the user has provided a ROM that has shifted some of the code, then 
+        """ Create warning about the ROM having incompatible code modifications.
+
+        If the user has provided a ROM that has shifted some of the code, then
         some of the UI elements might not be able to work correctly.  This
         creates a warning label to the user to let them know that some of the
         features are unsupported. """
@@ -350,8 +364,8 @@ class View(CustomDialog):
 
         layout = QBoxLayout(QBoxLayout.LeftToRight)
         self._death_takes_lives = View._create_checkbox(
-            _UIStrings.DEATH_TAKES_LIVES, 
-            self._on_death_takes_lives, 
+            _UIStrings.DEATH_TAKES_LIVES,
+            self._on_death_takes_lives,
             layout)
         return layout
 
@@ -361,7 +375,7 @@ class View(CustomDialog):
         button_box = QDialogButtonBox()
         button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self._on_ok)
         button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self._on_cancel)
-    
+
         return button_box
 
     def _create_1up_layout(self) -> QBoxLayout:
@@ -373,35 +387,35 @@ class View(CustomDialog):
         group.setLayout(internal_layout)
 
         self._mushroom_1up = View._create_checkbox(
-            _UIStrings.MUSHROOM_1UP, 
-            self._on_mushroom_1up, 
+            _UIStrings.MUSHROOM_1UP,
+            self._on_mushroom_1up,
             internal_layout)
 
         self._hundred_coins_1up = View._create_checkbox(
-            _UIStrings.HUNDRED_COINS_1UP, 
-            self._on_hundred_coins_1up, 
+            _UIStrings.HUNDRED_COINS_1UP,
+            self._on_hundred_coins_1up,
             internal_layout)
 
         self._end_card_1up = View._create_checkbox(
-            _UIStrings.END_CARD_1UP, 
-            self._on_end_card_1up, 
+            _UIStrings.END_CARD_1UP,
+            self._on_end_card_1up,
             internal_layout)
 
         self._card_game_1up = View._create_checkbox(
-            _UIStrings.CARD_GAME_1UP, 
-            self._on_card_game_1up, 
+            _UIStrings.CARD_GAME_1UP,
+            self._on_card_game_1up,
             internal_layout)
 
         self._roulette_1up = View._create_checkbox(
-            _UIStrings.ROULETTE_1UP, 
-            self._on_roulette_1up, 
+            _UIStrings.ROULETTE_1UP,
+            self._on_roulette_1up,
             internal_layout)
 
         self._dice_game_1up = View._create_checkbox(
-            _UIStrings.DICE_GAME_1UP, 
-            self._on_dice_game_1up, 
+            _UIStrings.DICE_GAME_1UP,
+            self._on_dice_game_1up,
             internal_layout)
-        
+
         external_layout.addWidget(group)
         return external_layout
 
@@ -415,7 +429,7 @@ class View(CustomDialog):
         return checkbox
 
     def render(self):
-        """ Updates the UI with the current state values. 
+        """ Updates the UI with the current state values.
 
         This function is the subscriber to the store so that whenever there is
         a state change in the system, this render function is called
@@ -435,7 +449,7 @@ class View(CustomDialog):
         View._render_checkbox(self._roulette_1up, state.roulette_1up)
         View._render_checkbox(self._card_game_1up, state.card_game_1up)
 
-        self._invalid_rom_warning.setVisible(View._all_areas_valid(state) == False)  
+        self._invalid_rom_warning.setVisible(View._all_areas_valid(state) is False)
 
     @staticmethod
     def _int_to_str_or_default(value: str, default: str):
@@ -444,18 +458,18 @@ class View(CustomDialog):
         return default if value is None else str(value)
 
     @staticmethod
-    def _render_line_edit(lineEdit: QLineEdit, value: int):
+    def _render_line_edit(line_edit: QLineEdit, value: int):
         """ Render a line edit value. """
 
-        lineEdit.setDisabled(value == None)
-        lineEdit.setText(View._int_to_str_or_default(value, "?"))
+        line_edit.setDisabled(value is None)
+        line_edit.setText(View._int_to_str_or_default(value, "?"))
 
     @staticmethod
-    def _render_checkbox(checkBox: QCheckBox, value: bool):
+    def _render_checkbox(checkbox: QCheckBox, value: bool):
         """ Render a checkbox value. """
 
-        checkBox.setDisabled(value is None)
-        checkBox.setChecked(False if value is None else value)
+        checkbox.setDisabled(value is None)
+        checkbox.setChecked(False if value is None else value)
 
     @staticmethod
     def _all_areas_valid(state : State) -> bool:
@@ -482,63 +496,63 @@ class View(CustomDialog):
     def _on_starting_lives(self, text : str):
         """ Process UI change of number of starting lives """
         self.store.dispatch(Action(
-            ActionNames.STARTING_LIVES, 
+            ActionNames.STARTING_LIVES,
             text))
 
     def _on_continue_lives(self, text : str):
         """ Process UI change of number of continue lives """
         self.store.dispatch(Action(
-            ActionNames.CONTINUE_LIVES, 
+            ActionNames.CONTINUE_LIVES,
             text))
 
     def _on_death_takes_lives(self):
         """ Process UI change of on death checkbox """
         self.store.dispatch(Action(
-            ActionNames.DEATH_TAKES_LIVES, 
+            ActionNames.DEATH_TAKES_LIVES,
             self._death_takes_lives.isChecked()))
 
     def _on_end_card_1up(self):
         """ Process UI change of end card 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.END_CARD_1UP, 
+            ActionNames.END_CARD_1UP,
             self._end_card_1up.isChecked()))
 
     def _on_mushroom_1up(self):
         """ Process UI change of mushroom/enemy jumps 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.MUSHROOM_1UP, 
+            ActionNames.MUSHROOM_1UP,
             self._mushroom_1up.isChecked()))
 
     def _on_dice_game_1up(self):
         """ Process UI change of dice game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.DICE_GAME_1UP, 
+            ActionNames.DICE_GAME_1UP,
             self._dice_game_1up.isChecked()))
 
     def _on_roulette_1up(self):
         """ Process UI change of roulette 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.ROULETTE_1UP, 
+            ActionNames.ROULETTE_1UP,
             self._roulette_1up.isChecked()))
 
     def _on_card_game_1up(self):
         """ Process UI change of card game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.CARD_GAME_1UP, 
+            ActionNames.CARD_GAME_1UP,
             self._card_game_1up.isChecked()))
 
     def _on_hundred_coins_1up(self):
         """ Process UI change of 100 coins 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.HUNDRED_COINS_1UP, 
+            ActionNames.HUNDRED_COINS_1UP,
             self._hundred_coins_1up.isChecked()))
 
 class PlayerLives():
-    """ Main entry point from main menu. 
-    
+    """ Main entry point from main menu.
+
     This creates the Store, the View, and the RomInterface.
     """
     def __init__(self, parent):
-        rom_interface = RomInterface(ROM())        
-        store = Store(rom_interface.read_state())               
+        rom_interface = RomInterface(ROM())
+        store = Store(rom_interface.read_state())
         View(parent, store, rom_interface)

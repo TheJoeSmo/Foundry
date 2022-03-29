@@ -1,15 +1,26 @@
+""" Defines a simple Redux store interface for Python.
+
+This store takes in a default state on initialization rather than generating
+one internally.  If it is desired to have one created interally, use a factory
+method.
+
+A Generic type state S is used to hold the state data for the module and
+actions given to the store are used to transform the state into a new state
+through a set of reducers.  The reducers are UI specific and so abstract in
+this interface definition.
+"""
 from typing import Any, TypeVar, Generic
 import copy
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 
 class StateNoneError(Exception):
-    pass
+    """ Error thrown when Redux default state is None """
 
 @dataclass
 class Action:
     """ User action that will be dispatched to the store for processing
-    
+
     type: str - a unique id that defines what action is happening
     payload: Any - the data payload of the action, can be Any type.
     """
@@ -37,12 +48,12 @@ class ReduxStore(ABC, Generic[S]):
     _subscribers = []
 
     def __init__(self, state: S):
-        """ Initialize the store with the default state. 
-        
+        """ Initialize the store with the default state.
+
         StateNoneError is raised if a None is provided for the default state
         """
         if not state: raise StateNoneError
-        
+
         self._default_state = state
         self._state = copy.deepcopy(state)
 
@@ -56,16 +67,16 @@ class ReduxStore(ABC, Generic[S]):
 
     def dispatch(self, action: Action):
         """ Updates the system state based on user action.
-        
-        The dispatch() routine takes in a user action and updates the current 
-        state by sending it to any reducers in the system and then notifies 
+
+        The dispatch() routine takes in a user action and updates the current
+        state by sending it to any reducers in the system and then notifies
         any subscribers to the store if the state has changed as a result of
-        the action. 
+        the action.
         """
-        oldState = copy.deepcopy(self._state)
+        old_state = copy.deepcopy(self._state)
         self._state = self._reduce(copy.deepcopy(self._state), action)
 
-        if self._state != oldState:
+        if self._state != old_state:
             self._notify_subscribers()
 
     def _notify_subscribers(self):
@@ -75,11 +86,11 @@ class ReduxStore(ABC, Generic[S]):
 
     @abstractmethod
     def _reduce(self, state:S, action: Action) -> S:
-        """ Creates a new state from the old state and a user action. 
-        
+        """ Creates a new state from the old state and a user action.
+
         (current state, user action) -> new state
 
-        This method is abstract as must be implemented by the implementing 
+        This method is abstract as must be implemented by the implementing
         class.  The state type is also the Generic type 'S' and must be defined
         by the implementing class.
 
@@ -89,7 +100,6 @@ class ReduxStore(ABC, Generic[S]):
         actual stored state will not be updated and the associated subscribers
         will not be notified.  DON'T DO IT!
         """
-        pass
 
     def subscribe(self, subscriber):
         """ Subscribe a function to be called when the state changes. """

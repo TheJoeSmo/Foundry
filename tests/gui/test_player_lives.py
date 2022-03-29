@@ -1,11 +1,12 @@
 from foundry.smb3parse.util.rom import Rom
 from foundry.gui.player_lives import Store, State, Action, ActionNames, RomInterface
 
-default_starting_lives = 5
-default_continue_lives = 4
+DEFAULT_STARTING_LIVES = 5
+DEFAULT_CONTINUE_LIVES = 4
 
 def default_store() -> Store:
-    return Store(State(default_starting_lives, default_continue_lives, True, True, True, True, True, True, True))
+    return Store(State(DEFAULT_STARTING_LIVES, DEFAULT_CONTINUE_LIVES, True,
+                       True, True, True, True, True, True))
 
 def test_subscribe_invalid_action():
     store = default_store()
@@ -31,39 +32,39 @@ def test_subscribe_on_valid_action_no_state_change():
     store.subscribe(callback.function)
     assert 0 == callback.called
 
-    store.dispatch(Action(ActionNames.STARTING_LIVES, default_starting_lives))
+    store.dispatch(Action(ActionNames.STARTING_LIVES, DEFAULT_STARTING_LIVES))
     assert 0 == callback.called
 
 def test_starting_lives_action():
-    startingLivesAction(default_store(), 1)
+    starting_lives_action(default_store(), 1)
 
-def startingLivesAction(store: Store, updated_starting_lives):
+def starting_lives_action(store: Store, updated_starting_lives):
     store.dispatch(Action(ActionNames.STARTING_LIVES, updated_starting_lives))
     assert updated_starting_lives == store.get_state().starting_lives
 
 def test_starting_lives_action_invalid_type():
     store = default_store()
     store.dispatch(Action(ActionNames.STARTING_LIVES, "P"))
-    assert default_starting_lives == store.get_state().starting_lives
+    assert DEFAULT_STARTING_LIVES == store.get_state().starting_lives
 
 def test_starting_lives_action_invalid_values():
     store = default_store()
     store.dispatch(Action(ActionNames.STARTING_LIVES, -1))
-    assert default_starting_lives == store.get_state().starting_lives
+    assert DEFAULT_STARTING_LIVES == store.get_state().starting_lives
     store.dispatch(Action(ActionNames.STARTING_LIVES, 100))
-    assert default_starting_lives == store.get_state().starting_lives
+    assert DEFAULT_STARTING_LIVES == store.get_state().starting_lives
 
 def test_continue_lives_action_invalid_type():
     store = default_store()
     store.dispatch(Action(ActionNames.CONTINUE_LIVES, "P"))
-    assert default_continue_lives == store.get_state().continue_lives
+    assert DEFAULT_CONTINUE_LIVES == store.get_state().continue_lives
 
 def test_continue_lives_action_invalid_values():
     store = default_store()
     store.dispatch(Action(ActionNames.CONTINUE_LIVES, -1))
-    assert default_continue_lives == store.get_state().continue_lives
+    assert DEFAULT_CONTINUE_LIVES == store.get_state().continue_lives
     store.dispatch(Action(ActionNames.CONTINUE_LIVES, 100))
-    assert default_continue_lives == store.get_state().continue_lives
+    assert DEFAULT_CONTINUE_LIVES == store.get_state().continue_lives
 
 def test_continue_lives_action():
     updated_continue_lives = 2
@@ -82,9 +83,9 @@ def test_warning_continue_lives_valid():
 def test_death_takes_lives_action():
     store = default_store()
     store.dispatch(Action(ActionNames.DEATH_TAKES_LIVES, False))
-    assert False == store.get_state().death_takes_lives
+    assert False is store.get_state().death_takes_lives
     store.dispatch(Action(ActionNames.DEATH_TAKES_LIVES, True))
-    assert True == store.get_state().death_takes_lives
+    assert True is store.get_state().death_takes_lives
 
 class CallbackTester:
     called = 0
@@ -93,11 +94,11 @@ class CallbackTester:
 
 def test_read_state_starting_lives_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().starting_lives
+    assert None is RomInterface(rom).read_state().starting_lives
 
 def create_starting_lives_rom() -> Rom:
     rom = Rom(bytearray([0] * 0x50000))
-    
+
     rom.write(0x308E1-4, bytes([0xCA, 0x10, 0xF8, 0xA9]))
     rom.write(0x308E1, bytes([0x04]))
     rom.write(0x308E1+1, bytes([0x8D, 0x36, 0x07, 0x8D]))
@@ -109,17 +110,17 @@ def test_read_state_starting_lives_valid():
 
 def test_write_state_starting_lives():
     rom_interface = RomInterface(create_starting_lives_rom())
-    state = State(0xAA, default_continue_lives, True, True, True, True, True, True, True)
+    state = State(0xAA, DEFAULT_CONTINUE_LIVES, True, True, True, True, True, True, True)
     assert 0x04 == rom_interface.read_state().starting_lives
     rom_interface.write_state(state)
     assert 0xAA == rom_interface.read_state().starting_lives
 
 def test_read_state_continue_lives_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().continue_lives
+    assert None is RomInterface(rom).read_state().continue_lives
 
 def create_continue_lives_rom() -> Rom:
-    rom = Rom(bytearray([0] * 0x50000))   
+    rom = Rom(bytearray([0] * 0x50000))
     rom.write(0x3D2D6-4, bytes([0x08, 0xD0, 0x65, 0xA9]))
     rom.write(0x3D2D6, bytes([0x04]))
     rom.write(0x3D2D6+1, bytes([0x9D, 0x36, 0x07, 0xA5]))
@@ -138,7 +139,7 @@ def test_write_state_continue_lives():
 
 def test_read_state_death_takes_lives_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().death_takes_lives
+    assert None is RomInterface(rom).read_state().death_takes_lives
 
 def create_death_takes_lives_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -149,17 +150,15 @@ def create_death_takes_lives_rom(value):
 
 def test_read_state_death_takes_lives_false():
     state = RomInterface(create_death_takes_lives_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.death_takes_lives
+    assert False is state.death_takes_lives
 
 def test_read_state_death_takes_lives_true():
     state = RomInterface(create_death_takes_lives_rom([0xDE, 0x36, 0x07])).read_state()
-    assert True == state.death_takes_lives
-
-""" 100 coins """
+    assert True is state.death_takes_lives
 
 def test_read_state_100_coins_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().hundred_coins_1up
+    assert None is RomInterface(rom).read_state().hundred_coins_1up
 
 def create_100_coins_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -170,31 +169,29 @@ def create_100_coins_rom(value):
 
 def test_read_state_100_coins_false():
     state = RomInterface(create_100_coins_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.hundred_coins_1up
+    assert False is state.hundred_coins_1up
 
 def test_read_state_100_coins_true():
     state = RomInterface(create_100_coins_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.hundred_coins_1up
+    assert True is state.hundred_coins_1up
 
 def test_write_state_100_coins():
     rom_interface = RomInterface(create_100_coins_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().hundred_coins_1up
+    assert False is rom_interface.read_state().hundred_coins_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().hundred_coins_1up
+    assert True is rom_interface.read_state().hundred_coins_1up
 
-def test_100CoinsAction():
+def test_100_coins_action():
     store = default_store()
     store.dispatch(Action(ActionNames.HUNDRED_COINS_1UP, False))
-    assert False == store.get_state().hundred_coins_1up
+    assert False is store.get_state().hundred_coins_1up
     store.dispatch(Action(ActionNames.HUNDRED_COINS_1UP, True))
-    assert True == store.get_state().hundred_coins_1up
-
-""" End Card """
+    assert True is store.get_state().hundred_coins_1up
 
 def test_read_state_end_card_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().end_card_1up
+    assert None is RomInterface(rom).read_state().end_card_1up
 
 def create_end_card_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -205,31 +202,29 @@ def create_end_card_rom(value):
 
 def test_read_state_end_card_false():
     state = RomInterface(create_end_card_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.end_card_1up
+    assert False is state.end_card_1up
 
 def test_read_state_end_card_true():
     state = RomInterface(create_end_card_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.end_card_1up
+    assert True is state.end_card_1up
 
 def test_write_state_end_card():
     rom_interface = RomInterface(create_end_card_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().end_card_1up
+    assert False is rom_interface.read_state().end_card_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().end_card_1up
+    assert True is rom_interface.read_state().end_card_1up
 
 def test_end_card_action():
     store = default_store()
     store.dispatch(Action(ActionNames.END_CARD_1UP, False))
-    assert False == store.get_state().end_card_1up
+    assert False is store.get_state().end_card_1up
     store.dispatch(Action(ActionNames.END_CARD_1UP, True))
-    assert True == store.get_state().end_card_1up
-
-""" Mushroom 1up"""
+    assert True is store.get_state().end_card_1up
 
 def test_read_state_mushroom_1up_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().mushroom_1up
+    assert None is RomInterface(rom).read_state().mushroom_1up
 
 def create_mushroom_1up_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -238,33 +233,31 @@ def create_mushroom_1up_rom(value):
     rom.write(0xeb0f+3, bytes([0xa6, 0xcd, 0xbd, 0xa3]))
     return rom
 
-def test_read_stateMushroom1upFalse():
+def test_read_state_mushroom_1up_false():
     state = RomInterface(create_mushroom_1up_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.mushroom_1up
+    assert False is state.mushroom_1up
 
-def test_read_stateMushroom1upTrue():
+def test_read_state_mushroom_1up_true():
     state = RomInterface(create_mushroom_1up_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.mushroom_1up
+    assert True is state.mushroom_1up
 
 def test_write_state_mushroom_1up():
     rom_interface = RomInterface(create_mushroom_1up_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().mushroom_1up
+    assert False is rom_interface.read_state().mushroom_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().mushroom_1up
+    assert True is rom_interface.read_state().mushroom_1up
 
 def test_mushroom_action():
     store = default_store()
     store.dispatch(Action(ActionNames.MUSHROOM_1UP, False))
-    assert False == store.get_state().mushroom_1up
+    assert False is store.get_state().mushroom_1up
     store.dispatch(Action(ActionNames.MUSHROOM_1UP, True))
-    assert True == store.get_state().mushroom_1up
-
-""" Dice game """
+    assert True is store.get_state().mushroom_1up
 
 def test_read_state_dice_game_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().dice_game_1up
+    assert None is RomInterface(rom).read_state().dice_game_1up
 
 def create_dice_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -275,31 +268,29 @@ def create_dice_game_rom(value):
 
 def test_read_state_dice_game_false():
     state = RomInterface(create_dice_game_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.dice_game_1up
+    assert False is state.dice_game_1up
 
 def test_read_state_dice_game_true():
     state = RomInterface(create_dice_game_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.dice_game_1up
+    assert True is state.dice_game_1up
 
 def test_write_state_dice_game():
     rom_interface = RomInterface(create_dice_game_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().dice_game_1up
+    assert False is rom_interface.read_state().dice_game_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().dice_game_1up
+    assert True is rom_interface.read_state().dice_game_1up
 
 def test_dice_game_action():
     store = default_store()
     store.dispatch(Action(ActionNames.DICE_GAME_1UP, False))
-    assert False == store.get_state().dice_game_1up
+    assert False is store.get_state().dice_game_1up
     store.dispatch(Action(ActionNames.DICE_GAME_1UP, True))
-    assert True == store.get_state().dice_game_1up
-
-""" Roulette game """
+    assert True is store.get_state().dice_game_1up
 
 def test_read_state_roulette_game_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().roulette_1up
+    assert None is RomInterface(rom).read_state().roulette_1up
 
 def create_roulette_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -310,31 +301,29 @@ def create_roulette_game_rom(value):
 
 def test_read_state_roulette_game_false():
     state = RomInterface(create_roulette_game_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.roulette_1up
+    assert False is state.roulette_1up
 
 def test_read_state_roulette_game_true():
     state = RomInterface(create_roulette_game_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.roulette_1up
+    assert True is state.roulette_1up
 
 def test_write_state_roulette_game():
     rom_interface = RomInterface(create_roulette_game_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().roulette_1up
+    assert False is rom_interface.read_state().roulette_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().roulette_1up
+    assert True is rom_interface.read_state().roulette_1up
 
 def test_roulette_game_action():
     store = default_store()
     store.dispatch(Action(ActionNames.ROULETTE_1UP, False))
-    assert False == store.get_state().roulette_1up
+    assert False is store.get_state().roulette_1up
     store.dispatch(Action(ActionNames.ROULETTE_1UP, True))
-    assert True == store.get_state().roulette_1up
-
-""" Card game """
+    assert True is store.get_state().roulette_1up
 
 def test_read_state_card_game_invalid():
     rom = Rom(bytearray([0] * 0x50000))
-    assert None == RomInterface(rom).read_state().card_game_1up
+    assert None is RomInterface(rom).read_state().card_game_1up
 
 def create_card_game_rom(value):
     rom = Rom(bytearray([0] * 0x50000))
@@ -345,22 +334,22 @@ def create_card_game_rom(value):
 
 def test_read_state_card_game_false():
     state = RomInterface(create_card_game_rom([0xEA, 0xEA, 0xEA])).read_state()
-    assert False == state.card_game_1up
+    assert False is state.card_game_1up
 
 def test_read_state_card_game_true():
     state = RomInterface(create_card_game_rom([0xfe, 0x36, 0x07])).read_state()
-    assert True == state.card_game_1up
+    assert True is state.card_game_1up
 
 def test_write_state_card_game():
     rom_interface = RomInterface(create_card_game_rom([0xEA, 0xEA, 0xEA]))
     state = State(0x00, 0x00, True, True, True, True, True, True, True)
-    assert False == rom_interface.read_state().card_game_1up
+    assert False is rom_interface.read_state().card_game_1up
     rom_interface.write_state(state)
-    assert True == rom_interface.read_state().card_game_1up
+    assert True is rom_interface.read_state().card_game_1up
 
 def test_card_game_action():
     store = default_store()
     store.dispatch(Action(ActionNames.CARD_GAME_1UP, False))
-    assert False == store.get_state().card_game_1up
+    assert False is store.get_state().card_game_1up
     store.dispatch(Action(ActionNames.CARD_GAME_1UP, True))
-    assert True == store.get_state().card_game_1up
+    assert True is store.get_state().card_game_1up

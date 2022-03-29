@@ -691,7 +691,8 @@ class MainWindow(QMainWindow):
         self.manager.display_block_viewer()
 
     def on_player_lives(self, _):
-        player_lives = PlayerLives(self)
+        """ Shows the Player Lives UI """
+        PlayerLives(self)
 
     def on_palette_viewer(self, _):
         self.manager.display_palette_viewer()
