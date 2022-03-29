@@ -5,22 +5,24 @@ abstract option and the values are the byte data needing to be programmed
 into memory.
 """
 from typing import Any, Optional
-from foundry.smb3parse.util.rom import Rom
+
 from foundry.smb3parse.util.code_edit import CodeEdit
+from foundry.smb3parse.util.rom import Rom
+
 
 class CodeEditDict(CodeEdit[Any]):
-    """ Represents a code edit that is specified by a dictionary.
+    """Represents a code edit that is specified by a dictionary.
 
     The user passes in a dictionary of abstract labels (Any) in the keys and
     the corresponding bytearray to be written to memory in the value of the
     dictionary.  The user can then request a read/write using the abstract
     key name.
     """
+
     _options: dict
 
-    def __init__(self, rom: Rom, start_address: int, length: int,
-                 prefix: bytearray, options: dict, postfix: bytearray):
-        """ Initialize the CodeEdit area and sets the valid dictionary values
+    def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, options: dict, postfix: bytearray):
+        """Initialize the CodeEdit area and sets the valid dictionary values
 
         options: dict
             * Needs to be of types: [Any, bytearray]
@@ -34,7 +36,7 @@ class CodeEditDict(CodeEdit[Any]):
         self._options = options
 
     def is_valid(self):
-        """ Check to see if the current ROM code area is valid.
+        """Check to see if the current ROM code area is valid.
 
         This calls the super() valid so the prefix and postfix are checked to
         see if they are valid.  Additionally this will check to see if the
@@ -45,7 +47,7 @@ class CodeEditDict(CodeEdit[Any]):
         return self.read() is not None
 
     def read(self) -> Optional[Any]:
-        """ Returns the abstract representation of target code area.
+        """Returns the abstract representation of target code area.
 
         This will read the current value in the ROM at the target address
         location and covert it to the corresponding abstract representation
@@ -59,7 +61,7 @@ class CodeEditDict(CodeEdit[Any]):
         return None
 
     def write(self, option: Any):
-        """ Requests a code edit by an abstract representation/name.
+        """Requests a code edit by an abstract representation/name.
 
         This will take the specified data, look it up in the provided
         dictionary and write the corresponding bytearray into the ROM at the

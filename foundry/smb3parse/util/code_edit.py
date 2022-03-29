@@ -3,17 +3,18 @@
 This CodeEdit will self verify that that the target memory location is correct
 by checking the surrounding code to make sure it matches.
 """
-from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Optional
+from dataclasses import dataclass
+from typing import Generic, Optional, TypeVar
 
 from foundry.smb3parse.util.rom import Rom
 
-D = TypeVar('D')
+D = TypeVar("D")
+
 
 @dataclass
 class CodeEdit(ABC, Generic[D]):
-    """ Represents an area to edit to the ROM code.
+    """Represents an area to edit to the ROM code.
 
     This class handles reading and writing the data of a specific code area for
     possible code edits.  It will also check the ROM to see if the target
@@ -46,7 +47,7 @@ class CodeEdit(ABC, Generic[D]):
     A potential improvement in the future would be to check if the target
     address is valid during initialization and if it isn't, search the adjacent
     code areas (maybe 500 bytes or user specified) and try to find a matching
-    prefix/postfix with the correct offsets.  This would let this adapt to 
+    prefix/postfix with the correct offsets.  This would let this adapt to
     ROMs with code shifting modifications rather than rejecting them.
 
     The above paragraph is particularly true for expanded ROMs where bank 30/31
@@ -57,6 +58,7 @@ class CodeEdit(ABC, Generic[D]):
     quicker results.  A search could be done secondary after the shift if the
     target code areas isn't found in the shifted target location.
     """
+
     rom: Rom
     address: int
     length: int
@@ -64,13 +66,13 @@ class CodeEdit(ABC, Generic[D]):
     postfix: bytearray
 
     def _valid_affix(self, test_address: int, data: bytearray) -> bool:
-        """ Verifies that the specified affix matches the ROM. """
-        if len(data) == 0: 
+        """Verifies that the specified affix matches the ROM."""
+        if len(data) == 0:
             return True
         return data == self.rom.read(test_address, len(data))
 
     def is_valid(self) -> bool:
-        """ Verifies that both the prefix and postfix are valid.
+        """Verifies that both the prefix and postfix are valid.
 
         This function can also be overwritten if only certain values are valid
         so that the value of the target area is also checked if that is
@@ -82,7 +84,7 @@ class CodeEdit(ABC, Generic[D]):
 
     @abstractmethod
     def read(self) -> Optional[D]:
-        """ Read the abstract representation of the target edit area.
+        """Read the abstract representation of the target edit area.
 
         The Generic return type 'D' here is the abstract representation of the
         code edit, not the actual data of the edit, though in some situations
@@ -98,7 +100,7 @@ class CodeEdit(ABC, Generic[D]):
 
     @abstractmethod
     def write(self, option: D):
-        """ Read the abstract representation of the target edit area.
+        """Read the abstract representation of the target edit area.
 
         The Generic option type 'D' here is the abstract representation of the
         code edit, not the actual data of the edit, though in some situations
@@ -108,4 +110,3 @@ class CodeEdit(ABC, Generic[D]):
         The implementation of this function is responsible for taking the
         abstract input and generating the corresponding code edit.
         """
-    
