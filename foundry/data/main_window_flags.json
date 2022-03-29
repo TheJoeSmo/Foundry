@@ -185,6 +185,19 @@
         }
       ]
     },
+    "customize": {
+      "name": "Customize",
+      "type": "actions",
+      "attribute": true,
+      "options": [
+        {
+          "player_lives": {
+            "name": "&Player Lives",
+            "action": "on_player_lives"
+          }
+        }
+      ]
+    },
     "help": {
       "name": "Help",
       "type": "actions",
