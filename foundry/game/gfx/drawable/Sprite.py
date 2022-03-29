@@ -11,7 +11,7 @@ from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
 
 
-@lru_cache(2 ** 10)
+@lru_cache(2**10)
 def get_sprite(
     index: int,
     palette_group: MutablePaletteGroupProtocol,
