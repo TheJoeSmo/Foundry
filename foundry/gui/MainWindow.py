@@ -35,6 +35,7 @@ from foundry.game.level.LevelManager import LevelManager
 from foundry.gui.AboutWindow import AboutDialog
 from foundry.gui.ContextMenu import CMAction
 from foundry.gui.LevelSelector import LevelSelector
+from foundry.gui.player_lives import PlayerLives
 from foundry.gui.settings import GUI_STYLE, SETTINGS, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.util import setup_window
@@ -688,6 +689,10 @@ class MainWindow(QMainWindow):
 
     def on_block_viewer(self, _):
         self.manager.display_block_viewer()
+
+    def on_player_lives(self, _):
+        """Shows the Player Lives UI"""
+        PlayerLives(self)
 
     def on_palette_viewer(self, _):
         self.manager.display_palette_viewer()
