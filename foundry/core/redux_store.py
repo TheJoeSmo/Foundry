@@ -52,7 +52,8 @@ class ReduxStore(ABC, Generic[S]):
 
         StateNoneError is raised if a None is provided for the default state
         """
-        if not state: raise StateNoneError
+        if not state:
+            raise StateNoneError
 
         self._default_state = state
         self._state = copy.deepcopy(state)

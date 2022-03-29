@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 """ Module defines an abstract class that represents a code edit in ROM.
 
 This CodeEdit will self verify that that the target memory location is correct
 by checking the surrounding code to make sure it matches.
 """
+=======
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic, Optional
@@ -13,7 +16,11 @@ D = TypeVar('D')
 
 @dataclass
 class CodeEdit(ABC, Generic[D]):
+<<<<<<< HEAD
     """ Represents an area to edit to the ROM code.
+=======
+    """ Represents an area to edit to the ROM code.  
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
 
     This class handles reading and writing the data of a specific code area for
     possible code edits.  It will also check the ROM to see if the target
@@ -25,7 +32,11 @@ class CodeEdit(ABC, Generic[D]):
     operations.
 
     Generic type 'D' is the abstract representation of the edit value and not
+<<<<<<< HEAD
     the literal data values (though they could be the same in some cases).
+=======
+    the literal data values (though they could be the same in some cases).  
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
     See read/write for more details.
 
     Parameters:
@@ -63,11 +74,18 @@ class CodeEdit(ABC, Generic[D]):
     prefix: bytearray
     postfix: bytearray
 
+<<<<<<< HEAD
     def _valid_affix(self, test_address: int, data: bytearray) -> bool:
         """ Verifies that the specified affix matches the ROM. """
         if len(data) == 0: 
             return True
         return data == self.rom.read(test_address, len(data))
+=======
+    def _valid_affix(self, testAddress: int, data: bytearray) -> bool:
+        """ Verifies that the specified affix matches the ROM. """
+        if len(data) == 0: return True
+        return data == self.rom.read(testAddress, len(data))
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
 
     def is_valid(self) -> bool:
         """ Verifies that both the prefix and postfix are valid.
@@ -76,19 +94,30 @@ class CodeEdit(ABC, Generic[D]):
         so that the value of the target area is also checked if that is
         important.
         """
+<<<<<<< HEAD
         if not self._valid_affix(self.address - len(self.prefix), self.prefix):
             return False
+=======
+        if not self._valid_affix(self.address - len(self.prefix), self.prefix): return False
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
         return self._valid_affix(self.address + self.length, self.postfix)
 
     @abstractmethod
     def read(self) -> Optional[D]:
+<<<<<<< HEAD
         """ Read the abstract representation of the target edit area.
 
         The Generic return type 'D' here is the abstract representation of the
+=======
+        """ Read the abstract representation of the target edit area. 
+        
+        The Generic return type 'D' here is the abstract representation of the 
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
         code edit, not the actual data of the edit, though in some situations
         these might be identical.  For example, if we are checking if the
         players lives decrease when they die, the return value might be a
         string "infinite lives" or "vanilla" or True/False while the actual
+<<<<<<< HEAD
         code edit might be the presence of an DEC NUM_LIVES instruction or a
         NOP section removing that code.
 
@@ -101,11 +130,33 @@ class CodeEdit(ABC, Generic[D]):
         """ Read the abstract representation of the target edit area.
 
         The Generic option type 'D' here is the abstract representation of the
+=======
+        code edit might be the presence of an DEC NUM_LIVES instruction or a 
+        NOP section removing that code.
+
+        This is an Optional[D] because if the code area is invalid, no value 
+        might be returned.
+        """
+        pass
+
+    @abstractmethod
+    def write(self, value: D):
+        """ Read the abstract representation of the target edit area. 
+        
+        The Generic return type 'D' here is the abstract representation of the 
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
         code edit, not the actual data of the edit, though in some situations
         these might be identical (see the read instruction documentation for
         an example).
 
+<<<<<<< HEAD
         The implementation of this function is responsible for taking the
         abstract input and generating the corresponding code edit.
         """
+=======
+        The implementation of this function is responsible for taking the 
+        abstract input and generating the corresponding code edit.
+        """
+        pass
+>>>>>>> 4de0dfbe5e948636f50ce1cc3dffb39f29eb4fac
     

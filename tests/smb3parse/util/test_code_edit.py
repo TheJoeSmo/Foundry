@@ -55,4 +55,3 @@ def test_full_affix():
     """ valid long prefix and postfix is valid. """
     test_area = CodeEditTest(get_test_rom(), 0x100, 1, long_prefix, long_postfix)
     assert True is test_area.is_valid()
-    
