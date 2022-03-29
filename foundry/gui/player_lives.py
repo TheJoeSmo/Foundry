@@ -93,36 +93,36 @@ class Store(ReduxStore[State]):
         if state is None:
             state = self.get_default_state()
 
-        if action.type == ActionNames.STARTING_LIVES:
+        if action.type == ActionNames.STARTING_LIVES.value:
             if Store._is_bounded_int(action.payload, 0, 99):
                 state.starting_lives = int(action.payload)
 
-        elif action.type == ActionNames.CONTINUE_LIVES:
+        elif action.type == ActionNames.CONTINUE_LIVES.value:
             if Store._is_bounded_int(action.payload, 0, 99):
                 state.continue_lives = int(action.payload)
 
-        elif action.type == ActionNames.DEATH_TAKES_LIVES:
+        elif action.type == ActionNames.DEATH_TAKES_LIVES.value:
             state.death_takes_lives = action.payload
 
-        elif action.type == ActionNames.HUNDRED_COINS_1UP:
+        elif action.type == ActionNames.HUNDRED_COINS_1UP.value:
             state.hundred_coins_1up = action.payload
 
-        elif action.type == ActionNames.END_CARD_1UP:
+        elif action.type == ActionNames.END_CARD_1UP.value:
             state.end_card_1up = action.payload
 
-        elif action.type == ActionNames.MUSHROOM_1UP:
+        elif action.type == ActionNames.MUSHROOM_1UP.value:
             state.mushroom_1up = action.payload
 
-        elif action.type == ActionNames.DICE_GAME_1UP:
+        elif action.type == ActionNames.DICE_GAME_1UP.value:
             state.dice_game_1up = action.payload
 
-        elif action.type == ActionNames.ROULETTE_1UP:
+        elif action.type == ActionNames.ROULETTE_1UP.value:
             state.roulette_1up = action.payload
 
-        elif action.type == ActionNames.CARD_GAME_1UP:
+        elif action.type == ActionNames.CARD_GAME_1UP.value:
             state.card_game_1up = action.payload
 
-        elif action.type == ActionNames.LOAD:
+        elif action.type == ActionNames.LOAD.value:
             state = self.get_default_state()
 
         return state
@@ -303,7 +303,7 @@ class View(CustomDialog):
         state changes in the system, the UI will automatically re-render.
         """
 
-        super(View, self).__init__(parent, title=_UIStrings.TITLE)
+        super(View, self).__init__(parent, title=_UIStrings.TITLE.value)
         self.rom_interface = rom_interface
         self.store = store
 
@@ -330,7 +330,7 @@ class View(CustomDialog):
         features are unsupported. """
 
         _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING}")
+        self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING.value}")
         self._invalid_rom_warning.setWordWrap(True)
         self._invalid_rom_warning.setFixedWidth(400)
         self._invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
@@ -351,10 +351,10 @@ class View(CustomDialog):
 
         fields_layout = QGridLayout()
         fields_layout.addWidget(
-            QLabel(f"{_UIStrings.STARTING_LIVES} (0-99):", self), 0, 0)
+            QLabel(f"{_UIStrings.STARTING_LIVES.value} (0-99):", self), 0, 0)
         fields_layout.addWidget(self._starting_lives_edit, 0, 1)
         fields_layout.addWidget(
-            QLabel(f"{_UIStrings.CONTINUE_LIVES} (0-99):", self), 1, 0)
+            QLabel(f"{_UIStrings.CONTINUE_LIVES.value} (0-99):", self), 1, 0)
         fields_layout.addWidget(self._continue_lives_edit, 1, 1)
 
         return fields_layout
@@ -364,7 +364,7 @@ class View(CustomDialog):
 
         layout = QBoxLayout(QBoxLayout.LeftToRight)
         self._death_takes_lives = View._create_checkbox(
-            _UIStrings.DEATH_TAKES_LIVES,
+            _UIStrings.DEATH_TAKES_LIVES.value,
             self._on_death_takes_lives,
             layout)
         return layout
@@ -382,37 +382,37 @@ class View(CustomDialog):
         """ Creates the layout for all of the possible 1up sources. """
 
         external_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        group = QGroupBox(f"{_UIStrings.TITLE_1UP}")
+        group = QGroupBox(f"{_UIStrings.TITLE_1UP.value}")
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group.setLayout(internal_layout)
 
         self._mushroom_1up = View._create_checkbox(
-            _UIStrings.MUSHROOM_1UP,
+            _UIStrings.MUSHROOM_1UP.value,
             self._on_mushroom_1up,
             internal_layout)
 
         self._hundred_coins_1up = View._create_checkbox(
-            _UIStrings.HUNDRED_COINS_1UP,
+            _UIStrings.HUNDRED_COINS_1UP.value,
             self._on_hundred_coins_1up,
             internal_layout)
 
         self._end_card_1up = View._create_checkbox(
-            _UIStrings.END_CARD_1UP,
+            _UIStrings.END_CARD_1UP.value,
             self._on_end_card_1up,
             internal_layout)
 
         self._card_game_1up = View._create_checkbox(
-            _UIStrings.CARD_GAME_1UP,
+            _UIStrings.CARD_GAME_1UP.value,
             self._on_card_game_1up,
             internal_layout)
 
         self._roulette_1up = View._create_checkbox(
-            _UIStrings.ROULETTE_1UP,
+            _UIStrings.ROULETTE_1UP.value,
             self._on_roulette_1up,
             internal_layout)
 
         self._dice_game_1up = View._create_checkbox(
-            _UIStrings.DICE_GAME_1UP,
+            _UIStrings.DICE_GAME_1UP.value,
             self._on_dice_game_1up,
             internal_layout)
 
@@ -496,55 +496,55 @@ class View(CustomDialog):
     def _on_starting_lives(self, text : str):
         """ Process UI change of number of starting lives """
         self.store.dispatch(Action(
-            ActionNames.STARTING_LIVES,
+            ActionNames.STARTING_LIVES.value,
             text))
 
     def _on_continue_lives(self, text : str):
         """ Process UI change of number of continue lives """
         self.store.dispatch(Action(
-            ActionNames.CONTINUE_LIVES,
+            ActionNames.CONTINUE_LIVES.value,
             text))
 
     def _on_death_takes_lives(self):
         """ Process UI change of on death checkbox """
         self.store.dispatch(Action(
-            ActionNames.DEATH_TAKES_LIVES,
+            ActionNames.DEATH_TAKES_LIVES.value,
             self._death_takes_lives.isChecked()))
 
     def _on_end_card_1up(self):
         """ Process UI change of end card 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.END_CARD_1UP,
+            ActionNames.END_CARD_1UP.value,
             self._end_card_1up.isChecked()))
 
     def _on_mushroom_1up(self):
         """ Process UI change of mushroom/enemy jumps 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.MUSHROOM_1UP,
+            ActionNames.MUSHROOM_1UP.value,
             self._mushroom_1up.isChecked()))
 
     def _on_dice_game_1up(self):
         """ Process UI change of dice game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.DICE_GAME_1UP,
+            ActionNames.DICE_GAME_1UP.value,
             self._dice_game_1up.isChecked()))
 
     def _on_roulette_1up(self):
         """ Process UI change of roulette 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.ROULETTE_1UP,
+            ActionNames.ROULETTE_1UP.value,
             self._roulette_1up.isChecked()))
 
     def _on_card_game_1up(self):
         """ Process UI change of card game 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.CARD_GAME_1UP,
+            ActionNames.CARD_GAME_1UP.value,
             self._card_game_1up.isChecked()))
 
     def _on_hundred_coins_1up(self):
         """ Process UI change of 100 coins 1up checkbox """
         self.store.dispatch(Action(
-            ActionNames.HUNDRED_COINS_1UP,
+            ActionNames.HUNDRED_COINS_1UP.value,
             self._hundred_coins_1up.isChecked()))
 
 class PlayerLives():
