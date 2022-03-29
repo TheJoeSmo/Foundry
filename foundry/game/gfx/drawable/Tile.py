@@ -12,7 +12,7 @@ PIXEL_OFFSET = 8  # both bits describing the color of a pixel are in separate 8 
 BACKGROUND_COLOR_INDEX = 0
 
 
-@lru_cache(2 ** 10)
+@lru_cache(2**10)
 class Tile:
     SIDE_LENGTH = 8  # pixel
     WIDTH = SIDE_LENGTH

@@ -23,7 +23,7 @@ from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
 from foundry.gui.Spinner import Spinner
 from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 
-LEVEL_LENGTHS = [0x10 * (i + 1) for i in range(0, 2 ** 4)]
+LEVEL_LENGTHS = [0x10 * (i + 1) for i in range(0, 2**4)]
 STR_LEVEL_LENGTHS = [f"{length - 1:0=#4X} / {length} Blocks".replace("X", "x") for length in LEVEL_LENGTHS]
 
 STR_X_POSITIONS = [f"{position >> 4}. Block ({position:0=#4X})".replace("X", "x") for position in MARIO_X_POSITIONS]
