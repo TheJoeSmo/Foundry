@@ -2,7 +2,12 @@ from hypothesis import given
 from hypothesis.strategies import booleans, builds, integers
 from pytest import fixture, raises
 
-from foundry.game.File import INESHeader, InvalidINESHeader
+from foundry.game.File import ROM, INESHeader, InvalidINESHeader
+
+
+@fixture
+def rom_header():
+    return INESHeader(16, 16, 3, True, False)
 
 
 @fixture
@@ -130,6 +135,14 @@ def test_normalized_address_from_expanded_rom_low_bound(expanded_rom_header: INE
     assert 0x7C000 + 0x10 == expanded_rom_header.normalized_address(0x3C010, 16)
 
 
+def test_normalized_address_from_expanded_rom_tsa_data_offset_normal(rom_header: INESHeader):
+    assert 0x3C3F9 == rom_header.normalized_address(0x3C3F9, 16)
+
+
+def test_normalized_address_from_expanded_rom_tsa_data_offset_expanded(expanded_rom_header: INESHeader):
+    assert 0x7C3F9 == expanded_rom_header.normalized_address(0x3C3F9, 16)
+
+
 def test_normalized_address_from_expanded_rom_high_bound(expanded_rom_header: INESHeader):
     assert 0x7FFFF + 0x10 == expanded_rom_header.normalized_address(0x3FFFF + 0x10, 16)
 
@@ -137,3 +150,68 @@ def test_normalized_address_from_expanded_rom_high_bound(expanded_rom_header: IN
 @given(integers(min_value=0), headers())
 def test_normalized_address_with_same_size_do_not_change(address: int, header: INESHeader):
     assert address == header.normalized_address(address, header.program_size)
+
+
+"""
+Tests to ensure that the ROM is being read from properly.
+"""
+
+
+def test_get_byte_start(rom_singleton: ROM):
+    assert 0x4E == rom_singleton.get_byte(0)
+
+
+def test_get_byte_regular_program_bank(rom_singleton: ROM):
+    assert 0xA0 == rom_singleton.get_byte(0x2010)
+
+
+def test_get_byte_global_program_bank(rom_singleton: ROM):
+    assert 0x00 == rom_singleton.get_byte(0x3C010)
+
+
+def test_get_byte_end(rom_singleton: ROM):
+    assert 0xF7 == rom_singleton.get_byte(0x3FFFF + 0x10)
+
+
+def test_bulk_read_header(rom_singleton: ROM):
+    assert bytes(
+        [0x4E, 0x45, 0x53, 0x1A, 0x10, 0x10, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0]
+    ) == rom_singleton.bulk_read(0x10, 0)
+
+
+def test_bulk_read_regular_program_bank(rom_singleton: ROM):
+    assert bytes(
+        [0xA0, 0xD3, 0x7B, 0xA2, 0x21, 0xA3, 0xA0, 0xD3, 0xA6, 0xA3, 0xDE, 0xA3, 0xAE, 0xA4, 0x2D, 0xAD]
+    ) == rom_singleton.bulk_read(0x10, 0x2010)
+
+
+def test_bulk_read_global_program_bank(rom_singleton: ROM):
+    assert bytes(
+        [0x0, 0x60, 0xB0, 0x61, 0x60, 0x63, 0x10, 0x65, 0xC0, 0x66, 0x70, 0x68, 0x20, 0x6A, 0xD0, 0x6B]
+    ) == rom_singleton.bulk_read(0x10, 0x3C010)
+
+
+def test_bulk_read_end(rom_singleton: ROM):
+    assert bytes(
+        [0x33, 0x0, 0x0, 0x6C, 0x56, 0x3, 0x0, 0x1, 0xC, 0x1, 0x2D, 0x86, 0xF4, 0x40, 0xFF, 0x95]
+    ) == rom_singleton.bulk_read(0x10, 0x3FFFF)
+
+
+def test_bulk_write_header(rom_singleton: ROM):
+    rom_singleton.bulk_write(bytearray([0] * 0x10), 0)
+    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0)
+
+
+def test_bulk_write_regular_program_bank(rom_singleton: ROM):
+    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x2010)
+    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x2010)
+
+
+def test_bulk_write_global_program_bank(rom_singleton: ROM):
+    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3C010)
+    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x3C010)
+
+
+def test_bulk_write_end(rom_singleton: ROM):
+    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3FFFF)
+    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x3FFFF)
