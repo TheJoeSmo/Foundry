@@ -327,8 +327,9 @@ class ROM(Rom):
 
         return self.rom_data[position]
 
-    def bulk_read(self, count: int, position: int) -> bytearray:
-        position = self.header.normalized_address(position)
+    def bulk_read(self, count: int, position: int, *, is_graphics: bool = False) -> bytearray:
+        if not is_graphics:
+            position = self.header.normalized_address(position)
 
         if position + count > len(self.rom_data):
             raise IndexError(

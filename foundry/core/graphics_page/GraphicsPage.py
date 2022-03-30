@@ -4,8 +4,8 @@ from typing import Optional, Protocol
 from attr import attrs
 from pydantic import BaseModel, FilePath
 
-from foundry.core.graphics_page import CHR_ROM_OFFSET, CHR_ROM_SEGMENT_SIZE
-from foundry.game.File import ROM
+from foundry.core.graphics_page import CHR_ROM_SEGMENT_SIZE
+from foundry.game.File import ROM, INESHeader
 
 
 class GraphicsPageProtocol(Protocol):
@@ -43,11 +43,11 @@ class GraphicsPage:
 
     @property
     def offset(self) -> int:
-        return CHR_ROM_OFFSET + self.index * CHR_ROM_SEGMENT_SIZE
+        return ROM().header.program_size + self.index * CHR_ROM_SEGMENT_SIZE + INESHeader.INES_HEADER_SIZE
 
     def __bytes__(self) -> bytes:
         if self.path is None:
-            return bytes(ROM().bulk_read(CHR_ROM_SEGMENT_SIZE, self.offset))
+            return bytes(ROM().bulk_read(CHR_ROM_SEGMENT_SIZE, self.offset, is_graphics=True))
         with open(self.path, "rb") as f:
             return f.read()[CHR_ROM_SEGMENT_SIZE * self.offset : CHR_ROM_SEGMENT_SIZE * (self.offset + 1)]
 
