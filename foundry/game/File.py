@@ -13,6 +13,7 @@ WORLD_COUNT = 9  # includes warp zone
 
 OS_SIZE = 2  # byte
 
+WORLD_MAP_TSA_INDEX = 12
 TSA_OS_LIST = PAGE_A000_ByTileset
 TSA_TABLE_SIZE = 0x400
 TSA_TABLE_INTERVAL = TSA_TABLE_SIZE + 0x1C00
@@ -209,6 +210,7 @@ class INESHeader:
         int
             The normalized address.
         """
+
         if self.program_size == program_size:
             return address
         return (
@@ -216,7 +218,7 @@ class INESHeader:
             + self.relative_address(address)
             - INESHeader.PROGRAM_BANK_SIZE
             + INESHeader.INES_HEADER_SIZE
-            if self.address_is_global(address, program_size)
+            if self.address_is_global(address, program_size // INESHeader.PROGRAM_BANK_SIZE)
             else self.program_address(address) + INESHeader.INES_HEADER_SIZE
         )
 
@@ -249,15 +251,16 @@ class ROM(Rom):
     def get_tsa_data(object_set: int) -> bytearray:
         rom = ROM()
 
-        tsa_index = rom.int(TSA_OS_LIST + object_set)
-
         if object_set == 0:
-            # todo why is the tsa index in the wrong (seemingly) false?
-            tsa_index += 1
+            tsa_index = WORLD_MAP_TSA_INDEX
+        else:
+            tsa_index = rom.get_byte(TSA_OS_LIST + object_set)
 
         tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
+        tsa_data = rom.bulk_read(TSA_TABLE_SIZE, rom.header.normalized_address(tsa_start))
 
-        return rom.read(tsa_start, TSA_TABLE_SIZE)
+        assert len(tsa_data) == TSA_TABLE_SIZE
+        return tsa_data
 
     @staticmethod
     def write_tsa_data(object_set: int, tsa_data: bytearray):
@@ -316,54 +319,24 @@ class ROM(Rom):
     def is_loaded() -> bool:
         return bool(ROM.path)
 
-    def seek(self, position: int) -> int:
-        if position > len(ROM.rom_data) or position < 0:
-            return -1
+    def get_byte(self, position: int) -> int:
+        position = self.header.normalized_address(position)
 
-        self.position = position
+        if position > len(self.rom_data):
+            raise IndexError(f"Cannot read index at 0x{position:X} from a file of size 0x{len(self.rom_data):X}")
 
-        return 0
+        return self.rom_data[position]
 
-    def get_byte(self, position: int = -1) -> int:
-        if position >= 0:
-            k = self.seek(position) >= 0
-        else:
-            k = self.position < len(ROM.rom_data)
+    def bulk_read(self, count: int, position: int) -> bytearray:
+        position = self.header.normalized_address(position)
 
-        if k:
-            return_byte = ROM.rom_data[self.position]
-        else:
-            return_byte = 0
-
-        self.position += 1
-
-        return return_byte
-
-    def peek_byte(self, position: int = -1) -> int:
-        old_position = self.position
-
-        byte = self.get_byte(position)
-
-        self.position = old_position
-
-        return byte
-
-    def bulk_read(self, count: int, position: int = -1) -> bytearray:
-        if position >= 0:
-            self.seek(position)
-        else:
-            position = self.position
-
-        self.position += count
+        if position + count > len(self.rom_data):
+            raise IndexError(
+                f"Cannot read index at 0x{position + count:X} from a file of size 0x{len(self.rom_data):X}"
+            )
 
         return ROM.rom_data[position : position + count]
 
-    def bulk_write(self, data: bytearray, position: int = -1):
-        if position >= 0:
-            self.seek(position)
-        else:
-            position = self.position
-
-        self.position += len(data)
-
-        ROM.rom_data[position : position + len(data)] = data
+    def bulk_write(self, data: bytearray, position: int):
+        position = self.header.normalized_address(position)
+        self.rom_data[position : position + len(data)] = data
