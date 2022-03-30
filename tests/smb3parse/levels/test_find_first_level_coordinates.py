@@ -16,7 +16,7 @@ def test_find_first_level_coordinates(rom: Rom):
         if coordinate.tile() == TILE_LEVEL_1:
             break
     else:
-        pytest.fail("Didn't find Level 1 in this world.")
+        pytest.fail("Didn't find PydanticLevel 1 in this world.")
         return
 
     assert coordinate.level_info is not None

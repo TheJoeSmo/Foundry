@@ -9,6 +9,7 @@ from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.ContextMenu import ContextMenu
 from foundry.gui.LevelView import LevelView
+from foundry.gui.settings import FileSettings, UserSettings
 from foundry.smb3parse.levels import HEADER_LENGTH
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 from tests.conftest import compare_images
@@ -57,8 +58,8 @@ with open(data_dir / "levels.dat", "r") as level_data_file:
         level_data.append((level_name, level_address, enemy_address, object_set_number, False))
         level_data.append((level_name, level_address, enemy_address, object_set_number, True))
 
-        test_name.append(f"Level {world_no}-{level_no} - {level_name}, no transparency")
-        test_name.append(f"Level {world_no}-{level_no} - {level_name}")
+        test_name.append(f"PydanticLevel {world_no}-{level_no} - {level_name}, no transparency")
+        test_name.append(f"PydanticLevel {world_no}-{level_no} - {level_name}")
 
 
 @pytest.mark.parametrize("level_info", level_data, ids=test_name)
@@ -72,7 +73,7 @@ def test_level(level_info, qtbot):
     # monkeypatch level names, since the level name data is broken atm
     level_ref.level.name = current_test_name()
 
-    level_view = LevelView(None, level_ref, ContextMenu(level_ref))
+    level_view = LevelView(None, level_ref, ContextMenu(level_ref), FileSettings(), UserSettings())
     level_view.transparency = transparent
     level_view.draw_jumps = False
     level_view.draw_grid = False
@@ -102,7 +103,7 @@ def test_draw_m3ls(m3l_file_name, level, qtbot):
         ref = LevelRef()
         ref._internal_level = level
 
-        view = LevelView(None, ref, ContextMenu(ref))
+        view = LevelView(None, ref, ContextMenu(ref), FileSettings(), UserSettings())
         view.draw_grid = False
 
         compare_images(m3l_file_name.stem, str(reference_image_dir / f"{m3l_file_name.stem}.png"), view.grab())

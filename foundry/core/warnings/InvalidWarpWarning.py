@@ -16,7 +16,7 @@ class InvalidWarpWarning(Warning):
         ----------
         obj : Jump
             The jump to check.
-        level : Optional[Level]
+        level : Optional[PydanticLevel]
             The level to check the warps of.
 
         Returns
@@ -31,7 +31,7 @@ class InvalidWarpWarning(Warning):
         return level is not None and not level.has_next_area
 
     def get_message(self, obj: ObjectLike) -> str:
-        return f"Level has {obj}, but no Jump Destination in Level Header."
+        return f"PydanticLevel has {obj}, but no Jump Destination in PydanticLevel Header."
 
 
 class PydanticInvalidWarpWarning(PydanticWarning):

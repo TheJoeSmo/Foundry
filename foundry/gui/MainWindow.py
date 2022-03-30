@@ -37,7 +37,7 @@ from foundry.gui.ContextMenu import CMAction
 from foundry.gui.LevelSelector import LevelSelector
 from foundry.gui.orb import Orb
 from foundry.gui.player_lives import PlayerLives
-from foundry.gui.settings import GUI_STYLE, SETTINGS, save_settings
+from foundry.gui.settings import GUILoader, UserSettings, load_gui_loader, save_settings
 from foundry.gui.SettingsDialog import POWERUPS, SettingsDialog
 from foundry.gui.util import setup_window
 from foundry.smb3parse.constants import (
@@ -78,19 +78,25 @@ MODE_RESIZE = 2
 class MainWindow(QMainWindow):
     level_selector_last_level: Optional[tuple[int, int]]
 
-    def __init__(self, path_to_rom="", world=None, level=None):
+    def __init__(
+        self,
+        path_to_rom="",
+        world=None,
+        level=None,
+        user_settings: Optional[UserSettings] = None,
+        gui_loader: Optional[GUILoader] = None,
+    ):
         super(MainWindow, self).__init__()
 
         self.setWindowIcon(icon(main_window_flags["icon"]))
-        try:
-            GUI_STYLE[SETTINGS["gui_style"]](self)
-        except KeyError:
-            SETTINGS["gui_style"] = "LIGHT BLUE"
-            GUI_STYLE[SETTINGS["gui_style"]]
+        self.user_settings = UserSettings() if user_settings is None else user_settings
+        self.gui_loader = load_gui_loader() if gui_loader is None else gui_loader
 
-        setup_window(self, main_window_flags)
+        self.gui_loader.load_style(self.user_settings.gui_style)(self)
 
-        self.manager = LevelManager(self)
+        setup_window(self, main_window_flags, self.user_settings)
+
+        self.manager = LevelManager(self, self.user_settings)
         self.manager.on_enable()
 
         self.menu_toolbar = QToolBar("Menu Toolbar", self)
@@ -100,7 +106,7 @@ class MainWindow(QMainWindow):
         self.menu_toolbar.addAction(icon("settings.svg"), "Editor Settings").triggered.connect(self._on_show_settings)
         self.menu_toolbar.addSeparator()
         self.menu_toolbar.addAction(icon("folder.svg"), "Open ROM").triggered.connect(self.on_open_rom)
-        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.svg"), "Save Level")
+        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.svg"), "Save PydanticLevel")
         self.menu_toolbar_save_action.triggered.connect(self.on_save_rom)
         self.menu_toolbar.addSeparator()
 
@@ -112,14 +118,14 @@ class MainWindow(QMainWindow):
         self.redo_action.setEnabled(False)
 
         self.menu_toolbar.addSeparator()
-        play_action = self.menu_toolbar.addAction(icon("play-circle.svg"), "Play Level")
+        play_action = self.menu_toolbar.addAction(icon("play-circle.svg"), "Play PydanticLevel")
         play_action.triggered.connect(self.on_play)
-        play_action.setWhatsThis("Opens an emulator with the current Level set to 1-1.\nSee Settings.")
+        play_action.setWhatsThis("Opens an emulator with the current PydanticLevel set to 1-1.\nSee Settings.")
         self.menu_toolbar.addSeparator()
         self.menu_toolbar.addAction(icon("zoom-out.svg"), "Zoom Out").triggered.connect(self.manager.zoom_out)
         self.menu_toolbar.addAction(icon("zoom-in.svg"), "Zoom In").triggered.connect(self.manager.zoom_in)
         self.menu_toolbar.addSeparator()
-        header_action = self.menu_toolbar.addAction(icon("tool.svg"), "Edit Level Header")
+        header_action = self.menu_toolbar.addAction(icon("tool.svg"), "Edit PydanticLevel Header")
         header_action.triggered.connect(self.manager.display_header_editor)
         header_action.setWhatsThis(
             "<b>Header Editor</b><br/>"
@@ -171,7 +177,7 @@ class MainWindow(QMainWindow):
         self.showMaximized()
 
     def _on_show_settings(self):
-        SettingsDialog(self).exec_()
+        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec_()
 
     @staticmethod
     def _save_auto_rom():
@@ -252,15 +258,15 @@ class MainWindow(QMainWindow):
 
         temp_rom.write(
             Title_PrepForWorldMap - 0x8,
-            bytes([SETTINGS["default_starting_world"] - 1]),
+            bytes([self.user_settings.default_starting_world - 1]),
         )
 
         temp_rom.save_to(str(path_to_temp_rom))
 
-        arguments = SETTINGS["instaplay_arguments"].replace("%f", str(path_to_temp_rom))
+        arguments = self.user_settings.instaplay_arguments.replace("%f", str(path_to_temp_rom))
         arguments = shlex.split(arguments, posix=False)
 
-        emu_path = pathlib.Path(SETTINGS["instaplay_emulator"])
+        emu_path = pathlib.Path(self.user_settings.instaplay_emulator)
 
         if emu_path.is_absolute():
             if emu_path.exists():
@@ -271,7 +277,7 @@ class MainWindow(QMainWindow):
                 )
                 return
         else:
-            emulator = SETTINGS["instaplay_emulator"]
+            emulator = self.user_settings.instaplay_emulator
 
         try:
             subprocess.run([emulator, *arguments])
@@ -288,7 +294,7 @@ class MainWindow(QMainWindow):
 
     def _put_current_level_to_level_1_1(self, rom) -> bool:
         # load world data
-        world = SMB3World.from_world_number(rom, SETTINGS["default_starting_world"])
+        world = SMB3World.from_world_number(rom, self.user_settings.default_starting_world)
 
         # find point of "level 1" tile in world map
         for position in world.gen_positions():
@@ -304,7 +310,7 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(
                 self,
                 "Couldn't place level",
-                "The Level is not part of the rom yet (M3L?). Try saving it into the ROM first.",
+                "The PydanticLevel is not part of the rom yet (M3L?). Try saving it into the ROM first.",
             )
             return False
 
@@ -324,8 +330,8 @@ class MainWindow(QMainWindow):
         world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
 
     def _set_default_powerup(self, rom) -> bool:
-        *_, powerup, hasPWing = POWERUPS[SETTINGS["default_powerup"]]
-        hasStar = SETTINGS["default_power_has_star"]
+        *_, powerup, hasPWing = POWERUPS[self.user_settings.default_powerup]
+        hasStar = self.user_settings.default_power_has_star
         nop = 0xEA
 
         rom.write(Title_PrepForWorldMap - 0x4, bytes([nop, nop, nop]))
@@ -675,9 +681,9 @@ class MainWindow(QMainWindow):
         if item_id not in CHECKABLE_MENU:
             return
         setattr(self.level_view, CHECKABLE_MENU[item_id]["attribute"], checked)
-        SETTINGS[CHECKABLE_MENU[item_id]["name"]] = checked
+        setattr(self.user_settings, CHECKABLE_MENU[item_id]["name"], checked)
 
-        save_settings()
+        save_settings(self.user_settings)
 
     def open_level_selector(self, _):
         self.manager.on_select()

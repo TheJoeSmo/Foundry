@@ -25,7 +25,7 @@ from foundry.game.gfx.objects.ObjectLike import (
 )
 from foundry.game.level.Level import Level
 from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
-from foundry.gui.settings import SETTINGS
+from foundry.gui.settings import UserSettings
 from foundry.smb3parse.constants import OBJ_AUTOSCROLL, TILESET_BACKGROUND_BLOCKS
 from foundry.smb3parse.levels import LEVEL_MAX_LENGTH
 from foundry.smb3parse.objects.object_set import (
@@ -116,16 +116,8 @@ def _block_from_index(block_index: int, level: Level) -> Block:
 
 
 class LevelDrawer:
-    def __init__(self):
-        self.draw_jumps = False
-        self.draw_grid = False
-        self.draw_expansions = False
-        self.draw_mario = False
-        self.draw_jumps_on_objects = True
-        self.draw_items_in_blocks = True
-        self.draw_invisible_items = True
-        self.draw_autoscroll = True
-        self.transparency = False
+    def __init__(self, user_settings: UserSettings):
+        self.user_settings = user_settings
 
         self.block_length = Block.WIDTH
 
@@ -150,19 +142,19 @@ class LevelDrawer:
 
         self._draw_overlays(painter, level)
 
-        if self.draw_expansions:
+        if self.user_settings.draw_expansion:
             self._draw_expansions(painter, level)
 
-        if self.draw_mario:
+        if self.user_settings.draw_mario:
             self._draw_mario(painter, level)
 
-        if self.draw_jumps:
+        if self.user_settings.draw_jumps:
             self._draw_jumps(painter, level)
 
-        if self.draw_grid:
+        if self.user_settings.draw_grid:
             self._draw_grid(painter, level)
 
-        if self.draw_autoscroll:
+        if self.user_settings.draw_autoscroll:
             self._draw_auto_scroll(painter, level)
 
     def _draw_background(self, painter: QPainter, level: Level):
@@ -261,9 +253,9 @@ class LevelDrawer:
                     level_object._draw_block(painter, block_index, x, y, self.block_length, False, blocks=blocks)
             else:
                 if isinstance(level_object, LevelObject):
-                    level_object.draw(painter, self.block_length, self.transparency, blocks=blocks)
+                    level_object.draw(painter, self.block_length, self.user_settings.block_transparency, blocks=blocks)
                 else:
-                    level_object.draw(painter, self.block_length, self.transparency)
+                    level_object.draw(painter, self.block_length, self.user_settings.block_transparency)
 
             if level_object.selected:
                 painter.save()
@@ -294,7 +286,7 @@ class LevelDrawer:
 
             # pipe entries
             if "pipe" in name and "can go" in name:
-                if not self.draw_jumps_on_objects:
+                if not self.user_settings.draw_jump_on_objects:
                     continue
 
                 fill_object = False
@@ -357,7 +349,7 @@ class LevelDrawer:
 
             # "?" - blocks, note blocks, wooden blocks and bricks
             elif "'?' with" in name or "brick with" in name or "bricks with" in name or "block with" in name:
-                if not self.draw_items_in_blocks:
+                if not self.user_settings.draw_items_in_blocks:
                     continue
 
                 pos.setY(pos.y() - self.block_length)
@@ -389,7 +381,7 @@ class LevelDrawer:
                 painter.drawImage(arrow_pos, ITEM_ARROW.scaled(self.block_length, self.block_length))
 
             elif "invisible" in name:
-                if not self.draw_invisible_items:
+                if not self.user_settings.draw_invisible_items:
                     continue
 
                 if "coin" in name:
@@ -400,7 +392,7 @@ class LevelDrawer:
                     image = EMPTY_IMAGE
 
             elif "silver coins" in name:
-                if not self.draw_invisible_items:
+                if not self.user_settings.draw_invisible_items:
                     continue
 
                 image = SILVER_COIN
@@ -439,7 +431,7 @@ class LevelDrawer:
             if level_object.selected:
                 painter.drawRect(level_object.get_rect(self.block_length))
 
-            if self.draw_expansions:
+            if self.user_settings.draw_expansion:
                 painter.save()
 
                 painter.setPen(Qt.NoPen)
@@ -464,7 +456,7 @@ class LevelDrawer:
 
         x_offset = 32 * level.start_action
         MARIO_POWERUP_Y_OFFSETS = [0, 0x20, 0x60, 0x40, 0xC0, 0xA0, 0x80, 0x60, 0xC0]
-        y_offset = MARIO_POWERUP_Y_OFFSETS[SETTINGS["default_powerup"]]
+        y_offset = MARIO_POWERUP_Y_OFFSETS[self.user_settings.default_powerup]
 
         mario_cutout = mario_actions.copy(QRect(x_offset, y_offset, 32, 32)).scaled(
             2 * self.block_length, 2 * self.block_length

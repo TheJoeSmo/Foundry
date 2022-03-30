@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import open_url
-from foundry.gui.settings import SETTINGS
+from foundry.gui.settings import UserSettings
 
 ID_PROP = "ID"
 
@@ -575,7 +575,7 @@ def setup_layout(parent: QWidget, flags: dict) -> QLayout:
     return layout
 
 
-def setup_widget_menu(widget: QMainWindow, flags):
+def setup_widget_menu(widget: QMainWindow, flags, user_settings: UserSettings):
     for menu_name, menu in flags["menu"].items():
         qmenu = QMenu(menu["name"])
         if menu.get("attribute", False):
@@ -617,9 +617,9 @@ def setup_widget_menu(widget: QMainWindow, flags):
                     action = qmenu.addAction(name)
                     action.setProperty(ID_PROP, option["id"])
                     action.setCheckable(True)
-                    action.setChecked(SETTINGS[option["name"]])
+                    action.setChecked(getattr(user_settings, option["name"]))
         widget.menuBar().addMenu(qmenu)
 
 
-def setup_window(widget: QMainWindow, flags):
-    setup_widget_menu(widget, flags)
+def setup_window(widget: QMainWindow, flags, user_settings: UserSettings):
+    setup_widget_menu(widget, flags, user_settings)

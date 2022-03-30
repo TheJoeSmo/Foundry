@@ -14,6 +14,9 @@ home_dir.mkdir(parents=True, exist_ok=True)
 
 default_settings_path = home_dir / "settings"
 
+file_settings_path = home_dir / "file_settings"
+file_settings_path.mkdir(parents=True, exist_ok=True)
+
 auto_save_path = home_dir / "auto_save"
 auto_save_path.mkdir(parents=True, exist_ok=True)
 
@@ -22,6 +25,8 @@ auto_save_m3l_path = auto_save_path / "auto_save.m3l"
 auto_save_level_data_path = auto_save_path / "level_data.json"
 
 data_dir = root_dir / "data"
+default_levels_path = data_dir / "levels.json"
+default_styles_path = data_dir / "gui_styles.json"
 main_window_flags_path = data_dir / "main_window_flags.json"
 jump_creator_flags_path = data_dir / "jump_creator_flags.json"
 spinner_panel_flags_path = data_dir / "spinner_panel_flags.json"
