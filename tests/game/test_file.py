@@ -191,12 +191,6 @@ def test_bulk_read_global_program_bank(rom_singleton: ROM):
     ) == rom_singleton.bulk_read(0x10, 0x3C010)
 
 
-def test_bulk_read_end(rom_singleton: ROM):
-    assert bytes(
-        [0x33, 0x0, 0x0, 0x6C, 0x56, 0x3, 0x0, 0x1, 0xC, 0x1, 0x2D, 0x86, 0xF4, 0x40, 0xFF, 0x95]
-    ) == rom_singleton.bulk_read(0x10, 0x3FFFF)
-
-
 def test_bulk_write_header(rom_singleton: ROM):
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0)
     assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0)
@@ -215,3 +209,7 @@ def test_bulk_write_global_program_bank(rom_singleton: ROM):
 def test_bulk_write_end(rom_singleton: ROM):
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3FFFF)
     assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x3FFFF)
+
+
+def test_tagged_file(rom_singleton: ROM):
+    assert rom_singleton.rom_data.find(rom_singleton.MARKER_VALUE) > 0

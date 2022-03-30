@@ -56,7 +56,7 @@ class EnemyCompatibilityWarning(Warning):
         ----------
         obj : EnemyObject
             The object to check.
-        level : Level
+        level : PydanticLevel
             The level the object is housed inside.
         index : int
             The index into the level enemies obj is housed.

@@ -83,12 +83,12 @@ class LevelController:
         object_set = self.level_ref.level.next_area_object_set
 
         self.update_level(
-            f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
+            f"PydanticLevel {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
         )
 
     @require_safe_to_change
     def on_select(self):
-        selector = LevelSelector(self.parent, start_level=self.level_selector_last_level)
+        selector = LevelSelector(self.parent, ROM().settings, start_level=self.level_selector_last_level)
 
         if QDialog.Accepted == selector.exec():
             self.level_selector_last_level = selector.current_level_index

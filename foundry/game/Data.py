@@ -52,16 +52,16 @@ map_sprite_names = [
 
 obj_sets = [
     "Map Screen",
-    "Plains Level",
-    "Hilly/Underground Level",
-    "Sky Level",
+    "Plains PydanticLevel",
+    "Hilly/Underground PydanticLevel",
+    "Sky PydanticLevel",
     "Dungeon",
     "Airship",
-    "Cloudy Level",
-    "Desert Level",
-    "Water/Pipe Level",
-    "Giant Level",
-    "Ice Level",
+    "Cloudy PydanticLevel",
+    "Desert PydanticLevel",
+    "Water/Pipe PydanticLevel",
+    "Giant PydanticLevel",
+    "Ice PydanticLevel",
 ]
 
 mushroom_houses = [

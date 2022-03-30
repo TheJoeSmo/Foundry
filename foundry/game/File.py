@@ -1,8 +1,10 @@
 from os.path import basename
+from random import getrandbits
 from typing import ClassVar, List, Optional, Type, TypeVar
 
 from attr import attrs
 
+from foundry.gui.settings import FileSettings, load_file_settings, save_file_settings
 from foundry.smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
 from foundry.smb3parse.util.rom import Rom
 
@@ -224,15 +226,16 @@ class INESHeader:
 
 
 class ROM(Rom):
-    MARKER_VALUE = bytes("SMB3FOUNDRY", "ascii")
+    NINTENDO_MARKER_VALUE: ClassVar[bytes] = bytes("SUPER MARIO 3", "ascii")
+    MARKER_VALUE: ClassVar[bytes] = bytes("SMB3FOUNDRY", "ascii")
 
     rom_data = bytearray()
-
-    additional_data = ""
 
     path: str = ""
     name: str = ""
     header: INESHeader
+    _settings: FileSettings
+    _id: Optional[int]
 
     W_INIT_OS_LIST: List[int] = []
 
@@ -276,25 +279,93 @@ class ROM(Rom):
 
         rom.bulk_write(tsa_data, tsa_start)
 
+    def generate_tag(self) -> Optional[int]:
+        """
+        Generates a identification tag for a file.  This enables the file to be references later on.
+
+        This tag will include the ROM_MARKER value and eight random bytes that serve as the ID of the file.
+
+        Returns
+        -------
+        Optional[int]
+            The ID of the file, if the tag was successfully generated and applied.
+        """
+        with open(self.path, "rb") as rom:
+            data = bytearray(rom.read())
+
+        nintendo_id_offset = data.find(self.NINTENDO_MARKER_VALUE)
+
+        if nintendo_id_offset == -1:
+            return None
+
+        # 8 random bytes to be used as the id.
+        rom_id = getrandbits(64)
+
+        self.write(nintendo_id_offset, self.MARKER_VALUE + rom_id.to_bytes(8, "big"))
+
+        return rom_id
+
+    def get_id(self) -> Optional[int]:
+        """
+        Determines the ID of the file.
+
+        Returns
+        -------
+        Optional[int]
+            The ID of the file, if one can exist.
+        """
+        with open(self.path, "rb") as rom:
+            data = bytearray(rom.read())
+
+        rom_id_start = data.find(self.MARKER_VALUE)
+
+        return (
+            self.generate_tag()
+            if rom_id_start == -1
+            else int.from_bytes(
+                data[rom_id_start + len(self.MARKER_VALUE) : rom_id_start + len(self.MARKER_VALUE) + 8],
+                "big",
+            )
+        )
+
+    @property
+    def identifier(self) -> str:
+        """
+        Provides an identifier for the file.
+
+        Returns
+        -------
+        str
+            The identifier associated with this file.
+        """
+        return str(self._id) if self._id is not None else self.path
+
+    @property
+    def settings(self) -> FileSettings:
+        """
+        Provides the settings for the file.
+
+        Returns
+        -------
+        FileSettings
+            The settings associated with this file.
+        """
+        return self._settings
+
+    @settings.setter
+    def settings(self, settings: FileSettings):
+        self._settings = settings
+
     @staticmethod
     def load_from_file(path: str):
         with open(path, "rb") as rom:
             data = bytearray(rom.read())
 
+        ROM.rom_data = data
         ROM.path = path
         ROM.name = basename(path)
-
-        additional_data_start = data.find(ROM.MARKER_VALUE)
-
-        if additional_data_start == -1:
-            ROM.rom_data = data
-            ROM.additional_data = ""
-        else:
-            ROM.rom_data = data[:additional_data_start]
-
-            additional_data_start += len(ROM.MARKER_VALUE)
-
-            ROM.additional_data = data[additional_data_start:].decode("utf-8")
+        ROM._id = ROM().get_id()
+        ROM._settings = load_file_settings(str(ROM._id))
         ROM.header = INESHeader.from_data(ROM.rom_data)
 
     @staticmethod
@@ -302,10 +373,7 @@ class ROM(Rom):
         with open(path, "wb") as f:
             f.write(bytearray(ROM.rom_data))
 
-        if ROM.additional_data:
-            with open(path, "ab") as f:
-                f.write(ROM.MARKER_VALUE)
-                f.write(ROM.additional_data.encode("utf-8"))
+        save_file_settings(str(ROM._id), ROM._settings)
 
         if set_new_path:
             ROM.path = path

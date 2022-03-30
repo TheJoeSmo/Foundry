@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 
 from foundry import auto_save_rom_path, github_issue_link
 from foundry.gui.AutoSaveDialog import AutoSaveDialog
-from foundry.gui.settings import load_settings, save_settings
+from foundry.gui.settings import load_gui_loader, load_settings, save_settings
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ def start():
     parser.add_argument(
         "--dev", default=False, action=BooleanOptionalAction, type=bool, help="Override path with system path"
     )
-    parser.add_argument("--level", type=int, help="Level index", default=None)
+    parser.add_argument("--level", type=int, help="PydanticLevel index", default=None)
     parser.add_argument("--world", type=int, help="World Index", default=None)
 
     args = parser.parse_args()
@@ -41,7 +41,8 @@ def start():
 
 
 def main(path_to_rom: str = "", world=None, level=None):
-    load_settings()
+    user_settings = load_settings()
+    gui_loader = load_gui_loader()
 
     app = QApplication()
 
@@ -55,11 +56,11 @@ def main(path_to_rom: str = "", world=None, level=None):
                 None, "Auto Save recovered", "Don't forget to save the loaded ROM under a new name!"
             )
 
-    window = MainWindow(path_to_rom, world, level)
+    window = MainWindow(path_to_rom, world, level, user_settings=user_settings, gui_loader=gui_loader)
     if window.loaded:
         del window.loaded
         app.exec_()
-        save_settings()
+        save_settings(user_settings)
 
 
 if __name__ == "__main__":
