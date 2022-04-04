@@ -13,13 +13,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import (
-    QBoxLayout,
-    QCheckBox,
-    QDialogButtonBox,
-    QLabel,
-    QGroupBox
-)
+from PySide6.QtWidgets import QBoxLayout, QCheckBox, QDialogButtonBox, QGroupBox, QLabel
 
 from foundry.core.redux_store import Action, ReduxStore
 from foundry.game.File import ROM
@@ -118,28 +112,24 @@ class RomInterface:
             0x68FD,
             3,
             bytearray([0x18, 0x05, 0xF0, 0x12]),
-            {False: bytearray([0x8c, 0xf4, 0x7c]), True: nop_x_3},
-            bytearray([0x88, 0xd0, 0x0b, 0x8c]),
+            {False: bytearray([0x8C, 0xF4, 0x7C]), True: nop_x_3},
+            bytearray([0x88, 0xD0, 0x0B, 0x8C]),
         )
 
         self._move_touch_to_timer = CodeEditDict(
             rom,
             0x6913,
             3,
-            bytearray([0xb5, 0x9a, 0xf0, 0x0e]),
-            {False: bytearray([0x8d, 0xf4, 0x7c]), True: nop_x_3},
-            bytearray([0x20, 0x12, 0xc4, 0xd0]),
+            bytearray([0xB5, 0x9A, 0xF0, 0x0E]),
+            {False: bytearray([0x8D, 0xF4, 0x7C]), True: nop_x_3},
+            bytearray([0x20, 0x12, 0xC4, 0xD0]),
         )
 
         self._stop_timer = self.StrayOrb(rom)
 
     def read_state(self) -> State:
         """Reads the ROM and creates a cooresponding abstract State instance."""
-        return State(
-            self._move_touch_to_timer.read(),
-            self._move_timer_to_exit.read(),
-            self._stop_timer.read()
-        )
+        return State(self._move_touch_to_timer.read(), self._move_timer_to_exit.read(), self._stop_timer.read())
 
     def write_state(self, state: State):
         """Takes in an abstract State instance, and writes to the ROM.
@@ -162,7 +152,7 @@ class RomInterface:
                 2,
                 bytearray([0x46, 0xBF, 0xFF, 0xA9]),
                 {False: bytearray([0x5B, 0xA9]), True: bytearray([0xBF, 0xBF])},
-                bytearray([0x88, 0xd0, 0x0b, 0x8c]),
+                bytearray([0x88, 0xD0, 0x0B, 0x8C]),
             )
 
             self._stop_timer = CodeEditDict(
@@ -170,8 +160,11 @@ class RomInterface:
                 0x7FCF,
                 6,
                 bytearray([0x07, 0x4C, 0xE7, 0xD5]),
-                {False: bytearray([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), True: bytearray([0xA9, 0x01, 0x8D, 0xF3, 0x05, 0x60])},
-                []
+                {
+                    False: bytearray([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]),
+                    True: bytearray([0xA9, 0x01, 0x8D, 0xF3, 0x05, 0x60]),
+                },
+                [],
             )
 
         def read(self) -> bool:

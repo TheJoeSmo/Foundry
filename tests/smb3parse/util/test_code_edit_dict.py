@@ -100,6 +100,7 @@ def test_write_value_incorrect_length():
     edit.write("test_2")
     assert "default" == edit.read()
 
+
 def test_valid_option():
     testdict = {
         "default": default_value,
