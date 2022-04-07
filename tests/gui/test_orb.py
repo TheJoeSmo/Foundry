@@ -3,18 +3,16 @@ from foundry.gui.orb import Action, Actions, RomInterface, State, Store
 from foundry.smb3parse.util.rom import Rom
 
 
-def test_store_initial_state_is_state():
-    state1 = State(True, True, True)
-    store1 = Store(state1)
-    assert state1 == store1.get_state()
+def test_store_initial_state_is_state_all_true():
+    state = State(True, True, True)
+    store = Store(state)
+    assert state == store.get_state()
 
-    state2 = State(False, True, True)
-    store2 = Store(state2)
-    assert state2 == store2.get_state()
 
-    state3 = State(True, False, False)
-    store3 = Store(state3)
-    assert state3 == store3.get_state()
+def test_store_initial_state_is_state_all_false():
+    state = State(False, False, False)
+    store = Store(state)
+    assert state == store.get_state()
 
 
 def test_store_reduce_none():
@@ -26,27 +24,27 @@ def test_store_reduce_none():
 def test_store_move_touch_to_timer():
     state = State(True, True, True)
     store = Store(state)
-    store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER, False))
+    store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER.value, False))
     assert False is store.get_state().move_touch_to_timer
-    store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER, True))
+    store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER.value, True))
     assert True is store.get_state().move_touch_to_timer
 
 
 def test_store_move_timer_to_exit():
     state = State(True, True, True)
     store = Store(state)
-    store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT, False))
+    store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT.value, False))
     assert False is store.get_state().move_timer_to_exit
-    store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT, True))
+    store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT.value, True))
     assert True is store.get_state().move_timer_to_exit
 
 
 def test_store_touch_game_timer_stops():
     state = State(True, True, True)
     store = Store(state)
-    store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS, False))
+    store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS.value, False))
     assert False is store.get_state().touch_game_timer_stops
-    store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS, True))
+    store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS.value, True))
     assert True is store.get_state().touch_game_timer_stops
 
 

@@ -11,6 +11,7 @@ obviously both still have a view.
 """
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QBoxLayout, QCheckBox, QDialogButtonBox, QGroupBox, QLabel
@@ -61,9 +62,9 @@ class State:
     state may also be rejected when trying to write the state to the ROM.
     """
 
-    move_touch_to_timer: bool
-    move_timer_to_exit: bool
-    touch_game_timer_stops: bool
+    move_touch_to_timer: Optional[bool]
+    move_timer_to_exit: Optional[bool]
+    touch_game_timer_stops: Optional[bool]
 
 
 class Store(ReduxStore[State]):
@@ -83,13 +84,13 @@ class Store(ReduxStore[State]):
         if action is None:
             return state
 
-        if action.type == Actions.MOVE_TOUCH_TO_TIMER:
+        if action.type == Actions.MOVE_TOUCH_TO_TIMER.value:
             state.move_touch_to_timer = action.payload
 
-        elif action.type == Actions.MOVE_TIMER_TO_EXIT:
+        elif action.type == Actions.MOVE_TIMER_TO_EXIT.value:
             state.move_timer_to_exit = action.payload
 
-        elif action.type == Actions.TOUCH_GAME_TIMER_STOPS:
+        elif action.type == Actions.TOUCH_GAME_TIMER_STOPS.value:
             state.touch_game_timer_stops = action.payload
 
         return state
@@ -164,10 +165,10 @@ class RomInterface:
                     False: bytearray([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]),
                     True: bytearray([0xA9, 0x01, 0x8D, 0xF3, 0x05, 0x60]),
                 },
-                [],
+                bytearray(),
             )
 
-        def read(self) -> bool:
+        def read(self) -> Optional[bool]:
             results_list = [self._jump_table.read(), self._stop_timer.read()]
 
             if results_list[0] != results_list[1]:
@@ -176,10 +177,9 @@ class RomInterface:
             return results_list[0]
 
         def write(self, option: bool):
-            if self.read() is not None:
-                if self._jump_table.is_option(option) and self._stop_timer.is_option(option):
-                    self._jump_table.write(option)
-                    self._stop_timer.write(option)
+            if self.read() is not None and self._jump_table.is_option(option) and self._stop_timer.is_option(option):
+                self._jump_table.write(option)
+                self._stop_timer.write(option)
 
 
 class View(CustomDialog):
@@ -334,13 +334,13 @@ class View(CustomDialog):
         self.done(QDialogButtonBox.Cancel)
 
     def _on_move_touch_to_timer(self):
-        self.store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER, self._move_touch_to_timer.isChecked()))
+        self.store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER.value, self._move_touch_to_timer.isChecked()))
 
     def _on_move_timer_to_exit(self):
-        self.store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT, self._move_timer_to_exit.isChecked()))
+        self.store.dispatch(Action(Actions.MOVE_TIMER_TO_EXIT.value, self._move_timer_to_exit.isChecked()))
 
     def _on_touch_game_timer_stops(self):
-        self.store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS, self._touch_game_timer_stops.isChecked()))
+        self.store.dispatch(Action(Actions.TOUCH_GAME_TIMER_STOPS.value, self._touch_game_timer_stops.isChecked()))
 
 
 class Orb:
