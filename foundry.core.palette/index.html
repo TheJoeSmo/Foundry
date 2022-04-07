@@ -430,34 +430,34 @@
 <em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticColor</span></span><a class="headerlink" href="#foundry.core.palette.Color.PydanticColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticColor&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;red&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;green&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Green&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;blue&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Blue&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;alpha&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Alpha&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;green&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;blue&quot;</span>
-   <span class="p">]</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticColor&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;red&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Red&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;green&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Green&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;blue&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Blue&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;alpha&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alpha&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;blue&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -531,7 +531,7 @@
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="foundry.core.palette.Color.PydanticColor.check_color_range">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_color_range</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.green" title="foundry.core.palette.Color.PydanticColor.green"><em class="xref py py-obj"><span class="pre">green</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.red" title="foundry.core.palette.Color.PydanticColor.red"><em class="xref py py-obj"><span class="pre">red</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.blue" title="foundry.core.palette.Color.PydanticColor.blue"><em class="xref py py-obj"><span class="pre">blue</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.alpha" title="foundry.core.palette.Color.PydanticColor.alpha"><em class="xref py py-obj"><span class="pre">alpha</span></em></a><a class="headerlink" href="#foundry.core.palette.Color.PydanticColor.check_color_range" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_color_range</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.red" title="foundry.core.palette.Color.PydanticColor.red"><em class="xref py py-obj"><span class="pre">red</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.blue" title="foundry.core.palette.Color.PydanticColor.blue"><em class="xref py py-obj"><span class="pre">blue</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.green" title="foundry.core.palette.Color.PydanticColor.green"><em class="xref py py-obj"><span class="pre">green</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#foundry.core.palette.Color.PydanticColor.alpha" title="foundry.core.palette.Color.PydanticColor.alpha"><em class="xref py py-obj"><span class="pre">alpha</span></em></a><a class="headerlink" href="#foundry.core.palette.Color.PydanticColor.check_color_range" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -563,12 +563,12 @@
 <p>A generator for a <a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorPaletteProtocol</span></code></a>.
 Creates the color palette dynamically from its type attribute to provide it additional information.</p>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteCreator&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.core.palette.ColorPalette.ColorPaletteProtocol`.\nCreates the color palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteCreator&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A generator for a :class:`~foundry.core.palette.ColorPalette.ColorPaletteProtocol`.\nCreates the color palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="py method">
@@ -708,32 +708,32 @@ Creates the color palette dynamically from its type attribute to provide it addi
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticColorPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of :class:`~foundry.core.palette.ColorPalette.ColorPalette`.\n\nAttributes\n----------\ntype: ColorPaletteType\n    How the ColorPalette should be loaded.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JSON FILE&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticColorPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A generic representation of :class:`~foundry.core.palette.ColorPalette.ColorPalette`.\n\nAttributes\n----------\ntype: ColorPaletteType\n    How the ColorPalette should be loaded.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;JSON FILE&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -783,68 +783,68 @@ Creates the color palette dynamically from its type attribute to provide it addi
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticColorsColorPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A color palette which generates itself from a series of colors.\n\nAttributes\n----------\ncolors: list[PydanticColor]\n    A list of colors that compose the color palette.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;colors&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Colors&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/PydanticColor&quot;</span>
-         <span class="p">}</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;colors&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JSON FILE&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;PydanticColor&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticColor&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;red&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;green&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Green&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;blue&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Blue&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">},</span>
-            <span class="nt">&quot;alpha&quot;</span><span class="p">:</span> <span class="p">{</span>
-               <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Alpha&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
-               <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-            <span class="p">}</span>
-         <span class="p">},</span>
-         <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;blue&quot;</span>
-         <span class="p">]</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticColorsColorPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A color palette which generates itself from a series of colors.\n\nAttributes\n----------\ncolors: list[PydanticColor]\n    A list of colors that compose the color palette.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;colors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colors&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/PydanticColor&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;colors&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;JSON FILE&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;PydanticColor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticColor&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;red&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Red&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;green&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Green&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;blue&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Blue&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;alpha&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alpha&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;blue&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -888,32 +888,32 @@ Creates the color palette dynamically from its type attribute to provide it addi
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.palette.ColorPalette.PydanticColorPalette" title="foundry.core.palette.ColorPalette.PydanticColorPalette"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.palette.ColorPalette.PydanticColorPalette</span></code></a></p>
 <p>A color palette which represents the NES colors inside the game.</p>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticDefaultColorPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A color palette which represents the NES colors inside the game.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JSON FILE&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticDefaultColorPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A color palette which represents the NES colors inside the game.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;JSON FILE&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -965,38 +965,38 @@ Creates the color palette dynamically from its type attribute to provide it addi
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticJSONFileColorPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A color palette which generates itself from another file.\n\nAttributes\n----------\npath: FilePath\n    A JSON file to be converted to a color palette.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Path&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;file-path&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;path&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JSON FILE&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticJSONFileColorPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A color palette which generates itself from another file.\n\nAttributes\n----------\npath: FilePath\n    A JSON file to be converted to a color palette.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file-path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;path&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;JSON FILE&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -1055,38 +1055,38 @@ Creates the color palette dynamically from its type attribute to provide it addi
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticPaletteFileColorPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A color palette which generates itself from another file.\n\nAttributes\n----------\npath: FilePath\n    A palette file to be converted to a color palette.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Path&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;file-path&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;path&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;JSON FILE&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticPaletteFileColorPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A color palette which generates itself from another file.\n\nAttributes\n----------\npath: FilePath\n    A palette file to be converted to a color palette.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file-path&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;path&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the color palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;PALETTE FILE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;JSON FILE&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -1250,7 +1250,7 @@ Creates the color palette dynamically from its type attribute to provide it addi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.palette.Palette.AbstractPalette.from_values">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._T</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.AbstractPalette.from_values" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._T</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.AbstractPalette.from_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>A generalized way to create itself from a series of values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1296,7 +1296,7 @@ Creates the color palette dynamically from its type attribute to provide it addi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.palette.Palette.MutablePalette.from_values">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._MT</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.MutablePalette.from_values" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._MT</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.MutablePalette.from_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>A generalized way to create itself from a series of values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1342,7 +1342,7 @@ Creates the color palette dynamically from its type attribute to provide it addi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.palette.Palette.Palette.from_values">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._PT</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.Palette.from_values" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_palette</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.palette.ColorPalette.ColorPaletteProtocol" title="foundry.core.palette.ColorPalette.ColorPaletteProtocol"><span class="pre">foundry.core.palette.ColorPalette.ColorPaletteProtocol</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.palette.Palette._PT</span></span></span><a class="headerlink" href="#foundry.core.palette.Palette.Palette.from_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>A generalized way to create itself from a series of values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1363,12 +1363,12 @@ Creates the color palette dynamically from its type attribute to provide it addi
 <p>A generator for a <a class="reference internal" href="#foundry.core.palette.Palette.PaletteProtocol" title="foundry.core.palette.Palette.PaletteProtocol"><code class="xref py py-class docutils literal notranslate"><span class="pre">PaletteProtocol</span></code></a>.
 Creates the palette dynamically from its type attribute to provide it additional information.</p>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PaletteCreator&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.core.palette.Palette.PaletteProtocol`.\nCreates the palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PaletteCreator&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A generator for a :class:`~foundry.core.palette.Palette.PaletteProtocol`.\nCreates the palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="py method">
@@ -1505,53 +1505,53 @@ Creates the palette dynamically from its type attribute to provide it additional
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticColorsPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A palette which generates itself from a series of indexes into the color palette.\n\nAttributes\n----------\ncolor_indexes: list[int]\n    A list of indexes into the color palette colors.\ncolor_palette: ColorPaletteCreator\n    A color palette generator which provides the colors which are indexed.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/PaletteType&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;color_indexes&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Color Indexes&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-         <span class="p">}</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;color_palette&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Color Palette&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;default&quot;</span><span class="p">:</span> <span class="p">{},</span>
-         <span class="nt">&quot;allOf&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-               <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/ColorPaletteCreator&quot;</span>
-            <span class="p">}</span>
-         <span class="p">]</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;color_indexes&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ROM ADDRESS&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;ColorPaletteCreator&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;ColorPaletteCreator&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generator for a :class:`~foundry.core.palette.ColorPalette.ColorPaletteProtocol`.\nCreates the color palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{}</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticColorsPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A palette which generates itself from a series of indexes into the color palette.\n\nAttributes\n----------\ncolor_indexes: list[int]\n    A list of indexes into the color palette colors.\ncolor_palette: ColorPaletteCreator\n    A color palette generator which provides the colors which are indexed.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/PaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;color_indexes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Color Indexes&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;color_palette&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Color Palette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;allOf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/ColorPaletteCreator&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;color_indexes&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;ROM ADDRESS&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;ColorPaletteCreator&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColorPaletteCreator&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A generator for a :class:`~foundry.core.palette.ColorPalette.ColorPaletteProtocol`.\nCreates the color palette dynamically from its type attribute to provide it additional information.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -1623,30 +1623,30 @@ Creates the palette dynamically from its type attribute to provide it additional
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticPalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A generic representation of :class:`~foundry.core.palette.Palette.Palette`.\n\nAttributes\n----------\ntype: PaletteType\n    How the Palette should be loaded.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/PaletteType&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ROM ADDRESS&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticPalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A generic representation of :class:`~foundry.core.palette.Palette.Palette`.\n\nAttributes\n----------\ntype: PaletteType\n    How the Palette should be loaded.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/PaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;ROM ADDRESS&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -1696,35 +1696,35 @@ Creates the palette dynamically from its type attribute to provide it additional
 </dd>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PydanticROMAddressPalettePalette&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A palette which generates itself from an address in the ROM and the default color palette.\n\nAttributes\n----------\npalette_address: int\n    The index into the ROM to generate the palette from.&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/PaletteType&quot;</span>
-      <span class="p">},</span>
-      <span class="nt">&quot;palette_address&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Palette Address&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
-      <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;palette_address&quot;</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span>
-         <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ROM ADDRESS&quot;</span>
-         <span class="p">],</span>
-         <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticROMAddressPalettePalette&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A palette which generates itself from an address in the ROM and the default color palette.\n\nAttributes\n----------\npalette_address: int\n    The index into the ROM to generate the palette from.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/PaletteType&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;palette_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Palette Address&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">},</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;palette_address&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;PaletteType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PaletteType&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A declaration of the palettes possible to be created through\n`JSON &lt;https://en.wikipedia.org/wiki/JSON&gt;`_ and\n`Pydantic &lt;https://pydantic-docs.helpmanual.io/&gt;`_.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;COLORS&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;ROM ADDRESS&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">],</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </details></p><dl class="field-list simple">
@@ -2053,7 +2053,7 @@ independent of its mutability or ability to be hashed.</p>
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
 </p>
     </div>
     
