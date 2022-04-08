@@ -45,6 +45,13 @@ class UndoController(Generic[T]):
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.state}, {self.undo_stack}, {self.redo_stack})"
 
+    def __eq__(self, other) -> bool:
+        return (
+            self.state == other.state and self.undo_stack == other.undo_stack and self.redo_stack == other.redo_stack
+            if isinstance(other, UndoController)
+            else False
+        )
+
     @property
     def state(self) -> T:
         return self._state
