@@ -15,6 +15,80 @@ def undo_controller(draw, min_size: int = 0, max_size: Optional[int] = None):
     return controller
 
 
+def test_equality_simple():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    assert controller1 == controller2
+
+
+def test_inequality_simple():
+    controller1 = UndoController(0)
+    controller2 = UndoController(1)
+    assert controller1 != controller2
+
+
+def test_equality_with_undo():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller2.do(1)
+    controller1.undo()
+    controller2.undo()
+    assert controller1 == controller2
+
+
+def test_inequality_with_undo():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller2.do(2)
+    controller1.undo()
+    controller2.undo()
+    assert controller1 != controller2
+
+
+def test_inequality_with_undo_and_normal():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller1.undo()
+    assert controller1 != controller2
+
+
+def test_equality_with_redo():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller2.do(1)
+    controller1.undo()
+    controller2.undo()
+    controller1.redo()
+    controller2.redo()
+    assert controller1 == controller2
+
+
+def test_inequality_with_redo():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller2.do(2)
+    controller1.undo()
+    controller2.undo()
+    controller1.redo()
+    controller2.redo()
+    assert controller1 != controller2
+
+
+def test_equality_with_redo_and_normal():
+    controller1 = UndoController(0)
+    controller2 = UndoController(0)
+    controller1.do(1)
+    controller2.do(1)
+    controller1.undo()
+    controller1.redo()
+    assert controller1 == controller2
+
+
 def test_do():
     controller = UndoController(0)
     controller.do(1)
