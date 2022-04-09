@@ -14,9 +14,14 @@ from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level.Level import Level, get_level_name_suggestion
 from foundry.game.level.LevelControlled import LevelControlled
 from foundry.game.level.LevelRef import LevelRef
+from foundry.game.level.util import get_level_index
 from foundry.gui.AutoScrollEditor import AutoScrollEditor
 from foundry.gui.BlockViewer import BlockViewerController as BlockViewer
-from foundry.gui.HeaderEditor import HeaderEditor
+from foundry.gui.HeaderEditor import (
+    HeaderEditor,
+    header_state_to_level_header,
+    level_to_header_state,
+)
 from foundry.gui.JumpEditor import JumpEditor
 from foundry.gui.LevelSelector import LevelSelector
 from foundry.gui.LevelView import undoable
@@ -294,8 +299,28 @@ class LevelController:
         self.parent.level_view.update()
 
     def display_header_editor(self):
-        header_editor = HeaderEditor(self.parent, self.level_ref)  # type: ignore
-        header_editor.tab_widget.setCurrentIndex(3)
+        header_editor = HeaderEditor(
+            self.parent, level_to_header_state(self.level_ref.level, ROM().settings), ROM().settings  # type: ignore
+        )
+        header_editor.current_page = 3
+
+        def update_level_header(state):
+            rom = ROM()
+
+            self.level_ref.level.header_bytes = header_state_to_level_header(state)
+            self.level_ref.level.name = state.info.display_information.name
+            self.level_ref.level.object_size_on_disk = state.info.generator_size - 9
+            self.level_ref.level.enemy_size_on_disk = state.info.enemy_size
+            self.parent.setWindowTitle(self.title_suggestion)  # type: ignore
+            self.level_ref.level._parse_header()
+            levels = rom.settings.levels
+            index = get_level_index(levels, self.level_ref.level.object_offset, self.level_ref.level.enemy_offset)
+            levels[index] = state.info
+            rom._settings.levels = levels
+            ROM().settings = rom.settings
+            self.level_ref.data_changed.emit()
+
+        header_editor.state_changed.connect(update_level_header)
         header_editor.exec_()
 
     def display_jump_editor(self):

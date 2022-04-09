@@ -1,362 +1,1003 @@
 from typing import Optional
 
-from PySide6.QtCore import Signal
+from attr import attrs, evolve
+from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import (
-    QCheckBox,
-    QComboBox,
-    QDialog,
-    QFormLayout,
-    QHBoxLayout,
-    QLabel,
-    QPushButton,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
-)
+from PySide6.QtWidgets import QLabel, QTabWidget, QVBoxLayout, QWidget
 
-from foundry.core.graphics_set.util import GRAPHIC_SET_NAMES
+from foundry.core.UndoController import UndoController
 from foundry.game.level.Level import Level
-from foundry.game.level.LevelRef import LevelRef
+from foundry.game.level.util import Level as LevelInformationState
+from foundry.game.level.util import find_level_by_pointers
 from foundry.gui.CustomDialog import CustomDialog
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
-from foundry.gui.Spinner import Spinner
-from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
-
-LEVEL_LENGTHS = [0x10 * (i + 1) for i in range(0, 2**4)]
-STR_LEVEL_LENGTHS = [f"{length - 1:0=#4X} / {length} Blocks".replace("X", "x") for length in LEVEL_LENGTHS]
-
-STR_X_POSITIONS = [f"{position >> 4}. Block ({position:0=#4X})".replace("X", "x") for position in MARIO_X_POSITIONS]
-
-STR_Y_POSITIONS = [f"{position}. Block ({position:0=#4X})".replace("X", "x") for position in MARIO_Y_POSITIONS]
-
-ACTIONS = [
-    "None",
-    "Sliding",
-    "Out of pipe ↑",
-    "Out of pipe ↓",
-    "Out of pipe ←",
-    "Out of pipe →",
-    "Running and climbing up ship",
-    "Ship auto scrolling",
-]
-
-MUSIC_ITEMS = [
-    "Plain level",
-    "Underground",
-    "Water level",
-    "Fortress",
-    "Boss",
-    "Ship",
-    "Battle",
-    "P-Switch/Mushroom house (1)",
-    "Hilly level",
-    "Castle room",
-    "Clouds/Sky",
-    "P-Switch/Mushroom house (2)",
-    "No music",
-    "P-Switch/Mushroom house (1)",
-    "No music",
-    "World 7 map",
-]
-
-TIMES = ["300", "400", "200", "Unlimited"]
-
-SCROLL_DIRECTIONS = [
-    "Locked, unless climbing/flying",
-    "Free vertical scrolling",
-    "Locked 'by start coordinates'?",
-    "Shouldn't appear in game, do not use.",
-]
+from foundry.gui.LevelDataEditor import LevelDataEditor, LevelDataState
+from foundry.gui.LevelGraphicsEditor import LevelGraphicsEditor, LevelGraphicsState
+from foundry.gui.LevelInformationEditor import LevelInformationEditor
+from foundry.gui.LevelStartEditor import LevelStartEditor, LevelStartState
+from foundry.gui.LevelWarpEditor import LevelWarpEditor, LevelWarpState
+from foundry.gui.settings import FileSettings
+from foundry.smb3parse.constants import TILESET_LEVEL_OFFSET
+from foundry.smb3parse.levels import ENEMY_BASE_OFFSET, LEVEL_BASE_OFFSET
 
 
-SPINNER_MAX_VALUE = 0x0F_FF_FF
+@attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
+class HeaderState:
+    """
+    The representation of a the level header.
+
+    data: LevelDataState
+        The miscellaneous level data.
+    start: LevelStartState
+        The starting conditions of the level.
+    graphics: LevelGraphicsState
+        The graphics of the level.
+    warp: LevelWarpState
+        The next level to be warped to.
+    info: LevelInformationState
+        The editor specific information associated with the level.
+    """
+
+    data: LevelDataState
+    start: LevelStartState
+    graphics: LevelGraphicsState
+    warp: LevelWarpState
+    info: LevelInformationState
+
+
+def level_to_header_state(level: Level, file_settings: FileSettings) -> HeaderState:
+    """
+    Generates a header state from a level.
+
+    Parameters
+    ----------
+    level : Level
+        To generate the header state from.
+    file_settings: FileSettings
+        To generate the level information from.
+
+    Returns
+    -------
+    HeaderState
+        The header state that corresponds to the level.
+    """
+    return HeaderState(
+        LevelDataState(
+            level.length // 0x10,
+            level.music_index,
+            level.time_index,
+            level.scroll_type,
+            not level.is_vertical,
+            level.pipe_ends_level,
+        ),
+        LevelStartState(level.start_x_index, level.start_y_index, level.start_action),
+        LevelGraphicsState(level.object_palette_index, level.enemy_palette_index, level.graphic_set),
+        LevelWarpState(level.next_area_objects, level.next_area_enemies, level.next_area_object_set),
+        find_level_by_pointers(file_settings.levels, level.object_offset, level.enemy_offset)
+        or file_settings.levels[0],
+    )
+
+
+def header_state_to_level_header(state: HeaderState) -> bytearray:
+    """
+    Generates a 9-byte header for a level for SMB3 from a header state.
+
+    Parameters
+    ----------
+    state : HeaderState
+        To be converted to a level header.
+
+    Returns
+    -------
+    bytearray
+        A series of nine bytes that represent a level header inside SMB3.
+
+    Notes
+    -----
+    The format of the level header is as follows:
+    Byte 0x02..1: The next level's generator pointer.
+    Byte 0x04..3: The next level's enemy pointer.
+    Byte 0x05: The level length in increments of 16 followed by the y start of the player.
+    Byte 0x06: The generator's palette, enemy's palette followed by the x start of the player.
+    Byte 0x07: The tileset of the level, if the level is vertical, the type of scroll used by the level,
+        followed by if the level ends when the player enters a pipe.
+    Byte 0x08: The graphics set of the level followed by the starting action of the player.
+    Byte 0x09: The music of the level followed by the time provided to the player.
+    """
+    data = bytearray()
+
+    generator_pointer = state.warp.generator_pointer - LEVEL_BASE_OFFSET - TILESET_LEVEL_OFFSET[state.warp.tileset]
+    enemy_pointer = state.warp.enemy_pointer - ENEMY_BASE_OFFSET
+
+    data.append(0x00FF & generator_pointer)
+    data.append((0xFF00 & generator_pointer) >> 8)
+    data.append(0x00FF & enemy_pointer)
+    data.append((0xFF00 & enemy_pointer) >> 8)
+    data.append((state.start.y_position << 5) + state.data.level_length)
+    data.append(state.graphics.generator_palette + (state.graphics.enemy_palette << 3) + (state.start.x_position << 5))
+    data.append(
+        state.warp.tileset
+        + (int(not state.data.horizontal) << 4)
+        + (state.data.scroll << 5)
+        + (int(state.data.pipe_ends_level) << 7)
+    )
+    data.append(state.graphics.graphics_set + (state.start.action << 5))
+    data.append(state.data.music + (state.data.time << 6))
+
+    return data
 
 
 class HeaderEditor(CustomDialog):
-    header_change: Signal = Signal()
+    """
+    A widget which controls the editing of the level header.
 
-    def __init__(self, parent: Optional[QWidget], level_ref: LevelRef):
+    Signals
+    -------
+    level_length_changed: SignalInstance
+        A signal which is activated on level length change.
+    music_changed: SignalInstance
+        A signal which is activated on music change.
+    time_changed: SignalInstance
+        A signal which is activated on time change.
+    scroll_changed: SignalInstance
+        A signal which is activated on scroll type change.
+    horizontal_changed: SignalInstance
+        A signal which is activated on level horizontality change.
+    pipe_ends_level_changed: SignalInstance
+        A signal which is activated on if pipe ends level change.
+    x_position_changed: SignalInstance
+        A signal which is activated on x position change.
+    y_position_changed: SignalInstance
+        A signal which is activated on y position change.
+    action_changed: SignalInstance
+        A signal which is activated on action change.
+    generator_palette_changed: SignalInstance
+        A signal which is activated on generator palette change.
+    enemy_palette_changed: SignalInstance
+        A signal which is activated on enemy palette change.
+    graphics_set_changed: SignalInstance
+        A signal which is activated on graphics set change.
+    next_level_generator_pointer_changed: SignalInstance
+        A signal which is activated on next level generator pointer change.
+    next_level_enemy_pointer_changed: SignalInstance
+        A signal which is activated on next level enemy pointer change.
+    next_level_tileset_changed: SignalInstance
+        A signal which is activated on next level tileset change.
+    name_changed: SignalInstance
+        A signal which is activated on name change.
+    description_changed: SignalInstance
+        A signal which is activated on description change.
+    generator_space_changed: SignalInstance
+        A signal which is activated on generation space change.
+    enemy_space_changed: SignalInstance
+        A signal which is activated on enemy space change.
+    state_changed: SignalInstance
+        A signal which is activated on any state change.
+
+    Attributes
+    ----------
+    undo_controller: UndoController[HeaderState]
+        The undo controller, which is responsible for undoing and redoing any action.
+    file_settings: FileSettings
+        The settings for determining levels to automatically select the warp state from.
+    """
+
+    level_length_changed: SignalInstance = Signal(int)  # type: ignore
+    music_changed: SignalInstance = Signal(int)  # type: ignore
+    time_changed: SignalInstance = Signal(int)  # type: ignore
+    scroll_changed: SignalInstance = Signal(int)  # type: ignore
+    horizontal_changed: SignalInstance = Signal(bool)  # type: ignore
+    pipe_ends_level_changed: SignalInstance = Signal(bool)  # type: ignore
+    x_position_changed: SignalInstance = Signal(int)  # type: ignore
+    y_position_changed: SignalInstance = Signal(int)  # type: ignore
+    action_changed: SignalInstance = Signal(int)  # type: ignore
+    generator_palette_changed: SignalInstance = Signal(int)  # type: ignore
+    enemy_palette_changed: SignalInstance = Signal(int)  # type: ignore
+    graphics_set_changed: SignalInstance = Signal(int)  # type: ignore
+    next_level_generator_pointer_changed: SignalInstance = Signal(int)  # type: ignore
+    next_level_enemy_pointer_changed: SignalInstance = Signal(int)  # type: ignore
+    next_level_tileset_changed: SignalInstance = Signal(int)  # type: ignore
+    name_changed: SignalInstance = Signal(str)  # type: ignore
+    description_changed: SignalInstance = Signal(str)  # type: ignore
+    generator_space_changed: SignalInstance = Signal(int)  # type: ignore
+    enemy_space_changed: SignalInstance = Signal(int)  # type: ignore
+
+    state_changed: SignalInstance = Signal(object)  # type: ignore
+
+    undo_controller: UndoController[HeaderState]
+
+    def __init__(
+        self,
+        parent: Optional[QWidget],
+        state: HeaderState,
+        file_settings: FileSettings,
+        undo_controller: Optional[UndoController[HeaderState]] = None,
+    ):
         super(HeaderEditor, self).__init__(parent, "Level Header Editor")
+        self.file_settings = file_settings
+        self._state = state
+        self.undo_controller = undo_controller or UndoController(state)
 
-        self.level: Level = level_ref.level
-        assert self.level is not None
+        self._display = HeaderDisplay(
+            self,
+            self.state.data,
+            self.state.start,
+            self.state.graphics,
+            self.state.warp,
+            self.state.info,
+            header_state_to_level_header(self.state),
+            self.file_settings,
+        )
 
-        # enables undo
-        self.header_change.connect(level_ref.save_level_state)
+        self.setLayout(self._display)
 
-        main_layout = QVBoxLayout(self)
+        # Connect signals accordingly
+        self._display.data_editor.level_length_changed.connect(self._level_length_changed)
+        self._display.data_editor.music_changed.connect(self._music_changed)
+        self._display.data_editor.time_changed.connect(self._time_changed)
+        self._display.data_editor.scroll_changed.connect(self._scroll_changed)
+        self._display.data_editor.horizontal_changed.connect(self._horizontal_changed)
+        self._display.data_editor.pipe_ends_level_changed.connect(self._pipe_ends_level_changed)
+        self._display.start_editor.x_position_changed.connect(self._x_position_changed)
+        self._display.start_editor.y_position_changed.connect(self._y_position_changed)
+        self._display.start_editor.action_changed.connect(self._action_changed)
+        self._display.graphics_editor.generator_palette_changed.connect(self._generator_palette_changed)
+        self._display.graphics_editor.enemy_palette_changed.connect(self._enemy_palette_changed)
+        self._display.graphics_editor.graphics_set_changed.connect(self._graphics_set_changed)
+        self._display.warp_editor.generator_pointer_changed.connect(self._next_level_generator_pointer_changed)
+        self._display.warp_editor.enemy_pointer_changed.connect(self._next_level_enemy_pointer_changed)
+        self._display.warp_editor.tileset_changed.connect(self._next_level_tileset_changed)
+        self._display.info_editor.name_changed.connect(self._name_changed)
+        self._display.info_editor.description_changed.connect(self._description_changed)
+        self._display.info_editor.generator_space_changed.connect(self._generator_space_changed)
+        self._display.info_editor.enemy_space_changed.connect(self._enemy_space_changed)
 
-        self.tab_widget = QTabWidget(self)
-        main_layout.addWidget(self.tab_widget)
+        self._display.data_editor.level_length_changed.connect(self.level_length_changed)
+        self._display.data_editor.music_changed.connect(self.music_changed)
+        self._display.data_editor.time_changed.connect(self.time_changed)
+        self._display.data_editor.scroll_changed.connect(self.scroll_changed)
+        self._display.data_editor.horizontal_changed.connect(self.horizontal_changed)
+        self._display.data_editor.pipe_ends_level_changed.connect(self.pipe_ends_level_changed)
+        self._display.start_editor.x_position_changed.connect(self.x_position_changed)
+        self._display.start_editor.y_position_changed.connect(self.y_position_changed)
+        self._display.start_editor.action_changed.connect(self.action_changed)
+        self._display.graphics_editor.generator_palette_changed.connect(self.generator_palette_changed)
+        self._display.graphics_editor.enemy_palette_changed.connect(self.enemy_palette_changed)
+        self._display.graphics_editor.graphics_set_changed.connect(self.graphics_set_changed)
+        self._display.warp_editor.generator_pointer_changed.connect(self.next_level_generator_pointer_changed)
+        self._display.warp_editor.enemy_pointer_changed.connect(self.next_level_enemy_pointer_changed)
+        self._display.warp_editor.tileset_changed.connect(self.next_level_tileset_changed)
+        self._display.info_editor.name_changed.connect(self.name_changed)
+        self._display.info_editor.description_changed.connect(self.description_changed)
+        self._display.info_editor.generator_space_changed.connect(self.generator_space_changed)
+        self._display.info_editor.enemy_space_changed.connect(self.enemy_space_changed)
 
-        # level settings
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent}, {self.state}, {self.file_settings}, {self.undo_controller})"
 
-        self.length_dropdown = QComboBox()
-        if self.level.is_vertical:
-            self.length_dropdown.addItems(STR_LEVEL_LENGTHS)
-        else:
-            self.length_dropdown.addItems(STR_LEVEL_LENGTHS[:-1])
+    def __eq__(self, other) -> bool:
+        return (
+            isinstance(other, HeaderEditor)
+            and self.state == other.state
+            and self.undo_controller == other.undo_controller
+        )
 
-        self.length_dropdown.activated.connect(self.on_combo)
+    @property
+    def current_page(self) -> int:
+        """
+        The current page accessed by the user.
 
-        self.music_dropdown = QComboBox()
-        self.music_dropdown.addItems(MUSIC_ITEMS)
-        self.music_dropdown.activated.connect(self.on_combo)
+        Returns
+        -------
+        int
+            The index of the current page accessed.
+        """
+        return self._display.current_page
 
-        self.time_dropdown = QComboBox()
-        self.time_dropdown.addItems(TIMES)
-        self.time_dropdown.activated.connect(self.on_combo)
+    @current_page.setter
+    def current_page(self, page: int):
+        self._display.current_page = page
 
-        self.v_scroll_direction_dropdown = QComboBox()
-        self.v_scroll_direction_dropdown.addItems(SCROLL_DIRECTIONS)
-        self.v_scroll_direction_dropdown.activated.connect(self.on_combo)
+    @property
+    def level_length(self) -> int:
+        """
+        Provides the length of the level.
 
-        self.level_is_vertical_cb = QCheckBox("Level is Vertical")
-        self.level_is_vertical_cb.clicked.connect(self.on_check_box)
+        Returns
+        -------
+        int
+            The length of the level.
+        """
+        return self.state.data.level_length
 
-        self.pipe_ends_level_cb = QCheckBox("Pipe ends Level")
-        self.pipe_ends_level_cb.clicked.connect(self.on_check_box)
+    @level_length.setter
+    def level_length(self, level_length: int):
+        if self.level_length != level_length:
+            self.do(evolve(self.state, data=evolve(self.state.data, level_length=level_length)))
+            self.level_length_changed.emit(level_length)
 
-        check_box_layout = QHBoxLayout()
-        check_box_layout.setContentsMargins(0, 0, 0, 0)
-        check_box_layout.addWidget(self.level_is_vertical_cb)
-        check_box_layout.addWidget(self.pipe_ends_level_cb)
+    @property
+    def music(self) -> int:
+        """
+        Provides the music of the level.
 
-        check_box_widget = QWidget()
-        check_box_widget.setLayout(check_box_layout)
+        Returns
+        -------
+        int
+            The music of the level.
+        """
+        return self.state.data.music
 
-        form = QFormLayout()
-        form.setFormAlignment(Qt.AlignCenter)
+    @music.setter
+    def music(self, music: int):
+        if self.music != music:
+            self.do(evolve(self.state, data=evolve(self.state.data, music=music)))
+            self.music_changed.emit(music)
 
-        form.addRow("Level length: ", self.length_dropdown)
-        form.addRow("Music: ", self.music_dropdown)
-        form.addRow("Time: ", self.time_dropdown)
-        form.addRow("Scroll direction: ", self.v_scroll_direction_dropdown)
+    @property
+    def time(self) -> int:
+        """
+        Provides the time of the level.
 
-        form.addWidget(check_box_widget)
+        Returns
+        -------
+        int
+            The time of the level.
+        """
+        return self.state.data.time
 
-        widget = QWidget()
-        widget.setLayout(form)
+    @time.setter
+    def time(self, time: int):
+        if self.time != time:
+            self.do(evolve(self.state, data=evolve(self.state.data, time=time)))
+            self.time_changed.emit(time)
 
-        self.tab_widget.addTab(widget, "Level")
+    @property
+    def scroll(self) -> int:
+        """
+        Provides the scroll of the level.
 
-        # player settings
+        Returns
+        -------
+        int
+            The scroll of the level.
+        """
+        return self.state.data.scroll
 
-        self.x_position_dropdown = QComboBox()
-        self.x_position_dropdown.addItems(STR_X_POSITIONS)
-        self.x_position_dropdown.activated.connect(self.on_combo)
+    @scroll.setter
+    def scroll(self, scroll: int):
+        if self.scroll != scroll:
+            self.do(evolve(self.state, data=evolve(self.state.data, scroll=scroll)))
+            self.scroll_changed.emit(scroll)
 
-        self.y_position_dropdown = QComboBox()
-        self.y_position_dropdown.addItems(STR_Y_POSITIONS)
-        self.y_position_dropdown.activated.connect(self.on_combo)
+    @property
+    def horizontal(self) -> bool:
+        """
+        Provides if the level is horizontal.
 
-        self.action_dropdown = QComboBox()
-        self.action_dropdown.addItems(ACTIONS)
-        self.action_dropdown.activated.connect(self.on_combo)
+        Returns
+        -------
+        bool
+            If the level is horizontal.
+        """
+        return self.state.data.horizontal
 
-        form = QFormLayout()
-        form.setFormAlignment(Qt.AlignCenter)
+    @horizontal.setter
+    def horizontal(self, horizontal: bool):
+        if self.horizontal != horizontal:
+            self.do(evolve(self.state, data=evolve(self.state.data, horizontal=horizontal)))
+            self.horizontal_changed.emit(horizontal)
 
-        form.addRow("Starting X: ", self.x_position_dropdown)
-        form.addRow("Starting Y: ", self.y_position_dropdown)
-        form.addRow("Action: ", self.action_dropdown)
+    @property
+    def pipe_ends_level(self) -> bool:
+        """
+        Provides if entering a pipe will end the level.
 
-        widget = QWidget()
-        widget.setLayout(form)
+        Returns
+        -------
+        bool
+            If the entering pipes end the level.
+        """
+        return self.state.data.pipe_ends_level
 
-        self.tab_widget.addTab(widget, "Mario")
+    @pipe_ends_level.setter
+    def pipe_ends_level(self, pipe_ends_level: bool):
+        if self.pipe_ends_level != pipe_ends_level:
+            self.do(evolve(self.state, data=evolve(self.state.data, pipe_ends_level=pipe_ends_level)))
+            self.pipe_ends_level_changed.emit(pipe_ends_level)
 
-        # graphic settings
+    @property
+    def x_position(self) -> int:
+        """
+        Provides the x position the player starts at.
 
-        self.object_palette_spinner = Spinner(self, maximum=7)
-        self.object_palette_spinner.valueChanged.connect(self.on_spin)
+        Returns
+        -------
+        int
+            The x position for the player starts at.
+        """
+        return self.state.start.x_position
 
-        self.enemy_palette_spinner = Spinner(self, maximum=3)
-        self.enemy_palette_spinner.valueChanged.connect(self.on_spin)
+    @x_position.setter
+    def x_position(self, x_position: int):
+        if self.x_position != x_position:
+            self.do(evolve(self.state, start=evolve(self.state.start, x_position=x_position)))
+            self.x_position_changed.emit(x_position)
 
-        self.graphic_set_dropdown = QComboBox()
-        self.graphic_set_dropdown.addItems(GRAPHIC_SET_NAMES)
-        self.graphic_set_dropdown.activated.connect(self.on_combo)
+    @property
+    def y_position(self) -> int:
+        """
+        Provides the y position the player starts at.
 
-        form = QFormLayout()
-        form.setFormAlignment(Qt.AlignCenter)
+        Returns
+        -------
+        int
+            The y position the player starts at.
+        """
+        return self.state.start.y_position
 
-        form.addRow("Object palette: ", self.object_palette_spinner)
-        form.addRow("Enemy palette: ", self.enemy_palette_spinner)
-        form.addRow("Graphic Set: ", self.graphic_set_dropdown)
+    @y_position.setter
+    def y_position(self, y_position: int):
+        if self.y_position != y_position:
+            self.do(evolve(self.state, start=evolve(self.state.start, y_position=y_position)))
+            self.y_position_changed.emit(y_position)
 
-        widget = QWidget()
-        widget.setLayout(form)
+    @property
+    def action(self) -> int:
+        """
+        Provides the action the player starts at.
 
-        self.tab_widget.addTab(widget, "Graphics")
+        Returns
+        -------
+        int
+            The action the player starts at.
+        """
+        return self.state.start.action
 
-        # next area settings
+    @action.setter
+    def action(self, action: int):
+        if self.action != action:
+            self.do(evolve(self.state, start=evolve(self.state.start, action=action)))
+            self.action_changed.emit(action)
 
-        self.level_pointer_spinner = Spinner(self, maximum=SPINNER_MAX_VALUE)
-        self.level_pointer_spinner.valueChanged.connect(self.on_spin)
-        self.enemy_pointer_spinner = Spinner(self, maximum=SPINNER_MAX_VALUE)
-        self.enemy_pointer_spinner.valueChanged.connect(self.on_spin)
+    @property
+    def generator_palette(self) -> int:
+        """
+        Provides the generator palette of this level.
 
-        self.next_area_object_set_dropdown = QComboBox()
-        self.next_area_object_set_dropdown.addItems(OBJECT_SET_ITEMS)
-        self.next_area_object_set_dropdown.activated.connect(self.on_combo)
+        Returns
+        -------
+        int
+            The generator palette of for this level.
+        """
+        return self.state.graphics.generator_palette
 
-        level_select_button = QPushButton("Set from Level")
-        level_select_button.pressed.connect(self._set_jump_destination)
+    @generator_palette.setter
+    def generator_palette(self, generator_palette: int):
+        if self.generator_palette != generator_palette:
+            self.do(evolve(self.state, graphics=evolve(self.state.graphics, generator_palette=generator_palette)))
+            self.generator_palette_changed.emit(generator_palette)
 
-        form = QFormLayout()
-        form.setFormAlignment(Qt.AlignCenter)
+    @property
+    def enemy_palette(self) -> int:
+        """
+        Provides the enemy palette of this level.
 
-        form.addRow("Address of Objects: ", self.level_pointer_spinner)
-        form.addRow("Address of Enemies: ", self.enemy_pointer_spinner)
-        form.addRow("Object Set: ", self.next_area_object_set_dropdown)
+        Returns
+        -------
+        int
+            The enemy palette of for this level.
+        """
+        return self.state.graphics.enemy_palette
 
-        form.addRow(QLabel(""))
-        form.addRow(level_select_button)
+    @enemy_palette.setter
+    def enemy_palette(self, enemy_palette: int):
+        if self.enemy_palette != enemy_palette:
+            self.do(evolve(self.state, graphics=evolve(self.state.graphics, enemy_palette=enemy_palette)))
+            self.enemy_palette_changed.emit(enemy_palette)
 
-        widget = QWidget()
-        widget.setLayout(form)
+    @property
+    def graphics_set(self) -> int:
+        """
+        Provides the graphics set of this level.
 
-        self.tab_widget.addTab(widget, "Warping")
+        Returns
+        -------
+        int
+            The graphics set of for this level.
+        """
+        return self.state.graphics.graphics_set
+
+    @graphics_set.setter
+    def graphics_set(self, graphics_set: int):
+        if self.graphics_set != graphics_set:
+            self.do(evolve(self.state, graphics=evolve(self.state.graphics, graphics_set=graphics_set)))
+            self.graphics_set_changed.emit(graphics_set)
+
+    @property
+    def next_level_generator_pointer(self) -> int:
+        """
+        Provides the generator pointer of the level that it will be warped to.
+
+        Returns
+        -------
+        int
+            The generator pointer of the next level.
+        """
+        return self.state.warp.generator_pointer
+
+    @next_level_generator_pointer.setter
+    def next_level_generator_pointer(self, generator_pointer: int):
+        if self.next_level_generator_pointer != generator_pointer:
+            self.do(evolve(self.state, warp=evolve(self.state.warp, generator_pointer=generator_pointer)))
+            self.next_level_generator_pointer_changed.emit(generator_pointer)
+
+    @property
+    def next_level_enemy_pointer(self) -> int:
+        """
+        Provides the enemy pointer of the level that it will be warped to.
+
+        Returns
+        -------
+        int
+            The enemy pointer of the next level.
+        """
+        return self.state.warp.enemy_pointer
+
+    @next_level_enemy_pointer.setter
+    def next_level_enemy_pointer(self, enemy_pointer: int):
+        print(enemy_pointer, type(enemy_pointer))
+        if self.next_level_enemy_pointer != enemy_pointer:
+            self.do(evolve(self.state, warp=evolve(self.state.warp, enemy_pointer=enemy_pointer)))
+            self.next_level_enemy_pointer_changed.emit(enemy_pointer)
+
+    @property
+    def next_level_tileset(self) -> int:
+        """
+        Provides the tileset of the level that it will be warped to.
+
+        Returns
+        -------
+        int
+            The tileset of the next level.
+        """
+        return self.state.warp.tileset
+
+    @next_level_tileset.setter
+    def next_level_tileset(self, tileset: int):
+        if self.next_level_tileset != tileset:
+            self.do(evolve(self.state, warp=evolve(self.state.warp, tileset=tileset)))
+            self.next_level_tileset_changed.emit(tileset)
+
+    @property
+    def name(self) -> str:
+        """
+        Provides the name of the level.
+
+        Returns
+        -------
+        str
+            The name of the level.
+        """
+        return self.state.info.display_information.name or ""
+
+    @name.setter
+    def name(self, name: str):
+        if self.name != name:
+            self.do(
+                evolve(
+                    self.state,
+                    info=evolve(
+                        self.state.info, display_information=evolve(self.state.info.display_information, name=name)
+                    ),
+                )
+            )
+            self.name_changed.emit(name)
+
+    @property
+    def description(self) -> str:
+        """
+        Provides the description of the level.
+
+        Returns
+        -------
+        str
+            The description of the level.
+        """
+        return self.state.info.display_information.description or ""
+
+    @description.setter
+    def description(self, description: str):
+        if self.description != description:
+            self.do(
+                evolve(
+                    self.state,
+                    info=evolve(
+                        self.state.info,
+                        display_information=evolve(self.state.info.display_information, description=description),
+                    ),
+                )
+            )
+            self.description_changed.emit(description)
+
+    @property
+    def generator_space(self) -> int:
+        """
+        Provides the space for generators inside of the level.
+
+        Returns
+        -------
+        int
+            The space for generators inside of the level.
+        """
+        return self.state.info.generator_size
+
+    @generator_space.setter
+    def generator_space(self, generator_space: int):
+        if self.generator_space != generator_space:
+            self.do(evolve(self.state, info=evolve(self.state.info, generator_size=generator_space)))
+            self.generator_space_changed.emit(generator_space)
+
+    @property
+    def enemy_space(self) -> int:
+        """
+        Provides the space for enemies inside of the level.
+
+        Returns
+        -------
+        int
+            The space for enemies inside of the level.
+        """
+        return self.state.info.enemy_size
+
+    @enemy_space.setter
+    def enemy_space(self, enemy_space: int):
+        if self.enemy_space != enemy_space:
+            self.do(evolve(self.state, info=evolve(self.state.info, enemy_size=enemy_space)))
+            self.enemy_space_changed.emit(enemy_space)
+
+    @property
+    def state(self) -> HeaderState:
+        return self._state
+
+    @state.setter
+    def state(self, state: HeaderState):
+        if self.state != state:
+            self.do(state)
+
+    def do(self, new_state: HeaderState) -> HeaderState:
+        """
+        Does an action through the controller, adding it to the undo stack and clearing the redo
+        stack, respectively.
+
+        Parameters
+        ----------
+        new_state : HeaderState
+            The new state to be stored.
+
+        Returns
+        -------
+        HeaderState
+            The new state that has been stored.
+        """
+        self._update_state(new_state)
+        return self.undo_controller.do(new_state)
+
+    @property
+    def can_undo(self) -> bool:
+        """
+        Determines if there is any states inside the undo stack.
+
+        Returns
+        -------
+        bool
+            If there is an undo state available.
+        """
+        return self.undo_controller.can_undo
+
+    def undo(self) -> HeaderState:
+        """
+        Undoes the last state, bring the previous.
+
+        Returns
+        -------
+        HeaderState
+            The new state that has been stored.
+        """
+        self._update_state(self.undo_controller.undo())
+        return self.state
+
+    @property
+    def can_redo(self) -> bool:
+        """
+        Determines if there is any states inside the redo stack.
+
+        Returns
+        -------
+        bool
+            If there is an redo state available.
+        """
+        return self.undo_controller.can_redo
+
+    def redo(self) -> HeaderState:
+        """
+        Redoes the previously undone state.
+
+        Returns
+        -------
+        HeaderState
+            The new state that has been stored.
+        """
+        self._update_state(self.undo_controller.redo())
+        return self.state
+
+    def _update_state(self, state: HeaderState):
+        """
+        Handles all updating of the state, sending any signals and updates to the display if needed.
+
+        Parameters
+        ----------
+        state : HeaderState
+            The new state of the editor.
+        """
+
+        self._state = state
+
+        # Let the display do the heavy lifting for generating the updates.
+        self._display.data = state.data
+        self._display.start = state.start
+        self._display.graphics = state.graphics
+        self._display.warp = state.warp
+        self._display.info = state.info
+
+        # Update the level header's bytes
+        self.level_bytes = header_state_to_level_header(state)
+
+        self.state_changed.emit(state)
+
+    def _level_length_changed(self, value: int):
+        self.level_length = value
+
+    def _music_changed(self, value: int):
+        self.music = value
+
+    def _time_changed(self, value: int):
+        self.time = value
+
+    def _scroll_changed(self, value: int):
+        self.scroll = value
+
+    def _horizontal_changed(self, value: bool):
+        self.horizontal = value
+
+    def _pipe_ends_level_changed(self, value: bool):
+        self.pipe_ends_level = value
+
+    def _x_position_changed(self, value: int):
+        self.x_position = value
+
+    def _y_position_changed(self, value: int):
+        self.y_position = value
+
+    def _action_changed(self, value: int):
+        self.action = value
+
+    def _generator_palette_changed(self, value: int):
+        self.generator_palette = value
+
+    def _enemy_palette_changed(self, value: int):
+        self.enemy_palette = value
+
+    def _next_level_generator_pointer_changed(self, value: int):
+        self.next_level_generator_pointer = value
+
+    def _next_level_enemy_pointer_changed(self, value: int):
+        assert isinstance(value, int)
+        print(value)
+        self.next_level_enemy_pointer = value
+
+    def _next_level_tileset_changed(self, value: int):
+        self.next_level_tileset = value
+
+    def _name_changed(self, value: str):
+        self.name = value
+
+    def _description_changed(self, value: str):
+        self.description = value
+
+    def _generator_space_changed(self, value: int):
+        self.generator_space = value
+
+    def _enemy_space_changed(self, value: int):
+        self.enemy_space = value
+
+    def _graphics_set_changed(self, value: int):
+        self.graphics_set = value
+
+
+class HeaderDisplay(QVBoxLayout):
+    """
+    The active display for all of the level's attributes defined inside the level header.
+
+    Attributes
+    ----------
+    data_editor: LevelDataEditor
+        The editor for this level's miscellaneous attributes.
+    start_editor: LevelStartEditor
+        The editor for this level's start placement and action.
+    graphics_editor: LevelGraphicsEditor
+        The editor for this level's graphics.
+    warp_editor: LevelWarpEditor
+        The editor for selecting the next level.
+    info_editor: LevelInformationEditor
+        The editor for adjusting this level's information.
+    """
+
+    data_editor: LevelDataEditor
+    start_editor: LevelStartEditor
+    graphics_editor: LevelGraphicsEditor
+    warp_editor: LevelWarpEditor
+    info_editor: LevelInformationEditor
+
+    def __init__(
+        self,
+        parent: QWidget,
+        data: LevelDataState,
+        start: LevelStartState,
+        graphics: LevelGraphicsState,
+        warp: LevelWarpState,
+        info: LevelInformationState,
+        level_bytes: bytearray,
+        file_settings: FileSettings,
+    ):
+        super().__init__(parent)
+        self.file_settings = file_settings
+
+        self._tabbed_widget = QTabWidget(parent)
+
+        self.data_editor = LevelDataEditor(self._tabbed_widget, data)
+        self.start_editor = LevelStartEditor(self._tabbed_widget, start)
+        self.graphics_editor = LevelGraphicsEditor(self._tabbed_widget, graphics)
+        self.warp_editor = LevelWarpEditor(self._tabbed_widget, warp, file_settings=self.file_settings)
+        self.info_editor = LevelInformationEditor(self._tabbed_widget, info)
+
+        self._tabbed_widget.addTab(self.data_editor, "Level")
+        self._tabbed_widget.addTab(self.start_editor, "Mario")
+        self._tabbed_widget.addTab(self.graphics_editor, "Graphics")
+        self._tabbed_widget.addTab(self.warp_editor, "Warping")
+        self._tabbed_widget.addTab(self.info_editor, "Info")
+
+        self.addWidget(self._tabbed_widget)
 
         self.header_bytes_label = QLabel()
+        self.level_bytes = level_bytes
 
-        main_layout.addWidget(self.header_bytes_label, alignment=Qt.AlignCenter)
+        self.addWidget(self.header_bytes_label, alignment=Qt.AlignCenter)  # type: ignore
 
-        self.update()
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}({self.parent}, {self.data}. {self.start},"
+            + f" {self.graphics}, {self.warp}, {self.info}, {self.file_settings})"
+        )
 
-    def update(self):
-        length_index = LEVEL_LENGTHS.index(self.level.length)
+    def __eq__(self, other) -> bool:
+        return (
+            isinstance(other, HeaderDisplay)
+            and self.data == other.data
+            and self.start == other.start
+            and self.graphics == other.graphics
+            and self.warp == other.warp
+            and self.info == other.info
+        )
 
-        self.length_dropdown.setCurrentIndex(length_index)
-        self.music_dropdown.setCurrentIndex(self.level.music_index)
-        self.time_dropdown.setCurrentIndex(self.level.time_index)
-        self.v_scroll_direction_dropdown.setCurrentIndex(self.level.scroll_type)
-        self.level_is_vertical_cb.setChecked(self.level.is_vertical)
-        self.pipe_ends_level_cb.setChecked(self.level.pipe_ends_level)
+    @property
+    def current_page(self) -> int:
+        """
+        The current page accessed by the user.
 
-        self.x_position_dropdown.setCurrentIndex(self.level.start_x_index)
-        self.y_position_dropdown.setCurrentIndex(self.level.start_y_index)
-        self.action_dropdown.setCurrentIndex(self.level.start_action)
+        Returns
+        -------
+        int
+            The index of the current page accessed.
+        """
+        return self._tabbed_widget.currentIndex()
 
-        self.object_palette_spinner.setValue(self.level.object_palette_index)
-        self.enemy_palette_spinner.setValue(self.level.enemy_palette_index)
-        self.graphic_set_dropdown.setCurrentIndex(self.level.graphic_set)
+    @current_page.setter
+    def current_page(self, page: int):
+        self._tabbed_widget.setCurrentIndex(page)
 
-        self.level_pointer_spinner.setValue(self.level.next_area_objects)
-        self.enemy_pointer_spinner.setValue(self.level.next_area_enemies)
-        self.next_area_object_set_dropdown.setCurrentIndex(self.level.next_area_object_set)
+    @property
+    def data(self) -> LevelDataState:
+        """
+        Provides the data of the level.
 
-        self.header_bytes_label.setText(" ".join(f"{number:0=#4X}"[2:] for number in self.level.header_bytes))
+        Returns
+        -------
+        LevelDataState
+            The data of the level.
+        """
+        return self.data_editor.state
 
-    def _set_jump_destination(self):
-        level_selector = LevelSelector(self)
-        level_was_selected = level_selector.exec_() == QDialog.Accepted
+    @data.setter
+    def data(self, data: LevelDataState):
+        self.data_editor.state = data
 
-        if not level_was_selected:
-            return
+    @property
+    def start(self) -> LevelStartState:
+        """
+        Provides the start of the level.
 
-        self.next_area_object_set_dropdown.setCurrentIndex(level_selector.object_set)
-        self.level.next_area_object_set = level_selector.object_set
+        Returns
+        -------
+        LevelStartState
+            The start of the level.
+        """
+        return self.start_editor.state
 
-        self.level_pointer_spinner.setValue(level_selector.object_data_offset)
-        self.level.next_area_objects = level_selector.object_data_offset
+    @start.setter
+    def start(self, start: LevelStartState):
+        self.start_editor.state = start
 
-        self.enemy_pointer_spinner.setValue(level_selector.enemy_data_offset)
-        self.level.next_area_enemies = level_selector.enemy_data_offset - 1
+    @property
+    def graphics(self) -> LevelGraphicsState:
+        """
+        Provides the graphics of the level.
 
-        self.header_change.emit()
+        Returns
+        -------
+        LevelGraphicsState
+            The graphics of the level.
+        """
+        return self.graphics_editor.state
 
-    def on_spin(self, _):
-        if self.level is None:
-            return
+    @graphics.setter
+    def graphics(self, graphics: LevelGraphicsState):
+        self.graphics_editor.state = graphics
 
-        spinner = self.sender()
+    @property
+    def warp(self) -> LevelWarpState:
+        """
+        Provides the warp of the level.
 
-        self.level.data_changed.connect(self.header_change.emit)
+        Returns
+        -------
+        LevelWarpState
+            The warp of the level.
+        """
+        return self.warp_editor.state
 
-        if spinner == self.object_palette_spinner:
-            new_index = self.object_palette_spinner.value()
-            self.level.object_palette_index = new_index
+    @warp.setter
+    def warp(self, warp: LevelWarpState):
+        self.warp_editor.state = warp
 
-        elif spinner == self.enemy_palette_spinner:
-            new_index = self.enemy_palette_spinner.value()
-            self.level.enemy_palette_index = new_index
+    @property
+    def info(self) -> LevelInformationState:
+        """
+        Provides the info of the level.
 
-        elif spinner == self.level_pointer_spinner:
-            new_offset = self.level_pointer_spinner.value()
-            self.level.next_area_objects = new_offset
+        Returns
+        -------
+        LevelInformationState
+            The info of the level.
+        """
+        return self.info_editor.level
 
-        elif spinner == self.enemy_pointer_spinner:
-            new_offset = self.enemy_pointer_spinner.value()
-            self.level.next_area_enemies = new_offset
+    @info.setter
+    def info(self, info: LevelInformationState):
+        self.info_editor.state = info
 
-        self.level.data_changed.disconnect()
+    @property
+    def level_bytes(self) -> bytearray:
+        """
+        Provides the bytes for the level header.
 
-        self.update()
+        Returns
+        -------
+        bytearray
+            The bytes for the level header.
+        """
+        return self._level_bytes
 
-    def on_combo(self, _):
-        dropdown = self.sender()
-
-        self.level.data_changed.connect(self.header_change.emit)
-
-        if dropdown == self.length_dropdown:
-            new_length = LEVEL_LENGTHS[self.length_dropdown.currentIndex()]
-            self.level.length = new_length
-
-        elif dropdown == self.music_dropdown:
-            new_music = self.music_dropdown.currentIndex()
-            self.level.music_index = new_music
-
-        elif dropdown == self.time_dropdown:
-            new_time = self.time_dropdown.currentIndex()
-            self.level.time_index = new_time
-
-        elif dropdown == self.v_scroll_direction_dropdown:
-            new_scroll = self.v_scroll_direction_dropdown.currentIndex()
-            self.level.scroll_type = new_scroll
-
-        elif dropdown == self.x_position_dropdown:
-            new_x = self.x_position_dropdown.currentIndex()
-            self.level.start_x_index = new_x
-
-        elif dropdown == self.y_position_dropdown:
-            new_y = self.y_position_dropdown.currentIndex()
-            self.level.start_y_index = new_y
-
-        elif dropdown == self.action_dropdown:
-            new_action = self.action_dropdown.currentIndex()
-            self.level.start_action = new_action
-
-        elif dropdown == self.graphic_set_dropdown:
-            new_gfx_set = self.graphic_set_dropdown.currentIndex()
-            self.level.graphic_set = new_gfx_set
-
-        elif dropdown == self.next_area_object_set_dropdown:
-            new_object_set = self.next_area_object_set_dropdown.currentIndex()
-            self.level.next_area_object_set = new_object_set
-
-        self.level.data_changed.disconnect()
-
-        self.update()
-
-    def on_check_box(self, _):
-        checkbox = self.sender()
-
-        self.level.data_changed.connect(self.header_change.emit)
-
-        if checkbox == self.pipe_ends_level_cb:
-            self.level.pipe_ends_level = self.pipe_ends_level_cb.isChecked()
-        elif checkbox == self.level_is_vertical_cb:
-            self.level.is_vertical = self.level_is_vertical_cb.isChecked()
-
-            self.length_dropdown.clear()
-            if self.level.is_vertical:
-                self.length_dropdown.addItems(STR_LEVEL_LENGTHS)
-            else:
-                self.length_dropdown.addItems(STR_LEVEL_LENGTHS[:-1])
-
-        self.level.data_changed.disconnect()
-
-        self.update()
+    @level_bytes.setter
+    def level_bytes(self, level_bytes: bytearray):
+        self._level_bytes = level_bytes
+        self.header_bytes_label.setText(" ".join(f"{number:0=#4X}"[2:] for number in level_bytes))
