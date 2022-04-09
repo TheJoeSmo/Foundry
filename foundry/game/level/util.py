@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from foundry import data_dir, default_levels_path
 
 
-@attrs(auto_attribs=True, slots=True)
+@attrs(auto_attribs=True, slots=True, frozen=True)
 class Location:
     """
     A representation of a location of a level.
@@ -22,7 +22,7 @@ class Location:
     index: int
 
 
-@attrs(auto_attribs=True, slots=True)
+@attrs(auto_attribs=True, slots=True, frozen=True)
 class DisplayInformation:
     """
     The display information to nicely sort levels.
@@ -42,7 +42,7 @@ class DisplayInformation:
     locations: list[Location]
 
 
-@attrs(auto_attribs=True, slots=True)
+@attrs(auto_attribs=True, slots=True, frozen=True, repr=False)
 class Level:
     """
     The representation of a level inside the game.
@@ -69,6 +69,12 @@ class Level:
     tileset: int
     generator_size: int
     enemy_size: int
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}({self.display_information}, {hex(self.generator_pointer)}, "
+            + f"{hex(self.enemy_pointer)}, {self.tileset}, {self.generator_size}, {self.enemy_size})"
+        )
 
 
 class PydanticLocation(BaseModel):
@@ -273,6 +279,52 @@ def get_world_levels(world: int, levels: list[Level]) -> list[Level]:
             if location.world == world:
                 world_levels[location.index] = level
     return [element[1] for element in sorted(world_levels.items(), key=lambda item: item[0])]
+
+
+def find_level_by_pointers(levels: list[Level], generator_pointer: int, enemy_pointer: int) -> Optional[Level]:
+    """
+    Finds a level by its pointers.
+
+    Parameters
+    ----------
+    levels : list[Level]
+        The levels to search through.
+    generator_pointer : int
+        The generator pointer of the level to find.
+    enemy_pointer : int
+        The enemy pointer of the level to find.
+
+    Returns
+    -------
+    Optional[Level]
+        The level, if one is found.
+    """
+    for level in levels:
+        if level.generator_pointer == generator_pointer and level.enemy_pointer == enemy_pointer:
+            return level
+
+
+def get_level_index(levels: list[Level], generator_pointer: int, enemy_pointer: int) -> int:
+    """
+    Finds a level by its pointers and sets it to the incoming value.
+
+    Parameters
+    ----------
+    levels : list[Level]
+        The levels to search through.
+    generator_pointer : int
+        The generator pointer of the level to find.
+    enemy_pointer : int
+        The enemy pointer of the level to find.
+
+    Returns
+    -------
+    int
+        The index of the level
+    """
+    for index, level in enumerate(levels):
+        if level.generator_pointer == generator_pointer and level.enemy_pointer == enemy_pointer:
+            return index
 
 
 def get_worlds(levels: list[PydanticLevel]) -> int:
