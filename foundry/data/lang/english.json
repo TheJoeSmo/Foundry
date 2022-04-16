@@ -1,17 +1,16 @@
 {
 	"language": "English",
-	"player_lives": {
-		"title": "Player Lives",
-		"STARTING_LIVES": "Starting Lives",
-		"CONTINUE_LIVES": "Continue Lives",
-		"INVALID_ROM_WARNING": "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled.",
-		"DEATH_TAKES_LIVES": "Subtract a life when the player dies",
-		"TITLE_1UP": "Add a life when player gets 1up from:",
-		"END_CARD_1UP": "Level end card",
-		"MUSHROOM_1UP": "1up Mushroom / Jumps on enemies",
-		"DICE_GAME_1UP": "Dice Game",
-		"ROULETTE_1UP": "Roulette Game",
-		"CARD_GAME_1UP": "Card Game",
-		"HUNDRED_COINS_1UP": "100 Coins"
-	}
+
+	"lives_title": "Player Lives",
+	"lives_starting": "Starting Lives",
+	"lives_continue": "Continue Lives",
+	"lives_invalid_rom_warning": "The selected ROM has code modifications that are incompatible with one or more features of this window. The affected features are visible but disabled.",
+	"lives_on_death": "Subtract a life when the player dies",
+	"lives_1up_title": "Add a life when player gets 1up from:",
+	"lives_1up_end_card": "Level end card",
+	"lives_1up_mushroom": "1up Mushroom / Jumps on enemies",
+	"lives_1up_dice_game": "Dice Game",
+	"lives_1up_roulette": "Roulette Game",
+	"lives_1up_card_game": "Card Game",
+	"lives_1up_100_coins": "100 Coins"
 }

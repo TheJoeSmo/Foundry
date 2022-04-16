@@ -1,11 +1,14 @@
 import json
 import os
 
-
 STRINGS = {}
 
 
-def _get_options() -> list:
+def get_options() -> list:
+    """Scans the /foundry/data/lang folder for any *.json file.  It takes the
+    'language' key from that file and inserts it and the file path into an
+    available language options list."""
+
     options = []
     directory = os.scandir("./foundry/data/lang/")
 
@@ -18,9 +21,17 @@ def _get_options() -> list:
     return options
 
 
-def load(path):
-    english_file = open('./foundry/data/lang/english.json')
-    new_lang_file = open(path)
+def load_language(path):
+    """This will load a new langauge.  English is always loaded first and then
+    the new langauge is superimposed onto the English dictionary.  This way if
+    there is a missing string in any language translation, it will default to
+    the English string.
+
+    NOTE: This requires that there is always an English string available for a
+    solution."""
+
+    english_file = open("./foundry/data/lang/english.json")
+    new_lang_file = open(path, "r", encoding="utf-8")
 
     english_data = json.load(english_file)
     new_lang_data = json.load(new_lang_file)
@@ -33,5 +44,4 @@ def load(path):
     new_lang_file.close()
 
 
-load("./foundry/data/lang/english.json")
-LANGUAGE_OPTIONS = _get_options()
+load_language("./foundry/data/lang/english.json")

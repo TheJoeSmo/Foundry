@@ -1,7 +1,6 @@
 {
 	"language": "Español (Spanish)",
-	"player_lives": {
-		"TITLE": "Vidas del Jugador",
-		"STARTING_LIVES": "Vidas Iniciales"
-	}
+
+	"lives_title": "Vidas del Jugador",
+	"lives_starting": "Vidas Iniciales"
 }

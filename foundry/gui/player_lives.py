@@ -27,30 +27,10 @@ from foundry.core.redux_store import Action, ReduxStore
 from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
+from foundry.gui.lang import STRINGS
 from foundry.smb3parse.util.code_edit_byte import CodeEditByte
 from foundry.smb3parse.util.code_edit_dict import CodeEditDict
 from foundry.smb3parse.util.rom import Rom
-
-
-class _UIStrings(Enum):
-    """All string values used in the UI."""
-
-    TITLE = "Player Lives"
-    STARTING_LIVES = "Starting Lives"
-    CONTINUE_LIVES = "Continue Lives"
-    INVALID_ROM_WARNING = (
-        "The selected ROM has code modifications that are"
-        " incompatible with one or more features of this window. The affected"
-        " features are visible but disabled."
-    )
-    DEATH_TAKES_LIVES = "Subtract a life when the player dies"
-    TITLE_1UP = "Add a life when player gets 1up from:"
-    END_CARD_1UP = "Level end card"
-    MUSHROOM_1UP = "1up Mushroom / Jumps on enemies "
-    DICE_GAME_1UP = "Dice Game"
-    ROULETTE_1UP = "Roulette Game"
-    CARD_GAME_1UP = "Card Game"
-    HUNDRED_COINS_1UP = "100 Coins"
 
 
 class ActionNames(Enum):
@@ -301,7 +281,7 @@ class View(CustomDialog):
         state changes in the system, the UI will automatically re-render.
         """
 
-        super(View, self).__init__(parent, title=_UIStrings.TITLE.value)
+        super(View, self).__init__(parent, title=STRINGS["lives_title"])
         self.rom_interface = rom_interface
         self.store = store
 
@@ -327,7 +307,7 @@ class View(CustomDialog):
         features are unsupported."""
 
         _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING.value}")
+        self._invalid_rom_warning = QLabel(f"{STRINGS['lives_invalid_rom_warning']}")
         self._invalid_rom_warning.setWordWrap(True)
         self._invalid_rom_warning.setFixedWidth(400)
         self._invalid_rom_warning.setStyleSheet(self.WARNING_STYLE)
@@ -347,9 +327,9 @@ class View(CustomDialog):
         self._continue_lives_edit.textEdited.connect(self._on_continue_lives)
 
         fields_layout = QGridLayout()
-        fields_layout.addWidget(QLabel(f"{_UIStrings.STARTING_LIVES.value} (0-99):", self), 0, 0)
+        fields_layout.addWidget(QLabel(f"{STRINGS['lives_starting']} (0-99):", self), 0, 0)
         fields_layout.addWidget(self._starting_lives_edit, 0, 1)
-        fields_layout.addWidget(QLabel(f"{_UIStrings.CONTINUE_LIVES.value} (0-99):", self), 1, 0)
+        fields_layout.addWidget(QLabel(f"{STRINGS['lives_continue']} (0-99):", self), 1, 0)
         fields_layout.addWidget(self._continue_lives_edit, 1, 1)
 
         return fields_layout
@@ -358,9 +338,7 @@ class View(CustomDialog):
         """Creates layout for when a death occurs."""
 
         layout = QBoxLayout(QBoxLayout.LeftToRight)
-        self._death_takes_lives = View._create_checkbox(
-            _UIStrings.DEATH_TAKES_LIVES.value, self._on_death_takes_lives, layout
-        )
+        self._death_takes_lives = View._create_checkbox(STRINGS["lives_on_death"], self._on_death_takes_lives, layout)
         return layout
 
     def _create_button_options_layout(self) -> QDialogButtonBox:
@@ -376,32 +354,32 @@ class View(CustomDialog):
         """Creates the layout for all of the possible 1up sources."""
 
         external_layout = QBoxLayout(QBoxLayout.TopToBottom)
-        group = QGroupBox(f"{_UIStrings.TITLE_1UP.value}")
+        group = QGroupBox(f"{STRINGS['lives_1up_title']}")
         internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
         group.setLayout(internal_layout)
 
         self._mushroom_1up = View._create_checkbox(
-            _UIStrings.MUSHROOM_1UP.value, self._on_mushroom_1up, internal_layout
+            STRINGS["lives_1up_mushroom"], self._on_mushroom_1up, internal_layout
         )
 
         self._hundred_coins_1up = View._create_checkbox(
-            _UIStrings.HUNDRED_COINS_1UP.value, self._on_hundred_coins_1up, internal_layout
+            STRINGS["lives_1up_100_coins"], self._on_hundred_coins_1up, internal_layout
         )
 
         self._end_card_1up = View._create_checkbox(
-            _UIStrings.END_CARD_1UP.value, self._on_end_card_1up, internal_layout
+            STRINGS["lives_1up_end_card"], self._on_end_card_1up, internal_layout
         )
 
         self._card_game_1up = View._create_checkbox(
-            _UIStrings.CARD_GAME_1UP.value, self._on_card_game_1up, internal_layout
+            STRINGS["lives_1up_card_game"], self._on_card_game_1up, internal_layout
         )
 
         self._roulette_1up = View._create_checkbox(
-            _UIStrings.ROULETTE_1UP.value, self._on_roulette_1up, internal_layout
+            STRINGS["lives_1up_roulette"], self._on_roulette_1up, internal_layout
         )
 
         self._dice_game_1up = View._create_checkbox(
-            _UIStrings.DICE_GAME_1UP.value, self._on_dice_game_1up, internal_layout
+            STRINGS["lives_1up_dice_game"], self._on_dice_game_1up, internal_layout
         )
 
         external_layout.addWidget(group)
