@@ -74,3 +74,6 @@ class CodeEditDict(CodeEdit[Any]):
                 self.rom.write(self.address, value)
         except KeyError:
             pass
+
+    def is_option(self, option: Any) -> bool:
+        return option in self._options.keys()

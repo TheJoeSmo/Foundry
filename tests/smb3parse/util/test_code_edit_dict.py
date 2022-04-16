@@ -99,3 +99,18 @@ def test_write_value_incorrect_length():
 
     edit.write("test_2")
     assert "default" == edit.read()
+
+
+def test_valid_option():
+    testdict = {
+        "default": default_value,
+        "test_1": bytearray([0x01, 0x01, 0x01]),
+        "test_2": bytearray([0x02, 0x02, 0x02, 0x02]),
+    }
+
+    edit = CodeEditDict(get_test_rom(), 0x100, len(default_value), bytearray(), testdict, bytearray())
+
+    assert True is edit.is_option("default")
+    assert True is edit.is_option("test_1")
+    assert True is edit.is_option("test_2")
+    assert False is edit.is_option("test_3")

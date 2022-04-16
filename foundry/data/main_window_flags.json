@@ -194,6 +194,10 @@
           "player_lives": {
             "name": "&Player Lives",
             "action": "on_player_lives"
+          },
+          "orb": {
+            "name": "&Orb",
+            "action": "on_orb_options"
           }
         }
       ]
