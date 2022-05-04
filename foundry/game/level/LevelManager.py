@@ -6,6 +6,7 @@ from PySide6.QtGui import QAction, QPixmap, Qt
 from PySide6.QtWidgets import QScrollArea, QSplitter
 
 from foundry.core.Data import DataProtocol
+from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level import LevelByteData
 from foundry.game.level.LevelController import LevelController
@@ -25,6 +26,7 @@ from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
 from foundry.gui.PaletteGroupController import PaletteGroupController
 from foundry.gui.PlayerViewer import PlayerViewerController as PlayerViewer
+from foundry.gui.settings import FileSettings, UserSettings
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.Toolbar import create_toolbar
 from foundry.gui.WarningList import WarningList
@@ -58,8 +60,9 @@ def require_enabled(function: Callable[..., T]) -> Callable[..., T]:
 
 
 class LevelManager:
-    def __init__(self, parent):
+    def __init__(self, parent, user_settings: UserSettings):
         self.parent = parent
+        self.user_settings = user_settings
         self.controller: Optional[LevelController] = None
         self._enabled = False
         self._has_warnings = False
@@ -109,7 +112,9 @@ class LevelManager:
 
         self.parent.context_menu = ContextMenu(level_ref)
         self.parent.context_menu.triggered.connect(self.parent.on_menu)  # type: ignore
-        self.parent.level_view = LevelView(self.parent, level_ref, self.parent.context_menu)
+        self.parent.level_view = LevelView(
+            self.parent, level_ref, self.parent.context_menu, FileSettings(), self.user_settings
+        )
         self.parent.scroll_panel = QScrollArea()
         self.parent.scroll_panel.setWidgetResizable(True)
         self.parent.scroll_panel.setWidget(self.parent.level_view)
@@ -165,7 +170,7 @@ class LevelManager:
         create_toolbar(self.parent, "Generator Editor", [self.parent.spinner_panel], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Generator Dropdown", [self.parent.object_dropdown], Qt.RightToolBarArea)
         create_toolbar(self.parent, "palette", [self.parent.side_palette], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "Level Size", [self.parent.level_size_bar], Qt.RightToolBarArea)
+        create_toolbar(self.parent, "PydanticLevel Size", [self.parent.level_size_bar], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Enemy Size", [self.parent.enemy_size_bar], Qt.RightToolBarArea)
         create_toolbar(self.parent, "Splitter", [splitter], Qt.RightToolBarArea)
 
@@ -242,6 +247,7 @@ class LevelManager:
     @require_enabled
     def update(self, controller: LevelController):
         controller.update()
+        self.parent.level_view.file_settings = ROM().settings
 
     @require_enabled
     def force_select(self, world: int, level: int, *, controller: LevelController):

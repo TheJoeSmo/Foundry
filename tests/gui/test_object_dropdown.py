@@ -11,7 +11,7 @@ def test_object_update_on_level_change(main_window):
 
     # WHEN the level is changed
     main_window.manager.controller.update_level(
-        "Level 1-2", level_1_2_object_address, level_1_2_enemy_address, HILLY_OBJECT_SET
+        "PydanticLevel 1-2", level_1_2_object_address, level_1_2_enemy_address, HILLY_OBJECT_SET
     )
 
     assert original_object_set != main_window.manager.controller.level_ref.level.object_set_number

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from PySide6.QtCore import QRect
 from PySide6.QtGui import QColor, QIcon, QImage, QPixmap, Qt
 from PySide6.QtWidgets import (
@@ -21,10 +23,11 @@ from foundry.game.gfx.objects.EnemyItem import MASK_COLOR
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.gui.settings import (
-    GUI_STYLE,
-    RESIZE_LEFT_CLICK,
-    RESIZE_RIGHT_CLICK,
-    SETTINGS,
+    GUILoader,
+    GUIStyle,
+    ResizeModes,
+    UserSettings,
+    load_gui_loader,
     load_settings,
     save_settings,
 )
@@ -62,8 +65,15 @@ png.convertTo(QImage.Format_RGB888)
 
 
 class SettingsDialog(CustomDialog):
-    def __init__(self, parent=None):
+    user_settings: UserSettings
+    gui_loader: GUILoader
+
+    def __init__(
+        self, parent=None, user_settings: Optional[UserSettings] = None, gui_loader: Optional[GUILoader] = None
+    ):
         super(SettingsDialog, self).__init__(parent, "Settings")
+        self.user_settings = user_settings if user_settings is not None else UserSettings()
+        self.gui_loader = gui_loader if gui_loader is not None else load_gui_loader()
 
         mouse_box = QGroupBox("Mouse", self)
         mouse_box.setLayout(QVBoxLayout())
@@ -71,7 +81,7 @@ class SettingsDialog(CustomDialog):
         label = QLabel("Scroll objects with mouse wheel:")
         label.setToolTip("Select an object and scroll up and down to change its type.")
         self._scroll_check_box = QCheckBox("Enabled")
-        self._scroll_check_box.setChecked(SETTINGS["object_scroll_enabled"])
+        self._scroll_check_box.setChecked(self.user_settings.object_scroll_enabled)
         self._scroll_check_box.toggled.connect(self._update_settings)
 
         scroll_layout = QHBoxLayout()
@@ -84,7 +94,7 @@ class SettingsDialog(CustomDialog):
             "When hovering your cursor over an object in a level, its name and point is shown in a tooltip."
         )
         self._tooltip_check_box = QCheckBox("Enabled")
-        self._tooltip_check_box.setChecked(SETTINGS["object_tooltip_enabled"])
+        self._tooltip_check_box.setChecked(self.user_settings.object_tooltip_enabled)
         self._tooltip_check_box.toggled.connect(self._update_settings)
 
         tooltip_layout = QHBoxLayout()
@@ -95,8 +105,8 @@ class SettingsDialog(CustomDialog):
         self.lmb_radio = QRadioButton("Left Mouse Button")
         rmb_radio = QRadioButton("Right Mouse Button")
 
-        self.lmb_radio.setChecked(SETTINGS["resize_mode"] == RESIZE_LEFT_CLICK)
-        rmb_radio.setChecked(SETTINGS["resize_mode"] == RESIZE_RIGHT_CLICK)
+        self.lmb_radio.setChecked(self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK)
+        rmb_radio.setChecked(self.user_settings.resize_mode == ResizeModes.RESIZE_RIGHT_CLICK)
 
         self.lmb_radio.toggled.connect(self._update_settings)
 
@@ -123,9 +133,10 @@ class SettingsDialog(CustomDialog):
         self.gui_style_combo_box = QComboBox()
         self.gui_style_hbox.addWidget(self.gui_style_combo_box)
 
-        for gui_style in GUI_STYLE.keys():
-            self.gui_style_combo_box.addItem(gui_style.capitalize())
-        self.gui_style_combo_box.setCurrentIndex(list(GUI_STYLE.keys()).index(SETTINGS["gui_style"]))
+        for gui_style in GUIStyle:
+            self.gui_style_combo_box.addItem(gui_style.value.capitalize())
+        self.gui_style_combo_box.setCurrentIndex(list(GUIStyle).index(self.user_settings.gui_style))
+
         self.gui_style_combo_box.currentIndexChanged.connect(self._update_settings)
 
         # -----------------------------------------------
@@ -133,7 +144,7 @@ class SettingsDialog(CustomDialog):
 
         self.emulator_command_input = QLineEdit(self)
         self.emulator_command_input.setPlaceholderText("Path to emulator")
-        self.emulator_command_input.setText(SETTINGS["instaplay_emulator"])
+        self.emulator_command_input.setText(self.user_settings.instaplay_emulator)
 
         self.emulator_command_input.textChanged.connect(self._update_settings)
 
@@ -142,7 +153,7 @@ class SettingsDialog(CustomDialog):
 
         self.command_arguments_input = QLineEdit(self)
         self.command_arguments_input.setPlaceholderText("%f")
-        self.command_arguments_input.setText(SETTINGS["instaplay_arguments"])
+        self.command_arguments_input.setText(self.user_settings.instaplay_arguments)
 
         self.command_arguments_input.textEdited.connect(self._update_settings)
 
@@ -174,13 +185,13 @@ class SettingsDialog(CustomDialog):
             self.powerup_combo_box.addItem(powerup_icon, name)
 
         self.powerup_combo_box.currentIndexChanged.connect(self._update_settings)
-        self.powerup_combo_box.setCurrentIndex(SETTINGS["default_powerup"])
+        self.powerup_combo_box.setCurrentIndex(self.user_settings.default_powerup)
 
         label = QLabel("Start with invincibility:")
         label.setToolTip("The player will start with star power.")
         self.powerup_star = QCheckBox("Enabled")
         self.powerup_star.setIcon(self._load_from_png(5, 48))
-        self.powerup_star.setChecked(SETTINGS["default_power_has_star"])
+        self.powerup_star.setChecked(self.user_settings.default_power_has_star)
         self.powerup_star.toggled.connect(self._update_settings)
 
         powerup_star_layout = QHBoxLayout()
@@ -192,7 +203,7 @@ class SettingsDialog(CustomDialog):
         label.setToolTip("The world that the player starts inside.")
         self.starting_world = QSpinBox(self)
         self.starting_world.setRange(1, 9)
-        self.starting_world.setValue(SETTINGS["default_starting_world"])
+        self.starting_world.setValue(self.user_settings.default_starting_world)
         self.starting_world.valueChanged.connect(self._update_settings)
 
         starting_world_layout = QHBoxLayout()
@@ -214,29 +225,31 @@ class SettingsDialog(CustomDialog):
         self.update()
 
     def update(self):
-        self.command_label.setText(f" > {SETTINGS['instaplay_emulator']} {SETTINGS['instaplay_arguments']}")
+        self.command_label.setText(
+            f" > {self.user_settings.instaplay_emulator} {self.user_settings.instaplay_arguments}"
+        )
 
     def _update_settings(self, _):
-        SETTINGS["instaplay_emulator"] = self.emulator_command_input.text()
-        SETTINGS["instaplay_arguments"] = self.command_arguments_input.text()
+        self.user_settings.instaplay_emulator = self.emulator_command_input.text()
+        self.user_settings.instaplay_arguments = self.command_arguments_input.text()
 
         if self.lmb_radio.isChecked():
-            SETTINGS["resize_mode"] = RESIZE_LEFT_CLICK
+            self.user_settings.resize_mode = ResizeModes.RESIZE_LEFT_CLICK
         else:
-            SETTINGS["resize_mode"] = RESIZE_RIGHT_CLICK
+            self.user_settings.resize_mode = ResizeModes.RESIZE_RIGHT_CLICK
 
         # setup style sheets
-        SETTINGS["gui_style"] = self.gui_style_combo_box.currentText().upper()
-        GUI_STYLE[SETTINGS["gui_style"]](self.parent())
+        self.user_settings.gui_style = GUIStyle(self.gui_style_combo_box.currentText().upper())
+        self.gui_loader.load_style(self.user_settings.gui_style)(self.parent())
 
-        SETTINGS["object_scroll_enabled"] = self._scroll_check_box.isChecked()
-        SETTINGS["object_tooltip_enabled"] = self._tooltip_check_box.isChecked()
+        self.user_settings.object_scroll_enabled = self._scroll_check_box.isChecked()
+        self.user_settings.object_tooltip_enabled = self._tooltip_check_box.isChecked()
 
-        SETTINGS["default_powerup"] = self.powerup_combo_box.currentIndex()
+        self.user_settings.default_powerup = self.powerup_combo_box.currentIndex()
         if hasattr(self, "powerup_star"):
-            SETTINGS["default_power_has_star"] = self.powerup_star.isChecked()
+            self.user_settings.default_power_has_star = self.powerup_star.isChecked()
         if hasattr(self, "starting_world"):
-            SETTINGS["default_starting_world"] = self.starting_world.value()
+            self.user_settings.default_starting_world = self.starting_world.value()
 
         self.update()
 
@@ -260,6 +273,6 @@ class SettingsDialog(CustomDialog):
         return icon_from_png
 
     def on_exit(self):
-        save_settings()
+        save_settings(self.user_settings)
 
         super(SettingsDialog, self).on_exit()

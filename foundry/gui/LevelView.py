@@ -35,7 +35,7 @@ from foundry.game.level.WorldMap import WorldMap
 from foundry.gui.ContextMenu import ContextMenu
 from foundry.gui.LevelDrawer import LevelDrawer
 from foundry.gui.SelectionSquare import SelectionSquare
-from foundry.gui.settings import RESIZE_LEFT_CLICK, RESIZE_RIGHT_CLICK, SETTINGS
+from foundry.gui.settings import FileSettings, ResizeModes, UserSettings
 
 HIGHEST_ZOOM_LEVEL = 8  # on linux, at least
 LOWEST_ZOOM_LEVEL = 1 / 16  # on linux, but makes sense with 16x16 blocks
@@ -62,29 +62,31 @@ class LevelView(QWidget):
     objects_selected: SignalInstance = Signal(object)  # type: ignore
     object_created: SignalInstance = Signal(object)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], level: LevelRef, context_menu: ContextMenu):
+    user_settings: UserSettings
+
+    def __init__(
+        self,
+        parent: Optional[QWidget],
+        level: LevelRef,
+        context_menu: ContextMenu,
+        file_settings: FileSettings,
+        user_settings: UserSettings,
+    ):
         super(LevelView, self).__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         self.setMouseTracking(True)
         self.setAcceptDrops(True)
 
+        self.file_settings = file_settings
+        self.user_settings = user_settings
+
         self.level_ref: LevelRef = level
         self.level_ref.data_changed.connect(self.update)
 
         self.context_menu = context_menu
 
-        self.level_drawer = LevelDrawer()
-
-        self.draw_grid = SETTINGS["draw_grid"]
-        self.draw_jumps = SETTINGS["draw_jumps"]
-        self.draw_expansions = SETTINGS["draw_expansion"]
-        self.draw_mario = SETTINGS["draw_mario"]
-        self.transparency = SETTINGS["block_transparency"]
-        self.draw_jumps_on_objects = SETTINGS["draw_jump_on_objects"]
-        self.draw_items_in_blocks = SETTINGS["draw_items_in_blocks"]
-        self.draw_invisible_items = SETTINGS["draw_invisible_items"]
-        self.draw_autoscroll = SETTINGS["draw_autoscroll"]
+        self.level_drawer = LevelDrawer(self.user_settings)
 
         self.zoom = 1
         self.block_length = Block.SIDE_LENGTH * self.zoom
@@ -110,7 +112,7 @@ class LevelView(QWidget):
         self.currently_dragged_object: Optional[Union[LevelObject, EnemyObject]] = None
 
         self.setWhatsThis(
-            "<b>Level View</b><br/>"
+            "<b>PydanticLevel View</b><br/>"
             "This renders the level as it would appear in game plus additional information, that can be "
             "toggled in the View menu.<br/>"
             "It supports selecting multiple objects, moving, copy/pasting and resizing them using the "
@@ -125,75 +127,75 @@ class LevelView(QWidget):
 
     @property
     def transparency(self):
-        return self.level_drawer.transparency
+        return self.user_settings.block_transparency
 
     @transparency.setter
     def transparency(self, value):
-        self.level_drawer.transparency = value
+        self.user_settings.block_transparency = value
 
     @property
     def draw_grid(self):
-        return self.level_drawer.draw_grid
+        return self.user_settings.draw_grid
 
     @draw_grid.setter
     def draw_grid(self, value):
-        self.level_drawer.draw_grid = value
+        self.user_settings.draw_grid = value
 
     @property
     def draw_jumps(self):
-        return self.level_drawer.draw_jumps
+        return self.user_settings.draw_jumps
 
     @draw_jumps.setter
     def draw_jumps(self, value):
-        self.level_drawer.draw_jumps = value
+        self.user_settings.draw_jumps = value
 
     @property
     def draw_mario(self):
-        return self.level_drawer.draw_mario
+        return self.user_settings.draw_mario
 
     @draw_mario.setter
     def draw_mario(self, value):
-        self.level_drawer.draw_mario = value
+        self.user_settings.draw_mario = value
 
     @property
     def draw_expansions(self):
-        return self.level_drawer.draw_expansions
+        return self.user_settings.draw_expansion
 
     @draw_expansions.setter
     def draw_expansions(self, value):
-        self.level_drawer.draw_expansions = value
+        self.user_settings.draw_expansion = value
 
     @property
     def draw_jumps_on_objects(self):
-        return self.level_drawer.draw_jumps_on_objects
+        return self.user_settings.draw_jump_on_objects
 
     @draw_jumps_on_objects.setter
     def draw_jumps_on_objects(self, value):
-        self.level_drawer.draw_jumps_on_objects = value
+        self.user_settings.draw_jump_on_objects = value
 
     @property
     def draw_items_in_blocks(self):
-        return self.level_drawer.draw_items_in_blocks
+        return self.user_settings.draw_items_in_blocks
 
     @draw_items_in_blocks.setter
     def draw_items_in_blocks(self, value):
-        self.level_drawer.draw_items_in_blocks = value
+        self.user_settings.draw_items_in_blocks = value
 
     @property
     def draw_invisible_items(self):
-        return self.level_drawer.draw_invisible_items
+        return self.user_settings.draw_invisible_items
 
     @draw_invisible_items.setter
     def draw_invisible_items(self, value):
-        self.level_drawer.draw_invisible_items = value
+        self.user_settings.draw_invisible_items = value
 
     @property
     def draw_autoscroll(self):
-        return self.level_drawer.draw_autoscroll
+        return self.user_settings.draw_autoscroll
 
     @draw_autoscroll.setter
     def draw_autoscroll(self, value):
-        self.level_drawer.draw_autoscroll = value
+        self.user_settings.draw_autoscroll = value
 
     def mousePressEvent(self, event: QMouseEvent):
         pressed_button = event.button()
@@ -220,14 +222,14 @@ class LevelView(QWidget):
         elif self.selection_square.active:
             self._set_selection_end(event.position().toPoint())
 
-        elif SETTINGS["resize_mode"] == RESIZE_LEFT_CLICK:
+        elif self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK:
             self._set_cursor_for_position(event)
 
         x, y = event.position().toPoint().toTuple()
 
         object_under_cursor = self.object_at(x, y)
 
-        if SETTINGS["object_tooltip_enabled"] and object_under_cursor is not None:
+        if self.user_settings.object_tooltip_enabled and object_under_cursor is not None:
             self.setToolTip(str(object_under_cursor))
         else:
             self.setToolTip("")
@@ -294,7 +296,7 @@ class LevelView(QWidget):
             super(LevelView, self).mouseReleaseEvent(event)
 
     def wheelEvent(self, event: QWheelEvent):
-        if SETTINGS["object_scroll_enabled"]:
+        if self.user_settings.object_scroll_enabled:
             x, y = event.position().toPoint().toTuple()
 
             obj_under_cursor = self.object_at(x, y)
@@ -353,7 +355,7 @@ class LevelView(QWidget):
 
         self.last_mouse_position = level_x, level_y
 
-        if self._select_objects_on_click(event) and SETTINGS["resize_mode"] == RESIZE_RIGHT_CLICK:
+        if self._select_objects_on_click(event) and self.user_settings.resize_mode == ResizeModes.RESIZE_RIGHT_CLICK:
             self._try_start_resize(MODE_RESIZE_DIAG, event)
 
     def _try_start_resize(self, resize_mode: int, event: QMouseEvent):
@@ -435,7 +437,7 @@ class LevelView(QWidget):
             if obj is not None:
                 edge = self._cursor_on_edge_of_object(obj, event.position().toPoint())
 
-                if SETTINGS["resize_mode"] == RESIZE_LEFT_CLICK and edge:
+                if self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK and edge:
 
                     self._try_start_resize(self._resize_mode_from_edge(edge), event)
                 else:
@@ -647,11 +649,11 @@ class LevelView(QWidget):
 
     def _cuts_into_other_enemies(self) -> str:
         if self.level_ref is None:
-            raise ValueError("Level is None")
+            raise ValueError("PydanticLevel is None")
 
         enemies_end = self.level_ref.level.enemies_end
 
-        levels_by_enemy_offset = sorted(Level.offsets, key=lambda level: level.enemy_pointer)
+        levels_by_enemy_offset = sorted(self.file_settings.levels, key=lambda level: level.enemy_pointer)
 
         level_index = bisect_right([level.enemy_pointer for level in levels_by_enemy_offset], enemies_end) - 1
 
@@ -666,7 +668,7 @@ class LevelView(QWidget):
 
     def _cuts_into_other_objects(self) -> str:
         if self.level_ref is None:
-            raise ValueError("Level is None")
+            raise ValueError("PydanticLevel is None")
 
         end_of_level_objects = self.level_ref.level.objects_end
 

@@ -20,7 +20,7 @@ level_1_2_enemy_address = 0xC6BA + 1
 
 @pytest.fixture
 def level(rom_singleton, qtbot):
-    return Level("Level 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET)
+    return Level("PydanticLevel 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET)
 
 
 @pytest.fixture(scope="module", autouse=True)

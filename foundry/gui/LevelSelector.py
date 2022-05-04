@@ -18,10 +18,10 @@ from PySide6.QtWidgets import (
 )
 
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.level.Level import Level
-from foundry.game.level.util import Level as LevelMeta
-from foundry.game.level.util import get_world_levels
+from foundry.game.level.Level import Level as LevelMeta
+from foundry.game.level.util import Level, get_world_levels
 from foundry.game.level.WorldMap import WorldMap
+from foundry.gui.settings import FileSettings
 from foundry.gui.Spinner import Spinner
 from foundry.gui.WorldMapView import WorldMapView
 from foundry.smb3parse.levels import WORLD_COUNT
@@ -63,13 +63,31 @@ OVERWORLD_MAPS_INDEX = 0
 WORLD_1_INDEX = 1
 
 
-def select_by_world_and_level(world: int, level: int) -> LevelMeta:
-    return get_world_levels(world, Level.offsets)[level]
+def select_by_world_and_level(world: int, level: int, levels: list[Level]) -> Level:
+    """
+    Selects a level by its world and level index.
+
+    Parameters
+    ----------
+    world : int
+        The world the level is inside.
+    level : int
+        The index of the level inside the world.
+    levels : list[Level]
+        The list of levels to search.
+
+    Returns
+    -------
+    Level
+        The level at the world and index.
+    """
+    return get_world_levels(world, levels)[level]
 
 
 class LevelSelector(QDialog):
-    def __init__(self, parent, *, start_level: Optional[tuple[int, int]] = None):
+    def __init__(self, parent, file_settings: FileSettings, *, start_level: Optional[tuple[int, int]] = None):
         super(LevelSelector, self).__init__(parent)
+        self.file_settings = file_settings
 
         self.setWindowTitle("Level Selector")
         self.setModal(True)
@@ -151,7 +169,7 @@ class LevelSelector(QDialog):
         self.setLayout(main_layout)
 
         if start_level is None:
-            self.world_list.setCurrentRow(1)  # select Level 1-1
+            self.world_list.setCurrentRow(1)  # select PydanticLevel 1-1
             self.on_world_click()
         else:
             self.world_list.setCurrentRow(start_level[0])
@@ -172,7 +190,9 @@ class LevelSelector(QDialog):
 
         self.level_list.clear()
 
-        self.level_list.addItems([level.display_information.name for level in get_world_levels(index, Level.offsets)])
+        self.level_list.addItems(
+            [level.display_information.name for level in get_world_levels(index, self.file_settings.levels)]
+        )
 
         if self.level_list.count():
             self.level_list.setCurrentRow(0)
@@ -186,15 +206,13 @@ class LevelSelector(QDialog):
 
         level_is_overworld = self.world_list.currentRow() == OVERWORLD_MAPS_INDEX
 
-        level = get_world_levels(self.world_list.currentRow(), Level.offsets)[index]
+        level = get_world_levels(self.world_list.currentRow(), self.file_settings.levels)[index]
         self.level_name = level.display_information.name
 
         object_data_for_lvl = level.generator_pointer
 
         if not level_is_overworld:
-            object_data_for_lvl -= Level.HEADER_LENGTH
-
-        if not level_is_overworld:
+            object_data_for_lvl -= LevelMeta.HEADER_LENGTH
             enemy_data_for_lvl = level.enemy_pointer
         else:
             enemy_data_for_lvl = 0

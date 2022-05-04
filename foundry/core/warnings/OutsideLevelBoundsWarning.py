@@ -15,7 +15,7 @@ class OutsideLevelBoundsWarning(Warning):
         ----------
         obj : ObjectLike
             The object to check.
-        level : Optional[Level]
+        level : Optional[PydanticLevel]
             The level to check the bounds of.
 
         Returns
