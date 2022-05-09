@@ -152,10 +152,10 @@ class PlayerViewerController(CustomChildWindow):
         self.view.mouse_moved_over_widget.connect(self._on_mouse_move)
         self.view.clicked.connect(self._show_player_frame_editor)
 
-        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
-        self.redo_action = self.toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
-        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
+        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.png"), "Undo Action")
+        self.redo_action = self.toolbar.addAction(icon("rotate-cw.png"), "Redo Action")
+        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
+        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
 
         self.powerup_combo_box = QComboBox()
         for (name, x, y) in POWERUPS:

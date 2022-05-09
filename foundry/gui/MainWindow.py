@@ -103,29 +103,29 @@ class MainWindow(QMainWindow):
         self.menu_toolbar.setOrientation(Qt.Horizontal)
         self.menu_toolbar.setIconSize(QSize(20, 20))
 
-        self.menu_toolbar.addAction(icon("settings.svg"), "Editor Settings").triggered.connect(self._on_show_settings)
+        self.menu_toolbar.addAction(icon("settings.png"), "Editor Settings").triggered.connect(self._on_show_settings)
         self.menu_toolbar.addSeparator()
-        self.menu_toolbar.addAction(icon("folder.svg"), "Open ROM").triggered.connect(self.on_open_rom)
-        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.svg"), "Save PydanticLevel")
+        self.menu_toolbar.addAction(icon("folder.png"), "Open ROM").triggered.connect(self.on_open_rom)
+        self.menu_toolbar_save_action = self.menu_toolbar.addAction(icon("save.png"), "Save PydanticLevel")
         self.menu_toolbar_save_action.triggered.connect(self.on_save_rom)
         self.menu_toolbar.addSeparator()
 
-        self.undo_action = self.menu_toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
+        self.undo_action = self.menu_toolbar.addAction(icon("rotate-ccw.png"), "Undo Action")
         self.undo_action.triggered.connect(self.manager.undo)
         self.undo_action.setEnabled(False)
-        self.redo_action = self.menu_toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
+        self.redo_action = self.menu_toolbar.addAction(icon("rotate-cw.png"), "Redo Action")
         self.redo_action.triggered.connect(self.manager.redo)
         self.redo_action.setEnabled(False)
 
         self.menu_toolbar.addSeparator()
-        play_action = self.menu_toolbar.addAction(icon("play-circle.svg"), "Play PydanticLevel")
+        play_action = self.menu_toolbar.addAction(icon("play-circle.png"), "Play PydanticLevel")
         play_action.triggered.connect(self.on_play)
         play_action.setWhatsThis("Opens an emulator with the current PydanticLevel set to 1-1.\nSee Settings.")
         self.menu_toolbar.addSeparator()
-        self.menu_toolbar.addAction(icon("zoom-out.svg"), "Zoom Out").triggered.connect(self.manager.zoom_out)
-        self.menu_toolbar.addAction(icon("zoom-in.svg"), "Zoom In").triggered.connect(self.manager.zoom_in)
+        self.menu_toolbar.addAction(icon("zoom-out.png"), "Zoom Out").triggered.connect(self.manager.zoom_out)
+        self.menu_toolbar.addAction(icon("zoom-in.png"), "Zoom In").triggered.connect(self.manager.zoom_in)
         self.menu_toolbar.addSeparator()
-        header_action = self.menu_toolbar.addAction(icon("tool.svg"), "Edit PydanticLevel Header")
+        header_action = self.menu_toolbar.addAction(icon("tool.png"), "Edit PydanticLevel Header")
         header_action.triggered.connect(self.manager.display_header_editor)
         header_action.setWhatsThis(
             "<b>Header Editor</b><br/>"
@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
         )
 
         self.jump_destination_action = self.menu_toolbar.addAction(
-            icon("arrow-right-circle.svg"), "Go to Jump Destination"
+            icon("arrow-right-circle.png"), "Go to Jump Destination"
         )
         self.jump_destination_action.triggered.connect(self.manager.warp_to_alternative)
         self.jump_destination_action.setWhatsThis(
@@ -145,11 +145,11 @@ class MainWindow(QMainWindow):
 
         whats_this_action = QWhatsThis.createAction()
         whats_this_action.setWhatsThis("Click on parts of the editor, to receive help information.")
-        whats_this_action.setIcon(icon("help-circle.svg"))
+        whats_this_action.setIcon(icon("help-circle.png"))
         whats_this_action.setText("Starts 'What's this?' mode")
         self.menu_toolbar.addAction(whats_this_action)
 
-        self.warning_action = self.menu_toolbar.addAction(icon("alert-triangle.svg"), "Warning Panel")
+        self.warning_action = self.menu_toolbar.addAction(icon("alert-triangle.png"), "Warning Panel")
         self.warning_action.setWhatsThis("Shows a list of warnings.")
         self.warning_action.setDisabled(True)
         self.warning_action.triggered.connect(self.manager.display_warnings)
@@ -624,7 +624,7 @@ class MainWindow(QMainWindow):
         if current_version != latest_version:
             latest_release_url = f"{releases_link}/tag/{latest_version}"
 
-            go_to_github_button = QPushButton(icon("external-link.svg"), "Go to latest release")
+            go_to_github_button = QPushButton(icon("external-link.png"), "Go to latest release")
             go_to_github_button.clicked.connect(lambda: open_url(latest_release_url))
 
             info_box = QMessageBox(
