@@ -71,7 +71,7 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
     return image.scaled(scale_factor, scale_factor)
 
 
-@lru_cache(2 ** 10)
+@lru_cache(2**10)
 def cached_block_to_image(
     block: Block, palette_group: HashablePaletteGroupProtocol, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
 ) -> QImage:
