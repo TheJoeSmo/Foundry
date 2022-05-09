@@ -49,12 +49,12 @@ class BlockViewerController(CustomChildWindow):
         self.view.block_selected.connect(self._on_block_selected)
         self.view.destroyed.connect(self.destroy)  # type: ignore
 
-        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.svg"), "Undo Action")
-        self.redo_action = self.toolbar.addAction(icon("rotate-cw.svg"), "Redo Action")
-        self.prev_os_action = self.toolbar.addAction(icon("arrow-left.svg"), "Previous object set")
-        self.next_os_action = self.toolbar.addAction(icon("arrow-right.svg"), "Next object set")
-        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
+        self.undo_action = self.toolbar.addAction(icon("rotate-ccw.png"), "Undo Action")
+        self.redo_action = self.toolbar.addAction(icon("rotate-cw.png"), "Redo Action")
+        self.prev_os_action = self.toolbar.addAction(icon("arrow-left.png"), "Previous object set")
+        self.next_os_action = self.toolbar.addAction(icon("arrow-right.png"), "Next object set")
+        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
+        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
 
         def change_tileset(offset: int):
             self.tileset += offset

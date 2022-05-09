@@ -59,8 +59,8 @@ class BlockEditorController(CustomChildWindow):
 
         self.view.pattern_selected.connect(lambda values: self._on_pattern_selected(*values))
 
-        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
+        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
+        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
 
         def change_zoom(offset: int):
             self.view.zoom += offset
