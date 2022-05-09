@@ -47,8 +47,8 @@ class SpriteViewerController(CustomChildWindow):
 
         self.view.sprite_selected.connect(self.sprite_selected.emit)
 
-        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
+        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
+        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
 
         def change_zoom(offset: int):
             self.view.zoom += offset

@@ -59,8 +59,8 @@ class PlayerFrameEditorController(CustomChildWindow):
 
         self.view.clicked.connect(self._create_sprite_viewer)
 
-        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.svg"), "Zoom Out")
-        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.svg"), "Zoom In")
+        self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
+        self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
 
         self.page_offset_spinner = Spinner(self, 0xFF)
         self.page_offset_spinner.setValue(animation.offset)

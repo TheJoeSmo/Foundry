@@ -148,7 +148,7 @@ class SettingsDialog(CustomDialog):
 
         self.emulator_command_input.textChanged.connect(self._update_settings)
 
-        self.emulator_path_button = QPushButton(icon("folder.svg"), "", self)
+        self.emulator_path_button = QPushButton(icon("folder.png"), "", self)
         self.emulator_path_button.pressed.connect(self._get_emulator_path)
 
         self.command_arguments_input = QLineEdit(self)
