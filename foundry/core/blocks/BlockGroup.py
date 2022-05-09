@@ -18,13 +18,8 @@ from foundry.core.palette.PaletteGroup import (
     PaletteGroupProtocol,
     PydanticPaletteGroup,
 )
-from foundry.core.point.Point import (
-    HashablePointProtocol,
-    Point,
-    PointProtocol,
-    PydanticPoint,
-)
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 from foundry.game.gfx.drawable import MASK_COLOR
 
 
@@ -34,7 +29,7 @@ class BlockGroupProtocol(Protocol):
 
     Attributes
     ----------
-    position: PositionProtocol
+    position: Point
         The position of the block group.
     blocks: Sequence[BlockProtocol]
         The blocks that compose the block group.
@@ -44,13 +39,13 @@ class BlockGroupProtocol(Protocol):
         The palettes to render the blocks with.
     """
 
-    point: PointProtocol
+    point: Point
     blocks: Sequence[BlockProtocol]
     graphics_set: GraphicsSetProtocol
     palette_group: PaletteGroupProtocol
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         ...
 
     def image(self, scale_factor: int) -> QImage:
@@ -67,7 +62,7 @@ class BlockGroup:
 
     Attributes
     ----------
-    point: PointProtocol
+    point: Point
         The point in space of the block group.
     blocks: tuple[BlockProtocol]
         The blocks that compose the block group.
@@ -77,7 +72,7 @@ class BlockGroup:
         The palettes to render the blocks with.
     """
 
-    point: HashablePointProtocol
+    point: Point
     blocks: tuple[BlockProtocol]
     graphics_set: GraphicsSetProtocol
     palette_group: HashablePaletteGroupProtocol
@@ -85,7 +80,7 @@ class BlockGroup:
     @classmethod
     def from_values(
         cls: Type[_T],
-        point: PointProtocol,
+        point: Point,
         blocks: Sequence[BlockProtocol],
         graphics_set: GraphicsSetProtocol,
         palette_group: PaletteGroupProtocol,
@@ -96,7 +91,7 @@ class BlockGroup:
 
         Parameters
         ----------
-        point : PointProtocol
+        point : Point
             The point in space of the block group.
         blocks : Sequence[BlockProtocol]
             The blocks that compose the block group.
@@ -106,7 +101,7 @@ class BlockGroup:
             The palettes to render the blocks with.
         """
         return cls(
-            Point.from_point(point),
+            point,
             tuple([Block.from_block(block) for block in blocks]),
             graphics_set,
             PaletteGroup.from_palette_group(palette_group),
@@ -128,13 +123,13 @@ class BlockGroup:
         )
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         """
         The maximum size required to render every block inside itself without any clipping.
 
         Returns
         -------
-        SizeProtocol
+        Size
             Of the size required to render every block without clipping.
         """
         return Size(
@@ -173,7 +168,7 @@ class BlockGroup:
 
 
 class PydanticBlockGroup(Drawable):
-    point: PydanticPoint
+    point: Point
     blocks: list[PydanticBlock]
     graphics_set: PydanticGraphicsSet
     palette_group: PydanticPaletteGroup
@@ -181,7 +176,7 @@ class PydanticBlockGroup(Drawable):
     @property
     def block_group(self) -> BlockGroupProtocol:
         return BlockGroup.from_values(
-            self.point.point,
+            self.point,
             [b.block for b in self.blocks],
             self.graphics_set.graphics_set,
             self.palette_group.palette_group,

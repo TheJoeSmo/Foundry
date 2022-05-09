@@ -3,8 +3,8 @@ from PySide6.QtGui import QImage
 
 from foundry.core.blocks.BlockGroup import BlockGroupProtocol, PydanticBlockGroup
 from foundry.core.drawable.Drawable import Drawable, DrawableProtocol
-from foundry.core.point.Point import HashablePointProtocol
-from foundry.core.size.Size import SizeProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
@@ -13,11 +13,11 @@ class BlockGroupDrawable:
     A drawable block group.
     """
 
-    point_offset: HashablePointProtocol
+    point_offset: Point
     block_group: BlockGroupProtocol
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         return self.block_group.size
 
     def image(self, scale_factor: int = 1) -> QImage:

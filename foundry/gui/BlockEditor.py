@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import MutablePoint
+from foundry.core.point.Point import Point
 from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PatternViewer import PatternViewerController as PatternViewer
@@ -210,9 +210,9 @@ class BlockEditorView(QWidget):
         return Block.WIDTH * self.zoom
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = MutablePoint.from_qpoint(event.pos())
-        pos.x, pos.y = pos.x // (self.block_scale // 2), pos.y // (self.block_scale // 2)
-        self.pattern_selected.emit((pos.x, pos.y))
+        pos = Point.from_qpoint(event.pos())
+        x, y = pos.x // (self.block_scale // 2), pos.y // (self.block_scale // 2)
+        self.pattern_selected.emit((x, y))
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)

@@ -4,8 +4,8 @@ from pydantic import BaseModel
 from PySide6.QtGui import QImage
 
 from foundry.core.drawable import DrawableType
-from foundry.core.point.Point import PointProtocol, PydanticPoint
-from foundry.core.size.Size import SizeProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 
 
 class DrawableProtocol(Protocol):
@@ -13,10 +13,10 @@ class DrawableProtocol(Protocol):
     An element that can be drawn to the screen.
     """
 
-    point_offset: PointProtocol
+    point_offset: Point
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         ...
 
     def image(self, scale_factor: int = 1) -> QImage:
@@ -25,7 +25,7 @@ class DrawableProtocol(Protocol):
 
 class Drawable(BaseModel):
     type: DrawableType
-    point_offset: PydanticPoint = PydanticPoint(x=0, y=0)
+    point_offset: Point = Point(x=0, y=0)
 
     class Config:
         use_enum_values = True

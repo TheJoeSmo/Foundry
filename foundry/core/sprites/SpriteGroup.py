@@ -5,8 +5,8 @@ from PySide6.QtGui import QColor, QImage, QPainter
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
-from foundry.core.point.Point import PointProtocol
-from foundry.core.size.Size import MutableSize, SizeProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.game.gfx.drawable import MASK_COLOR
@@ -14,13 +14,13 @@ from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
 
 
 class SpriteGroupProtocol(Protocol):
-    position: PointProtocol
+    position: Point
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
     palette_group: MutablePaletteGroupProtocol
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         ...
 
     def image(self, scale_factor: int) -> QImage:
@@ -34,7 +34,7 @@ class SpriteGroup:
 
     Attributes
     ----------
-    point: PointProtocol
+    point: Point
         The point of the sprite group.
     sprites: list[SpriteProtocol]
         The sprites that compose the sprite group.
@@ -44,14 +44,14 @@ class SpriteGroup:
         The palettes to render the sprites with.
     """
 
-    position: PointProtocol
+    position: Point
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSetProtocol
     palette_group: MutablePaletteGroupProtocol
 
     @property
-    def size(self) -> SizeProtocol:
-        return MutableSize(
+    def size(self) -> Size:
+        return Size(
             max([sprites.position.x for sprites in self.sprites]) + SPRITE_SIZE.width,
             max([sprites.position.y for sprites in self.sprites]) + SPRITE_SIZE.height,
         )

@@ -5,8 +5,9 @@ from abc import ABC
 from typing import Optional, Protocol
 
 import attr
+from attrs import evolve
 
-from foundry.core.point.Point import MutablePoint, PointProtocol
+from foundry.core.point.Point import Point
 
 MIN_DOMAIN = 0
 MAX_DOMAIN = 7
@@ -39,7 +40,7 @@ class LevelComponentProtocol(Protocol):
 
     domain: int
     index: int
-    position: PointProtocol
+    position: Point
 
 
 def domain_check(instance, attribute, value):
@@ -121,7 +122,7 @@ class LevelComponent:
 
     domain: int = attr.ib(validator=domain_check, default=0)
     index: int = attr.ib(validator=index_check, default=0)
-    position: MutablePoint = attr.ib(validator=position_check, default=attr.Factory(lambda: MutablePoint(0, 0)))
+    position: Point = attr.ib(validator=position_check, default=attr.Factory(lambda: Point(0, 0)))
 
 
 class InLevelObject(ABC):
@@ -157,7 +158,7 @@ class InLevelObject(ABC):
 
     @x.setter
     def x(self, value):
-        self.level_component.position.x = value
+        self.level_component.position = evolve(self.level_component.position, x=value)
 
     @property
     def y(self):
@@ -165,7 +166,7 @@ class InLevelObject(ABC):
 
     @y.setter
     def y(self, value):
-        self.level_component.position.y = value
+        self.level_component.position = evolve(self.level_component.position, y=value)
 
     @property
     def additional_length(self):

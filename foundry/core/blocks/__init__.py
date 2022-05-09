@@ -1,9 +1,9 @@
-from foundry.core.point.Point import Point, PointProtocol
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.point.Point import Point
+from foundry.core.size.Size import Size
 
-BLOCK_SIZE: SizeProtocol = Size(16, 16)
+BLOCK_SIZE: Size = Size(16, 16)
 
-PATTERN_LOCATIONS: tuple[PointProtocol, PointProtocol, PointProtocol, PointProtocol] = (
+PATTERN_LOCATIONS: tuple[Point, Point, Point, Point] = (
     Point(0, 0),
     Point(8, 0),
     Point(0, 8),
