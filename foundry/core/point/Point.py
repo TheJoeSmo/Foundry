@@ -88,7 +88,7 @@ class AbstractPoint(ABC):
 
     @property
     def distance_from_origin(self) -> float:
-        return sqrt(self.x ** 2 + self.y ** 2)
+        return sqrt(self.x**2 + self.y**2)
 
     def __lt__(self, other: PointProtocol):
         return self.distance_from_origin < other.distance_from_origin
@@ -115,7 +115,7 @@ class AbstractPoint(ABC):
         return self.from_values(self.x >> other, self.y >> other)
 
     def __pow__(self: _T, other: int) -> _T:
-        return self.from_values(self.x ** other, self.y ** other)
+        return self.from_values(self.x**other, self.y**other)
 
     def __add__(self: _T, other: PointProtocol) -> _T:
         return self.from_values(self.x + other.x, self.y + other.y)

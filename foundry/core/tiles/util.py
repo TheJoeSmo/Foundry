@@ -101,7 +101,7 @@ def _tile_to_image(tile: _Tile, scale_factor: int = 1) -> QImage:
     return image.scaled(TILE_SIZE.width * scale_factor, TILE_SIZE.height * scale_factor)
 
 
-@lru_cache(2 ** 10)
+@lru_cache(2**10)
 def cached_tile_to_image(
     tile_index: int,
     palette: HashablePaletteProtocol,

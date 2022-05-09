@@ -88,7 +88,7 @@ class AbstractSize(ABC):
         return self.from_values(self.width >> other, self.height >> other)
 
     def __pow__(self: _T, other: int) -> _T:
-        return self.from_values(self.width ** other, self.height ** other)
+        return self.from_values(self.width**other, self.height**other)
 
     def __add__(self: _T, other: SizeProtocol) -> _T:
         return self.from_values(self.width + other.width, self.height + other.height)
