@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from git.repo.base import Repo
 
-from foundry.core.point.Point import Point
+from foundry.core.point.Point import MutablePoint
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectIcon import get_minimal_icon_object
@@ -141,7 +141,7 @@ def test_no_change_to_bytes():
 
 
 @pytest.mark.parametrize(
-    "attribute, increase", zip(["domain", "obj_index", "length", "point"], [1, 0x10, 1, Point(1, 1)])
+    "attribute, increase", zip(["domain", "obj_index", "length", "point"], [1, 0x10, 1, MutablePoint(1, 1)])
 )
 def test_change_attribute_to_bytes(attribute, increase):
     object_factory = LevelObjectFactory(1, 1, 0, [], False)

@@ -6,7 +6,7 @@ from PySide6.QtGui import QColor, QImage, QPainter
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
 from foundry.core.point.Point import PointProtocol
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.size.Size import MutableSize, SizeProtocol
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.game.gfx.drawable import MASK_COLOR
@@ -51,7 +51,7 @@ class SpriteGroup:
 
     @property
     def size(self) -> SizeProtocol:
-        return Size(
+        return MutableSize(
             max([sprites.position.x for sprites in self.sprites]) + SPRITE_SIZE.width,
             max([sprites.position.y for sprites in self.sprites]) + SPRITE_SIZE.height,
         )

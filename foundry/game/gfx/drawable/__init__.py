@@ -259,7 +259,7 @@ bit_reverse = [
     0x7F,
     0xFF,
 ]
-MASK_COLOR = [0xFF, 0x00, 0xFF]
+MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 SELECTION_OVERLAY_COLOR = QColor(20, 87, 159, 80)
 

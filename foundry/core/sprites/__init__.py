@@ -1,3 +1,3 @@
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.size.Size import MutableSize, SizeProtocol
 
-SPRITE_SIZE: SizeProtocol = Size(8, 16)
+SPRITE_SIZE: SizeProtocol = MutableSize(8, 16)

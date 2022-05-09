@@ -6,7 +6,7 @@ from typing import Optional, Protocol
 
 import attr
 
-from foundry.core.point.Point import Point, PointProtocol
+from foundry.core.point.Point import MutablePoint, PointProtocol
 
 MIN_DOMAIN = 0
 MAX_DOMAIN = 7
@@ -121,7 +121,7 @@ class LevelComponent:
 
     domain: int = attr.ib(validator=domain_check, default=0)
     index: int = attr.ib(validator=index_check, default=0)
-    position: Point = attr.ib(validator=position_check, default=attr.Factory(lambda: Point(0, 0)))
+    position: MutablePoint = attr.ib(validator=position_check, default=attr.Factory(lambda: MutablePoint(0, 0)))
 
 
 class InLevelObject(ABC):

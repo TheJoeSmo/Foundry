@@ -1,6 +1,6 @@
 from PySide6.QtCore import QRect
 
-from foundry.core.point.Point import Point, PointProtocol
+from foundry.core.point.Point import MutablePoint, PointProtocol
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -54,7 +54,7 @@ map_object_names = {
     0x58: "Miniature Path Lower Left",
     0x59: "Miniature Path Horizontal",
     0x5A: "Miniature Tower",
-    0x5B: "Miniature Path Point Horizontal",
+    0x5B: "Miniature Path MutablePoint Horizontal",
     0x5C: "Miniature Path Lower Left 2",
     0x5D: "Miniature Cacti",
     0x5E: "Miniature Cacti 2",
@@ -154,7 +154,7 @@ class MapObject(ObjectLike):
 
     @property
     def position(self) -> PointProtocol:
-        return Point(self.x_position, self.y_position)
+        return MutablePoint(self.x_position, self.y_position)
 
     @position.setter
     def position(self, position: PointProtocol):
@@ -181,7 +181,7 @@ class MapObject(ObjectLike):
         return self.block.index
 
     def move_by(self, dx, dy):
-        self.position = Point(self.x_position + dx, self.y_position + dy)
+        self.position = MutablePoint(self.x_position + dx, self.y_position + dy)
 
     def resize_to(self, x, y):
         return
