@@ -395,8 +395,8 @@ a basic implementation.</p>
 </dd></dl>
 
 <dl class="py class pydantic_model">
-<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticGraphicsPage</span></span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticGraphicsSet</span></span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
 <p>A JSON model of a generic GraphicsSet through Pydantic.</p>
 <dl class="field-list simple">
@@ -409,7 +409,7 @@ a basic implementation.</p>
 </dl>
 <p><details  class="autodoc_pydantic_collapsable_json">
 <summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticGraphicsPage&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticGraphicsSet&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">   </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A JSON model of a generic GraphicsSet through Pydantic.\n\nAttributes\n----------\npages: list[PydanticGraphicsPage]\n    The pages that compose the graphical set.&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -417,7 +417,7 @@ a basic implementation.</p>
 <span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Pages&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">         </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/foundry__core__graphics_page__GraphicsPage__PydanticGraphicsPage&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/PydanticGraphicsPage&quot;</span><span class="w"></span>
 <span class="w">         </span><span class="p">}</span><span class="w"></span>
 <span class="w">      </span><span class="p">}</span><span class="w"></span>
 <span class="w">   </span><span class="p">},</span><span class="w"></span>
@@ -425,7 +425,7 @@ a basic implementation.</p>
 <span class="w">      </span><span class="s2">&quot;pages&quot;</span><span class="w"></span>
 <span class="w">   </span><span class="p">],</span><span class="w"></span>
 <span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;foundry__core__graphics_page__GraphicsPage__PydanticGraphicsPage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;PydanticGraphicsPage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticGraphicsPage&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A JSON model of a generic GraphicsPage through Pydantic\n\nAttributes\n----------\nindex: int\n    The index of the graphical page into the ROM.\npath: Optional[FilePath]\n    The path to the file containing the bytes of the graphics page or ROM if None.&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
@@ -451,18 +451,18 @@ a basic implementation.</p>
 </details></p><dl class="field-list simple">
 <dt class="field-odd">Fields</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages" title="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pages</span> <span class="pre">(list[foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.pages" title="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.pages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pages</span> <span class="pre">(list[foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage])</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage" title="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage"><span class="pre">foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.pages" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.pages">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage" title="foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage"><span class="pre">foundry.core.graphics_page.GraphicsPage.PydanticGraphicsPage</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.pages" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.to_graphics_set">
-<span class="sig-name descname"><span class="pre">to_graphics_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></span></span><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsPage.to_graphics_set" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.graphics_set">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">graphics_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol" title="foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSetProtocol</span></a></em><a class="headerlink" href="#foundry.core.graphics_set.GraphicsSet.PydanticGraphicsSet.graphics_set" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
