@@ -15,7 +15,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
-from foundry.core.point.Point import MutablePoint
+from foundry.core.point.Point import Point
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -804,7 +804,7 @@ class LevelView(QWidget):
 
         level_object = self._object_from_mime_data(event.mimeData())
 
-        level_object.position = MutablePoint(x, y)
+        level_object.position = Point(x, y)
 
         self.currently_dragged_object = level_object
 
