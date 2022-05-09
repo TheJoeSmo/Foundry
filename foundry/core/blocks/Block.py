@@ -3,18 +3,13 @@ from typing import Protocol, Type, TypeVar
 from attr import attrs
 from pydantic import BaseModel
 
-from foundry.core.point.Point import (
-    HashablePointProtocol,
-    Point,
-    PointProtocol,
-    PydanticPoint,
-)
+from foundry.core.point.Point import Point
 
 Pattern = tuple[int, int, int, int]
 
 
 class BlockProtocol(Protocol):
-    point: PointProtocol
+    point: Point
     patterns: Pattern
     palette_index: int
     do_not_render: bool
@@ -30,7 +25,7 @@ class Block:
 
     Attributes
     ----------
-    point: HashablePointProtocol
+    point: Point
         The position of the block.
     patterns: Pattern
         The four tile indexes that define the graphics of block from the GraphicsSetProtocol.
@@ -40,16 +35,16 @@ class Block:
         If the block should not render.
     """
 
-    point: HashablePointProtocol
+    point: Point
     patterns: Pattern
     palette_index: int
     do_not_render: bool = False
 
     @classmethod
     def from_values(
-        cls: Type[_T], point: PointProtocol, patterns: Pattern, palette_index: int, do_not_render: bool = False
+        cls: Type[_T], point: Point, patterns: Pattern, palette_index: int, do_not_render: bool = False
     ) -> _T:
-        return cls(Point.from_point(point), patterns, palette_index, do_not_render)
+        return cls(point, patterns, palette_index, do_not_render)
 
     @classmethod
     def from_block(cls: Type[_T], block: BlockProtocol) -> _T:
@@ -57,11 +52,11 @@ class Block:
 
 
 class PydanticBlock(BaseModel):
-    point: PydanticPoint
+    point: Point
     patterns: tuple[int, int, int, int] = (0, 0, 0, 0)
     palette_index: int = 0
     do_not_render: bool = False
 
     @property
     def block(self) -> BlockProtocol:
-        return Block.from_values(self.point.point, self.patterns, self.palette_index, self.do_not_render)
+        return Block.from_values(self.point, self.patterns, self.palette_index, self.do_not_render)

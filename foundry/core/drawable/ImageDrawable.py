@@ -6,10 +6,10 @@ from PySide6.QtGui import QColor, QImage, Qt
 
 from foundry.core.drawable.Drawable import Drawable, DrawableProtocol
 from foundry.core.file.FileGenerator import FileGenerator as FilePath
-from foundry.core.point.Point import Point, PointProtocol
-from foundry.core.rect.Rect import PydanticRect, Rect
+from foundry.core.point.Point import Point
+from foundry.core.rect.Rect import Rect
 from foundry.core.rect.util import to_qrect
-from foundry.core.size.Size import Size, SizeProtocol
+from foundry.core.size.Size import Size
 from foundry.game.gfx.drawable import MASK_COLOR
 
 
@@ -19,13 +19,13 @@ class ImageDrawable:
     A drawable for an image.
     """
 
-    point_offset: PointProtocol
+    point_offset: Point
     qimage: QImage
     image_offset: Optional[Rect] = None
     use_transparency: bool = True
 
     @property
-    def size(self) -> SizeProtocol:
+    def size(self) -> Size:
         return Size(self.qimage.width(), self.qimage.height())
 
     @cached_property
@@ -42,7 +42,7 @@ class ImageDrawable:
 
 class PydanticImageDrawable(Drawable):
     image: FilePath
-    image_offset: Optional[PydanticRect] = None
+    image_offset: Optional[Rect] = None
     use_transparency: bool = True
 
     def __init__(self, *, type, image, image_offset=None, use_transparency=True, **kwargs):
@@ -58,8 +58,8 @@ class PydanticImageDrawable(Drawable):
     @cached_property
     def drawable(self) -> DrawableProtocol:
         return ImageDrawable(
-            Point(self.point_offset.point.x, self.point_offset.point.y),
+            Point(self.point_offset.x, self.point_offset.y),
             QImage(self.image),
-            self.image_offset if self.image_offset is None else Rect.from_rect(self.image_offset.rect),
+            self.image_offset if self.image_offset is None else self.image_offset,
             self.use_transparency,
         )
