@@ -1,5 +1,4 @@
-from foundry.core.point.Point import Point
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Point, Size
 
 BLOCK_SIZE: Size = Size(16, 16)
 

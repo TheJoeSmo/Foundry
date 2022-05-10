@@ -4,8 +4,7 @@ from pydantic import BaseModel
 from PySide6.QtGui import QImage
 
 from foundry.core.drawable import DrawableType
-from foundry.core.point.Point import Point
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Point, Size
 
 
 class DrawableProtocol(Protocol):

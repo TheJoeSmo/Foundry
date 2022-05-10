@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from PySide6.QtCore import QRect
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 from foundry.game.Definitions import Definition
 
 EXPANDS_NOT = 0b00

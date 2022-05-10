@@ -1,6 +1,6 @@
 from PySide6.QtCore import QRect
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 

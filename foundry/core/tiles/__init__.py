@@ -1,4 +1,4 @@
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Size
 
 TILE_SIZE: Size = Size(8, 8)
 PIXELS: int = 64

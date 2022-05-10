@@ -3,8 +3,7 @@ from PySide6.QtGui import QImage
 
 from foundry.core.blocks.BlockGroup import BlockGroupProtocol, PydanticBlockGroup
 from foundry.core.drawable.Drawable import Drawable, DrawableProtocol
-from foundry.core.point.Point import Point
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Point, Size
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)

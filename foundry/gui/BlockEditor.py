@@ -13,9 +13,9 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point
 from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PatternViewer import PatternViewerController as PatternViewer

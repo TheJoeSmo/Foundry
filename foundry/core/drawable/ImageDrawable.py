@@ -6,10 +6,7 @@ from PySide6.QtGui import QColor, QImage, Qt
 
 from foundry.core.drawable.Drawable import Drawable, DrawableProtocol
 from foundry.core.file.FileGenerator import FileGenerator as FilePath
-from foundry.core.point.Point import Point
-from foundry.core.rect.Rect import Rect
-from foundry.core.rect.util import to_qrect
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Point, Rect, Size, to_qrect
 from foundry.game.gfx.drawable import MASK_COLOR
 
 

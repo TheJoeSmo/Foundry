@@ -7,7 +7,7 @@ from typing import Optional, Protocol
 import attr
 from attrs import evolve
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 
 MIN_DOMAIN = 0
 MAX_DOMAIN = 7
