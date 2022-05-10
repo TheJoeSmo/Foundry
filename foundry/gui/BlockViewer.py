@@ -11,10 +11,10 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
-from foundry.core.point.Point import Point
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block

@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from git.repo.base import Repo
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectIcon import get_minimal_icon_object

@@ -7,6 +7,7 @@ from foundry.core.blocks import BLOCK_SIZE
 from foundry.core.blocks.Block import Block, BlockProtocol, PydanticBlock
 from foundry.core.blocks.util import block_to_image
 from foundry.core.drawable.Drawable import Drawable
+from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import (
     GraphicsSetProtocol,
     PydanticGraphicsSet,
@@ -18,8 +19,6 @@ from foundry.core.palette.PaletteGroup import (
     PaletteGroupProtocol,
     PydanticPaletteGroup,
 )
-from foundry.core.point.Point import Point
-from foundry.core.size.Size import Size
 from foundry.game.gfx.drawable import MASK_COLOR
 
 
