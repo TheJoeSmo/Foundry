@@ -1,7 +1,6 @@
 from attr import attrs
 
-from foundry.core.point.Point import Point
-from foundry.core.size.Size import Size
+from foundry.core.geometry import Point, Size
 
 
 @attrs(slots=True, frozen=True, auto_attribs=True)

@@ -3,7 +3,7 @@ from json import loads
 from PySide6.QtCore import QRect
 
 from foundry import warp_definitions
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH

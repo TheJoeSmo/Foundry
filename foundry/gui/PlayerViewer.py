@@ -15,6 +15,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import icon
+from foundry.core.geometry import Point
 from foundry.core.palette.Palette import MutablePalette, MutablePaletteProtocol
 from foundry.core.palette.PaletteGroup import (
     MutablePaletteGroup,
@@ -31,7 +32,6 @@ from foundry.core.player_animations.util import (
     load_power_up_palettes,
     save_player_animations_to_rom,
 )
-from foundry.core.point.Point import Point
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol

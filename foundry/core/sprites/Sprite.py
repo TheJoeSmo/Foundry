@@ -2,7 +2,7 @@ from typing import Protocol
 
 from attr import attrs
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 
 
 class SpriteProtocol(Protocol):

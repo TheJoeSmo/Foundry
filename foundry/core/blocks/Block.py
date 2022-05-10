@@ -3,7 +3,7 @@ from typing import Protocol, Type, TypeVar
 from attr import attrs
 from pydantic import BaseModel
 
-from foundry.core.point.Point import Point
+from foundry.core.geometry import Point
 
 Pattern = tuple[int, int, int, int]
 
