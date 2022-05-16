@@ -13,12 +13,7 @@ from foundry.core.graphics_set.GraphicsSet import (
     PydanticGraphicsSet,
 )
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import (
-    HashablePaletteGroupProtocol,
-    PaletteGroup,
-    PaletteGroupProtocol,
-    PydanticPaletteGroup,
-)
+from foundry.core.palette.PaletteGroup import PaletteGroup, PydanticPaletteGroup
 from foundry.game.gfx.drawable import MASK_COLOR
 
 
@@ -34,14 +29,14 @@ class BlockGroupProtocol(Protocol):
         The blocks that compose the block group.
     graphics_set: GraphicsSetProtocol
         The graphics to render the blocks with.
-    palette_group: PaletteGroupProtocol
+    palette_group: PaletteGroup
         The palettes to render the blocks with.
     """
 
     point: Point
     blocks: Sequence[BlockProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
+    palette_group: PaletteGroup
 
     @property
     def size(self) -> Size:
@@ -67,14 +62,14 @@ class BlockGroup:
         The blocks that compose the block group.
     graphics_set: GraphicsSetProtocol
         The graphics to render the blocks with.
-    palette_group: HashablePaletteGroupProtocol
+    palette_group: PaletteGroup
         The palettes to render the blocks with.
     """
 
     point: Point
     blocks: tuple[BlockProtocol]
     graphics_set: GraphicsSetProtocol
-    palette_group: HashablePaletteGroupProtocol
+    palette_group: PaletteGroup
 
     @classmethod
     def from_values(
@@ -82,7 +77,7 @@ class BlockGroup:
         point: Point,
         blocks: Sequence[BlockProtocol],
         graphics_set: GraphicsSetProtocol,
-        palette_group: PaletteGroupProtocol,
+        palette_group: PaletteGroup,
     ) -> _T:
         """
         Generates a block group from any point, block, graphics set, and palette group, converting it to
@@ -96,15 +91,10 @@ class BlockGroup:
             The blocks that compose the block group.
         graphics_set : GraphicsSetProtocol
             The graphics to render the blocks with.
-        palette_group : PaletteGroupProtocol
+        palette_group : PaletteGroup
             The palettes to render the blocks with.
         """
-        return cls(
-            point,
-            tuple([Block.from_block(block) for block in blocks]),
-            graphics_set,
-            PaletteGroup.from_palette_group(palette_group),
-        )
+        return cls(point, tuple(Block.from_block(block) for block in blocks), graphics_set, palette_group)
 
     @classmethod
     def from_block_group(cls: Type[_T], block_group: BlockGroupProtocol) -> _T:

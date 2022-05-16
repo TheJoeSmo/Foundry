@@ -18,7 +18,7 @@ from foundry import icon
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.gfx.drawable import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.gui.CustomChildWindow import CustomChildWindow
@@ -27,13 +27,13 @@ from foundry.gui.CustomChildWindow import CustomChildWindow
 @attrs(slots=True, auto_attribs=True)
 class PatternViewerModel:
     graphics_set: GraphicsSet
-    palette_group: MutablePaletteGroup
+    palette_group: PaletteGroup
     palette_index: int
 
 
 class PatternViewerController(CustomChildWindow):
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(MutablePaletteGroup)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     pattern_selected: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
@@ -42,7 +42,7 @@ class PatternViewerController(CustomChildWindow):
         self,
         parent: Optional[QWidget],
         graphics_set: GraphicsSet,
-        palette_group: MutablePaletteGroup,
+        palette_group: PaletteGroup,
         palette_index: int,
     ):
         super().__init__(parent, "Pattern Viewer")
@@ -85,11 +85,11 @@ class PatternViewerController(CustomChildWindow):
         self.view.update()
 
     @property
-    def palette_group(self) -> MutablePaletteGroup:
+    def palette_group(self) -> PaletteGroup:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value: MutablePaletteGroup):
+    def palette_group(self, value: PaletteGroup):
         self.model.palette_group = value
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
@@ -118,7 +118,7 @@ class PatternViewerView(QWidget):
         self,
         parent: Optional[QWidget],
         graphics_set: GraphicsSet,
-        palette_group: MutablePaletteGroup,
+        palette_group: PaletteGroup,
         palette_index: int,
         zoom: int = 4,
     ):
@@ -176,9 +176,7 @@ class PatternViewerView(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(
-                i, tuple(tuple(c for c in pal) for pal in self.palette_group), self.palette_index, self.graphics_set
-            )
+            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
 
             x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
             y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale

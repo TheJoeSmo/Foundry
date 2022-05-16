@@ -1,7 +1,9 @@
-from abc import ABC, abstractmethod
+from __future__ import annotations
+
+from collections.abc import Iterator
 from enum import Enum
 from functools import cached_property
-from typing import Optional, Protocol, Sequence, Type, TypeVar
+from typing import Protocol, Sequence
 
 from attr import attrs
 from pydantic import BaseModel
@@ -16,153 +18,61 @@ from foundry.core.palette.ColorPalette import (
 from foundry.game.File import ROM
 
 
-class PaletteProtocol(Protocol):
-    color_indexes: Sequence[int]
-    color_palette: ColorPaletteProtocol
-
-    def __bytes__(self) -> bytes:
-        ...
-
-    def __getitem__(self, item: int) -> int:
-        ...
-
-    @property
-    def colors(self) -> Sequence[QColor]:
-        ...
-
-
-class MutablePaletteProtocol(PaletteProtocol, Protocol):
-    def __setitem__(self, key: int, value: int):
-        ...
-
-
-class HashablePaletteProtocol(PaletteProtocol, Protocol):
-    def __hash__(self) -> int:
-        ...
-
-
-_T = TypeVar("_T", bound="AbstractPalette")
-
-
-class AbstractPalette(ABC):
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class Palette:
     """
-    An abstract implementation of the primary methods of a Palette, regardless of color_indexes.
+    A representation of a series of colors that are indexable.
+
+    Returns
+    -------
+    color_indexes: tuple[int, ...]
+        A series of indexes into the `color_palette`, which represent the respective colors.
+    color_palette: ColorPaletteProtocol
+        A series of indexable colors.
     """
 
-    color_indexes: Sequence[int]
-    color_palette: ColorPaletteProtocol
+    color_indexes: tuple[int, ...] = (0, 0, 0, 0)
+    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
 
     def __bytes__(self) -> bytes:
-        return bytes([i & 0xFF for i in self.color_indexes])
+        return bytes(i & 0xFF for i in self.color_indexes)
 
     def __getitem__(self, item: int) -> int:
         return self.color_indexes[item]
 
+    def __iter__(self) -> Iterator[int]:
+        return iter(self.color_indexes)
+
     @property
     def colors(self) -> Sequence[QColor]:
+        """
+        A sequence of QColors that represent this instance.
+
+        Returns
+        -------
+        Sequence[QColor]
+            A sequence of QColors derived from `color_indexes` and `color_palette`.
+        """
         return [
             self.color_palette.colors[index % len(self.color_palette.colors)].qcolor for index in self.color_indexes
         ]
 
     @classmethod
-    @abstractmethod
-    def from_values(
-        cls: Type[_T], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
-    ) -> _T:
+    def from_rom(cls, address: int) -> Palette:
         """
-        A generalized way to create itself from a series of values.
-
-        Returns
-        -------
-        AbstractPalette
-            The created palette from the series.
-        """
-        ...
-
-    @classmethod
-    def from_palette(cls: Type[_T], palette: PaletteProtocol) -> _T:
-        """
-        Generates a AbstractPalette of this type from another PaletteProtocol.
-
-        Parameters
-        ----------
-        palette : PaletteProtocol
-            The palette to be converted to this type.
-
-        Returns
-        -------
-        AbstractPalette
-            A palette that is equal to the original palette.
-        """
-        return cls.from_values(palette.color_indexes, palette.color_palette)
-
-    @classmethod
-    def as_empty(cls: Type[_T]) -> _T:
-        """
-        Makes an empty palette of default values.
-
-        Returns
-        -------
-        AbstractPalette
-            A palette filled with default values.
-        """
-        return cls.from_values([0, 0, 0, 0])
-
-    @classmethod
-    def from_rom(cls: Type[_T], address: int) -> _T:
-        """
-        Creates a palette from an absolute address in ROM.
+        Creates a palette from an absolute address in the file.
 
         Parameters
         ----------
         address : int
-            The absolute address into the ROM.
+            The absolute address into the file.
 
         Returns
         -------
-        AbstractPalette
+        Palette
             The palette that represents the absolute address in ROM.
         """
-        return cls.from_values(tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
-
-
-_MT = TypeVar("_MT", bound="MutablePalette")
-
-
-@attrs(slots=True, auto_attribs=True, eq=True)
-class MutablePalette(AbstractPalette):
-    color_indexes: list[int]
-    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
-
-    def __setitem__(self, key: int, value: int):
-        self.color_indexes[key] = value
-
-    @classmethod
-    def from_values(
-        cls: Type[_MT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
-    ) -> _MT:
-        if color_palette is None:
-            return cls(list(color_indexes))
-        else:
-            return cls(list(color_indexes), color_palette)
-
-
-_PT = TypeVar("_PT", bound="Palette")
-
-
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
-class Palette(AbstractPalette):
-    color_indexes: tuple[int, ...]
-    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
-
-    @classmethod
-    def from_values(
-        cls: Type[_PT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
-    ) -> _PT:
-        if color_palette is None:
-            return cls(tuple(color_indexes))
-        else:
-            return cls(tuple(color_indexes), color_palette)
+        return cls(tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
 
 
 class PaletteType(str, Enum):
@@ -221,7 +131,7 @@ class PydanticPaletteProtocol(Protocol):
     """
 
     @cached_property
-    def palette(self) -> PaletteProtocol:
+    def palette(self) -> Palette:
         ...
 
 
@@ -253,16 +163,16 @@ class PydanticColorsPalette(PydanticPalette):
         return self.color_palette  # type: ignore
 
     @cached_property
-    def palette(self) -> PaletteProtocol:
+    def palette(self) -> Palette:
         """
         Provides the representation of a palette from the Pydantic version.
 
         Returns
         -------
-        PaletteProtocol
+        Protocol
             The corresponding palette.
         """
-        return Palette.from_values(self.color_indexes, self.color_palette_.color_palette)
+        return Palette(tuple(self.color_indexes), self.color_palette_.color_palette)
 
 
 class PydanticROMAddressPalettePalette(PydanticPalette):
@@ -278,13 +188,13 @@ class PydanticROMAddressPalettePalette(PydanticPalette):
     palette_address: int
 
     @cached_property
-    def palette(self) -> PaletteProtocol:
+    def palette(self) -> Palette:
         """
         Provides the representation of a palette from the ROM.
 
         Returns
         -------
-        PaletteProtocol
+        Protocol
             The corresponding palette.
         """
         return Palette.from_rom(self.palette_address)
@@ -292,7 +202,7 @@ class PydanticROMAddressPalettePalette(PydanticPalette):
 
 class PaletteCreator(BaseModel):
     """
-    A generator for a :class:`~foundry.core.palette.Palette.PaletteProtocol`.
+    A generator for a :class:`~foundry.core.palette.Palette.Palette`.
     Creates the palette dynamically from its type attribute to provide it additional information.
     """
 

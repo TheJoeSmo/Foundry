@@ -14,7 +14,7 @@ from foundry import icon
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
@@ -142,7 +142,7 @@ class BlockViewerController(CustomChildWindow):
         self.view.update()
         if self.editor is not None:
             self.editor.silent_update_tsa_data(self.tsa_data)
-            self.editor.palette_group = MutablePaletteGroup.from_tileset(self.tileset, self.palette_group)
+            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, self.palette_group)
             self.editor.graphics_set = GraphicsSet.from_tileset(self.tileset)
 
     @property
@@ -156,7 +156,7 @@ class BlockViewerController(CustomChildWindow):
         self.palette_group_changed.emit(self.palette_group)
         self.view.update()
         if self.editor is not None:
-            self.editor.palette_group = MutablePaletteGroup.from_tileset(self.tileset, value)
+            self.editor.palette_group = PaletteGroup.from_tileset(self.tileset, value)
 
     def _on_block_selected(self, index: int):
         if self.editor is None:
@@ -165,7 +165,7 @@ class BlockViewerController(CustomChildWindow):
                 ROM.get_tsa_data(self.tileset),
                 index,
                 GraphicsSet.from_tileset(self.tileset),
-                MutablePaletteGroup.from_tileset(self.tileset, self.palette_group),
+                PaletteGroup.from_tileset(self.tileset, self.palette_group),
                 index // 0x40,
             )
 
@@ -238,7 +238,7 @@ class BlockViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        palette = MutablePaletteGroup.from_tileset(self.object_set, self.palette_group)
+        palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
         frozen_palette = tuple(tuple(c for c in pal) for pal in palette)
         bg_color = palette.background_color
         painter.setBrush(QBrush(bg_color))

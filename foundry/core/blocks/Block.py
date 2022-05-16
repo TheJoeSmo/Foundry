@@ -30,7 +30,7 @@ class Block:
     patterns: Pattern
         The four tile indexes that define the graphics of block from the GraphicsSetProtocol.
     palette_index: int
-        The palette index of the block into the PaletteGroupProtocol.
+        The palette index of the block into the PaletteGroup.
     do_not_render: bool
         If the block should not render.
     """

@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroupProtocol
@@ -15,7 +15,7 @@ from foundry.game.gfx.drawable import MASK_COLOR
 class SpriteViewerWidget(QFrame):
     sprites_changed: SignalInstance = Signal(list[SpriteProtocol])  # type: ignore
     graphics_set_changed: SignalInstance = Signal(GraphicsSetProtocol)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     transparency_changed: SignalInstance = Signal(bool)  # type: ignore
     zoom_changed: SignalInstance = Signal(int)  # type: ignore
     mouse_moved_over_widget: SignalInstance = Signal(QMouseEvent)  # type: ignore
@@ -55,11 +55,11 @@ class SpriteViewerWidget(QFrame):
         self.update()
 
     @property
-    def palette_group(self) -> MutablePaletteGroupProtocol:
+    def palette_group(self) -> PaletteGroup:
         return self.sprite_group.palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: MutablePaletteGroupProtocol):
+    def palette_group(self, palette_group: PaletteGroup):
         self.sprite_group.palette_group = palette_group
         self.palette_group_changed.emit(palette_group)
         self.update()

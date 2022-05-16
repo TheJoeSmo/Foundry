@@ -8,11 +8,7 @@ from foundry.core.blocks import BLOCK_SIZE, PATTERN_LOCATIONS
 from foundry.core.blocks.Block import Block, BlockProtocol, Pattern
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import (
-    HashablePaletteGroupProtocol,
-    PaletteGroup,
-    PaletteGroupProtocol,
-)
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.tiles import MASK_COLOR
 from foundry.core.tiles.util import cached_tile_to_image
 
@@ -28,7 +24,7 @@ class _Block:
         The four tile indexes that define the graphics of block from the GraphicsSetProtocol.
     palette_index: int
         The palette index of the block into the palette group.
-    palette_group: HashablePaletteGroupProtocol
+    palette_group: PaletteGroup
         The a hashable palette group.
     graphics_set: GraphicsSetProtocol
         The base of all images generated for the Block.
@@ -38,7 +34,7 @@ class _Block:
 
     patterns: Pattern
     palette_index: int
-    palette_group: HashablePaletteGroupProtocol
+    palette_group: PaletteGroup
     graphics_set: GraphicsSetProtocol
     do_not_render: bool = False
 
@@ -73,7 +69,7 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
 
 @lru_cache(2**10)
 def cached_block_to_image(
-    block: Block, palette_group: HashablePaletteGroupProtocol, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
+    block: Block, palette_group: PaletteGroup, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
 ) -> QImage:
     """
     Generates and caches a NES block with a given palette and graphics as a QImage.
@@ -82,7 +78,7 @@ def cached_block_to_image(
     ----------
     block : Block
         The block data to be rendered to the image.
-    palette_group : HashablePaletteGroupProtocol
+    palette_group : PaletteGroup
         The specific palette to use for the block.
     graphics_set : GraphicsSetProtocol
         The specific graphics to use for the block.
@@ -105,7 +101,7 @@ def cached_block_to_image(
 
 
 def block_to_image(
-    block: BlockProtocol, palette_group: PaletteGroupProtocol, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
+    block: BlockProtocol, palette_group: PaletteGroup, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
 ) -> QImage:
     """
     Generates a block with a given palette and graphics as a QImage.
@@ -114,7 +110,7 @@ def block_to_image(
     ----------
     block : BlockProtocol
         The block data to be rendered to the image.
-    palette_group : PaletteGroupProtocol
+    palette_group : PaletteGroup
         The specific palette to use for the block.
     graphics_set : GraphicsSetProtocol
         The specific graphics to use for the block.
@@ -126,6 +122,4 @@ def block_to_image(
     QImage
         That represents the block.
     """
-    return cached_block_to_image(
-        Block.from_block(block), PaletteGroup.from_palette_group(palette_group), graphics_set, scale_factor
-    )
+    return cached_block_to_image(Block.from_block(block), palette_group, graphics_set, scale_factor)
