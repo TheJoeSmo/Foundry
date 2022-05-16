@@ -18,7 +18,7 @@ from foundry.core.palette.ColorPalette import (
 from foundry.game.File import ROM
 
 
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=False)
 class Palette:
     """
     A representation of a series of colors that are indexable.
@@ -42,6 +42,9 @@ class Palette:
 
     def __iter__(self) -> Iterator[int]:
         return iter(self.color_indexes)
+
+    def __hash__(self) -> int:
+        return hash(self.color_indexes)
 
     @property
     def colors(self) -> Sequence[QColor]:
