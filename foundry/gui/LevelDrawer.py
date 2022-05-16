@@ -104,7 +104,7 @@ SPECIAL_BACKGROUND_OBJECTS = [
 
 def get_blocks(level: Level) -> list[Block]:
     palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-    palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+    palette_group = palette_group
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
@@ -124,7 +124,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
-    return Block(block_index, tuple(tuple(c for c in pal) for pal in palette_group), graphics_set, tsa_data)
+    return Block(block_index, palette_group, graphics_set, tsa_data)
 
 
 class LevelDrawer:

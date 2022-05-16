@@ -24,7 +24,7 @@ class EnemyObject(ObjectLike):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
-        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+        self.palette_group = palette_group
 
         self.png_data = png_data
 

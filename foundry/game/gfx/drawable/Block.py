@@ -41,7 +41,7 @@ class Block:
     def __init__(
         self,
         block_index: int,
-        palette_group: tuple[tuple[int, ...], ...],
+        palette_group: PaletteGroup,
         graphics_set: GraphicsSetProtocol,
         tsa_data: bytes,
         mirrored: bool = False,

@@ -222,7 +222,7 @@ class BlockEditorView(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
         block = Block(
             self.block_index,
-            tuple(tuple(c for c in pal) for pal in self.palette_group),
+            self.palette_group,
             self.graphics_set,
             self.tsa_data,
         )

@@ -66,7 +66,7 @@ class SpriteGroup:
             else:
                 sprite = MetaSprite(
                     sprite_data.index,
-                    tuple(tuple(c for c in pal) for pal in self.palette_group),  # type: ignore
+                    self.palette_group,
                     sprite_data.palette_index,
                     self.graphics_set,
                     sprite_data.horizontal_mirror,

@@ -79,8 +79,7 @@ class LevelObject(GeneratorObject):
         self._position = Point(0, 0)
         self._ignore_rendered_position = False
 
-        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
-
+        self.palette_group = palette_group
         self.index_in_level = index
         self.objects_ref = objects_ref
         self.vertical_level = is_vertical

@@ -51,7 +51,7 @@ class WorldMap(LevelLike):
 
             block = Block(
                 world_position.tile(),
-                tuple(tuple(c for c in pal) for pal in self.palette_group),
+                self.palette_group,
                 self.graphics_set,
                 self.tsa_data,
             )
