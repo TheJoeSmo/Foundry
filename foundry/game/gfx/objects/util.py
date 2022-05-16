@@ -15,7 +15,9 @@ def decrement_type(item: Union[LevelObject, EnemyObject]):
 
 def change_type(item: Union[LevelObject, EnemyObject], increment: bool):
     if isinstance(item, LevelObject):
-        return change_level_object_type(item, increment)
+        result = change_level_object_type(item, increment)
+        item.reset_definition()
+        return result
     elif isinstance(item, EnemyObject):
         return change_enemy_object_type(item, increment)
 

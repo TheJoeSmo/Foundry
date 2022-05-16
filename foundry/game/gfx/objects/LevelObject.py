@@ -84,6 +84,10 @@ class LevelObject(GeneratorObject):
         self.objects_ref = objects_ref
         self.vertical_level = is_vertical
 
+        # Cached values
+        self._definition = None
+        self._orientation = None
+
         self.data = data
 
         self.selected = False
@@ -103,7 +107,9 @@ class LevelObject(GeneratorObject):
 
     @property
     def orientation(self) -> GeneratorType:
-        return GeneratorType(self.definition.orientation)
+        if self._orientation is None:
+            self._orientation = GeneratorType(self.definition.orientation)
+        return self._orientation
 
     @property
     def ending(self) -> EndType:
@@ -142,9 +148,15 @@ class LevelObject(GeneratorObject):
         else:
             return (self.obj_index >> 4) + domain_offset + 16 - 1
 
+    def reset_definition(self) -> None:
+        self._definition = None
+        self._orientation = None
+
     @property
     def definition(self) -> TilesetDefinition:
-        return self.object_set.get_definition_of(self.type)
+        if self._definition is None:
+            self._definition = self.object_set.get_definition_of(self.type)
+        return self._definition
 
     @property
     def obj_index(self) -> int:
