@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from enum import Enum
 from functools import cached_property
 from typing import Protocol, Sequence
 
@@ -9,6 +8,7 @@ from attr import attrs
 from pydantic import BaseModel
 from PySide6.QtGui import QColor
 
+from foundry.core.Enum import Enum
 from foundry.core.palette import COLORS_PER_PALETTE
 from foundry.core.palette.ColorPalette import ColorPalette
 from foundry.game.File import ROM
@@ -83,24 +83,6 @@ class PaletteType(str, Enum):
 
     from_colors = "COLORS"
     from_rom_address = "ROM ADDRESS"
-
-    @classmethod
-    def has_value(cls, value):
-        """
-        A convenience method to quickly determine if a value is a valid enumeration.
-
-        Parameters
-        ----------
-        value : str
-            The value to check against the enumeration.
-
-        Returns
-        -------
-        bool
-            If the value is inside the enumeration.
-        """
-
-        return value in cls._value2member_map_
 
 
 class PydanticPalette(BaseModel):

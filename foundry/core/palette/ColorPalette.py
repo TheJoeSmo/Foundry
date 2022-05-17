@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from json import loads
 from pathlib import Path
 
@@ -8,6 +7,7 @@ from attr import attrs
 from pydantic.errors import EnumMemberError, MissingError
 from pydantic.validators import list_validator
 
+from foundry.core.Enum import Enum
 from foundry.core.file.FilePath import FilePath
 from foundry.core.palette import PALETTE_FILE_COLOR_OFFSET, PALETTE_FILE_PATH
 from foundry.core.palette.Color import Color
@@ -24,24 +24,6 @@ class ColorPaletteType(str, Enum):
     colors = "COLORS"
     palette_file = "PALETTE FILE"
     json_file = "JSON FILE"
-
-    @classmethod
-    def has_value(cls, value):
-        """
-        A convenience method to quickly determine if a value is a valid enumeration.
-
-        Parameters
-        ----------
-        value : str
-            The value to check against the enumeration.
-
-        Returns
-        -------
-        bool
-            If the value is inside the enumeration.
-        """
-
-        return value in cls._value2member_map_
 
 
 _DEFAULT_COLOR_PALETTE: None | ColorPalette = None

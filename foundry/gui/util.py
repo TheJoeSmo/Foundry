@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -16,6 +15,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import open_url
+from foundry.core.Enum import Enum
 from foundry.gui.settings import UserSettings
 
 ID_PROP = "ID"
@@ -89,23 +89,6 @@ class WidgetType(str, Enum):
 
     button = "BUTTON"
     spinner = "SPINNER"
-
-    @classmethod
-    def has_value(cls, value: str) -> bool:
-        """
-        A convenience method to quickly determine if a value is a valid enumeration.
-
-        Parameters
-        ----------
-        value : str
-            The value to check against the enumeration.
-
-        Returns
-        -------
-        bool
-            If the value is inside the enumeration.
-        """
-        return value in cls._value2member_map_
 
 
 class Widget(BaseModel):
@@ -259,24 +242,6 @@ class LayoutType(str, Enum):
     horizontal = "HORIZONTAL"
     verticle = "VERTICLE"
     form = "FORM"
-
-    @classmethod
-    def has_value(cls, value):
-        """
-        A convenience method to quickly determine if a value is a valid enumeration.
-
-        Parameters
-        ----------
-        value : str
-            The value to check against the enumeration.
-
-        Returns
-        -------
-        bool
-            If the value is inside the enumeration.
-        """
-
-        return value in cls._value2member_map_
 
 
 class LayoutMeta(BaseModel):
