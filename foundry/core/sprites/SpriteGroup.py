@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor, QImage, QPainter
 
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.game.gfx.drawable import MASK_COLOR

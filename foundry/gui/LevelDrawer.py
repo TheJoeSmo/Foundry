@@ -8,8 +8,7 @@ from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 from foundry import data_dir, namespace_path
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.namespace.Namespace import Namespace, generate_namespace
-from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import NESPalette, PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block

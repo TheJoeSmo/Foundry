@@ -7,7 +7,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject

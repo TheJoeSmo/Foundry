@@ -5,7 +5,7 @@ from attr import attrs
 from PySide6.QtGui import QImage
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette import Palette
 from foundry.core.tiles import (
     BYTES_PER_TILE,
     MASK_COLOR,

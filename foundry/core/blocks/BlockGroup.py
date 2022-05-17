@@ -13,7 +13,7 @@ from foundry.core.graphics_set.GraphicsSet import (
     PydanticGraphicsSet,
 )
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.gfx.drawable import MASK_COLOR
 
 

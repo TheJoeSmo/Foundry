@@ -2,7 +2,7 @@ from typing import Optional
 
 from PySide6.QtWidgets import QDialog, QWidget
 
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette import Palette
 from foundry.gui.ColorSelector import ColorSelector
 from foundry.gui.PaletteWidget import PaletteWidget
 

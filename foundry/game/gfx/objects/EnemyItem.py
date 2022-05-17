@@ -4,7 +4,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 from foundry.core.geometry import Point
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,

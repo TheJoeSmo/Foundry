@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.core.palette.ColorPalette import ColorPalette
+from foundry.core.palette import ColorPalette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 from foundry.gui.CustomDialog import CustomDialog
 
