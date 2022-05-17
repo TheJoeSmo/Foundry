@@ -15,7 +15,7 @@ from pydantic.errors import (
 from pydantic.validators import int_validator, list_validator
 from PySide6.QtGui import QColor
 
-from foundry import data_dir, root_dir
+from foundry import data_dir
 from foundry.core.Enum import Enum
 from foundry.core.file.FilePath import FilePath
 from foundry.game.File import ROM
@@ -31,21 +31,8 @@ _PALETTE_PRG_NO = 22
 _PALETTE_BASE_ADDRESS = BASE_OFFSET + _PALETTE_PRG_NO * _PRG_SIZE
 _PALETTE_OFFSET_LIST = Palette_By_Tileset
 _PALETTE_OFFSET_SIZE = 2  # bytes
-
-_COLOR_COUNT = 64
-_BYTES_IN_COLOR = 3 + 1  # bytes + separator
-_PALETTE_FILE_PATH = data_dir / "palette.json"
-_palette_file = root_dir.joinpath("data", "Default.pal")
 _PALETTE_FILE_COLOR_OFFSET = 0x18
-_offset = 0x18  # first color point
-NESPalette: list[QColor] = []
-with open(_palette_file, "rb") as f:
-    color_data = f.read()
-
-for _ in range(_COLOR_COUNT):
-    NESPalette.append(QColor(color_data[_offset], color_data[_offset + 1], color_data[_offset + 2]))
-
-    _offset += _BYTES_IN_COLOR
+_PALETTE_FILE_PATH = data_dir / "palette.json"
 
 
 def _check_in_color_range(inst, attr, value):
@@ -111,6 +98,12 @@ class ColorPalette:
     """
 
     colors: tuple[Color, ...]
+
+    def __getitem__(self, item: int) -> Color:
+        return self.colors[item]
+
+    def __iter__(self) -> Iterator[Color]:
+        return iter(self.colors)
 
     def __len__(self) -> int:
         return len(self.colors)

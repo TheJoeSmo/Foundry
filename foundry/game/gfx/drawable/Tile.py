@@ -3,7 +3,7 @@ from functools import lru_cache
 from PySide6.QtGui import QImage
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette import NESPalette, PaletteGroup
+from foundry.core.palette import ColorPalette, PaletteGroup
 from foundry.game.gfx.drawable import MASK_COLOR, bit_reverse
 
 PIXEL_OFFSET = 8  # both bits describing the color of a pixel are in separate 8 byte chunks at the same index
@@ -63,7 +63,7 @@ class Tile:
             if color_index == 0:
                 self.pixels.extend(MASK_COLOR)
             else:
-                self.pixels.extend(NESPalette[color].toTuple()[:3])
+                self.pixels.extend(ColorPalette.as_default()[color].qcolor.toTuple()[:3])
 
         assert len(self.pixels) == 3 * Tile.PIXEL_COUNT
 

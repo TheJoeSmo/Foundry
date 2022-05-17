@@ -4,7 +4,7 @@ from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette import NESPalette, PaletteGroup
+from foundry.core.palette import ColorPalette, PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
@@ -103,7 +103,7 @@ class Sprite:
         # draw image on background layer, to fill transparent pixels
         background = image.copy()
         try:
-            index = NESPalette[self.palette_group[self.palette_index][0]]
+            index = ColorPalette.as_default()[self.palette_group[self.palette_index][0]].qcolor
         except IndexError:
             return image
         background.fill(index)
