@@ -3,7 +3,8 @@ from __future__ import annotations
 from collections.abc import Iterator
 
 from attr import attrs
-from pydantic import BaseModel
+from pydantic.errors import MissingError
+from pydantic.validators import list_validator
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
@@ -77,23 +78,13 @@ class PaletteGroup:
         offset = get_internal_palette_offset(tileset) + index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
         return cls.from_rom(offset)
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
 
-class PydanticPaletteGroup(BaseModel):
-    """
-    A generic representation of :class:`~foundry.core.palette.PaletteGroup.PaletteGroup`.
-
-    Attributes
-    ----------
-    palettes: list[Palette]
-        The palettes that compose the palette group.
-    """
-
-    palettes: list[Palette]
-
-    @property
-    def palette_protocols(self) -> list[Palette]:
-        return self.palettes
-
-    @property
-    def palette_group(self) -> PaletteGroup:
-        return PaletteGroup(tuple(self.palette_protocols))
+    @classmethod
+    def validate(cls, values) -> PaletteGroup:
+        if "palettes" not in values:
+            raise MissingError()
+        palettes = list_validator(values["palettes"])
+        return cls(tuple(Palette.validate(pal) for pal in palettes))
