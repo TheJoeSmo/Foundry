@@ -7,11 +7,7 @@ from pydantic import BaseModel
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
-from foundry.core.palette.Palette import (
-    Palette,
-    PaletteCreator,
-    PydanticPaletteProtocol,
-)
+from foundry.core.palette.Palette import Palette
 from foundry.core.palette.util import get_internal_palette_offset
 
 
@@ -88,16 +84,16 @@ class PydanticPaletteGroup(BaseModel):
 
     Attributes
     ----------
-    palettes: list[PaletteCreator]
+    palettes: list[Palette]
         The palettes that compose the palette group.
     """
 
-    palettes: list[PaletteCreator]
+    palettes: list[Palette]
 
     @property
-    def palette_protocols(self) -> list[PydanticPaletteProtocol]:
-        return self.palettes  # type: ignore
+    def palette_protocols(self) -> list[Palette]:
+        return self.palettes
 
     @property
     def palette_group(self) -> PaletteGroup:
-        return PaletteGroup(tuple(p.palette for p in self.palette_protocols))
+        return PaletteGroup(tuple(self.palette_protocols))

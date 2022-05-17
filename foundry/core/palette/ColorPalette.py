@@ -37,6 +37,9 @@ class ColorPalette:
 
     colors: tuple[Color, ...]
 
+    def __len__(self) -> int:
+        return len(self.colors)
+
     @classmethod
     def from_json(cls, path: Path) -> ColorPalette:
         """

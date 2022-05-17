@@ -1,17 +1,33 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from functools import cached_property
-from typing import Protocol, Sequence
+from typing import Sequence
 
 from attr import attrs
-from pydantic import BaseModel
+from pydantic.errors import (
+    EnumMemberError,
+    MissingError,
+    NumberNotGeError,
+    NumberNotLeError,
+)
+from pydantic.validators import int_validator, list_validator
 from PySide6.QtGui import QColor
 
 from foundry.core.Enum import Enum
 from foundry.core.palette import COLORS_PER_PALETTE
 from foundry.core.palette.ColorPalette import ColorPalette
 from foundry.game.File import ROM
+
+
+class PaletteType(str, Enum):
+    """
+    A declaration of the palettes possible to be created through
+    `JSON <https://en.wikipedia.org/wiki/JSON>`_ and
+    `Pydantic <https://pydantic-docs.helpmanual.io/>`_.
+    """
+
+    from_colors = "COLORS"
+    from_rom_address = "ROM ADDRESS"
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=False)
@@ -73,183 +89,100 @@ class Palette:
         """
         return cls(tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
 
-
-class PaletteType(str, Enum):
-    """
-    A declaration of the palettes possible to be created through
-    `JSON <https://en.wikipedia.org/wiki/JSON>`_ and
-    `Pydantic <https://pydantic-docs.helpmanual.io/>`_.
-    """
-
-    from_colors = "COLORS"
-    from_rom_address = "ROM ADDRESS"
-
-
-class PydanticPalette(BaseModel):
-    """
-    A generic representation of :class:`~foundry.core.palette.Palette.Palette`.
-
-    Attributes
-    ----------
-    type: PaletteType
-        How the Palette should be loaded.
-    """
-
-    type: PaletteType
-
-    class Config:
-        # Allow storing the enum as a string
-        use_enum_values = True
-
-        # Enable cached property to be ignored by Pydantic
-        arbitrary_types_allowed = True
-        keep_untouched = (cached_property,)
-
-
-class PydanticPaletteProtocol(Protocol):
-    """
-    A Pydantic palette that can convert to a regular palette.
-    """
-
-    @cached_property
-    def palette(self) -> Palette:
-        ...
-
-
-class PydanticColorsPalette(PydanticPalette):
-    """
-    A palette which generates itself from a series of indexes into the color palette.
-
-    Attributes
-    ----------
-    color_indexes: list[int]
-        A list of indexes into the color palette colors.
-    color_palette: ColorPalette
-        A color palette generator which provides the colors which are indexed.
-    """
-
-    color_indexes: list[int]
-    color_palette: ColorPalette = ColorPalette.as_default()
-
-    @property
-    def color_palette_(self) -> ColorPalette:
-        """
-        A simple wrapper around the true color palette to provide correct type hints.
-
-        Returns
-        -------
-        ColorPalette
-            The color palette that is supplied.
-        """
-        return self.color_palette
-
-    @cached_property
-    def palette(self) -> Palette:
-        """
-        Provides the representation of a palette from the Pydantic version.
-
-        Returns
-        -------
-        Protocol
-            The corresponding palette.
-        """
-        return Palette(tuple(self.color_indexes), self.color_palette)
-
-
-class PydanticROMAddressPalettePalette(PydanticPalette):
-    """
-    A palette which generates itself from an address in the ROM and the default color palette.
-
-    Attributes
-    ----------
-    palette_address: int
-        The index into the ROM to generate the palette from.
-    """
-
-    palette_address: int
-
-    @cached_property
-    def palette(self) -> Palette:
-        """
-        Provides the representation of a palette from the ROM.
-
-        Returns
-        -------
-        Protocol
-            The corresponding palette.
-        """
-        return Palette.from_rom(self.palette_address)
-
-
-class PaletteCreator(BaseModel):
-    """
-    A generator for a :class:`~foundry.core.palette.Palette.Palette`.
-    Creates the palette dynamically from its type attribute to provide it additional information.
-    """
-
-    def __init_subclass__(cls, **kwargs) -> None:
-        return super().__init_subclass__(**kwargs)
-
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
-    def generate_palette(cls, v: dict) -> PydanticPaletteProtocol:
+    def validate_from_colors(cls, values: dict) -> Palette:
         """
-        The constructor for each specific palette.
+        Validates a Palette from a series of colors and a color palette.
 
         Parameters
         ----------
-        v : dict
-            The dictionary to create the palette from.
+        values : dict
+            A dictionary that contains the values to be validated.  A valid entry
+            must contain a field `color_indexes`, which contains a series of integers
+            that are valid indexes into `color_palette`.  An optional entry is the
+            `color_palette`, which is a class:~`foundry.core.palette.ColorPalette.ColorPalette`
+            that will override the default entry.
 
         Returns
         -------
-        PydanticPaletteProtocol
-            The created palette as defined by `v["type"]`
+        Palette
+            The palette that represents the values provided.
 
         Raises
         ------
-        NotImplementedError
-            If the constructor does not have a valid constructor for `v["type"]`.
+        MissingError
+            The field `color_indexes` is not present inside `values`.
+        ListError
+            The field `color_indexes` is not a list.
+        IntegerError
+            Any of the values of `color_indexes` is not an integer.
+        NumberNotGeError
+            Any of the values of `color_indexes` is not positive.
+        NumberNotLeError
+            Any of the values of `color_indexes` exceed the length of `color_palette`.
         """
+        if "color_indexes" not in values:
+            MissingError()
+        indexes = list_validator(values["color_indexes"])
+        if "color_palette" in values:
+            color_palette = ColorPalette.validate(values["color_palette"])
+        else:
+            color_palette = ColorPalette.as_default()
+        color_indexes = []
+        for value in indexes:
+            index = int_validator(value)
+            if index < 0:
+                raise NumberNotGeError(limit_value=0)
+            if index > len(color_palette):
+                raise NumberNotLeError(limit_value=len(color_palette))
+            color_indexes.append(index)
+        return cls(tuple(color_indexes), color_palette)
 
-        type_ = PaletteType(v["type"])
+    @classmethod
+    def validate_from_rom(cls, values: dict) -> Palette:
+        """
+        Validates a Palette from an address into the ROM.
+
+        Parameters
+        ----------
+        values : dict
+            A dictionary that contains the values to be validated.  A valid entry
+            must contain `palette_address`, which is a valid address into the ROM.
+
+        Returns
+        -------
+        Palette
+            The palette that represents the values provided.
+
+        Raises
+        ------
+        MissingError
+            The field `palette_address` is not present inside `values`.
+        IntegerError
+            `palette_address` is not an integer.
+        """
+        if "palette_address" not in values:
+            MissingError()
+        palette_address = int_validator(values["palette_address"])
+        return cls.from_rom(palette_address)
+
+    @classmethod
+    def validate_by_type(cls, type_: PaletteType, values: dict) -> Palette:
         if type_ == PaletteType.from_colors:
-            return PydanticColorsPalette(**v)
+            return cls.validate_from_colors(values)
         if type_ == PaletteType.from_rom_address:
-            return PydanticROMAddressPalettePalette(**v)
+            return cls.validate_from_rom(values)
         raise NotImplementedError(f"There is no palette of type {type_}")
 
     @classmethod
-    def validate(cls, v) -> PydanticPaletteProtocol:
-        """
-        Validates that the provided object is a valid palette.
-
-        Parameters
-        ----------
-        v : dict
-            The dictionary to create the palette from.
-
-        Returns
-        -------
-        PydanticPaletteProtocol
-            If validated, a palette will be created in accordance to `generate_palette`.
-
-        Raises
-        ------
-        TypeError
-            If a dictionary is not provided.
-        TypeError
-            If the dictionary does not contain the key `"type"`.
-        TypeError
-            If the type provided is not inside :class:`~foundry.core.palette.Color.PaletteType`.
-        """
-        if not isinstance(v, dict):
-            raise TypeError("Dictionary required")
-        if "type" not in v:
-            raise TypeError("Must have a type")
-        if not PaletteType.has_value(type_ := v["type"]):
-            raise TypeError(f"{type_} is not a valid layout type")
-        return cls.generate_palette(v)
+    def validate(cls, values) -> Palette:
+        if "type" not in values:
+            MissingError()
+        type_ = values["type"]
+        if not PaletteType.has_value(type_):
+            raise EnumMemberError(enum_values=list(PaletteType._value2member_map_))
+        return cls.validate_by_type(type_, values)
