@@ -10,10 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.core.palette.ColorPalette import (
-    ColorPaletteProtocol,
-    PydanticDefaultColorPalette,
-)
+from foundry.core.palette.ColorPalette import ColorPalette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 from foundry.gui.CustomDialog import CustomDialog
 
@@ -29,14 +26,12 @@ class ColorSelector(CustomDialog):
         parent: Optional[QWidget],
         title: str = "NES Color Table",
         size: Optional[QSize] = None,
-        color_palette: Optional[ColorPaletteProtocol] = None,
+        color_palette: Optional[ColorPalette] = None,
     ):
         super().__init__(parent, title=title)
 
         self.size_ = size if not None else QSize(24, 24)
-        self.color_palette = (
-            color_palette if color_palette is not None else PydanticDefaultColorPalette(type="DEFAULT").color_palette
-        )
+        self.color_palette = color_palette if color_palette is not None else ColorPalette.as_default()
 
         self._selected_button = 0
 

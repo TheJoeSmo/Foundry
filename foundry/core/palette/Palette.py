@@ -10,11 +10,7 @@ from pydantic import BaseModel
 from PySide6.QtGui import QColor
 
 from foundry.core.palette import COLORS_PER_PALETTE
-from foundry.core.palette.ColorPalette import (
-    ColorPaletteCreator,
-    ColorPaletteProtocol,
-    PydanticColorPaletteProtocol,
-)
+from foundry.core.palette.ColorPalette import ColorPalette
 from foundry.game.File import ROM
 
 
@@ -27,12 +23,12 @@ class Palette:
     -------
     color_indexes: tuple[int, ...]
         A series of indexes into the `color_palette`, which represent the respective colors.
-    color_palette: ColorPaletteProtocol
+    color_palette: ColorPalette
         A series of indexable colors.
     """
 
     color_indexes: tuple[int, ...] = (0, 0, 0, 0)
-    color_palette: ColorPaletteProtocol = ColorPaletteCreator.as_default().color_palette
+    color_palette: ColorPalette = ColorPalette.as_default()
 
     def __bytes__(self) -> bytes:
         return bytes(i & 0xFF for i in self.color_indexes)
@@ -146,24 +142,24 @@ class PydanticColorsPalette(PydanticPalette):
     ----------
     color_indexes: list[int]
         A list of indexes into the color palette colors.
-    color_palette: ColorPaletteCreator
+    color_palette: ColorPalette
         A color palette generator which provides the colors which are indexed.
     """
 
     color_indexes: list[int]
-    color_palette: ColorPaletteCreator = ColorPaletteCreator(type="DEFAULT")
+    color_palette: ColorPalette = ColorPalette.as_default()
 
     @property
-    def color_palette_(self) -> PydanticColorPaletteProtocol:
+    def color_palette_(self) -> ColorPalette:
         """
         A simple wrapper around the true color palette to provide correct type hints.
 
         Returns
         -------
-        ColorPaletteProtocol
+        ColorPalette
             The color palette that is supplied.
         """
-        return self.color_palette  # type: ignore
+        return self.color_palette
 
     @cached_property
     def palette(self) -> Palette:
@@ -175,7 +171,7 @@ class PydanticColorsPalette(PydanticPalette):
         Protocol
             The corresponding palette.
         """
-        return Palette(tuple(self.color_indexes), self.color_palette_.color_palette)
+        return Palette(tuple(self.color_indexes), self.color_palette)
 
 
 class PydanticROMAddressPalettePalette(PydanticPalette):

@@ -1,27 +1,16 @@
+from __future__ import annotations
+
 from enum import Enum
-from functools import cached_property
 from json import loads
 from pathlib import Path
-from typing import Protocol, Sequence
 
 from attr import attrs
-from pydantic import BaseModel, FilePath
+from pydantic.errors import EnumMemberError, MissingError
+from pydantic.validators import list_validator
 
+from foundry.core.file.FilePath import FilePath
 from foundry.core.palette import PALETTE_FILE_COLOR_OFFSET, PALETTE_FILE_PATH
 from foundry.core.palette.Color import Color
-
-
-class ColorPaletteProtocol(Protocol):
-    colors: Sequence[Color]
-
-
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
-class ColorPalette:
-    """
-    A representation of a series of colors.
-    """
-
-    colors: tuple[Color, ...]
 
 
 class ColorPaletteType(str, Enum):
@@ -55,246 +44,153 @@ class ColorPaletteType(str, Enum):
         return value in cls._value2member_map_
 
 
-class PydanticColorPalette(BaseModel):
+_DEFAULT_COLOR_PALETTE: None | ColorPalette = None
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class ColorPalette:
     """
-    A generic representation of :class:`~foundry.core.palette.ColorPalette.ColorPalette`.
-
-    Attributes
-    ----------
-    type: ColorPaletteType
-        How the ColorPalette should be loaded.
-    """
-
-    type: ColorPaletteType
-
-    class Config:
-        # Allow storing the enum as a string
-        use_enum_values = True
-
-        # Enable cached property to be ignored by Pydantic
-        arbitrary_types_allowed = True
-        keep_untouched = (cached_property,)
-
-
-class PydanticColorPaletteProtocol(Protocol):
-    """
-    A Pydantic color palette that can convert to a regular color palette.
+    A representation of a series of colors.
     """
 
-    @cached_property
-    def color_palette(self) -> ColorPaletteProtocol:
-        ...
+    colors: tuple[Color, ...]
 
-
-class PydanticColorsColorPalette(PydanticColorPalette):
-    """
-    A color palette which generates itself from a series of colors.
-
-    Attributes
-    ----------
-    colors: list[Color]
-        A list of colors that compose the color palette.
-    """
-
-    colors: list[Color]
-
-    @cached_property
-    def color_palette(self) -> ColorPaletteProtocol:
+    @classmethod
+    def from_json(cls, path: Path) -> ColorPalette:
         """
-        Provides the representation of a color palette from the Pydantic version.
+        Generates a color palette from a JSON file.
+
+        Parameters
+        ----------
+        path : Path
+            The path to the JSON file.
 
         Returns
         -------
-        ColorPaletteProtocol
-            The corresponding color palette.
+        ColorPalette
+            The color palette that represents the JSON at `path`.
         """
-        return ColorPalette(tuple(self.colors))
+        with open(path, "r") as f:
+            data = f.read()
+        return cls.validate(loads(data))
 
-
-def palette_file_to_color_palette(path: Path) -> ColorPaletteProtocol:
-    """
-    Generates a color palette from a palette file.
-
-    Parameters
-    ----------
-    path : Path
-        The path to the palette file.
-
-    Returns
-    -------
-    ColorPaletteProtocol
-        The color palette that represents the palette file.
-    """
-    with open(path, "rb") as f:
-        data = f.read()
-    return ColorPalette(
-        tuple(Color(data[i], data[i + 1], data[i + 2]) for i in range(PALETTE_FILE_COLOR_OFFSET, len(data), 4))
-    )
-
-
-class PydanticPaletteFileColorPalette(PydanticColorPalette):
-    """
-    A color palette which generates itself from another file.
-
-    Attributes
-    ----------
-    path: FilePath
-        A palette file to be converted to a color palette.
-    """
-
-    path: FilePath
-
-    @cached_property
-    def color_palette(self) -> ColorPaletteProtocol:
+    @classmethod
+    def from_palette_file(cls, path: Path) -> ColorPalette:
         """
-        Provides the representation of a color palette from the Pydantic version.
+        Generates a color palette from a PAL file.
+
+        Parameters
+        ----------
+        path : Path
+            The path to the PAL file.
 
         Returns
         -------
-        ColorPaletteProtocol
-            The corresponding color palette.
+        ColorPalette
+            The color palette that represents the file at `path`.
         """
-        return palette_file_to_color_palette(self.path)
+        with open(path, "rb") as f:
+            data = f.read()
+        return ColorPalette(
+            tuple(Color(data[i], data[i + 1], data[i + 2]) for i in range(PALETTE_FILE_COLOR_OFFSET, len(data), 4))
+        )
 
-
-def json_file_to_color_palette(path: Path) -> ColorPaletteProtocol:
-    """
-    Generates a color palette from a JSON file.
-
-    Parameters
-    ----------
-    path : Path
-        The path to the JSON file.
-
-    Returns
-    -------
-    ColorPaletteProtocol
-        The color palette that represents the JSON file.
-    """
-    with open(path, "r") as f:
-        return ColorPaletteCreator.generate_color_palette(loads(f.read())).color_palette
-
-
-class PydanticJSONFileColorPalette(PydanticColorPalette):
-    """
-    A color palette which generates itself from another file.
-
-    Attributes
-    ----------
-    path: FilePath
-        A JSON file to be converted to a color palette.
-    """
-
-    path: FilePath
-
-    @cached_property
-    def color_palette(self) -> ColorPaletteProtocol:
+    @classmethod
+    def as_default(cls) -> ColorPalette:
         """
-        Provides the representation of a color palette from the Pydantic version.
+        The default NES palette.
 
         Returns
         -------
-        ColorPaletteProtocol
-            The corresponding color palette.
+        ColorPalette
+            The palette that represents the NES palette.
         """
-        return json_file_to_color_palette(self.path)
-
-
-class PydanticDefaultColorPalette(PydanticColorPalette):
-    """
-    A color palette which represents the NES colors inside the game.
-    """
-
-    @cached_property
-    def color_palette(self) -> ColorPaletteProtocol:
-        """
-        Provides the representation of a color palette from the Pydantic version.
-
-        Returns
-        -------
-        ColorPaletteProtocol
-            The corresponding color palette.
-        """
-        return PydanticJSONFileColorPalette(type="JSON FILE", path=PALETTE_FILE_PATH).color_palette
-
-
-class ColorPaletteCreator(BaseModel):
-    """
-    A generator for a :class:`~foundry.core.palette.ColorPalette.ColorPaletteProtocol`.
-    Creates the color palette dynamically from its type attribute to provide it additional information.
-    """
-
-    def __init_subclass__(cls, **kwargs) -> None:
-        return super().__init_subclass__(**kwargs)
+        global _DEFAULT_COLOR_PALETTE
+        if _DEFAULT_COLOR_PALETTE is None:
+            _DEFAULT_COLOR_PALETTE = cls.from_json(PALETTE_FILE_PATH)
+        return _DEFAULT_COLOR_PALETTE
 
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
-    def as_default(cls) -> PydanticColorPaletteProtocol:
-        return PydanticDefaultColorPalette(type="DEFAULT")
-
-    @classmethod
-    def generate_color_palette(cls, v: dict) -> PydanticColorPaletteProtocol:
+    def validate_from_colors(cls, values: dict) -> ColorPalette:
         """
-        The constructor for each specific color palette.
+        Generates a color palette from a series of colors.
 
         Parameters
         ----------
-        v : dict
-            The dictionary to create the color palette from.
+        values : dict
+            The values to evaluate.
 
         Returns
         -------
-        PydanticColorPaletteProtocol
-            The created layout as defined by `v["type"]`
-
-        Raises
-        ------
-        NotImplementedError
-            If the constructor does not have a valid constructor for `v["type"]`.
+        ColorPalette
+            The color palette that represents the colors provided.
         """
+        if "colors" not in values:
+            MissingError()
+        colors = list_validator(values["colors"])
+        return ColorPalette(tuple(Color.validate(c) for c in colors))
 
-        type_ = ColorPaletteType(v["type"])
+    @classmethod
+    def validate_from_palette_file(cls, values) -> ColorPalette:
+        """
+        Generates a color palette from a palette file.
+
+        Parameters
+        ----------
+        values: dict
+            The values to evaluate.
+
+        Returns
+        -------
+        ColorPalette
+            The color palette that represents the palette file.
+        """
+        if "path" not in values:
+            MissingError()
+        path = FilePath(values["path"])
+        return cls.from_palette_file(path)
+
+    @classmethod
+    def validate_from_json_file(cls, values: dict) -> ColorPalette:
+        """
+        Generates a color palette from a JSON file.
+
+        Parameters
+        ----------
+        values: dict
+            The values to evaluate.
+
+        Returns
+        -------
+        ColorPalette
+            The color palette that represents the JSON file.
+        """
+        if "path" not in values:
+            MissingError()
+        path = FilePath(values["path"])
+        return cls.from_json(path)
+
+    @classmethod
+    def validate_by_type(cls, type_: ColorPaletteType, values: dict) -> ColorPalette:
         if type_ == ColorPaletteType.default:
-            return PydanticDefaultColorPalette(**v)
+            return cls.as_default()
         if type_ == ColorPaletteType.colors:
-            return PydanticColorsColorPalette(**v)
+            return cls.validate_from_colors(values)
         if type_ == ColorPaletteType.palette_file:
-            return PydanticPaletteFileColorPalette(**v)
+            return cls.validate_from_palette_file(values)
         if type_ == ColorPaletteType.json_file:
-            return PydanticJSONFileColorPalette(**v)
+            return cls.validate_from_json_file(values)
         raise NotImplementedError(f"There is no color palette of type {type_}")
 
     @classmethod
-    def validate(cls, v) -> PydanticColorPaletteProtocol:
-        """
-        Validates that the provided object is a valid color palette.
-
-        Parameters
-        ----------
-        v : dict
-            The dictionary to create the color palette from.
-
-        Returns
-        -------
-        PydanticColorPaletteProtocol
-            If validated, a color palette will be created in accordance to `generate_color_palette`.
-
-        Raises
-        ------
-        TypeError
-            If a dictionary is not provided.
-        TypeError
-            If the dictionary does not contain the key `"type"`.
-        TypeError
-            If the type provided is not inside :class:`~foundry.core.palette.ColorPalette.ColorPaletteType`.
-        """
-        if not isinstance(v, dict):
-            raise TypeError("Dictionary required")
-        if "type" not in v:
-            raise TypeError("Must have a type")
-        if not ColorPaletteType.has_value(type_ := v["type"]):
-            raise TypeError(f"{type_} is not a valid layout type")
-        return cls.generate_color_palette(v)
+    def validate(cls, values: dict) -> ColorPalette:
+        if "type" not in values:
+            MissingError()
+        type_ = values["type"]
+        if not ColorPaletteType.has_value(type_):
+            raise EnumMemberError(enum_values=list(ColorPaletteType._value2member_map_))
+        return cls.validate_by_type(type_, values)
