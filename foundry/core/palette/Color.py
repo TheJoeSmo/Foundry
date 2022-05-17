@@ -1,20 +1,9 @@
-from functools import cached_property
-from typing import Protocol
+from __future__ import annotations
 
 from attr import attrs, field, validators
-from pydantic import BaseModel, validator
+from pydantic.errors import MissingError, NumberNotGeError, NumberNotLeError
+from pydantic.validators import int_validator
 from PySide6.QtGui import QColor
-
-
-class ColorProtocol(Protocol):
-    red: int
-    green: int
-    blue: int
-    alpha: int
-
-    @property
-    def qcolor(self) -> QColor:
-        return QColor(self.red, self.green, self.blue, self.alpha)
 
 
 def _check_in_color_range(inst, attr, value):
@@ -34,24 +23,24 @@ class Color:
     def qcolor(self) -> QColor:
         return QColor(self.red, self.green, self.blue, self.alpha)
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
 
-class PydanticColor(BaseModel):
-    red: int
-    green: int
-    blue: int
-    alpha: int = 255
-
-    # Enable cached property to be ignored by Pydantic
-    class Config:
-        arbitrary_types_allowed = True
-        keep_untouched = (cached_property,)
-
-    @validator("red", "blue", "green", "alpha", allow_reuse=True)
-    def check_color_range(cls, v):
-        if not 0 <= v <= 0xFF:
-            raise ValueError(f"{v} is not inside the range 0-255")
-        return v
-
-    @cached_property
-    def color(self) -> ColorProtocol:
-        return Color(self.red, self.green, self.blue, self.alpha)
+    @classmethod
+    def validate(cls, values) -> Color:
+        if "red" not in values:
+            MissingError()
+        if "green" not in values:
+            MissingError()
+        if "blue" not in values:
+            MissingError()
+        red: int = int_validator(values["red"])
+        green: int = int_validator(values["green"])
+        blue: int = int_validator(values["blue"])
+        alpha: int = int_validator(values["alpha"]) if "alpha" in values else 255
+        if any(color < 0 for color in [red, green, blue, alpha]):
+            raise NumberNotGeError(limit_value=0)
+        if any(color > 255 for color in [red, green, blue, alpha]):
+            raise NumberNotLeError(limit_value=255)
+        return Color(red, green, blue, alpha)

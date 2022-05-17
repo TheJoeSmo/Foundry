@@ -8,11 +8,11 @@ from attr import attrs
 from pydantic import BaseModel, FilePath
 
 from foundry.core.palette import PALETTE_FILE_COLOR_OFFSET, PALETTE_FILE_PATH
-from foundry.core.palette.Color import Color, ColorProtocol, PydanticColor
+from foundry.core.palette.Color import Color
 
 
 class ColorPaletteProtocol(Protocol):
-    colors: Sequence[ColorProtocol]
+    colors: Sequence[Color]
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
@@ -21,7 +21,7 @@ class ColorPalette:
     A representation of a series of colors.
     """
 
-    colors: tuple[ColorProtocol, ...]
+    colors: tuple[Color, ...]
 
 
 class ColorPaletteType(str, Enum):
@@ -92,11 +92,11 @@ class PydanticColorsColorPalette(PydanticColorPalette):
 
     Attributes
     ----------
-    colors: list[PydanticColor]
+    colors: list[Color]
         A list of colors that compose the color palette.
     """
 
-    colors: list[PydanticColor]
+    colors: list[Color]
 
     @cached_property
     def color_palette(self) -> ColorPaletteProtocol:
@@ -108,7 +108,7 @@ class PydanticColorsColorPalette(PydanticColorPalette):
         ColorPaletteProtocol
             The corresponding color palette.
         """
-        return ColorPalette(tuple(color.color for color in self.colors))
+        return ColorPalette(tuple(self.colors))
 
 
 def palette_file_to_color_palette(path: Path) -> ColorPaletteProtocol:
