@@ -5,7 +5,7 @@ from math import sqrt
 from attr import attrs
 from pydantic.errors import MissingError, NumberNotGeError
 from pydantic.validators import int_validator
-from PySide6.QtCore import QPoint, QRect
+from PySide6.QtCore import QPoint, QRect, QSize
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
@@ -177,6 +177,18 @@ class Size:
 
     def __xor__(self, other: Size) -> Size:
         return self.__class__(self.width ^ other.width, self.height ^ other.height)
+
+    @property
+    def qsize(self) -> QSize:
+        """
+        Provides the QSize equivalent from a this instance.
+
+        Returns
+        -------
+        QSize
+            The QSize that represents this.
+        """
+        return QSize(self.width, self.height)
 
     @classmethod
     def __get_validators__(cls):
