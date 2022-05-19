@@ -9,7 +9,7 @@ from foundry.gui.LevelView import LevelView
 from foundry.gui.ObjectDropdown import ObjectDropdown
 from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectToolBar import ObjectToolBar
-from foundry.gui.PaletteGroupController import PaletteGroupController
+from foundry.gui.palette import PaletteGroupController
 from foundry.gui.SpinnerPanel import SpinnerPanel
 from foundry.gui.WarningList import WarningList
 

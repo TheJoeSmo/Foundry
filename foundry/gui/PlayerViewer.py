@@ -33,7 +33,7 @@ from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
 from foundry.core.UndoController import UndoController
 from foundry.gui.CustomChildWindow import CustomChildWindow
-from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
+from foundry.gui.palette import PaletteEditorWidget
 from foundry.gui.PlayerFrameEditor import (
     PlayerFrameEditorController as PlayerFrameEditor,
 )

@@ -24,7 +24,7 @@ from foundry.gui.ObjectList import ObjectList
 from foundry.gui.ObjectStatusBar import ObjectStatusBar
 from foundry.gui.ObjectToolBar import ObjectToolBar
 from foundry.gui.ObjectViewer import ObjectViewer
-from foundry.gui.PaletteGroupController import PaletteGroupController
+from foundry.gui.palette import PaletteGroupController
 from foundry.gui.PlayerViewer import PlayerViewerController as PlayerViewer
 from foundry.gui.settings import FileSettings, UserSettings
 from foundry.gui.SpinnerPanel import SpinnerPanel

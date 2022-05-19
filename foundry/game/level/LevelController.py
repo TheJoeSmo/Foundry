@@ -25,7 +25,7 @@ from foundry.gui.HeaderEditor import (
 from foundry.gui.JumpEditor import JumpEditor
 from foundry.gui.LevelSelector import LevelSelector
 from foundry.gui.LevelView import undoable
-from foundry.gui.PaletteViewer import PaletteViewer
+from foundry.gui.palette import PaletteViewer
 
 
 def require_safe_to_change(function: Callable):
