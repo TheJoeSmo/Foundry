@@ -108,6 +108,26 @@ class ColorPalette:
     def __len__(self) -> int:
         return len(self.colors)
 
+    @property
+    def default_color(self) -> Color:
+        """
+        The class:~`foundry.core.palette.Color` of a color palette to be used when no other color is specified.
+
+        Returns
+        -------
+        Color
+            The default color of this color palette.
+
+        Raises
+        ------
+        IndexError
+            The color palette does not have any colors inside of itself to select.
+        """
+        try:
+            return self[0]
+        except IndexError as e:
+            raise IndexError("An empty color palette does not have a default color") from e
+
     @classmethod
     def from_json(cls, path: Path) -> ColorPalette:
         """

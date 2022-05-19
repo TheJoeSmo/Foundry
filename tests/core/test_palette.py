@@ -59,6 +59,11 @@ def test_color_palette_iter():
     assert Color(6, 7, 8, 9) == next(i)
 
 
+def test_color_palette_default_color():
+    color_palette = ColorPalette((Color(0, 1, 2), Color(3, 4, 5), Color(6, 7, 8, 9)))
+    assert color_palette.default_color in color_palette
+
+
 def test_palette_initialization(simple_color_palette):
     Palette((0, 1, 2), simple_color_palette)
 
