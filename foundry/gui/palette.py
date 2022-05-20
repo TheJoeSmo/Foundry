@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from typing import Optional
 
-from attr import attrs
+from attr import attrs, evolve
 from PySide6.QtCore import QSize, Signal, SignalInstance
-from PySide6.QtGui import QColor, QMouseEvent, QPixmap, Qt
+from PySide6.QtGui import QMouseEvent, QPixmap, Qt
 from PySide6.QtWidgets import (
     QAbstractButton,
     QDialog,
@@ -16,108 +18,277 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from foundry.core.geometry import Size
 from foundry.core.palette import (
     COLORS_PER_PALETTE,
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
+    Color,
     ColorPalette,
     Palette,
     PaletteGroup,
     get_internal_palette_offset,
 )
+from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level
 from foundry.game.level.LevelRef import LevelRef
 from foundry.gui.CustomDialog import CustomDialog
 
 
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class ColorButtonState:
+    """
+    The model of a colored button.
+
+    Attributes
+    ----------
+    color: Color
+        The color of the button, by default the first color of the NES palette.
+    size: Size
+        The fixed size of the button, by default (16, 16).
+    selected: bool
+        If the button is selected, by default unselected.
+    """
+
+    color: Color = ColorPalette.as_default().default_color
+    size: Size = Size(16, 16)
+    selected: bool = False
+
+
 class ColorButtonWidget(QLabel):
     """
     A colored button that can be pressed and interacted with
 
+    Signals
+    -------
+    clicked: SignalInstance
+        Slot associated with the button being clicked.
+    size_changed: SignalInstance
+        Slot associated with the button changing size.
+    color_changed: SignalInstance
+        Slot associated with the button changing color.
+    selected_changed: SignalInstance
+        Slot associated with the button changing its selected state.
+
     Attributes
     ----------
-    clicked: Signal
-        Slot associated with the button being clicked.
-    size_changed: Signal[QSize]
-        Slot associated with the button changing size.
-    color_changed: Signal[QColor]
-        Slot associated with the button changing color.
-    selected_changed: Signal[bool]
-        Slot associated with the button changing its selected state.
+    parent: None | QWidget
+        The parent of this widget if one exists.
+    color: Color
+        The color of the button, by default the first color of the NES palette.
+    size_: Size
+        The size of the button, by default (16, 16).
+    selected: bool
+        If the button is selected, by default unselected.
+    undo_controller: UndoController[ColorButtonState]
+        The controller in charge of handling undo and redo actions, a new one is generated if None is provided.
     """
 
     clicked: SignalInstance = Signal()  # type: ignore
-    size_changed: SignalInstance = Signal(QSize)  # type: ignore
-    color_changed: SignalInstance = Signal(QColor)  # type: ignore
+    size_changed: SignalInstance = Signal(Size)  # type: ignore
+    color_changed: SignalInstance = Signal(Color)  # type: ignore
     selected_changed: SignalInstance = Signal(bool)  # type: ignore
 
     def __init__(
         self,
-        parent: Optional[QWidget],
-        color: Optional[QColor] = None,
-        size: Optional[QSize] = None,
+        parent: None | QWidget,
+        color: Color = ColorPalette.as_default().default_color,
+        size_: Size = Size(16, 16),
         selected: bool = False,
+        undo_controller: None | UndoController[ColorButtonState] = None,
     ):
         super().__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-
-        if color is not None:
-            self._color = color
-        else:
-            self._color = QColor(Qt.white)
-        if size is not None:
-            self._size_ = size
-        else:
-            self._size_ = QSize(16, 16)
-        self._selected = selected
+        self._state = ColorButtonState(color, size_, selected)
+        self.undo_controller = undo_controller or UndoController(self.state)
         self._update()
 
+    def __eq__(self, other) -> bool:
+        return (
+            isinstance(other, type(self))
+            and self._state == other.state
+            and self.undo_controller == other.undo_controller
+        )
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}({self.parent}, {self.color}, {self.size_}, "
+            + f"{self.selected}, {self.undo_controller})"
+        )
+
     @property
-    def size_(self) -> QSize:
-        return self._size_
+    def size_(self) -> Size:
+        """
+        Provides the size of the button to be displayed.
+
+        Returns
+        -------
+        Size
+            The size of the button.
+        """
+        return self._state.size
 
     @size_.setter
-    def size_(self, size: QSize):
-        self._size_ = size
-        self.size_changed.emit(size)
-        self._update()
+    def size_(self, size: Size):
+        if size != self._state.size:
+            self.do(evolve(self.state, size=size))
 
     @property
-    def color(self) -> QColor:
-        return self._color
+    def color(self) -> Color:
+        """
+        Provides the color of the button to be displayed.
+
+        Returns
+        -------
+        Color
+            The color of the button.
+        """
+        return self._state.color
 
     @color.setter
-    def color(self, color: QColor):
-        self._color = color
-        self.color_changed.emit(color)
-        self._update()
+    def color(self, color: Color):
+        if color != self._state.color:
+            self.do(evolve(self.state, color=color))
 
     @property
     def selected(self) -> bool:
-        return self._selected
+        """
+        If the button is considered selected.
+
+        Returns
+        -------
+        bool
+            If the button is currently selected.
+        """
+        return self._state.selected
 
     @selected.setter
     def selected(self, selected: bool):
-        self._selected = selected
-        self.selected_changed.emit(selected)
+        if selected != self._state.selected:
+            self.do(evolve(self.state, selected=selected))
+
+    @property
+    def state(self) -> ColorButtonState:
+        """
+        Provides the current state of the instance.
+
+        Returns
+        -------
+        ColorButtonState
+            A tuple of the color, size, and if the button is selected of this instance.
+        """
+        return self._state
+
+    @state.setter
+    def state(self, state: ColorButtonState):
+        if self.state != state:
+            self.do(state)
+
+    def do(self, new_state: ColorButtonState) -> ColorButtonState:
+        """
+        Does an action through the controller, adding it to the undo stack and clearing the redo
+        stack, respectively.
+
+        Parameters
+        ----------
+        new_state : ColorButtonState
+            The new state to be stored.
+
+        Returns
+        -------
+        ColorButtonState
+            The new state that has been stored.
+        """
+        self._update_state(new_state)
+        return self.undo_controller.do(new_state)
+
+    @property
+    def can_undo(self) -> bool:
+        """
+        Determines if there is any states inside the undo stack.
+
+        Returns
+        -------
+        bool
+            If there is an undo state available.
+        """
+        return self.undo_controller.can_undo
+
+    def undo(self) -> ColorButtonState:
+        """
+        Undoes the last state, bring the previous.
+
+        Returns
+        -------
+        ColorButtonState
+            The new state that has been stored.
+        """
+        self._update_state(self.undo_controller.undo())
+        return self.state
+
+    @property
+    def can_redo(self) -> bool:
+        """
+        Determines if there is any states inside the redo stack.
+
+        Returns
+        -------
+        bool
+            If there is an redo state available.
+        """
+        return self.undo_controller.can_redo
+
+    def redo(self) -> ColorButtonState:
+        """
+        Redoes the previously undone state.
+
+        Returns
+        -------
+        ColorButtonState
+            The new state that has been stored.
+        """
+        self._update_state(self.undo_controller.redo())
+        return self.state
+
+    def _update_state(self, state: ColorButtonState):
+        """
+        Handles all updating of the state, sending any signals and updates to the display if needed.
+
+        Parameters
+        ----------
+        state : ColorButtonState
+            The new state of the editor.
+        """
+        if self._state.color != state.color:
+            self.color_changed.emit(state.color)
+            self._state = evolve(self.state, color=state.color)
+
+        if self._state.size != state.size:
+            self.size_changed.emit(state.size)
+            self._state = evolve(self.state, size=state.size)
+
+        if self._state.selected != state.selected:
+            self.selected_changed.emit(state.selected)
+            self._state = evolve(self.state, selected=state.selected)
+
         self._update()
 
     def _update(self):
-        pix = QPixmap(self.size_)
-        pix.fill(self.color)
+        pix = QPixmap(self.state.size.qsize)
+        pix.fill(self.color.qcolor)
         self.setPixmap(pix)
 
         if self.selected:
-            if self.color.lightnessF() < 0.25:
+            if self.color.qcolor.lightnessF() < 0.25:
                 self.setStyleSheet("border-color: rgb(255, 255, 255); border-width: 2px; border-style: solid")
             else:
                 self.setStyleSheet("border-color: rgb(0, 0, 0); border-width: 2px; border-style: solid")
         else:
-            rgb = self.color.getRgb()
             self.setStyleSheet(
-                f"border-color: rgb({rgb[0]}, {rgb[1]}, {rgb[2]}); border-width: 2px; border-style: solid"
+                f"border-color: rgb({self.color.red}, {self.color.green}, {self.color.blue});"
+                + "border-width: 2px; border-style: solid"
             )
 
         self.update()
