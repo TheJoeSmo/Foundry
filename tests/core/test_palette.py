@@ -72,6 +72,18 @@ def test_palette_initialization_from_default():
     Palette((0, 1, 2, 3))
 
 
+def test_palette_colors(simple_color_palette):
+    assert [simple_color_palette[0], simple_color_palette[1], simple_color_palette[2]] == Palette(
+        (0, 1, 2), simple_color_palette
+    ).colors
+
+
+def test_palette_qcolors(simple_color_palette):
+    assert [simple_color_palette[0].qcolor, simple_color_palette[1].qcolor, simple_color_palette[2].qcolor] == Palette(
+        (0, 1, 2), simple_color_palette
+    ).qcolors
+
+
 def test_palette_get_item(simple_color_palette):
     palette = Palette((0, 2, 1), simple_color_palette)
     assert 0 == palette[0]
@@ -108,4 +120,4 @@ def test_palette_group_iter():
 
 def test_palette_group_background_color():
     palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
-    assert palette_group[0].colors[0] == palette_group.background_color
+    assert palette_group[0].qcolors[0] == palette_group.background_color

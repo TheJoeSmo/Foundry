@@ -3,7 +3,7 @@ from __future__ import annotations
 from functools import cache
 from json import loads
 from pathlib import Path
-from typing import Iterator, Sequence
+from typing import Iterator
 
 from attr import attrs, field, validators
 from pydantic.errors import (
@@ -309,18 +309,28 @@ class Palette:
         return hash(self.color_indexes)
 
     @property
-    def colors(self) -> Sequence[QColor]:
+    def colors(self) -> list[Color]:
         """
-        A sequence of QColors that represent this instance.
+        A list of :class:~`foundry.core.palette.Colors` that represent this instance.
 
         Returns
         -------
-        Sequence[QColor]
-            A sequence of QColors derived from `color_indexes` and `color_palette`.
+        list[QColor]
+            A list of QColors derived from `color_indexes` and `color_palette`.
         """
-        return [
-            self.color_palette.colors[index % len(self.color_palette.colors)].qcolor for index in self.color_indexes
-        ]
+        return [self.color_palette.colors[index % len(self.color_palette.colors)] for index in self.color_indexes]
+
+    @property
+    def qcolors(self) -> list[QColor]:
+        """
+        A list of :class:~`foundry.core.palette.Colors` that represent this instance.
+
+        Returns
+        -------
+        list[QColor]
+            A list of QColors derived from `color_indexes` and `color_palette`.
+        """
+        return [c.qcolor for c in self.colors]
 
     @classmethod
     def from_rom(cls, address: int) -> Palette:
@@ -460,7 +470,7 @@ class PaletteGroup:
 
     @property
     def background_color(self) -> QColor:
-        return self.palettes[0].colors[0]
+        return self.palettes[0].qcolors[0]
 
     @classmethod
     def from_rom(cls, address: int) -> PaletteGroup:
