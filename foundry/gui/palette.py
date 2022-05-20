@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Optional
 
-from attr import attrs, evolve
-from PySide6.QtCore import QSize, Signal, SignalInstance
+from attr import attrs, evolve, field
+from attr.validators import instance_of
+from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import QMouseEvent, QPixmap, Qt
 from PySide6.QtWidgets import (
-    QAbstractButton,
     QDialog,
     QDialogButtonBox,
     QGridLayout,
@@ -51,9 +51,9 @@ class ColorButtonState:
         If the button is selected, by default unselected.
     """
 
-    color: Color = ColorPalette.as_default().default_color
-    size: Size = Size(16, 16)
-    selected: bool = False
+    color: Color = field(validator=[instance_of(Color)], default=ColorPalette.as_default().default_color)
+    size: Size = field(validator=[instance_of(Size)], default=Size(16, 16))
+    selected: bool = field(validator=[instance_of(bool)], default=False)
 
 
 class ColorButtonWidget(QLabel):
@@ -297,61 +297,105 @@ class ColorButtonWidget(QLabel):
         self.clicked.emit()
 
 
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class ColorSelectorState:
+    """
+    The model of a color selector.
+
+    Attributes
+    ----------
+    title: str
+        The title of the dialog, by default "NES Color Table".
+    size: Size
+        The size of the color buttons, by default (24, 24).
+    color_palette: ColorPalette
+        The palette of color options to select from, by default the NES palette.
+    selected_button: int
+        The currently selected colored button, by default 0.
+    rows: int = 4
+        The number of rows to display.
+    columns: int = 16
+        The number of columns to display.
+    """
+
+    title: str = "NES Color Table"
+    size: Size = Size(24, 24)
+    color_palette: ColorPalette = ColorPalette.as_default()
+    selected_button: int = 0
+    rows: int = 4
+    columns: int = 16
+
+
 class ColorSelector(CustomDialog):
-    ROWS = 4
-    COLUMNS = 16
+    """
+    A widget in charge of selecting a color from a color palette.
+
+    Signals
+    -------
+    ok_clicked: SignalInstance
+        The index of the last color button selected after the user pressed ok.
+    """
 
     ok_clicked: SignalInstance = Signal(int)  # type: ignore
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: None | QWidget,
         title: str = "NES Color Table",
-        size: Optional[QSize] = None,
-        color_palette: Optional[ColorPalette] = None,
+        size: Size = Size(24, 24),
+        color_palette: ColorPalette = ColorPalette.as_default(),
+        selected_button: int = 0,
+        rows: int = 4,
+        columns: int = 16,
     ):
         super().__init__(parent, title=title)
 
-        self.size_ = size if not None else QSize(24, 24)
-        self.color_palette = color_palette if color_palette is not None else ColorPalette.as_default()
+        self._state = ColorSelectorState(title, size, color_palette, selected_button, rows, columns)
 
-        self._selected_button = 0
+        grid_layout = QGridLayout()
+        grid_layout.setSpacing(0)
 
-        self.layout_ = QGridLayout()
-        self.layout_.setSpacing(0)
+        self._buttons = [ColorButtonWidget(self, color, self._state.size) for color in self._state.color_palette.colors]
+        for index, button in enumerate(self._buttons):
+            button.setLineWidth(0)
+            button.clicked.connect(lambda index=index: self._on_click(index))
+            grid_layout.addWidget(button, index // self._state.columns, index % self._state.columns)
+        self._buttons[self._state.selected_button].selected = True
 
-        self._color_buttons = []
-        for row in range(self.ROWS):
-            for column in range(self.COLUMNS):
-                color = self.color_palette.colors[row * self.COLUMNS + column]
-                button = ColorButtonWidget(self, color.qcolor, self.size_)
-                button.setLineWidth(0)
-                self._color_buttons.append(button)
-                self.layout_.addWidget(button, row, column)
-        self._color_buttons[0].selected = True
-
-        for idx, btn in enumerate(self._color_buttons):
-            btn.clicked.connect(lambda idx=idx: self._on_click(idx))
-
-        self.buttons = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
-        self.buttons.clicked.connect(self._on_button)  # type: ignore
+        self._dialog = QDialogButtonBox(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)  # type: ignore
+        self._dialog.clicked.connect(self._on_dialog)  # type: ignore
 
         layout = QVBoxLayout(self)
-        layout.addLayout(self.layout_)
+        layout.addLayout(grid_layout)
+        layout.addWidget(self._dialog, alignment=Qt.AlignCenter)  # type: ignore
 
-        layout.addWidget(self.buttons, alignment=Qt.AlignCenter)
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}({self.parent}, {self._state.title}, {self._state.size}, "
+            + f"{self._state.color_palette}, {self._state.selected_button}, {self._state.rows}, "
+            + f"{self._state.columns})"
+        )
 
     @property
     def last_selected_color_index(self) -> int:
-        return self._selected_button
+        """
+        Provides the index of the last selected colored button.
+
+        Returns
+        -------
+        int
+            The index of the last selected button.
+        """
+        return self._state.selected_button
 
     def _on_click(self, index: int):
-        self._color_buttons[self._selected_button].selected = False
-        self._color_buttons[index].selected = True
-        self._selected_button = index
+        self._buttons[self._state.selected_button].selected = False
+        self._buttons[index].selected = True
+        self._state = evolve(self._state, selected_button=index)
 
-    def _on_button(self, button: QAbstractButton):
-        if button is self.buttons.button(QDialogButtonBox.Ok):  # ok button
+    def _on_dialog(self, button):
+        if button is self._dialog.button(QDialogButtonBox.Ok):
+            self.ok_clicked.emit(self.last_selected_color_index)
             self.accept()
         else:
             self.reject()
@@ -376,7 +420,7 @@ class PaletteWidget(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(1, 2, 0, 2)
 
-        self._buttons = [ColorButtonWidget(self, color) for color in palette.colors]
+        self._buttons = [ColorButtonWidget(self, palette.color_palette[color]) for color in palette]
 
         for button in self._buttons:
             layout.addWidget(button)
@@ -395,8 +439,8 @@ class PaletteWidget(QWidget):
         self._update()
 
     def _update(self):
-        for idx, color in enumerate(self.palette.colors):
-            self._buttons[idx].color = color
+        for idx, color in enumerate(self.palette):
+            self._buttons[idx].color = self.palette.color_palette[color % len(self.palette.color_palette)]
 
 
 class PaletteEditorWidget(PaletteWidget):

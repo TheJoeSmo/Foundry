@@ -1,8 +1,10 @@
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDialogButtonBox
 from pytest import fixture
 
 from foundry.core.geometry import Size
-from foundry.core.palette import Color
-from foundry.gui.palette import ColorButtonState, ColorButtonWidget
+from foundry.core.palette import Color, ColorPalette
+from foundry.gui.palette import ColorButtonState, ColorButtonWidget, ColorSelector
 
 
 @fixture
@@ -23,6 +25,11 @@ def size() -> Size:
 @fixture
 def alternative_size() -> Size:
     return Size(64, 64)
+
+
+@fixture
+def color_palette() -> ColorPalette:
+    return ColorPalette((Color(0, 1, 2), Color(3, 4, 5), Color(6, 7, 8, 9)))
 
 
 @fixture
@@ -218,3 +225,32 @@ def test_color_button_selected_redo_selected_changed(qtbot, color: Color, size: 
 
     assert not button.selected
     assert not button.state.selected
+
+
+def test_color_selector_initialization_defaults():
+    ColorSelector(None)
+
+
+def test_color_selector_initialization_normal(size: Size, color_palette: ColorPalette):
+    ColorSelector(None, title="test", size=size, color_palette=color_palette, selected_button=1, rows=1, columns=3)
+
+
+def test_color_selector_selecting_button(qtbot, size: Size, color_palette: ColorPalette):
+    selector = ColorSelector(
+        None, title="test", size=size, color_palette=color_palette, selected_button=1, rows=1, columns=3
+    )
+
+    qtbot.mouseClick(selector._buttons[0], Qt.LeftButton)
+
+    assert 0 == selector.last_selected_color_index
+
+
+def test_color_selector_finish_dialog(qtbot, size: Size, color_palette: ColorPalette):
+    selector = ColorSelector(
+        None, title="test", size=size, color_palette=color_palette, selected_button=1, rows=1, columns=3
+    )
+
+    qtbot.mouseClick(selector._buttons[0], Qt.LeftButton)
+
+    with qtbot.waitSignal(selector.ok_clicked, timeout=100, check_params_cb=lambda value: value == 0):
+        selector._on_dialog(selector._dialog.button(QDialogButtonBox.Ok))
