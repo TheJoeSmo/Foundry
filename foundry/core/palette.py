@@ -469,7 +469,11 @@ class PaletteGroup:
         return iter(self.palettes)
 
     @property
-    def background_color(self) -> QColor:
+    def background_color(self) -> Color:
+        return self.palettes[0].colors[0]
+
+    @property
+    def background_qcolor(self) -> QColor:
         return self.palettes[0].qcolors[0]
 
     @classmethod

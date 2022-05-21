@@ -120,4 +120,9 @@ def test_palette_group_iter():
 
 def test_palette_group_background_color():
     palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
-    assert palette_group[0].qcolors[0] == palette_group.background_color
+    assert palette_group[0].colors[0] == palette_group.background_color
+
+
+def test_palette_group_background_qcolor():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
+    assert palette_group[0].qcolors[0] == palette_group.background_qcolor
