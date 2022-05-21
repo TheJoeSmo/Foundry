@@ -3,13 +3,15 @@ from PySide6.QtWidgets import QDialog, QDialogButtonBox, QMainWindow
 from pytest import fixture
 
 from foundry.core.geometry import Size
-from foundry.core.palette import Color, ColorPalette, Palette
+from foundry.core.palette import Color, ColorPalette, Palette, PaletteGroup
 from foundry.gui.palette import (
     ColorButtonState,
     ColorButtonWidget,
     ColorSelector,
     PaletteDisplay,
     PaletteEditorWidget,
+    PaletteGroupDisplay,
+    PaletteGroupWidget,
     PaletteWidget,
 )
 
@@ -47,6 +49,30 @@ def palette(color_palette: ColorPalette) -> Palette:
 @fixture
 def alternative_palette(color_palette: ColorPalette) -> Palette:
     return Palette((2, 1, 0), color_palette)
+
+
+@fixture
+def palette_group(color_palette: ColorPalette):
+    return PaletteGroup(
+        (
+            Palette((0, 1, 2), color_palette),
+            Palette((0, 2, 1), color_palette),
+            Palette((0, 0, 2), color_palette),
+            Palette((0, 2, 0), color_palette),
+        )
+    )
+
+
+@fixture
+def alternative_palette_group(color_palette: ColorPalette):
+    return PaletteGroup(
+        (
+            Palette((1, 2, 1), color_palette),
+            Palette((1, 2, 0), color_palette),
+            Palette((1, 1, 2), color_palette),
+            Palette((1, 0, 2), color_palette),
+        )
+    )
 
 
 @fixture
@@ -510,3 +536,131 @@ def test_palette_editor_widget_from_color_selector(qtbot, palette: Palette):
         qtbot.mouseClick(widget._display.buttons[1], Qt.LeftButton)
 
     PaletteEditorWidget._generate_color_selector = method  # restore the actual method so we don't mess up tests.
+
+
+def test_palette_group_display_initialization(temp_app, palette_group: PaletteGroup):
+    PaletteGroupDisplay(temp_app, palette_group)
+
+
+def test_palette_group_display_palette(temp_app, palette_group: PaletteGroup):
+    assert PaletteGroupDisplay(temp_app, palette_group).palette_group == palette_group
+
+
+def test_palette_group_display_set_palette(
+    temp_app, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    display = PaletteGroupDisplay(temp_app, palette_group)
+    display.palette_group = alternative_palette_group
+
+    assert display.palette_group != palette
+    assert display.palette_group == alternative_palette_group
+
+
+def test_palette_group_display_palette_changed(qtbot, palette_group: PaletteGroup, palette: Palette):
+    display = PaletteGroupDisplay(QMainWindow(), palette_group)
+
+    with qtbot.waitSignal(display.palette_changed, timeout=100, check_params_cb=lambda value: value == 1):
+        display.widgets[1].palette = palette
+
+
+def test_palette_group_widget_initialization(palette_group: PaletteGroup):
+    PaletteGroupWidget(None, palette_group)
+
+
+def test_palette_group_widget_equality(palette_group: PaletteGroup):
+    assert PaletteGroupWidget(None, palette_group) == PaletteGroupWidget(None, palette_group)
+
+
+def test_palette_group_widget_inequality_from_palette(
+    palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    assert PaletteGroupWidget(None, palette_group) != PaletteGroupWidget(None, alternative_palette_group)
+
+
+def test_palette_group_widget_equality_undo(palette_group: PaletteGroup, alternative_palette_group: PaletteGroup):
+    widget1 = PaletteGroupWidget(None, palette_group)
+    widget2 = PaletteGroupWidget(None, palette_group)
+    widget1.palette_group = alternative_palette_group
+    widget1.undo()
+    assert widget1 != widget2
+
+    widget2.palette_group = alternative_palette_group
+
+    assert widget1 != widget2
+
+    widget2.undo()
+
+    assert widget1 == widget2
+
+
+def test_palette_group_widget_equality_redo(palette_group: PaletteGroup, alternative_palette_group: PaletteGroup):
+    widget1 = PaletteGroupWidget(None, palette_group)
+    widget2 = PaletteGroupWidget(None, palette_group)
+    widget1.palette_group = alternative_palette_group
+    widget1.undo()
+    widget1.redo()
+    assert widget1 != widget2
+
+    widget2.palette_group = alternative_palette_group
+
+    assert widget1 == widget2
+
+    widget2.undo()
+    widget2.redo()
+
+    assert widget1 == widget2
+
+
+def test_palette_group_widget_inequality_from_other(palette_group: PaletteGroup):
+    assert PaletteGroupWidget(None, palette_group) != 1
+
+
+def test_palette_group_widget_palette_group(palette_group: PaletteGroup):
+    widget = PaletteGroupWidget(None, palette_group)
+
+    assert palette_group == widget.palette_group
+
+
+def test_palette_group_widget_set_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupWidget(None, palette_group)
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == alternative_palette_group
+    ):
+        widget.palette_group = alternative_palette_group
+
+    assert widget.palette_group == alternative_palette_group
+    assert widget._display.palette_group == alternative_palette_group
+
+
+def test_palette_group_widget_undo_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupWidget(None, palette_group)
+    widget.palette_group = alternative_palette_group
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == palette_group
+    ):
+        widget.undo()
+
+    assert widget.palette_group == palette_group
+    assert widget._display.palette_group == palette_group
+
+
+def test_palette_group_widget_redo_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupWidget(None, palette_group)
+    widget.palette_group = alternative_palette_group
+    widget.undo()
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == alternative_palette_group
+    ):
+        widget.redo()
+
+    assert widget.palette_group == alternative_palette_group
+    assert widget._display.palette_group == alternative_palette_group

@@ -614,6 +614,203 @@ class PaletteDisplay(QHBoxLayout):
                 widget.deleteLater()
 
 
+class PaletteGroupWidget(QWidget):
+    """
+    A widget to view a palette group.
+
+    Signals
+    -------
+    palette_group_changed: SignalInstance
+        A signal which is activated when the palette group changes.
+
+    Attributes
+    ----------
+    palette_group: PaletteGroup
+        The palette group being displayed by the widget.
+    undo_controller: UndoController[PaletteGroup]
+        The undo controller, which is responsible for undoing and redoing any action.
+    """
+
+    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
+
+    def __init__(
+        self,
+        parent: Optional[QWidget],
+        palette_group: PaletteGroup,
+        undo_controller: None | UndoController[PaletteGroup] = None,
+    ):
+        super().__init__(parent)
+
+        self._palette_group = palette_group
+        self.undo_controller = undo_controller or UndoController(palette_group)
+        self._display = PaletteGroupDisplay(self, palette_group)
+
+    def __eq__(self, other) -> bool:
+        return (
+            isinstance(other, type(self))
+            and self._palette_group == other.palette_group
+            and self.undo_controller == other.undo_controller
+        )
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent}, {self.palette})"
+
+    @property
+    def palette_group(self) -> PaletteGroup:
+        """
+        The current palette group being displayed by the widget.
+
+        Returns
+        -------
+        PaletteGroup
+            The palette group being displayed by the widget.
+        """
+        return self._palette_group
+
+    @palette_group.setter
+    def palette_group(self, palette_group: PaletteGroup):
+        self.do(palette_group)
+        self.palette_group_changed.emit(palette_group)
+
+    def do(self, palette_group: PaletteGroup) -> PaletteGroup:
+        """
+        Does an action through the controller, adding it to the undo stack and clearing the redo
+        stack, respectively.
+
+        Parameters
+        ----------
+        palette_group : PaletteGroup
+            The new palette group to be stored.
+
+        Returns
+        -------
+        PaletteGroup
+            The new state that has been stored.
+        """
+        self._update_palette(palette_group)
+        return self.undo_controller.do(palette_group)
+
+    @property
+    def can_undo(self) -> bool:
+        """
+        Determines if there is any palette groups inside the undo stack.
+
+        Returns
+        -------
+        bool
+            If there is an undo palette group available.
+        """
+        return self.undo_controller.can_undo
+
+    def undo(self) -> PaletteGroup:
+        """
+        Undoes the last palette group, bring the previous.
+
+        Returns
+        -------
+        PaletteGroup
+            The new palette group that has been stored.
+        """
+        self._update_palette(self.undo_controller.undo())
+        return self.palette_group
+
+    @property
+    def can_redo(self) -> bool:
+        """
+        Determines if there is any palette groups inside the redo stack.
+
+        Returns
+        -------
+        bool
+            If there is an redo palette group available.
+        """
+        return self.undo_controller.can_redo
+
+    def redo(self) -> PaletteGroup:
+        """
+        Redoes the previously undone palette group.
+
+        Returns
+        -------
+        PaletteGroup
+            The new palette group that has been stored.
+        """
+        self._update_palette(self.undo_controller.redo())
+        return self.palette_group
+
+    def _update_palette(self, palette_group: PaletteGroup):
+        """
+        Handles all updating of the palette group, sending any signals and updates to the display if needed.
+
+        Parameters
+        ----------
+        palette_group : PaletteGroup
+            The new palette group of the editor.
+        """
+        if self._palette_group != palette_group or self.undo_controller.state != palette_group:
+            self.palette_group_changed.emit(palette_group)
+            self._palette_group = palette_group
+            self._display.palette_group = palette_group
+
+
+class PaletteGroupDisplay(QHBoxLayout):
+    """
+    A display for a palette group.
+
+    Signals
+    -------
+    palette_changed
+        Provides an update to the index of a palette when it has changed.
+
+    Attributes
+    ----------
+    widgets: list[PaletteWidget]
+        The widgets which display the respective palettes of the palette group.
+    """
+
+    palette_changed: SignalInstance = Signal(int)  # type: ignore
+
+    widgets: list[PaletteWidget]
+
+    def __init__(self, parent: QWidget, palette_group: PaletteGroup):
+        super().__init__(parent)
+        self.setSpacing(0)
+        self.parent_ = parent
+        self.palette_group = palette_group
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent_}, {self.palette_group})"
+
+    @property
+    def palette_group(self) -> PaletteGroup:
+        """
+        The palette group that is being represented by the display.
+
+        Returns
+        -------
+        PaletteGroup
+            The palette group that is being represented by `widgets` of this display.
+        """
+        return PaletteGroup(tuple(palette_widget.palette for palette_widget in self.widgets))
+
+    @palette_group.setter
+    def palette_group(self, palette_group: PaletteGroup):
+        self._clear()
+        self.widgets = [PaletteWidget(self.parent_, palette) for palette in palette_group]
+        for index, widget in enumerate(self.widgets):
+            widget.palette_changed.connect(lambda *_, index=index: self.palette_changed.emit(index))
+            self.addWidget(widget)
+
+    def _clear(self):
+        """
+        Clears the display so new buttons can be placed inside of it.
+        """
+        while self.count():
+            child = self.takeAt(0)
+            if widget := child.widget():
+                widget.deleteLater()
+
+
 @attrs(slots=True, auto_attribs=True)
 class PaletteGroupModel:
     tileset: int
