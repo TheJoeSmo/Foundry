@@ -403,60 +403,215 @@ class ColorSelector(CustomDialog):
 
 class PaletteWidget(QWidget):
     """
-    A widget to view the palette.
+    A widget to view a palette.
+
+    Signals
+    -------
+    palette_changed: SignalInstance
+        A signal which is activated when the palette changes.
 
     Attributes
     ----------
-    palette_changed: Signal[palette]
-        Slot associated with the palette viewer changing its palette.
+    palette: Palette
+        The palette being displayed by the widget.
+    undo_controller: UndoController[Palette]
+        The undo controller, which is responsible for undoing and redoing any action.
     """
 
     palette_changed: SignalInstance = Signal(Palette)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], palette: Palette):
+    def __init__(
+        self, parent: Optional[QWidget], palette: Palette, undo_controller: None | UndoController[Palette] = None
+    ):
         super().__init__(parent)
+
         self._palette = palette
+        self.undo_controller = undo_controller or UndoController(palette)
+        self._display = PaletteDisplay(self, palette)
 
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(1, 2, 0, 2)
-
-        self._buttons = [ColorButtonWidget(self, palette.color_palette[color]) for color in palette]
-
-        for button in self._buttons:
-            layout.addWidget(button)
+    def __eq__(self, other) -> bool:
+        return (
+            isinstance(other, type(self))
+            and self._palette == other.palette
+            and self.undo_controller == other.undo_controller
+        )
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.parent}, {self.palette})"
 
     @property
     def palette(self) -> Palette:
+        """
+        The current palette being displayed by the widget.
+
+        Returns
+        -------
+        Palette
+            The palette being displayed by the widget.
+        """
         return self._palette
 
     @palette.setter
     def palette(self, palette: Palette):
-        self._palette = palette
+        self.do(palette)
         self.palette_changed.emit(palette)
-        self._update()
 
-    def _update(self):
-        for idx, color in enumerate(self.palette):
-            self._buttons[idx].color = self.palette.color_palette[color % len(self.palette.color_palette)]
+    def do(self, palette: Palette) -> Palette:
+        """
+        Does an action through the controller, adding it to the undo stack and clearing the redo
+        stack, respectively.
+
+        Parameters
+        ----------
+        palette : Palette
+            The new palette to be stored.
+
+        Returns
+        -------
+        Palette
+            The new state that has been stored.
+        """
+        self._update_palette(palette)
+        return self.undo_controller.do(palette)
+
+    @property
+    def can_undo(self) -> bool:
+        """
+        Determines if there is any palettes inside the undo stack.
+
+        Returns
+        -------
+        bool
+            If there is an undo palette available.
+        """
+        return self.undo_controller.can_undo
+
+    def undo(self) -> Palette:
+        """
+        Undoes the last palette, bring the previous.
+
+        Returns
+        -------
+        Palette
+            The new palette that has been stored.
+        """
+        self._update_palette(self.undo_controller.undo())
+        return self.palette
+
+    @property
+    def can_redo(self) -> bool:
+        """
+        Determines if there is any palettes inside the redo stack.
+
+        Returns
+        -------
+        bool
+            If there is an redo palette available.
+        """
+        return self.undo_controller.can_redo
+
+    def redo(self) -> Palette:
+        """
+        Redoes the previously undone palette.
+
+        Returns
+        -------
+        Palette
+            The new state that has been stored.
+        """
+        self._update_palette(self.undo_controller.redo())
+        return self.palette
+
+    def _update_palette(self, palette: Palette):
+        """
+        Handles all updating of the palette, sending any signals and updates to the display if needed.
+
+        Parameters
+        ----------
+        palette : Palette
+            The new palette of the editor.
+        """
+        if self._palette != palette or self.undo_controller.state != palette:
+            self.palette_changed.emit(palette)
+            self._palette = palette
+            self._display.palette = palette
 
 
 class PaletteEditorWidget(PaletteWidget):
-    def __init__(self, parent: Optional[QWidget], palette: Palette):
-        super().__init__(parent, palette)
+    def __init__(
+        self, parent: Optional[QWidget], palette: Palette, undo_controller: None | UndoController[Palette] = None
+    ):
+        super().__init__(parent, palette, undo_controller)
 
-        for idx, btn in enumerate(self._buttons):
-            btn.clicked.connect(lambda idx=idx: self._open_color_selector(idx))
+        self._display.button_clicked.connect(self._open_color_selector)
+
+    # Separated to help monkey-patch for testing
+    def _generate_color_selector(self) -> ColorSelector:
+        return ColorSelector(self)
 
     def _open_color_selector(self, button_index: int):
-        selector = ColorSelector(self)
+        selector = self._generate_color_selector()
 
         if QDialog.Accepted == selector.exec_():
             palette = list(self.palette)
             palette[button_index] = selector.last_selected_color_index
             self.palette = Palette(tuple(palette))
+
+
+class PaletteDisplay(QHBoxLayout):
+    """
+    The display of a palette, containing each of the respective colors.
+
+    Attributes
+    ----------
+    buttons: list[ColorButtonWidget]
+        A list containing each of the colors of the palette provided.
+    """
+
+    button_clicked: SignalInstance = Signal(int)  # type: ignore
+
+    buttons: list[ColorButtonWidget]
+
+    def __init__(self, parent: QWidget, palette: Palette):
+        super().__init__(parent)
+        self.setContentsMargins(1, 2, 0, 2)
+        self.parent_ = parent
+        self.palette = palette
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent_}, {self.palette})"
+
+    @property
+    def palette(self) -> Palette:
+        """
+        The palette that is being represented by the display.
+
+        Returns
+        -------
+        Palette
+            The palette that is being represented by `buttons` of this display.
+        """
+        return Palette(
+            tuple(self._color_palette.colors.index(button.color) for button in self.buttons), self._color_palette
+        )
+
+    @palette.setter
+    def palette(self, palette: Palette):
+        self._clear()
+        self._color_palette = palette.color_palette
+        self.buttons = [ColorButtonWidget(self.parent_, color) for color in palette.colors]
+        for index, button in enumerate(self.buttons):
+            button.clicked.connect(lambda index=index, *_: self.button_clicked.emit(index))
+            self.addWidget(button)
+
+    def _clear(self):
+        """
+        Clears the display so new buttons can be placed inside of it.
+        """
+        while self.count():
+            child = self.takeAt(0)
+            if widget := child.widget():
+                widget.deleteLater()
 
 
 @attrs(slots=True, auto_attribs=True)
