@@ -614,6 +614,84 @@ class PaletteDisplay(QHBoxLayout):
                 widget.deleteLater()
 
 
+class PaletteGroupDisplay(QHBoxLayout):
+    """
+    A display for a palette group.
+
+    Signals
+    -------
+    palette_changed
+        Provides an update to the index of a palette when it has changed.
+
+    Attributes
+    ----------
+    widgets: list[PaletteWidget]
+        The widgets which display the respective palettes of the palette group.
+    """
+
+    palette_changed: SignalInstance = Signal(int)  # type: ignore
+
+    _PALETTE_WIDGET: type[PaletteWidget] = PaletteWidget
+
+    widgets: list[_PALETTE_WIDGET]
+
+    def __init__(self, parent: QWidget, palette_group: PaletteGroup):
+        super().__init__(parent)
+        self.setSpacing(0)
+        self.parent_ = parent
+        self.palette_group = palette_group
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.parent_}, {self.palette_group})"
+
+    @property
+    def palette_group(self) -> PaletteGroup:
+        """
+        The palette group that is being represented by the display.
+
+        Returns
+        -------
+        PaletteGroup
+            The palette group that is being represented by `widgets` of this display.
+        """
+        return PaletteGroup(tuple(palette_widget.palette for palette_widget in self.widgets))
+
+    @palette_group.setter
+    def palette_group(self, palette_group: PaletteGroup):
+        self._clear()
+        self.widgets = [self._PALETTE_WIDGET(self.parent_, palette) for palette in palette_group]
+        for index, widget in enumerate(self.widgets):
+            widget.palette_changed.connect(lambda *_, index=index: self.palette_changed.emit(index))
+            self.addWidget(widget)
+
+    def _clear(self):
+        """
+        Clears the display so new buttons can be placed inside of it.
+        """
+        while self.count():
+            child = self.takeAt(0)
+            if widget := child.widget():
+                widget.deleteLater()
+
+
+class PaletteGroupEditorDisplay(PaletteGroupDisplay):
+    """
+    A display for a palette group editor.
+
+    Signals
+    -------
+    palette_changed
+        Provides an update to the index of a palette when it has changed.
+
+    Attributes
+    ----------
+    widgets: list[PaletteEditorWidget]
+        The widgets which display and enable editing of the respective palettes of the palette group.
+    """
+
+    _PALETTE_WIDGET: type[PaletteWidget] = PaletteEditorWidget
+
+
 class PaletteGroupWidget(QWidget):
     """
     A widget to view a palette group.
@@ -633,6 +711,8 @@ class PaletteGroupWidget(QWidget):
 
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
 
+    _DISPLAY = PaletteGroupDisplay
+
     def __init__(
         self,
         parent: Optional[QWidget],
@@ -643,7 +723,7 @@ class PaletteGroupWidget(QWidget):
 
         self._palette_group = palette_group
         self.undo_controller = undo_controller or UndoController(palette_group)
-        self._display = PaletteGroupDisplay(self, palette_group)
+        self._display = self._DISPLAY(self, palette_group)
 
     def __eq__(self, other) -> bool:
         return (
@@ -753,62 +833,24 @@ class PaletteGroupWidget(QWidget):
             self._display.palette_group = palette_group
 
 
-class PaletteGroupDisplay(QHBoxLayout):
+class PaletteGroupEditorWidget(PaletteGroupWidget):
     """
-    A display for a palette group.
+    A widget to view and edit a palette group.
 
     Signals
     -------
-    palette_changed
-        Provides an update to the index of a palette when it has changed.
+    palette_group_changed: SignalInstance
+        A signal which is activated when the palette group changes.
 
     Attributes
     ----------
-    widgets: list[PaletteWidget]
-        The widgets which display the respective palettes of the palette group.
+    palette_group: PaletteGroup
+        The palette group being displayed by the widget.
+    undo_controller: UndoController[PaletteGroup]
+        The undo controller, which is responsible for undoing and redoing any action.
     """
 
-    palette_changed: SignalInstance = Signal(int)  # type: ignore
-
-    widgets: list[PaletteWidget]
-
-    def __init__(self, parent: QWidget, palette_group: PaletteGroup):
-        super().__init__(parent)
-        self.setSpacing(0)
-        self.parent_ = parent
-        self.palette_group = palette_group
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.parent_}, {self.palette_group})"
-
-    @property
-    def palette_group(self) -> PaletteGroup:
-        """
-        The palette group that is being represented by the display.
-
-        Returns
-        -------
-        PaletteGroup
-            The palette group that is being represented by `widgets` of this display.
-        """
-        return PaletteGroup(tuple(palette_widget.palette for palette_widget in self.widgets))
-
-    @palette_group.setter
-    def palette_group(self, palette_group: PaletteGroup):
-        self._clear()
-        self.widgets = [PaletteWidget(self.parent_, palette) for palette in palette_group]
-        for index, widget in enumerate(self.widgets):
-            widget.palette_changed.connect(lambda *_, index=index: self.palette_changed.emit(index))
-            self.addWidget(widget)
-
-    def _clear(self):
-        """
-        Clears the display so new buttons can be placed inside of it.
-        """
-        while self.count():
-            child = self.takeAt(0)
-            if widget := child.widget():
-                widget.deleteLater()
+    _DISPLAY = PaletteGroupEditorDisplay
 
 
 @attrs(slots=True, auto_attribs=True)

@@ -11,6 +11,8 @@ from foundry.gui.palette import (
     PaletteDisplay,
     PaletteEditorWidget,
     PaletteGroupDisplay,
+    PaletteGroupEditorDisplay,
+    PaletteGroupEditorWidget,
     PaletteGroupWidget,
     PaletteWidget,
 )
@@ -654,6 +656,138 @@ def test_palette_group_widget_redo_palette_group(
     qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
 ):
     widget = PaletteGroupWidget(None, palette_group)
+    widget.palette_group = alternative_palette_group
+    widget.undo()
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == alternative_palette_group
+    ):
+        widget.redo()
+
+    assert widget.palette_group == alternative_palette_group
+    assert widget._display.palette_group == alternative_palette_group
+
+
+def test_palette_group_editor_display_initialization(temp_app, palette_group: PaletteGroup):
+    PaletteGroupEditorDisplay(temp_app, palette_group)
+
+
+def test_palette_group_editor_display_palette(temp_app, palette_group: PaletteGroup):
+    assert PaletteGroupEditorDisplay(temp_app, palette_group).palette_group == palette_group
+
+
+def test_palette_group_editor_display_set_palette(
+    temp_app, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    display = PaletteGroupEditorDisplay(temp_app, palette_group)
+    display.palette_group = alternative_palette_group
+
+    assert display.palette_group != palette
+    assert display.palette_group == alternative_palette_group
+
+
+def test_palette_group_editor_display_palette_changed(qtbot, palette_group: PaletteGroup, palette: Palette):
+    display = PaletteGroupEditorDisplay(QMainWindow(), palette_group)
+
+    with qtbot.waitSignal(display.palette_changed, timeout=100, check_params_cb=lambda value: value == 1):
+        display.widgets[1].palette = palette
+
+
+def test_palette_group_editor_widget_initialization(palette_group: PaletteGroup):
+    PaletteGroupEditorWidget(None, palette_group)
+
+
+def test_palette_group_editor_widget_equality(palette_group: PaletteGroup):
+    assert PaletteGroupEditorWidget(None, palette_group) == PaletteGroupEditorWidget(None, palette_group)
+
+
+def test_palette_group_editor_widget_inequality_from_palette(
+    palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    assert PaletteGroupEditorWidget(None, palette_group) != PaletteGroupEditorWidget(None, alternative_palette_group)
+
+
+def test_palette_group_editor_widget_equality_undo(
+    palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget1 = PaletteGroupEditorWidget(None, palette_group)
+    widget2 = PaletteGroupEditorWidget(None, palette_group)
+    widget1.palette_group = alternative_palette_group
+    widget1.undo()
+    assert widget1 != widget2
+
+    widget2.palette_group = alternative_palette_group
+
+    assert widget1 != widget2
+
+    widget2.undo()
+
+    assert widget1 == widget2
+
+
+def test_palette_group_editor_widget_equality_redo(
+    palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget1 = PaletteGroupEditorWidget(None, palette_group)
+    widget2 = PaletteGroupEditorWidget(None, palette_group)
+    widget1.palette_group = alternative_palette_group
+    widget1.undo()
+    widget1.redo()
+    assert widget1 != widget2
+
+    widget2.palette_group = alternative_palette_group
+
+    assert widget1 == widget2
+
+    widget2.undo()
+    widget2.redo()
+
+    assert widget1 == widget2
+
+
+def test_palette_group_editor_widget_inequality_from_other(palette_group: PaletteGroup):
+    assert PaletteGroupEditorWidget(None, palette_group) != 1
+
+
+def test_palette_group_editor_widget_palette_group(palette_group: PaletteGroup):
+    widget = PaletteGroupEditorWidget(None, palette_group)
+
+    assert palette_group == widget.palette_group
+
+
+def test_palette_group_editor_widget_set_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupEditorWidget(None, palette_group)
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == alternative_palette_group
+    ):
+        widget.palette_group = alternative_palette_group
+
+    assert widget.palette_group == alternative_palette_group
+    assert widget._display.palette_group == alternative_palette_group
+
+
+def test_palette_group_editor_widget_undo_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupEditorWidget(None, palette_group)
+    widget.palette_group = alternative_palette_group
+
+    with qtbot.waitSignal(
+        widget.palette_group_changed, timeout=100, check_params_cb=lambda value: value == palette_group
+    ):
+        widget.undo()
+
+    assert widget.palette_group == palette_group
+    assert widget._display.palette_group == palette_group
+
+
+def test_palette_group_editor_widget_redo_palette_group(
+    qtbot, palette_group: PaletteGroup, alternative_palette_group: PaletteGroup
+):
+    widget = PaletteGroupEditorWidget(None, palette_group)
     widget.palette_group = alternative_palette_group
     widget.undo()
 
