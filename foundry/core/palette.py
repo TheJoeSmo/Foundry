@@ -333,6 +333,26 @@ class Palette:
         return [c.qcolor for c in self.colors]
 
     @classmethod
+    def from_palette(cls, palette: Palette, pairs: dict[int, int]) -> Palette:
+        """
+        Generates a new palette from another palette with mutations specified by pairs.
+
+        Parameters
+        ----------
+        pairs : dict[int, int]
+            A dictionary containing the index into the palette with its respective new index into `color_palette`.
+
+        Returns
+        -------
+        Palette
+            The palette formed from the mutations to this instance.
+        """
+        palette_indexes = list(palette.color_indexes)
+        for palette_index, color_index in pairs.items():
+            palette_indexes[palette_index] = color_index
+        return cls(tuple(palette_indexes), palette.color_palette)
+
+    @classmethod
     def from_rom(cls, address: int) -> Palette:
         """
         Creates a palette from an absolute address in the file.
@@ -475,6 +495,41 @@ class PaletteGroup:
     @property
     def background_qcolor(self) -> QColor:
         return self.palettes[0].qcolors[0]
+
+    @classmethod
+    def from_palette_group(cls, palette_group: PaletteGroup, pairs: dict[int, dict[int, int]]) -> PaletteGroup:
+        """
+        Generates a new palette group from another palette group with mutations specified by pairs.
+
+        Parameters
+        ----------
+        pairs : dict[int, dict[int, int]]
+            A dictionary containing the index into the palette group containing another dict of indexes specified by
+            :func:~`foundry.core.palette.Palette.from_palette`.
+
+        Returns
+        -------
+        PaletteGroup
+            The palette group formed from the mutations to this instance.
+
+        Notes
+        -----
+        Because there exists multiple indexes into the background color, it is possible to provide multiple background
+        colors to be mutated.  If a different color is specified for the respective background color indexes, then
+        the new background color of the new palette group is undefined, but will be in the set of background colors
+        provided to the indexes and no exception will be raised.
+        """
+        palettes = list(palette_group.palettes)
+        for palette_group_index, palette_dict in pairs.items():
+            for palette_index, color_palette_index in palette_dict.items():
+                if palette_index == 0:  # Handle background color being the same for all palettes.
+                    for index, palette in enumerate(palettes):
+                        palettes[index] = Palette.from_palette(palette, {0: color_palette_index})
+                else:
+                    palettes[palette_group_index] = Palette.from_palette(
+                        palettes[palette_group_index], {palette_index: color_palette_index}
+                    )
+        return cls(tuple(palettes))
 
     @classmethod
     def from_rom(cls, address: int) -> PaletteGroup:

@@ -98,6 +98,20 @@ def test_palette_iter(simple_color_palette):
     assert 1 == next(i)
 
 
+def test_palette_from_palette_simple(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+    palette = Palette.from_palette(palette, {0: 1})
+
+    assert Palette((1, 2, 1), simple_color_palette) == palette
+
+
+def test_palette_from_palette_normal(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+    palette = Palette.from_palette(palette, {0: 1, 2: 0})
+
+    assert Palette((1, 2, 0), simple_color_palette) == palette
+
+
 def test_palette_group_initialization():
     PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
 
@@ -119,10 +133,46 @@ def test_palette_group_iter():
 
 
 def test_palette_group_background_color():
-    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
     assert palette_group[0].colors[0] == palette_group.background_color
 
 
 def test_palette_group_background_qcolor():
-    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
     assert palette_group[0].qcolors[0] == palette_group.background_qcolor
+
+
+def test_palette_group_from_palette_group_simple():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+    palette_group = PaletteGroup.from_palette_group(palette_group, {0: {1: 2}})
+
+    assert (
+        PaletteGroup((Palette((0, 2, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8)))) == palette_group
+    )
+
+
+def test_palette_group_from_palette_group_complex():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+    palette_group = PaletteGroup.from_palette_group(palette_group, {0: {1: 2, 2: 1}, 2: {1: 2}})
+
+    assert (
+        PaletteGroup((Palette((0, 2, 1)), Palette((0, 3, 4)), Palette((0, 2, 6)), Palette((0, 7, 8)))) == palette_group
+    )
+
+
+def test_palette_group_from_palette_group_background_color_simple():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+    palette_group = PaletteGroup.from_palette_group(palette_group, {0: {0: 9}})
+
+    assert (
+        PaletteGroup((Palette((9, 1, 2)), Palette((9, 3, 4)), Palette((9, 5, 6)), Palette((9, 7, 8)))) == palette_group
+    )
+
+
+def test_palette_group_from_palette_group_background_color_complex():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+    palette_group = PaletteGroup.from_palette_group(palette_group, {0: {0: 9, 2: 1}, 2: {1: 2}})
+
+    assert (
+        PaletteGroup((Palette((9, 1, 1)), Palette((9, 3, 4)), Palette((9, 2, 6)), Palette((9, 7, 8)))) == palette_group
+    )
