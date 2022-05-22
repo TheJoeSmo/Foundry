@@ -332,6 +332,23 @@ class Palette:
         """
         return [c.qcolor for c in self.colors]
 
+    def find_palette_mutations(self, palette: Palette) -> dict[int, int]:
+        """
+        Provides a dictionary such that calling :func:~`foundry.core.palette.Palette.from_palette` with the
+        parameters of this instance and the returned result would result in `palette`.
+
+        Parameters
+        ----------
+        palette : Palette
+            The palette to derive mutations from this instance.
+
+        Returns
+        -------
+        dict[int, int]
+            The series of mutations which must be applied from this instance to be equal to `palette`.
+        """
+        return {index: c2 for index, (c1, c2) in enumerate(zip(self, palette)) if c1 != c2}
+
     @classmethod
     def from_palette(cls, palette: Palette, pairs: dict[int, int]) -> Palette:
         """

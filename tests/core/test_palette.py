@@ -98,6 +98,31 @@ def test_palette_iter(simple_color_palette):
     assert 1 == next(i)
 
 
+def test_palette_find_palette_mutations_equal(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+
+    assert {} == palette.find_palette_mutations(palette)
+
+
+def test_palette_find_palette_mutations_simple(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+
+    assert {0: 1} == palette.find_palette_mutations(Palette((1, 2, 1), simple_color_palette))
+
+
+def test_palette_find_palette_mutations_complex(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+
+    assert {0: 1, 1: 0, 2: 2} == palette.find_palette_mutations(Palette((1, 0, 2), simple_color_palette))
+
+
+def test_palette_from_palette_empty(simple_color_palette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+    palette = Palette.from_palette(palette, {})
+
+    assert Palette((0, 2, 1), simple_color_palette) == palette
+
+
 def test_palette_from_palette_simple(simple_color_palette):
     palette = Palette((0, 2, 1), simple_color_palette)
     palette = Palette.from_palette(palette, {0: 1})
