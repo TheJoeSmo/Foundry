@@ -1,5 +1,5 @@
 from PySide6.QtGui import QColor
-from pytest import fixture
+from pytest import fixture, raises
 
 from foundry.core.palette import Color, ColorPalette, Palette, PaletteGroup
 
@@ -59,12 +59,27 @@ def test_color_palette_iter():
     assert Color(6, 7, 8, 9) == next(i)
 
 
+def test_color_palette_index():
+    color_palette = ColorPalette((Color(0, 1, 2), Color(3, 4, 5), Color(6, 7, 8, 9)))
+
+    assert 0 == color_palette.index(Color(0, 1, 2))
+    assert 1 == color_palette.index(Color(3, 4, 5))
+    assert 2 == color_palette.index(Color(6, 7, 8, 9))
+
+
+def test_color_palette_index_invalid():
+    color_palette = ColorPalette((Color(0, 1, 2), Color(3, 4, 5), Color(6, 7, 8, 9)))
+
+    with raises(ValueError):
+        color_palette.index(Color(1, 2, 3))
+
+
 def test_color_palette_default_color():
     color_palette = ColorPalette((Color(0, 1, 2), Color(3, 4, 5), Color(6, 7, 8, 9)))
     assert color_palette.default_color in color_palette
 
 
-def test_palette_initialization(simple_color_palette):
+def test_palette_initialization(simple_color_palette: ColorPalette):
     Palette((0, 1, 2), simple_color_palette)
 
 
@@ -72,65 +87,79 @@ def test_palette_initialization_from_default():
     Palette((0, 1, 2, 3))
 
 
-def test_palette_colors(simple_color_palette):
+def test_palette_colors(simple_color_palette: ColorPalette):
     assert [simple_color_palette[0], simple_color_palette[1], simple_color_palette[2]] == Palette(
         (0, 1, 2), simple_color_palette
     ).colors
 
 
-def test_palette_qcolors(simple_color_palette):
+def test_palette_qcolors(simple_color_palette: ColorPalette):
     assert [simple_color_palette[0].qcolor, simple_color_palette[1].qcolor, simple_color_palette[2].qcolor] == Palette(
         (0, 1, 2), simple_color_palette
     ).qcolors
 
 
-def test_palette_get_item(simple_color_palette):
+def test_palette_get_item(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
     assert 0 == palette[0]
     assert 2 == palette[1]
     assert 1 == palette[2]
 
 
-def test_palette_iter(simple_color_palette):
+def test_palette_iter(simple_color_palette: ColorPalette):
     i = iter(Palette((0, 2, 1), simple_color_palette))
     assert 0 == next(i)
     assert 2 == next(i)
     assert 1 == next(i)
 
 
-def test_palette_find_palette_mutations_equal(simple_color_palette):
+def test_palette_color_index(simple_color_palette: ColorPalette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+
+    for index, color in enumerate(simple_color_palette):
+        assert index == palette.color_index(color)
+
+
+def test_palette_color_index_invalid(simple_color_palette: ColorPalette):
+    palette = Palette((0, 2, 1), simple_color_palette)
+
+    with raises(ValueError):
+        palette.color_index(Color(1, 2, 3))
+
+
+def test_palette_find_palette_mutations_equal(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
 
     assert {} == palette.find_palette_mutations(palette)
 
 
-def test_palette_find_palette_mutations_simple(simple_color_palette):
+def test_palette_find_palette_mutations_simple(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
 
     assert {0: 1} == palette.find_palette_mutations(Palette((1, 2, 1), simple_color_palette))
 
 
-def test_palette_find_palette_mutations_complex(simple_color_palette):
+def test_palette_find_palette_mutations_complex(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
 
     assert {0: 1, 1: 0, 2: 2} == palette.find_palette_mutations(Palette((1, 0, 2), simple_color_palette))
 
 
-def test_palette_from_palette_empty(simple_color_palette):
+def test_palette_from_palette_empty(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
     palette = Palette.from_palette(palette, {})
 
     assert Palette((0, 2, 1), simple_color_palette) == palette
 
 
-def test_palette_from_palette_simple(simple_color_palette):
+def test_palette_from_palette_simple(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
     palette = Palette.from_palette(palette, {0: 1})
 
     assert Palette((1, 2, 1), simple_color_palette) == palette
 
 
-def test_palette_from_palette_normal(simple_color_palette):
+def test_palette_from_palette_normal(simple_color_palette: ColorPalette):
     palette = Palette((0, 2, 1), simple_color_palette)
     palette = Palette.from_palette(palette, {0: 1, 2: 0})
 
@@ -165,6 +194,34 @@ def test_palette_group_background_color():
 def test_palette_group_background_qcolor():
     palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
     assert palette_group[0].qcolors[0] == palette_group.background_qcolor
+
+
+def test_palette_group_color_index(simple_color_palette: ColorPalette):
+    palette_group = PaletteGroup(
+        (
+            Palette((0, 1, 2), simple_color_palette),
+            Palette((0, 3, 4), simple_color_palette),
+            Palette((0, 5, 6), simple_color_palette),
+            Palette((0, 7, 8), simple_color_palette),
+        )
+    )
+
+    for index, color in enumerate(simple_color_palette):
+        assert index == palette_group.color_index(color)
+
+
+def test_palette_group_color_index_invalid(simple_color_palette: ColorPalette):
+    palette_group = PaletteGroup(
+        (
+            Palette((0, 1, 2), simple_color_palette),
+            Palette((0, 3, 4), simple_color_palette),
+            Palette((0, 5, 6), simple_color_palette),
+            Palette((0, 7, 8), simple_color_palette),
+        )
+    )
+
+    with raises(ValueError):
+        palette_group.color_index(Color(1, 2, 3))
 
 
 def test_palette_group_from_palette_group_simple():

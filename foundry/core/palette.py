@@ -108,6 +108,30 @@ class ColorPalette:
     def __len__(self) -> int:
         return len(self.colors)
 
+    def index(self, color: Color) -> int:
+        """
+        Provides the index of a :class:~`foundry.core.palette.Color` inside this instance.
+
+        Parameters
+        ----------
+        color : Color
+            The color to find the index of.
+
+        Returns
+        -------
+        int
+            The index of the color inside this instance.
+
+        Raises
+        ------
+        ValueError
+            If `color` does not exist inside this instance.
+        """
+        try:
+            return self.colors.index(color)
+        except ValueError as e:
+            raise ValueError(f"{color} does not exist inside {self}") from e
+
     @property
     def default_color(self) -> Color:
         """
@@ -308,6 +332,23 @@ class Palette:
     def __hash__(self) -> int:
         return hash(self.color_indexes)
 
+    def color_index(self, color: Color) -> int:
+        """
+        A convenience method to provide the index of a color inside `color_palette` that can be
+        referenced by this instance.
+
+        Parameters
+        ----------
+        color : Color
+            The color to find the index into `color_palette`.
+
+        Returns
+        -------
+        int
+            The index of `color` inside `color_palette`.
+        """
+        return self.color_palette.index(color)
+
     @property
     def colors(self) -> list[Color]:
         """
@@ -504,6 +545,32 @@ class PaletteGroup:
 
     def __iter__(self) -> Iterator[Palette]:
         return iter(self.palettes)
+
+    def color_index(self, color: Color) -> int:
+        """
+        A convenience method to provide the index of a color inside
+        :attr:~`foundry.core.palette.Palette.color_palette` that can be
+        referenced by this instance.
+
+        Parameters
+        ----------
+        color : Color
+            The color to find the index into the color palette.
+
+        Returns
+        -------
+        int
+            The index of `color` inside color palette.
+
+        Notes
+        -----
+        It is assumed that every palette inside this instance contains an equal color palette, such that
+        the index of any color should be the same for any of the palettes provided.  If the palette's
+        color palettes are not equal, this method does not ensure that the index of the color provided
+        that it exists inside a palette, nor is the behavior to provide an index is defined.  Instead,
+        the specific palette should be referenced to determine its specific color index.
+        """
+        return self.palettes[0].color_index(color)
 
     @property
     def background_color(self) -> Color:
