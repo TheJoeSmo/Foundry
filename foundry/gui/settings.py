@@ -1,9 +1,10 @@
 from enum import Enum
 from json import loads
 from os.path import exists
+from pathlib import Path
 
 from attr import attrs, field
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from qt_material import build_stylesheet
 
 from foundry import default_settings_path, default_styles_path, file_settings_path
@@ -301,7 +302,7 @@ def save_file_settings(file_id: str, file_settings: FileSettings):
         settings_file.write(to_pydantic_file_settings(file_settings).json(indent=4))
 
 
-def load_settings() -> UserSettings:
+def load_settings(file_path: Path = default_settings_path) -> UserSettings:
     """
     Provides the user settings.
 
@@ -311,9 +312,9 @@ def load_settings() -> UserSettings:
         The current user settings.
     """
     try:
-        with open(str(default_settings_path), "r") as settings_file:
+        with open(str(file_path), "r") as settings_file:
             return PydanticUserSettings(**loads(settings_file.read())).to_user_settings()
-    except (TypeError, FileNotFoundError):
+    except (TypeError, FileNotFoundError, ValidationError):
         return PydanticUserSettings().to_user_settings()
 
 
