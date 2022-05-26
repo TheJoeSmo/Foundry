@@ -167,23 +167,28 @@ def test_palette_from_palette_normal(simple_color_palette: ColorPalette):
 
 
 def test_palette_group_initialization():
-    PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
+    PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+
+
+def test_Palette_group_background_color_validation():
+    with raises(ValueError):
+        PaletteGroup((Palette((0, 1, 2)), Palette((2, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
 
 
 def test_palette_group_get_item():
-    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11))))
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
     assert Palette((0, 1, 2)) == palette_group[0]
-    assert Palette((3, 4, 5)) == palette_group[1]
-    assert Palette((6, 7, 8)) == palette_group[2]
-    assert Palette((9, 10, 11)) == palette_group[3]
+    assert Palette((0, 3, 4)) == palette_group[1]
+    assert Palette((0, 5, 6)) == palette_group[2]
+    assert Palette((0, 7, 8)) == palette_group[3]
 
 
 def test_palette_group_iter():
-    i = iter(PaletteGroup((Palette((0, 1, 2)), Palette((3, 4, 5)), Palette((6, 7, 8)), Palette((9, 10, 11)))))
+    i = iter(PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8)))))
     assert Palette((0, 1, 2)) == next(i)
-    assert Palette((3, 4, 5)) == next(i)
-    assert Palette((6, 7, 8)) == next(i)
-    assert Palette((9, 10, 11)) == next(i)
+    assert Palette((0, 3, 4)) == next(i)
+    assert Palette((0, 5, 6)) == next(i)
+    assert Palette((0, 7, 8)) == next(i)
 
 
 def test_palette_group_background_color():

@@ -526,13 +526,27 @@ class Palette:
         return cls.validate_by_type(type_, values)
 
 
+def _check_background_color(instance, attribute, value: tuple[Palette, ...]):
+    """
+    Validates that the background color for each palette is consistent.
+    """
+    if not value:
+        return value
+    background_color = value[0].color_indexes[0]
+    for palette in value:
+        if background_color != palette.color_indexes[0]:
+            raise ValueError("The background color must be consistent between entries")
+
+
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
 class PaletteGroup:
     """
     A concrete implementation of a hashable and immutable group of palettes.
     """
 
-    palettes: tuple[Palette, ...] = (Palette(), Palette(), Palette(), Palette())
+    palettes: tuple[Palette, ...] = field(
+        default=(Palette(), Palette(), Palette(), Palette()), validator=[_check_background_color]
+    )
 
     def __bytes__(self) -> bytes:
         b = bytearray()
