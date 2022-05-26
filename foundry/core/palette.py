@@ -580,6 +580,27 @@ class PaletteGroup:
     def background_qcolor(self) -> QColor:
         return self.palettes[0].qcolors[0]
 
+    def find_palette_group_mutations(self, palette_group: PaletteGroup) -> dict[int, dict[int, int]]:
+        """
+        Provides a dictionary such that calling :func:~`foundry.core.palette.PaletteGroup.from_palette_group`
+        with the parameters of this instance and the returned result would result in `palette_group`.
+
+        Parameters
+        ----------
+        palette_group : PaletteGroup
+            The palette group to derive mutations from this instance.
+
+        Returns
+        -------
+        dict[int, dict[int, int]]
+            The series of mutations which must be applied from this instance to be equal to `palette_group`.
+        """
+        mutations = {}
+        for index, (p1, p2) in enumerate(zip(self, palette_group)):
+            if m := p1.find_palette_mutations(p2):
+                mutations |= {index: m}
+        return mutations
+
     @classmethod
     def from_palette_group(cls, palette_group: PaletteGroup, pairs: dict[int, dict[int, int]]) -> PaletteGroup:
         """

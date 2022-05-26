@@ -224,6 +224,28 @@ def test_palette_group_color_index_invalid(simple_color_palette: ColorPalette):
         palette_group.color_index(Color(1, 2, 3))
 
 
+def test_palette_group_find_palette_mutations_equal():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+
+    assert {} == palette_group.find_palette_group_mutations(palette_group)
+
+
+def test_palette_group_find_palette_mutations_simple():
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+
+    assert {0: {1: 2}} == palette_group.find_palette_group_mutations(
+        PaletteGroup((Palette((0, 2, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+    )
+
+
+def test_palette_group_find_palette_mutations_complex(simple_color_palette: ColorPalette):
+    palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
+
+    assert {0: {0: 1}, 1: {0: 1, 1: 2}, 2: {0: 1}, 3: {0: 1}} == palette_group.find_palette_group_mutations(
+        PaletteGroup((Palette((1, 1, 2)), Palette((1, 2, 4)), Palette((1, 5, 6)), Palette((1, 7, 8))))
+    )
+
+
 def test_palette_group_from_palette_group_simple():
     palette_group = PaletteGroup((Palette((0, 1, 2)), Palette((0, 3, 4)), Palette((0, 5, 6)), Palette((0, 7, 8))))
     palette_group = PaletteGroup.from_palette_group(palette_group, {0: {1: 2}})
