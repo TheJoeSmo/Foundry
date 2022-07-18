@@ -4,6 +4,7 @@ from typing import Protocol
 from attr import attrs
 from pydantic import BaseModel
 
+from foundry.core.graphics_page.GraphicsGroup import GraphicsGroupProtocol
 from foundry.core.graphics_page.GraphicsPage import (
     GraphicsPageProtocol,
     PydanticGraphicsPage,
@@ -43,6 +44,10 @@ class GraphicsSet:
 
     def __bytes__(self) -> bytes:
         return bytes(chain.from_iterable([bytes(page) for page in self.pages]))
+
+    @classmethod
+    def from_groups(cls, groups: tuple[GraphicsGroupProtocol, ...], group_page_indexes: tuple[int, ...]):
+        return cls(tuple(groups[index].pages[page] for index, page in enumerate(group_page_indexes)))
 
     @classmethod
     def from_tileset(cls, index: int):
