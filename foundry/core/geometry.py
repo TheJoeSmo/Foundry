@@ -287,10 +287,10 @@ class Rect(ConcreteValidator, KeywordValidator):
         """
         Generates a QRect from a Rect.
 
-        Parameters
-        ----------
-        rect : Rect
-            The rect to be converted to a Rect.
+    Parameters
+    ----------
+    rect : Rect
+        The rect to be converted to a Rect.
 
         Returns
         -------

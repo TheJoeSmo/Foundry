@@ -4,6 +4,7 @@ from typing import TypeVar
 
 from attr import attrs
 
+from foundry.core.graphics_page.GraphicsGroup import GraphicsGroup
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.util import get_graphics_pages_from_tileset
 from foundry.core.namespace import (
@@ -31,6 +32,7 @@ class GraphicsSet(ConcreteValidator, KeywordValidator):
     """
 
     pages: tuple[GraphicsPage, ...]
+
     __names__ = (
         "__GRAPHICS_SET_VALIDATOR__",
         "graphics set",
@@ -48,6 +50,10 @@ class GraphicsSet(ConcreteValidator, KeywordValidator):
 
     def __bytes__(self) -> bytes:
         return bytes(chain.from_iterable([bytes(page) for page in self.pages]))
+
+    @classmethod
+    def from_groups(cls, groups: Sequence[GraphicsGroup], group_indexes: Sequence[int]):
+        return cls(tuple(map(lambda v: v[0].pages[v[1]], zip(groups, group_indexes))))
 
     @classmethod
     def from_tileset(cls, index: int):
