@@ -35,6 +35,7 @@ pyinstaller = "^4.5.1"
 
 [tool.poetry.scripts]
 foundry = "foundry.main:start"
+graphic_editor = "foundry.graphic_editor.main:start"
 
 [tool.isort]
 profile = "black"
