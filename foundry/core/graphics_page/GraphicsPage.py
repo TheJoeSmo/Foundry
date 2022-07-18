@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Protocol
 
-from attr import attrs
+from attr import attrs, field
 from pydantic import BaseModel, FilePath
 
 from foundry.core.graphics_page import CHR_ROM_SEGMENT_SIZE
@@ -19,6 +19,10 @@ class GraphicsPageProtocol(Protocol):
     """
 
     index: int
+
+    @property
+    def offset(self) -> int:
+        ...
 
     def __bytes__(self) -> bytes:
         ...
@@ -39,7 +43,7 @@ class GraphicsPage:
     """
 
     index: int
-    path: Optional[Path] = None
+    path: Path | None = None
 
     @property
     def offset(self) -> int:
@@ -50,6 +54,38 @@ class GraphicsPage:
             return bytes(ROM().bulk_read(CHR_ROM_SEGMENT_SIZE, self.offset, is_graphics=True))
         with open(self.path, "rb") as f:
             return f.read()[CHR_ROM_SEGMENT_SIZE * self.offset : CHR_ROM_SEGMENT_SIZE * (self.offset + 1)]
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class EditableGraphicsPage:
+    """
+    A representation of a single page of graphics inside the ROM which focuses on making
+    editing of graphic page data easier.
+
+    Attributes
+    ----------
+    index: int
+        The index of the graphical page into the ROM.
+    data: bytes
+        The internal data of the graphic page.
+    path: Optional[Path]
+        The path to the file containing the bytes of the graphics page or ROM if None.
+    """
+
+    index: int
+    data: bytes
+    path: Path | None = None
+
+    @property
+    def offset(self) -> int:
+        return GraphicsPage(self.index, self.path).offset
+
+    @classmethod
+    def from_index(cls, index: int, path: Path | None):
+        return cls(index, bytes(GraphicsPage(index, path)), path)
+
+    def __bytes__(self) -> bytes:
+        return self.data
 
 
 class PydanticGraphicsPage(BaseModel):
