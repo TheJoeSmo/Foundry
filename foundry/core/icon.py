@@ -1,12 +1,39 @@
 from __future__ import annotations
 
+from enum import Enum
+
 from PySide6.QtGui import QIcon
 
 from foundry.core.file.FileGenerator import FileGenerator
-from foundry.core.icon import IconType
 from foundry.core.namespace.Namespace import Namespace
 from foundry.core.namespace.NamespaceElement import NamespaceElement
 from foundry.core.namespace.PydanticPath import PydanticPath
+
+
+class IconType(str, Enum):
+    """
+    The type of icon to be applied.
+    """
+
+    FROM_FILE = "FROM FILE"
+    FROM_NAMESPACE = "FROM NAMESPACE"
+
+    @classmethod
+    def has_value(cls, value: str) -> bool:
+        """
+        A convenience method to quickly determine if a value is a valid enumeration.
+
+        Parameters
+        ----------
+        value : str
+            The value to check against the enumeration.
+
+        Returns
+        -------
+        bool
+            If the value is inside the enumeration.
+        """
+        return value in cls._value2member_map_
 
 
 class Icon(QIcon):
