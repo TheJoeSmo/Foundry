@@ -95,7 +95,7 @@ class Icon(QIcon):
         Parameters
         ----------
         v : dict
-            The dictionary to create the file path.
+            The dictionary to create the icon.
 
         Returns
         -------
