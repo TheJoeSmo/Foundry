@@ -13,13 +13,13 @@ class GraphicsGroup:
 
     Attributes
     ----------
-    pages: tuple[GraphicsPage]
+    pages: tuple[GraphicsPage, ...]
         The pages to be animated.
     animation_speed: int
         The animation speed in milliseconds.
     """
 
-    pages: tuple[GraphicsPageProtocol]
+    pages: tuple[GraphicsPageProtocol, ...]
     animation_speed: int
 
     @property
@@ -34,13 +34,13 @@ class EditableGraphicsGroup:
 
     Attributes
     ----------
-    pages: tuple[EditableGraphicsPage]
+    pages: tuple[EditableGraphicsPage, ...]
         The pages to be animated.
     animation_speed: int
         The animation speed in milliseconds.
     """
 
-    pages: tuple[EditableGraphicsPage]
+    pages: tuple[EditableGraphicsPage, ...]
     animation_speed: int
 
     @property
