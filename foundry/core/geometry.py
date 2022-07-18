@@ -5,7 +5,7 @@ from math import sqrt
 from attr import attrs
 from pydantic.errors import MissingError, NumberNotGeError
 from pydantic.validators import int_validator
-from PySide6.QtCore import QPoint, QRect
+from PySide6.QtCore import QPoint, QRect, QSize
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
@@ -225,6 +225,23 @@ class Rect:
         if "size" not in values:
             MissingError()
         return Rect(Point.validate(values["point"]), Size.validate(values["size"]))
+
+
+def to_qsize(size: Size) -> QSize:
+    """
+    Generates a QSize from a Size
+
+    Parameters
+    ----------
+    size : Size
+        The size to be converted to a QSize.
+
+    Returns
+    -------
+    QSize
+        The QSize derived from `size`.
+    """
+    return QSize(size.width, size.height)
 
 
 def to_qrect(rect: Rect) -> QRect:
