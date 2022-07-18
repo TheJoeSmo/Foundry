@@ -12,6 +12,47 @@
               "path": "$data/gfx.png"
             }
           }
+        },
+        "icons": {
+          "type": "FILE",
+          "elements": {
+            "settings_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/settings.png"
+            },
+            "folder_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/folder.png"
+            },
+            "save_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/save.png"
+            },
+            "undo_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/rotate-ccw.png"
+            },
+            "redo_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/rotate-cw.png"
+            },
+            "play_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/play-circle.png"
+            },
+            "zoom_in_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/zoom-in.png"
+            },
+            "zoom_out_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/zoom-out.png"
+            },
+            "help_icon": {
+              "type": "FROM FILE",
+              "path": "$data/icons/help-circle.png"
+            }
+          }
         }
       }
     },
