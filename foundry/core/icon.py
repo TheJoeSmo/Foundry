@@ -5,9 +5,7 @@ from enum import Enum
 from PySide6.QtGui import QIcon
 
 from foundry.core.file.FileGenerator import FileGenerator
-from foundry.core.namespace.Namespace import Namespace
-from foundry.core.namespace.NamespaceElement import NamespaceElement
-from foundry.core.namespace.PydanticPath import PydanticPath
+from foundry.core.namespace import Namespace, Path, validate_element
 
 
 class IconType(str, Enum):
@@ -83,9 +81,7 @@ class Icon(QIcon):
         Self
             The icon inside the Namespace.
         """
-        return NamespaceElement(
-            parent=parent.from_path(PydanticPath(parent=parent, path=path).to_path()), name=name, type_=cls
-        ).element
+        return validate_element(parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=cls)
 
     @classmethod
     def generate_icon(cls, v: dict):
@@ -136,7 +132,7 @@ class Icon(QIcon):
         TypeError
             If the dictionary does not contain the key `"type"`.
         TypeError
-            If the type provided is not inside :class:`~foundry.core.icon.IconType`.
+            If the type provided is not inside :class:~`foundry.core.icon.IconType`_.
         """
         if not isinstance(v, dict):
             raise TypeError("Dictionary required")
