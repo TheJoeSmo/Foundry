@@ -3,9 +3,7 @@ from pydantic import BaseModel
 from foundry import root_dir
 from foundry.core.file import FileType
 from foundry.core.file.FilePath import FilePath
-from foundry.core.namespace.Namespace import Namespace
-from foundry.core.namespace.NamespaceElement import NamespaceElement
-from foundry.core.namespace.PydanticPath import PydanticPath
+from foundry.core.namespace import Namespace, Path, validate_element
 
 
 class FileFromNamespace(BaseModel):
@@ -32,9 +30,9 @@ class FileFromNamespace(BaseModel):
             raise ValueError("Name is not defined")
         name: str = v["name"]
 
-        return NamespaceElement(
-            parent=parent.from_path(PydanticPath(parent=parent, path=path).to_path()), name=name, type_=FilePath
-        ).element
+        return validate_element(
+            parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=FilePath
+        )
 
 
 def validate_from_file(v: dict) -> FilePath:
@@ -44,7 +42,7 @@ def validate_from_file(v: dict) -> FilePath:
     if not isinstance(path, str):
         raise ValueError(f"{path} is not a string")
     if path.startswith("$"):
-        path = f"{root_dir!s}\\{path[1:]}"
+        path = root_dir / path[1:]
     return FilePath(path)
 
 

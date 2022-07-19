@@ -1,14 +1,14 @@
 from pytest import raises
 
-from foundry.core.namespace.Namespace import (
+from foundry.core.namespace import (
     ChildDoesNotExistException,
     CircularImportException,
     Namespace,
+    Path,
     _evolve_child,
     generate_namespace,
     get_namespace_dict_from_path,
 )
-from foundry.core.namespace.Path import Path
 
 
 def test_namespace_initialization_empty():
