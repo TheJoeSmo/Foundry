@@ -1,13 +1,13 @@
-foundry.core.point package
+foundry.core.tiles package
 ==========================
 
 Submodules
 ----------
 
-foundry.core.point.Point module
--------------------------------
+foundry.core.tiles.util module
+------------------------------
 
-.. automodule:: foundry.core.point.Point
+.. automodule:: foundry.core.tiles.util
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ foundry.core.point.Point module
 Module contents
 ---------------
 
-.. automodule:: foundry.core.point
+.. automodule:: foundry.core.tiles
    :members:
    :undoc-members:
    :show-inheritance:

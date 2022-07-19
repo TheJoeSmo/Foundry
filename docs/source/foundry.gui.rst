@@ -140,10 +140,34 @@ foundry.gui.JumpList module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.LevelDataEditor module
+----------------------------------
+
+.. automodule:: foundry.gui.LevelDataEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.LevelDrawer module
 ------------------------------
 
 .. automodule:: foundry.gui.LevelDrawer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.LevelGraphicsEditor module
+--------------------------------------
+
+.. automodule:: foundry.gui.LevelGraphicsEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.LevelInformationEditor module
+-----------------------------------------
+
+.. automodule:: foundry.gui.LevelInformationEditor
    :members:
    :undoc-members:
    :show-inheritance:
@@ -164,10 +188,26 @@ foundry.gui.LevelSizeBar module
    :undoc-members:
    :show-inheritance:
 
+foundry.gui.LevelStartEditor module
+-----------------------------------
+
+.. automodule:: foundry.gui.LevelStartEditor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 foundry.gui.LevelView module
 ----------------------------
 
 .. automodule:: foundry.gui.LevelView
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.LevelWarpEditor module
+----------------------------------
+
+.. automodule:: foundry.gui.LevelWarpEditor
    :members:
    :undoc-members:
    :show-inheritance:
@@ -384,6 +424,22 @@ foundry.gui.WorldMapView module
 -------------------------------
 
 .. automodule:: foundry.gui.WorldMapView
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.orb module
+----------------------
+
+.. automodule:: foundry.gui.orb
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+foundry.gui.player\_lives module
+--------------------------------
+
+.. automodule:: foundry.gui.player_lives
    :members:
    :undoc-members:
    :show-inheritance:
