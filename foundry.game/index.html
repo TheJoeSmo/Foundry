@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>foundry.game package &#8212; Foundry 0.4.14 documentation</title>
+    <title>foundry.game package &#8212; Foundry 0.5.1 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -161,6 +161,21 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.blocks/">
+       foundry.core.blocks package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.drawable/">
+       foundry.core.drawable package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.file/">
+       foundry.core.file package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.graphics_page/">
        foundry.core.graphics_page package
       </a>
@@ -186,18 +201,13 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.point/">
-       foundry.core.point package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.size/">
-       foundry.core.size package
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.sprites/">
        foundry.core.sprites package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.tiles/">
+       foundry.core.tiles package
       </a>
      </li>
      <li class="toctree-l3">
@@ -404,7 +414,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../foundry.game.level/">foundry.game.level package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#foundry-game-level-pydanticlevel-module">foundry.game.level.PydanticLevel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.Level">foundry.game.level.Level module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.LevelControlled">foundry.game.level.LevelControlled module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.LevelController">foundry.game.level.LevelController module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.game.level/#module-foundry.game.level.LevelLike">foundry.game.level.LevelLike module</a></li>
@@ -1336,7 +1346,7 @@
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The representation of the header inside the ROM, following the INES format.
 Regarding the specifics of the INES format, more information can be found at
-<a href="#id1"><span class="problematic" id="id2">`https://www.nesdev.org/wiki/INES`_</span></a>.</p>
+<a class="reference external" href="https://www.nesdev.org/wiki/INES">INES</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
@@ -1357,7 +1367,8 @@ Regarding the specifics of the INES format, more information can be found at
 <dt><strong>mapper: int</strong></dt><dd><p>The memory mapper used by the file.</p>
 </dd>
 <dt><strong>horizontal_mirroring: bool</strong></dt><dd><p>If the file uses horizontal mirroring, otherwise it is assumed it uses vertical mirroring.
-See <a href="#id3"><span class="problematic" id="id4">`https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring`_</span></a> for more information.</p>
+See <a class="reference external" href="https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring">Nametable_Mirroring</a>
+for more information.</p>
 </dd>
 <dt><strong>battery_backed_ram: bool</strong></dt><dd><p>If the file contains battery-backed RAM between 0x6000 and 0x7FFF or any other form of persistent memory.</p>
 </dd>
@@ -1558,7 +1569,8 @@ See <a href="#id3"><span class="problematic" id="id4">`https://www.nesdev.org/wi
 <dt class="sig sig-object py" id="foundry.game.File.INESHeader.vertical_mirroring">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vertical_mirroring</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.game.File.INESHeader.vertical_mirroring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the file uses vertical mirroring.
-See <a href="#id5"><span class="problematic" id="id6">`https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring`_</span></a> for more information.</p>
+See <a class="reference external" href="https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring">Nametable_Mirroring</a>
+for more information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
@@ -2440,7 +2452,7 @@ constructed, this enum lists the known generator types.</p>
     
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright 2021, TheJoeSmo.<br>
+    &copy; Copyright 2022, TheJoeSmo.<br>
 </p>
     </div>
     

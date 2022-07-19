@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>foundry.smb3parse.util package &#8212; Foundry 0.4.14 documentation</title>
+    <title>foundry.smb3parse.util package &#8212; Foundry 0.5.1 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -161,6 +161,21 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.blocks/">
+       foundry.core.blocks package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.drawable/">
+       foundry.core.drawable package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.file/">
+       foundry.core.file package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.graphics_page/">
        foundry.core.graphics_page package
       </a>
@@ -186,18 +201,13 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.point/">
-       foundry.core.point package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.size/">
-       foundry.core.size package
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.sprites/">
        foundry.core.sprites package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.tiles/">
+       foundry.core.tiles package
       </a>
      </li>
      <li class="toctree-l3">
@@ -306,6 +316,21 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.smb3parse.util.code_edit">
+   foundry.smb3parse.util.code_edit module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.smb3parse.util.code_edit_byte">
+   foundry.smb3parse.util.code_edit_byte module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.smb3parse.util.code_edit_dict">
+   foundry.smb3parse.util.code_edit_dict module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-foundry.smb3parse.util.rom">
    foundry.smb3parse.util.rom module
   </a>
@@ -340,6 +365,207 @@
 <h1>foundry.smb3parse.util package<a class="headerlink" href="#foundry-smb3parse-util-package" title="Permalink to this headline">¶</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-foundry.smb3parse.util.code_edit">
+<span id="foundry-smb3parse-util-code-edit-module"></span><h2>foundry.smb3parse.util.code_edit module<a class="headerlink" href="#module-foundry.smb3parse.util.code_edit" title="Permalink to this headline">¶</a></h2>
+<p>Module defines an abstract class that represents a code edit in ROM.</p>
+<p>This CodeEdit will self verify that that the target memory location is correct
+by checking the surrounding code to make sure it matches.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CodeEdit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom" title="foundry.smb3parse.util.rom.Rom"><span class="pre">foundry.smb3parse.util.rom.Rom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">postfix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">foundry.smb3parse.util.code_edit.D</span></code>]</p>
+<p>Represents an area to edit to the ROM code.</p>
+<p class="rubric">Notes</p>
+<p>This class handles reading and writing the data of a specific code area for
+possible code edits.  It will also check the ROM to see if the target
+modification area has shifted due to other code modifications.</p>
+<p>This is an abstract class.  Implementing classes will need to define the
+read and write routines based on the type of code edit that needs to be
+done.  The read/write routines use the Generic data type ‘D’ for their
+operations.</p>
+<p>Generic type ‘D’ is the abstract representation of the edit value and not
+the literal data values (though they could be the same in some cases).
+See read/write for more details.</p>
+<p>A potential improvement in the future would be to check if the target
+address is valid during initialization and if it isn’t, search the adjacent
+code areas (maybe 500 bytes or user specified) and try to find a matching
+prefix/postfix with the correct offsets.  This would let this adapt to
+ROMs with code shifting modifications rather than rejecting them.</p>
+<p>The above paragraph is particularly true for expanded ROMs where bank 30/31
+will always be shifted so edits in those banks will fail more often than
+others.  Another possible enhancement might be to read the ROM header as
+well to detect if the ROM is expanded to see if edits in banks 30/31 need
+to be shifted (instead of searched) as this would provide more accurate and
+quicker results.  A search could be done secondary after the shift if the
+target code areas isn’t found in the shifted target location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>rom: Rom</strong></dt><dd><p>The ROM to edit.</p>
+</dd>
+<dt><strong>address: int</strong></dt><dd><p>The address of the edit.</p>
+</dd>
+<dt><strong>length: int</strong></dt><dd><p>The length of the edit.</p>
+</dd>
+<dt><strong>prefix: int</strong></dt><dd><p>The ROM data just before the edit.  This is used for checking the validity of the
+target location.  This is useful for when a code edit has been made that has shifted
+the code and the target address is no longer valid.  This will help protect invalid
+writes in that case.</p>
+</dd>
+<dt><strong>postfix: int</strong></dt><dd><p>The ROM data just after the edit.  This is used for checking the validity of the target
+location.  This is useful for when a code edit has been made that has shifted the code and
+the target address is no longer valid.  This will help protect invalid writes in that case.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.address">
+<span class="sig-name descname"><span class="pre">address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that both the prefix and postfix are valid.</p>
+<p class="rubric">Notes</p>
+<p>This function can also be overwritten if only certain values are valid
+so that the value of the target area is also checked if that is
+important.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.length">
+<span class="sig-name descname"><span class="pre">length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.postfix">
+<span class="sig-name descname"><span class="pre">postfix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></em><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.postfix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></em><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.read">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">foundry.smb3parse.util.code_edit.D</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the abstract representation of the target edit area.</p>
+<p class="rubric">Notes</p>
+<p>The Generic return type ‘D’ here is the abstract representation of the
+code edit, not the actual data of the edit, though in some situations
+these might be identical.  For example, if we are checking if the
+players lives decrease when they die, the return value might be a
+string “infinite lives” or “vanilla” or True/False while the actual
+code edit might be the presence of an DEC NUM_LIVES instruction or a
+NOP section removing that code.</p>
+<p>This is an Optional[D] because if the code area is invalid, no value
+might be returned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.rom">
+<span class="sig-name descname"><span class="pre">rom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom" title="foundry.smb3parse.util.rom.Rom"><span class="pre">foundry.smb3parse.util.rom.Rom</span></a></em><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.rom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit.CodeEdit.write">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">foundry.smb3parse.util.code_edit.D</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit.CodeEdit.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the abstract representation of the target edit area.</p>
+<p class="rubric">Notes</p>
+<p>The Generic option type ‘D’ here is the abstract representation of the
+code edit, not the actual data of the edit, though in some situations
+these might be identical (see the read instruction documentation for
+an example).</p>
+<p>The implementation of this function is responsible for taking the
+abstract input and generating the corresponding code edit.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.smb3parse.util.code_edit_byte">
+<span id="foundry-smb3parse-util-code-edit-byte-module"></span><h2>foundry.smb3parse.util.code_edit_byte module<a class="headerlink" href="#module-foundry.smb3parse.util.code_edit_byte" title="Permalink to this headline">¶</a></h2>
+<p>Implements a concretion of the CodeEdit interface with a byte payload.</p>
+<p>A single byte is the data type that is written to the specified address.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_byte.CodeEditByte">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CodeEditByte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom" title="foundry.smb3parse.util.rom.Rom"><span class="pre">foundry.smb3parse.util.rom.Rom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">postfix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_byte.CodeEditByte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.smb3parse.util.code_edit.CodeEdit" title="foundry.smb3parse.util.code_edit.CodeEdit"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.smb3parse.util.code_edit.CodeEdit</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</p>
+<p>Edit a single byte of memory in the ROM.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_byte.CodeEditByte.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_byte.CodeEditByte.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the target byte out of the ROM.</p>
+<p>This reads the byte at the target code address if both the prefix and
+postfix are valid.  If they are not valid, returns None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_byte.CodeEditByte.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_byte.CodeEditByte.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the specified byte to the target address if valid.</p>
+<p>If the prefix or postfix or not valid, the write is not allowed.</p>
+<p>Throws OverflowError if a value larger than a byte is given.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-foundry.smb3parse.util.code_edit_dict">
+<span id="foundry-smb3parse-util-code-edit-dict-module"></span><h2>foundry.smb3parse.util.code_edit_dict module<a class="headerlink" href="#module-foundry.smb3parse.util.code_edit_dict" title="Permalink to this headline">¶</a></h2>
+<p>Concrete implementation of the CodeEdit class using a dictionary lookup.</p>
+<p>This CodeEdit uses a dictionary as the edit values.  The keys represent the
+abstract option and the values are the byte data needing to be programmed
+into memory.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_dict.CodeEditDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CodeEditDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.smb3parse.util.rom.Rom" title="foundry.smb3parse.util.rom.Rom"><span class="pre">foundry.smb3parse.util.rom.Rom</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">postfix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_dict.CodeEditDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.smb3parse.util.code_edit.CodeEdit" title="foundry.smb3parse.util.code_edit.CodeEdit"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.smb3parse.util.code_edit.CodeEdit</span></code></a>[<a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+<p>Represents a code edit that is specified by a dictionary.</p>
+<p>The user passes in a dictionary of abstract labels (Any) in the keys and
+the corresponding bytearray to be written to memory in the value of the
+dictionary.  The user can then request a read/write using the abstract
+key name.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_dict.CodeEditDict.is_option">
+<span class="sig-name descname"><span class="pre">is_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_dict.CodeEditDict.is_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_dict.CodeEditDict.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_dict.CodeEditDict.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if the current ROM code area is valid.</p>
+<p>This calls the super() valid so the prefix and postfix are checked to
+see if they are valid.  Additionally this will check to see if the
+value at the code edit location is in the provided dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_dict.CodeEditDict.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_dict.CodeEditDict.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the abstract representation of target code area.</p>
+<p>This will read the current value in the ROM at the target address
+location and covert it to the corresponding abstract representation
+provided by the user during initialization.  If a matching abstract
+value isn’t found, None is returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.smb3parse.util.code_edit_dict.CodeEditDict.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.smb3parse.util.code_edit_dict.CodeEditDict.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests a code edit by an abstract representation/name.</p>
+<p>This will take the specified data, look it up in the provided
+dictionary and write the corresponding bytearray into the ROM at the
+target address location.  If there is no matching abstract value in
+the dictionary, the write is rejected.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-foundry.smb3parse.util.rom">
 <span id="foundry-smb3parse-util-rom-module"></span><h2>foundry.smb3parse.util.rom module<a class="headerlink" href="#module-foundry.smb3parse.util.rom" title="Permalink to this headline">¶</a></h2>
@@ -430,7 +656,7 @@
     
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright 2021, TheJoeSmo.<br>
+    &copy; Copyright 2022, TheJoeSmo.<br>
 </p>
     </div>
     

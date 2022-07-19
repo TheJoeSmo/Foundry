@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>foundry.core package &#8212; Foundry 0.4.14 documentation</title>
+    <title>foundry.core package &#8212; Foundry 0.5.1 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -36,7 +36,7 @@
     <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
-    <link rel="next" title="foundry.core.graphics_page package" href="../foundry.core.graphics_page/" />
+    <link rel="next" title="foundry.core.blocks package" href="../foundry.core.blocks/" />
     <link rel="prev" title="foundry package" href="../foundry/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -161,6 +161,21 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.blocks/">
+       foundry.core.blocks package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.drawable/">
+       foundry.core.drawable package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.file/">
+       foundry.core.file package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.graphics_page/">
        foundry.core.graphics_page package
       </a>
@@ -186,18 +201,13 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.point/">
-       foundry.core.point package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../foundry.core.size/">
-       foundry.core.size package
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../foundry.core.sprites/">
        foundry.core.sprites package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../foundry.core.tiles/">
+       foundry.core.tiles package
       </a>
      </li>
      <li class="toctree-l3">
@@ -321,6 +331,26 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.core.geometry">
+   foundry.core.geometry module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.core.namespace">
+   foundry.core.namespace module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.core.redux_store">
+   foundry.core.redux_store module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-foundry.core.validators">
+   foundry.core.validators module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-foundry.core">
    Module contents
   </a>
@@ -352,6 +382,30 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.core.blocks/">foundry.core.blocks package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.blocks/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.blocks/#module-foundry.core.blocks.Block">foundry.core.blocks.Block module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.blocks/#module-foundry.core.blocks.BlockGroup">foundry.core.blocks.BlockGroup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.blocks/#module-foundry.core.blocks.util">foundry.core.blocks.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.blocks/#module-foundry.core.blocks">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.core.drawable/">foundry.core.drawable package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#module-foundry.core.drawable.BlockGroupDrawable">foundry.core.drawable.BlockGroupDrawable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#module-foundry.core.drawable.Drawable">foundry.core.drawable.Drawable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#module-foundry.core.drawable.DrawableGenerator">foundry.core.drawable.DrawableGenerator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#module-foundry.core.drawable.ImageDrawable">foundry.core.drawable.ImageDrawable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.drawable/#module-foundry.core.drawable">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.core.file/">foundry.core.file package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.file/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.file/#module-foundry.core.file.FileGenerator">foundry.core.file.FileGenerator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.file/#module-foundry.core.file.FilePath">foundry.core.file.FilePath module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.file/#module-foundry.core.file">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../foundry.core.graphics_page/">foundry.core.graphics_page package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.graphics_page/#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.graphics_page/#module-foundry.core.graphics_page.GraphicsPage">foundry.core.graphics_page.GraphicsPage module</a></li>
@@ -389,23 +443,17 @@
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.player_animations/#module-foundry.core.player_animations">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../foundry.core.point/">foundry.core.point package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.point/#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.point/#foundry-core-point-point-module">foundry.core.point.Point module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.point/#module-contents">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../foundry.core.size/">foundry.core.size package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.size/#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.size/#foundry-core-size-size-module">foundry.core.size.Size module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../foundry.core.size/#module-contents">Module contents</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../foundry.core.sprites/">foundry.core.sprites package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.sprites/#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.sprites/#module-foundry.core.sprites.Sprite">foundry.core.sprites.Sprite module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.sprites/#module-foundry.core.sprites.SpriteGroup">foundry.core.sprites.SpriteGroup module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../foundry.core.sprites/#module-foundry.core.sprites">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../foundry.core.tiles/">foundry.core.tiles package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.tiles/#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.tiles/#module-foundry.core.tiles.util">foundry.core.tiles.util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../foundry.core.tiles/#module-foundry.core.tiles">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../foundry.core.warnings/">foundry.core.warnings package</a><ul>
@@ -623,6 +671,1176 @@ stack, respectively.</p>
 </dd></dl>
 
 </section>
+<section id="module-foundry.core.geometry">
+<span id="foundry-core-geometry-module"></span><h2>foundry.core.geometry module<a class="headerlink" href="#module-foundry.core.geometry" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A two dimensional representation of a point on a plain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x: int</strong></dt><dd><p>The horizontal location of the point.</p>
+</dd>
+<dt><strong>y: int</strong></dt><dd><p>The vertical location of the point.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.distance_from_origin">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_from_origin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.distance_from_origin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_qpoint">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtCore.QPoint</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_qpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a point from a QPoint for easy conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point</strong><span class="classifier">QPoint</span></dt><dd><p>To be converted.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>AbstractPoint</dt><dd><p>Of the QPoint represented inside Python.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Point.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.y">
+<span class="sig-name descname"><span class="pre">y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A two dimensional representation of a box, that uses <code class="docutils literal notranslate"><span class="pre">attrs</span></code> to create a basic
+implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point: Point</strong></dt><dd><p>The upper left corner of the rect.</p>
+</dd>
+<dt><strong>size: Size</strong></dt><dd><p>The size of the box.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.point">
+<span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.size">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Rect.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A two dimensional representation of a size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>width: int</strong></dt><dd><p>The width of the object being represented.</p>
+</dd>
+<dt><strong>height: int</strong></dt><dd><p>The height of the object being represented.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Size.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.geometry.to_qrect">
+<span class="sig-name descname"><span class="pre">to_qrect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtCore.QRect</span></span></span><a class="headerlink" href="#foundry.core.geometry.to_qrect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a QRect from a Rect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>rect</strong><span class="classifier">Rect</span></dt><dd><p>The rect to be converted to a Rect.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>QRect</dt><dd><p>The QRect derived from the Rect.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-foundry.core.namespace">
+<span id="foundry-core-namespace-module"></span><h2>foundry.core.namespace module<a class="headerlink" href="#module-foundry.core.namespace" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.ChildDoesNotExistException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ChildDoesNotExistException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">unfound_child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.ChildDoesNotExistException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.NamespaceValidationException" title="foundry.core.namespace.NamespaceValidationException"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.NamespaceValidationException</span></code></a></p>
+<p>A method is called where the :class:~`foundry.core.namespace.Namespace.Namespace`_ did not have child
+when a child was required.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parent: Optional[Namespace]</strong></dt><dd><p>The parent that did not contain</p>
+</dd>
+<dt><strong>path: Path</strong></dt><dd></dd>
+<dt><strong>unfound_child: str</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ChildDoesNotExistException.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.ChildDoesNotExistException.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ChildDoesNotExistException.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></em><a class="headerlink" href="#foundry.core.namespace.ChildDoesNotExistException.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ChildDoesNotExistException.unfound_child">
+<span class="sig-name descname"><span class="pre">unfound_child</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.namespace.ChildDoesNotExistException.unfound_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.CircularImportException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CircularImportException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cycle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.CircularImportException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.NamespaceValidationException" title="foundry.core.namespace.NamespaceValidationException"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.NamespaceValidationException</span></code></a></p>
+<p>This exception is raised during the importation of dependencies if a cycle exists.  A cycle makes it
+so none of the :class:~`foundry.core.namespace.Namespace`_ inside the cycle could be fully
+initialized without violating the invariant of the namespace.  Thus, the namespaces cannot
+be initialized and this exception must be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cycle: Optional[tuple[Path]]</strong></dt><dd><p>The cycle that was detected.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.CircularImportException.cycle">
+<span class="sig-name descname"><span class="pre">cycle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.CircularImportException.cycle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.InvalidChildName">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidChildName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalid_element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.InvalidChildName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#ValueError" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+<p>An exception raised when a child’s name inside :class:~`foundry.core.namespace.util.ChildTreeProtocol`_
+is considered to be invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name: str</strong></dt><dd><p>The invalid string in its entirety.</p>
+</dd>
+<dt><strong>invalid_element: str</strong></dt><dd><p>The invalid portion of the string.  By definition this must be a subset of name.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.InvalidChildName.invalid_element">
+<span class="sig-name descname"><span class="pre">invalid_element</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.InvalidChildName.invalid_element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.InvalidChildName.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.namespace.InvalidChildName.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">Namespace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.Namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">foundry.core.namespace._T</span></code>]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.children">
+<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.namespace.Namespace.children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.namespace.Namespace.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.dict">
+<span class="sig-name descname"><span class="pre">dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Namespace.dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the namespace to a dict that can be reconstructed back into itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>dict</dt><dd><p>A dict that represents a namespace.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.elements">
+<span class="sig-name descname"><span class="pre">elements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.namespace.Namespace.elements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.from_path">
+<span class="sig-name descname"><span class="pre">from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Namespace.from_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a namespace starting from this namespace by following the path provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">Path</span></dt><dd><p>The path to follow to get to a namespace.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Namespace</dt><dd><p>The namespace relative to this namespace and the path provided.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>KeyError</dt><dd><p>There does not exist a namespace relative to this namespace the path provided, such that
+:func:~`foundry.core.namespace.Namespace.namespace_exists_at_path`_ is False.
+Thus, a namespace cannot be returned from the parameters provided.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.namespace.Namespace.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the name of the child inside its parent that refers to itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>str</dt><dd><p>The name that refers to itself from its parent.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ParentDoesNotExistException</dt><dd><p>The parent of this instance is None.</p>
+</dd>
+<dt>ParentDoesNotContainChildException</dt><dd><p>The parent and child are not linked properly.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.namespace_exists_at_path">
+<span class="sig-name descname"><span class="pre">namespace_exists_at_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Namespace.namespace_exists_at_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a namespace exists relative to this namespace and a provided path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">Path</span></dt><dd><p>The path the namespace is relative to.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the namespace exists relative to this namespace and the path provided.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.Namespace.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.namespace.Namespace.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a series of names or keys that will yield itself from the root node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Sequence[str]</dt><dd><p>A series of names to provide itself from the root node.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.public_elements">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">public_elements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/collections.html#collections.ChainMap" title="(in Python v3.12)"><span class="pre">collections.ChainMap</span></a></em><a class="headerlink" href="#foundry.core.namespace.Namespace.public_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entire dict of elements that can be accessed via the dictionary interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ChainMap</dt><dd><p>A dict containing the elements of this instance and any public facing elements from its dependencies.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Namespace.root">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></em><a class="headerlink" href="#foundry.core.namespace.Namespace.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the child tree without a parent.  From the root node all other child tree of the same vein should
+be accessible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ExtendedChildTree</dt><dd><p>The namespace whose parent is None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NamespaceType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.NamespaceType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>The type of elements allowed inside the namespace.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.DRAWABLE">
+<span class="sig-name descname"><span class="pre">DRAWABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DRAWABLE'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.DRAWABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.FILE">
+<span class="sig-name descname"><span class="pre">FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FILE'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.FLOAT">
+<span class="sig-name descname"><span class="pre">FLOAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FLOAT'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.INTEGER">
+<span class="sig-name descname"><span class="pre">INTEGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INTEGER'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.INTEGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NONE'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.STRING">
+<span class="sig-name descname"><span class="pre">STRING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STRING'</span></em><a class="headerlink" href="#foundry.core.namespace.NamespaceType.STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceType.has_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.NamespaceType.has_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience method to quickly determine if a value is a valid enumeration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>value</strong><span class="classifier">str</span></dt><dd><p>The value to check against the enumeration.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the value is inside the enumeration.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.NamespaceValidationException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NamespaceValidationException</span></span><a class="headerlink" href="#foundry.core.namespace.NamespaceValidationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#Exception" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>An exception that is raised during the validation of a namespace.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.ParentDoesNotContainChildException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParentDoesNotContainChildException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.ParentDoesNotContainChildException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.NamespaceValidationException" title="foundry.core.namespace.NamespaceValidationException"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.NamespaceValidationException</span></code></a></p>
+<p>For each :class:~`foundry.core.namespace.Namespace.Namespace`, it is expected that the parent attribute
+also references the child.  If a method which relies on this functionality does finds that this is
+not the case, this exception will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parent: Namespace</strong></dt><dd><p>That does not have a reference to the child.</p>
+</dd>
+<dt><strong>child: Namespace</strong></dt><dd><p>The child which called the method that required this functionality.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ParentDoesNotContainChildException.child">
+<span class="sig-name descname"><span class="pre">child</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></em><a class="headerlink" href="#foundry.core.namespace.ParentDoesNotContainChildException.child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ParentDoesNotContainChildException.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></em><a class="headerlink" href="#foundry.core.namespace.ParentDoesNotContainChildException.parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.namespace.ParentDoesNotExistException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParentDoesNotExistException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.ParentDoesNotExistException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.NamespaceValidationException" title="foundry.core.namespace.NamespaceValidationException"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.NamespaceValidationException</span></code></a></p>
+<p>A method is called where the :class:~`foundry.core.namespace.Namespace`_ did not have parent
+where a parent was required.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>child: Optional[Namespace]</strong></dt><dd><p>The child without a parent.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.ParentDoesNotExistException.child">
+<span class="sig-name descname"><span class="pre">child</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.ParentDoesNotExistException.child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decomposed_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NOTHING</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.Path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A representation of a path that be taken through a tree structure to get to a given element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>InvalidChildName</dt><dd><p>If any of the children name are returned as invalid for <code class="xref py py-func docutils literal notranslate"><span class="pre">foundry.core.namespace.Path.is_valid_name()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>decomposed_path: tuple[str, …] = (,)</strong></dt><dd><p>A series of strings that represent a series of keys that can be taken to traverse a tree structure.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.create_child">
+<span class="sig-name descname"><span class="pre">create_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Path.create_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a child element with this instance as the parent and name as a child of parent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>A child of this path to create a new instance from.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Path</dt><dd><p>A path that represents a child of this parent with the name as the top element.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>InvalidChildName</dt><dd><p>If name is returned as invalid for <code class="xref py py-func docutils literal notranslate"><span class="pre">foundry.core.namespace.Path.is_valid_name()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.create_child_from_parent">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_child_from_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Path.create_child_from_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a child of the same instance of this from parent, if it exists, and a child.  If no child exists, then
+the child will be created as root.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parent</strong><span class="classifier">Optional[Path]</span></dt><dd><p>A parent that may exist to create a child from.</p>
+</dd>
+<dt><strong>child</strong><span class="classifier">str</span></dt><dd><p>The name of the top most name to exist inside the path.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Self</dt><dd><p>A path that represents a child of the parent, if it exists, otherwise root.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>InvalidChildName</dt><dd><p>If name is returned as invalid for <code class="xref py py-func docutils literal notranslate"><span class="pre">foundry.core.namespace.Path.is_valid_name()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.decomposed_path">
+<span class="sig-name descname"><span class="pre">decomposed_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.namespace.Path.decomposed_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.from_string">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Path.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a path from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>s</strong><span class="classifier">str</span></dt><dd><p>The string to convert to a path.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Self</dt><dd><p>A path that represents a path.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>InvalidChildName</dt><dd><p>If any of the children name are returned as invalid for <a class="reference internal" href="#foundry.core.namespace.is_valid_name" title="foundry.core.namespace.is_valid_name"><code class="xref py py-func docutils literal notranslate"><span class="pre">foundry.core.namespace.is_valid_name()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.namespace.Path.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the name of the element referenced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>str</dt><dd><p>The name of the element referenced.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.parent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.namespace.Path.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the parent Path of this path, if one exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Optional[Path]</dt><dd><p>The parent path of this path if one exists, else None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.root">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.namespace.Path.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the root of the element referenced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>str</dt><dd><p>The root of the element referenced.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Path.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that the provided object is a valid Path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">str</span></dt><dd><p>The path to be validated.</p>
+</dd>
+<dt><strong>use_parent</strong><span class="classifier">bool, optional</span></dt><dd><p>If the path must exist relative to <cite>parent</cite>, by default True</p>
+</dd>
+<dt><strong>parent</strong><span class="classifier">Namespace | None, optional</span></dt><dd><p>The namespace to validate the path from, by default None</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Path</dt><dd><p>Generates a validated path from <cite>s</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If <cite>use_parent</cite> and there does <cite>parent</cite> is None.</p>
+</dd>
+<dt>TypeError</dt><dd><p>If <cite>parent</cite> is not None or a Namespace.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.namespace.Path.validate_path_from_parent">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_path_from_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.Path.validate_path_from_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an additional validation that the path derived from <cite>s</cite> exists
+relative to <cite>parent</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parent</strong><span class="classifier">Namespace</span></dt><dd><p>The parent to derive the path from.</p>
+</dd>
+<dt><strong>s</strong><span class="classifier">str</span></dt><dd><p>The path to be derived.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Path</dt><dd><p>The path derived from <cite>s</cite> and <cite>parent</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>The path <cite>s</cite> does not exist relative to <cite>parent</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.namespace.Uninitializable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Uninitializable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.namespace.Uninitializable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A class that will always throw an exception on initialization.  Used to enforce no elements for a given
+namespace.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.find_cycle">
+<span class="sig-name descname"><span class="pre">find_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.namespace.find_cycle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.generate_dependency_graph">
+<span class="sig-name descname"><span class="pre">generate_dependency_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.namespace.generate_dependency_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a graph where each vertex is a namespace and its neighbors are its dependencies, including
+its parent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name: str</strong></dt><dd><p>The name of the root node.</p>
+</dd>
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>A dictionary structure that represents the data.</p>
+</dd>
+<dt><strong>parent</strong><span class="classifier">Optional[Path], optional</span></dt><dd><p>The parent of the root node, by default None</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict[Path, set[Path]]</dt><dd><p>The graph that represents the data supplied.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.generate_namespace">
+<span class="sig-name descname"><span class="pre">generate_namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.generate_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the root namespace from a dictionary, creating every aspect of the namespace, including its
+children.  This also includes validation of the namespace, its children, its elements, and its children’s
+elements, recursively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dictionary to generate the namespace and its children from.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Namespace</dt><dd><p>The root namespace and its children derived from the dictionary provided.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Generating namespace is a multi-step process because a namespace’s children can depend on components
+which depend on it’s parent.  In other words, a child cannot be guaranteed to be able to be initialized
+at the time that it’s parent is created.  Instead, the child must be appended afterwards to ensure
+that the parent namespace can accommodate all the variants that its children can take.  Because a
+namespace’s dependency and parent must follow a directed acyclic graph with accordance to the namespace’s
+invariant, we can sort the dependency graph of the root topographically.  This generates a sequence
+which can load the all the namespaces in an order which will not conflict with one another.  Once
+every namespace is iterated through in topographic order, the root should correctly define the
+dictionary.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.get_namespace_dict_from_path">
+<span class="sig-name descname"><span class="pre">get_namespace_dict_from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.get_namespace_dict_from_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the dictionary associated with a given path that will generate a namespace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The root dictionary and its children to obtain its or its children’s namespace’s dictionary from.</p>
+</dd>
+<dt><strong>path</strong><span class="classifier">Path</span></dt><dd><p>The path to namespace which is valid from root.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>The namespace’s dict associated with the path provided.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ChildDoesNotExistException</dt><dd><p>The child associated with the path provided does not exist inside the dictionary.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.get_namespace_type">
+<span class="sig-name descname"><span class="pre">get_namespace_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.get_namespace_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the namespace’s element’s type by the type specified inside the dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dict with the data for a namespace.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>type</dt><dd><p>The type that this dict’s namespace should represent.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>KeyError</dt><dd><p>The dictionary does not contain a type for the namespace to be associated with.</p>
+</dd>
+<dt>NotImplementedError</dt><dd><p>The type supplied by the namespace is unsupported.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.is_valid_name">
+<span class="sig-name descname"><span class="pre">is_valid_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regrex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'^[A-Za-z_][A-Za-z0-9_]*$'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.is_valid_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if a name for a given child is considered valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">Any</span></dt><dd><p>The name to check if it is valid.</p>
+</dd>
+<dt><strong>regrex</strong><span class="classifier">str, optional</span></dt><dd><p>The regrex expression to check for validity.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>bool</dt><dd><p>If the name is valid.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.sort_topographically">
+<span class="sig-name descname"><span class="pre">sort_topographically</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.12)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Path" title="foundry.core.namespace.Path"><span class="pre">foundry.core.namespace.Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.namespace.sort_topographically" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a graph of dependencies an iterable is produced to sort the vertices in topographic order, such
+that the dependencies could be loaded sequentially without any exceptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>graph</strong><span class="classifier">dict[Path, set[Path]]</span></dt><dd><p>The representation of the graph, where the dictionary represents the set of vertices and its
+respective neighbors.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Iterable[Path]</dt><dd><p>An iterable of the paths for the respective namespaces.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_element">
+<span class="sig-name descname"><span class="pre">validate_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Type" title="(in Python v3.12)"><span class="pre">Type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">foundry.core.namespace._T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.namespace._T</span></span></span><a class="headerlink" href="#foundry.core.namespace.validate_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a referenced element inside of a namespace to ensure that it exists and is of the correct
+type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>parent: Namespace</strong></dt><dd><p>The namespace which the element of key <cite>name</cite> should exist inside.</p>
+</dd>
+<dt><strong>name: str</strong></dt><dd><p>The index or key associated inside <cite>parent</cite> of the element.</p>
+</dd>
+<dt><strong>type_: Type[_T]</strong></dt><dd><p>The type the element should take.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>_T</dt><dd><p>The element indexed inside <cite>parent</cite> with a key of <cite>name</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If the name is not a valid name for an element.</p>
+</dd>
+<dt>ValueError</dt><dd><p>If there does not exist an element inside <cite>parent</cite> at <cite>name</cite>.</p>
+</dd>
+<dt>ValueError</dt><dd><p>If the element inside <cite>parent</cite> at <cite>name</cite> is not of <cite>type_</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_element_to_type">
+<span class="sig-name descname"><span class="pre">validate_element_to_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Type" title="(in Python v3.12)"><span class="pre">Type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">foundry.core.namespace._T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Type" title="(in Python v3.12)"><span class="pre">Type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">foundry.core.namespace._T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.namespace.validate_element_to_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that the element is of <cite>type_</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>The name to of the element to validate.</p>
+</dd>
+<dt><strong>parent</strong><span class="classifier">Namespace</span></dt><dd><p>The namespace to start the name from.</p>
+</dd>
+<dt><strong>type_</strong><span class="classifier">Type[_T]</span></dt><dd><p>The expected type of the element.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Type[_T]</dt><dd><p>The type used to validate the element.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>The element was not of <cite>type_</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_name_is_in_namespace">
+<span class="sig-name descname"><span class="pre">validate_name_is_in_namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.validate_name_is_in_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that <cite>name</cite> exists inside <cite>parent</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>The name to validate.</p>
+</dd>
+<dt><strong>parent</strong><span class="classifier">Namespace</span></dt><dd><p>The namespace to start the name from.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The validated name.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If there does not exist an element at <cite>name</cite> inside <cite>parent</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_namespace">
+<span class="sig-name descname"><span class="pre">validate_namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.namespace.Namespace" title="foundry.core.namespace.Namespace"><span class="pre">foundry.core.namespace.Namespace</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.validate_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the primary validation which is required to generate a namespace.  Specifically, its dependencies
+and it’s elements are validated and loaded into the namespace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dictionary to generate the namespace from.</p>
+</dd>
+<dt><strong>parent</strong><span class="classifier">Optional[Namespace], optional</span></dt><dd><p>The parent of this namespace, by default None</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Namespace</dt><dd><p>The namespace represented by this dictionary, excluding its children.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ChildDoesNotExistException</dt><dd><p>If a root node contains dependencies, it will raise an exception to note this contradiction.  A root
+node may not depend on anything, by definition.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method does not handle the generation of a namespace’s children.  This is done intentionally because
+this namespace’s children may depend on namespace’s which depend on it’s parent.  Thus, the parent cannot
+load its children without creating a circular importation loop.  Instead, the children must be appended
+to the namespace after its initialization to facilitate such a relationship.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_path_name">
+<span class="sig-name descname"><span class="pre">validate_path_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.validate_path_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that the path can form a :class:~`foundry.core.namespace.Path`.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path</strong><span class="classifier">Any</span></dt><dd><p>The path to validate.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The validated path.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>TypeError</dt><dd><p>If the path is not a string.</p>
+</dd>
+<dt>ValueError</dt><dd><p>If the path cannot form a :class:~`foundry.core.namespace.Path`_ as specified by</p>
+</dd>
+<dt>:func:~`foundry.core.namespace.is_valid_name`.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.namespace.validate_valid_name">
+<span class="sig-name descname"><span class="pre">validate_valid_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#foundry.core.namespace.validate_valid_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that the name could be referenced inside any namespace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>The name to validate.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The validated name.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If the name could not be referenced inside any namespace.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-foundry.core.redux_store">
+<span id="foundry-core-redux-store-module"></span><h2>foundry.core.redux_store module<a class="headerlink" href="#module-foundry.core.redux_store" title="Permalink to this headline">¶</a></h2>
+<p>Defines a simple Redux store interface for Python.</p>
+<p>This store takes in a default state on initialization rather than generating
+one internally.  If it is desired to have one created interally, use a factory
+method.</p>
+<p>A Generic type state S is used to hold the state data for the module and
+actions given to the store are used to transform the state into a new state
+through a set of reducers.  The reducers are UI specific and so abstract in
+this interface definition.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.redux_store.Action">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.redux_store.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>User action that will be dispatched to the store for processing</p>
+<p>type: str - a unique id that defines what action is happening
+payload: Any - the data payload of the action, can be Any type.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.redux_store.Action.payload">
+<span class="sig-name descname"><span class="pre">payload</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#foundry.core.redux_store.Action.payload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.redux_store.Action.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#foundry.core.redux_store.Action.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.redux_store.ReduxStore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ReduxStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">foundry.core.redux_store.S</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.redux_store.ReduxStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">foundry.core.redux_store.S</span></code>]</p>
+<p>An abstract Redux store for handing system state and user actions.</p>
+<p>Redux is a pattern used for handing system state storage/change based on
+user interaction.  More information can be found here:
+<a class="reference external" href="https://redux.js.org/introduction/core-concepts">https://redux.js.org/introduction/core-concepts</a></p>
+<p>The basic principle is that the store hold the system state and accepts
+user actions and creates a new system state based on that action.</p>
+<p>Actions are dispatched to the store and the store will notify all
+subscribers if the state changes.</p>
+<p>In this implementation the state is a generic type ‘S’ to be defined by
+the developer.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.redux_store.ReduxStore.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.redux_store.Action" title="foundry.core.redux_store.Action"><span class="pre">foundry.core.redux_store.Action</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.redux_store.ReduxStore.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the system state based on user action.</p>
+<p>The dispatch() routine takes in a user action and updates the current
+state by sending it to any reducers in the system and then notifies
+any subscribers to the store if the state has changed as a result of
+the action.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.redux_store.ReduxStore.get_default_state">
+<span class="sig-name descname"><span class="pre">get_default_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.redux_store.S</span></span></span><a class="headerlink" href="#foundry.core.redux_store.ReduxStore.get_default_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the default state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.redux_store.ReduxStore.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.redux_store.S</span></span></span><a class="headerlink" href="#foundry.core.redux_store.ReduxStore.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a copy of the current state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.redux_store.ReduxStore.subscribe">
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subscriber</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.redux_store.ReduxStore.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscribe a function to be called when the state changes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="foundry.core.redux_store.StateNoneError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StateNoneError</span></span><a class="headerlink" href="#foundry.core.redux_store.StateNoneError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#Exception" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Error thrown when Redux default state is None</p>
+</dd></dl>
+
+</section>
+<section id="module-foundry.core.validators">
+<span id="foundry-core-validators-module"></span><h2>foundry.core.validators module<a class="headerlink" href="#module-foundry.core.validators" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="foundry.core.validators.range_validator">
+<span class="sig-name descname"><span class="pre">range_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.core.validators.range_validator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A validator for an ~`attrs.attrs` dataclass that ensures an int is between a minimum and maximum value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>minimum</strong><span class="classifier">Optional[int]</span></dt><dd><p>The minimum value that the value is permitted to be.  If minimum is None, then there will be no bound for the
+minimum value.  By default, None.</p>
+</dd>
+<dt><strong>maximum</strong><span class="classifier">Optional[int]</span></dt><dd><p>The maximum value that the value is permitted to be.  If maximum is None, then there will be no bound for the
+maximum value.  By default, None.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Callable[[Any, Any, int], int]</dt><dd><p>A callable that acts as the true validator with a predefined minimum and maximum value.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-foundry.core">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core" title="Permalink to this headline">¶</a></h2>
 </section>
@@ -641,10 +1859,10 @@ stack, respectively.</p>
             <p class="prev-next-title">foundry package</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../foundry.core.graphics_page/" title="next page">
+    <a class='right-next' id="next-link" href="../foundry.core.blocks/" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">foundry.core.graphics_page package</p>
+        <p class="prev-next-title">foundry.core.blocks package</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -662,7 +1880,7 @@ stack, respectively.</p>
     
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright 2021, TheJoeSmo.<br>
+    &copy; Copyright 2022, TheJoeSmo.<br>
 </p>
     </div>
     
