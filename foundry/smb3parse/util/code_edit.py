@@ -1,4 +1,5 @@
-""" Module defines an abstract class that represents a code edit in ROM.
+"""
+Module defines an abstract class that represents a code edit in ROM.
 
 This CodeEdit will self verify that that the target memory location is correct
 by checking the surrounding code to make sure it matches.
@@ -14,8 +15,29 @@ D = TypeVar("D")
 
 @dataclass
 class CodeEdit(ABC, Generic[D]):
-    """Represents an area to edit to the ROM code.
+    """
+    Represents an area to edit to the ROM code.
 
+    Attributes
+    ----------
+    rom: Rom
+        The ROM to edit.
+    address: int
+        The address of the edit.
+    length: int
+        The length of the edit.
+    prefix: int
+        The ROM data just before the edit.  This is used for checking the validity of the
+        target location.  This is useful for when a code edit has been made that has shifted
+        the code and the target address is no longer valid.  This will help protect invalid
+        writes in that case.
+    postfix: int
+        The ROM data just after the edit.  This is used for checking the validity of the target
+        location.  This is useful for when a code edit has been made that has shifted the code and
+        the target address is no longer valid.  This will help protect invalid writes in that case.
+
+    Notes
+    -----
     This class handles reading and writing the data of a specific code area for
     possible code edits.  It will also check the ROM to see if the target
     modification area has shifted due to other code modifications.
@@ -28,21 +50,6 @@ class CodeEdit(ABC, Generic[D]):
     Generic type 'D' is the abstract representation of the edit value and not
     the literal data values (though they could be the same in some cases).
     See read/write for more details.
-
-    Parameters:
-        rom: Rom - the ROM to edit
-        address: int - the address of the edit
-        length: int - the length of the edit
-        prefix: int - the ROM data just before the edit.  This is used for
-            checking the validity of the target location.  This is useful for
-            when a code edit has been made that has shifted the code and
-            the target address is no longer valid.  This will help protect
-            invalid writes in that case.
-        postfix: int - the ROM data just after the edit.  This is used for
-            checking the validity of the target location.  This is useful for
-            when a code edit has been made that has shifted the code and
-            the target address is no longer valid.  This will help protect
-            invalid writes in that case.
 
     A potential improvement in the future would be to check if the target
     address is valid during initialization and if it isn't, search the adjacent
@@ -66,14 +73,19 @@ class CodeEdit(ABC, Generic[D]):
     postfix: bytearray
 
     def _valid_affix(self, test_address: int, data: bytearray) -> bool:
-        """Verifies that the specified affix matches the ROM."""
+        """
+        Verifies that the specified affix matches the ROM.
+        """
         if len(data) == 0:
             return True
         return data == self.rom.read(test_address, len(data))
 
     def is_valid(self) -> bool:
-        """Verifies that both the prefix and postfix are valid.
+        """
+        Verifies that both the prefix and postfix are valid.
 
+        Notes
+        -----
         This function can also be overwritten if only certain values are valid
         so that the value of the target area is also checked if that is
         important.
@@ -84,8 +96,11 @@ class CodeEdit(ABC, Generic[D]):
 
     @abstractmethod
     def read(self) -> Optional[D]:
-        """Read the abstract representation of the target edit area.
+        """
+        Read the abstract representation of the target edit area.
 
+        Notes
+        -----
         The Generic return type 'D' here is the abstract representation of the
         code edit, not the actual data of the edit, though in some situations
         these might be identical.  For example, if we are checking if the
@@ -100,8 +115,11 @@ class CodeEdit(ABC, Generic[D]):
 
     @abstractmethod
     def write(self, option: D):
-        """Read the abstract representation of the target edit area.
+        """
+        Read the abstract representation of the target edit area.
 
+        Notes
+        -----
         The Generic option type 'D' here is the abstract representation of the
         code edit, not the actual data of the edit, though in some situations
         these might be identical (see the read instruction documentation for

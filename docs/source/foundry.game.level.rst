@@ -4,10 +4,10 @@ foundry.game.level package
 Submodules
 ----------
 
-foundry.game.level.PydanticLevel module
+foundry.game.level.Level module
 -------------------------------
 
-.. automodule:: foundry.game.level.PydanticLevel
+.. automodule:: foundry.game.level.Level
    :members:
    :undoc-members:
    :show-inheritance:

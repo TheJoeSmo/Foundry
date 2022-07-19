@@ -71,7 +71,7 @@ def is_valid_name(name: Any, *, regrex: str = "^[A-Za-z_][A-Za-z0-9_]*$") -> boo
     name : Any
         The name to check if it is valid.
     regrex : str, optional
-        The regrex expression to check for validity, by default "^[A-Za-z_][A-Za-z0-9_]+$"
+        The regrex expression to check for validity.
 
     Returns
     -------
@@ -447,8 +447,8 @@ def validate_path_name(path: Any) -> str:
     TypeError
         If the path is not a string.
     ValueError
-        If the path cannot form a :class:~`foundry.core.namespace.Path` as specified by
-    :func:~`foundry.core.namespace.Path.is_valid_name`.
+        If the path cannot form a :class:~`foundry.core.namespace.Path`_ as specified by
+    :func:~`foundry.core.namespace.is_valid_name`.
     """
     if not isinstance(path, str):
         raise TypeError(f"Path {path} must be a {str.__name__}")
@@ -470,9 +470,9 @@ class NamespaceValidationException(Exception):
 class CircularImportException(NamespaceValidationException):
     """
     This exception is raised during the importation of dependencies if a cycle exists.  A cycle makes it
-    so none of the `foundry.core.namespace.Namespace` inside the cycle could be fully initialized without
-    violating the invariant of the namespace.  Thus, the namespaces cannot be initialized and this
-    exception must be raised.
+    so none of the :class:~`foundry.core.namespace.Namespace`_ inside the cycle could be fully
+    initialized without violating the invariant of the namespace.  Thus, the namespaces cannot
+    be initialized and this exception must be raised.
 
     Attributes
     ----------
@@ -494,7 +494,7 @@ class CircularImportException(NamespaceValidationException):
 
 class ParentDoesNotExistException(NamespaceValidationException):
     """
-    A method is called where the :class:~`foundry.core.namespace.Namespace.Namespace` did not have parent
+    A method is called where the :class:~`foundry.core.namespace.Namespace`_ did not have parent
     where a parent was required.
 
     Attributes
@@ -517,7 +517,7 @@ class ParentDoesNotExistException(NamespaceValidationException):
 
 class ChildDoesNotExistException(NamespaceValidationException):
     """
-    A method is called where the :class:~`foundry.core.namespace.Namespace.Namespace` did not have child
+    A method is called where the :class:~`foundry.core.namespace.Namespace.Namespace`_ did not have child
     when a child was required.
 
     Attributes
@@ -569,8 +569,8 @@ class ParentDoesNotContainChildException(NamespaceValidationException):
 
 class InvalidChildName(ValueError):
     """
-    An exception raised when a child's name inside :class:~`foundry.core.namespace.util.ChildTreeProtocol` is
-    considered to be invalid.
+    An exception raised when a child's name inside :class:~`foundry.core.namespace.util.ChildTreeProtocol`_
+    is considered to be invalid.
 
     Attributes
     ----------
@@ -727,7 +727,7 @@ class Path:
         Raises
         ------
         InvalidChildName
-            If any of the children name are returned as invalid for :func:`foundry.core.namespace.Path.is_valid_name`.
+            If any of the children name are returned as invalid for :func:`foundry.core.namespace.is_valid_name`.
         """
         return cls(tuple(s.split("."))) if s else cls()
 
@@ -1029,7 +1029,7 @@ class Namespace(Generic[_T]):
         ------
         KeyError
             There does not exist a namespace relative to this namespace the path provided, such that
-            :func:~`foundry.core.namespace.Namespace.Namespace.namespace_exists_at_path` is False.
+            :func:~`foundry.core.namespace.Namespace.namespace_exists_at_path`_ is False.
             Thus, a namespace cannot be returned from the parameters provided.
         """
         assert self.namespace_exists_at_path(path)
