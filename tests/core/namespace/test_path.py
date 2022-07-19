@@ -1,6 +1,6 @@
 from pytest import raises
 
-from foundry.core.namespace.Path import InvalidChildName, Path, is_valid_name
+from foundry.core.namespace import InvalidChildName, Path, is_valid_name
 
 
 def test_is_valid_name_empty():

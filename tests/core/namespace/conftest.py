@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from foundry.core.namespace.Namespace import Namespace
+from foundry.core.namespace import Namespace
 
 
 @fixture
