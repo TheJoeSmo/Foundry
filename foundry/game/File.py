@@ -40,7 +40,7 @@ class INESHeader:
     """
     The representation of the header inside the ROM, following the INES format.
     Regarding the specifics of the INES format, more information can be found at
-    `https://www.nesdev.org/wiki/INES`_.
+    `INES <https://www.nesdev.org/wiki/INES>`_.
 
     Attributes
     ----------
@@ -62,7 +62,8 @@ class INESHeader:
         The memory mapper used by the file.
     horizontal_mirroring: bool
         If the file uses horizontal mirroring, otherwise it is assumed it uses vertical mirroring.
-        See `https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring`_ for more information.
+        See `Nametable_Mirroring <https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring>`_
+        for more information.
     battery_backed_ram: bool
         If the file contains battery-backed RAM between 0x6000 and 0x7FFF or any other form of persistent memory.
     """
@@ -83,7 +84,8 @@ class INESHeader:
     def vertical_mirroring(self) -> bool:
         """
         Determines if the file uses vertical mirroring.
-        See `https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring`_ for more information.
+        See `Nametable_Mirroring <https://www.nesdev.org/wiki/Mirroring#Nametable_Mirroring>`_
+        for more information.
 
         Returns
         -------

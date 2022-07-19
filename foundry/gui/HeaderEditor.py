@@ -25,6 +25,8 @@ class HeaderState:
     """
     The representation of a the level header.
 
+    Attributes
+    ----------
     data: LevelDataState
         The miscellaneous level data.
     start: LevelStartState
@@ -93,15 +95,23 @@ def header_state_to_level_header(state: HeaderState) -> bytearray:
 
     Notes
     -----
-    The format of the level header is as follows:
-    Byte 0x02..1: The next level's generator pointer.
-    Byte 0x04..3: The next level's enemy pointer.
-    Byte 0x05: The level length in increments of 16 followed by the y start of the player.
-    Byte 0x06: The generator's palette, enemy's palette followed by the x start of the player.
-    Byte 0x07: The tileset of the level, if the level is vertical, the type of scroll used by the level,
+    The format of the level header is as follows
+
+    Byte 0x02-1:
+        The next level's generator pointer.
+    Byte 0x04-3:
+        The next level's enemy pointer.
+    Byte 0x05:
+        The level length in increments of 16 followed by the y start of the player.
+    Byte 0x06:
+        The generator's palette, enemy's palette followed by the x start of the player.
+    Byte 0x07:
+        The tileset of the level, if the level is vertical, the type of scroll used by the level,
         followed by if the level ends when the player enters a pipe.
-    Byte 0x08: The graphics set of the level followed by the starting action of the player.
-    Byte 0x09: The music of the level followed by the time provided to the player.
+    Byte 0x08:
+        The graphics set of the level followed by the starting action of the player.
+    Byte 0x09:
+        The music of the level followed by the time provided to the player.
     """
     data = bytearray()
 
@@ -179,6 +189,7 @@ class HeaderEditor(CustomDialog):
         The undo controller, which is responsible for undoing and redoing any action.
     file_settings: FileSettings
         The settings for determining levels to automatically select the warp state from.
+
     """
 
     level_length_changed: SignalInstance = Signal(int)  # type: ignore
@@ -290,6 +301,7 @@ class HeaderEditor(CustomDialog):
         -------
         int
             The index of the current page accessed.
+
         """
         return self._display.current_page
 
@@ -306,6 +318,7 @@ class HeaderEditor(CustomDialog):
         -------
         int
             The length of the level.
+
         """
         return self.state.data.level_length
 
@@ -324,6 +337,7 @@ class HeaderEditor(CustomDialog):
         -------
         int
             The music of the level.
+
         """
         return self.state.data.music
 
