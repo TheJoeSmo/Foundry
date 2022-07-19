@@ -47,7 +47,7 @@ master_doc = "index"
 # -- Project information -----------------------------------------------------
 
 project = "Foundry"
-copyright = "2021, TheJoeSmo"
+copyright = "2022, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
