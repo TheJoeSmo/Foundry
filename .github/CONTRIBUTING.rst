@@ -93,11 +93,30 @@ Code
     $ python -m pip install pre-commit
     $ pre-commit install
 
+  or for Linux users:
+
+  .. code-block:: console
+    
+    $ python3 -m pip install pre-commit
+    $ pre-commit install
+
   You can also run them anytime using the following command:
 
   .. code-block:: console
 
     $ pre-commit run --all-files
+
+  Notes:
+  
+  Depending on your shell you may run into a problem where ``pre-commit`` is not found.
+  This is because the path is found inside ``~/.profile``.  We have provided the most common
+  fixes for ``bash`` and ``zsh``.
+
+  Bash: Add ``source ~/.profile`` inside ``~/.bashrc``.
+  
+  ZHS: Add ``[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'`` inside ``~/.zshrc``.
+
+  For more reading: `ZSH not hitting ~/.profile <https://superuser.com/questions/187639/zsh-not-hitting-profile>`_
 
 Tests
 -----
