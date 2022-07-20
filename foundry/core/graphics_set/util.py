@@ -1,4 +1,4 @@
-from foundry.core.graphics_page.GraphicsPage import GraphicsPage, GraphicsPageProtocol
+from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.game.File import ROM
 from foundry.smb3parse.constants import Level_BG_Pages1, Level_BG_Pages2
 
@@ -49,7 +49,7 @@ GRAPHIC_SET_NAMES = [
 ]
 
 
-def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicsPageProtocol, ...]:
+def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicsPage, ...]:
     if tileset == WORLD_MAP:
         return (
             GraphicsPage(0x14),

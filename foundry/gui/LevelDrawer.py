@@ -5,10 +5,11 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
+from foundry.core.drawable.Drawable import Drawable as DrawableValidator
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.namespace import Namespace, generate_namespace
 from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
@@ -39,11 +40,11 @@ from foundry.smb3parse.objects.object_set import (
 
 def load_namespace() -> Namespace:
     with open(str(namespace_path)) as f:
-        return generate_namespace(loads(f.read()))
+        return generate_namespace(loads(f.read()), validators=DrawableValidator.type_manager)
 
 
 namespace = load_namespace()
-level_images = namespace.children["graphics"].children["level_images"]
+level_images: Namespace[DrawableValidator] = namespace.children["graphics"].children["level_images"]
 
 
 png = QImage(str(data_dir / "gfx.png"))
@@ -69,28 +70,28 @@ def _load_from_png(x: int, y: int):
     return image
 
 
-FIRE_FLOWER = level_images["fire_flower"].drawable.image()
-LEAF = level_images["leaf"].drawable.image()
-NORMAL_STAR = level_images["star"].drawable.image()
-CONTINUOUS_STAR = level_images["star_continuous"].drawable.image()
-MULTI_COIN = level_images["coins_multiple"].drawable.image()
-ONE_UP = level_images["extra_life"].drawable.image()
-COIN = level_images["coin"].drawable.image()
-VINE = level_images["vine"].drawable.image()
-P_SWITCH = level_images["p_switch"].drawable.image()
-SILVER_COIN = level_images["coin_silver"].drawable.image()
-INVISIBLE_COIN = level_images["coin_invisible"].drawable.image()
-INVISIBLE_1_UP = level_images["coin_extra_life"].drawable.image()
+FIRE_FLOWER = level_images["fire_flower"].image()
+LEAF = level_images["leaf"].image()
+NORMAL_STAR = level_images["star"].image()
+CONTINUOUS_STAR = level_images["star_continuous"].image()
+MULTI_COIN = level_images["coins_multiple"].image()
+ONE_UP = level_images["extra_life"].image()
+COIN = level_images["coin"].image()
+VINE = level_images["vine"].image()
+P_SWITCH = level_images["p_switch"].image()
+SILVER_COIN = level_images["coin_silver"].image()
+INVISIBLE_COIN = level_images["coin_invisible"].image()
+INVISIBLE_1_UP = level_images["coin_extra_life"].image()
 
-NO_JUMP = level_images["no_jump"].drawable.image()
-UP_ARROW = level_images["up_arrow"].drawable.image()
-DOWN_ARROW = level_images["down_arrow"].drawable.image()
-LEFT_ARROW = level_images["left_arrow"].drawable.image()
-RIGHT_ARROW = level_images["right_arrow"].drawable.image()
+NO_JUMP = level_images["no_jump"].image()
+UP_ARROW = level_images["up_arrow"].image()
+DOWN_ARROW = level_images["down_arrow"].image()
+LEFT_ARROW = level_images["left_arrow"].image()
+RIGHT_ARROW = level_images["right_arrow"].image()
 
-ITEM_ARROW = level_images["item_arrow"].drawable.image()
+ITEM_ARROW = level_images["item_arrow"].image()
 
-EMPTY_IMAGE = level_images["empty"].drawable.image()
+EMPTY_IMAGE = level_images["empty"].image()
 
 
 SPECIAL_BACKGROUND_OBJECTS = [
@@ -102,7 +103,7 @@ SPECIAL_BACKGROUND_OBJECTS = [
 
 
 def get_blocks(level: Level) -> list[Block]:
-    palette_group = MutablePaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
     palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
@@ -119,7 +120,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     :return:
     """
 
-    palette_group = MutablePaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
@@ -173,10 +174,10 @@ class LevelDrawer:
 
         if level.object_set_number == CLOUDY_OBJECT_SET:
             bg_color = NESPalette[
-                MutablePaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3][2]
+                PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3][2]
             ]
         else:
-            bg_color = MutablePaletteGroup.from_tileset(
+            bg_color = PaletteGroup.from_tileset(
                 level.object_set_number, level.header.object_palette_index
             ).background_color
 
@@ -234,11 +235,11 @@ class LevelDrawer:
     def _draw_objects(self, painter: QPainter, level: Level):
         bg_palette_group = tuple(
             tuple(c for c in pal)
-            for pal in MutablePaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+            for pal in PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
         )
         spr_palette_group = tuple(
             tuple(c for c in pal)
-            for pal in MutablePaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
+            for pal in PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
         )
 
         blocks = get_blocks(level)

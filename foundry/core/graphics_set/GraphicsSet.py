@@ -1,45 +1,43 @@
+from collections.abc import Sequence
 from itertools import chain
-from typing import Protocol
+from typing import TypeVar
 
 from attr import attrs
-from pydantic import BaseModel
 
-from foundry.core.graphics_page.GraphicsPage import (
-    GraphicsPageProtocol,
-    PydanticGraphicsPage,
-)
+from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.util import get_graphics_pages_from_tileset
+from foundry.core.namespace import (
+    ConcreteValidator,
+    KeywordValidator,
+    SequenceValidator,
+    default_validator,
+    validate,
+)
 
-
-class GraphicsSetProtocol(Protocol):
-    """
-    A representation of a series of graphical pages inside the ROM.
-
-    Attributes
-    ----------
-    pages: tuple[GraphicsPageProtocol, ...]
-        The pages that compose the graphical set.
-    """
-
-    pages: tuple[GraphicsPageProtocol, ...]
-
-    def __bytes__(self) -> bytes:
-        ...
+_S = TypeVar("_S", bound="GraphicsSet")
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=False, hash=False)
-class GraphicsSet:
+@default_validator
+class GraphicsSet(ConcreteValidator, KeywordValidator):
     """
     A representation of a series of graphical pages inside the ROM, that uses ``attrs`` to create
     a basic implementation.
 
     Attributes
     ----------
-    pages: tuple[GraphicsPageProtocol, ...]
+    pages: tuple[GraphicsPage, ...]
         The pages that compose the graphical set.
     """
 
-    pages: tuple[GraphicsPageProtocol, ...]
+    pages: tuple[GraphicsPage, ...]
+    __names__ = (
+        "__GRAPHICS_SET_VALIDATOR__",
+        "graphics set",
+        "Graphics Set",
+        "GRAPHICS SET",
+    )
+    __required_validators__ = (GraphicsPage, SequenceValidator)
 
     def __eq__(self, other):
         return self is other or (isinstance(other, GraphicsSet) and self.pages == other.pages)
@@ -56,19 +54,7 @@ class GraphicsSet:
         cls.number = index
         return cls(get_graphics_pages_from_tileset(index))
 
-
-class PydanticGraphicsSet(BaseModel):
-    """
-    A JSON model of a generic GraphicsSet through Pydantic.
-
-    Attributes
-    ----------
-    pages: list[PydanticGraphicsPage]
-        The pages that compose the graphical set.
-    """
-
-    pages: list[PydanticGraphicsPage]
-
-    @property
-    def graphics_set(self) -> GraphicsSetProtocol:
-        return GraphicsSet(tuple(page.to_graphics_page() for page in self.pages))
+    @classmethod
+    @validate(pages=SequenceValidator.generate_class(GraphicsPage))
+    def validate(cls: type[_S], pages: Sequence[GraphicsPage]) -> _S:
+        return cls(tuple(pages))

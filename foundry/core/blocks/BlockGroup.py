@@ -1,62 +1,28 @@
 from collections.abc import Sequence
-from typing import Protocol, TypeVar
 
 from attr import attrs
 from PySide6.QtGui import QColor, QImage
 
 from foundry.core.blocks import BLOCK_SIZE
-from foundry.core.blocks.Block import Block, BlockProtocol, PydanticBlock
+from foundry.core.blocks.Block import Block
 from foundry.core.blocks.util import block_to_image
-from foundry.core.drawable.Drawable import Drawable
 from foundry.core.geometry import Point, Size
-from foundry.core.graphics_set.GraphicsSet import (
-    GraphicsSetProtocol,
-    PydanticGraphicsSet,
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.namespace import (
+    ConcreteValidator,
+    KeywordValidator,
+    SequenceValidator,
+    default_validator,
+    validate,
 )
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import (
-    HashablePaletteGroupProtocol,
-    PaletteGroup,
-    PaletteGroupProtocol,
-    PydanticPaletteGroup,
-)
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.gfx.drawable import MASK_COLOR
 
 
-class BlockGroupProtocol(Protocol):
-    """
-    A representation of a group of blocks inside the game.
-
-    Attributes
-    ----------
-    position: Point
-        The position of the block group.
-    blocks: Sequence[BlockProtocol]
-        The blocks that compose the block group.
-    graphics_set: GraphicsSetProtocol
-        The graphics to render the blocks with.
-    palette_group: PaletteGroupProtocol
-        The palettes to render the blocks with.
-    """
-
-    point: Point
-    blocks: Sequence[BlockProtocol]
-    graphics_set: GraphicsSetProtocol
-    palette_group: PaletteGroupProtocol
-
-    @property
-    def size(self) -> Size:
-        ...
-
-    def image(self, scale_factor: int) -> QImage:
-        ...
-
-
-_T = TypeVar("_T", bound="BlockGroup")
-
-
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class BlockGroup:
+@default_validator
+class BlockGroup(ConcreteValidator, KeywordValidator):
     """
     A generic, hashable, representation of a group of blocks inside the game.
 
@@ -64,63 +30,31 @@ class BlockGroup:
     ----------
     point: Point
         The point in space of the block group.
-    blocks: tuple[BlockProtocol]
+    blocks: tuple[Block]
         The blocks that compose the block group.
-    graphics_set: GraphicsSetProtocol
+    graphics_set: GraphicsSet
         The graphics to render the blocks with.
-    palette_group: HashablePaletteGroupProtocol
+    palette_group: PaletteGroup
         The palettes to render the blocks with.
     """
 
+    __names__ = ("__BLOCK_GROUP_VALIDATOR__", "block group", "Block Group", "BLOCK GROUP")
+    __required_validators__ = (SequenceValidator, Point, Block, GraphicsSet, PaletteGroup)
+
     point: Point
-    blocks: tuple[BlockProtocol]
-    graphics_set: GraphicsSetProtocol
-    palette_group: HashablePaletteGroupProtocol
+    blocks: tuple[Block]
+    graphics_set: GraphicsSet
+    palette_group: PaletteGroup
 
     @classmethod
-    def from_values(
-        cls: type[_T],
-        point: Point,
-        blocks: Sequence[BlockProtocol],
-        graphics_set: GraphicsSetProtocol,
-        palette_group: PaletteGroupProtocol,
-    ) -> _T:
-        """
-        Generates a block group from any point, block, graphics set, and palette group, converting it to
-        the correct hashable type if necessary.
-
-        Parameters
-        ----------
-        point : Point
-            The point in space of the block group.
-        blocks : Sequence[BlockProtocol]
-            The blocks that compose the block group.
-        graphics_set : GraphicsSetProtocol
-            The graphics to render the blocks with.
-        palette_group : PaletteGroupProtocol
-            The palettes to render the blocks with.
-        """
-        return cls(
-            point,
-            tuple(Block.from_block(block) for block in blocks),
-            graphics_set,
-            PaletteGroup.from_palette_group(palette_group),
-        )
-
-    @classmethod
-    def from_block_group(cls: type[_T], block_group: BlockGroupProtocol) -> _T:
-        """
-        Generates this implementation of a block group from any other valid
-        :class:`~foundry.core.blocks.BlockGroup.BlockGroupProtocol`, converting any types if necessary.
-
-        Parameters
-        ----------
-        block_group : BlockGroupProtocol
-            The initial block group to be converted from.
-        """
-        return cls.from_values(
-            block_group.point, block_group.blocks, block_group.graphics_set, block_group.palette_group
-        )
+    @validate(
+        point=Point,
+        blocks=SequenceValidator.generate_class(Block),
+        graphics_set=GraphicsSet,
+        palette_group=PaletteGroup,
+    )
+    def validate(cls, point: Point, blocks: Sequence[Block], graphics_set: GraphicsSet, palette_group: PaletteGroup):
+        return cls(point, tuple(blocks), graphics_set, palette_group)
 
     @property
     def size(self) -> Size:
@@ -165,19 +99,3 @@ class BlockGroup:
                 )
 
         return image
-
-
-class PydanticBlockGroup(Drawable):
-    point: Point
-    blocks: list[PydanticBlock]
-    graphics_set: PydanticGraphicsSet
-    palette_group: PydanticPaletteGroup
-
-    @property
-    def block_group(self) -> BlockGroupProtocol:
-        return BlockGroup.from_values(
-            self.point,
-            [b.block for b in self.blocks],
-            self.graphics_set.graphics_set,
-            self.palette_group.palette_group,
-        )

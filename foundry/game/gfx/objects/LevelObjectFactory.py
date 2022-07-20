@@ -1,5 +1,5 @@
-from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import (
     SCREEN_HEIGHT,
@@ -13,13 +13,13 @@ class LevelObjectFactory:
     graphic_set: int
     palette_group_index: int
 
-    graphics_set: GraphicsSetProtocol | None = None
+    graphics_set: GraphicsSet | None = None
     palette_group: list = []
 
     def __init__(
         self,
         object_set: int,
-        graphic_set: int | GraphicsSetProtocol,
+        graphic_set: int | GraphicsSet,
         palette_group_index: int,
         objects_ref: list[LevelObject],
         vertical_level: bool,
@@ -46,7 +46,7 @@ class LevelObjectFactory:
 
     def set_palette_group_index(self, palette_group_index: int):
         self.palette_group_index = palette_group_index
-        self.palette_group = MutablePaletteGroup.from_tileset(self.object_set, self.palette_group_index)
+        self.palette_group = PaletteGroup.from_tileset(self.object_set, self.palette_group_index)
 
     def from_data(self, data: bytearray, index: int):
         if Jump.is_jump(data):

@@ -3,8 +3,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.geometry import Point
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
-from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
@@ -20,7 +20,7 @@ MASK_COLOR = [0xFF, 0x33, 0xFF]
 
 
 class EnemyObject(ObjectLike):
-    def __init__(self, data, png_data, palette_group: MutablePaletteGroup):
+    def __init__(self, data, png_data, palette_group: PaletteGroup):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
@@ -54,7 +54,7 @@ class EnemyObject(ObjectLike):
         )
 
     @property
-    def graphics_set(self) -> GraphicsSetProtocol:
+    def graphics_set(self) -> GraphicsSet:
         if GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation:
             return GraphicsSet(tuple(GraphicsPage(page) for page in self.definition.pages))
         else:
