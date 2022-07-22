@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from reprlib import recursive_repr
-from typing import TypeVar
+from typing import Any, TypeVar
 
 from attr import attrs
 
@@ -13,7 +13,7 @@ _CMV = TypeVar("_CMV", bound="ChainMapView")
 class ChainMap(Mapping):
     """
     A ChainMap groups multiple dicts (or other mappings) together
-    to create a single, updateable view.
+    to create a single, updatable view.
 
     Attributes
     ----------
@@ -25,7 +25,7 @@ class ChainMap(Mapping):
     -----
     Lookups search the underlying mappings successively until a key is found.
 
-    This is derived from the origional collections ChainMap, but abbreviated to
+    This is derived from the original collections ChainMap, but abbreviated to
     use attrs and be frozen.
     """
 
@@ -108,10 +108,31 @@ class ChainMap(Mapping):
         return self.__class__(other, self)
 
 
-@attrs(slots=True, auto_attribs=True, init=True, frozen=True, hash=False)
+@attrs(slots=True, auto_attribs=True, init=False, frozen=True, hash=False)
 class ChainMapView(Mapping):
+    """
+    A view of a chain map, used to limit the values able to be acquired.
+
+    Attributes
+    ----------
+    chain_map: ChainMap | ChainMapView
+        The underlying chain map to hide keys of.
+    keys: Any
+        The keys of the set, if `valid_keys` is not set.
+    valid_keys: set | None
+        The set of a valid keys.  If None and there are no `keys`, it is assumed that all keys are valid.
+    """
+
     chain_map: ChainMap | ChainMapView
     valid_keys: set
+
+    def __init__(self, mapping: Mapping, *keys: Any, valid_keys: set | None = None):
+        # get around the frozen attribute.
+        chain_map = mapping if isinstance(mapping, (ChainMap, ChainMapView)) else ChainMap(mapping)
+        object.__setattr__(self, "chain_map", chain_map)
+        object.__setattr__(
+            self, "valid_keys", valid_keys if valid_keys is not None else set(keys) or set(chain_map.keys())
+        )
 
     def __missing__(self, key):
         raise KeyError(key)
@@ -147,7 +168,7 @@ class ChainMapView(Mapping):
         return cls(ChainMap.fromkeys(iterable, *args), iterable)
 
     def copy(self):
-        return self.__class__(self.chain_map, self.valid_keys)
+        return self.__class__(self.chain_map, valid_keys=self.valid_keys)
 
     __copy__ = copy
 
@@ -160,11 +181,27 @@ class ChainMapView(Mapping):
         If no map is provided, an empty dict is used.
         Keyword arguments update the map or new empty dict.
         """
-        return self.__class__(self.chain_map.new_child(m, **kwargs), self.valid_keys)
+        return self.__class__(self.chain_map.new_child(m, **kwargs), valid_keys=self.valid_keys)
 
     @property
     def parents(self):
         """
         New ChainMap from maps[1:].
         """
-        return self.__class__(self.chain_map.parents, self.valid_keys)
+        return self.__class__(self.chain_map.parents, valid_keys=self.valid_keys)
+
+    @property
+    def maps(self) -> tuple[Mapping]:
+        """
+        The maps associated with the underlying chain map.
+
+        Returns
+        -------
+        tuple[Mapping]
+            A series of maps that are present in the underlying chain map.
+
+        Notes
+        -----
+        Does not hide invalid keys, defined from `valid_keys`.
+        """
+        return self.chain_map.maps

@@ -5,12 +5,17 @@ from collections import OrderedDict, UserDict
 
 from pytest import raises
 
-from foundry.core import ChainMap
+from foundry.core import ChainMap, ChainMapView
 
 
 class DefaultChainMap(ChainMap):
     def __missing__(self, key):
         return 999
+
+
+class DefaultChainMapView(ChainMapView):
+    def __missing__(self, key):
+        return 888
 
 
 class Subclass(ChainMap):
@@ -287,3 +292,269 @@ def test_chain_map_union_reverse():
     a = ChainMap({1: 2, 3: 4}) | SubclassRor({5: 6, 7: 8})
     assert isinstance(a, SubclassRor)
     assert a.maps == (ChainMap({1: 2, 3: 4}), SubclassRor({5: 6, 7: 8}))
+
+
+def test_chain_map_view_initialization_empty():
+    a = ChainMapView(ChainMap())
+    assert a.maps == ()
+    assert a.keys() == set()
+
+
+def test_chain_map_view_initialization_simple():
+    a = ChainMapView(ChainMap({1: 2}))
+    assert a.maps == ({1: 2},)
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_initialization_complex():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5}))
+    assert a.maps == ({1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2, 4}
+
+
+def test_chain_map_view_initialization_regular_map():
+    a = ChainMapView({2: 3, 4: 5})
+    assert a.maps == ({2: 3, 4: 5},)
+    assert a.keys() == {2, 4}
+
+
+def test_chain_map_view_initialization_hidden_keys_args():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5}), 1, 2, 3)
+    assert a.maps == ({1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2}
+
+
+def test_chain_map_view_initialization_hidden_keys_set():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5}), valid_keys={1, 2, 3})
+    assert a.maps == ({1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2}
+
+
+def test_chain_map_view_new_child_empty_empty():
+    a = ChainMapView(ChainMap()).new_child()
+    assert a.maps == ()
+    assert a.keys() == set()
+
+
+def test_chain_map_view_new_child_simple_empty():
+    a = ChainMapView(ChainMap({1: 2})).new_child()
+    assert a.maps == ({1: 2},)
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_new_child_empty_simple_single():
+    a = ChainMapView(ChainMap()).new_child({3: 4})
+    assert a.maps == ({3: 4},)
+    assert a.keys() == set()
+
+
+def test_chain_map_view_new_child_empty_simple_kwargs():
+    a = ChainMapView(ChainMap()).new_child(test=3)
+    assert a.maps == ({"test": 3},)
+    assert a.keys() == set()
+
+
+def test_chain_map_view_new_child_simple_simple_single():
+    a = ChainMapView(ChainMap({1: 2})).new_child({3: 4})
+    assert a.maps == ({3: 4}, {1: 2})
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_new_child_simple_simple_kwargs():
+    a = ChainMapView(ChainMap({1: 2})).new_child(test=3)
+    assert a.maps == ({"test": 3}, {1: 2})
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_new_child_complex_empty():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5})).new_child()
+    assert a.maps == ({1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2, 4}
+
+
+def test_chain_map_view_new_child_complex_simple_single():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5})).new_child({6: 7})
+    assert a.maps == ({6: 7}, {1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2, 4}
+
+
+def test_chain_map_view_new_child_complex_simple_kwargs():
+    a = ChainMapView(ChainMap({1: 2}, {2: 3, 4: 5})).new_child(test=6)
+    assert a.maps == ({"test": 6}, {1: 2}, {2: 3, 4: 5})
+    assert a.keys() == {1, 2, 4}
+
+
+def test_chain_map_view_new_child_simple_complex_single():
+    a = ChainMapView(ChainMap({1: 2})).new_child({2: 3, 4: 5})
+    assert a.maps == ({2: 3, 4: 5}, {1: 2})
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_new_child_simple_complex_kwargs():
+    a = ChainMapView(ChainMap({1: 2})).new_child(test=3, test2=4)
+    assert a.maps == ({"test": 3, "test2": 4}, {1: 2})
+    assert a.keys() == {1}
+
+
+def test_chain_map_view_items_empty():
+    assert ChainMapView(ChainMap()).items() == {}.items()
+
+
+def test_chain_map_view_items_simple():
+    assert ChainMapView(ChainMap({1: 2, 3: 4})).items() == {1: 2, 3: 4}.items()
+
+
+def test_chain_map_view_items_complex():
+    assert ChainMapView(ChainMap({1: 2}, {1: 0, 3: 4}, {3: 0, 5: 6})).items() == {1: 2, 3: 4, 5: 6}.items()
+
+
+def test_chain_map_view_items_valid_keys():
+    assert ChainMapView(ChainMap({1: 2}, {1: 0, 3: 4}, {3: 0, 5: 6}), valid_keys={1, 3}).items() == {1: 2, 3: 4}.items()
+
+
+def test_chain_map_view_repr_empty():
+    repr(ChainMapView(ChainMap()))
+
+
+def test_chain_map_view_repr_simple():
+    repr(ChainMapView(ChainMap({1: 2}, {1: 0, 3: 4}, {3: 0, 5: 6})))
+
+
+def test_chain_map_view_str_empty():
+    str(ChainMapView(ChainMap()))
+
+
+def test_chain_map_view_str_simple():
+    str(ChainMapView(ChainMap({1: 2}, {1: 0, 3: 4}, {3: 0, 5: 6})))
+
+
+def test_chain_map_view_get_item_simple():
+    assert ChainMapView(ChainMap({1: 2}))[1] == 2
+
+
+def test_chain_map_view_get_item_simple_without_valid_key():
+    with raises(KeyError):
+        ChainMapView(DefaultChainMap({1: 2}), valid_keys=set())[1]
+
+
+def test_chain_map_view_get_item_complex():
+    a = ChainMapView(ChainMap({1: 2}, {3: 4, 5: 6}, {1: 0, 3: 0, 5: 0}))
+    assert a[1] == 2
+    assert a[3] == 4
+    assert a[5] == 6
+
+
+def test_chain_map_view_get_item_complex_without_valid_key():
+    a = ChainMapView(DefaultChainMap({1: 2}, {3: 4, 5: 6}, {1: 0, 3: 0, 5: 0}), valid_keys={1, 5})
+    assert a[1] == 2
+    with raises(KeyError):
+        assert a[3]
+    assert a[5] == 6
+
+
+def test_chain_map_view_get_item_missing_empty():
+    assert DefaultChainMapView(ChainMap())[1] == 888
+
+
+def test_chain_map_view_get_item_missing_simple():
+    assert DefaultChainMapView(DefaultChainMap({1: 2}), valid_keys=set())[1] == 888
+
+
+def test_chain_map_view_get_item_missing_complex():
+    a = DefaultChainMapView(DefaultChainMap({1: 2}, {3: 4, 5: 6}), valid_keys={1, 3, 4})
+    assert a[1] == 2
+    assert a[2] == 888
+    assert a[3] == 4
+    assert a[4] == 999
+    assert a[5] == 888
+
+
+def test_chain_map_view_len_empty():
+    assert len(ChainMapView(ChainMap())) == 0
+
+
+def test_chain_map_view_len_simple():
+    assert len(ChainMapView(ChainMap({1: 2}, {3: 4, 5: 6}))) == 3
+
+
+def test_chain_map_view_len_complex():
+    assert len(ChainMapView(ChainMap({}, {1: 2}, {3: 4, 5: 6}, {1: 0, 3: 0, 5: 0}), valid_keys={1, 2, 3, 4})) == 2
+
+
+def test_chain_map_view_contains_empty():
+    assert 1 not in ChainMapView(ChainMap())
+
+
+def test_chain_map_view_contains_simple():
+    assert 1 in ChainMapView(ChainMap({1: 2}))
+
+
+def test_chain_map_view_contains_complex():
+    a = ChainMapView(ChainMap({1: 2}, {3: 4, 5: 6}, {1: 0, 3: 0, 5: 0}), valid_keys={1, 3, 4})
+    assert 1 in a
+    assert 2 not in a
+    assert 3 in a
+    assert 4 not in a
+    assert 5 not in a
+    assert 6 not in a
+
+
+def test_chain_map_view_ordering():
+    # Combined order matches a series of dict updates from last to first.
+    # This test relies on the ordering of the underlying dicts.
+
+    baseline = {"music": "bach", "art": "rembrandt"}
+    adjustments = {"art": "van gogh", "opera": "carmen"}
+
+    cm = ChainMapView(ChainMap(adjustments, baseline))
+
+    combined = baseline.copy()
+    combined.update(adjustments)
+
+    assert list(combined.items()) == list(cm.items())
+
+
+def test_chain_map_view_bool_empty():
+    assert not ChainMapView(ChainMap())
+
+
+def test_chain_map_view_bool_empty_set():
+    assert not ChainMapView(ChainMap(), valid_keys=set())
+
+
+def test_chain_map_view_bool_simple():
+    assert ChainMapView(ChainMap({1: 2}, {}))
+
+
+def test_chain_map_view_bool_complex():
+    assert not ChainMapView(ChainMap({1: 2}), valid_keys={2})
+
+
+def test_chain_map_view_order_preservation():
+    d = ChainMapView(
+        ChainMap(
+            OrderedDict(j=0, h=88888),
+            OrderedDict(),
+            OrderedDict(i=9999, d=4444, c=3333),
+            OrderedDict(f=666, b=222, g=777, c=333, h=888),
+            OrderedDict(),
+            OrderedDict(e=55, b=22),
+            OrderedDict(a=1, b=2, c=3, d=4, e=5),
+            OrderedDict(),
+        ),
+        valid_keys={"a", "c", "e", "g", "i"},
+    )
+    assert "".join(d) == "acegi"
+    assert list(d.items()) == [
+        ("a", 1),
+        ("c", 3333),
+        ("e", 55),
+        ("g", 777),
+        ("i", 9999),
+    ]
+
+
+def test_chain_map_view_dict_coercion():
+    d = ChainMapView(ChainMap(dict(a=1, b=2), dict(b=20, c=30)))
+    assert dict(d) == dict(a=1, b=2, c=30)
+    assert dict(d.items()) == dict(a=1, b=2, c=30)
