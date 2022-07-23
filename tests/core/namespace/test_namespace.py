@@ -8,6 +8,7 @@ from foundry.core.namespace import (
     _evolve_child,
     generate_namespace,
     get_namespace_dict_from_path,
+    primitive_manager,
 )
 
 
@@ -231,17 +232,18 @@ def test_namespace_from_path_complex():
 
 
 def test_generate_namespace_initialization_empty(empty_namespace):
-    namespace = generate_namespace({"type": "INTEGER"})
+    print(primitive_manager)
+    namespace = generate_namespace({"type": "INTEGER"}, primitive_manager)
     assert empty_namespace == namespace
 
 
 def test_generate_namespace_initialization_with_int_elements():
-    namespace = generate_namespace({"type": "INTEGER", "elements": {"a": 1, "b": 2, "c": 3}})
+    namespace = generate_namespace({"type": "INTEGER", "elements": {"a": 1, "b": 2, "c": 3}}, primitive_manager)
     assert Namespace(elements={"a": 1, "b": 2, "c": 3}) == namespace
 
 
 def test_generate_namespace_initialization_empty_hierarchy(empty_namespace):
-    namespace = generate_namespace({"type": "INTEGER", "children": {"a": {"type": "INTEGER"}}})
+    namespace = generate_namespace({"type": "INTEGER", "children": {"a": {"type": "INTEGER"}}}, primitive_manager)
     assert Namespace(None, {}, {}, {"a": empty_namespace}) == namespace
 
 
@@ -253,7 +255,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_does_not_exist(
                 "children": {
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -265,7 +268,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy():
                 "foo": {"type": "INTEGER"},
                 "bar": {"type": "INTEGER", "dependencies": ["foo"]},
             },
-        }
+        },
+        primitive_manager,
     )
 
     foo = Namespace()
@@ -281,7 +285,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                 "children": {
                     "foo": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -294,7 +299,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "foo": {"type": "INTEGER", "dependencies": ["bar"]},
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -308,7 +314,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                     "foo_bar": {"type": "INTEGER", "dependencies": ["bar"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -323,7 +330,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "foo_bar": {"type": "INTEGER", "dependencies": ["bar"]},
                     "bar_foo": {"type": "INTEGER", "dependencies": ["foo_bar"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -339,7 +347,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_complex():
                 "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 "bar_foo": {"type": "INTEGER", "dependencies": ["foo.foo_bar"]},
             },
-        }
+        },
+        primitive_manager,
     )
 
     assert "foo" in namespace.children
