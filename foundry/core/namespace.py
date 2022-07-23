@@ -1,12 +1,7 @@
 from __future__ import annotations
 
 from collections import ChainMap
-from collections.abc import Iterable, Iterator, Sequence
-from enum import Enum
-from graphlib import CycleError, TopologicalSorter
-from re import search
-from typing import Any, Generic, TypeVar
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from enum import Enum
 from graphlib import CycleError, TopologicalSorter
 from re import search
@@ -14,9 +9,43 @@ from typing import Any, Callable, Generic, Iterator, Sequence, Type, TypeVar
 
 from attr import Factory, attrs, evolve, field, validators
 
+from foundry.core import ChainMap, ChainMapView
+
 _T = TypeVar("_T")
-_TNV = TypeVar("_TNV", bound="NamespaceValidator")
+_NV = TypeVar("_NV", bound="NamespaceValidator")
+_CNV = TypeVar("_CNV", bound="ConcreteNamespaceValidator")
+_NTH = TypeVar("_NTH", bound="NamespaceTypeHandler")
+_NTHM = TypeVar("_NTHM", bound="NamespaceTypeHandlerManager")
+_PV = TypeVar("_PV", bound="_PrimitiveValidator")
 _Validator = Callable[[Type[_T], Mapping], _T]
+ValidatorMapping = Mapping[str, _Validator | "Validator"]
+ValidatorHandlerMapping = Mapping[str, "NamespaceTypeHandler"]
+
+
+DEFAULT_ARGUMENT = "__DEFAULT_ARGUMENT__"
+TYPE_ARGUMENT = "__TYPE_ARGUMENT__"
+VALID_TYPE_ARGUMENTS = (TYPE_ARGUMENT, "TYPE", "type")
+
+
+def _get_type_argument(v: Mapping) -> str | None:
+    """
+    Determines the type of the object.  A few options are used, but it is advised to only
+    use a single one, as the process to select the type should be assumed to be random.
+
+    Parameters
+    ----------
+    v : Mapping
+        A map of values to determine the type from.
+
+    Returns
+    -------
+    str | None
+        The type if found otherwise None.
+    """
+    for valid_argument in VALID_TYPE_ARGUMENTS:
+        if valid_argument in v:
+            return v[valid_argument]
+    return None
 
 
 def _is_valid_list_of_names(inst, attr, value: tuple) -> tuple[str, ...]:
@@ -128,15 +157,15 @@ def is_valid_name(name: Any, *, regrex: str = "^[A-Za-z_][A-Za-z0-9_]*$") -> boo
     return bool(search(regrex, name)) if isinstance(name, str) else False
 
 
-def sort_topographically(graph: dict[Path, set[Path]]) -> Iterable[Path]:
+def sort_topographically(graph: Mapping[Path, set[Path]]) -> Iterable[Path]:
     """
     From a graph of dependencies an iterable is produced to sort the vertices in topographic order, such
     that the dependencies could be loaded sequentially without any exceptions.
 
     Parameters
     ----------
-    graph : dict[Path, set[Path]]
-        The representation of the graph, where the dictionary represents the set of vertices and its
+    graph : Mapping[Path, set[Path]]
+        The representation of the graph, where the mapping represents the set of vertices and its
         respective neighbors.
 
     Returns
@@ -147,11 +176,11 @@ def sort_topographically(graph: dict[Path, set[Path]]) -> Iterable[Path]:
     return TopologicalSorter(graph).static_order()
 
 
-def find_cycle(graph: dict[Path, set[Path]]) -> tuple[Path]:
+def find_cycle(graph: Mapping[Path, set[Path]]) -> tuple[Path]:
     return TopologicalSorter(graph)._find_cycle()  # type: ignore
 
 
-def generate_dependency_graph(name: str, v: dict, parent: Path | None = None) -> dict[Path, set[Path]]:
+def generate_dependency_graph(name: str, v: Mapping, parent: Path | None = None) -> Mapping[Path, set[Path]]:
     """
     Generates a graph where each vertex is a namespace and its neighbors are its dependencies, including
     its parent.
@@ -160,17 +189,17 @@ def generate_dependency_graph(name: str, v: dict, parent: Path | None = None) ->
     ----------
     name: str
         The name of the root node.
-    v : dict
-        A dictionary structure that represents the data.
+    v : Mapping
+        A map structure that represents the data.
     parent : Optional[Path], optional
         The parent of the root node, by default None
 
     Returns
     -------
-    dict[Path, set[Path]]
+    Mapping[Path, set[Path]]
         The graph that represents the data supplied.
     """
-    graph: dict[Path, set[Path]] = {}
+    graph: Mapping[Path, set[Path]] = {}
     path: Path = parent.create_child(name) if parent else Path()
     dependencies: set[Path] = set() if "dependencies" not in v else {Path.from_string(d) for d in v["dependencies"]}
     if parent is not None:
@@ -184,16 +213,16 @@ def generate_dependency_graph(name: str, v: dict, parent: Path | None = None) ->
     return graph
 
 
-def validate_namespace_type(type_handler: NamespaceTypeHandler, v: dict) -> str:
+def validate_namespace_type(validators: NamespaceTypeHandlerManager, v: Mapping) -> str:
     """
     Validates that a namespace's type is a valid type.
 
     Parameters
     ----------
-    type_handler : NamespaceTypeHandler
-        The handler to get the valid types from.
-    v : dict
-        The dict with the data for a namespace.
+    validators : NamespaceTypeHandlerManager
+        The specific validators and associated types that the namespace can possess.
+    v : Mapping
+        The mapping with the data for a namespace.
 
     Returns
     -------
@@ -205,41 +234,41 @@ def validate_namespace_type(type_handler: NamespaceTypeHandler, v: dict) -> str:
     KeyError
         There does not exist type inside `v`.
     TypeError
-        `type` is not present inside `type_handler`.
+        `type` is not present inside `validators`.
     ValueError
-        The `type` is present inside `type_handler` but the validation type was not defined
+        The `type` is present inside `validators` but the validation type was not defined
         properly, so the namespace could not determine which type to validate the type to.
     """
-    if "type" not in v:
+    type_ = _get_type_argument(v)
+    if type_ is None:
         raise KeyError(f"type of namespace is not found inside {v}.")
-    type_: str = v["type"]
-    if not type_handler.has_type(type_):
-        raise TypeError(f"{type_} is not supported, only {type_handler.types}.")
-    if type_handler.get_type_suggestion(type_) is None:
-        raise ValueError(f"Could not determine how to validate {type_} from {type_handler.types}")
+    if type_ not in validators.types.keys():
+        raise TypeError(f"{type_} is not supported, only {validators.types.keys()}.")
+    if validators.types[type_].get_type_suggestion(type_) is None:
+        raise ValueError(f"Could not determine how to validate {type_} from {validators.types[type_]}")
     return type_
 
 
-def get_namespace_dict_from_path(v: dict, path: Path) -> dict:
+def get_namespace_dict_from_path(v: Mapping, path: Path) -> Mapping:
     """
-    Provides the dictionary associated with a given path that will generate a namespace.
+    Provides the mapping associated with a given path that will generate a namespace.
 
     Parameters
     ----------
-    v : dict
-        The root dictionary and its children to obtain its or its children's namespace's dictionary from.
+    v : Mapping
+        The root map and its children to obtain its or its children's namespace's map from.
     path : Path
         The path to namespace which is valid from root.
 
     Returns
     -------
-    dict
-        The namespace's dict associated with the path provided.
+    Mapping
+        The namespace's map associated with the path provided.
 
     Raises
     ------
     ChildDoesNotExistException
-        The child associated with the path provided does not exist inside the dictionary.
+        The child associated with the path provided does not exist inside the map.
     """
     get_dependency_dict = v
     for element in path:
@@ -251,7 +280,7 @@ def get_namespace_dict_from_path(v: dict, path: Path) -> dict:
 
 
 def validate_namespace(
-    v: dict, parent: Namespace | None = None, type_handler: NamespaceTypeHandler | None = None
+    v: Mapping, parent: Namespace | None = None, validators: NamespaceTypeHandlerManager | None = None
 ) -> Namespace:
     """
     Handles the primary validation which is required to generate a namespace.  Specifically, its dependencies
@@ -259,18 +288,18 @@ def validate_namespace(
 
     Parameters
     ----------
-    v : dict
-        The dictionary to generate the namespace from.
+    v : Mapping
+        The mapping to generate the namespace from.
     parent : Optional[Namespace], optional
         The parent of this namespace, by default makes the namespace the root.
-    type_handler: NamespaceTypeHandler | None, optional
-        The type handler to validate and generate new namespaces from, by default the parent's handler if
+    type_handler: NamespaceTypeHandlerManager | None, optional
+        The type manager to validate and generate new namespaces from, by default the parent's handler if
         a parent is provided, otherwise the default handler will be used.
 
     Returns
     -------
     Namespace
-        The namespace represented by this dictionary, excluding its children.
+        The namespace represented by this map, excluding its children.
 
     Raises
     ------
@@ -285,7 +314,9 @@ def validate_namespace(
     load its children without creating a circular importation loop.  Instead, the children must be appended
     to the namespace after its initialization to facilitate such a relationship.
     """
-    namespace = Namespace(parent) if type_handler is None else Namespace(parent, type_handler=type_handler)
+    namespace = Namespace(parent) if validators is None else Namespace(parent, validators=validators)
+    element_type = validate_namespace_type(namespace.validators, v)
+    validator = namespace.validators.types[element_type]
 
     dependencies: set[Path] = set() if "dependencies" not in v else {Path.from_string(d) for d in v["dependencies"]}
     if parent is None and dependencies:
@@ -296,29 +327,27 @@ def validate_namespace(
 
     elements = {}
     for key, value in ({} if "elements" not in v else v["elements"]).items():
-        elements[key] = namespace.type_handler.validate_by_type(
-            validate_namespace_type(namespace.type_handler, value), value, namespace
-        )
+        elements[key] = validator.validate_by_type(element_type, value, namespace)
     namespace = evolve(namespace, elements=elements)
 
     return namespace
 
 
-def generate_namespace(v: dict) -> Namespace:
+def generate_namespace(v: Mapping) -> Namespace:
     """
-    Generates the root namespace from a dictionary, creating every aspect of the namespace, including its
+    Generates the root namespace from a mapping, creating every aspect of the namespace, including its
     children.  This also includes validation of the namespace, its children, its elements, and its children's
     elements, recursively.
 
     Parameters
     ----------
-    v : dict
-        The dictionary to generate the namespace and its children from.
+    v : Mapping
+        The mapping to generate the namespace and its children from.
 
     Returns
     -------
     Namespace
-        The root namespace and its children derived from the dictionary provided.
+        The root namespace and its children derived from the map provided.
 
     Notes
     -----
@@ -329,8 +358,7 @@ def generate_namespace(v: dict) -> Namespace:
     namespace's dependency and parent must follow a directed acyclic graph with accordance to the namespace's
     invariant, we can sort the dependency graph of the root topographically.  This generates a sequence
     which can load the all the namespaces in an order which will not conflict with one another.  Once
-    every namespace is iterated through in topographic order, the root should correctly define the
-    dictionary.
+    every namespace is iterated through in topographic order, the root should correctly define the map.
     """
     order = iter(sort_topographically(dependency_graph := generate_dependency_graph("root", v)))
 
@@ -498,7 +526,7 @@ def validate_path_name(path: Any) -> str:
     return path
 
 
-def validate_from_namespace(cls: Type[_T], v: dict) -> _T:
+def validate_from_namespace(cls: Type[_T], v: Mapping) -> _T:
     """
     Generates and validates from another existing object inside a namespace.
 
@@ -506,8 +534,8 @@ def validate_from_namespace(cls: Type[_T], v: dict) -> _T:
     ----------
     cls : Type[_T]
         The type to find inside the namespace.
-    v : dict
-        A dictionary containing a parent, name, and path.
+    v : Mapping
+        A map containing a parent, name, and path.
 
     Returns
     -------
@@ -935,8 +963,8 @@ class NamespaceTypeHandler(Generic[_T]):
 
     Attributes
     ----------
-    types: Mapping[str, _Validator | Validator]
-        A dict containing the types and their respective validator methods.  This can come in
+    types: ValidatorMapping
+        A map containing the types and their respective validator methods.  This can come in
         two variants.  It can either be a simple callable or be defined as a Validator.
         If a callable is provided, it will automatically be converted to a Validator with
         default parameters for any Validator specific methods.  For more specification a
@@ -951,10 +979,32 @@ class NamespaceTypeHandler(Generic[_T]):
         The type to be validated to.
     """
 
-    types: Mapping[str, _Validator | Validator]
+    types: ValidatorMapping = field(default=dict)
     default_type_suggestion: Type[_T] | None = None
 
-    def validate_by_type(self, type: str, values: dict, parent: Namespace) -> _T:
+    def overwrite_from_parent(self: _NTH, other: NamespaceTypeHandler) -> _NTH:
+        """
+        `other` overwrites or adds additional type validators from this handler
+        to form a new handler.
+
+        Parameters
+        ----------
+        other : NamespaceTypeHandler
+            The handler to override values from this handler.
+
+        Returns
+        -------
+        Self
+            The extended parent.
+        """
+        return type(self)(
+            ChainMap(other.types, self.types),
+            default_type_suggestion=self.default_type_suggestion
+            if other.default_type_suggestion is None
+            else other.default_type_suggestion,
+        )
+
+    def validate_by_type(self, type: str, values: Mapping, parent: Namespace) -> _T:
         """
         Generates and validates `values` of `type` to generate an object from `parent`.
 
@@ -962,7 +1012,7 @@ class NamespaceTypeHandler(Generic[_T]):
         ----------
         type : str
             The type of object to generate and validate.
-        values : dict
+        values : Mapping
             The attributes of the object.
         parent : Namespace
             The parent namespace of the object.
@@ -972,7 +1022,7 @@ class NamespaceTypeHandler(Generic[_T]):
         _T
             The generated and validated object.
         """
-        validator = parent.type_handler
+        validator = parent.validators.types[type]
         if validator.get_if_validator_uses_parent(type):
             return validator.get_validator(type)(validator.get_type_suggestion(type), values | {"parent": parent})
         return validator.get_validator(type)(validator.get_type_suggestion(type), values)
@@ -999,7 +1049,7 @@ class NamespaceTypeHandler(Generic[_T]):
 
     def get_validator(self, type: str) -> _Validator:
         """
-        Gets a validator to generate a specific object from a dict.
+        Gets a validator to generate a specific object from a map.
 
         Parameters
         ----------
@@ -1015,7 +1065,7 @@ class NamespaceTypeHandler(Generic[_T]):
 
     def get_if_validator_uses_parent(self, type: str) -> bool:
         """
-        Gets if a validator should request the parent namespace to be inside the dict which is passed to
+        Gets if a validator should request the parent namespace to be inside the map which is passed to
         it for its initialization.
 
         Parameters
@@ -1047,19 +1097,110 @@ class NamespaceTypeHandler(Generic[_T]):
         return type in self.types
 
 
-_namespace_type_handler: NamespaceTypeHandler = NamespaceTypeHandler({})
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class NamespaceTypeHandlerManager:
+    """
+    Manages which type is associated to which handler.  This primarily serves as a series of
+    convenience methods to manage a map to ensure consistent validation.
+
+    Attributes
+    ----------
+    types: ValidatorHandlerMapping
+        A series of types and their associated validator handler.
+    """
+
+    types: ValidatorHandlerMapping
+
+    @classmethod
+    def from_managers(cls, *managers: NamespaceTypeHandlerManager):
+        """
+        Effectively merges a series of managers together into a single manager.
+
+        Parameters
+        ----------
+        *managers: NamespaceTypeHandlerManager
+            A series of managers to merge together.
+        """
+        manager = cls(ChainMap())
+        for m in managers:
+            for type_, handler in m.types.items():
+                manager.add_type_handler(type_, handler)
+        return manager
+
+    def override_type_handler(self: _NTHM, type_: str, handler: NamespaceTypeHandler) -> _NTHM:
+        """
+        Generates a new manager which removes the current handler of `type_` if it exists
+        and replaces it with `handler`.
+
+        Parameters
+        ----------
+        type_ : str
+            The type to override.
+        handler : NamespaceTypeHandler
+            The handler to validate the type with.
+
+        Returns
+        -------
+        Self
+            The generated manager with the mutation or addition to `type_`.
+        """
+        if isinstance(self.types, ChainMap):
+            return self.__class__(ChainMap({type_: handler}, *self.types.maps))  # No need to make a new ChainMap.
+        return self.__class__(ChainMap({type_: handler}, self.types))
+
+    def add_type_handler(self: _NTHM, type_: str, handler: NamespaceTypeHandler) -> _NTHM:
+        """
+        Generates a new manager which adds a handler to validate `type_`.  If `type_`
+        is already defined a new handler will be used which overrides this instance's
+        handler for `type_`, such that `handler`'s validators will be used instead.
+
+        Parameters
+        ----------
+        type_ : str
+            The type to add validators to.
+        handler : NamespaceTypeHandler
+            The handler to validate the type with.
+
+        Returns
+        -------
+        Self
+             The generated manager with the mutation or addition to `type_`.
+        """
+        if type_ not in self.types:
+            return self.override_type_handler(type_, handler)  # Overrides nothing, as it is not there.
+        return self.__class__(ChainMap({type_: self.types[type_].overwrite_from_parent(handler)}, self.types))
+
+    def from_select_types(self: _NTHM, *types: str) -> _NTHM:
+        """
+        Generates a new manager which ensures only `types` can be validated.
+
+        Parameters
+        ----------
+        *types: str
+            The types that can be validated.
+
+        Returns
+        -------
+        Self
+            This manager, but with a limit to only validate `types`.
+        """
+        if isinstance(self.types, ChainMap) or isinstance(self.types, ChainMapView):
+            return self.__class__(ChainMapView(self.types, set(*types)))  # No need to make a new ChainMap.
+        return self.__class__(ChainMapView(ChainMap(self.types), set(*types)))
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, hash=True, cache_hash=True, cmp=False, repr=False)
 class Namespace(Generic[_T]):
     parent: Namespace | None = field(eq=False, default=None)
-    dependencies: dict[str, Namespace] = field(factory=dict)
-    elements: dict[str, _T] = field(factory=dict)
-    children: dict[str, Namespace] = field(factory=dict)
-    type_handler: NamespaceTypeHandler = field(
+    dependencies: Mapping[str, Namespace] = field(factory=dict)
+    elements: Mapping[str, _T] = field(factory=dict)
+    children: Mapping[str, Namespace] = field(factory=dict)
+    validators: NamespaceTypeHandlerManager = field(
         eq=False,
         default=Factory(
-            lambda self: _namespace_type_handler if self.parent is None else self.parent.type_handler,  # type: ignore
+            lambda self: NamespaceTypeHandlerManager({})
+            if self.parent is None
+            else self.parent.validators,  # type: ignore
             takes_self=True,  # type: ignore
         ),
     )
@@ -1108,8 +1249,8 @@ class Namespace(Generic[_T]):
             s = f"{s}elements={self.elements}, "
         if self.children:
             s = f"{s}children={self.children}, "
-        if self.type_handler:
-            s = f"{s}type_handler={self.type_handler}, "
+        if self.validators:
+            s = f"{s}validators={self.validators}, "
         if s[-1] == " ":
             s = s[:-2]
         return f"{s})"
@@ -1205,12 +1346,12 @@ class Namespace(Generic[_T]):
     @property
     def public_elements(self) -> ChainMap:
         """
-        The entire dict of elements that can be accessed via the dictionary interface.
+        The entire map of elements that can be accessed via the mapping interface.
 
         Returns
         -------
         ChainMap
-            A dict containing the elements of this instance and any public facing elements from its dependencies.
+            A map containing the elements of this instance and any public facing elements from its dependencies.
         """
         return ChainMap(self.elements, *[d.elements for d in self.dependencies.values()])
 
@@ -1265,7 +1406,7 @@ class Namespace(Generic[_T]):
 
 class NamespaceValidator:
     """
-    A namespace element validator, which seeks to encorage extension and modularity for
+    A namespace element validator, which seeks to encourage extension and modularity for
     namespace validators.
 
     Attributes
@@ -1275,10 +1416,13 @@ class NamespaceValidator:
         also incorporates the parent's attribute, if it exists.
     __type_default__: str | None
         The type default.  If None, then the type must be provided.
+    __names__: tuple[str, ...]
+        The names to associate this type with.
     """
 
     __validator_handler__: NamespaceTypeHandler = NamespaceTypeHandler({"FROM NAMESPACE": validate_from_namespace})
     __type_default__: str | None = None
+    __names__: tuple[str, ...] = ("NONE", "none")
     __slots__ = ()
 
     @classmethod
@@ -1287,75 +1431,200 @@ class NamespaceValidator:
 
     @classmethod
     @property
-    def type_handler(cls: Type[_TNV]) -> NamespaceTypeHandler[_TNV]:
+    def type_handler(cls: Type[_NV]) -> NamespaceTypeHandler[_NV]:
         """
         Provides the type handler for this type.
 
         Returns
         -------
-        NamespaceTypeHandler[_TNV]
+        NamespaceTypeHandler[_NV]
             The handler for to validate this type.
         """
         return NamespaceTypeHandler(
             ChainMap(
-                cls.__validator_handler__.types,  # type: ignore
+                cls.__validator_handler__.types,
                 *[getattr(b, "type_handler").types for b in cls.__bases__ if hasattr(b, "type_handler")],
             )
         )
 
     @classmethod
-    def validate_by_type(cls: Type[_TNV], v: dict) -> _TNV:
+    @property
+    def type_manager(cls) -> NamespaceTypeHandlerManager:
+        """
+        Provides the type manager for this type and all of its associated names.
+
+        Returns
+        -------
+        NamespaceTypeHandlerManager
+            The manager to find the proper validations for this type.
+        """
+        return NamespaceTypeHandlerManager({name: cls.type_handler for name in cls.__names__})
+
+    @classmethod
+    def get_type_suggestion(cls, v: Mapping) -> str:
+        """
+        A convenience method to access the string type of the object after it has been validated by
+        `validate_type`.
+
+        Parameters
+        ----------
+        v : Mapping
+            A mapping containing the information to generate the object.
+
+        Returns
+        -------
+        str
+            The type of the object.
+        """
+        return v[TYPE_ARGUMENT]
+
+    @classmethod
+    def get_default_argument(cls, v: Mapping) -> Any:
+        """
+        A convenience method to access the default argument for a type which only accepts a single
+        argument.
+
+        Parameters
+        ----------
+        v : Mapping
+            A mapping containing the information to generate the object.
+
+        Returns
+        -------
+        Any
+            The default argument
+
+        Raises
+        ------
+        TypeError
+            Both the type and default argument is not present.
+        TypeError
+            Too many arguments were provided to deduce the default argument.
+        TypeError
+            No argument were provided other than the type.
+        """
+        if DEFAULT_ARGUMENT not in v and TYPE_ARGUMENT not in v:
+            raise TypeError(f"{cls.__name__} with arguments {v} is malformed")
+        elif DEFAULT_ARGUMENT not in v and len(v) > 2:
+            raise TypeError(f"{cls.__name__} of {cls.get_type_suggestion(v)} only accepts a single value, not {v}")
+        elif DEFAULT_ARGUMENT not in v:
+            raise TypeError(f"{cls.__name__} of {cls.get_type_suggestion(v)} must be provided a value, not {v}")
+        return v[DEFAULT_ARGUMENT]
+
+    @classmethod
+    def validate_by_type(cls: Type[_NV], v: Mapping) -> _NV:
         """
         Generates and validates an object by its type defined in `__validator_handler__`.
 
         Parameters
         ----------
-        cls : Type[_TNV]
+        cls : Type[_NV]
             The type of object to generate.
-        v : dict
-            A dictionary containing the information to generate the object.
+        v : Mapping
+            A mapping containing the information to generate the object.
 
         Returns
         -------
-        _TNV
+        _NV
             The object generated from `v` specified by its type.
         """
-        return cls.type_handler.get_validator(v["type"])(cls, v)
+        type_ = _get_type_argument(v)
+        if type_ is None:
+            raise KeyError(f"Cannot find type of {v}")
+        return cls.type_handler.get_validator(type_)(cls, v)
 
     @classmethod
-    def validate_type(cls: Type[_TNV], v: Any) -> _TNV:
+    def validate_type(cls: Type[_NV], v: Any) -> _NV:
         """
         Generates and validates an object by its types and ensures that there is a type
         inside `v` such that it can be validated further.
 
         Parameters
         ----------
-        cls : Type[_TNV]
+        cls : Type[_NV]
             The type of object to generate.
         v : Any
-            A dictionary containing the information to generate the object.
+            A map containing the information to generate the object.
 
         Returns
         -------
-        _TNV
+        _NV
             The object generated from `v` specified by its type.
 
         Raises
         ------
         TypeError
-            `v` was not passed as a dict.
-        KeyError
+            `v` was not passed as a map.
+        TypeError
             There does not exist `type` inside `v` and `__type_default__` is None.
         TypeError
             `type` is not a valid type.
         """
         if not isinstance(v, dict):
-            raise TypeError(f"{v} is not a {dict.__name__}")
-        if "type" not in v:
-            if cls.__type_default__ is not None:
-                v["type"] = cls.__type_default__
-            else:
-                raise KeyError("Must have a type")
+            if cls.__type_default__ is None:
+                raise TypeError(f"{v} is not a {dict.__name__}")
+            v = {DEFAULT_ARGUMENT: v}
+        type_ = _get_type_argument(v)
+        if type_ is None:
+            if cls.__type_default__ is None:
+                raise TypeError(f"{v} does not define a type for {cls.__name__}")
+            type_ = cls.__type_default__
         elif not cls.type_handler.has_type(type_ := v["type"]):
-            raise TypeError(f"{type_} is not a valid menu type")
+            raise TypeError(f"{type_} is not a valid type")
+        v[TYPE_ARGUMENT] = type_  # Enforce that TYPE_ARGUMENT will always work for subclass validators.
         return cls.validate_by_type(v)
+
+
+class ConcreteNamespaceValidator(NamespaceValidator):
+    """
+    Automatically provides this class as the type suggestion for the handler.  This is so the namespace
+    generation functions can actually call this instance with the correct type.
+    """
+
+    @classmethod
+    @property
+    def type_handler(cls: Type[_CNV]) -> NamespaceTypeHandler[_CNV]:
+        handler = super().type_handler
+        return evolve(handler, default_type_suggestion=cls)  # type: ignore
+
+
+NoneValidator = ConcreteNamespaceValidator
+
+
+class _PrimitiveValidator(ConcreteNamespaceValidator):
+    __type_default__ = "DEFAULT"
+
+    def __init__(self, value: Any):
+        raise NotImplementedError()
+
+    @classmethod
+    def _validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
+        return cls(cls.get_default_argument(v))
+
+    __validator_handler__ = NamespaceTypeHandler({"DEFAULT": Validator(_validate_primitive, use_parent=False)})
+
+
+class IntegerValidator(int, _PrimitiveValidator):
+    pass
+
+
+IntegerValidator.__validator_handler__ = NamespaceTypeHandler(default_type_suggestion=IntegerValidator)
+
+
+class FloatValidator(float, _PrimitiveValidator):
+    pass
+
+
+FloatValidator.__validator_handler__ = NamespaceTypeHandler(default_type_suggestion=FloatValidator)
+
+
+class StringValidator(str, _PrimitiveValidator):
+    pass
+
+
+StringValidator.__validator_handler__ = NamespaceTypeHandler(default_type_suggestion=StringValidator)
+
+
+primitive_manager = NamespaceTypeHandlerManager.from_managers(
+    IntegerValidator.type_manager, FloatValidator.type_manager, StringValidator.type_manager
+)
