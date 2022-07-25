@@ -673,6 +673,7 @@ class TypeHandler(_TypeHandler[_T]):
         if validator_type is None:
             raise ValueError("Type is not defined")
         type_suggestion = validator.get_type_suggestion(validator_type)
+        print(validator, validator_type, type_suggestion)
         if type_suggestion is None:
             raise ValueError(f"Cannot deduce type of {values} from {validator}")
         if validator.get_if_validator_uses_parent(validator_type):

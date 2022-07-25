@@ -406,11 +406,9 @@ def test_generate_namespace_generate_float():
 
 def test_generate_namespace_generate_file():
     from foundry import root_dir
-    from foundry.core.file.FilePath import FilePath
+    from foundry.core.file import FilePath
 
-    namespace = generate_namespace(
-        {"type": "FILE", "elements": {"foo": {"type": "FROM FILE", "path": "$data/gfx.png"}}}
-    )
+    namespace = generate_namespace({"type": "FILE", "elements": {"foo": "$data/gfx.png"}}, FilePath.type_manager)
 
     assert Namespace(elements={"foo": FilePath(root_dir) / "data" / "gfx.png"}) == namespace
 
