@@ -5,7 +5,6 @@ from foundry.core.namespace import (
     CircularImportException,
     Namespace,
     Path,
-    _evolve_child,
     generate_namespace,
     get_namespace_dict_from_path,
     primitive_manager,
@@ -374,17 +373,17 @@ def test_get_namespace_dict_from_path_child():
     assert expected_namespace.children["foo"].dict() == get_namespace_dict_from_path(d, Path(("foo",)))
 
 
-def test__evolve_child_from_empty():
+def test_evolve_child_from_empty():
     parent, child = Namespace(), Namespace()
 
-    assert Namespace(children={"foo": Namespace()}) == _evolve_child(parent, "foo", child)
+    assert Namespace(children={"foo": Namespace()}) == parent.evolve_child("foo", child)
 
 
-def test__evolve_child_from_simple():
+def test_evolve_child_from_simple():
     parent, child = Namespace(children={"foo": Namespace()}), Namespace()
 
-    assert Namespace(children={"foo": Namespace(children={"bar": Namespace()})}) == _evolve_child(
-        parent.children["foo"], "bar", child
+    assert Namespace(children={"foo": Namespace(children={"bar": Namespace()})}) == parent.children["foo"].evolve_child(
+        "bar", child
     )
 
 

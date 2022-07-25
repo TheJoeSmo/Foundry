@@ -34,8 +34,8 @@ Declare private type hints.
 """
 
 _T = TypeVar("_T")
-_NV = TypeVar("_NV", bound="NamespaceValidator")
-_CNV = TypeVar("_CNV", bound="ConcreteNamespaceValidator")
+_V = TypeVar("_V", bound="Validator")
+_CV = TypeVar("_CV", bound="ConcreteValidator")
 _NTH = TypeVar("_NTH", bound="_TypeHandler")
 _NTHM = TypeVar("_NTHM", bound="_TypeHandlerManager")
 _PV = TypeVar("_PV", bound="PrimitiveValidator")
@@ -103,7 +103,7 @@ class _TypeHandler(Generic[_T]):
         The type to be validated to.
     """
 
-    types: ValidatorMapping = field(default=dict)
+    types: ValidatorMapping = field(default=Factory(dict))  # type: ignore
     default_type_suggestion: Type[_T] | None = None
 
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
@@ -112,13 +112,17 @@ class _TypeHandler(Generic[_T]):
     def get_type_suggestion(self, type: str) -> Type[_T] | None:
         raise NotImplementedError()
 
+    def has_type(self, type: str) -> bool:
+        raise NotImplementedError()
+
     def get_if_validator_uses_parent(self, type: str) -> bool:
         raise NotImplementedError()
 
     def get_validator(self, type: str) -> _MetaValidator:
         raise NotImplementedError()
 
-    def validate_by_type(self, type: str, values: Mapping, parent: Namespace) -> _T:
+    @staticmethod
+    def validate_by_type(type: str, values: Mapping, parent: Namespace[_T]) -> _T:
         raise NotImplementedError()
 
 
@@ -307,6 +311,8 @@ class _Validators:
     A helper class that defines a series of validators to ensure the correct types with `attrs`.
     """
 
+    __slots__ = ()
+
     def is_valid_list_of_names(inst, attr, value: tuple) -> tuple[str, ...]:
         """
         Determines if a path is a valid list of names.
@@ -331,6 +337,8 @@ class _Converters:
     """
     A helper class that defines a series of converters to help with `attrs`.
     """
+
+    __slots__ = ()
 
     @staticmethod
     def convert_to_validator(value: _MetaValidator | MetaValidator) -> MetaValidator:
@@ -593,6 +601,8 @@ class TypeHandler(_TypeHandler[_T]):
         The type to be validated to.
     """
 
+    __slots__ = ()
+
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
         """
         `other` overwrites or adds additional type validators from this handler
@@ -615,7 +625,8 @@ class TypeHandler(_TypeHandler[_T]):
             else other.default_type_suggestion,
         )
 
-    def validate_by_type(self, type: str, values: Mapping, parent: Namespace) -> _T:
+    @staticmethod
+    def validate_by_type(type: str, values: Mapping, parent: Namespace[_T]) -> _T:
         """
         Generates and validates `values` of `type` to generate an object from `parent`.
 
@@ -625,7 +636,7 @@ class TypeHandler(_TypeHandler[_T]):
             The type of object to generate and validate.
         values : Mapping
             The attributes of the object.
-        parent : Namespace
+        parent : Namespace[_T]
             The parent namespace of the object.
 
         Returns
@@ -633,10 +644,16 @@ class TypeHandler(_TypeHandler[_T]):
         _T
             The generated and validated object.
         """
-        validator = parent.validators.types[type]
-        if validator.get_if_validator_uses_parent(type):
-            return validator.get_validator(type)(validator.get_type_suggestion(type), values | {"parent": parent})
-        return validator.get_validator(type)(validator.get_type_suggestion(type), values)
+        validator: _TypeHandler = parent.validators.types[type]
+        validator_type: str | None = Validator.get_type_argument(values)
+        if validator_type is None:
+            raise ValueError("Type is not defined")
+        type_suggestion = validator.get_type_suggestion(validator_type)
+        if type_suggestion is None:
+            raise ValueError(f"Cannot deduce type of {values} from {validator}")
+        if validator.get_if_validator_uses_parent(validator_type):
+            return validator.get_validator(validator_type)(type_suggestion, values | {"parent": parent})
+        return validator.get_validator(validator_type)(type_suggestion, values)
 
     def get_type_suggestion(self, type: str) -> Type[_T] | None:
         """
@@ -718,6 +735,8 @@ class TypeHandlerManager(_TypeHandlerManager):
     types: ValidatorHandlerMapping
         A series of types and their associated validator handler.
     """
+
+    __slots__ = ()
 
     @classmethod
     def from_managers(cls: Type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
@@ -1071,7 +1090,7 @@ class Namespace(Generic[_T]):
         return from_path
 
 
-class NamespaceValidator:
+class Validator:
     """
     A namespace element validator, which seeks to encourage extension and modularity for
     namespace validators.
@@ -1098,13 +1117,13 @@ class NamespaceValidator:
 
     @classmethod
     @property
-    def type_handler(cls: Type[_NV]) -> TypeHandler[_NV]:
+    def type_handler(cls: Type[_V]) -> TypeHandler[_V]:
         """
         Provides the type handler for this type.
 
         Returns
         -------
-        TypeHandler[_NV]
+        TypeHandler[_V]
             The handler for to validate this type.
         """
         return TypeHandler(
@@ -1179,13 +1198,13 @@ class NamespaceValidator:
         return v[DEFAULT_ARGUMENT]
 
     @classmethod
-    def _validate_from_namespace(cls: Type[_NV], parent: Namespace, name: str, path: str) -> _NV:
+    def _validate_from_namespace(cls: Type[_V], parent: Namespace, name: str, path: str) -> _V:
         """
         Generates and validates from another existing object from `parent`.
 
         Parameters
         ----------
-        cls: Type[_NV]
+        cls: Type[_V]
             The type to find inside the namespace.
         parent : Namespace
             The namespace with the object to copy.
@@ -1196,26 +1215,26 @@ class NamespaceValidator:
 
         Returns
         -------
-        _NV
+        _V
             The object inside the Namespace.
         """
         return validate_element(parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=cls)
 
     @classmethod
-    def validate_from_namespace(cls: Type[_NV], v: Mapping) -> _NV:
+    def validate_from_namespace(cls: Type[_V], v: Mapping) -> _V:
         """
         Generates and validates from another existing object inside a namespace.
 
         Parameters
         ----------
-        cls : Type[_NV]
+        cls : Type[_V]
             The type to find inside the namespace.
         v : Mapping
             A map containing a parent, name, and path.
 
         Returns
         -------
-        _NV
+        _V
             The object inside the Namespace.
 
         Raises
@@ -1248,20 +1267,20 @@ class NamespaceValidator:
         return cls._validate_from_namespace(parent, name, path)
 
     @classmethod
-    def validate_by_type(cls: Type[_NV], v: Mapping) -> _NV:
+    def validate_by_type(cls: Type[_V], v: Mapping) -> _V:
         """
         Generates and validates an object by its type defined in `__validator_handler__`.
 
         Parameters
         ----------
-        cls : Type[_NV]
+        cls : Type[_V]
             The type of object to generate.
         v : Mapping
             A mapping containing the information to generate the object.
 
         Returns
         -------
-        _NV
+        _V
             The object generated from `v` specified by its type.
         """
         type_ = cls.get_type_argument(v)
@@ -1270,21 +1289,21 @@ class NamespaceValidator:
         return cls.type_handler.get_validator(type_)(cls, v)
 
     @classmethod
-    def validate_type(cls: Type[_NV], v: Any) -> _NV:
+    def validate_type(cls: Type[_V], v: Any) -> _V:
         """
         Generates and validates an object by its types and ensures that there is a type
         inside `v` such that it can be validated further.
 
         Parameters
         ----------
-        cls : Type[_NV]
+        cls : Type[_V]
             The type of object to generate.
         v : Any
             A map containing the information to generate the object.
 
         Returns
         -------
-        _NV
+        _V
             The object generated from `v` specified by its type.
 
         Raises
@@ -1332,7 +1351,7 @@ class NamespaceValidator:
         return None
 
 
-class ConcreteNamespaceValidator(NamespaceValidator):
+class ConcreteValidator(Validator):
     """
     Automatically provides this class as the type suggestion for the handler.  This is so the namespace
     generation functions can actually call this instance with the correct type.
@@ -1340,15 +1359,15 @@ class ConcreteNamespaceValidator(NamespaceValidator):
 
     @classmethod
     @property
-    def type_handler(cls: Type[_CNV]) -> TypeHandler[_CNV]:
+    def type_handler(cls: Type[_CV]) -> TypeHandler[_CV]:
         handler = super().type_handler
         return evolve(handler, default_type_suggestion=cls)  # type: ignore
 
 
-NoneValidator = ConcreteNamespaceValidator
+NoneValidator = ConcreteValidator
 
 
-class PrimitiveValidator(ConcreteNamespaceValidator):
+class PrimitiveValidator(ConcreteValidator):
     """
     Adds methods to easily validate primitives through their native constructors.
     """
@@ -1492,7 +1511,7 @@ def validate_namespace_type(validators: _TypeHandlerManager, v: Mapping) -> str:
         The `type` is present inside `validators` but the validation type was not defined
         properly, so the namespace could not determine which type to validate the type to.
     """
-    type_ = NamespaceValidator.get_type_argument(v)
+    type_ = Validator.get_type_argument(v)
     if type_ is None:
         raise TypeError(f"type of namespace is not found inside {v}.")
     if type_ not in validators.types.keys():
@@ -1782,6 +1801,4 @@ def validate_path_name(path: Any) -> str:
 
 
 # Allow all types to be validated by reference natively.
-NamespaceValidator.__validator_handler__ = TypeHandler(
-    {"FROM NAMESPACE": getattr(NamespaceValidator, "validate_from_namespace")}
-)
+Validator.__validator_handler__ = TypeHandler({"FROM NAMESPACE": getattr(Validator, "validate_from_namespace")})
