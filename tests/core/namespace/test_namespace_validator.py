@@ -55,7 +55,7 @@ def test_validate_type_no_dict_with_list():
 
 
 def test_validate_type_no_type_no_default():
-    with raises(KeyError):
+    with raises(TypeError):
         NamespaceValidatorTypeOnly.validate_type({})
 
 
@@ -95,65 +95,75 @@ def test_validate_type_validator_handler_extended_multiple():
 
 
 def test_validate_from_namespace_no_parent():
-    with raises(KeyError):
-        IntegerValidator.validate_from_namespace({})
+    with raises(TypeError):
+        IntegerValidator.validate_from_namespace(IntegerValidator, {})
 
 
 def test_validate_from_namespace_parent_int():
     with raises(TypeError):
-        IntegerValidator.validate_from_namespace({"parent": 1})
+        IntegerValidator.validate_from_namespace(IntegerValidator, {"parent": IntegerValidator(1)})
 
 
 def test_validate_from_namespace_parent_str():
     with raises(TypeError):
-        IntegerValidator.validate_from_namespace({"parent": ""})
+        IntegerValidator.validate_from_namespace(IntegerValidator, {"parent": ""})
 
 
 def test_validate_from_namespace_parent_list():
     with raises(TypeError):
         IntegerValidator.validate_from_namespace(
-            {"parent": [Namespace(elements={"test": 1})], "name": "test", "path": ""}
+            IntegerValidator,
+            {"parent": [Namespace(elements={"test": IntegerValidator(1)})], "name": "test", "path": ""},
         )
 
 
 def test_validate_from_namespace_no_name():
     with raises(TypeError):
-        IntegerValidator.validate_from_namespace({"parent": Namespace(elements={"test": 1}), "path": ""})
+        IntegerValidator.validate_from_namespace(
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "path": ""}
+        )
 
 
 def test_validate_from_namespace_name_int():
     with raises(TypeError):
-        IntegerValidator.validate_from_namespace({"parent": Namespace(elements={"test": 1}), "name": 1, "path": ""})
+        IntegerValidator.validate_from_namespace(
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": 1, "path": ""}
+        )
 
 
 def test_validate_from_namespace_name_list():
     with raises(TypeError):
         IntegerValidator.validate_from_namespace(
-            {"parent": Namespace(elements={"test": 1}), "name": ["t", "e", "s", "t"], "path": ""}
+            IntegerValidator,
+            {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": ["t", "e", "s", "t"], "path": ""},
         )
 
 
 def test_validate_from_namespace_no_path():
-    with raises(KeyError):
-        IntegerValidator.validate_from_namespace({"parent": Namespace(elements={"test": 1}), "name": "test"})
+    with raises(TypeError):
+        IntegerValidator.validate_from_namespace(
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": "test"}
+        )
 
 
 def test_validate_from_namespace_path_int():
     with raises(TypeError):
-        IntegerValidator.validate_from_namespace({"parent": Namespace(elements={"test": 1}), "name": "test", "path": 1})
+        IntegerValidator.validate_from_namespace(
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": "test", "path": 1}
+        )
 
 
 def test_validate_from_namespace_path_list():
     with raises(TypeError):
         IntegerValidator.validate_from_namespace(
-            {"parent": Namespace(elements={"test": 1}), "name": "test", "path": []}
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": "test", "path": []}
         )
 
 
 def test_validate_from_namespace():
     assert (
         IntegerValidator.validate_from_namespace(
-            {"parent": Namespace(elements={"test": 1}), "name": "test", "path": ""}
+            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": "test", "path": ""}
         )
         == 1
     )

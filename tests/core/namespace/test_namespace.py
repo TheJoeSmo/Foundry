@@ -231,7 +231,6 @@ def test_namespace_from_path_complex():
 
 
 def test_generate_namespace_initialization_empty(empty_namespace):
-    print(primitive_manager)
     namespace = generate_namespace({"type": "INTEGER"}, primitive_manager)
     assert empty_namespace == namespace
 
@@ -388,19 +387,19 @@ def test_evolve_child_from_simple():
 
 
 def test_generate_namespace_generate_integer():
-    namespace = generate_namespace({"type": "INTEGER", "elements": {"foo": 1}})
+    namespace = generate_namespace({"type": "INTEGER", "elements": {"foo": 1}}, primitive_manager)
 
     assert Namespace(elements={"foo": 1}) == namespace
 
 
 def test_generate_namespace_generate_string():
-    namespace = generate_namespace({"type": "STRING", "elements": {"foo": "string"}})
+    namespace = generate_namespace({"type": "STRING", "elements": {"foo": "string"}}, primitive_manager)
 
     assert Namespace(elements={"foo": "string"}) == namespace
 
 
 def test_generate_namespace_generate_float():
-    namespace = generate_namespace({"type": "FLOAT", "elements": {"foo": 1.1}})
+    namespace = generate_namespace({"type": "FLOAT", "elements": {"foo": 1.1}}, primitive_manager)
 
     assert Namespace(elements={"foo": 1.1}) == namespace
 

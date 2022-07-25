@@ -52,7 +52,7 @@ Declare common data class structures for common use.
 """
 
 
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
 class MetaValidator(Generic[_T]):
     """
     A generic interface to validate an type into an object.
@@ -70,6 +70,16 @@ class MetaValidator(Generic[_T]):
     validator: _MetaValidator
     type_suggestion: Type[_T] | None = None
     use_parent: bool = True
+
+    def __repr__(self) -> str:
+        s = f"{self.__class__.__name__}(validator={self.validator}, "
+        if self.type_suggestion is not None:
+            s = f"{s}type_suggestion={self.type_suggestion}, "
+        if not self.use_parent:
+            s = f"{s}use_parent={self.use_parent}, "
+        if s[-1] == " ":
+            s = s[:-2]
+        return f"{s})"
 
 
 ValidatorMapping = Mapping[str, _MetaValidator | MetaValidator]
@@ -105,6 +115,7 @@ class _TypeHandler(Generic[_T]):
 
     types: ValidatorMapping = field(default=Factory(dict))  # type: ignore
     default_type_suggestion: Type[_T] | None = None
+    default_validator: str | None = None
 
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
         raise NotImplementedError()
@@ -611,6 +622,7 @@ class TypeHandler(_TypeHandler[_T]):
         if isinstance(other, _TypeHandler):
             return (
                 self.default_type_suggestion == other.default_type_suggestion
+                and self.default_validator == other.default_validator
                 and self._converted_types(self).items() == self._converted_types(other).items()
             )
         return NotImplemented
@@ -657,14 +669,16 @@ class TypeHandler(_TypeHandler[_T]):
             The generated and validated object.
         """
         validator: _TypeHandler = parent.validators.types[type]
-        validator_type: str | None = Validator.get_type_argument(values)
+        validator_type: str | None = Validator.get_type_argument(values, validator.default_validator)
         if validator_type is None:
             raise ValueError("Type is not defined")
+        print("validator", validator_type)
         type_suggestion = validator.get_type_suggestion(validator_type)
         if type_suggestion is None:
             raise ValueError(f"Cannot deduce type of {values} from {validator}")
         if validator.get_if_validator_uses_parent(validator_type):
             return validator.get_validator(validator_type)(type_suggestion, values | {"parent": parent})
+        print(validator.get_validator(validator_type), type_suggestion, values)
         return validator.get_validator(validator_type)(type_suggestion, values)
 
     def get_type_suggestion(self, type: str) -> Type[_T] | None:
@@ -681,6 +695,7 @@ class TypeHandler(_TypeHandler[_T]):
         Type[_T] | None
             Provides the type if one is provided, otherwise defaults on `default_type_suggestion`.
         """
+        print("type provided: ", type)
         return (
             suggestion
             if (suggestion := _Converters.convert_to_validator(self.types[type]).type_suggestion) is not None
@@ -765,7 +780,7 @@ class TypeHandlerManager(_TypeHandlerManager):
         *managers: _TypeHandlerManager
             A series of managers to merge together.
         """
-        manager = cls()
+        manager = cls(ChainMap())  # Stops the creation of an empty dict.
         for m in managers:
             for type_, handler in m.types.items():
                 manager = manager.add_type_handler(type_, handler)
@@ -1147,7 +1162,8 @@ class Validator:
             ChainMap(
                 cls.__validator_handler__.types,
                 *[getattr(b, "type_handler").types for b in cls.__bases__ if hasattr(b, "type_handler")],
-            )
+            ),
+            default_validator=cls.__type_default__,
         )
 
     @classmethod
@@ -1182,14 +1198,14 @@ class Validator:
         return v[TYPE_ARGUMENT]
 
     @classmethod
-    def get_default_argument(cls, v: Mapping) -> Any:
+    def get_default_argument(cls, v: Any) -> Any:
         """
         A convenience method to access the default argument for a type which only accepts a single
         argument.
 
         Parameters
         ----------
-        v : Mapping
+        v : Any
             A mapping containing the information to generate the object.
 
         Returns
@@ -1206,6 +1222,8 @@ class Validator:
         TypeError
             No argument were provided other than the type.
         """
+        if not isinstance(v, dict):
+            return v
         if DEFAULT_ARGUMENT not in v and TYPE_ARGUMENT not in v:
             raise TypeError(f"{cls.__name__} with arguments {v} is malformed")
         elif DEFAULT_ARGUMENT not in v and len(v) > 2:
@@ -1237,14 +1255,14 @@ class Validator:
         """
         return validate_element(parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=cls)
 
-    @classmethod
-    def validate_from_namespace(cls: Type[_V], v: Mapping) -> _V:
+    @staticmethod
+    def validate_from_namespace(class_: Type[_V], v: Mapping) -> _V:
         """
         Generates and validates from another existing object inside a namespace.
 
         Parameters
         ----------
-        cls : Type[_V]
+        class_ : Type[_V]
             The type to find inside the namespace.
         v : Mapping
             A map containing a parent, name, and path.
@@ -1270,18 +1288,18 @@ class Validator:
             The path is not a string.
         """
         if "parent" not in v:
-            raise TypeError(f"Parent namespace was not defined inside {v} to generate {cls.__name__} from namespace")
+            raise TypeError(f"Parent namespace was not defined inside {v} to generate {class_.__name__} from namespace")
         if not isinstance((parent := v["parent"]), Namespace):
             raise TypeError(f"{parent} is not {Namespace.__name__}")
         if "name" not in v:
-            raise TypeError(f"Name is not inside {v} to generate {cls.__name__} from namespace")
+            raise TypeError(f"Name is not inside {v} to generate {class_.__name__} from namespace")
         if not isinstance((name := v["name"]), str):
             raise TypeError(f"{name} is not {str.__name__}")
         if "path" not in v:
-            raise TypeError(f"Path is not inside {v} to generate {cls.__name__} from namespace")
+            raise TypeError(f"Path is not inside {v} to generate {class_.__name__} from namespace")
         if not isinstance((path := v["path"]), str):
             raise TypeError(f"{path} is not {str.__name__}")
-        return cls._validate_from_namespace(parent, name, path)
+        return class_._validate_from_namespace(parent, name, path)
 
     @classmethod
     def validate_by_type(cls: Type[_V], v: Mapping) -> _V:
@@ -1347,7 +1365,7 @@ class Validator:
         return cls.validate_by_type(v)
 
     @staticmethod
-    def get_type_argument(v: Mapping) -> str | None:
+    def get_type_argument(v: Any, default: str | None = None) -> str | None:
         """
         Determines the type of the object.  A few options are used, but it is advised to only
         use a single one, as the process to select the type should be assumed to be random.
@@ -1362,10 +1380,12 @@ class Validator:
         str | None
             The type if found otherwise None.
         """
+        if not isinstance(v, dict):
+            return default
         for valid_argument in VALID_TYPE_ARGUMENTS:
             if valid_argument in v:
                 return v[valid_argument]
-        return None
+        return default
 
 
 class ConcreteValidator(Validator):
@@ -1392,11 +1412,11 @@ class PrimitiveValidator(ConcreteValidator):
     __type_default__ = "DEFAULT"
 
     def __init__(self, value: Any):
-        raise NotImplementedError()
+        super().__init__()
 
-    @classmethod
-    def _validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
-        return cls(cls.get_default_argument(v))
+    @staticmethod
+    def _validate_primitive(class_: Type[_PV], v: Mapping) -> _PV:
+        return class_(class_.get_default_argument(v))
 
     __validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_primitive, use_parent=False)})
 
@@ -1405,6 +1425,8 @@ class IntegerValidator(int, PrimitiveValidator):
     """
     A validator for integers.
     """
+
+    __names__ = ("int", "integer", "Int", "Integer", "INT", "INTEGER")
 
 
 IntegerValidator.__validator_handler__ = TypeHandler(default_type_suggestion=IntegerValidator)
@@ -1415,6 +1437,8 @@ class FloatValidator(float, PrimitiveValidator):
     A validator for floats.
     """
 
+    __names__ = ("float", "Float", "FLOAT")
+
 
 FloatValidator.__validator_handler__ = TypeHandler(default_type_suggestion=FloatValidator)
 
@@ -1423,6 +1447,8 @@ class StringValidator(str, PrimitiveValidator):
     """
     A validator for strings.
     """
+
+    __names__ = ("str", "string", "Str", "String", "STR", "STRING")
 
 
 StringValidator.__validator_handler__ = TypeHandler(default_type_suggestion=StringValidator)
@@ -1524,17 +1550,12 @@ def validate_namespace_type(validators: _TypeHandlerManager, v: Mapping) -> str:
         There does not exist type inside `v`.
     TypeError
         `type` is not present inside `validators`.
-    ValueError
-        The `type` is present inside `validators` but the validation type was not defined
-        properly, so the namespace could not determine which type to validate the type to.
     """
     type_ = Validator.get_type_argument(v)
     if type_ is None:
         raise TypeError(f"type of namespace is not found inside {v}.")
     if type_ not in validators.types.keys():
         raise TypeError(f"{type_} is not supported, only {validators.types.keys()}.")
-    if validators.types[type_].get_type_suggestion(type_) is None:
-        raise ValueError(f"Could not determine how to validate {type_} from {validators.types[type_]}")
     return type_
 
 
@@ -1818,4 +1839,4 @@ def validate_path_name(path: Any) -> str:
 
 
 # Allow all types to be validated by reference natively.
-Validator.__validator_handler__ = TypeHandler({"FROM NAMESPACE": getattr(Validator, "validate_from_namespace")})
+Validator.__validator_handler__ = TypeHandler({"FROM NAMESPACE": Validator.validate_from_namespace})
