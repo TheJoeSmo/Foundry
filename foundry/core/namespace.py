@@ -672,13 +672,11 @@ class TypeHandler(_TypeHandler[_T]):
         validator_type: str | None = Validator.get_type_argument(values, validator.default_validator)
         if validator_type is None:
             raise ValueError("Type is not defined")
-        print("validator", validator_type)
         type_suggestion = validator.get_type_suggestion(validator_type)
         if type_suggestion is None:
             raise ValueError(f"Cannot deduce type of {values} from {validator}")
         if validator.get_if_validator_uses_parent(validator_type):
             return validator.get_validator(validator_type)(type_suggestion, values | {"parent": parent})
-        print(validator.get_validator(validator_type), type_suggestion, values)
         return validator.get_validator(validator_type)(type_suggestion, values)
 
     def get_type_suggestion(self, type: str) -> Type[_T] | None:
@@ -695,7 +693,6 @@ class TypeHandler(_TypeHandler[_T]):
         Type[_T] | None
             Provides the type if one is provided, otherwise defaults on `default_type_suggestion`.
         """
-        print("type provided: ", type)
         return (
             suggestion
             if (suggestion := _Converters.convert_to_validator(self.types[type]).type_suggestion) is not None
