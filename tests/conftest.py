@@ -23,7 +23,7 @@ def level(rom_singleton, qtbot):
     return Level("PydanticLevel 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET)
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def rom_singleton():
     rom_path = Path(__file__).parent.resolve() / "artifacts"
 
