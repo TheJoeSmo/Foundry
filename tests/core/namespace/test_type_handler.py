@@ -113,6 +113,24 @@ def test_type_handler_initialize_default_type_suggestion():
     assert a.default_type_suggestion is int
 
 
+def test_type_handler_eq_empty():
+    assert TypeHandler() == TypeHandler({})
+
+
+def test_type_handler_eq_default_type_suggestion():
+    assert TypeHandler() != TypeHandler(default_type_suggestion=int)
+
+
+def test_type_handler_eq_simple(meta_validator_function, meta_validator):
+    assert TypeHandler({"test": meta_validator_function}) == TypeHandler({"test": meta_validator})
+
+
+def test_type_handler_eq_complex(meta_validator_true_function, meta_validator):
+    assert TypeHandler({"test": meta_validator_true_function}).overwrite_from_parent(
+        TypeHandler({"test": meta_validator})
+    ) == TypeHandler({"test": meta_validator})
+
+
 def test_type_handler_initialize_validator_mapping_functions(meta_validator_function):
     a = TypeHandler({"test": meta_validator_function})
     assert "test" in a.types

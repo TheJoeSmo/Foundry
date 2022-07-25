@@ -145,7 +145,7 @@ class _TypeHandlerManager:
         A series of types and their associated validator handler.
     """
 
-    types: ValidatorHandlerMapping
+    types: ValidatorHandlerMapping = field(default=Factory(dict))  # type: ignore
 
     @classmethod
     def from_managers(cls: Type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
@@ -603,6 +603,18 @@ class TypeHandler(_TypeHandler[_T]):
 
     __slots__ = ()
 
+    @staticmethod
+    def _converted_types(class_: _TypeHandler) -> Mapping[str, MetaValidator]:
+        return {key: _Converters.convert_to_validator(value) for key, value in class_.types.items()}
+
+    def __eq__(self, other):
+        if isinstance(other, _TypeHandler):
+            return (
+                self.default_type_suggestion == other.default_type_suggestion
+                and self._converted_types(self).items() == self._converted_types(other).items()
+            )
+        return NotImplemented
+
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
         """
         `other` overwrites or adds additional type validators from this handler
@@ -738,6 +750,11 @@ class TypeHandlerManager(_TypeHandlerManager):
 
     __slots__ = ()
 
+    def __eq__(self, other) -> bool:
+        if isinstance(other, _TypeHandlerManager):
+            return self.types.items() == other.types.items()
+        return NotImplemented
+
     @classmethod
     def from_managers(cls: Type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
         """
@@ -748,10 +765,10 @@ class TypeHandlerManager(_TypeHandlerManager):
         *managers: _TypeHandlerManager
             A series of managers to merge together.
         """
-        manager = cls(ChainMap())
+        manager = cls()
         for m in managers:
             for type_, handler in m.types.items():
-                manager.add_type_handler(type_, handler)
+                manager = manager.add_type_handler(type_, handler)
         return manager
 
     def override_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
@@ -812,8 +829,8 @@ class TypeHandlerManager(_TypeHandlerManager):
             This manager, but with a limit to only validate `types`.
         """
         if isinstance(self.types, ChainMap) or isinstance(self.types, ChainMapView):
-            return self.__class__(ChainMapView(self.types, set(*types)))  # No need to make a new ChainMap.
-        return self.__class__(ChainMapView(ChainMap(self.types), set(*types)))
+            return self.__class__(ChainMapView(self.types, set(types)))  # No need to make a new ChainMap.
+        return self.__class__(ChainMapView(ChainMap(self.types), valid_keys=set(types)))
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, hash=True, cache_hash=True, cmp=False, repr=False)
