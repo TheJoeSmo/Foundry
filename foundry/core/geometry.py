@@ -1,15 +1,26 @@
 from __future__ import annotations
 
 from math import sqrt
+from typing import Any, ClassVar, Type, TypeVar
 
 from attr import attrs
-from pydantic.errors import MissingError, NumberNotGeError
-from pydantic.validators import int_validator
 from PySide6.QtCore import QPoint, QRect
+
+from foundry.core.namespace import (
+    ConcreteValidator,
+    IntegerValidator,
+    MetaValidator,
+    NonNegativeIntegerValidator,
+    TypeHandler,
+)
+
+_P = TypeVar("_P", bound="Point")
+_S = TypeVar("_S", bound="Size")
+_R = TypeVar("_R", bound="Rect")
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Point:
+class Point(ConcreteValidator):
     """
     A two dimensional representation of a point on a plain.
 
@@ -23,6 +34,8 @@ class Point:
 
     x: int
     y: int
+    __type_default__: ClassVar[str] = "DEFAULT"
+    __names__: ClassVar[tuple[str, ...]] = ("__POINT_VALIDATOR__", "point", "Point", "POINT")
 
     def __lt__(self, other: Point):
         return self.distance_from_origin < other.distance_from_origin
@@ -76,18 +89,11 @@ class Point:
         return self.__class__(self.x ^ other.x, self.y ^ other.y)
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, values) -> Point:
-        if "x" not in values:
-            MissingError()
-        if "y" not in values:
-            MissingError()
-        x: int = int_validator(values["x"])
-        y: int = int_validator(values["y"])
-        return Point(x, y)
+    def validate(cls: Type[_P], values: Any) -> _P:
+        kwargs = cls.check_for_kwargs_only(values, "x", "y")
+        x: int = cls.validate_other_type(IntegerValidator, kwargs.get("parent", None), kwargs["x"])
+        y: int = cls.validate_other_type(IntegerValidator, kwargs.get("parent", None), kwargs["y"])
+        return cls(x, y)
 
     @classmethod
     def from_qpoint(cls, point: QPoint) -> Point:
@@ -111,8 +117,15 @@ class Point:
         return sqrt(self.x**2 + self.y**2)
 
 
+def _validate_point(class_: Type[_P], v) -> _P:
+    return class_.validate(v)
+
+
+Point.__validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_point)})
+
+
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Size:
+class Size(ConcreteValidator):
     """
     A two dimensional representation of a size.
 
@@ -126,6 +139,9 @@ class Size:
 
     width: int
     height: int
+
+    __type_default__: ClassVar[str] = "DEFAULT"
+    __names__: ClassVar[tuple[str, ...]] = ("__SIZE_VALIDATOR__", "size", "Size", "SIZE")
 
     def __lt__(self, other: Size):
         return self.width * self.height < other.width * other.height
@@ -179,26 +195,22 @@ class Size:
         return self.__class__(self.width ^ other.width, self.height ^ other.height)
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
+    def validate(cls: Type[_S], values) -> _S:
+        kwargs = cls.check_for_kwargs_only(values, "width", "height")
+        width: int = cls.validate_other_type(NonNegativeIntegerValidator, kwargs.get("parent", None), kwargs["width"])
+        height: int = cls.validate_other_type(NonNegativeIntegerValidator, kwargs.get("parent", None), kwargs["height"])
+        return cls(width, height)
 
-    @classmethod
-    def validate(cls, values) -> Size:
-        if "width" not in values:
-            MissingError()
-        if "height" not in values:
-            MissingError()
-        width: int = int_validator(values["width"])
-        height: int = int_validator(values["height"])
-        if width < 0:
-            raise NumberNotGeError(limit_value=0)
-        if height < 0:
-            raise NumberNotGeError(limit_value=0)
-        return Size(width, height)
+
+def _validate_size(class_: Type[_S], v) -> _S:
+    return class_.validate(v)
+
+
+Size.__validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_size)})
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Rect:
+class Rect(ConcreteValidator):
     """
     A two dimensional representation of a box, that uses ``attrs`` to create a basic
     implementation.
@@ -214,17 +226,22 @@ class Rect:
     point: Point
     size: Size
 
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
+    __type_default__: ClassVar[str] = "DEFAULT"
+    __names__: ClassVar[tuple[str, ...]] = ("__RECT_VALIDATOR__", "rect", "Rect", "Rect")
 
     @classmethod
-    def validate(cls, values) -> Rect:
-        if "point" not in values:
-            MissingError()
-        if "size" not in values:
-            MissingError()
-        return Rect(Point.validate(values["point"]), Size.validate(values["size"]))
+    def validate(cls: Type[_R], values) -> _R:
+        kwargs = cls.check_for_kwargs_only(values, "point", "size")
+        point: Point = cls.validate_other_type(Point, kwargs.get("parent", None), kwargs["point"])
+        size: Size = cls.validate_other_type(Size, kwargs.get("parent", None), kwargs["size"])
+        return cls(point, size)
+
+
+def _validate_rect(class_: Type[_R], v) -> _R:
+    return class_.validate(v)
+
+
+Rect.__validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_rect)})
 
 
 def to_qrect(rect: Rect) -> QRect:

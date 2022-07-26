@@ -24,6 +24,12 @@ TYPE_ARGUMENT: Literal["__TYPE_ARGUMENT__"] = "__TYPE_ARGUMENT__"
 The type the validator that should be used to create and object.
 """
 
+PARENT_ARGUMENT: Literal["__PARENT__"] = "__PARENT__"
+"""
+The parent namespace that is passed to create an object relating to its namespace.
+"""
+
+
 VALID_TYPE_ARGUMENTS = (TYPE_ARGUMENT, "TYPE", "type")
 """
 The valid ways a user can define the type attribute.
@@ -129,6 +135,9 @@ class _TypeHandler(Generic[_T]):
     def get_if_validator_uses_parent(self, type: str) -> bool:
         raise NotImplementedError()
 
+    def get_if_validator_uses_parent_validator(self, type: str) -> bool:
+        raise NotImplementedError()
+
     def get_validator(self, type: str) -> _MetaValidator:
         raise NotImplementedError()
 
@@ -177,7 +186,53 @@ Define custom exceptions.
 """
 
 
-class NamespaceValidationException(Exception):
+class ValidationException(Exception):
+    """
+    An exception that is raised during the validation of a validator.
+    """
+
+    __slots__ = ()
+
+
+class MalformedArgumentsExceptions(Exception):
+    """
+    An exception that is raised when the arguments and key-word arguments are
+    incorrectly provided.
+    """
+
+    __slots__ = ("class_", "expected_value", "provided_value")
+
+    def __init__(self, class_: Type[Validator], expected_value: Type, provided_value: Any):
+        self.class_ = class_
+        self.expected_value = expected_value
+        self.provided_value = provided_value
+        super().__init__(
+            f"{class_.__name__} requires data to be passed as {expected_value.__name__}, "
+            f"but was passed {provided_value}"
+        )
+
+
+class MissingException(ValidationException):
+    __slots__ = ("class_", "required_fields", "provided_values")
+
+    class_: Type[Validator]
+    required_fields: set[str]
+    provided_values: Mapping[str, Any]
+
+    def __init__(self, class_: Type[Validator], required_fields: set[str], provided_values: Mapping[str, Any]):
+        self.class_ = class_
+        self.required_fields = required_fields
+        self.provided_values = provided_values
+        super().__init__(
+            f"{class_.__name__} requires {required_fields}, but {self._find_missing_keys()}"
+            f"were not inside {provided_values}"
+        )
+
+    def _find_missing_keys(self) -> set[str]:
+        return self.required_fields - set(self.provided_values.keys())
+
+
+class NamespaceValidationException(ValidationException):
     """
     An exception that is raised during the validation of a namespace.
     """
@@ -673,11 +728,10 @@ class TypeHandler(_TypeHandler[_T]):
         if validator_type is None:
             raise ValueError("Type is not defined")
         type_suggestion = validator.get_type_suggestion(validator_type)
-        print(validator, validator_type, type_suggestion)
         if type_suggestion is None:
             raise ValueError(f"Cannot deduce type of {values} from {validator}")
         if validator.get_if_validator_uses_parent(validator_type):
-            return validator.get_validator(validator_type)(type_suggestion, values | {"parent": parent})
+            values = values | {PARENT_ARGUMENT: parent}
         return validator.get_validator(validator_type)(type_suggestion, values)
 
     def get_type_suggestion(self, type: str) -> Type[_T] | None:
@@ -1138,7 +1192,7 @@ class Validator:
 
     __validator_handler__: _TypeHandler
     __type_default__: str | None = None
-    __names__: tuple[str, ...] = ("NONE", "none")
+    __names__: tuple[str, ...] = ("__NONE_VALIDATOR__", "NONE", "none")
     __slots__ = ()
 
     @classmethod
@@ -1178,6 +1232,92 @@ class Validator:
         return TypeHandlerManager({name: cls.type_handler for name in cls.__names__})
 
     @classmethod
+    def check_for_kwargs_only(cls, values: Any, *expected: str) -> Mapping:
+        """
+        A convenience method to ensure only key-word arguments are passed.
+
+        Parameters
+        ----------
+        values : Any
+            The arguments to validate.
+        *expected: str
+            Any key-word arguments that are required or expected.
+
+        Returns
+        -------
+        Mapping
+            The validated arguments.
+
+        Raises
+        ------
+        MalformedArgumentsExceptions
+            If the arguments were invalid.
+        MissingException
+            If an expected argument is not provided inside `values`.
+        """
+        if isinstance(values, dict):
+            raise MalformedArgumentsExceptions(cls, dict, values)
+        for keyword in expected:
+            if keyword not in values:
+                raise MissingException(cls, set(expected), values)
+        return values
+
+    @classmethod
+    def check_for_args_only(cls, values: Any) -> Sequence:
+        """
+        A convenience method to ensure only arguments were passed.
+
+        Parameters
+        ----------
+        values : Any
+            The arguments to validate.
+
+        Returns
+        -------
+        Sequence
+            The validated arguments.
+
+        Raises
+        ------
+        MalformedArgumentsExceptions
+            If the arguments were invalid.
+        """
+        if isinstance(values, list):
+            raise MalformedArgumentsExceptions(cls, list, values)
+        return values
+
+    @classmethod
+    def validate_other_type(cls, class_: Type[_V], parent: Namespace, v: Mapping) -> _V:
+        """
+        Validates another type of validator.  This is achieved by observing the namespace's attributes
+        and utilizing the validator's name suggestion to allow for the namespace to extend or restrict
+        the use of that validator as required.  This allows for namespace validation to be consistent
+        and secure.
+
+        Parameters
+        ----------
+        class_ : Type[_V]
+            The type of validator to validate.
+        parent: Namespace
+            The parent namespace of this validator.
+        v : Mapping
+            The attributes of the validator.
+
+        Returns
+        -------
+        _V
+            The validated validator.
+
+        Raises
+        ------
+        TypeError
+            The parent was not supplied in the mapping.
+        TypeError
+            The parent validators was not supplied in the mapping.
+        """
+        return parent.validators.types[class_.__names__[0]].validate_by_type(class_.__names__[0], v, parent)
+
+    @classmethod
     def get_type_suggestion(cls, v: Mapping) -> str:
         """
         A convenience method to access the string type of the object after it has been validated by
@@ -1194,6 +1334,23 @@ class Validator:
             The type of the object.
         """
         return v[TYPE_ARGUMENT]
+
+    @classmethod
+    def get_parent_suggestion(cls, v: Mapping) -> Namespace | None:
+        """
+        A convenience method to access the parent of the validator.
+
+        Parameters
+        ----------
+        v : Mapping
+            A mapping containing the information to generate the object.
+
+        Returns
+        -------
+        Namespace | None
+            The namespace of the object if it exists.
+        """
+        return v.get(PARENT_ARGUMENT, None)
 
     @classmethod
     def get_default_argument(cls, v: Any) -> Any:
@@ -1285,9 +1442,9 @@ class Validator:
         TypeError
             The path is not a string.
         """
-        if "parent" not in v:
+        if (parent := class_.get_parent_suggestion(v)) is None:
             raise TypeError(f"Parent namespace was not defined inside {v} to generate {class_.__name__} from namespace")
-        if not isinstance((parent := v["parent"]), Namespace):
+        if not isinstance(parent, Namespace):
             raise TypeError(f"{parent} is not {Namespace.__name__}")
         if "name" not in v:
             raise TypeError(f"Name is not inside {v} to generate {class_.__name__} from namespace")
@@ -1412,11 +1569,16 @@ class PrimitiveValidator(ConcreteValidator):
     def __init__(self, value: Any):
         super().__init__()
 
-    @staticmethod
-    def _validate_primitive(class_: Type[_PV], v: Mapping) -> _PV:
-        return class_(class_.get_default_argument(v))
+    @classmethod
+    def validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
+        return cls(cls.get_default_argument(v))
 
-    __validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_primitive, use_parent=False)})
+
+def _validate_primitive(class_: Type[_PV], v: Mapping) -> _PV:
+    return class_.validate_primitive(v)
+
+
+__validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_primitive, use_parent=False)})
 
 
 class IntegerValidator(int, PrimitiveValidator):
@@ -1424,10 +1586,27 @@ class IntegerValidator(int, PrimitiveValidator):
     A validator for integers.
     """
 
-    __names__ = ("int", "integer", "Int", "Integer", "INT", "INTEGER")
+    __names__ = ("__INTEGER_VALIDATOR__", "int", "integer", "Int", "Integer", "INT", "INTEGER")
 
 
 IntegerValidator.__validator_handler__ = TypeHandler(default_type_suggestion=IntegerValidator)
+
+
+class NonNegativeIntegerValidator(IntegerValidator):
+    __names__ = (
+        "__NONNEGATIVE_INTEGER_VALIDATOR__",
+        "non-negative int",
+        "non-negative integer",
+        "NONNEGATIVE_INT",
+        "NONNEGATIVE_INTEGER",
+    )
+
+    @classmethod
+    def validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
+        self = super().validate_primitive(v)
+        if 0 > self:  # type: ignore
+            raise ValueError(f"{self} must be a non-negative integer")
+        return self
 
 
 class FloatValidator(float, PrimitiveValidator):
@@ -1435,7 +1614,7 @@ class FloatValidator(float, PrimitiveValidator):
     A validator for floats.
     """
 
-    __names__ = ("float", "Float", "FLOAT")
+    __names__ = ("__FLOAT_VALIDATOR__", "float", "Float", "FLOAT")
 
 
 FloatValidator.__validator_handler__ = TypeHandler(default_type_suggestion=FloatValidator)
@@ -1446,14 +1625,17 @@ class StringValidator(str, PrimitiveValidator):
     A validator for strings.
     """
 
-    __names__ = ("str", "string", "Str", "String", "STR", "STRING")
+    __names__ = ("__STRING_VALIDATOR__", "str", "string", "Str", "String", "STR", "STRING")
 
 
 StringValidator.__validator_handler__ = TypeHandler(default_type_suggestion=StringValidator)
 
 
 primitive_manager = TypeHandlerManager.from_managers(
-    IntegerValidator.type_manager, FloatValidator.type_manager, StringValidator.type_manager
+    IntegerValidator.type_manager,
+    NonNegativeIntegerValidator.type_manager,
+    FloatValidator.type_manager,
+    StringValidator.type_manager,
 )
 
 
