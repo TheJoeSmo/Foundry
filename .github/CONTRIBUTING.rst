@@ -10,20 +10,19 @@ project to empower yourself and the community to contribute.
 Support
 -------
 
-If GitHub is overwelming, but still want to help the community: help fellow developers
-on `StackOverflow <https://stackoverflow.com/questions/tagged/python-nametable>`_.
+If GitHub is overwhelming, but still want to help the community: help fellow developers
+on StackOverflow [1]_.
 
 The official tag is ``python-foundry`` and support enables us to improve ``Foundry`` instead.
 
-Also, if development is not your forte, you can also help the game design community over
-at `Discord <https://discord.gg/MMExJKExGG>`_.
+Also, if development is not your forte, you can also help the `game design community <https://discord.gg/MMExJKExGG>`_ 
+over at Discord [2]_.
 
 Getting Started
 ---------------
 
 You will need a working version of Python between the versions specified inside the
-`toml file <https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml>`_ and to install
-`Poetry <https://pypi.org/project/poetry/>`_.
+`toml file <https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml>`_ and to install Poetry [3]_.
 To install the remaining dependencies, simply write the following:
 
 .. code-block:: console
@@ -33,8 +32,8 @@ To install the remaining dependencies, simply write the following:
     $ poetry install
 
 This will install the remaining dependencies.  It is recommended to run this command after
-each fetch or update to the project's dependencies, as it ensures the continous integration
-environment is equivelent to your local one.  
+each fetch or update to the project's dependencies, as it ensures the continuos integration
+environment is equivalent to your local one.  
 
 If everything worked, you should be able to run the following and see that every test passed:
 
@@ -48,12 +47,11 @@ Workflow
 - No contribution is too small!  Fixes to typos and grammar are welcome.
 - Try to limit each pull request to a single change.
 - Always add tests and documentation for your code.
-  We recommend using `test driven development <https://www.youtube.com/watch?v=yfP_v6qCdcs>`_
-  to develop your software.  It helps divide the program into smaller parts, which helps both
-  yourself and the reviewer.  If either tests or documentation are not provided, your code
-  will be inelegiable to be merged.
+  We recommend using test driven development to develop your software [4]_.
+  It helps divide the program into smaller parts, which helps both yourself and the reviewer.  
+  If either tests or documentation are not provided, your code will be ineligible to be merged.
 - Make sure that your new tests would otherwise fail without your change.
-- Ensure that your new test and the remaining tests pass using pytest.
+- Ensure that your new test and the remaining tests pass using PyTest.
   When making a pull request, Github will automatically run these tests.  We will not provide
   feedback until all tests pass or explicitly asked. 
 - Once you've addressed review feedback, make sure to bump the pull request with a small note
@@ -62,25 +60,93 @@ Workflow
 Code
 ----
 - Obey `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_ and 
-  `Numpy Docs style guide <https://numpydoc.readthedocs.io/en/latest/format.html>`_.
-  We use ``"""`` for on seperate lines for docstrings.
+  `Numpy Docs style guide <https://numpydoc.readthedocs.io/en/latest/format.html>`_ [5]_ [6]_.
+  We use ``"""`` for on separate lines for doc-strings.
 
   .. code-block:: python
 
-      def func(x: int) -> str:
-          """
-          Do something.
+      from typing import ClassVar
+      
+      from attr import attrs
 
-          Parameters
+      @attrs(slots=True, auto_attribs=True, eq=True, hash=True, frozen=True)
+      class Example:
+          """
+          This is an example class to showcase the documentation style guidelines as defined by the
+          Numpy Doc style guide [1]_.
+
+          This is the extended summary.  We try to avoid this, but it acceptable under some 
+          circumstances.  Instead you should use `Notes` to write specific implementation details 
+          and so on.  This section should only be used if there is some erroneous details about 
+          *functionality* that need to be clarified.
+
+          Attributes
           ----------
-          x : int
-              Description of parameter `x`.
+          example: str
+              An example attribute.
+          version: ClassVar[int]
+              The amount of times this class has been updated.
 
-          Returns
+          Methods
           -------
-          str
-              Description of the string return value.
+          example_method(x: int, y: int = 2) -> str:
+              A method to showcase the documentation style guidelines for a function or method.
+
+          See Also
+          --------
+          example_function: This is `example_method` reincarnated as a function, from the same module.
+          module.ExtendedExample: This is `Example` but extended into a novel, inside a sub-module.
+          foundry.module.ExtendedExtendedExample: Provide the entire path for a different module.
+
+          Notes
+          -----
+          Please notice that `example_method` does not include `self` under `Methods`.
+
+          It is advised to only explain private methods this section and any other specific implementation
+          detail.
+
+          History of the class or method should go here.
+
+          References
+          ----------
+          .. [1] The NumpyDoc style guide: `NumpyDocs <https://numpydoc.readthedocs.io/en/latest/format.html>`_
           """
+
+          example: str
+
+          version: ClassVar[int] = 2
+
+          def example_method(self, x: int, y: int = 2) -> str:
+              """
+              Do something.
+
+              Parameters
+              ----------
+              x : int
+                  Description of parameter `x`.
+
+              Returns
+              -------
+              str
+                  Description of the string return value.
+
+              Raises
+              ------
+              Sadness
+                  When someone does not document.
+
+              Examples
+              --------
+              >>> Example().example_method(0)
+              This is an example
+
+              Brace yourself for the second example...  You won't expect it.
+
+              >>> Example().example_method(1)
+              The Spanish Inquisition
+              """
+              pass
+
 - We use `Black <https://pypi.org/project/black/>`_, 
   `Flake8 <https://pypi.org/project/flake8/>`_, and `Isort <https://pypi.org/project/isort/>`_
   as our linters.
@@ -110,13 +176,11 @@ Code
   
   Depending on your shell you may run into a problem where ``pre-commit`` is not found.
   This is because the path is found inside ``~/.profile``.  We have provided the most common
-  fixes for ``bash`` and ``zsh``.
+  fixes for ``bash`` and ``zsh`` [7]_.
 
   Bash: Add ``source ~/.profile`` inside ``~/.bashrc``.
   
   ZHS: Add ``[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'`` inside ``~/.zshrc``.
-
-  For more reading: `ZSH not hitting ~/.profile <https://superuser.com/questions/187639/zsh-not-hitting-profile>`_
 
 Tests
 -----
@@ -127,3 +191,14 @@ Tests
   .. code-block:: console
 
     $ poetry run pytest tests/ --verbose --failed-first --ignore="tests/game/gfx/objects/" --ignore="tests/game/level/test_level_drawing.py" --ignore="tests/gui/test_world_map.py"
+
+References
+----------
+
+.. [1] StackOverflow: https://stackoverflow.com/questions/tagged/python-nametable
+.. [2] SMB3 Prime Discord Server: https://discord.gg/MMExJKExGG
+.. [3] Poetry Installation Guide: https://python-poetry.org/docs/
+.. [4] Test Driven Development Guide: https://www.youtube.com/watch?v=yfP_v6qCdcs
+.. [5] PEP 8: https://www.python.org/dev/peps/pep-0008
+.. [6] NumpyDoc Guide: https://numpydoc.readthedocs.io/en/latest/format.html
+.. [7] ZSH and Poetry Guide: https://superuser.com/questions/187639/zsh-not-hitting-profile
