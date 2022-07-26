@@ -1210,6 +1210,11 @@ class Validator:
         TypeHandler[_V]
             The handler for to validate this type.
         """
+        if not hasattr(cls, "__validator_handler__") or not cls.__validator_handler__.types:
+            return TypeHandler(
+                ChainMap(*[getattr(b, "type_handler").types for b in cls.__bases__ if hasattr(b, "type_handler")]),
+                default_validator=cls.__type_default__,
+            )
         return TypeHandler(
             ChainMap(
                 cls.__validator_handler__.types,
@@ -1578,7 +1583,9 @@ def _validate_primitive(class_: Type[_PV], v: Mapping) -> _PV:
     return class_.validate_primitive(v)
 
 
-__validator_handler__ = TypeHandler({"DEFAULT": MetaValidator(_validate_primitive, use_parent=False)})
+PrimitiveValidator.__validator_handler__ = TypeHandler(
+    {"DEFAULT": MetaValidator(_validate_primitive, use_parent=False)}
+)
 
 
 class IntegerValidator(int, PrimitiveValidator):
@@ -1632,6 +1639,7 @@ StringValidator.__validator_handler__ = TypeHandler(default_type_suggestion=Stri
 
 
 primitive_manager = TypeHandlerManager.from_managers(
+    NoneValidator.type_manager,
     IntegerValidator.type_manager,
     NonNegativeIntegerValidator.type_manager,
     FloatValidator.type_manager,
@@ -1806,7 +1814,7 @@ def validate_namespace(
     """
     namespace = Namespace(parent) if validators is None else Namespace(parent, validators=validators)
     element_type = validate_namespace_type(namespace.validators, v)
-    validator = namespace.validators.types[element_type]
+    handler = namespace.validators.types[element_type]
 
     dependencies: set[Path] = set() if "dependencies" not in v else {Path.from_string(d) for d in v["dependencies"]}
     if parent is None and dependencies:
@@ -1817,7 +1825,7 @@ def validate_namespace(
 
     elements = {}
     for key, value in ({} if "elements" not in v else v["elements"]).items():
-        elements[key] = validator.validate_by_type(element_type, value, namespace)
+        elements[key] = handler.validate_by_type(element_type, value, namespace)
     namespace = evolve(namespace, elements=elements)
 
     return namespace

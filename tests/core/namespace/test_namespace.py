@@ -431,5 +431,6 @@ def test_generate_namespace_generate_drawable():
                     },
                 },
             },
-        }
+        },
+        primitive_manager,
     )

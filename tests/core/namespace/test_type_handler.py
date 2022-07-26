@@ -1,6 +1,7 @@
 from pytest import fixture, raises
 
 from foundry.core.namespace import (
+    PARENT_ARGUMENT,
     MetaValidator,
     Namespace,
     TypeHandler,
@@ -35,7 +36,7 @@ def meta_validator_false_function():
 @fixture(scope="session")
 def meta_validator_return_if_has_parent():
     def validate(cls, v):
-        return "parent" in v
+        return PARENT_ARGUMENT in v
 
     return validate
 

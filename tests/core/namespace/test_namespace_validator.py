@@ -1,6 +1,12 @@
 from pytest import raises
 
-from foundry.core.namespace import IntegerValidator, Namespace, TypeHandler, Validator
+from foundry.core.namespace import (
+    PARENT_ARGUMENT,
+    IntegerValidator,
+    Namespace,
+    TypeHandler,
+    Validator,
+)
 
 
 class NamespaceValidatorTypeOnly(Validator):
@@ -163,7 +169,8 @@ def test_validate_from_namespace_path_list():
 def test_validate_from_namespace():
     assert (
         IntegerValidator.validate_from_namespace(
-            IntegerValidator, {"parent": Namespace(elements={"test": IntegerValidator(1)}), "name": "test", "path": ""}
+            IntegerValidator,
+            {PARENT_ARGUMENT: Namespace(elements={"test": IntegerValidator(1)}), "name": "test", "path": ""},
         )
         == 1
     )
