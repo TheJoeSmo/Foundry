@@ -188,6 +188,11 @@
      Tests
     </a>
    </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -256,17 +261,16 @@ People like yourself are the lifeblood of the community and this tool.</p>
 project to empower yourself and the community to contribute.</p>
 <section id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
-<p>If GitHub is overwelming, but still want to help the community: help fellow developers
-on <a class="reference external" href="https://stackoverflow.com/questions/tagged/python-nametable">StackOverflow</a>.</p>
+<p>If GitHub is overwhelming, but still want to help the community: help fellow developers
+on StackOverflow <a class="footnote-reference brackets" href="#id8" id="id1">1</a>.</p>
 <p>The official tag is <code class="docutils literal notranslate"><span class="pre">python-foundry</span></code> and support enables us to improve <code class="docutils literal notranslate"><span class="pre">Foundry</span></code> instead.</p>
-<p>Also, if development is not your forte, you can also help the game design community over
-at <a class="reference external" href="https://discord.gg/MMExJKExGG">Discord</a>.</p>
+<p>Also, if development is not your forte, you can also help the <a class="reference external" href="https://discord.gg/MMExJKExGG">game design community</a>
+over at Discord <a class="footnote-reference brackets" href="#id9" id="id2">2</a>.</p>
 </section>
 <section id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>You will need a working version of Python between the versions specified inside the
-<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a> and to install
-<a class="reference external" href="https://pypi.org/project/poetry/">Poetry</a>.
+<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a> and to install Poetry <a class="footnote-reference brackets" href="#id10" id="id3">3</a>.
 To install the remaining dependencies, simply write the following:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:TheJoeSmo/Foundry.git
 <span class="gp">$ </span><span class="nb">cd</span> Foundry
@@ -274,8 +278,8 @@ To install the remaining dependencies, simply write the following:</p>
 </pre></div>
 </div>
 <p>This will install the remaining dependencies.  It is recommended to run this command after
-each fetch or update to the project’s dependencies, as it ensures the continous integration
-environment is equivelent to your local one.</p>
+each fetch or update to the project’s dependencies, as it ensures the continuos integration
+environment is equivalent to your local one.</p>
 <p>If everything worked, you should be able to run the following and see that every test passed:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry run pytest tests/ --verbose --failed-first --ignore<span class="o">=</span><span class="s2">&quot;tests/game/gfx/objects/&quot;</span> --ignore<span class="o">=</span><span class="s2">&quot;tests/game/level/test_level_drawing.py&quot;</span> --ignore<span class="o">=</span><span class="s2">&quot;tests/gui/test_world_map.py&quot;</span>
 </pre></div>
@@ -287,12 +291,11 @@ environment is equivelent to your local one.</p>
 <li><p>No contribution is too small!  Fixes to typos and grammar are welcome.</p></li>
 <li><p>Try to limit each pull request to a single change.</p></li>
 <li><p>Always add tests and documentation for your code.
-We recommend using <a class="reference external" href="https://www.youtube.com/watch?v=yfP_v6qCdcs">test driven development</a>
-to develop your software.  It helps divide the program into smaller parts, which helps both
-yourself and the reviewer.  If either tests or documentation are not provided, your code
-will be inelegiable to be merged.</p></li>
+We recommend using test driven development to develop your software <a class="footnote-reference brackets" href="#id11" id="id4">4</a>.
+It helps divide the program into smaller parts, which helps both yourself and the reviewer.
+If either tests or documentation are not provided, your code will be ineligible to be merged.</p></li>
 <li><p>Make sure that your new tests would otherwise fail without your change.</p></li>
-<li><p>Ensure that your new test and the remaining tests pass using pytest.
+<li><p>Ensure that your new test and the remaining tests pass using PyTest.
 When making a pull request, Github will automatically run these tests.  We will not provide
 feedback until all tests pass or explicitly asked.</p></li>
 <li><p>Once you’ve addressed review feedback, make sure to bump the pull request with a small note
@@ -303,22 +306,89 @@ so we know you have finished.</p></li>
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p>Obey <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a> and
-<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a>.
-We use <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> for on seperate lines for docstrings.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a> <a class="footnote-reference brackets" href="#id12" id="id5">5</a> <a class="footnote-reference brackets" href="#id13" id="id6">6</a>.
+We use <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> for on separate lines for doc-strings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
+
+<span class="kn">from</span> <span class="nn">attr</span> <span class="kn">import</span> <span class="n">attrs</span>
+
+<span class="nd">@attrs</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eq</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Example</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Do something.</span>
+<span class="sd">    This is an example class to showcase the documentation style guidelines as defined by the</span>
+<span class="sd">    Numpy Doc style guide [1]_.</span>
 
-<span class="sd">    Parameters</span>
+<span class="sd">    This is the extended summary.  We try to avoid this, but it acceptable under some</span>
+<span class="sd">    circumstances.  Instead you should use `Notes` to write specific implementation details</span>
+<span class="sd">    and so on.  This section should only be used if there is some erroneous details about</span>
+<span class="sd">    *functionality* that need to be clarified.</span>
+
+<span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    x : int</span>
-<span class="sd">        Description of parameter `x`.</span>
+<span class="sd">    example: str</span>
+<span class="sd">        An example attribute.</span>
+<span class="sd">    version: ClassVar[int]</span>
+<span class="sd">        The amount of times this class has been updated.</span>
 
-<span class="sd">    Returns</span>
+<span class="sd">    Methods</span>
 <span class="sd">    -------</span>
-<span class="sd">    str</span>
-<span class="sd">        Description of the string return value.</span>
+<span class="sd">    example_method(x: int, y: int = 2) -&gt; str:</span>
+<span class="sd">        A method to showcase the documentation style guidelines for a function or method.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    example_function: This is `example_method` reincarnated as a function, from the same module.</span>
+<span class="sd">    module.ExtendedExample: This is `Example` but extended into a novel, inside a sub-module.</span>
+<span class="sd">    foundry.module.ExtendedExtendedExample: Provide the entire path for a different module.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Please notice that `example_method` does not include `self` under `Methods`.</span>
+
+<span class="sd">    It is advised to only explain private methods this section and any other specific implementation</span>
+<span class="sd">    detail.</span>
+
+<span class="sd">    History of the class or method should go here.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. [1] The NumpyDoc style guide: `NumpyDocs &lt;https://numpydoc.readthedocs.io/en/latest/format.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">example</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">version</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">example_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do something.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : int</span>
+<span class="sd">            Description of parameter `x`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Description of the string return value.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Sadness</span>
+<span class="sd">            When someone does not document.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; Example().example_method(0)</span>
+<span class="sd">        This is an example</span>
+
+<span class="sd">        Brace yourself for the second example...  You won&#39;t expect it.</span>
+
+<span class="sd">        &gt;&gt;&gt; Example().example_method(1)</span>
+<span class="sd">        The Spanish Inquisition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
 </pre></div>
 </div>
 </li>
@@ -344,10 +414,9 @@ following and these checks will be ran before every pull request.</p>
 <p>Notes:</p>
 <p>Depending on your shell you may run into a problem where <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> is not found.
 This is because the path is found inside <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.  We have provided the most common
-fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code>.</p>
+fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code> <a class="footnote-reference brackets" href="#id14" id="id7">7</a>.</p>
 <p>Bash: Add <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.profile</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.</p>
 <p>ZHS: Add <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">-e</span> <span class="pre">~/.profile</span> <span class="pre">]]</span> <span class="pre">&amp;&amp;</span> <span class="pre">emulate</span> <span class="pre">sh</span> <span class="pre">-c</span> <span class="pre">'source</span> <span class="pre">~/.profile'</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code>.</p>
-<p>For more reading: <a class="reference external" href="https://superuser.com/questions/187639/zsh-not-hitting-profile">ZSH not hitting ~/.profile</a></p>
 </li>
 </ul>
 </section>
@@ -361,6 +430,32 @@ fixes for <code class="docutils literal notranslate"><span class="pre">bash</spa
 </div>
 </li>
 </ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>StackOverflow: <a class="reference external" href="https://stackoverflow.com/questions/tagged/python-nametable">https://stackoverflow.com/questions/tagged/python-nametable</a></p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>SMB3 Prime Discord Server: <a class="reference external" href="https://discord.gg/MMExJKExGG">https://discord.gg/MMExJKExGG</a></p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Poetry Installation Guide: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Test Driven Development Guide: <a class="reference external" href="https://www.youtube.com/watch?v=yfP_v6qCdcs">https://www.youtube.com/watch?v=yfP_v6qCdcs</a></p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>PEP 8: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008">https://www.python.org/dev/peps/pep-0008</a></p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
+<dd><p>NumpyDoc Guide: <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">https://numpydoc.readthedocs.io/en/latest/format.html</a></p>
+</dd>
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id7">7</a></span></dt>
+<dd><p>ZSH and Poetry Guide: <a class="reference external" href="https://superuser.com/questions/187639/zsh-not-hitting-profile">https://superuser.com/questions/187639/zsh-not-hitting-profile</a></p>
+</dd>
+</dl>
 </section>
 </section>
 <section id="contributor-code-of-conduct">
