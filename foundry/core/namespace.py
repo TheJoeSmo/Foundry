@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from collections import ChainMap
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from graphlib import CycleError, TopologicalSorter
 from re import search
-from typing import Any, Callable, Generic, Iterator, Literal, Sequence, Type, TypeVar
+from typing import Any, Generic, Literal, TypeVar
 
 from attr import Factory, attrs, evolve, field, validators
 
@@ -47,7 +46,7 @@ _NTHM = TypeVar("_NTHM", bound="_TypeHandlerManager")
 _PV = TypeVar("_PV", bound="PrimitiveValidator")
 
 
-_MetaValidator = Callable[[Type[_T], Mapping], _T]
+_MetaValidator = Callable[[type[_T], Mapping], _T]
 """
 Validates a type `Type[_T]` into an object `_T` by accepting a map of values.
 """
@@ -74,7 +73,7 @@ class MetaValidator(Generic[_T]):
     """
 
     validator: _MetaValidator
-    type_suggestion: Type[_T] | None = None
+    type_suggestion: type[_T] | None = None
     use_parent: bool = True
 
     def __repr__(self) -> str:
@@ -120,13 +119,13 @@ class _TypeHandler(Generic[_T]):
     """
 
     types: ValidatorMapping = field(default=Factory(dict))  # type: ignore
-    default_type_suggestion: Type[_T] | None = None
+    default_type_suggestion: type[_T] | None = None
     default_validator: str | None = None
 
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
         raise NotImplementedError()
 
-    def get_type_suggestion(self, type: str) -> Type[_T] | None:
+    def get_type_suggestion(self, type: str) -> type[_T] | None:
         raise NotImplementedError()
 
     def has_type(self, type: str) -> bool:
@@ -168,7 +167,7 @@ class _TypeHandlerManager:
     types: ValidatorHandlerMapping = field(default=Factory(dict))  # type: ignore
 
     @classmethod
-    def from_managers(cls: Type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
+    def from_managers(cls: type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
         raise NotImplementedError()
 
     def override_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
@@ -202,7 +201,7 @@ class MalformedArgumentsExceptions(Exception):
 
     __slots__ = ("class_", "expected_value", "provided_value")
 
-    def __init__(self, class_: Type[Validator], expected_value: Type, provided_value: Any):
+    def __init__(self, class_: type[Validator], expected_value: type, provided_value: Any):
         self.class_ = class_
         self.expected_value = expected_value
         self.provided_value = provided_value
@@ -215,11 +214,11 @@ class MalformedArgumentsExceptions(Exception):
 class MissingException(ValidationException):
     __slots__ = ("class_", "required_fields", "provided_values")
 
-    class_: Type[Validator]
+    class_: type[Validator]
     required_fields: set[str]
     provided_values: Mapping[str, Any]
 
-    def __init__(self, class_: Type[Validator], required_fields: set[str], provided_values: Mapping[str, Any]):
+    def __init__(self, class_: type[Validator], required_fields: set[str], provided_values: Mapping[str, Any]):
         self.class_ = class_
         self.required_fields = required_fields
         self.provided_values = provided_values
@@ -734,7 +733,7 @@ class TypeHandler(_TypeHandler[_T]):
             values = values | {PARENT_ARGUMENT: parent}
         return validator.get_validator(validator_type)(type_suggestion, values)
 
-    def get_type_suggestion(self, type: str) -> Type[_T] | None:
+    def get_type_suggestion(self, type: str) -> type[_T] | None:
         """
         Provides the type that `type` requires as the first argument for its validator.
 
@@ -823,7 +822,7 @@ class TypeHandlerManager(_TypeHandlerManager):
         return NotImplemented
 
     @classmethod
-    def from_managers(cls: Type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
+    def from_managers(cls: type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
         """
         Effectively merges a series of managers together into a single manager.
 
@@ -1201,7 +1200,7 @@ class Validator:
 
     @classmethod
     @property
-    def type_handler(cls: Type[_V]) -> TypeHandler[_V]:
+    def type_handler(cls: type[_V]) -> TypeHandler[_V]:
         """
         Provides the type handler for this type.
 
@@ -1292,7 +1291,7 @@ class Validator:
         return values
 
     @classmethod
-    def validate_other_type(cls, class_: Type[_V], parent: Namespace, v: Mapping) -> _V:
+    def validate_other_type(cls, class_: type[_V], parent: Namespace, v: Mapping) -> _V:
         """
         Validates another type of validator.  This is achieved by observing the namespace's attributes
         and utilizing the validator's name suggestion to allow for the namespace to extend or restrict
@@ -1393,7 +1392,7 @@ class Validator:
         return v[DEFAULT_ARGUMENT]
 
     @classmethod
-    def _validate_from_namespace(cls: Type[_V], parent: Namespace, name: str, path: str) -> _V:
+    def _validate_from_namespace(cls: type[_V], parent: Namespace, name: str, path: str) -> _V:
         """
         Generates and validates from another existing object from `parent`.
 
@@ -1416,7 +1415,7 @@ class Validator:
         return validate_element(parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=cls)
 
     @staticmethod
-    def validate_from_namespace(class_: Type[_V], v: Mapping) -> _V:
+    def validate_from_namespace(class_: type[_V], v: Mapping) -> _V:
         """
         Generates and validates from another existing object inside a namespace.
 
@@ -1462,7 +1461,7 @@ class Validator:
         return class_._validate_from_namespace(parent, name, path)
 
     @classmethod
-    def validate_by_type(cls: Type[_V], v: Mapping) -> _V:
+    def validate_by_type(cls: type[_V], v: Mapping) -> _V:
         """
         Generates and validates an object by its type defined in `__validator_handler__`.
 
@@ -1484,7 +1483,7 @@ class Validator:
         return cls.type_handler.get_validator(type_)(cls, v)
 
     @classmethod
-    def validate_type(cls: Type[_V], v: Any) -> _V:
+    def validate_type(cls: type[_V], v: Any) -> _V:
         """
         Generates and validates an object by its types and ensures that there is a type
         inside `v` such that it can be validated further.
@@ -1556,7 +1555,7 @@ class ConcreteValidator(Validator):
 
     @classmethod
     @property
-    def type_handler(cls: Type[_CV]) -> TypeHandler[_CV]:
+    def type_handler(cls: type[_CV]) -> TypeHandler[_CV]:
         handler = super().type_handler
         return evolve(handler, default_type_suggestion=cls)  # type: ignore
 
@@ -1575,11 +1574,11 @@ class PrimitiveValidator(ConcreteValidator):
         super().__init__()
 
     @classmethod
-    def validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
+    def validate_primitive(cls: type[_PV], v: Mapping) -> _PV:
         return cls(cls.get_default_argument(v))
 
 
-def _validate_primitive(class_: Type[_PV], v: Mapping) -> _PV:
+def _validate_primitive(class_: type[_PV], v: Mapping) -> _PV:
     return class_.validate_primitive(v)
 
 
@@ -1609,7 +1608,7 @@ class NonNegativeIntegerValidator(IntegerValidator):
     )
 
     @classmethod
-    def validate_primitive(cls: Type[_PV], v: Mapping) -> _PV:
+    def validate_primitive(cls: type[_PV], v: Mapping) -> _PV:
         self = super().validate_primitive(v)
         if 0 > self:  # type: ignore
             raise ValueError(f"{self} must be a non-negative integer")
@@ -1929,7 +1928,7 @@ def validate_name_is_in_namespace(name: str, parent: Namespace) -> str:
     return name
 
 
-def validate_element_to_type(name: str, parent: Namespace, type_: Type[_T]) -> Type[_T]:
+def validate_element_to_type(name: str, parent: Namespace, type_: type[_T]) -> type[_T]:
     """
     Validates that the element is of `type_`.
 
@@ -1961,7 +1960,7 @@ def validate_element_to_type(name: str, parent: Namespace, type_: Type[_T]) -> T
     return type_
 
 
-def validate_element(parent: Namespace, name: str, type: Type[_T]) -> _T:
+def validate_element(parent: Namespace, name: str, type: type[_T]) -> _T:
     """
     Validates a referenced element inside of a namespace to ensure that it exists and is of the correct
     type.
