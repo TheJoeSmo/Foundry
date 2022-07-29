@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs, field
 from attr.validators import instance_of
 from PySide6.QtCore import Signal, SignalInstance
@@ -74,9 +72,9 @@ class LevelStartEditor(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         state: LevelStartState,
-        undo_controller: Optional[UndoController[LevelStartState]] = None,
+        undo_controller: UndoController[LevelStartState] | None = None,
     ):
         super().__init__(parent)
         self._state = state
@@ -299,7 +297,7 @@ class LevelStartDisplay(QFormLayout):
     y_position_editor: QComboBox
     action_editor: QComboBox
 
-    def __init__(self, parent: Optional[QWidget], x_position: int, y_position: int, action: int):
+    def __init__(self, parent: QWidget | None, x_position: int, y_position: int, action: int):
         super().__init__(parent)
 
         self.setFormAlignment(Qt.AlignCenter)  # type: ignore

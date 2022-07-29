@@ -39,7 +39,7 @@ def current_test_name():
 level_data = []
 test_name = []
 
-with open(data_dir / "levels.dat", "r") as level_data_file:
+with open(data_dir / "levels.dat") as level_data_file:
     for line in level_data_file.readlines():
         world_no, level_no, level_address, enemy_address, object_set_number, level_name = line.strip().split(",")
 

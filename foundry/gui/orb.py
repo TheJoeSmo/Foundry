@@ -11,7 +11,6 @@ obviously both still have a view.
 """
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QBoxLayout, QCheckBox, QDialogButtonBox, QGroupBox, QLabel
@@ -62,9 +61,9 @@ class State:
     state may also be rejected when trying to write the state to the ROM.
     """
 
-    move_touch_to_timer: Optional[bool]
-    move_timer_to_exit: Optional[bool]
-    touch_game_timer_stops: Optional[bool]
+    move_touch_to_timer: bool | None
+    move_timer_to_exit: bool | None
+    touch_game_timer_stops: bool | None
 
 
 class Store(ReduxStore[State]):
@@ -168,7 +167,7 @@ class RomInterface:
                 bytearray(),
             )
 
-        def read(self) -> Optional[bool]:
+        def read(self) -> bool | None:
             results_list = [self._jump_table.read(), self._stop_timer.read()]
 
             if results_list[0] != results_list[1]:
@@ -211,7 +210,7 @@ class View(CustomDialog):
         state changes in the system, the UI will automatically re-render.
         """
 
-        super(View, self).__init__(parent, title=_UIStrings.TITLE.value)
+        super().__init__(parent, title=_UIStrings.TITLE.value)
         self.rom_interface = rom_interface
         self.store = store
 

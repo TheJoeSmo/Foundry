@@ -1,4 +1,5 @@
-from typing import Protocol, Sequence, Type, TypeVar
+from collections.abc import Sequence
+from typing import Protocol, TypeVar
 
 from attr import attrs
 from PySide6.QtGui import QColor, QImage
@@ -78,7 +79,7 @@ class BlockGroup:
 
     @classmethod
     def from_values(
-        cls: Type[_T],
+        cls: type[_T],
         point: Point,
         blocks: Sequence[BlockProtocol],
         graphics_set: GraphicsSetProtocol,
@@ -101,13 +102,13 @@ class BlockGroup:
         """
         return cls(
             point,
-            tuple([Block.from_block(block) for block in blocks]),
+            tuple(Block.from_block(block) for block in blocks),
             graphics_set,
             PaletteGroup.from_palette_group(palette_group),
         )
 
     @classmethod
-    def from_block_group(cls: Type[_T], block_group: BlockGroupProtocol) -> _T:
+    def from_block_group(cls: type[_T], block_group: BlockGroupProtocol) -> _T:
         """
         Generates this implementation of a block group from any other valid
         :class:`~foundry.core.blocks.BlockGroup.BlockGroupProtocol`, converting any types if necessary.
@@ -132,8 +133,8 @@ class BlockGroup:
             Of the size required to render every block without clipping.
         """
         return Size(
-            max([blocks.point.x for blocks in self.blocks]) + BLOCK_SIZE.width,
-            max([blocks.point.y for blocks in self.blocks]) + BLOCK_SIZE.height,
+            max(blocks.point.x for blocks in self.blocks) + BLOCK_SIZE.width,
+            max(blocks.point.y for blocks in self.blocks) + BLOCK_SIZE.height,
         )
 
     def image(self, scale_factor: int = 1) -> QImage:

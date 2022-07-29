@@ -19,6 +19,7 @@ qt-material = "^2.8.13"
 single-source = "^0.2.0"
 autodoc-pydantic = "^1.6.1"
 black = "^22.3.0"
+pyupgrade = "^2.37.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

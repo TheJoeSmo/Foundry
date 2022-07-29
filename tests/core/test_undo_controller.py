@@ -1,5 +1,3 @@
-from typing import Optional
-
 from hypothesis import given
 from hypothesis.strategies import composite, integers, lists
 
@@ -7,7 +5,7 @@ from foundry.core.UndoController import UndoController
 
 
 @composite
-def undo_controller(draw, min_size: int = 0, max_size: Optional[int] = None):
+def undo_controller(draw, min_size: int = 0, max_size: int | None = None):
     events = draw(lists(integers(), min_size=min_size, max_size=max_size))
     controller = UndoController(0)
     for event in events:

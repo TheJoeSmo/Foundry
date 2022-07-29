@@ -1,8 +1,9 @@
+from collections.abc import Sequence
 from enum import Enum
 from functools import cached_property
 from json import loads
 from pathlib import Path
-from typing import Protocol, Sequence
+from typing import Protocol
 
 from attr import attrs
 from pydantic import BaseModel, FilePath
@@ -171,7 +172,7 @@ def json_file_to_color_palette(path: Path) -> ColorPaletteProtocol:
     ColorPaletteProtocol
         The color palette that represents the JSON file.
     """
-    with open(path, "r") as f:
+    with open(path) as f:
         return ColorPaletteCreator.generate_color_palette(loads(f.read())).color_palette
 
 

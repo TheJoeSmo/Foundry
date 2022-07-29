@@ -8,7 +8,7 @@ from foundry.smb3parse.util.rom import Rom
 
 class Level(LevelBase):
     def __init__(self, rom: Rom, object_set_number: int, layout_address: int, enemy_address: int):
-        super(Level, self).__init__(object_set_number, layout_address)
+        super().__init__(object_set_number, layout_address)
 
         self.object_set_number = object_set_number
         self.enemy_address = enemy_address

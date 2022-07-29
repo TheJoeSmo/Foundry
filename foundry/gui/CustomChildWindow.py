@@ -8,7 +8,7 @@ class CustomChildWindow(QMainWindow):
     """
 
     def __init__(self, parent, title="Title"):
-        super(CustomChildWindow, self).__init__(parent)
+        super().__init__(parent)
 
         self.setWindowTitle(title)
         self.setWindowFlag(Qt.WindowStaysOnTopHint)

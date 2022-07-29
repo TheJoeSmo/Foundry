@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QPainter, QPaintEvent
 from PySide6.QtWidgets import QWidget
@@ -8,8 +6,8 @@ from foundry.game.level.WorldMap import WorldMap
 
 
 class WorldMapView(QWidget):
-    def __init__(self, parent: Optional[QWidget], world: WorldMap):
-        super(WorldMapView, self).__init__(parent)
+    def __init__(self, parent: QWidget | None, world: WorldMap):
+        super().__init__(parent)
 
         self.world = world
         self.zoom = 2

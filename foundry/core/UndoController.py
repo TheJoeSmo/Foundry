@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Generic, Optional, Protocol, TypeVar
+from typing import Generic, Protocol, TypeVar
 
 T = TypeVar("T")
 
@@ -37,7 +37,7 @@ class UndoController(Generic[T]):
         The state being stored by the UndoController.
     """
 
-    def __init__(self, initial_state: T, undo_stack: Optional[deque[T]] = None, redo_stack: Optional[deque[T]] = None):
+    def __init__(self, initial_state: T, undo_stack: deque[T] | None = None, redo_stack: deque[T] | None = None):
         self._state: T = initial_state
         self.undo_stack: deque[T] = undo_stack if undo_stack is not None else deque()
         self.redo_stack: deque[T] = redo_stack if redo_stack is not None else deque()

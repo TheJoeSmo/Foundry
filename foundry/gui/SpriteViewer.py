@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent, QMouseEvent, QPainter, QPaintEvent, QResizeEvent
@@ -30,7 +28,7 @@ class SpriteViewerController(CustomChildWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         graphics_set: GraphicsSetProtocol,
         palette_group: MutablePaletteGroupProtocol,
         palette_index: int,
@@ -109,7 +107,7 @@ class SpriteViewerView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         graphics_set: GraphicsSetProtocol,
         palette_group: MutablePaletteGroupProtocol,
         palette_index: int,

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
@@ -15,12 +13,12 @@ class PaletteGroupController(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         tileset: int = 0,
         bg_offset: int = 0,
         spr_offset: int = 0,
-        bg_palette_group: Optional[MutablePaletteGroup] = None,
-        spr_palette_group: Optional[MutablePaletteGroup] = None,
+        bg_palette_group: MutablePaletteGroup | None = None,
+        spr_palette_group: MutablePaletteGroup | None = None,
     ):
         super().__init__(parent)
 
@@ -67,7 +65,7 @@ class PaletteGroupController(QWidget):
         self._changed = False
         self.silent_update()
 
-    def save(self, rom: Optional[ROM] = None):
+    def save(self, rom: ROM | None = None):
         self.model.save(rom)
         self._changed = False
 

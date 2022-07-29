@@ -1,5 +1,3 @@
-from typing import List, Optional, Union
-
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet, GraphicsSetProtocol
 from foundry.core.palette.PaletteGroup import MutablePaletteGroup
 from foundry.game.gfx.objects.Jump import Jump
@@ -15,15 +13,15 @@ class LevelObjectFactory:
     graphic_set: int
     palette_group_index: int
 
-    graphics_set: Optional[GraphicsSetProtocol] = None
+    graphics_set: GraphicsSetProtocol | None = None
     palette_group: list = []
 
     def __init__(
         self,
         object_set: int,
-        graphic_set: Union[int, GraphicsSetProtocol],
+        graphic_set: int | GraphicsSetProtocol,
         palette_group_index: int,
-        objects_ref: List[LevelObject],
+        objects_ref: list[LevelObject],
         vertical_level: bool,
         size_minimal: bool = False,
     ):
@@ -74,7 +72,7 @@ class LevelObjectFactory:
         object_index: int,
         x: int,
         y: int,
-        length: Optional[int],
+        length: int | None,
         index: int,
     ):
         assert isinstance(domain, int)

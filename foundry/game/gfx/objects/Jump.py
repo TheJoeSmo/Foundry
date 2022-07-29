@@ -68,7 +68,7 @@ class Jump(GeneratorObject):
 
     @property
     def definition(self) -> Definition:
-        with open(warp_definitions, "r") as f:
+        with open(warp_definitions) as f:
             return Definition(__root__=loads(f.read()))
 
     @property

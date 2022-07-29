@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent, Qt
@@ -69,9 +67,9 @@ class PlayerViewerModel:
         cls,
         is_mario: bool = True,
         power_up: int = 0,
-        power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[MutablePaletteGroupProtocol] = None,
-        animations: Optional[list[PlayerAnimation]] = None,
+        power_up_offsets: list[int] | None = None,
+        palette_group: MutablePaletteGroupProtocol | None = None,
+        animations: list[PlayerAnimation] | None = None,
     ):
         return cls(
             is_mario,
@@ -106,7 +104,7 @@ class PlayerViewerModel:
         page_offset_bytes = bytearray()
         for animation in self.animations:
             ani_bytes, page_bytes = animation.to_bytes()
-            ani_bytes = bytearray([i + 1 for i in ani_bytes])
+            ani_bytes = bytearray(i + 1 for i in ani_bytes)
             animation_bytes += ani_bytes
             page_offset_bytes += page_bytes
 
@@ -127,20 +125,20 @@ class PlayerViewerController(CustomChildWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         title: str = "Player Viewer",
         is_mario: bool = True,
         power_up: int = 0,
-        power_up_offsets: Optional[list[int]] = None,
-        palette_group: Optional[MutablePaletteGroupProtocol] = None,
-        animations: Optional[list[PlayerAnimation]] = None,
+        power_up_offsets: list[int] | None = None,
+        palette_group: MutablePaletteGroupProtocol | None = None,
+        animations: list[PlayerAnimation] | None = None,
     ):
         super().__init__(parent, title)
 
         self.model = PlayerViewerModel.from_rom(is_mario, power_up, power_up_offsets, palette_group, animations)
         self.view = PlayerViewerView(self, self.sprite_groups)
         self.undo_controller = UndoController(self.model.to_bytes())
-        self.frame_editor: Optional[PlayerFrameEditor] = None
+        self.frame_editor: PlayerFrameEditor | None = None
         self.frame_editor_index = 0
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
@@ -386,7 +384,7 @@ class PlayerViewerView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         sprite_groups: list[SpriteGroupProtocol],
         zoom: int = 2,
     ):

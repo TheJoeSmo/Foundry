@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 
 from foundry.core.palette import (
@@ -23,8 +21,8 @@ class PaletteGroupModel:
     background_palette_group: MutablePaletteGroupProtocol
     sprite_palette_group: MutablePaletteGroupProtocol
     changed: bool = False
-    background_palette_group_backup: Optional[MutablePaletteGroupProtocol] = None
-    sprite_palette_group_backup: Optional[MutablePaletteGroupProtocol] = None
+    background_palette_group_backup: MutablePaletteGroupProtocol | None = None
+    sprite_palette_group_backup: MutablePaletteGroupProtocol | None = None
 
     def restore(self):
         self.background_palette_group = (
@@ -47,12 +45,12 @@ class PaletteGroupModel:
             )
         self._save()
 
-    def save(self, rom: Optional[ROM] = None):
+    def save(self, rom: ROM | None = None):
         self.background_palette_group_backup = None
         self.sprite_palette_group_backup = None
         self._save(rom)
 
-    def _save(self, rom: Optional[ROM] = None):
+    def _save(self, rom: ROM | None = None):
         bg_offset = (
             get_internal_palette_offset(self.tileset)
             + self.background_index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE

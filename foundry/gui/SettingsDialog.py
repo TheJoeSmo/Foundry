@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QRect
 from PySide6.QtGui import QColor, QIcon, QImage, QPixmap, Qt
 from PySide6.QtWidgets import (
@@ -68,10 +66,8 @@ class SettingsDialog(CustomDialog):
     user_settings: UserSettings
     gui_loader: GUILoader
 
-    def __init__(
-        self, parent=None, user_settings: Optional[UserSettings] = None, gui_loader: Optional[GUILoader] = None
-    ):
-        super(SettingsDialog, self).__init__(parent, "Settings")
+    def __init__(self, parent=None, user_settings: UserSettings | None = None, gui_loader: GUILoader | None = None):
+        super().__init__(parent, "Settings")
         self.user_settings = user_settings if user_settings is not None else UserSettings()
         self.gui_loader = gui_loader if gui_loader is not None else load_gui_loader()
 
@@ -275,4 +271,4 @@ class SettingsDialog(CustomDialog):
     def on_exit(self):
         save_settings(self.user_settings)
 
-        super(SettingsDialog, self).on_exit()
+        super().on_exit()

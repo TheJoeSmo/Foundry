@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs, field
 from attr.validators import instance_of
 from PySide6.QtCore import Signal, SignalInstance
@@ -74,10 +72,10 @@ class LevelWarpEditor(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         state: LevelWarpState,
-        undo_controller: Optional[UndoController[LevelWarpState]] = None,
-        file_settings: Optional[FileSettings] = None,
+        undo_controller: UndoController[LevelWarpState] | None = None,
+        file_settings: FileSettings | None = None,
     ):
         super().__init__(parent)
         self._state = state
@@ -314,7 +312,7 @@ class LevelWarpDisplay(QFormLayout):
     enemy_pointer_editor: Spinner
     tileset_editor: QComboBox
 
-    def __init__(self, parent: Optional[QWidget], generator_pointer: int, enemy_pointer: int, tileset: int):
+    def __init__(self, parent: QWidget | None, generator_pointer: int, enemy_pointer: int, tileset: int):
         super().__init__(parent)
 
         self.setFormAlignment(Qt.AlignCenter)  # type: ignore

@@ -1,11 +1,9 @@
-from typing import Optional
-
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QMainWindow, QToolBar, QWidget
 
 
 def create_toolbar(
-    parent: QMainWindow, name: str, widgets: Optional[list[QWidget]] = None, area: Optional[Qt.ToolBarArea] = None
+    parent: QMainWindow, name: str, widgets: list[QWidget] | None = None, area: Qt.ToolBarArea | None = None
 ) -> QToolBar:
     """
     Creates a QToolbar with the default arguments for this repository.

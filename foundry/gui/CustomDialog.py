@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QDialog
 
 class CustomDialog(QDialog):
     def __init__(self, parent, title="Title"):
-        super(CustomDialog, self).__init__(parent)
+        super().__init__(parent)
 
         self.setWindowTitle(title)
         self.setWindowFlag(Qt.WindowStaysOnTopHint)

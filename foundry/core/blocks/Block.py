@@ -1,4 +1,4 @@
-from typing import Protocol, Type, TypeVar
+from typing import Protocol, TypeVar
 
 from attr import attrs
 from pydantic import BaseModel
@@ -42,12 +42,12 @@ class Block:
 
     @classmethod
     def from_values(
-        cls: Type[_T], point: Point, patterns: Pattern, palette_index: int, do_not_render: bool = False
+        cls: type[_T], point: Point, patterns: Pattern, palette_index: int, do_not_render: bool = False
     ) -> _T:
         return cls(point, patterns, palette_index, do_not_render)
 
     @classmethod
-    def from_block(cls: Type[_T], block: BlockProtocol) -> _T:
+    def from_block(cls: type[_T], block: BlockProtocol) -> _T:
         return cls.from_values(block.point, block.patterns, block.palette_index, block.do_not_render)
 
 

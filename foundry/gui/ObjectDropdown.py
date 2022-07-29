@@ -1,5 +1,3 @@
-from typing import Union
-
 from PySide6.QtCore import Qt, Signal, SignalInstance
 from PySide6.QtGui import QIcon, QImage, QPixmap
 from PySide6.QtWidgets import QApplication, QComboBox, QCompleter, QWidget
@@ -23,7 +21,7 @@ class ObjectDropdown(QComboBox):
     object_selected: SignalInstance = Signal(ObjectLike)
 
     def __init__(self, parent: QWidget):
-        super(ObjectDropdown, self).__init__(parent)
+        super().__init__(parent)
 
         self.setEditable(True)
         self.setMaxVisibleItems(30)
@@ -47,7 +45,7 @@ class ObjectDropdown(QComboBox):
         )
 
     def setFocus(self):
-        super(ObjectDropdown, self).setFocus()
+        super().setFocus()
 
         self.lineEdit().selectAll()
 
@@ -122,7 +120,7 @@ class ObjectDropdown(QComboBox):
 
             self._add_item(enemy_item)
 
-    def _add_item(self, level_object: Union[LevelObject, EnemyObject]):
+    def _add_item(self, level_object: LevelObject | EnemyObject):
         if not isinstance(level_object, (LevelObject, EnemyObject)):
             return
 

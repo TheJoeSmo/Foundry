@@ -47,7 +47,7 @@ discord_link = "https://discord.gg/pm87gm7"
 enemy_compat_link = QUrl.fromLocalFile(str(doc_dir.joinpath("SMB3 enemy compatibility.html")))
 
 
-def open_url(url: Union[str, QUrl]):
+def open_url(url: str | QUrl):
     QDesktopServices.openUrl(QUrl(url))
 
 

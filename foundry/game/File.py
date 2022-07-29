@@ -1,6 +1,6 @@
 from os.path import basename
 from random import getrandbits
-from typing import ClassVar, List, Optional, Type, TypeVar
+from typing import ClassVar, TypeVar
 
 from attr import attrs
 
@@ -29,7 +29,7 @@ class InvalidINESHeader(TypeError):
     An exception that is raised if a file does not follow an INES header when it is meant to.
     """
 
-    def __init__(self, file_path: Optional[str] = None):
+    def __init__(self, file_path: str | None = None):
         if file_path:
             super().__init__(f"{file_path} does not follow the INES header format")
         super().__init__("Invalid INES header")
@@ -119,7 +119,7 @@ class INESHeader:
         return self.CHARACTER_BANK_SIZE * self.character_banks
 
     @classmethod
-    def from_data(cls: Type[Self], data: bytes, path: Optional[str] = None) -> Self:
+    def from_data(cls: type[Self], data: bytes, path: str | None = None) -> Self:
         """
         Generates an INES header from a file following the header.
 
@@ -237,18 +237,18 @@ class ROM(Rom):
     name: str = ""
     header: INESHeader
     _settings: FileSettings
-    _id: Optional[int]
+    _id: int | None
 
-    W_INIT_OS_LIST: List[int] = []
+    W_INIT_OS_LIST: list[int] = []
 
-    def __init__(self, path: Optional[str] = None):
+    def __init__(self, path: str | None = None):
         if not ROM.rom_data:
             if path is None:
                 raise ValueError("Rom was not loaded!")
 
             ROM.load_from_file(path)
 
-        super(ROM, self).__init__(ROM.rom_data)
+        super().__init__(ROM.rom_data)
 
         self.position = 0
 
@@ -281,7 +281,7 @@ class ROM(Rom):
 
         rom.bulk_write(tsa_data, tsa_start)
 
-    def generate_tag(self) -> Optional[int]:
+    def generate_tag(self) -> int | None:
         """
         Generates a identification tag for a file.  This enables the file to be references later on.
 
@@ -307,7 +307,7 @@ class ROM(Rom):
 
         return rom_id
 
-    def get_id(self) -> Optional[int]:
+    def get_id(self) -> int | None:
         """
         Determines the ID of the file.
 

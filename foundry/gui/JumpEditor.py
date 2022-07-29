@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtWidgets import (
     QComboBox,
     QDialogButtonBox,
@@ -35,9 +33,9 @@ MAX_HORIZ_POSITION = 0xFF
 
 class JumpEditor(CustomDialog):
     def __init__(
-        self, parent: Optional[QWidget], jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX
+        self, parent: QWidget | None, jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX
     ):
-        super(JumpEditor, self).__init__(parent, "Jump Editor")
+        super().__init__(parent, "Jump Editor")
 
         self.jump = jump
         self.is_horizontal = is_horizontal
@@ -88,9 +86,7 @@ class JumpEditor(CustomDialog):
         self.exit_vertical.setCurrentIndex(self.jump.exit_vertical & 0b111)
 
     @staticmethod
-    def edit_jump(
-        parent: Optional[QWidget], jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX
-    ):
+    def edit_jump(parent: QWidget | None, jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX):
         jump_editor = JumpEditor(parent, jump, is_horizontal, suggested_max_size)
 
         jump_editor.exec_()

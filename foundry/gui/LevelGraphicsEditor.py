@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs, field
 from attr.validators import instance_of
 from PySide6.QtCore import Signal, SignalInstance
@@ -62,9 +60,9 @@ class LevelGraphicsEditor(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         state: LevelGraphicsState,
-        undo_controller: Optional[UndoController[LevelGraphicsState]] = None,
+        undo_controller: UndoController[LevelGraphicsState] | None = None,
     ):
         super().__init__(parent)
         self._state = state
@@ -290,7 +288,7 @@ class LevelGraphicsDisplay(QFormLayout):
     enemy_palette_editor: Spinner
     graphics_set_editor: QComboBox
 
-    def __init__(self, parent: Optional[QWidget], generator_palette: int, enemy_palette: int, graphics_set: int):
+    def __init__(self, parent: QWidget | None, generator_palette: int, enemy_palette: int, graphics_set: int):
         super().__init__(parent)
 
         self.setFormAlignment(Qt.AlignCenter)  # type: ignore

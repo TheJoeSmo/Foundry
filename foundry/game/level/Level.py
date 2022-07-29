@@ -1,5 +1,5 @@
 from functools import reduce
-from typing import List, Optional, Tuple, Union, overload
+from typing import overload
 
 from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
 
@@ -59,7 +59,7 @@ class Level(LevelLike):
     def __init__(
         self, level_name: str = "", layout_address: int = 0, enemy_data_offset: int = 0, object_set_number: int = 1
     ):
-        super(Level, self).__init__(object_set_number, layout_address)
+        super().__init__(object_set_number, layout_address)
 
         self._signal_emitter = LevelSignaller()
 
@@ -74,10 +74,10 @@ class Level(LevelLike):
         self.object_offset = self.header_offset + Level.HEADER_LENGTH
         self.enemy_offset = enemy_data_offset
 
-        self.objects: List[LevelObject] = []
+        self.objects: list[LevelObject] = []
         self.header_bytes: bytearray = bytearray()
-        self.jumps: List[Jump] = []
-        self.enemies: List[EnemyObject] = []
+        self.jumps: list[Jump] = []
+        self.enemies: list[EnemyObject] = []
 
         if self.layout_address == self.enemy_offset == 0:
             # probably loaded to become an m3l
@@ -496,24 +496,24 @@ class Level(LevelLike):
     def too_many_enemies_or_items(self):
         return self.current_enemies_size() > self.enemy_size_on_disk
 
-    def get_all_objects(self) -> List[Union[LevelObject, EnemyObject]]:
+    def get_all_objects(self) -> list[LevelObject | EnemyObject]:
         return self.objects + self.enemies
 
     def get_object_names(self):
         return [obj.name for obj in self.get_all_objects()]
 
-    def object_at(self, x: int, y: int) -> Optional[Union[EnemyObject, LevelObject]]:
+    def object_at(self, x: int, y: int) -> EnemyObject | LevelObject | None:
         for obj in reversed(self.get_all_objects()):
             if (x, y) in obj:
                 return obj
         else:
             return None
 
-    def bring_to_foreground(self, objects: List[Union[LevelObject, EnemyObject]]):
+    def bring_to_foreground(self, objects: list[LevelObject | EnemyObject]):
         for obj in objects:
             intersecting_objects = self.get_intersecting_objects(obj)
 
-            object_currently_in_the_foreground: Union[LevelObject, EnemyObject] = intersecting_objects[-1]
+            object_currently_in_the_foreground: LevelObject | EnemyObject = intersecting_objects[-1]
 
             if obj is object_currently_in_the_foreground:
                 continue
@@ -529,11 +529,11 @@ class Level(LevelLike):
 
             objects.insert(index, obj)
 
-    def bring_to_background(self, level_objects: List[Union[LevelObject, EnemyObject]]):
+    def bring_to_background(self, level_objects: list[LevelObject | EnemyObject]):
         for obj in level_objects:
             intersecting_objects = self.get_intersecting_objects(obj)
 
-            object_currently_in_the_background: Union[LevelObject, EnemyObject] = intersecting_objects[0]
+            object_currently_in_the_background: LevelObject | EnemyObject = intersecting_objects[0]
 
             if obj is object_currently_in_the_background:
                 continue
@@ -552,16 +552,14 @@ class Level(LevelLike):
             objects.insert(index, obj)
 
     @overload
-    def get_intersecting_objects(self, obj: LevelObject) -> List[LevelObject]:
+    def get_intersecting_objects(self, obj: LevelObject) -> list[LevelObject]:
         ...
 
     @overload
-    def get_intersecting_objects(self, obj: EnemyObject) -> List[EnemyObject]:
+    def get_intersecting_objects(self, obj: EnemyObject) -> list[EnemyObject]:
         ...
 
-    def get_intersecting_objects(
-        self, obj: Union[LevelObject, EnemyObject]
-    ) -> Union[List[LevelObject], List[EnemyObject]]:
+    def get_intersecting_objects(self, obj: LevelObject | EnemyObject) -> list[LevelObject] | list[EnemyObject]:
         """
         Returns all objects of the same type, that overlap the rectangle of the given object, including itself. The
         objects are in the order, that they appear in, in memory, meaning back to front.
@@ -587,13 +585,13 @@ class Level(LevelLike):
     def draw(self, *_):
         pass
 
-    def paste_object_at(self, x: int, y: int, obj: Union[EnemyObject, LevelObject]) -> Union[EnemyObject, LevelObject]:
+    def paste_object_at(self, x: int, y: int, obj: EnemyObject | LevelObject) -> EnemyObject | LevelObject:
         if isinstance(obj, EnemyObject):
             return self.add_enemy(obj.obj_index, x, y)
 
         elif isinstance(obj, LevelObject):
             if obj.is_4byte:
-                length: Optional[int] = obj.data[3]
+                length: int | None = obj.data[3]
             else:
                 length = None
 
@@ -613,7 +611,7 @@ class Level(LevelLike):
         self.add_enemy(0x72, x, y, len(self.enemies))
 
     def add_object(
-        self, domain: int, object_index: int, x: int, y: int, length: Optional[int], index: int = -1
+        self, domain: int, object_index: int, x: int, y: int, length: int | None, index: int = -1
     ) -> LevelObject:
         assert isinstance(domain, int)
         assert isinstance(object_index, int)
@@ -651,7 +649,7 @@ class Level(LevelLike):
 
         self.data_changed.emit()
 
-    def index_of(self, obj: Union[EnemyObject, LevelObject]) -> int:
+    def index_of(self, obj: EnemyObject | LevelObject) -> int:
         if isinstance(obj, LevelObject):
             return self.objects.index(obj)
         elif isinstance(obj, EnemyObject):
@@ -665,7 +663,7 @@ class Level(LevelLike):
         else:
             return self.enemies[index % len(self.objects)]
 
-    def remove_object(self, obj: Union[EnemyObject, LevelObject]):
+    def remove_object(self, obj: EnemyObject | LevelObject):
         if obj is None:
             return
 
@@ -761,7 +759,7 @@ class Level(LevelLike):
 
         return (self.header_offset, data), (self.enemy_offset, enemies)
 
-    def from_bytes(self, object_data: Tuple[int, bytearray], enemy_data: Tuple[int, bytearray], new_level=True):
+    def from_bytes(self, object_data: tuple[int, bytearray], enemy_data: tuple[int, bytearray], new_level=True):
 
         self.header_offset, object_bytes = object_data
         self.enemy_offset, enemies = enemy_data

@@ -4,7 +4,7 @@ from foundry.smb3parse.objects import InLevelObject
 
 class LevelObject(InLevelObject):
     def __init__(self, data: bytearray):
-        super(LevelObject, self).__init__(data)
+        super().__init__(data)
 
         if len(data) not in [3, 4]:
             raise ValueError(f"Length of the given data must be 3 or 4, was {len(data)}.")
