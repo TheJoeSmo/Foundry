@@ -103,7 +103,7 @@ class Tilesets(BaseModel):
 
 @cache
 def get_object_metadata() -> Tilesets:
-    with open(tileset_definitions, "r") as f:
+    with open(tileset_definitions) as f:
         return Tilesets(__root__=loads(f.read()))
 
 

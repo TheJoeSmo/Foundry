@@ -5,7 +5,6 @@ import pathlib
 import shlex
 import subprocess
 import tempfile
-from typing import Optional
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShortcut, Qt
@@ -52,7 +51,7 @@ ROM_FILE_FILTER = "ROM files (*.nes *.rom);;All files (*)"
 M3L_FILE_FILTER = "M3L files (*.m3l);;All files (*)"
 IMG_FILE_FILTER = "Screenshots (*.png);;All files (*)"
 
-with open(main_window_flags_path, "r") as data:
+with open(main_window_flags_path) as data:
     main_window_flags = json.loads(data.read())
 del data
 
@@ -76,17 +75,17 @@ MODE_RESIZE = 2
 
 
 class MainWindow(QMainWindow):
-    level_selector_last_level: Optional[tuple[int, int]]
+    level_selector_last_level: tuple[int, int] | None
 
     def __init__(
         self,
         path_to_rom="",
         world=None,
         level=None,
-        user_settings: Optional[UserSettings] = None,
-        gui_loader: Optional[GUILoader] = None,
+        user_settings: UserSettings | None = None,
+        gui_loader: GUILoader | None = None,
     ):
-        super(MainWindow, self).__init__()
+        super().__init__()
 
         self.setWindowIcon(icon(main_window_flags["icon"]))
         self.user_settings = UserSettings() if user_settings is None else user_settings
@@ -206,7 +205,7 @@ class MainWindow(QMainWindow):
 
     def _load_auto_save(self):
         # rom already loaded
-        with open(auto_save_level_data_path, "r") as level_data_file:
+        with open(auto_save_level_data_path) as level_data_file:
             json_data = level_data_file.read()
 
             object_set_number, level_offset, enemy_offset, base64_data = json.loads(json_data)
@@ -406,7 +405,7 @@ class MainWindow(QMainWindow):
     def update_title(self):
         self.setWindowTitle(self.manager.title_suggestion if self.manager.enabled else "SMB3Foundry")
 
-    def on_open_rom(self, path_to_rom="", world: Optional[int] = None, level: Optional[int] = None) -> bool:
+    def on_open_rom(self, path_to_rom="", world: int | None = None, level: int | None = None) -> bool:
         if not self.safe_to_change():
             return False
 
@@ -429,7 +428,7 @@ class MainWindow(QMainWindow):
                 else:
                     self.manager.on_select()
             return True
-        except IOError as exp:
+        except OSError as exp:
             QMessageBox.warning(self, type(exp).__name__, f"Cannot open file '{path_to_rom}'.")
             return False
 
@@ -448,7 +447,7 @@ class MainWindow(QMainWindow):
             with open(pathname, "rb") as m3l_file:
 
                 m3l_data = bytearray(m3l_file.read())
-        except IOError as exp:
+        except OSError as exp:
             QMessageBox.warning(self, type(exp).__name__, f"Cannot open file '{pathname}'.")
 
             return False
@@ -582,7 +581,7 @@ class MainWindow(QMainWindow):
             ROM().save_to_file(pathname, set_new_path)
 
             self._save_auto_rom()
-        except IOError as exp:
+        except OSError as exp:
             QMessageBox.warning(self, f"{type(exp).__name__}", f"Cannot save ROM data to file '{pathname}'.")
 
     def on_save_m3l(self, _):
@@ -606,7 +605,7 @@ class MainWindow(QMainWindow):
         try:
             with open(pathname, "wb") as m3l_file:
                 m3l_file.write(m3l_bytes)
-        except IOError as exp:
+        except OSError as exp:
             QMessageBox.warning(self, type(exp).__name__, f"Couldn't save level to '{pathname}'.")
 
     def on_check_for_update(self):
@@ -735,4 +734,4 @@ class MainWindow(QMainWindow):
         auto_save_m3l_path.unlink(missing_ok=True)
         auto_save_level_data_path.unlink(missing_ok=True)
 
-        super(MainWindow, self).closeEvent(event)
+        super().closeEvent(event)

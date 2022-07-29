@@ -4,7 +4,7 @@ This CodeEdit uses a dictionary as the edit values.  The keys represent the
 abstract option and the values are the byte data needing to be programmed
 into memory.
 """
-from typing import Any, Optional
+from typing import Any
 
 from foundry.smb3parse.util.code_edit import CodeEdit
 from foundry.smb3parse.util.rom import Rom
@@ -46,7 +46,7 @@ class CodeEditDict(CodeEdit[Any]):
             return False
         return self.read() is not None
 
-    def read(self) -> Optional[Any]:
+    def read(self) -> Any | None:
         """Returns the abstract representation of target code area.
 
         This will read the current value in the ROM at the target address

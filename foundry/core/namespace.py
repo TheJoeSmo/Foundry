@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from collections import ChainMap
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator, Sequence
 from enum import Enum
 from graphlib import CycleError, TopologicalSorter
 from re import search
-from typing import Any, Generic, Iterator, Sequence, Type, TypeVar
+from typing import Any, Generic, TypeVar
 
 from attr import attrs, evolve, field, validators
 
@@ -362,7 +362,7 @@ def validate_name_is_in_namespace(name: str, parent: Namespace) -> str:
     return name
 
 
-def validate_element_to_type(name: str, parent: Namespace, type_: Type[_T]) -> Type[_T]:
+def validate_element_to_type(name: str, parent: Namespace, type_: type[_T]) -> type[_T]:
     """
     Validates that the element is of `type_`.
 
@@ -394,7 +394,7 @@ def validate_element_to_type(name: str, parent: Namespace, type_: Type[_T]) -> T
     return type_
 
 
-def validate_element(parent: Namespace, name: str, type: Type[_T]) -> _T:
+def validate_element(parent: Namespace, name: str, type: type[_T]) -> _T:
     """
     Validates a referenced element inside of a namespace to ensure that it exists and is of the correct
     type.

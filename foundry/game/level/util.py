@@ -1,5 +1,4 @@
 from json import loads
-from typing import Optional
 
 from attr import attrs
 from pydantic import BaseModel
@@ -37,8 +36,8 @@ class DisplayInformation:
         The locations that the level is inside.
     """
 
-    name: Optional[str]
-    description: Optional[str]
+    name: str | None
+    description: str | None
     locations: list[Location]
 
 
@@ -116,8 +115,8 @@ class PydanticDisplayInformation(BaseModel):
         The locations that the level is inside.
     """
 
-    name: Optional[str]
-    description: Optional[str]
+    name: str | None
+    description: str | None
     locations: list[PydanticLocation]
 
     def to_display_information(self) -> DisplayInformation:
@@ -249,7 +248,7 @@ def generate_default_level_information() -> list[Level]:
     list[Level]
         A list of levels that the base game contains.
     """
-    with open(default_levels_path, "r") as f:
+    with open(default_levels_path) as f:
         return [PydanticLevel(**level).to_level() for level in loads(f.read())]
 
 
@@ -281,7 +280,7 @@ def get_world_levels(world: int, levels: list[Level]) -> list[Level]:
     return [element[1] for element in sorted(world_levels.items(), key=lambda item: item[0])]
 
 
-def find_level_by_pointers(levels: list[Level], generator_pointer: int, enemy_pointer: int) -> Optional[Level]:
+def find_level_by_pointers(levels: list[Level], generator_pointer: int, enemy_pointer: int) -> Level | None:
     """
     Finds a level by its pointers.
 
@@ -349,5 +348,5 @@ def get_worlds(levels: list[PydanticLevel]) -> int:
 
 
 def load_level_offsets() -> list[PydanticLevel]:
-    with open(data_dir.joinpath("levels.json"), "r") as f:
+    with open(data_dir.joinpath("levels.json")) as f:
         return [PydanticLevel(**level) for level in loads(f.read())]

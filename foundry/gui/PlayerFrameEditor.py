@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent
@@ -38,7 +36,7 @@ class PlayerFrameEditorController(CustomChildWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         animation: PlayerAnimation,
         power_up_offsets: list[int],
         palette_group: MutablePaletteGroupProtocol,
@@ -50,7 +48,7 @@ class PlayerFrameEditorController(CustomChildWindow):
 
         self.model = PlayerFrameEditorModel(animation, power_up_offsets, palette_group, is_mario)
         self.view = PlayerFrameEditorView(self, self.sprite_groups, zoom)
-        self.sprite_viewer: Optional[SpriteViewer] = None
+        self.sprite_viewer: SpriteViewer | None = None
         self.sprite_viewer_index = 0
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
@@ -207,7 +205,7 @@ class PlayerFrameEditorView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         sprite_groups: list[SpriteGroupProtocol],
         zoom: int = 2,
     ):

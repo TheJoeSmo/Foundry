@@ -2,7 +2,7 @@ from json import loads
 
 from foundry import tileset_data_path
 
-with open(tileset_data_path, "r") as data:
+with open(tileset_data_path) as data:
     _tileset_data = loads(data.read())
 
 TILESET_LEVEL_OFFSET = [int(tileset["location"], 16) for tileset in _tileset_data]

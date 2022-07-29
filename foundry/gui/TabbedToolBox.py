@@ -1,5 +1,3 @@
-from typing import Union
-
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QScrollArea, QTabWidget
 
@@ -15,7 +13,7 @@ class TabbedToolBox(QTabWidget):
     object_placed: SignalInstance = Signal(ObjectButton)  # type: ignore
 
     def __init__(self, parent=None):
-        super(TabbedToolBox, self).__init__(parent)
+        super().__init__(parent)
 
         self.setTabPosition(self.East)
 
@@ -85,7 +83,7 @@ class TabbedToolBox(QTabWidget):
     def show_enemy_item_tab(self):
         self.setCurrentIndex(self.indexOf(self._enemies_scroll_area))
 
-    def select_object(self, tab_index: int, object_index: int) -> Union[LevelObject, EnemyObject]:
+    def select_object(self, tab_index: int, object_index: int) -> LevelObject | EnemyObject:
         if tab_index == 0:
             return self._recent_toolbox.objects[object_index]
         elif tab_index == 1:
@@ -103,7 +101,7 @@ class TabbedToolBox(QTabWidget):
         self._enemies_toolbox.clear()
         self._enemies_toolbox.add_from_enemy_set(object_set_index, spr_palette_index)
 
-    def add_recent_object(self, level_object: Union[EnemyObject, LevelObject]):
+    def add_recent_object(self, level_object: EnemyObject | LevelObject):
         self._recent_toolbox.place_at_front(level_object)
 
     def _on_object_dragged(self, object_icon: ObjectButton):

@@ -1,12 +1,11 @@
 from functools import cache
-from typing import Type
 
 from foundry.core.warnings.Warning import PydanticWarning, Warning
 from foundry.core.warnings.WarningType import WarningType
 
 
 @cache
-def type_to_pydantic_warning() -> dict[WarningType, Type[PydanticWarning]]:
+def type_to_pydantic_warning() -> dict[WarningType, type[PydanticWarning]]:
     """
     Provide a dictionary to easily convert between a given warning type and pydantic warning
 
@@ -43,7 +42,7 @@ def type_to_pydantic_warning() -> dict[WarningType, Type[PydanticWarning]]:
 
 
 @cache
-def type_to_warning() -> dict[WarningType, Type[Warning]]:
+def type_to_warning() -> dict[WarningType, type[Warning]]:
     """
     Provide a dictionary to easily convert between a given warning type and warning
 
@@ -75,7 +74,7 @@ def type_to_warning() -> dict[WarningType, Type[Warning]]:
     }
 
 
-def convert_pydantic_to_warning(warning: PydanticWarning) -> Type[Warning]:
+def convert_pydantic_to_warning(warning: PydanticWarning) -> type[Warning]:
     """
     Provides the class alternative for a given pydantic warning.
 

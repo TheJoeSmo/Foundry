@@ -1,19 +1,17 @@
-from typing import Union
-
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.ObjectLike import EXPANDS_HORIZ, EXPANDS_VERT
 
 
-def increment_type(item: Union[LevelObject, EnemyObject]):
+def increment_type(item: LevelObject | EnemyObject):
     change_type(item, True)
 
 
-def decrement_type(item: Union[LevelObject, EnemyObject]):
+def decrement_type(item: LevelObject | EnemyObject):
     change_type(item, False)
 
 
-def change_type(item: Union[LevelObject, EnemyObject], increment: bool):
+def change_type(item: LevelObject | EnemyObject, increment: bool):
     if isinstance(item, LevelObject):
         return change_level_object_type(item, increment)
     elif isinstance(item, EnemyObject):

@@ -1,5 +1,5 @@
 from typing import Tuple
 
-ObjectData = Tuple[int, bytearray]
-EnemyItemData = Tuple[int, bytearray]
-LevelByteData = Tuple[ObjectData, EnemyItemData]
+ObjectData = tuple[int, bytearray]
+EnemyItemData = tuple[int, bytearray]
+LevelByteData = tuple[ObjectData, EnemyItemData]

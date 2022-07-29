@@ -8,7 +8,7 @@ class LevelLike(LevelBase, abc.ABC):
     height: int
 
     def __init__(self, object_set_number, layout_address):
-        super(LevelLike, self).__init__(object_set_number, layout_address)
+        super().__init__(object_set_number, layout_address)
 
         self.changed = False
 

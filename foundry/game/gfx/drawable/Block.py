@@ -34,7 +34,7 @@ class Block:
 
     PIXEL_COUNT = WIDTH * HEIGHT
 
-    tsa_data = bytes()
+    tsa_data = b""
 
     _block_cache = {}
 

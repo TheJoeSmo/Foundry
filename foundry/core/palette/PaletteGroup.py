@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import ClassVar, Protocol, Sequence, Type, TypeVar
+from collections.abc import Sequence
+from typing import ClassVar, Protocol, TypeVar
 
 from attr import attrs
 from pydantic import BaseModel
@@ -66,7 +67,7 @@ class AbstractPaletteGroup(ABC):
 
     palettes: Sequence[PaletteProtocol]
 
-    PALETTE_TYPE: ClassVar[Type[AbstractPalette]] = AbstractPalette
+    PALETTE_TYPE: ClassVar[type[AbstractPalette]] = AbstractPalette
 
     def __bytes__(self) -> bytes:
         b = bytearray()
@@ -83,7 +84,7 @@ class AbstractPaletteGroup(ABC):
 
     @classmethod
     @abstractmethod
-    def from_values(cls: Type[_T], *values: PaletteProtocol) -> _T:
+    def from_values(cls: type[_T], *values: PaletteProtocol) -> _T:
         """
         A generalized way to create itself from a series of values.
 
@@ -95,7 +96,7 @@ class AbstractPaletteGroup(ABC):
         ...
 
     @classmethod
-    def from_palette_group(cls: Type[_T], palette_group: PaletteGroupProtocol) -> _T:
+    def from_palette_group(cls: type[_T], palette_group: PaletteGroupProtocol) -> _T:
         """
         Generates a AbstractPaletteGroup of this type from another PaletteGroupProtocol.
 
@@ -112,7 +113,7 @@ class AbstractPaletteGroup(ABC):
         return cls.from_values(*palette_group.palettes)
 
     @classmethod
-    def as_empty(cls: Type[_T]) -> _T:
+    def as_empty(cls: type[_T]) -> _T:
         """
         Makes an empty palette group of default values.
 
@@ -124,7 +125,7 @@ class AbstractPaletteGroup(ABC):
         return cls.from_values(*[cls.PALETTE_TYPE.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
 
     @classmethod
-    def from_rom(cls: Type[_T], address: int) -> _T:
+    def from_rom(cls: type[_T], address: int) -> _T:
         """
         Creates a palette group from an absolute address in ROM.
 
@@ -177,13 +178,13 @@ class MutablePaletteGroup(AbstractPaletteGroup):
 
     palettes: list[MutablePaletteProtocol]
 
-    PALETTE_TYPE: ClassVar[Type[MutablePalette]] = MutablePalette
+    PALETTE_TYPE: ClassVar[type[MutablePalette]] = MutablePalette
 
     def __setitem__(self, key: int, value: MutablePaletteProtocol):
         self.palettes[key] = value
 
     @classmethod
-    def from_values(cls: Type[_MT], *values: PaletteProtocol) -> _MT:
+    def from_values(cls: type[_MT], *values: PaletteProtocol) -> _MT:
         return cls([cls.PALETTE_TYPE.from_palette(palette) for palette in values])
 
 
@@ -198,10 +199,10 @@ class PaletteGroup(AbstractPaletteGroup):
 
     palettes: tuple[HashablePaletteProtocol]
 
-    PALETTE_TYPE: ClassVar[Type[Palette]] = Palette
+    PALETTE_TYPE: ClassVar[type[Palette]] = Palette
 
     @classmethod
-    def from_values(cls: Type[_PT], *values: PaletteProtocol) -> _PT:
+    def from_values(cls: type[_PT], *values: PaletteProtocol) -> _PT:
         return cls(tuple(cls.PALETTE_TYPE.from_palette(palette) for palette in values))
 
 

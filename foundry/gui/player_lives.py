@@ -301,7 +301,7 @@ class View(CustomDialog):
         state changes in the system, the UI will automatically re-render.
         """
 
-        super(View, self).__init__(parent, title=_UIStrings.TITLE.value)
+        super().__init__(parent, title=_UIStrings.TITLE.value)
         self.rom_interface = rom_interface
         self.store = store
 

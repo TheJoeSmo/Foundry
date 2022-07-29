@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 
 from foundry.core.warnings.Warning import PydanticWarning, Warning
@@ -12,10 +10,10 @@ class InvalidPositionWarning(Warning):
     A warning for an object exceeding its valid positional range.
     """
 
-    max_x: Optional[int] = None
-    min_x: Optional[int] = None
-    max_y: Optional[int] = None
-    min_y: Optional[int] = None
+    max_x: int | None = None
+    min_x: int | None = None
+    max_y: int | None = None
+    min_y: int | None = None
 
     def check_object(self, obj: ObjectLike, *args, **kwargs) -> bool:
         """
@@ -59,7 +57,7 @@ class PydanticInvalidPositionWarning(PydanticWarning):
     A JSON model of a warning that checks for an object being in a positional range.
     """
 
-    max_x: Optional[int] = None
-    min_x: Optional[int] = None
-    max_y: Optional[int] = None
-    min_y: Optional[int] = None
+    max_x: int | None = None
+    min_x: int | None = None
+    max_y: int | None = None
+    min_y: int | None = None

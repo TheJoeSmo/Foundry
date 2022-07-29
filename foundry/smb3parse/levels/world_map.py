@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import Any, Generator, List
+from collections.abc import Generator
+from typing import Any
 from warnings import warn
 
 from foundry.smb3parse.constants import (
@@ -75,7 +76,7 @@ TILE_NAMES.update(
 )
 
 
-def list_world_map_addresses(rom: Rom) -> List[int]:
+def list_world_map_addresses(rom: Rom) -> list[int]:
     offsets = rom.read(LAYOUT_LIST_OFFSET, WORLD_COUNT * OFFSET_SIZE)
 
     addresses = []
@@ -90,7 +91,7 @@ def list_world_map_addresses(rom: Rom) -> List[int]:
     return addresses
 
 
-def get_all_world_maps(rom: Rom) -> List["WorldMap"]:
+def get_all_world_maps(rom: Rom) -> list["WorldMap"]:
     world_map_addresses = list_world_map_addresses(rom)
 
     return [WorldMap(address, rom) for address in world_map_addresses]
@@ -113,7 +114,7 @@ class WorldMap(LevelBase):
     """
 
     def __init__(self, layout_address: int, rom: Rom):
-        super(WorldMap, self).__init__(WORLD_MAP_OBJECT_SET, layout_address)
+        super().__init__(WORLD_MAP_OBJECT_SET, layout_address)
 
         self._rom = rom
 

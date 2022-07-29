@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
@@ -10,7 +8,7 @@ from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
 class PaletteGroupEditor(QWidget):
     palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], palette_group: MutablePaletteGroupProtocol):
+    def __init__(self, parent: QWidget | None, palette_group: MutablePaletteGroupProtocol):
         super().__init__(parent)
         self._palette_group = palette_group
 

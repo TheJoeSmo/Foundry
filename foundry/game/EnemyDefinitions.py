@@ -1,7 +1,6 @@
 from enum import Enum
 from functools import cache
 from json import loads
-from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -42,8 +41,8 @@ class EnemyDefinition(Definition):
     rect_y_offset: int = 0
     icon_width: int = 0
     icon_height: int = 0
-    icon_x_offset: Optional[int] = None
-    icon_y_offset: Optional[int] = None
+    icon_x_offset: int | None = None
+    icon_y_offset: int | None = None
     sprites: list[Sprite] = Field(default_factory=list)
     blocks: list[int] = Field(default_factory=list)
     pages: list[int] = Field(default_factory=list)
@@ -140,5 +139,5 @@ class EnemyDefinitions(BaseModel):
 
 @cache
 def get_enemy_metadata() -> EnemyDefinitions:
-    with open(enemy_definitions, "r") as f:
+    with open(enemy_definitions) as f:
         return EnemyDefinitions(__root__=loads(f.read()))

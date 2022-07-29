@@ -1,4 +1,3 @@
-from typing import List, Optional, Tuple
 from warnings import warn
 
 from attrs import evolve
@@ -68,7 +67,7 @@ class LevelObject(GeneratorObject):
         object_set: int,
         palette_group: MutablePaletteGroup,
         graphics_set: GraphicsSetProtocol,
-        objects_ref: List["LevelObject"],
+        objects_ref: list["LevelObject"],
         is_vertical: bool,
         index: int,
         size_minimal: bool = False,
@@ -545,7 +544,7 @@ class LevelObject(GeneratorObject):
             self.rendered_position.x, self.rendered_position.y, self.rendered_size.width, self.rendered_size.height
         )
 
-    def draw(self, painter: QPainter, block_length, transparent, blocks: Optional[list[Block]] = None):
+    def draw(self, painter: QPainter, block_length, transparent, blocks: list[Block] | None = None):
         size = self.rendered_size
         size = evolve(size, width=max(size.width, 1))
 
@@ -559,7 +558,7 @@ class LevelObject(GeneratorObject):
             self._draw_block(painter, block_index, x, y, block_length, transparent, blocks=blocks)
 
     def _draw_block(
-        self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: Optional[list[Block]] = None
+        self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: list[Block] | None = None
     ):
         if blocks is not None:
             block = blocks[block_index if block_index <= 0xFF else ROM().get_byte(block_index)]
@@ -808,7 +807,7 @@ class LevelObject(GeneratorObject):
         else:
             return EXPANDS_BOTH
 
-    def __contains__(self, item: Tuple[int, int]) -> bool:
+    def __contains__(self, item: tuple[int, int]) -> bool:
         x, y = item
 
         return self.point_in(x, y)
@@ -816,7 +815,7 @@ class LevelObject(GeneratorObject):
     def point_in(self, x: int, y: int) -> bool:
         return self.rect.contains(x, y)
 
-    def get_status_info(self) -> List[tuple]:
+    def get_status_info(self) -> list[tuple]:
         return [
             ("x", self.rendered_position.x),
             ("y", self.rendered_position.y),

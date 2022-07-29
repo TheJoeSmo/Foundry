@@ -1,5 +1,3 @@
-from typing import Union
-
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
@@ -13,7 +11,7 @@ class ObjectToolBar(QWidget):
     selected: SignalInstance = Signal(ObjectLike)  # type: ignore
 
     def __init__(self, parent=None):
-        super(ObjectToolBar, self).__init__(parent)
+        super().__init__(parent)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -47,5 +45,5 @@ class ObjectToolBar(QWidget):
         item = self.tool_box.select_object(tab_index, object_index)
         self.selected.emit(item)
 
-    def add_recent_object(self, level_object: Union[EnemyObject, LevelObject]):
+    def add_recent_object(self, level_object: EnemyObject | LevelObject):
         self.tool_box.add_recent_object(level_object)

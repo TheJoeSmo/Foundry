@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List, Tuple, Union
 
 from PySide6.QtCore import QPoint
 from PySide6.QtWidgets import QMenu
@@ -32,7 +31,7 @@ MAX_ORIGIN = 0xFF, 0xFF
 
 class ContextMenu(QMenu):
     def __init__(self, level_ref: LevelRef):
-        super(ContextMenu, self).__init__()
+        super().__init__()
 
         self.level_ref = level_ref
 
@@ -65,7 +64,7 @@ class ContextMenu(QMenu):
         self.add_object_action = self.addAction("Add Object")
         self.add_object_action.setProperty(ID_PROP, CMAction.ADD_OBJECT)
 
-    def set_copied_objects(self, objects: List[Union[LevelObject, EnemyObject]]):
+    def set_copied_objects(self, objects: list[LevelObject | EnemyObject]):
         if not objects:
             return
 
@@ -84,13 +83,13 @@ class ContextMenu(QMenu):
 
         self.copied_objects_origin = min_x, min_y
 
-    def get_copied_objects(self) -> Tuple[List[Union[LevelObject, EnemyObject]], Tuple[int, int]]:
+    def get_copied_objects(self) -> tuple[list[LevelObject | EnemyObject], tuple[int, int]]:
         return self.copied_objects, self.copied_objects_origin
 
     def set_position(self, position: QPoint):
         self.last_opened_at = position
 
-    def get_position(self) -> Tuple[int, int]:
+    def get_position(self) -> tuple[int, int]:
         x, y = self.last_opened_at.toTuple()
 
         return x, y

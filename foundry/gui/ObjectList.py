@@ -8,7 +8,7 @@ from foundry.gui.ContextMenu import ContextMenu
 
 class ObjectList(QListWidget):
     def __init__(self, parent: QWidget, level_ref: LevelRef, context_menu: ContextMenu):
-        super(ObjectList, self).__init__(parent=parent)
+        super().__init__(parent=parent)
 
         self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
@@ -46,13 +46,13 @@ class ObjectList(QListWidget):
         if event.button() == Qt.RightButton:
             self.on_right_down(event)
         else:
-            return super(ObjectList, self).mousePressEvent(event)
+            return super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         if event.button() == Qt.RightButton:
             self.on_right_up(event)
         else:
-            return super(ObjectList, self).mouseReleaseEvent(event)
+            return super().mouseReleaseEvent(event)
 
     def on_right_down(self, event: QMouseEvent):
         item_under_mouse = self.itemAt(event.pos())
@@ -84,7 +84,7 @@ class ObjectList(QListWidget):
         A new item has been selected, so select the new item.
         """
         prior_selection = self.currentIndex()
-        currently_selected = set(obj.row() for obj in self.selectedIndexes())
+        currently_selected = {obj.row() for obj in self.selectedIndexes()}
         ignore_prior_selection = False
 
         level_objects = self.level_ref.level.get_all_objects()

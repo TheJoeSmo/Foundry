@@ -258,7 +258,7 @@ def load_gui_loader() -> GUILoader:
     GUILoader
         The loader for the GUI styles.
     """
-    with open(default_styles_path, "r") as f:
+    with open(default_styles_path) as f:
         return GUILoader(style=loads(f.read()))
 
 
@@ -280,7 +280,7 @@ def load_file_settings(file_id: str) -> FileSettings:
     if not exists(file_settings_path / file_id):
         return FileSettings()
     try:
-        with open(file_settings_path / file_id, "r") as f:
+        with open(file_settings_path / file_id) as f:
             return FileSettings([PydanticLevel(**level).to_level() for level in loads(f.read())["levels"]])
     except TypeError:
         # Todo: Probably should add a warning to the user here.
@@ -312,7 +312,7 @@ def load_settings(file_path: Path = default_settings_path) -> UserSettings:
         The current user settings.
     """
     try:
-        with open(str(file_path), "r") as settings_file:
+        with open(str(file_path)) as settings_file:
             return PydanticUserSettings(**loads(settings_file.read())).to_user_settings()
     except (TypeError, FileNotFoundError, ValidationError):
         return PydanticUserSettings().to_user_settings()

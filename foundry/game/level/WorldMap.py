@@ -21,7 +21,7 @@ class WorldMap(LevelLike):
     def __init__(self, world_index):
         self._internal_world_map = _WorldMap.from_world_number(ROM(), world_index)
 
-        super(WorldMap, self).__init__(0, self._internal_world_map.layout_address)
+        super().__init__(0, self._internal_world_map.layout_address)
 
         self.name = f"World {world_index} - Overworld"
 

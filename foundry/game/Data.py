@@ -5,7 +5,7 @@ from typing import NamedTuple
 def read_string_dict(path):
     return_dict = dict()
 
-    with open(path, "r") as f:
+    with open(path) as f:
         for line in f.readlines():
             key, value = line.rstrip().split("=")
 

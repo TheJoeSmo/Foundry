@@ -1,5 +1,4 @@
 from json import loads
-from typing import Optional
 
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QSizePolicy, QWidget
@@ -21,15 +20,15 @@ class SpinnerPanel(QWidget):
     zoom_in_triggered: SignalInstance = Signal()
     zoom_out_triggered: SignalInstance = Signal()
 
-    def __init__(self, parent: Optional[QWidget], level_ref: LevelRef):
-        super(SpinnerPanel, self).__init__(parent)
+    def __init__(self, parent: QWidget | None, level_ref: LevelRef):
+        super().__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
         self.level_ref = level_ref
         self.level_ref.data_changed.connect(self.update)
 
-        with open(spinner_panel_flags_path, "r") as data:
+        with open(spinner_panel_flags_path) as data:
             flags = loads(data.read())
         setup_layout(self, flags)
         setup_description(self, flags)
@@ -44,7 +43,7 @@ class SpinnerPanel(QWidget):
         else:
             self.disable_all()
 
-        super(SpinnerPanel, self).update()
+        super().update()
 
     def _populate_spinners(self, obj: ObjectLike):
         self.blockSignals(True)
