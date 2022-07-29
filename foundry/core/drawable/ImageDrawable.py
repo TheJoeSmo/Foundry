@@ -1,5 +1,4 @@
 from functools import cached_property
-from typing import Optional
 
 from attr import attrs
 from PySide6.QtGui import QColor, QImage, Qt
@@ -18,7 +17,7 @@ class ImageDrawable:
 
     point_offset: Point
     qimage: QImage
-    image_offset: Optional[Rect] = None
+    image_offset: Rect | None = None
     use_transparency: bool = True
 
     @property
@@ -39,7 +38,7 @@ class ImageDrawable:
 
 class PydanticImageDrawable(Drawable):
     image: FilePath
-    image_offset: Optional[Rect] = None
+    image_offset: Rect | None = None
     use_transparency: bool = True
 
     def __init__(self, *, type, image, image_offset=None, use_transparency=True, **kwargs):

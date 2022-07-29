@@ -1,5 +1,3 @@
-from typing import Union
-
 from PySide6.QtCore import QPoint, QSize
 from PySide6.QtGui import QCloseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import (
@@ -35,7 +33,7 @@ MAX_LENGTH = 0xFF
 
 class ObjectViewer(CustomChildWindow):
     def __init__(self, parent):
-        super(ObjectViewer, self).__init__(parent, title="Object Viewer")
+        super().__init__(parent, title="Object Viewer")
 
         self.spin_domain = Spinner(self, MAX_DOMAIN)
         self.spin_domain.valueChanged.connect(self.on_spin)
@@ -152,7 +150,7 @@ class ObjectViewer(CustomChildWindow):
 
 class ObjectDrawArea(QWidget):
     def __init__(self, parent, object_set, graphic_set=1, palette_index=0):
-        super(ObjectDrawArea, self).__init__(parent)
+        super().__init__(parent)
 
         self.object_factory = LevelObjectFactory(object_set, graphic_set, palette_index, [], False, size_minimal=True)
 
@@ -182,7 +180,7 @@ class ObjectDrawArea(QWidget):
             )
         )
 
-    def update_object(self, object_data: Union[bytearray, LevelObject, Jump] = None):
+    def update_object(self, object_data: bytearray | LevelObject | Jump = None):
         if object_data is None:
             object_data = self.current_object.data
         elif isinstance(object_data, (LevelObject, Jump)):
@@ -211,7 +209,7 @@ class ObjectDrawArea(QWidget):
 
 class BlockArray(QWidget):
     def __init__(self, parent, level_object: LevelObject):
-        super(BlockArray, self).__init__(parent)
+        super().__init__(parent)
 
         self.setLayout(QHBoxLayout())
 
@@ -242,7 +240,7 @@ class BlockArray(QWidget):
 
 class BlockArea(QWidget):
     def __init__(self, block: Block):
-        super(BlockArea, self).__init__()
+        super().__init__()
 
         self.block = block
 

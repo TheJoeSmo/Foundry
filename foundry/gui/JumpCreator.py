@@ -1,5 +1,4 @@
 from json import loads
-from typing import Optional
 
 from PySide6.QtWidgets import QWidget
 
@@ -14,12 +13,12 @@ class JumpCreator(QWidget):
     A menu item used to create and modify jumps inside the level editor.
     """
 
-    def __init__(self, level_view: LevelView, parent: Optional[QWidget] = None):
+    def __init__(self, level_view: LevelView, parent: QWidget | None = None):
         super().__init__(parent)
         self.level_view = level_view
         self.level_ref = level_view.level_ref
 
-        with open(jump_creator_flags_path, "r") as data:
+        with open(jump_creator_flags_path) as data:
             flags = loads(data.read())
         setup_layout(self, flags)
 

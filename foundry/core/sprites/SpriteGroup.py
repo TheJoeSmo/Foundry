@@ -51,8 +51,8 @@ class SpriteGroup:
     @property
     def size(self) -> Size:
         return Size(
-            max([sprites.position.x for sprites in self.sprites]) + SPRITE_SIZE.width,
-            max([sprites.position.y for sprites in self.sprites]) + SPRITE_SIZE.height,
+            max(sprites.position.x for sprites in self.sprites) + SPRITE_SIZE.width,
+            max(sprites.position.y for sprites in self.sprites) + SPRITE_SIZE.height,
         )
 
     def image(self, scale_factor: int = 1) -> QImage:

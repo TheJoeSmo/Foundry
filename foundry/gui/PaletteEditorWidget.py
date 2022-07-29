@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtWidgets import QDialog, QWidget
 
 from foundry.core.palette.Palette import MutablePaletteProtocol
@@ -8,7 +6,7 @@ from foundry.gui.PaletteWidget import PaletteWidget
 
 
 class PaletteEditorWidget(PaletteWidget):
-    def __init__(self, parent: Optional[QWidget], palette: MutablePaletteProtocol):
+    def __init__(self, parent: QWidget | None, palette: MutablePaletteProtocol):
         super().__init__(parent, palette)
 
         for idx, btn in enumerate(self._buttons):

@@ -1,6 +1,3 @@
-from typing import Tuple
-
-
 class WorldMapPosition:
     def __init__(self, world, screen: int, row: int, column: int):
         self.world = world
@@ -9,7 +6,7 @@ class WorldMapPosition:
         self.column = column
 
     @property
-    def level_info(self) -> Tuple[int, int, int]:
+    def level_info(self) -> tuple[int, int, int]:
         return self.world.level_for_position(self.screen, self.row, self.column)
 
     def can_have_level(self):

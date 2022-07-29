@@ -1,4 +1,4 @@
-from typing import Generic, Optional, TypeVar
+from typing import Generic, TypeVar
 
 from PySide6.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QDrag, QMouseEvent, QPainter, QPaintEvent
@@ -67,7 +67,7 @@ def get_minimal_icon_object(level_object: T) -> T:
 class ObjectIcon(QWidget, Generic[T]):
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         item: T,
         background_color: bool = False,
     ):
@@ -114,7 +114,7 @@ class ObjectIcon(QWidget, Generic[T]):
 
         painter.drawImage(x, y, scaled_image)
 
-        return super(ObjectIcon, self).paintEvent(event)
+        return super().paintEvent(event)
 
 
 class ObjectButton(ObjectIcon):
@@ -143,7 +143,7 @@ class ObjectButton(ObjectIcon):
 
 
 class ObjectViewer(QWidget):
-    def __init__(self, parent: Optional[QWidget], icon: Optional[ObjectButton] = None):
+    def __init__(self, parent: QWidget | None, icon: ObjectButton | None = None):
         super().__init__(parent)
         self.icon = icon
         self.layout_ = QVBoxLayout()
@@ -155,11 +155,11 @@ class ObjectViewer(QWidget):
         )
 
     @property
-    def icon(self) -> Optional[ObjectButton]:
+    def icon(self) -> ObjectButton | None:
         return self._icon
 
     @icon.setter
-    def icon(self, icon: Optional[ObjectButton]):
+    def icon(self, icon: ObjectButton | None):
         self._icon = icon
         if icon is not None:
             clear_layout(self.layout_)

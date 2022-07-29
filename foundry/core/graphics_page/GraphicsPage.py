@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Protocol
+from typing import Protocol
 
 from attr import attrs
 from pydantic import BaseModel, FilePath
@@ -39,7 +39,7 @@ class GraphicsPage:
     """
 
     index: int
-    path: Optional[Path] = None
+    path: Path | None = None
 
     @property
     def offset(self) -> int:
@@ -65,7 +65,7 @@ class PydanticGraphicsPage(BaseModel):
     """
 
     index: int
-    path: Optional[FilePath]
+    path: FilePath | None
 
     def to_graphics_page(self) -> GraphicsPageProtocol:
         return GraphicsPage(self.index, self.path)

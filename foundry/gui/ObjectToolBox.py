@@ -1,5 +1,4 @@
 from itertools import product
-from typing import Optional, Union
 
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QWidget
@@ -19,10 +18,10 @@ class ObjectToolBox(QWidget):
     object_placed: SignalInstance = Signal(ObjectButton)  # type: ignore
     object_selected: SignalInstance = Signal(int)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget] = None):
-        super(ObjectToolBox, self).__init__(parent)
+    def __init__(self, parent: QWidget | None = None):
+        super().__init__(parent)
         self._layout = FlowLayout(self)
-        self.objects: list[Union[EnemyObject, LevelObject]] = []
+        self.objects: list[EnemyObject | LevelObject] = []
 
     def update(self):
         self._layout.clear()
@@ -33,7 +32,7 @@ class ObjectToolBox(QWidget):
             icon.object_created.connect(lambda icon=icon: self.object_placed.emit(icon))
             self._layout.addWidget(icon)
 
-    def add_object(self, level_object: Union[EnemyObject, LevelObject]):
+    def add_object(self, level_object: EnemyObject | LevelObject):
         self.objects.append(level_object)
         self.update()
 
@@ -88,7 +87,7 @@ class ObjectToolBox(QWidget):
         for index in range(self._layout.count()):
             self.objects[index].draw_background_color = value
 
-    def place_at_front(self, object: Union[LevelObject, EnemyObject]):
+    def place_at_front(self, object: LevelObject | EnemyObject):
         for idx, obj in enumerate(self.objects):
             if obj.name == object.name:
                 self.objects.pop(idx)

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import (
@@ -40,7 +38,7 @@ class BlockEditorController(CustomChildWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         tsa_data: bytearray,
         block_index: int,
         graphics_set: GraphicsSet,
@@ -176,7 +174,7 @@ class BlockEditorView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         tsa_data: bytearray,
         block_index: int,
         graphics_set: GraphicsSet,

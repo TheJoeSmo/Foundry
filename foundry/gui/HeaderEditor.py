@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs, evolve
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import Qt
@@ -218,12 +216,12 @@ class HeaderEditor(CustomDialog):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         state: HeaderState,
         file_settings: FileSettings,
-        undo_controller: Optional[UndoController[HeaderState]] = None,
+        undo_controller: UndoController[HeaderState] | None = None,
     ):
-        super(HeaderEditor, self).__init__(parent, "Level Header Editor")
+        super().__init__(parent, "Level Header Editor")
         self.file_settings = file_settings
         self._state = state
         self.undo_controller = undo_controller or UndoController(state)

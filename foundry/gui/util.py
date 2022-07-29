@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import Optional
 
 from pydantic import BaseModel, Field
 from PySide6.QtGui import QColor
@@ -124,8 +123,8 @@ class Widget(BaseModel):
     """
 
     type: WidgetType
-    parent_attribute_name: Optional[str]
-    what_is_this: Optional[WhatIsThis]
+    parent_attribute_name: str | None
+    what_is_this: WhatIsThis | None
 
     class Config:
         use_enum_values = True  # Allow storing the enum as a string
@@ -144,7 +143,7 @@ class Button(Widget):
     """
 
     name: str = Field(default_factory=Field(""))
-    action: Optional[str]
+    action: str | None
 
 
 class Spinner(Widget):
@@ -167,10 +166,10 @@ class Spinner(Widget):
     """
 
     enabled: bool = Field(default_factor=Field(True))
-    minimum: Optional[int]
-    maximum: Optional[int]
+    minimum: int | None
+    maximum: int | None
     hexadecimal: bool = Field(default_factor=Field(False))
-    value_change_action: Optional[str]
+    value_change_action: str | None
 
 
 class WidgetCreator(BaseModel):

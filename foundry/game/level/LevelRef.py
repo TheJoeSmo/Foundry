@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QObject, Signal, SignalInstance
 
 from foundry.core.UndoController import UndoController
@@ -12,7 +10,7 @@ class LevelRef(QObject):
     jumps_changed: SignalInstance = Signal()  # type: ignore
 
     def __init__(self):
-        super(LevelRef, self).__init__()
+        super().__init__()
         self._internal_level = None
         self._undo_controller = None
         self._is_loaded = False
@@ -72,7 +70,7 @@ class LevelRef(QObject):
 
         return self._undo_controller.state
 
-    def do(self, level_data: Optional[LevelByteData] = None) -> LevelByteData:
+    def do(self, level_data: LevelByteData | None = None) -> LevelByteData:
         assert self._undo_controller is not None
 
         data = self._undo_controller.do(level_data if level_data is not None else self.level.to_bytes())

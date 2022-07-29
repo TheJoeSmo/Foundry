@@ -1,5 +1,5 @@
+from collections.abc import Generator
 from functools import cache, lru_cache
-from typing import Generator
 
 from attr import attrs
 from PySide6.QtGui import QImage

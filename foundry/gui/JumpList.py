@@ -15,7 +15,7 @@ class JumpList(QListWidget):
     remove_jump: SignalInstance = Signal()
 
     def __init__(self, parent: QWidget, level_ref: LevelRef):
-        super(JumpList, self).__init__(parent)
+        super().__init__(parent)
 
         self._level_ref = level_ref
 
@@ -45,7 +45,7 @@ class JumpList(QListWidget):
         self.addItems([str(jump) for jump in jumps])
 
     def delete(self):
-        currently_selected = set(obj.row() for obj in self.selectedIndexes())
+        currently_selected = {obj.row() for obj in self.selectedIndexes()}
         jumps = self._level_ref.level.jumps
         for idx, jump in enumerate(jumps):
             if idx in currently_selected:

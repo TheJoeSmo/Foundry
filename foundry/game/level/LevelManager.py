@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Optional, Protocol, TypeVar
+from typing import Protocol, TypeVar
 
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QAction, QPixmap, Qt
@@ -63,7 +63,7 @@ class LevelManager:
     def __init__(self, parent, user_settings: UserSettings):
         self.parent = parent
         self.user_settings = user_settings
-        self.controller: Optional[LevelController] = None
+        self.controller: LevelController | None = None
         self._enabled = False
         self._has_warnings = False
 
@@ -345,7 +345,7 @@ class LevelManager:
         controller.copy()
 
     @require_enabled
-    def paste(self, x: Optional[int] = None, y: Optional[int] = None, *, controller: LevelController):
+    def paste(self, x: int | None = None, y: int | None = None, *, controller: LevelController):
         return controller.paste(x, y)
 
     @require_enabled

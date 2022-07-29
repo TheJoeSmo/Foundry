@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QMargins, QSize, Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent, QKeyEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import (
@@ -85,8 +83,8 @@ def select_by_world_and_level(world: int, level: int, levels: list[Level]) -> Le
 
 
 class LevelSelector(QDialog):
-    def __init__(self, parent, file_settings: FileSettings, *, start_level: Optional[tuple[int, int]] = None):
-        super(LevelSelector, self).__init__(parent)
+    def __init__(self, parent, file_settings: FileSettings, *, start_level: tuple[int, int] | None = None):
+        super().__init__(parent)
         self.file_settings = file_settings
 
         self.setWindowTitle("Level Selector")
@@ -262,7 +260,7 @@ class WorldMapLevelSelect(QScrollArea):
     accepted: SignalInstance = Signal()  # type: ignore
 
     def __init__(self, world_number: int):
-        super(WorldMapLevelSelect, self).__init__()
+        super().__init__()
 
         self.world = WorldMap(world_number)
 
@@ -305,7 +303,7 @@ class WorldMapLevelSelect(QScrollArea):
         except ValueError:
             pass
 
-        return super(WorldMapLevelSelect, self).mouseMoveEvent(event)
+        return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         x, y = self.world_view.mapFromParent(event.position().toPoint()).toTuple()
@@ -326,7 +324,7 @@ class WorldMapLevelSelect(QScrollArea):
         self.accepted.emit()
 
     def sizeHint(self) -> QSize:
-        orig_size = super(WorldMapLevelSelect, self).sizeHint()
+        orig_size = super().sizeHint()
 
         scrollbar_width = QScrollBar().sizeHint().width()
 

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QSize, Signal, SignalInstance
 from PySide6.QtGui import QColor, QMouseEvent, QPixmap, Qt
 from PySide6.QtWidgets import QLabel, QSizePolicy, QWidget
@@ -28,9 +26,9 @@ class ColorButtonWidget(QLabel):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
-        color: Optional[QColor] = None,
-        size: Optional[QSize] = None,
+        parent: QWidget | None,
+        color: QColor | None = None,
+        size: QSize | None = None,
         selected: bool = False,
     ):
         super().__init__(parent)

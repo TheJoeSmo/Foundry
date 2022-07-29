@@ -134,7 +134,7 @@ class InLevelObject(ABC):
     def __init__(self, data: bytearray):
         self._data: bytearray = data
         self.level_component = LevelComponent()
-        self._length: Optional[int] = None
+        self._length: int | None = None
 
     @property
     def id(self):

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import (
@@ -40,7 +38,7 @@ class PatternViewerController(CustomChildWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         graphics_set: GraphicsSet,
         palette_group: MutablePaletteGroup,
         palette_index: int,
@@ -116,7 +114,7 @@ class PatternViewerView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         graphics_set: GraphicsSet,
         palette_group: MutablePaletteGroup,
         palette_index: int,

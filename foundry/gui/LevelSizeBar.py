@@ -7,14 +7,14 @@ from foundry.gui.util import ease_color
 
 class SizeBar(QWidget):
     def __init__(self, parent: QWidget, current_value: int, maximum_value: int):
-        super(SizeBar, self).__init__(parent)
+        super().__init__(parent)
 
         self._maximum_value = maximum_value
         self._current_value = current_value
         self.value_color = QColor.black
 
     def sizeHint(self) -> QSize:
-        size = super(SizeBar, self).sizeHint()
+        size = super().sizeHint()
         size.setHeight(10)
         return size
 
@@ -65,7 +65,7 @@ class SizeBar(QWidget):
 
 class LevelSizeBar(QWidget):
     def __init__(self, parent, label: str, current_value: int, maximum_value: int):
-        super(LevelSizeBar, self).__init__(parent)
+        super().__init__(parent)
 
         self.label = label
         self._current_value = current_value
@@ -91,7 +91,7 @@ class LevelSizeBar(QWidget):
 
     def update(self):
         self.info_label.setText(f"{self.label}: {self.current_value}/{self.maximum_value} Bytes")
-        return super(LevelSizeBar, self).update()
+        return super().update()
 
     @property
     def current_value(self) -> int:

@@ -6,7 +6,7 @@ by checking the surrounding code to make sure it matches.
 """
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Generic, Optional, TypeVar
+from typing import Generic, TypeVar
 
 from foundry.smb3parse.util.rom import Rom
 
@@ -95,7 +95,7 @@ class CodeEdit(ABC, Generic[D]):
         return self._valid_affix(self.address + self.length, self.postfix)
 
     @abstractmethod
-    def read(self) -> Optional[D]:
+    def read(self) -> D | None:
         """
         Read the abstract representation of the target edit area.
 

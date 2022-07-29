@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
@@ -19,7 +17,7 @@ class PaletteWidget(QWidget):
 
     palette_changed: SignalInstance = Signal(MutablePaletteProtocol)  # type: ignore
 
-    def __init__(self, parent: Optional[QWidget], palette: MutablePaletteProtocol):
+    def __init__(self, parent: QWidget | None, palette: MutablePaletteProtocol):
         super().__init__(parent)
         self._palette = palette
 

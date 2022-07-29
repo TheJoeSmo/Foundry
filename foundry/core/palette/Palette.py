@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+from collections.abc import Sequence
 from enum import Enum
 from functools import cached_property
-from typing import Optional, Protocol, Sequence, Type, TypeVar
+from typing import Protocol, TypeVar
 
 from attr import attrs
 from pydantic import BaseModel
@@ -53,7 +54,7 @@ class AbstractPalette(ABC):
     color_palette: ColorPaletteProtocol
 
     def __bytes__(self) -> bytes:
-        return bytes([i & 0xFF for i in self.color_indexes])
+        return bytes(i & 0xFF for i in self.color_indexes)
 
     def __getitem__(self, item: int) -> int:
         return self.color_indexes[item]
@@ -67,7 +68,7 @@ class AbstractPalette(ABC):
     @classmethod
     @abstractmethod
     def from_values(
-        cls: Type[_T], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+        cls: type[_T], color_indexes: Sequence[int], color_palette: ColorPaletteProtocol | None = None
     ) -> _T:
         """
         A generalized way to create itself from a series of values.
@@ -80,7 +81,7 @@ class AbstractPalette(ABC):
         ...
 
     @classmethod
-    def from_palette(cls: Type[_T], palette: PaletteProtocol) -> _T:
+    def from_palette(cls: type[_T], palette: PaletteProtocol) -> _T:
         """
         Generates a AbstractPalette of this type from another PaletteProtocol.
 
@@ -97,7 +98,7 @@ class AbstractPalette(ABC):
         return cls.from_values(palette.color_indexes, palette.color_palette)
 
     @classmethod
-    def as_empty(cls: Type[_T]) -> _T:
+    def as_empty(cls: type[_T]) -> _T:
         """
         Makes an empty palette of default values.
 
@@ -109,7 +110,7 @@ class AbstractPalette(ABC):
         return cls.from_values([0, 0, 0, 0])
 
     @classmethod
-    def from_rom(cls: Type[_T], address: int) -> _T:
+    def from_rom(cls: type[_T], address: int) -> _T:
         """
         Creates a palette from an absolute address in ROM.
 
@@ -139,7 +140,7 @@ class MutablePalette(AbstractPalette):
 
     @classmethod
     def from_values(
-        cls: Type[_MT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+        cls: type[_MT], color_indexes: Sequence[int], color_palette: ColorPaletteProtocol | None = None
     ) -> _MT:
         if color_palette is None:
             return cls(list(color_indexes))
@@ -157,7 +158,7 @@ class Palette(AbstractPalette):
 
     @classmethod
     def from_values(
-        cls: Type[_PT], color_indexes: Sequence[int], color_palette: Optional[ColorPaletteProtocol] = None
+        cls: type[_PT], color_indexes: Sequence[int], color_palette: ColorPaletteProtocol | None = None
     ) -> _PT:
         if color_palette is None:
             return cls(tuple(color_indexes))

@@ -1,7 +1,8 @@
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 
-def range_validator(minimum: Optional[int] = None, maximum: Optional[int] = None) -> Callable[[Any, Any, int], int]:
+def range_validator(minimum: int | None = None, maximum: int | None = None) -> Callable[[Any, Any, int], int]:
     """
     A validator for an ~`attrs.attrs` dataclass that ensures an int is between a minimum and maximum value.
 

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 
 from foundry.core.warnings.Warning import PydanticWarning, Warning
@@ -12,10 +10,10 @@ class InvalidSizeWarning(Warning):
     A warning for an object exceeding its valid size range.
     """
 
-    max_width: Optional[int] = None
-    min_width: Optional[int] = None
-    max_height: Optional[int] = None
-    min_height: Optional[int] = None
+    max_width: int | None = None
+    min_width: int | None = None
+    max_height: int | None = None
+    min_height: int | None = None
 
     def check_object(self, obj: LevelObject, *args, **kwargs) -> bool:
         """
@@ -63,7 +61,7 @@ class PydanticInvalidSizeWarning(PydanticWarning):
     A JSON model of a warning that checks for an object being in a size range.
     """
 
-    max_width: Optional[int] = None
-    min_width: Optional[int] = None
-    max_height: Optional[int] = None
-    min_height: Optional[int] = None
+    max_width: int | None = None
+    min_width: int | None = None
+    max_height: int | None = None
+    min_height: int | None = None

@@ -16,7 +16,7 @@ class PaletteViewer(CustomDialog):
     def __init__(self, parent, level_ref: LevelRef):
         title = f"MutablePalette Groups for Object Set {level_ref.level.object_set_number}"
 
-        super(PaletteViewer, self).__init__(parent, title=title)
+        super().__init__(parent, title=title)
 
         self.level_ref = level_ref
 

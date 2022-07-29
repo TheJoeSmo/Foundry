@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 from PySide6.QtCore import QEvent, QRect, Qt, Signal, SignalInstance
 from PySide6.QtGui import QCursor, QFocusEvent
 from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
@@ -15,7 +13,7 @@ class WarningList(QWidget):
     warnings_updated: SignalInstance = Signal(bool)
 
     def __init__(self, parent, level_ref: LevelRef, level_view_ref: LevelView, object_list_ref: ObjectList):
-        super(WarningList, self).__init__(parent)
+        super().__init__(parent)
 
         self.level_ref = level_ref
         self.level_ref.data_changed.connect(self._update_warnings)
@@ -29,7 +27,7 @@ class WarningList(QWidget):
 
         self._enemy_dict = {}
 
-        self.warnings: List[Tuple[str, List[LevelObject]]] = []
+        self.warnings: list[tuple[str, list[LevelObject]]] = []
 
     def _update_warnings(self):
         self.warnings.clear()
@@ -57,7 +55,7 @@ class WarningList(QWidget):
 
             self.layout().addWidget(label)
 
-        super(WarningList, self).update()
+        super().update()
 
     def show(self):
         pos = QCursor.pos()
@@ -65,7 +63,7 @@ class WarningList(QWidget):
 
         self.setGeometry(QRect(pos, self.layout().sizeHint()))
 
-        super(WarningList, self).show()
+        super().show()
 
     def _focus_objects(self):
         objects = self.sender().related_objects
@@ -82,18 +80,18 @@ class WarningList(QWidget):
     def focusOutEvent(self, event: QFocusEvent):
         self.hide()
 
-        super(WarningList, self).focusOutEvent(event)
+        super().focusOutEvent(event)
 
 
 class WarningLabel(QLabel):
     hovered: SignalInstance = Signal()
 
-    def __init__(self, text: str, related_objects: List[LevelObject]):
-        super(WarningLabel, self).__init__(text)
+    def __init__(self, text: str, related_objects: list[LevelObject]):
+        super().__init__(text)
 
         self.related_objects = related_objects
 
     def enterEvent(self, event: QEvent):
         self.hovered.emit()
 
-        return super(WarningLabel, self).enterEvent(event)
+        return super().enterEvent(event)

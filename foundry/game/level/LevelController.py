@@ -1,7 +1,7 @@
 import logging
 import os
 from collections.abc import Callable
-from typing import Optional, Protocol, Tuple
+from typing import Protocol
 
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QAction, QPixmap, Qt
@@ -37,7 +37,7 @@ def require_safe_to_change(function: Callable):
 
 
 class LevelSelectorController(Protocol):
-    last_level: Optional[tuple[int, int]]
+    last_level: tuple[int, int] | None
 
 
 class LevelController:
@@ -191,7 +191,7 @@ class LevelController:
             self.parent.context_menu.set_copied_objects(selected)
 
     @undoable
-    def paste(self, x: Optional[int] = None, y: Optional[int] = None):
+    def paste(self, x: int | None = None, y: int | None = None):
         self.parent.level_view.paste_objects_at(self.parent.context_menu.get_copied_objects(), x, y)
 
     def select_all(self):
@@ -227,7 +227,7 @@ class LevelController:
             self.parent.jump_list.item(index).setText(str(jump))
 
     @undoable
-    def place_object_from_dropdown(self, pos: Tuple[int, int]) -> None:
+    def place_object_from_dropdown(self, pos: tuple[int, int]) -> None:
         # the dropdown is synchronized with the toolbar, so it doesn't matter where to take it from
         level_object = self.parent.object_dropdown.currentData(Qt.UserRole)
 

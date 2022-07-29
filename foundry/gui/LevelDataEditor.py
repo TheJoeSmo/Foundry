@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs, evolve, field
 from attr.validators import instance_of
 from PySide6.QtCore import Signal, SignalInstance
@@ -108,9 +106,9 @@ class LevelDataEditor(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         state: LevelDataState,
-        undo_controller: Optional[UndoController[LevelDataState]] = None,
+        undo_controller: UndoController[LevelDataState] | None = None,
     ):
         super().__init__(parent)
         self._state = state
@@ -424,7 +422,7 @@ class LevelDataDisplay(QFormLayout):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         level_length: int,
         music: int,
         time: int,

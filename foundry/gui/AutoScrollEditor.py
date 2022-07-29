@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from PySide6.QtWidgets import QCheckBox, QLabel, QVBoxLayout
 
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
@@ -21,7 +19,7 @@ AUTOSCROLL_LABELS = {
 
 class AutoScrollEditor(CustomDialog):
     def __init__(self, parent, level_ref: LevelRef):
-        super(AutoScrollEditor, self).__init__(parent, title="Autoscroll Editor")
+        super().__init__(parent, title="Autoscroll Editor")
         self.level_ref = level_ref
 
         self.original_autoscroll_item = _get_autoscroll(self.level_ref.level.enemies)
@@ -94,10 +92,10 @@ class AutoScrollEditor(CustomDialog):
             ):
                 self.level_ref.save_level_state()
 
-        super(AutoScrollEditor, self).closeEvent(event)
+        super().closeEvent(event)
 
 
-def _get_autoscroll(enemy_items: List[EnemyObject]) -> Optional[EnemyObject]:
+def _get_autoscroll(enemy_items: list[EnemyObject]) -> EnemyObject | None:
     for item in enemy_items:
         if item.obj_index == OBJ_AUTOSCROLL:
             return item

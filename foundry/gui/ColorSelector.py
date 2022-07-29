@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QSize, Signal, SignalInstance
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import (
@@ -26,10 +24,10 @@ class ColorSelector(CustomDialog):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         title: str = "NES Color Table",
-        size: Optional[QSize] = None,
-        color_palette: Optional[ColorPaletteProtocol] = None,
+        size: QSize | None = None,
+        color_palette: ColorPaletteProtocol | None = None,
     ):
         super().__init__(parent, title=title)
 

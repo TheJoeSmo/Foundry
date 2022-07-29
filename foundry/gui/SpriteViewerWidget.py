@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6.QtCore import QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
@@ -22,7 +20,7 @@ class SpriteViewerWidget(QFrame):
     clicked: SignalInstance = Signal(int, int)  # type: ignore
 
     def __init__(
-        self, parent: Optional[QWidget], sprite_group: SpriteGroupProtocol, zoom: int = 2, transparent: bool = True
+        self, parent: QWidget | None, sprite_group: SpriteGroupProtocol, zoom: int = 2, transparent: bool = True
     ):
         super().__init__(parent)
 

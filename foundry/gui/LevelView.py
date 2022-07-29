@@ -1,5 +1,4 @@
 from bisect import bisect_right
-from typing import List, Optional, Tuple, Union
 from warnings import warn
 
 from PySide6.QtCore import QMimeData, QPoint, QSize, Signal, SignalInstance
@@ -66,13 +65,13 @@ class LevelView(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         level: LevelRef,
         context_menu: ContextMenu,
         file_settings: FileSettings,
         user_settings: UserSettings,
     ):
-        super(LevelView, self).__init__(parent)
+        super().__init__(parent)
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         self.setMouseTracking(True)
@@ -109,7 +108,7 @@ class LevelView(QWidget):
         self.resizing_happened = False
 
         # dragged in from the object toolbar
-        self.currently_dragged_object: Optional[Union[LevelObject, EnemyObject]] = None
+        self.currently_dragged_object: LevelObject | EnemyObject | None = None
 
         self.setWhatsThis(
             "<b>PydanticLevel View</b><br/>"
@@ -205,7 +204,7 @@ class LevelView(QWidget):
         elif pressed_button == Qt.RightButton:
             self._on_right_mouse_button_down(event)
         else:
-            return super(LevelView, self).mousePressEvent(event)
+            return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
         if self.mouse_mode == MODE_DRAG:
@@ -235,7 +234,7 @@ class LevelView(QWidget):
             self.setToolTip("")
             QToolTip.hideText()
 
-        return super(LevelView, self).mouseMoveEvent(event)
+        return super().mouseMoveEvent(event)
 
     def _set_cursor_for_position(self, event: QMouseEvent):
         level_object = self.object_at(*event.position().toTuple())
@@ -266,9 +265,7 @@ class LevelView(QWidget):
         if self.mouse_mode not in RESIZE_MODES:
             self.setCursor(Qt.ArrowCursor)
 
-    def _cursor_on_edge_of_object(
-        self, level_object: Union[LevelObject, EnemyObject], pos: QPoint, edge_width: int = 4
-    ):
+    def _cursor_on_edge_of_object(self, level_object: LevelObject | EnemyObject, pos: QPoint, edge_width: int = 4):
         right = (level_object.get_rect().left() + level_object.get_rect().width()) * self.block_length
         bottom = (level_object.get_rect().top() + level_object.get_rect().height()) * self.block_length
 
@@ -293,7 +290,7 @@ class LevelView(QWidget):
         elif released_button == Qt.RightButton:
             self._on_right_mouse_button_up(event)
         else:
-            super(LevelView, self).mouseReleaseEvent(event)
+            super().mouseReleaseEvent(event)
 
     def wheelEvent(self, event: QWheelEvent):
         if self.user_settings.object_scroll_enabled:
@@ -316,7 +313,7 @@ class LevelView(QWidget):
 
             return True
         else:
-            super(LevelView, self).wheelEvent(event)
+            super().wheelEvent(event)
             return False
 
     @undoable
@@ -335,7 +332,7 @@ class LevelView(QWidget):
 
     def sizeHint(self) -> QSize:
         if not self.level_ref:
-            return super(LevelView, self).sizeHint()
+            return super().sizeHint()
         else:
             width, height = self.level_ref.level.size
 
@@ -344,7 +341,7 @@ class LevelView(QWidget):
     def update(self):
         self.resize(self.sizeHint())
 
-        super(LevelView, self).update()
+        super().update()
 
     def _on_right_mouse_button_down(self, event: QMouseEvent):
         if self.mouse_mode == MODE_DRAG:
@@ -578,7 +575,7 @@ class LevelView(QWidget):
     def select_all(self):
         self.select_objects(self.level_ref.level.get_all_objects())
 
-    def _select_object(self, objects: Optional[list]):
+    def _select_object(self, objects: list | None):
         if objects is not None:
             self.select_objects(objects)
             self.objects_selected.emit(objects)
@@ -597,23 +594,23 @@ class LevelView(QWidget):
 
         self.level_ref.selected_objects = objects
 
-    def get_selected_objects(self) -> List[Union[LevelObject, EnemyObject]]:
+    def get_selected_objects(self) -> list[LevelObject | EnemyObject]:
         return self.level_ref.selected_objects
 
     def remove_selected_objects(self):
         for obj in self.level_ref.selected_objects:
             self.level_ref.level.remove_object(obj)
 
-    def scroll_to_objects(self, objects: List[LevelObject]):
+    def scroll_to_objects(self, objects: list[LevelObject]):
         if not objects:
             return
 
-        min_x = min([obj.position.x for obj in objects]) * self.block_length
-        min_y = min([obj.position.y for obj in objects]) * self.block_length
+        min_x = min(obj.position.x for obj in objects) * self.block_length
+        min_y = min(obj.position.y for obj in objects) * self.block_length
 
         self.parent().parent().ensureVisible(min_x, min_y)
 
-    def level_safe_to_save(self) -> Tuple[bool, str, str]:
+    def level_safe_to_save(self) -> tuple[bool, str, str]:
         is_safe = True
         reason = ""
         additional_info = ""
@@ -691,7 +688,7 @@ class LevelView(QWidget):
     def add_jump(self):
         self.level_ref.level.add_jump()
 
-    def object_at(self, x: int, y: int) -> Optional[Union[LevelObject, EnemyObject]]:
+    def object_at(self, x: int, y: int) -> LevelObject | EnemyObject | None:
         """
         Returns an enemy or level object at the point. The x and y is relative to the View (for example, when you
         receive a mouse event) and will be converted into level coordinates internally.
@@ -705,7 +702,7 @@ class LevelView(QWidget):
 
         return self.level_ref.level.object_at(level_x, level_y)
 
-    def _to_level_point(self, screen_x: int, screen_y: int) -> Tuple[int, int]:
+    def _to_level_point(self, screen_x: int, screen_y: int) -> tuple[int, int]:
         level_x = screen_x // self.block_length
         level_y = screen_y // self.block_length
 
@@ -733,7 +730,7 @@ class LevelView(QWidget):
 
         self.level_ref.level.add_enemy(enemy_index, level_x, level_y, index)
 
-    def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: Optional[int]):
+    def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: int | None):
         self.remove_object(obj)
 
         new_obj = self.level_ref.level.add_object(
@@ -762,9 +759,9 @@ class LevelView(QWidget):
 
     def paste_objects_at(
         self,
-        paste_data: Tuple[List[Union[LevelObject, EnemyObject]], Tuple[int, int]],
-        x: Optional[int] = None,
-        y: Optional[int] = None,
+        paste_data: tuple[list[LevelObject | EnemyObject], tuple[int, int]],
+        x: int | None = None,
+        y: int | None = None,
     ):
         if x is None or y is None:
             level_x, level_y = self.last_mouse_position
@@ -833,7 +830,7 @@ class LevelView(QWidget):
         self.object_created.emit(level_object)
         self.level_ref.data_changed.emit()
 
-    def _object_from_mime_data(self, mime_data: QMimeData) -> Union[LevelObject, EnemyObject]:
+    def _object_from_mime_data(self, mime_data: QMimeData) -> LevelObject | EnemyObject:
         object_type, *object_bytes = mime_data.data("application/level-object")
 
         if object_type == b"\x00":

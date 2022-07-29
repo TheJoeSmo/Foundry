@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QMessageBox
 
 class AutoSaveDialog(QMessageBox):
     def __init__(self):
-        super(AutoSaveDialog, self).__init__()
+        super().__init__()
 
         self.setWindowTitle("Rom was recovered")
         self.setText("We found an auto saved ROM from the last session. Do you want to open it?")

@@ -1,5 +1,3 @@
-from typing import Optional, Union
-
 from attr import evolve
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtGui import Qt
@@ -47,9 +45,9 @@ class LevelInformationEditor(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         level: LevelData,
-        undo_controller: Optional[UndoController[LevelDataState]] = None,
+        undo_controller: UndoController[LevelDataState] | None = None,
     ):
         super().__init__(parent)
         self.level = level
@@ -165,7 +163,7 @@ class LevelInformationEditor(QWidget):
         return (self.name, self.description, self.generator_space, self.enemy_space)
 
     @state.setter
-    def state(self, state: Union[LevelDataState, LevelData]):
+    def state(self, state: LevelDataState | LevelData):
         # Convert it to a level data state
         if isinstance(state, LevelData):
             state = (
@@ -316,7 +314,7 @@ class LevelInformationEditorDisplay(QFormLayout):
     generator_space_editor: QSpinBox
     enemy_space_editor: QSpinBox
 
-    def __init__(self, parent: Optional[QWidget], name: str, description: str, generator_space: int, enemy_space: int):
+    def __init__(self, parent: QWidget | None, name: str, description: str, generator_space: int, enemy_space: int):
         super().__init__(parent)
 
         self.setFormAlignment(Qt.AlignCenter)  # type: ignore

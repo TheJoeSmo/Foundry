@@ -17,7 +17,7 @@ LINK_PIJOKRA = "https://github.com/PiJoKra"
 
 class AboutDialog(CustomDialog):
     def __init__(self, parent):
-        super(AboutDialog, self).__init__(parent, title="About SMB3Foundry")
+        super().__init__(parent, title="About SMB3Foundry")
 
         main_layout = QBoxLayout(QBoxLayout.LeftToRight, self)
 
@@ -33,7 +33,7 @@ class AboutDialog(CustomDialog):
         text_layout.addWidget(QLabel(f"SMB3 Foundry v{get_current_version_name()}", self))
         text_layout.addWidget(HorizontalLine())
         text_layout.addWidget(LinkLabel(self, f'By <a href="{LINK_SMB3F}">Michael</a>'))
-        text_layout.addWidget((QLabel("", self)))
+        text_layout.addWidget(QLabel("", self))
         text_layout.addWidget(QLabel("With thanks to:", self))
         text_layout.addWidget(
             LinkLabel(self, f'<a href="{LINK_HUKKA}">Hukka</a> for <a href="{LINK_SMB3WS}">SMB3 Workshop</a>')
@@ -62,7 +62,7 @@ class AboutDialog(CustomDialog):
 
 class LinkLabel(QLabel):
     def __init__(self, parent, text):
-        super(LinkLabel, self).__init__(parent)
+        super().__init__(parent)
 
         self.setText(text)
         self.setTextFormat(Qt.RichText)

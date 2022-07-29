@@ -91,7 +91,7 @@ def test_character_bank_size(header: INESHeader):
 
 def test_empty_data():
     with raises(InvalidINESHeader):
-        INESHeader.from_data(bytes())
+        INESHeader.from_data(b"")
 
 
 def test_too_small_data():

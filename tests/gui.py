@@ -26,7 +26,7 @@ class ApprovalDialog(QDialog):
     Ignore = QDialogButtonBox.Ignore
 
     def __init__(self, test_name: str, reference_image: QPixmap, generated_image: QPixmap):
-        super(ApprovalDialog, self).__init__()
+        super().__init__()
 
         self.setWindowTitle(test_name)
 
