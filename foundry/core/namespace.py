@@ -28,10 +28,35 @@ PARENT_ARGUMENT: Literal["__PARENT__"] = "__PARENT__"
 The parent namespace that is passed to create an object relating to its namespace.
 """
 
+META_TYPE_ARGUMENTS: Literal["__TYPE_ARGUMENTS__"] = "__TYPE_ARGUMENTS__"
+"""
+The key inside a dictionary for determining extra arguments for a type.
+"""
+
+META_TYPE_KEYWORD_ARGUMENTS: Literal["__TYPE_KEYWORD_ARGUMENTS__"] = "__TYPE_KEYWORD_ARGUMENTS__"
+"""
+The key inside a dictionary for determining extra keyword arguments for a type.
+"""
 
 VALID_TYPE_ARGUMENTS = (TYPE_ARGUMENT, "TYPE", "type")
 """
 The valid ways a user can define the type attribute.
+"""
+
+VALID_META_TYPE_ARGUMENTS = (META_TYPE_ARGUMENTS, "args", "ARGS", "arguments", "ARGUMENTS")
+"""
+The valid ways a user can define the type meta-arguments.
+"""
+
+VALID_META_TYPE_KEYWORD_ARGUMENTS = (
+    META_TYPE_KEYWORD_ARGUMENTS,
+    "kwargs",
+    "KWARGS",
+    "keyword arguments",
+    "KEYWORD ARGUMENTS",
+)
+"""
+The valid ways a user can define the type meta-keyword-arguments.
 """
 
 """
@@ -41,20 +66,49 @@ Declare private type hints.
 _T = TypeVar("_T")
 _V = TypeVar("_V", bound="Validator")
 _CV = TypeVar("_CV", bound="ConcreteValidator")
+_TV = TypeVar("_TV", bound="TypeValidator")
+_PV = TypeVar("_PV", bound="PrimitiveValidator")
 _NTH = TypeVar("_NTH", bound="_TypeHandler")
 _NTHM = TypeVar("_NTHM", bound="_TypeHandlerManager")
-_PV = TypeVar("_PV", bound="PrimitiveValidator")
 
 
 _MetaValidator = Callable[[type[_T], Mapping], _T]
 """
-Validates a type `Type[_T]` into an object `_T` by accepting a map of values.
+Validates a type `_T` into an object `_T` by accepting a map of values.
 """
 
+_MetaComplexValidator = Callable[[type[_T], Mapping, Sequence], _MetaValidator[_T]]
+"""
+Validates a type, `_T` into an object by accepting a map of values and a sequence and map of preset conditions
+required for a complex type validator.
+"""
 
 """
 Declare common data class structures for common use.
 """
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
+class _MetaType(Generic[_T]):
+    """
+    A generic interface to represent a complex type.
+
+    Parameters
+    ----------
+    type_suggestion: str
+        The name of the type to be identified.
+    arguments: tuple[Any, ...], default ()
+        The required arguments to pass to the type validator.
+    keyword_arguments: Mapping[str, Any], default {}
+        The required keyword arguments to pass to the type validator.
+    parent: Namespace | None = None
+        The parent of the type, if provided.
+    """
+
+    type_suggestion: str
+    arguments: tuple[Any, ...] = field(default=Factory(tuple))  # type: ignore
+    keyword_arguments: Mapping[str, Any] = field(default=Factory(dict))  # type: ignore
+    parent: Namespace | None = None
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
@@ -87,7 +141,62 @@ class MetaValidator(Generic[_T]):
         return f"{s})"
 
 
-ValidatorMapping = Mapping[str, _MetaValidator | MetaValidator]
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
+class ComplexMetaValidator(Generic[_T]):
+    """
+    A generic interface to decompose a complex validator into a normal validator.
+
+    Attributes
+    ----------
+    validator: _MetaComplexValidator
+        The callable to decompose the type into a validator.
+    arguments: tuple[Any, ...] = ()
+        A series of validators to generate the arguments for the complex validator.
+    keywords_arguments: Mapping[str, Any] = {}
+        A series of keyword validators to generate the keyword arguments for the complex validator.
+    restrict_arguments: bool = True
+        If the validator should limit type meta-arguments.
+    restrict_keywords: bool = True
+        If the validator should limit type meta-keyword-arguments.
+    """
+
+    validator: _MetaComplexValidator
+    arguments: tuple[Any, ...] = field(default=Factory(tuple))  # type: ignore
+    keywords_arguments: Mapping[str, Any] = field(default=Factory(dict))  # type: ignore
+    restrict_arguments: bool = True
+    restrict_keywords: bool = True
+
+    def __repr__(self) -> str:
+        s = f"{self.__class__.__name__}(validator={self.validator}, "
+        if not self.arguments:
+            s = f"{s}arguments={self.arguments}, "
+        if not self.keywords_arguments:
+            s = f"{s}keyword={self.keywords_arguments}, "
+        if not self.restrict_arguments:
+            s = f"{s}restrict_arguments={self.restrict_arguments}, "
+        if not self.restrict_keywords:
+            s = f"{s}restrict_keywords={self.restrict_keywords}, "
+        if s[-1] == " ":
+            s = s[:-2]
+        return f"{s})"
+
+    def decompose(self, *args, **kwargs) -> _MetaValidator:
+        """
+        Decomposes the complex validator into a normal validator.
+
+        Returns
+        -------
+        _MetaValidator
+            The decomposed validator.
+
+        Notes
+        -----
+        This method does not supply any validation of the arguments passed.
+        """
+        return self.validator(*args, **kwargs)
+
+
+ValidatorMapping = Mapping[str, _MetaValidator | MetaValidator | ComplexMetaValidator]
 """
 A map which contains a series of strings, which define creatable types such as the default, from
 namespace, etc.; and their respective validators such that types could be validated in multiple ways.
@@ -120,28 +229,28 @@ class _TypeHandler(Generic[_T]):
 
     types: ValidatorMapping = field(default=Factory(dict))  # type: ignore
     default_type_suggestion: type[_T] | None = None
-    default_validator: str | None = None
+    default_validator: _MetaType | None = None
 
     def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
         raise NotImplementedError()
 
-    def get_type_suggestion(self, type: str) -> type[_T] | None:
+    def get_type_suggestion(self, type: _MetaType) -> type[_T] | None:
         raise NotImplementedError()
 
-    def has_type(self, type: str) -> bool:
+    def has_type(self, type: _MetaType) -> bool:
         raise NotImplementedError()
 
-    def get_if_validator_uses_parent(self, type: str) -> bool:
+    def get_if_validator_uses_parent(self, type: _MetaType) -> bool:
         raise NotImplementedError()
 
-    def get_if_validator_uses_parent_validator(self, type: str) -> bool:
+    def get_if_validator_uses_parent_validator(self, type: _MetaType) -> bool:
         raise NotImplementedError()
 
-    def get_validator(self, type: str) -> _MetaValidator:
+    def get_validator(self, type: _MetaType) -> _MetaValidator:
         raise NotImplementedError()
 
     @staticmethod
-    def validate_by_type(type: str, values: Mapping, parent: Namespace[_T]) -> _T:
+    def validate_by_type(type: _MetaType, values: Mapping) -> _T:
         raise NotImplementedError()
 
 
@@ -191,6 +300,43 @@ class ValidationException(Exception):
     """
 
     __slots__ = ()
+
+
+class InvalidPositionalArgumentsException(Exception):
+    """
+    An exception that is raised during the validation of a validator which provided too many or few
+    positional arguments.
+    """
+
+    __slots__ = ("validator", "arguments")
+
+    def __init__(self, validator: ComplexMetaValidator, arguments: Sequence):
+        self.validator = validator
+        self.arguments = arguments
+        required_args = len(validator.arguments)
+        provided_args = len(arguments)
+        if required_args > provided_args:
+            super().__init__(f"{self.validator} missing {required_args - provided_args} argument(s)")
+        else:
+            super().__init__(f"{self.validator} takes {required_args - provided_args} argument(s)")
+
+
+class InvalidKeywordArgumentsException(Exception):
+    """
+    An exception that is raised during the validation of a validator which provided too many or few
+    keyword arguments.
+    """
+
+    __slots__ = ("validator", "arguments")
+
+    def __init__(self, validator: ComplexMetaValidator, arguments: Mapping):
+        self.validator = validator
+        self.arguments = arguments
+        invalid_arguments = set(validator.keywords_arguments.keys()) - set(arguments.keys())
+        if invalid_arguments:
+            super().__init__(f"{self.validator} got an unexpected keyword argument `{next(iter(invalid_arguments))}`")
+        missing_arguments = set(arguments.keys()) - set(validator.keywords_arguments.keys())
+        super().__init__(f"{self.validator} is missing keyword arguments: {missing_arguments}")
 
 
 class MalformedArgumentsExceptions(Exception):
@@ -378,6 +524,7 @@ class _Validators:
 
     __slots__ = ()
 
+    @staticmethod
     def is_valid_list_of_names(inst, attr, value: tuple) -> tuple[str, ...]:
         """
         Determines if a path is a valid list of names.
@@ -406,21 +553,23 @@ class _Converters:
     __slots__ = ()
 
     @staticmethod
-    def convert_to_validator(value: _MetaValidator | MetaValidator) -> MetaValidator:
+    def convert_to_validator(
+        value: _MetaValidator | MetaValidator | ComplexMetaValidator,
+    ) -> MetaValidator | ComplexMetaValidator:
         """
         Converts a callable to a validator if required.
 
         Parameters
         ----------
-        value : _MetaValidator | MetaValidator
+        value : _MetaValidator | MetaValidator | ComplexMetaValidator
             The callable or validator to form the validator with.
 
         Returns
         -------
-        MetaValidator
+        MetaValidator | ComplexMetaValidator
             The validator that represents the callable provided.
         """
-        return value if isinstance(value, MetaValidator) else MetaValidator(value)
+        return value if isinstance(value, (MetaValidator, ComplexMetaValidator)) else MetaValidator(value)
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, hash=True, eq=True)
@@ -669,7 +818,7 @@ class TypeHandler(_TypeHandler[_T]):
     __slots__ = ()
 
     @staticmethod
-    def _converted_types(class_: _TypeHandler) -> Mapping[str, MetaValidator]:
+    def _converted_types(class_: _TypeHandler) -> Mapping[str, MetaValidator | ComplexMetaValidator]:
         return {key: _Converters.convert_to_validator(value) for key, value in class_.types.items()}
 
     def __eq__(self, other):
@@ -704,28 +853,35 @@ class TypeHandler(_TypeHandler[_T]):
         )
 
     @staticmethod
-    def validate_by_type(type: str, values: Mapping, parent: Namespace[_T]) -> _T:
+    def validate_by_type(type: _MetaType, values: Mapping) -> _T:
         """
         Generates and validates `values` of `type` to generate an object from `parent`.
 
         Parameters
         ----------
-        type : str
+        type : _MetaType
             The type of object to generate and validate.
         values : Mapping
             The attributes of the object.
-        parent : Namespace[_T]
-            The parent namespace of the object.
+
+        Raises
+        ------
+        TypeError
+            `parent` was not provided inside `type`.
 
         Returns
         -------
         _T
             The generated and validated object.
         """
-        validator: _TypeHandler = parent.validators.types[type]
-        validator_type: str | None = Validator.get_type_argument(values, validator.default_validator)
+        parent = type.parent
+        if parent is None:
+            raise TypeError("Parent must be defined to validate a type")
+        validator: _TypeHandler = parent.validators.types[type.type_suggestion]
+        validator_type: _MetaType | None = Validator.get_type_argument(values, validator.default_validator)
         if validator_type is None:
             raise ValueError("Type is not defined")
+        validator_type = evolve(validator_type, parent=parent)
         type_suggestion = validator.get_type_suggestion(validator_type)
         if type_suggestion is None:
             raise ValueError(f"Cannot deduce type of {values} from {validator}")
@@ -733,13 +889,13 @@ class TypeHandler(_TypeHandler[_T]):
             values = values | {PARENT_ARGUMENT: parent}
         return validator.get_validator(validator_type)(type_suggestion, values)
 
-    def get_type_suggestion(self, type: str) -> type[_T] | None:
+    def get_type_suggestion(self, type: _MetaType) -> type[_T] | None:
         """
         Provides the type that `type` requires as the first argument for its validator.
 
         Parameters
         ----------
-        type : str
+        type : _MetaType
             The key to a type and its associated validator.
 
         Returns
@@ -747,29 +903,113 @@ class TypeHandler(_TypeHandler[_T]):
         Type[_T] | None
             Provides the type if one is provided, otherwise defaults on `default_type_suggestion`.
         """
-        return (
-            suggestion
-            if (suggestion := _Converters.convert_to_validator(self.types[type]).type_suggestion) is not None
-            else self.default_type_suggestion
-        )
+        validator = _Converters.convert_to_validator(self.types[type.type_suggestion])
+        if isinstance(validator, MetaValidator):
+            return validator.type_suggestion
+        validated_args, validated_kwargs = self._validate_complex_meta_validator_arguments(validator, type)
+        return validator.decompose(*validated_args, **validated_kwargs).type_suggestion
 
-    def get_validator(self, type: str) -> _MetaValidator:
+    @classmethod
+    def _validate_complex_meta_validator_arguments(
+        cls, validator: ComplexMetaValidator, arguments: _MetaType
+    ) -> tuple[Sequence, Mapping]:
+        """
+        Validates a complex validator's arguments, such that it can be safely decomposed with the
+        arguments and keyword-arguments returned.
+
+        Parameters
+        ----------
+        validator : ComplexMetaValidator
+            The complex validator to supply validation.
+        arguments : _MetaType
+            The arguments to validate.
+
+        Returns
+        -------
+        tuple[Sequence, Mapping]
+            The validated arguments and keyword-arguments required to decompose `validator`.
+
+        Raises
+        ------
+        InvalidPositionalArgumentsException
+            Positional arguments are missing or too many positional arguments were provided.
+        InvalidKeywordArgumentsException
+            Keyword arguments are missing or extra keys were provided.
+        TypeError
+            One of the positional arguments was formed into an invalid type.
+        TypeError
+            One of the keyword arguments was formed into an invalid type.
+
+        Notes
+        -----
+        If `validator` does not set `restrict_arguments`, only the `arguments` of `validator` will be
+        validated.  The rest of the positional arguments will be appended to the end not validated.
+        The same process occurs for `restrict_keywords`.
+        """
+        if (validator.restrict_arguments and len(validator.arguments) != len(arguments.arguments)) or (
+            len(validator.arguments) <= len(arguments.arguments)
+        ):
+            raise InvalidPositionalArgumentsException(validator, arguments.arguments)
+        if validator.restrict_keywords and validator.keywords_arguments.keys() != arguments.keyword_arguments.keys():
+            raise InvalidKeywordArgumentsException(validator, arguments.keyword_arguments)
+        args = tuple(
+            Validator.get_type_argument(
+                arg, Validator.validate_other_type(TypeValidator.__type_default__, arg_type).__type_default__
+            )
+            for arg_type, arg in zip(validator.arguments, arguments.arguments)
+        )
+        for arg, arg_type_suggestion in zip(args, validator.arguments):
+            arg_type = Validator.validate_other_type(TypeValidator.__type_default__, arg_type_suggestion)
+            if not isinstance(arg, type(arg_type)):
+                raise TypeError(f"{arg} is not of type {arg_type.__class__}")
+        if not validator.restrict_arguments:
+            args = tuple(*args, *arguments.arguments[len(args) :])
+        kwargs = {
+            key: Validator.get_type_argument(
+                arguments.keyword_arguments[key],
+                Validator.validate_other_type(
+                    TypeValidator.__type_default__, validator.keywords_arguments[key]
+                ).__type_default__,
+            )
+            for key in validator.keywords_arguments.keys()
+        }
+        for key in validator.keywords_arguments.keys():
+            kwarg_type = Validator.validate_other_type(
+                TypeValidator.__type_default__, validator.keywords_arguments[key]
+            )
+            if not isinstance(kwargs[key], type(kwarg_type)):
+                raise TypeError(f"{kwargs[key]} is not of type {kwarg_type.__class__}")
+        if not validator.restrict_keywords:
+            keywords_to_add = set(arguments.keyword_arguments.keys()) - set(validator.keywords_arguments.keys())
+            for key in keywords_to_add:
+                kwargs |= {key: validator.keywords_arguments[key]}
+        return args, kwargs
+
+    def get_validator(self, type: _MetaType) -> _MetaValidator:
         """
         Gets a validator to generate a specific object from a map.
 
         Parameters
         ----------
-        type : str
-            The type to validate to.
+        type : _MetaType
+            The type information that defines the validator.
 
         Returns
         -------
         _MetaValidator
             The validator associated with `type`.
-        """
-        return _Converters.convert_to_validator(self.types[type]).validator
 
-    def get_if_validator_uses_parent(self, type: str) -> bool:
+        Notes
+        -----
+        If `type` does not define `parent`, then complex validators will not be supported.
+        """
+        validator = _Converters.convert_to_validator(self.types[type.type_suggestion])
+        if isinstance(validator, MetaValidator):
+            return validator.validator
+        validated_args, validated_kwargs = self._validate_complex_meta_validator_arguments(validator, type)
+        return validator.decompose(*validated_args, **validated_kwargs)
+
+    def get_if_validator_uses_parent(self, type: _MetaType) -> bool:
         """
         Gets if a validator should request the parent namespace to be inside the map which is passed to
         it for its initialization.
@@ -784,15 +1024,19 @@ class TypeHandler(_TypeHandler[_T]):
         bool
             If the parent is used by the validator.
         """
-        return _Converters.convert_to_validator(self.types[type]).use_parent
+        validator = _Converters.convert_to_validator(self.types[type.type_suggestion])
+        if isinstance(validator, MetaValidator):
+            return validator.use_parent
+        validated_args, validated_kwargs = self._validate_complex_meta_validator_arguments(validator, type)
+        return validator.decompose(*validated_args, **validated_kwargs).use_parent
 
-    def has_type(self, type: str) -> bool:
+    def has_type(self, type: _MetaType) -> bool:
         """
         A convenience method to quickly determine if a 'type' is valid.
 
         Parameters
         ----------
-        type : str
+        type : _MetaType
             The type to check if it is registered.
 
         Returns
@@ -800,7 +1044,7 @@ class TypeHandler(_TypeHandler[_T]):
         bool
             If the type is registered.
         """
-        return type in self.types
+        return type.type_suggestion in self.types
 
 
 class TypeHandlerManager(_TypeHandlerManager):
@@ -1183,14 +1427,14 @@ class Validator:
     __validator_handler__: _TypeHandler
         The handler for validators to automatically validate and generate the objects from a namespace,
         also incorporates the parent's attribute, if it exists.
-    __type_default__: str | None
+    __type_default__: _MetaType | None
         The type default.  If None, then the type must be provided.
     __names__: tuple[str, ...]
         The names to associate this type with.
     """
 
     __validator_handler__: _TypeHandler
-    __type_default__: str | None = None
+    __type_default__: _MetaType | None = None
     __names__: tuple[str, ...] = ("__NONE_VALIDATOR__", "NONE", "none")
     __slots__ = ()
 
@@ -1291,7 +1535,7 @@ class Validator:
         return values
 
     @classmethod
-    def validate_other_type(cls, class_: type[_V], parent: Namespace, v: Mapping) -> _V:
+    def validate_other_type(cls, type: _MetaType, v: Mapping) -> Validator:
         """
         Validates another type of validator.  This is achieved by observing the namespace's attributes
         and utilizing the validator's name suggestion to allow for the namespace to extend or restrict
@@ -1300,26 +1544,25 @@ class Validator:
 
         Parameters
         ----------
-        class_ : Type[_V]
-            The type of validator to validate.
-        parent: Namespace
-            The parent namespace of this validator.
+        type: _MetaType
+            The type information to generate the validator to.
         v : Mapping
             The attributes of the validator.
 
         Returns
         -------
-        _V
+        Validator
             The validated validator.
 
         Raises
         ------
         TypeError
-            The parent was not supplied in the mapping.
-        TypeError
-            The parent validators was not supplied in the mapping.
+            `parent` is not provided inside `type`.
         """
-        return parent.validators.types[class_.__names__[0]].validate_by_type(class_.__names__[0], v, parent)
+        parent = type.parent
+        if parent is None:
+            raise TypeError("Parent must be defined to validate a type")
+        return parent.validators.types[type.type_suggestion].validate_by_type(type, v)
 
     @classmethod
     def get_type_suggestion(cls, v: Mapping) -> str:
@@ -1524,7 +1767,96 @@ class Validator:
         return cls.validate_by_type(v)
 
     @staticmethod
-    def get_type_argument(v: Any, default: str | None = None) -> str | None:
+    def _get_type_argument(v: Mapping) -> Any:
+        """
+        Determines the type argument from a predefined list of valid types.
+
+        Parameters
+        ----------
+        v : Mapping
+            The map to find the type argument inside.
+
+        Returns
+        -------
+        Any
+            The type argument if found, else None.
+        """
+        return next((v[k] for k in VALID_TYPE_ARGUMENTS if k in v), None)
+
+    @staticmethod
+    def _get_type_meta_arguments(v: dict) -> tuple[Sequence, dict]:
+        """
+        Determines the type meta-arguments from a series of type arguments, `v`.
+
+        Parameters
+        ----------
+        v : dict
+            The type arguments to find the meta-arguments from.
+
+        Returns
+        -------
+        tuple[Sequence, dict]
+            A tuple containing the meta-args and meta-kwargs.
+
+        Raises
+        ------
+        TypeError
+            The meta-arguments are malformed.
+        TypeError
+            The meta-keyword-arguments are malformed.
+        """
+        args = next((v[k] for k in VALID_META_TYPE_ARGUMENTS if k in v), ())
+        if not isinstance(args, Sequence):
+            raise TypeError(f"Type arguments are malformed: {args} is not a list")
+        kwargs = next((v[k] for k in VALID_META_TYPE_KEYWORD_ARGUMENTS if k in v), {})
+        if not isinstance(kwargs, dict):
+            raise TypeError(f"Type keyword arguments are malformed: {kwargs} is not a dictionary")
+        return args, kwargs
+
+    @staticmethod
+    def _sanitize_type_arguments(v: Any) -> Mapping | str | None:
+        """
+        Sanitizes type arguments, such that the arguments will be provided in one of three states.
+
+        Parameters
+        ----------
+        v : Any
+            The data to validate.
+
+        Returns
+        -------
+        Mapping | str | None
+            One of three sanitized values representing the type arguments.  If None is returned, no type
+            information can be determined.  If a str is passed, simple type information can be found
+            at `v[TYPE_ARGUMENT]`.  If a map is passed, complex type information, `m`, can be found at
+            `v[TYPE_ARGUMENT]`.  Inside `m` there exists three validated values: `TYPE_ARGUMENT`,
+            `META_TYPE_ARGUMENTS`, and `META_TYPE_KEYWORD_ARGUMENTS` for the type suggestion,
+            type meta-arguments, and type meta-keyword-arguments, respectively.
+
+        Raises
+        ------
+        TypeError
+            There exists `v[TYPE_ARGUMENT]`, but the data inside it is malformed.
+        TypeError
+            There exists a map inside `v[TYPE_ARGUMENT]`, but it does not provide a type suggestion.
+        """
+        if not isinstance(v, dict):
+            return None
+        type_data = v[TYPE_ARGUMENT] = Validator._get_type_argument(v)
+        if type_data is None or isinstance(type_data, str):
+            return type_data
+        if not isinstance(type_data, dict):
+            raise TypeError(f"Type is malformed: {type_data} must either be a string or dictionary")
+        type_suggestion = type_data[TYPE_ARGUMENT] = Validator._get_type_argument(type_data)
+        if type_suggestion is None:
+            raise TypeError(f"Type is not defined: {type_suggestion} does not define `type`")
+        type_data[META_TYPE_ARGUMENTS], type_data[META_TYPE_KEYWORD_ARGUMENTS] = Validator._get_type_meta_arguments(
+            type_data
+        )
+        return type_data
+
+    @staticmethod
+    def get_type_argument(v: Any, default: _MetaType | None = None) -> _MetaType | None:
         """
         Determines the type of the object.  A few options are used, but it is advised to only
         use a single one, as the process to select the type should be assumed to be random.
@@ -1533,18 +1865,25 @@ class Validator:
         ----------
         v : Mapping
             A map of values to determine the type from.
+        default: _MetaType | None = None
+            The default type suggestion.
 
         Returns
         -------
-        str | None
+        _MetaType | None
             The type if found otherwise None.
         """
-        if not isinstance(v, dict):
-            return default
-        for valid_argument in VALID_TYPE_ARGUMENTS:
-            if valid_argument in v:
-                return v[valid_argument]
-        return default
+        type_information = Validator._sanitize_type_arguments(v)
+        if type_information is None:
+            return evolve(default, parent=Validator.get_parent_suggestion(v))
+        if isinstance(type_information, str):
+            return _MetaType(v, parent=Validator.get_parent_suggestion(v))
+        return _MetaType(
+            type_information[TYPE_ARGUMENT],
+            type_information[META_TYPE_ARGUMENTS],
+            type_information[META_TYPE_KEYWORD_ARGUMENTS],
+            Validator.get_parent_suggestion(v),
+        )
 
 
 class ConcreteValidator(Validator):
@@ -1563,12 +1902,64 @@ class ConcreteValidator(Validator):
 NoneValidator = ConcreteValidator
 
 
+class TypeValidator(ConcreteValidator, TypeHandler):
+    """
+    A validator to generate a meta validator.
+    """
+
+    __type_default__: _MetaType = _MetaType("DEFAULT")
+    __names__ = ("__TYPE_VALIDATOR__", "type", "TYPE")
+
+    @classmethod
+    @property
+    def type_handler(cls: type[_TV]) -> _TypeHandler[_TV]:
+        return cls.__validator_handler__
+
+    @classmethod
+    def validate(cls: type[_TV], v: Mapping) -> _TV:
+        """
+        Generates and validates a type validator from a map.
+
+        Parameters
+        ----------
+        v : Mapping
+            The values to validate.
+
+        Returns
+        -------
+        _TV
+            The validated type validator.
+
+        Raises
+        ------
+        TypeError
+            A parent was not provided.
+        TypeError
+            A type suggestion could not be found.
+        """
+        parent = Validator.get_parent_suggestion(v)
+        if parent is None:
+            raise TypeError(f"Parent was not defined inside {v}")
+        type_suggestion = Validator.get_type_argument(v)
+        if type_suggestion is None:
+            raise TypeError(f"Type information was not provided inside {v}")
+        handler = parent.validators.types[type_suggestion.type_suggestion]
+        return cls(handler.types, handler.default_type_suggestion, handler.default_validator)
+
+
+def _validate_type(class_: type[_TV], v: Mapping) -> _TV:
+    return class_.validate(v)
+
+
+TypeValidator.__validator_handler__ = TypeHandler({"DEFAULT": _validate_type})
+
+
 class PrimitiveValidator(ConcreteValidator):
     """
     Adds methods to easily validate primitives through their native constructors.
     """
 
-    __type_default__ = "DEFAULT"
+    __type_default__ = _MetaType("DEFAULT")
 
     def __init__(self, value: Any):
         super().__init__()
@@ -1715,34 +2106,36 @@ def generate_dependency_graph(name: str, v: Mapping, parent: Path | None = None)
     return graph
 
 
-def validate_namespace_type(validators: _TypeHandlerManager, v: Mapping) -> str:
+def validate_namespace_type(namespace: Namespace, v: Mapping) -> _MetaType:
     """
     Validates that a namespace's type is a valid type.
 
     Parameters
     ----------
-    validators : _TypeHandlerManager
-        The specific validators and associated types that the namespace can possess.
+    namespace : Namespace
+        The namespace to validate the type from.
     v : Mapping
         The mapping with the data for a namespace.
 
     Returns
     -------
     str
-        The validated type string.
+        The validated type.
 
     Raises
     ------
+
     TypeError
         There does not exist type inside `v`.
     TypeError
         `type` is not present inside `validators`.
     """
-    type_ = Validator.get_type_argument(v)
+    v_to_validate = ChainMap({TYPE_ARGUMENT: namespace}, v)
+    type_: _MetaType | None = Validator.get_type_argument(v_to_validate)
     if type_ is None:
-        raise TypeError(f"type of namespace is not found inside {v}.")
-    if type_ not in validators.types.keys():
-        raise TypeError(f"{type_} is not supported, only {validators.types.keys()}.")
+        raise TypeError(f"Type of namespace is not found inside {v}.")
+    if type_.type_suggestion not in namespace.validators.types.keys():
+        raise TypeError(f"{type_} is not supported, only {namespace.validators.types.keys()}.")
     return type_
 
 
@@ -1812,8 +2205,8 @@ def validate_namespace(
     to the namespace after its initialization to facilitate such a relationship.
     """
     namespace = Namespace(parent) if validators is None else Namespace(parent, validators=validators)
-    element_type = validate_namespace_type(namespace.validators, v)
-    handler = namespace.validators.types[element_type]
+    element_type = validate_namespace_type(namespace, v)
+    handler = namespace.validators.types[element_type.type_suggestion]
 
     dependencies: set[Path] = set() if "dependencies" not in v else {Path.from_string(d) for d in v["dependencies"]}
     if parent is None and dependencies:
@@ -1824,7 +2217,7 @@ def validate_namespace(
 
     elements = {}
     for key, value in ({} if "elements" not in v else v["elements"]).items():
-        elements[key] = handler.validate_by_type(element_type, value, namespace)
+        elements[key] = handler.validate_by_type(element_type, value)
     namespace = evolve(namespace, elements=elements)
 
     return namespace
