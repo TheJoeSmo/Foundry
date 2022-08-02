@@ -27,7 +27,7 @@ class GraphicsSetProtocol(Protocol):
         ...
 
 
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=False, hash=False)
 class GraphicsSet:
     """
     A representation of a series of graphical pages inside the ROM, that uses ``attrs`` to create
@@ -40,6 +40,13 @@ class GraphicsSet:
     """
 
     pages: tuple[GraphicsPageProtocol, ...]
+
+    def __eq__(self, other):
+        return self is other or (isinstance(other, GraphicsSet) and self.pages == other.pages)
+
+    def __hash__(self) -> int:
+        # Just copy the first page's hash
+        return hash(self.pages[0]) if self.pages else 0
 
     def __bytes__(self) -> bytes:
         return bytes(chain.from_iterable([bytes(page) for page in self.pages]))
