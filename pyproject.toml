@@ -33,6 +33,7 @@ pydata-sphinx-theme = "^0.7.1"
 GitPython = "^3.1.24"
 isort = "^5.9.3"
 pyinstaller = "^4.5.1"
+gprof2dot = "^2022.7.29"
 
 [tool.poetry.scripts]
 foundry = "foundry.main:start"

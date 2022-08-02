@@ -1,3 +1,4 @@
+from time import time
 from warnings import warn
 
 from attrs import evolve
@@ -78,9 +79,13 @@ class LevelObject(GeneratorObject):
         self._position = Point(0, 0)
         self._ignore_rendered_position = False
 
+        # Lag some vars behind
+        self._type_time = 0
+        self._orientation_time = 0
+
         self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
 
-        self.index_in_level = index
+        self._index_in_level = index
         self.objects_ref = objects_ref
         self.vertical_level = is_vertical
 
@@ -103,7 +108,11 @@ class LevelObject(GeneratorObject):
 
     @property
     def orientation(self) -> GeneratorType:
-        return GeneratorType(self.definition.orientation)
+        t = time()
+        if self._orientation_time == 0 or t - self._type_time > 10000:
+            self._orientation = GeneratorType(self.definition.orientation)
+            self._orientation_time = t
+        return self._orientation
 
     @property
     def ending(self) -> EndType:
@@ -135,12 +144,18 @@ class LevelObject(GeneratorObject):
 
     @property
     def type(self) -> int:
-        domain_offset = self.domain * 0x1F
+        # Dirty trick to make type lag a bit for better speed
+        t = time()
+        if self._type_time == 0 or t - self._type_time > 10000:
+            domain_offset = self.domain * 0x1F
 
-        if self.is_single_block:
-            return self.obj_index + domain_offset
-        else:
-            return (self.obj_index >> 4) + domain_offset + 16 - 1
+            if self.is_single_block:
+                result = self.obj_index + domain_offset
+            else:
+                result = (self.obj_index >> 4) + domain_offset + 16 - 1
+            self._type = result
+            self._type_time = t
+        return self._type
 
     @property
     def definition(self) -> TilesetDefinition:
@@ -163,12 +178,11 @@ class LevelObject(GeneratorObject):
         if self.is_single_block:
             return 1
         if self.size == 3:
-            return self.obj_index & 0x0F
-        else:
-            try:
-                return self.data[3]
-            except IndexError:
-                return 0
+            return self.obj_index & 15
+        try:
+            return self.data[3]
+        except IndexError:
+            return 0
 
     @length.setter
     def length(self, value: int):
@@ -199,25 +213,34 @@ class LevelObject(GeneratorObject):
             index |= value & 0x0F
             self.obj_index = index
 
+    @property
+    def index_in_level(self) -> int:
+        # Check the prior index as it is a hell of a lot faster than checking its neighbors.
+        if len(self.objects_ref) > self._index_in_level and self.objects_ref[self._index_in_level] is not self:
+            try:
+                self._index_in_level = self.objects_ref.index(self)
+            except ValueError:
+                # the object has not been added yet, so stick with the one given in the constructor
+                return self._index_in_level
+        return self._index_in_level
+
     def render(self):
         self._render()
 
     def _render(self):
-        try:
-            self.index_in_level = self.objects_ref.index(self)
-        except ValueError:
-            # the object has not been added yet, so stick with the one given in the constructor
-            pass
+        # Add some mega dirty locals because we have a need for speed and we will rework this later
+        orientation = self.orientation
+        rendered_size = self.rendered_size
 
         blocks_to_draw = []
 
-        if self.orientation == GeneratorType.TO_THE_SKY:
+        if orientation == GeneratorType.TO_THE_SKY:
             for _ in range(self.position.y):
                 blocks_to_draw.extend(self.blocks[0 : self.scale.width])
 
             blocks_to_draw.extend(self.blocks[-self.scale.width :])
 
-        elif self.orientation == GeneratorType.DESERT_PIPE_BOX:
+        elif orientation == GeneratorType.DESERT_PIPE_BOX:
             # segments are the horizontal sections, which are 8 blocks long
             # two of those are drawn per length bit
             # rows are the 4 block high rows Mario can walk in
@@ -255,10 +278,10 @@ class LevelObject(GeneratorObject):
                 blocks_to_draw.extend(self.blocks[start:stop])
 
             # every line repeats the last block again for some reason
-            for end_of_line in range(len(blocks_to_draw), 0, -(self.rendered_size.width - 1)):
+            for end_of_line in range(len(blocks_to_draw), 0, -(rendered_size.width - 1)):
                 blocks_to_draw.insert(end_of_line, blocks_to_draw[end_of_line - 1])
 
-        elif self.orientation in [
+        elif orientation in [
             GeneratorType.DIAG_DOWN_LEFT,
             GeneratorType.DIAG_DOWN_RIGHT,
             GeneratorType.DIAG_UP_RIGHT,
@@ -270,13 +293,13 @@ class LevelObject(GeneratorObject):
                 slopes = self.blocks
 
             elif self.ending == EndType.END_ON_TOP_OR_LEFT:
-                if self.orientation in [GeneratorType.DIAG_DOWN_RIGHT, GeneratorType.DIAG_UP_RIGHT]:
+                if orientation in [GeneratorType.DIAG_DOWN_RIGHT, GeneratorType.DIAG_UP_RIGHT]:
                     fill_block = self.blocks[0:1]
                     slopes = self.blocks[1:]
 
                     left = fill_block
                     right = [BLANK]
-                elif self.orientation == GeneratorType.DIAG_DOWN_LEFT:
+                elif orientation == GeneratorType.DIAG_DOWN_LEFT:
                     fill_block = self.blocks[-1:]
                     slopes = self.blocks[0:-1]
 
@@ -309,23 +332,23 @@ class LevelObject(GeneratorObject):
             else:
                 slope_width = len(slopes)
 
-            for y in range(self.rendered_size.height):
+            for y in range(rendered_size.height):
                 amount_right = (y // self.scale.height) * slope_width
-                amount_left = self.rendered_size.width - slope_width - amount_right
+                amount_left = rendered_size.width - slope_width - amount_right
 
                 offset = y % self.scale.height
 
                 rows.append(amount_left * left + slopes[offset : offset + slope_width] + amount_right * right)
 
-            if self.orientation in [GeneratorType.DIAG_UP_RIGHT]:
+            if orientation in [GeneratorType.DIAG_UP_RIGHT]:
                 for row in rows:
                     row.reverse()
 
-            if self.orientation in [GeneratorType.DIAG_DOWN_RIGHT, GeneratorType.DIAG_UP_RIGHT]:
+            if orientation in [GeneratorType.DIAG_DOWN_RIGHT, GeneratorType.DIAG_UP_RIGHT]:
                 if not self.scale.height > self.scale.width:
                     rows.reverse()
 
-            if self.orientation == GeneratorType.DIAG_DOWN_RIGHT and self.scale.height > self.scale.width:
+            if orientation == GeneratorType.DIAG_DOWN_RIGHT and self.scale.height > self.scale.width:
                 # special case for 60 degree platform wire down right
                 for row in rows:
                     row.reverse()
@@ -333,10 +356,9 @@ class LevelObject(GeneratorObject):
             for row in rows:
                 blocks_to_draw.extend(row)
 
-        elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
+        elif orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
             # since pyramids grow horizontally in both directions when extending
             # we need to check for new ground every time it grows
-            rendered_size = self.rendered_size
 
             blank = self.blocks[0]
             left_slope = self.blocks[1]
@@ -356,13 +378,13 @@ class LevelObject(GeneratorObject):
 
                 blocks_to_draw.extend(blank_blocks * [blank])
 
-        elif self.orientation == GeneratorType.ENDING:
+        elif orientation == GeneratorType.ENDING:
             page_width = 16
             page_limit = page_width - self.position.x % page_width
 
             for y in range(SKY, GROUND - 1):
                 blocks_to_draw.append(self.blocks[0])
-                blocks_to_draw.extend([self.blocks[1]] * (self.rendered_size.width))
+                blocks_to_draw.extend([self.blocks[1]] * (rendered_size.width))
 
             # todo magic number
             # ending graphics
@@ -379,27 +401,27 @@ class LevelObject(GeneratorObject):
                 for x in range(page_width):
                     block_index = rom.get_byte(rom_offset + y * page_width + x - 1)
 
-                    block_position = (y_offset + y) * (self.rendered_size.width + 1) + x + page_limit + 1
+                    block_position = (y_offset + y) * (rendered_size.width + 1) + x + page_limit + 1
                     blocks_to_draw[block_position] = block_index
 
             # the ending object is seemingly always 1 block too wide (going into the next screen)
-            for end_of_line in range(len(blocks_to_draw) - 1, 0, -(self.rendered_size.width + 1)):
+            for end_of_line in range(len(blocks_to_draw) - 1, 0, -(rendered_size.width + 1)):
                 del blocks_to_draw[end_of_line]
 
-        elif self.orientation == GeneratorType.VERTICAL:
+        elif orientation == GeneratorType.VERTICAL:
             if self.ending == EndType.UNIFORM:
                 for _ in range(self.length + 1):
                     for y in range(self.scale.height):
-                        for x in range(self.rendered_size.width):
+                        for x in range(rendered_size.width):
                             blocks_to_draw.append(self.blocks[y * self.scale.height + x % self.scale.width])
 
             elif self.ending == EndType.END_ON_TOP_OR_LEFT:
                 # in case the drawn object is smaller than its actual size
-                for y in range(min(self.scale.height, self.rendered_size.height)):
+                for y in range(min(self.scale.height, rendered_size.height)):
                     offset = y * self.scale.width
                     blocks_to_draw.extend(self.blocks[offset : offset + self.scale.width])
 
-                additional_rows = self.rendered_size.height - self.scale.height
+                additional_rows = rendered_size.height - self.scale.height
 
                 # assume only the last row needs to repeat
                 # todo true for giant blocks?
@@ -410,7 +432,7 @@ class LevelObject(GeneratorObject):
                         blocks_to_draw.extend(last_row)
 
             elif self.ending == EndType.END_ON_BOTTOM_OR_RIGHT:
-                additional_rows = self.rendered_size.height - self.scale.height
+                additional_rows = rendered_size.height - self.scale.height
 
                 # assume only the first row needs to repeat
                 # todo true for giant blocks?
@@ -421,7 +443,7 @@ class LevelObject(GeneratorObject):
                         blocks_to_draw.extend(last_row)
 
                 # in case the drawn object is smaller than its actual size
-                for y in range(min(self.scale.height, self.rendered_size.height)):
+                for y in range(min(self.scale.height, rendered_size.height)):
                     offset = y * self.scale.width
                     blocks_to_draw.extend(self.blocks[offset : offset + self.scale.width])
 
@@ -432,19 +454,19 @@ class LevelObject(GeneratorObject):
 
                 blocks_to_draw.extend(top_row)
 
-                additional_rows = self.rendered_size.height - 2
+                additional_rows = rendered_size.height - 2
 
                 # repeat second to last row
                 if additional_rows > 0:
                     for _ in range(additional_rows):
                         blocks_to_draw.extend(self.blocks[-2 * self.scale.width : -self.scale.width])
 
-                if self.rendered_size.height > 1:
+                if rendered_size.height > 1:
                     blocks_to_draw.extend(bottom_row)
 
-        elif self.orientation in [GeneratorType.HORIZONTAL, GeneratorType.HORIZ_TO_GROUND, GeneratorType.HORIZONTAL_2]:
+        elif orientation in [GeneratorType.HORIZONTAL, GeneratorType.HORIZ_TO_GROUND, GeneratorType.HORIZONTAL_2]:
             if self.ending == EndType.UNIFORM and not self.is_4byte:
-                for y in range(self.rendered_size.height):
+                for y in range(rendered_size.height):
                     if self.is_single_block:
                         blocks_to_draw.extend(self.blocks[: self.scale.width])
                     else:
@@ -457,31 +479,31 @@ class LevelObject(GeneratorObject):
                 top = self.blocks[0:1]
                 bottom = self.blocks[-1:]
 
-                if self.orientation == GeneratorType.HORIZONTAL_2:
-                    for _ in range(0, self.rendered_size.height - 1):
-                        blocks_to_draw.extend(self.rendered_size.width * top)
+                if orientation == GeneratorType.HORIZONTAL_2:
+                    for _ in range(0, rendered_size.height - 1):
+                        blocks_to_draw.extend(rendered_size.width * top)
 
-                    blocks_to_draw.extend(self.rendered_size.width * bottom)
+                    blocks_to_draw.extend(rendered_size.width * bottom)
                 else:
-                    blocks_to_draw.extend(self.rendered_size.width * top)
+                    blocks_to_draw.extend(rendered_size.width * top)
 
-                    for _ in range(1, self.rendered_size.height):
-                        blocks_to_draw.extend(self.rendered_size.width * bottom)
+                    for _ in range(1, rendered_size.height):
+                        blocks_to_draw.extend(rendered_size.width * bottom)
 
             elif self.ending == EndType.END_ON_TOP_OR_LEFT:
-                for y in range(self.rendered_size.height):
+                for y in range(rendered_size.height):
                     offset = y * self.scale.width
 
                     blocks_to_draw.append(self.blocks[offset])
 
-                    for x in range(1, self.rendered_size.width):
+                    for x in range(1, rendered_size.width):
                         blocks_to_draw.append(self.blocks[offset + 1])
 
             elif self.ending == EndType.END_ON_BOTTOM_OR_RIGHT:
-                for y in range(self.rendered_size.height):
+                for y in range(rendered_size.height):
                     offset = y * self.scale.width
 
-                    for x in range(self.rendered_size.width - 1):
+                    for x in range(rendered_size.width - 1):
                         blocks_to_draw.append(self.blocks[offset])
 
                     blocks_to_draw.append(self.blocks[offset + self.scale.width - 1])
@@ -507,7 +529,7 @@ class LevelObject(GeneratorObject):
                     left, *middle, right = self.blocks[start:end]
 
                     blocks_to_draw.append(left)
-                    blocks_to_draw.extend(middle * (self.rendered_size.width - 2))
+                    blocks_to_draw.extend(middle * (rendered_size.width - 2))
                     blocks_to_draw.append(right)
 
                 if not len(blocks_to_draw) % self.scale.height == 0:
@@ -521,13 +543,13 @@ class LevelObject(GeneratorObject):
 
                 blocks_to_draw = top_row
 
-                for y in range(1, self.rendered_size.height - 1):
+                for y in range(1, rendered_size.height - 1):
                     blocks_to_draw.extend(middle_blocks)
 
-                if self.rendered_size.height > 1:
+                if rendered_size.height > 1:
                     blocks_to_draw.extend(bottom_row)
         else:
-            if not self.orientation == GeneratorType.SINGLE_BLOCK_OBJECT:
+            if not orientation == GeneratorType.SINGLE_BLOCK_OBJECT:
                 warn(f"Didn't render {self.name}", RuntimeWarning)
                 # breakpoint()
 
@@ -540,20 +562,19 @@ class LevelObject(GeneratorObject):
         else:
             self.rendered_blocks = self.blocks
 
-        self.rect = QRect(
-            self.rendered_position.x, self.rendered_position.y, self.rendered_size.width, self.rendered_size.height
-        )
+        self.rect = QRect(self.rendered_position.x, self.rendered_position.y, rendered_size.width, rendered_size.height)
 
     def draw(self, painter: QPainter, block_length, transparent, blocks: list[Block] | None = None):
-        size = self.rendered_size
+        size = self._rendered_size  # Use predefine size as it is an expensive call.
         size = evolve(size, width=max(size.width, 1))
+        rendered_position = self.rendered_position  # This is an expensive call so cache it.
 
         for index, block_index in enumerate(self.rendered_blocks):
             if block_index == BLANK:
                 continue
 
-            x = self.rendered_position.x + index % size.width
-            y = self.rendered_position.y + index // size.width
+            x = rendered_position.x + index % size.width
+            y = rendered_position.y + index // size.width
 
             self._draw_block(painter, block_index, x, y, block_length, transparent, blocks=blocks)
 
@@ -619,23 +640,26 @@ class LevelObject(GeneratorObject):
 
     @property
     def rendered_position(self) -> Point:
+        orientation = self.orientation
+        position = self.position
+
         if self._ignore_rendered_position:
             return Point(0, 0)
-        elif self.orientation == GeneratorType.TO_THE_SKY:
-            return Point(self.position.x, SKY)
-        elif self.orientation in [GeneratorType.DIAG_UP_RIGHT]:
-            return Point(self.position.x, self.position.y - self.rendered_size.height + 1)
-        elif self.orientation in [GeneratorType.DIAG_DOWN_LEFT]:
+        elif orientation == GeneratorType.TO_THE_SKY:
+            return Point(position.x, SKY)
+        elif orientation in [GeneratorType.DIAG_UP_RIGHT]:
+            return Point(position.x, position.y - self.rendered_size.height + 1)
+        elif orientation in [GeneratorType.DIAG_DOWN_LEFT]:
             if self.object_set.number == 3 or self.object_set.number == 14:  # Sky or Hilly tileset
-                return Point(self.position.x - (self.rendered_size.width - self.scale.width + 1), self.position.y)
+                return Point(position.x - (self.rendered_size.width - self.scale.width + 1), position.y)
             else:
-                return Point(self.position.x - (self.rendered_size.width - self.scale.width), self.position.y)
+                return Point(position.x - (self.rendered_size.width - self.scale.width), position.y)
 
-        elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
-            return Point(self.position.x - (self.rendered_size.width // 2) + 1, self.position.y)
+        elif orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
+            return Point(position.x - (self.rendered_size.width // 2) + 1, position.y)
         elif self.name.lower() == "black boss room background":
-            return Point(self.position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
-        return self.position
+            return Point(position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
+        return position
 
     @property
     def scale(self) -> Size:
@@ -644,10 +668,10 @@ class LevelObject(GeneratorObject):
     @property
     def rendered_size(self) -> Size:
         if self.orientation == GeneratorType.TO_THE_SKY:
-            return Size(self.scale.width, self.position.y + self.scale.height - 1)
+            result = Size(self.scale.width, self.position.y + self.scale.height - 1)
         elif self.orientation == GeneratorType.DESERT_PIPE_BOX:
             segments = (self.length + 1) * 2
-            return Size(segments * self.scale.width + 1, 4 * self.scale.height)
+            result = Size(segments * self.scale.width + 1, 4 * self.scale.height)
         elif self.orientation in [
             GeneratorType.DIAG_DOWN_LEFT,
             GeneratorType.DIAG_DOWN_RIGHT,
@@ -655,28 +679,29 @@ class LevelObject(GeneratorObject):
             GeneratorType.DIAG_WEIRD,
         ]:
             if self.ending == EndType.UNIFORM:
-                return Size((self.length + 1) * self.scale.width, (self.length + 1) * self.scale.height)
+                result = Size((self.length + 1) * self.scale.width, (self.length + 1) * self.scale.height)
             elif self.ending == EndType.END_ON_TOP_OR_LEFT:
-                return Size((self.length + 1) * (self.scale.width - 1), (self.length + 1))
+                result = Size((self.length + 1) * (self.scale.width - 1), (self.length + 1))
             else:
-                return Size((self.length + 1) * (self.scale.width - 1), (self.length + 1) * self.scale.height)
+                result = Size((self.length + 1) * (self.scale.width - 1), (self.length + 1) * self.scale.height)
         elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
             size = Size(1, 1)
             for y in range(self.position.y, self.ground_level):
                 size = Size(2 * (y - self.position.y), (y - self.position.y))
                 bottom_row = QRect(self.position.x, y, size.width, 1)
+                index_in_level = self.index_in_level
                 if any(
                     [
                         bottom_row.intersects(obj.get_rect()) and y == obj.get_rect().top()
-                        for obj in self.objects_ref[0 : self.index_in_level]
+                        for obj in self.objects_ref[0:index_in_level]
                     ]
                 ):
                     break
-            return size
+            result = size
         elif self.orientation == GeneratorType.ENDING:
             page_width = 16
             page_limit = page_width - self.position.x % page_width
-            return Size(page_width + page_limit, (GROUND - 1) - SKY)
+            result = Size(page_width + page_limit, (GROUND - 1) - SKY)
         elif self.orientation == GeneratorType.VERTICAL:
             size = Size(self.scale.width, self.length + 1)
 
@@ -688,7 +713,7 @@ class LevelObject(GeneratorObject):
 
                 # adjust height for giant blocks, so that the rect is correct
                 size = evolve(size, height=size.height * self.scale.height)
-            return size
+            result = size
         elif self.orientation in [GeneratorType.HORIZONTAL, GeneratorType.HORIZ_TO_GROUND, GeneratorType.HORIZONTAL_2]:
             size = Size(self.length + 1, self.scale.height)
 
@@ -699,20 +724,24 @@ class LevelObject(GeneratorObject):
                 size = evolve(size, width=size.width - 1)
             if self.orientation == GeneratorType.HORIZ_TO_GROUND:
                 # to the ground only, until it hits something
-                for y in range(self.position.y, self.ground_level):
-                    bottom_row = QRect(self.position.x, y, size.width, 1)
+                position = self.position
+                bottom_row = QRect(position.x, position.y, size.width, 1)
+                index_in_level = self.index_in_level
+                for y in range(position.y, self.ground_level):
+                    bottom_row.setY(y)
 
-                    if any(
-                        [
-                            bottom_row.intersects(obj.get_rect()) and y == obj.get_rect().top()
-                            for obj in self.objects_ref[0 : self.index_in_level]
-                        ]
-                    ):
-                        size = evolve(size, height=y - self.position.y)
+                    found = False
+                    for obj in self.objects_ref[0:index_in_level]:
+                        obj_rect = obj.get_rect()
+                        if y == obj_rect.top() and bottom_row.intersects(obj_rect):
+                            size = evolve(size, height=y - position.y)
+                            found = True
+                            break
+                    if found:
                         break
                 else:
                     # nothing underneath this object, extend to the ground
-                    size = evolve(size, height=self.ground_level - self.position.y)
+                    size = evolve(size, height=self.ground_level - position.y)
 
                 if self.is_single_block:
                     size = evolve(size, width=self.length)
@@ -745,10 +774,13 @@ class LevelObject(GeneratorObject):
                         size = evolve(size, height=min(2, self.secondary_length + 1))
                     else:
                         size = evolve(size, height=self.secondary_length + 1)
-            return size
+            result = size
         elif self.name.lower() == "black boss room background":
-            return Size(SCREEN_WIDTH, SCREEN_HEIGHT)
-        return self.scale
+            result = Size(SCREEN_WIDTH, SCREEN_HEIGHT)
+        else:
+            result = self.scale
+        self._rendered_size = result
+        return result
 
     @property
     def horizontally_expands(self) -> bool:
@@ -854,6 +886,7 @@ class LevelObject(GeneratorObject):
         return image
 
     def to_bytes(self) -> bytearray:
+        position = self.position
         data = bytearray()
 
         if self.vertical_level:
@@ -861,13 +894,13 @@ class LevelObject(GeneratorObject):
             # seems like you can't convert the coordinates 1:1
             # there seems to be ambiguity
 
-            offset = self.position.y // SCREEN_HEIGHT
+            offset = position.y // SCREEN_HEIGHT
 
-            x_position = self.position.x + offset * SCREEN_WIDTH
-            y_position = self.position.y % SCREEN_HEIGHT
+            x_position = position.x + offset * SCREEN_WIDTH
+            y_position = position.y % SCREEN_HEIGHT
         else:
-            x_position = self.position.x
-            y_position = self.position.y
+            x_position = position.x
+            y_position = position.y
 
         if self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
             x_position = self.rendered_position.x - 1 + self.rendered_size.width // 2
@@ -889,6 +922,9 @@ class LevelObject(GeneratorObject):
         if not isinstance(other, LevelObject):
             return False
         else:
+            # Add a cheeky check to remove most cases.
+            if self.position != other.position:
+                return False
             return self.to_bytes() == other.to_bytes()
 
     def __lt__(self, other):
