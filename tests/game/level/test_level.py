@@ -3,7 +3,14 @@ import pytest
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import LevelObject
-from foundry.game.level.Level import LEVEL_DEFAULT_HEIGHT
+from foundry.game.level.Level import LEVEL_DEFAULT_HEIGHT, Level
+from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from tests.conftest import level_1_1_enemy_address, level_1_1_object_address
+
+
+@pytest.fixture
+def level(rom_singleton, qtbot):
+    return Level("Level 1-1", level_1_1_object_address, level_1_1_enemy_address, PLAINS_OBJECT_SET)
 
 
 @pytest.mark.parametrize(
