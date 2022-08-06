@@ -7562,23 +7562,23 @@
       "max_value": 95,
       "bmp_width": 1,
       "bmp_height": 1,
-      "blocks": [165],
+      "blocks": [145],
       "orientation": 9,
       "ending": 0,
-      "description": "Hilly Wall - 50=right, 51=left (SMAS only)"
+      "description": "MSG_CRASH",
+      "warnings": [{ "type": "INVALID OBJECT" }]
     },
     {
       "domain": 5,
       "min_value": 96,
       "max_value": 111,
-      "bmp_width": 3,
-      "bmp_height": 2,
-      "blocks": [164, 164, 164, 153, 153, 153],
-      "orientation": 0,
-      "ending": 3,
-      "size": 4,
-      "description": "Flat Ground with green on top (SMAS only)",
-      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
+      "bmp_width": 1,
+      "bmp_height": 1,
+      "blocks": [145],
+      "orientation": 9,
+      "ending": 0,
+      "description": "MSG_CRASH",
+      "warnings": [{ "type": "INVALID OBJECT" }]
     },
     {
       "domain": 5,
@@ -26959,10 +26959,11 @@
       "max_value": 143,
       "bmp_width": 1,
       "bmp_height": 1,
-      "blocks": [146],
+      "blocks": [145],
       "orientation": 9,
       "ending": 0,
-      "description": "MSG_NOTHING (SMAS only)"
+      "description": "MSG_CRASH",
+      "warnings": [{ "type": "INVALID OBJECT" }]
     },
     {
       "domain": 3,
@@ -33450,23 +33451,23 @@
       "max_value": 95,
       "bmp_width": 1,
       "bmp_height": 1,
-      "blocks": [165],
+      "blocks": [145],
       "orientation": 9,
       "ending": 0,
-      "description": "Hilly Wall - 50=right, 51=left (SMAS only)"
+      "description": "MSG_CRASH",
+      "warnings": [{ "type": "INVALID OBJECT" }]
     },
     {
       "domain": 5,
       "min_value": 96,
       "max_value": 111,
-      "bmp_width": 3,
-      "bmp_height": 2,
-      "blocks": [164, 164, 164, 153, 153, 153],
-      "orientation": 0,
-      "ending": 3,
-      "size": 4,
-      "description": "Flat Ground with green on top (SMAS only)",
-      "warnings": [{ "type": "INVALID SIZE", "min_width": 3 }]
+      "bmp_width": 1,
+      "bmp_height": 1,
+      "blocks": [145],
+      "orientation": 9,
+      "ending": 0,
+      "description": "MSG_CRASH",
+      "warnings": [{ "type": "INVALID OBJECT" }]
     },
     {
       "domain": 5,
