@@ -578,7 +578,7 @@ python-versions = "*"
 name = "pyupgrade"
 version = "2.37.3"
 description = "A tool to automatically upgrade syntax for newer versions."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -776,7 +776,7 @@ test = ["pytest"]
 name = "tokenize-rt"
 version = "4.2.1"
 description = "A wrapper around the stdlib `tokenize` which roundtrips."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.1"
 
@@ -820,7 +820,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "53a6573913ec3a771e63dba1eecc98d137e1dbfe57607fd8449cda95d9e73a10"
+content-hash = "069aaa564e9a57f7ee131a4e82f3223c01f686c279a895fd49dbd03fcc0221ca"
 
 [metadata.files]
 alabaster = [
