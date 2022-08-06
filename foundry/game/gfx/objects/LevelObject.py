@@ -728,7 +728,7 @@ class LevelObject(GeneratorObject):
                 bottom_row = QRect(position.x, position.y, size.width, 1)
                 index_in_level = self.index_in_level
                 for y in range(position.y, self.ground_level):
-                    bottom_row.setY(y)
+                    bottom_row.setBottom(y)
 
                     found = False
                     for obj in self.objects_ref[0:index_in_level]:
@@ -742,11 +742,6 @@ class LevelObject(GeneratorObject):
                 else:
                     # nothing underneath this object, extend to the ground
                     size = evolve(size, height=self.ground_level - position.y)
-
-                if self.is_single_block:
-                    size = evolve(size, width=self.length)
-
-                size = evolve(size, height=max(min(self.scale.height, 2), size.height))
 
             elif self.orientation == GeneratorType.HORIZONTAL_2 and self.ending == EndType.TWO_ENDS:
                 # floating platforms seem to just be one shorter for some reason
