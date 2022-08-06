@@ -190,7 +190,7 @@ Tests
   
   .. code-block:: console
 
-    $ poetry run pytest tests/ --verbose --failed-first --ignore="tests/game/gfx/objects/" --ignore="tests/game/level/test_level_drawing.py" --ignore="tests/gui/test_world_map.py"
+    $ poetry run pytest tests/ --verbose --failed-first"
 
 References
 ----------
