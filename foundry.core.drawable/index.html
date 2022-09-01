@@ -316,7 +316,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.core.drawable.BlockGroupDrawable">
+  <a class="reference internal nav-link" href="#foundry-core-drawable-blockgroupdrawable-module">
    foundry.core.drawable.BlockGroupDrawable module
   </a>
  </li>
@@ -326,12 +326,12 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.core.drawable.DrawableGenerator">
+  <a class="reference internal nav-link" href="#foundry-core-drawable-drawablegenerator-module">
    foundry.core.drawable.DrawableGenerator module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.core.drawable.ImageDrawable">
+  <a class="reference internal nav-link" href="#foundry-core-drawable-imagedrawable-module">
    foundry.core.drawable.ImageDrawable module
   </a>
  </li>
@@ -366,215 +366,71 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
-<section id="module-foundry.core.drawable.BlockGroupDrawable">
-<span id="foundry-core-drawable-blockgroupdrawable-module"></span><h2>foundry.core.drawable.BlockGroupDrawable module<a class="headerlink" href="#module-foundry.core.drawable.BlockGroupDrawable" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockGroupDrawable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.blocks/#foundry.core.blocks.BlockGroup.BlockGroupProtocol" title="foundry.core.blocks.BlockGroup.BlockGroupProtocol"><span class="pre">foundry.core.blocks.BlockGroup.BlockGroupProtocol</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>A drawable block group.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.block_group">
-<span class="sig-name descname"><span class="pre">block_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.blocks/#foundry.core.blocks.BlockGroup.BlockGroupProtocol" title="foundry.core.blocks.BlockGroup.BlockGroupProtocol"><span class="pre">foundry.core.blocks.BlockGroup.BlockGroupProtocol</span></a></em><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.block_group" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.image">
-<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.point_offset">
-<span class="sig-name descname"><span class="pre">point_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.point_offset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></em><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.BlockGroupDrawable.size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class pydantic_model">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticBlockGroupDrawable</span></span><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable" title="foundry.core.drawable.Drawable.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.drawable.Drawable.Drawable</span></code></a></p>
-<p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticBlockGroupDrawable&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/DrawableType&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;point_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point Offset&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;block_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Block Group&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">},</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
-<span class="w">   </span><span class="p">],</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;DrawableType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DrawableType&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The type of drawable to be applied.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;FROM FILE&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;BLOCK GROUP&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;SPRITE GROUP&quot;</span><span class="w"></span>
-<span class="w">         </span><span class="p">],</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-</details></p><dl class="field-list simple">
-<dt class="field-odd">Config</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.block_group" title="foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.block_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_group</span> <span class="pre">(foundry.core.blocks.BlockGroup.PydanticBlockGroup)</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.block_group">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">block_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.blocks/#foundry.core.blocks.BlockGroup.PydanticBlockGroup" title="foundry.core.blocks.BlockGroup.PydanticBlockGroup"><span class="pre">foundry.core.blocks.BlockGroup.PydanticBlockGroup</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.block_group" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.drawable">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">drawable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.drawable.Drawable.DrawableProtocol" title="foundry.core.drawable.Drawable.DrawableProtocol"><span class="pre">foundry.core.drawable.Drawable.DrawableProtocol</span></a></em><a class="headerlink" href="#foundry.core.drawable.BlockGroupDrawable.PydanticBlockGroupDrawable.drawable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="foundry-core-drawable-blockgroupdrawable-module">
+<h2>foundry.core.drawable.BlockGroupDrawable module<a class="headerlink" href="#foundry-core-drawable-blockgroupdrawable-module" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="module-foundry.core.drawable.Drawable">
 <span id="foundry-core-drawable-drawable-module"></span><h2>foundry.core.drawable.Drawable module<a class="headerlink" href="#module-foundry.core.drawable.Drawable" title="Permalink to this headline">¶</a></h2>
-<dl class="py class pydantic_model">
+<dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Drawable</span></span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
-<p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Drawable&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/DrawableType&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;point_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point Offset&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">},</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
-<span class="w">   </span><span class="p">],</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;DrawableType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DrawableType&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The type of drawable to be applied.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;FROM FILE&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;BLOCK GROUP&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;SPRITE GROUP&quot;</span><span class="w"></span>
-<span class="w">         </span><span class="p">],</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-</details></p><dl class="field-list simple">
-<dt class="field-odd">Config</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>use_enum_values</strong>: <em>bool = True</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable.point_offset" title="foundry.core.drawable.Drawable.Drawable.point_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_offset</span> <span class="pre">(foundry.core.geometry.Point)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable.type" title="foundry.core.drawable.Drawable.Drawable.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(foundry.core.drawable.DrawableType)</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute pydantic_field">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Drawable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtGui.QImage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Point(x=0,</span> <span class="pre">y=0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../foundry.core/#foundry.core.namespace.ConcreteValidator" title="foundry.core.namespace.ConcreteValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.ConcreteValidator</span></code></a>, <a class="reference internal" href="../foundry.core/#foundry.core.namespace.KeywordValidator" title="foundry.core.namespace.KeywordValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.namespace.KeywordValidator</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.base_image">
+<span class="sig-name descname"><span class="pre">base_image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PySide6.QtGui.QImage</span></em><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.base_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.from_block_group">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_block_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.blocks/#foundry.core.blocks.BlockGroup.BlockGroup" title="foundry.core.blocks.BlockGroup.BlockGroup"><span class="pre">foundry.core.blocks.BlockGroup.BlockGroup</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Point(x=0,</span> <span class="pre">y=0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.from_block_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">pathlib.Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_transparency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Point(x=0,</span> <span class="pre">y=0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.from_image">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtGui.QImage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_transparency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Point(x=0,</span> <span class="pre">y=0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.from_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.image">
+<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.point_offset">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Point(x=0,</span> <span class="pre">y=0)</span></em><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.point_offset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.type">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.drawable.DrawableType" title="foundry.core.drawable.DrawableType"><span class="pre">foundry.core.drawable.DrawableType</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.type" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.DrawableProtocol">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DrawableProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.Drawable.DrawableProtocol" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
-<p>An element that can be drawn to the screen.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.DrawableProtocol.image">
-<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.drawable.Drawable.DrawableProtocol.image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.DrawableProtocol.point_offset">
-<span class="sig-name descname"><span class="pre">point_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><a class="headerlink" href="#foundry.core.drawable.Drawable.DrawableProtocol.point_offset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">point_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.point_offset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.DrawableProtocol.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></em><a class="headerlink" href="#foundry.core.drawable.Drawable.DrawableProtocol.size" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></em><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-</section>
-<section id="module-foundry.core.drawable.DrawableGenerator">
-<span id="foundry-core-drawable-drawablegenerator-module"></span><h2>foundry.core.drawable.DrawableGenerator module<a class="headerlink" href="#module-foundry.core.drawable.DrawableGenerator" title="Permalink to this headline">¶</a></h2>
-<dl class="py class pydantic_model">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableGenerator.DrawableGeneratator">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DrawableGeneratator</span></span><a class="headerlink" href="#foundry.core.drawable.DrawableGenerator.DrawableGeneratator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.main.BaseModel</span></code></p>
-<p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DrawableGeneratator&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-</details></p><dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableGenerator.DrawableGeneratator.generate_drawable">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_drawable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable" title="foundry.core.drawable.Drawable.Drawable"><span class="pre">foundry.core.drawable.Drawable.Drawable</span></a></span></span><a class="headerlink" href="#foundry.core.drawable.DrawableGenerator.DrawableGeneratator.generate_drawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>The constructor for each specific drawable.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.validate_from_block_group">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_from_block_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.namespace._KV</span></span></span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.validate_from_block_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates <cite>values</cite> by the predetermined kwargs validator suggestions with respect
+to the parent namespace passed inside <cite>values</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dictionary to create the drawable.</p>
+<dt><strong>values</strong><span class="classifier">Any</span></dt><dd><p>A series of values to be validated.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Drawable</dt><dd><p>The created drawable as defined by <cite>v[“type”]</cite>.</p>
+<dt>_KV</dt><dd><p>The values validated and composed into its correct type.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>NotImplementedError</dt><dd><p>If the constructor does not have a valid constructor for <cite>v[“type”]</cite>.</p>
+<dt>KeyError</dt><dd><p>The parent namespace was not defined inside <cite>values</cite>.</p>
 </dd>
 </dl>
 </dd>
@@ -582,29 +438,26 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableGenerator.DrawableGeneratator.validate">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable" title="foundry.core.drawable.Drawable.Drawable"><span class="pre">foundry.core.drawable.Drawable.Drawable</span></a></span></span><a class="headerlink" href="#foundry.core.drawable.DrawableGenerator.DrawableGeneratator.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates that the provided object is a valid Drawable.</p>
+<dt class="sig sig-object py" id="foundry.core.drawable.Drawable.Drawable.validate_from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">foundry.core.namespace._KV</span></span></span><a class="headerlink" href="#foundry.core.drawable.Drawable.Drawable.validate_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates <cite>values</cite> by the predetermined kwargs validator suggestions with respect
+to the parent namespace passed inside <cite>values</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>v</strong><span class="classifier">dict</span></dt><dd><p>The dictionary to create the drawable.</p>
+<dt><strong>values</strong><span class="classifier">Any</span></dt><dd><p>A series of values to be validated.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Drawable</dt><dd><p>If validated, a drawable will be created in accordance to <cite>generate_drawable</cite>.</p>
+<dt>_KV</dt><dd><p>The values validated and composed into its correct type.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><dl class="simple">
-<dt>TypeError</dt><dd><p>If a dictionary is not provided.</p>
-</dd>
-<dt>TypeError</dt><dd><p>If the dictionary does not contain the key <cite>“type”</cite>.</p>
-</dd>
-<dt>TypeError</dt><dd><p>If the type provided is not inside <code class="xref py py-class docutils literal notranslate"><span class="pre">DrawableType</span></code>.</p>
+<dt>KeyError</dt><dd><p>The parent namespace was not defined inside <cite>values</cite>.</p>
 </dd>
 </dl>
 </dd>
@@ -614,194 +467,14 @@
 </dd></dl>
 
 </section>
-<section id="module-foundry.core.drawable.ImageDrawable">
-<span id="foundry-core-drawable-imagedrawable-module"></span><h2>foundry.core.drawable.ImageDrawable module<a class="headerlink" href="#module-foundry.core.drawable.ImageDrawable" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImageDrawable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">qimage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtGui.QImage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_transparency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>A drawable for an image.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.image">
-<span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PySide6.QtGui.QImage</span></span></span><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.image_offset">
-<span class="sig-name descname"><span class="pre">image_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.image_offset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.point_offset">
-<span class="sig-name descname"><span class="pre">point_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.point_offset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.qimage">
-<span class="sig-name descname"><span class="pre">qimage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PySide6.QtGui.QImage</span></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.qimage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">foundry.core.geometry.Size</span></a></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.ImageDrawable.use_transparency">
-<span class="sig-name descname"><span class="pre">use_transparency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.ImageDrawable.use_transparency" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class pydantic_model">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.PydanticImageDrawable">
-<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PydanticImageDrawable</span></span><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#foundry.core.drawable.Drawable.Drawable" title="foundry.core.drawable.Drawable.Drawable"><code class="xref py py-class docutils literal notranslate"><span class="pre">foundry.core.drawable.Drawable.Drawable</span></code></a></p>
-<p><details  class="autodoc_pydantic_collapsable_json">
-<summary>Show JSON schema</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PydanticImageDrawable&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/DrawableType&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;point_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point Offset&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/FileGenerator&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;image_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Image Offset&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;use_transparency&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Use Transparency&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">},</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="s2">&quot;image&quot;</span><span class="w"></span>
-<span class="w">   </span><span class="p">],</span><span class="w"></span>
-<span class="w">   </span><span class="nt">&quot;definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;DrawableType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DrawableType&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The type of drawable to be applied.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;FROM FILE&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;BLOCK GROUP&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;SPRITE GROUP&quot;</span><span class="w"></span>
-<span class="w">         </span><span class="p">],</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;FileType&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FileType&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The type of file to be applied.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;FROM FILE&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;FROM NAMESPACE&quot;</span><span class="w"></span>
-<span class="w">         </span><span class="p">],</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;FileGenerator&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FileGenerator&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">               </span><span class="nt">&quot;$ref&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#/definitions/FileType&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="p">}</span><span class="w"></span>
-<span class="w">         </span><span class="p">},</span><span class="w"></span>
-<span class="w">         </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;type&quot;</span><span class="w"></span>
-<span class="w">         </span><span class="p">]</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-</details></p><dl class="field-list simple">
-<dt class="field-odd">Config</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
-<li><p><strong>keep_untouched</strong>: <em>tuple = (&lt;class ‘functools.cached_property’&gt;,)</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image" title="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image</span> <span class="pre">(foundry.core.file.FileGenerator.FileGenerator)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image_offset" title="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image_offset</span> <span class="pre">(foundry.core.geometry.Rect</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.use_transparency" title="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.use_transparency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_transparency</span> <span class="pre">(bool)</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.file/#foundry.core.file.FileGenerator.FileGenerator" title="foundry.core.file.FileGenerator.FileGenerator"><span class="pre">foundry.core.file.FileGenerator.FileGenerator</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image_offset">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.image_offset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.use_transparency">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_transparency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.use_transparency" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.drawable.ImageDrawable.PydanticImageDrawable.drawable">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">drawable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.drawable.Drawable.DrawableProtocol" title="foundry.core.drawable.Drawable.DrawableProtocol"><span class="pre">foundry.core.drawable.Drawable.DrawableProtocol</span></a></em><a class="headerlink" href="#foundry.core.drawable.ImageDrawable.PydanticImageDrawable.drawable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="foundry-core-drawable-drawablegenerator-module">
+<h2>foundry.core.drawable.DrawableGenerator module<a class="headerlink" href="#foundry-core-drawable-drawablegenerator-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="foundry-core-drawable-imagedrawable-module">
+<h2>foundry.core.drawable.ImageDrawable module<a class="headerlink" href="#foundry-core-drawable-imagedrawable-module" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="module-foundry.core.drawable">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-foundry.core.drawable" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DrawableType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.drawable.DrawableType" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/dev/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
-<p>The type of drawable to be applied.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableType.BLOCK_GROUP">
-<span class="sig-name descname"><span class="pre">BLOCK_GROUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BLOCK</span> <span class="pre">GROUP'</span></em><a class="headerlink" href="#foundry.core.drawable.DrawableType.BLOCK_GROUP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableType.IMAGE_FROM_FILE">
-<span class="sig-name descname"><span class="pre">IMAGE_FROM_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FROM</span> <span class="pre">FILE'</span></em><a class="headerlink" href="#foundry.core.drawable.DrawableType.IMAGE_FROM_FILE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableType.SPRITE_GROUP">
-<span class="sig-name descname"><span class="pre">SPRITE_GROUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SPRITE</span> <span class="pre">GROUP'</span></em><a class="headerlink" href="#foundry.core.drawable.DrawableType.SPRITE_GROUP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.drawable.DrawableType.has_value">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.drawable.DrawableType.has_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>A convenience method to quickly determine if a value is a valid enumeration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>value</strong><span class="classifier">str</span></dt><dd><p>The value to check against the enumeration.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>bool</dt><dd><p>If the value is inside the enumeration.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 </section>
 
