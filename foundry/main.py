@@ -5,7 +5,6 @@ import sys
 import traceback
 from argparse import ArgumentParser, BooleanOptionalAction
 
-import pretty_errors  # noqa: F401 is used to provide nicer messages throughout the project.
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 from foundry import auto_save_rom_path, github_issue_link
