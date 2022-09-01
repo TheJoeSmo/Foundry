@@ -1,20 +1,13 @@
-from functools import cached_property
-from typing import Protocol
-
 from attr import attrs, field, validators
-from pydantic import BaseModel, validator
 from PySide6.QtGui import QColor
 
-
-class ColorProtocol(Protocol):
-    red: int
-    green: int
-    blue: int
-    alpha: int
-
-    @property
-    def qcolor(self) -> QColor:
-        return QColor(self.red, self.green, self.blue, self.alpha)
+from foundry.core.namespace import (
+    ConcreteValidator,
+    IntegerValidator,
+    KeywordValidator,
+    default_validator,
+    validate,
+)
 
 
 def _check_in_color_range(inst, attr, value):
@@ -24,34 +17,21 @@ def _check_in_color_range(inst, attr, value):
 
 
 @attrs(slots=True, frozen=True, eq=True, hash=True)
-class Color:
+@default_validator
+class Color(ConcreteValidator, KeywordValidator):
+    __names__ = ("__COLOR_VALIDATOR__", "color", "Color", "COLOR")
+    __required_validators__ = (IntegerValidator,)
+
     red: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     green: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     blue: int = field(validator=[validators.instance_of(int), _check_in_color_range])
     alpha: int = field(default=255, validator=[validators.instance_of(int), _check_in_color_range])
 
+    @classmethod
+    @validate(red=IntegerValidator, green=IntegerValidator, blue=IntegerValidator, alpha=IntegerValidator)
+    def validate(cls, red: int, green: int, blue: int, alpha: int):
+        return cls(red, green, blue, alpha)
+
     @property
     def qcolor(self) -> QColor:
         return QColor(self.red, self.green, self.blue, self.alpha)
-
-
-class PydanticColor(BaseModel):
-    red: int
-    green: int
-    blue: int
-    alpha: int = 255
-
-    # Enable cached property to be ignored by Pydantic
-    class Config:
-        arbitrary_types_allowed = True
-        keep_untouched = (cached_property,)
-
-    @validator("red", "blue", "green", "alpha", allow_reuse=True)
-    def check_color_range(cls, v):
-        if not 0 <= v <= 0xFF:
-            raise ValueError(f"{v} is not inside the range 0-255")
-        return v
-
-    @cached_property
-    def color(self) -> ColorProtocol:
-        return Color(self.red, self.green, self.blue, self.alpha)

@@ -3,7 +3,7 @@ from PySide6.QtGui import QImage
 
 from foundry import data_dir
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
-from foundry.core.palette.PaletteGroup import MutablePaletteGroup
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 
@@ -25,7 +25,7 @@ class EnemyItemFactory:
 
         self.png_data = png.copy(QRect(0, y_offset, png.width(), png.height() - y_offset))
 
-        self.palette_group = MutablePaletteGroup.from_tileset(object_set, PALETTE_GROUPS_PER_OBJECT_SET + palette_index)
+        self.palette_group = PaletteGroup.from_tileset(object_set, PALETTE_GROUPS_PER_OBJECT_SET + palette_index)
 
     def from_data(self, data, _):
         return EnemyObject(data, self.png_data, self.palette_group)

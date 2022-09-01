@@ -5,8 +5,8 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
 from foundry.core.geometry import Point, Size
-from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.gui.CustomChildWindow import CustomChildWindow
@@ -14,14 +14,14 @@ from foundry.gui.CustomChildWindow import CustomChildWindow
 
 @attrs(slots=True, auto_attribs=True)
 class SpriteViewerModel:
-    graphics_set: GraphicsSetProtocol
-    palette_group: MutablePaletteGroupProtocol
+    graphics_set: GraphicsSet
+    palette_group: PaletteGroup
     palette_index: int
 
 
 class SpriteViewerController(CustomChildWindow):
-    graphics_set_changed: SignalInstance = Signal(GraphicsSetProtocol)  # type: ignore
-    palette_group_changed: SignalInstance = Signal(MutablePaletteGroupProtocol)  # type: ignore
+    graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
+    palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     sprite_selected: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
@@ -29,8 +29,8 @@ class SpriteViewerController(CustomChildWindow):
     def __init__(
         self,
         parent: QWidget | None,
-        graphics_set: GraphicsSetProtocol,
-        palette_group: MutablePaletteGroupProtocol,
+        graphics_set: GraphicsSet,
+        palette_group: PaletteGroup,
         palette_index: int,
     ):
         super().__init__(parent, "Sprite Viewer")
@@ -64,22 +64,22 @@ class SpriteViewerController(CustomChildWindow):
         super().closeEvent(event)
 
     @property
-    def graphics_set(self) -> GraphicsSetProtocol:
+    def graphics_set(self) -> GraphicsSet:
         return self.model.graphics_set
 
     @graphics_set.setter
-    def graphics_set(self, value: GraphicsSetProtocol):
+    def graphics_set(self, value: GraphicsSet):
         self.model.graphics_set = value
         self.view.graphics_set = value
         self.graphics_set_changed.emit(self.graphics_set)
         self.view.update()
 
     @property
-    def palette_group(self) -> MutablePaletteGroupProtocol:
+    def palette_group(self) -> PaletteGroup:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, value: MutablePaletteGroupProtocol):
+    def palette_group(self, value: PaletteGroup):
         self.model.palette_group = value
         self.view.palette_group = value
         self.palette_group_changed.emit(self.palette_group)
@@ -108,8 +108,8 @@ class SpriteViewerView(QWidget):
     def __init__(
         self,
         parent: QWidget | None,
-        graphics_set: GraphicsSetProtocol,
-        palette_group: MutablePaletteGroupProtocol,
+        graphics_set: GraphicsSet,
+        palette_group: PaletteGroup,
         palette_index: int,
         zoom: int = 4,
     ):

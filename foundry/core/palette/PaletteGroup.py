@@ -1,73 +1,34 @@
-from abc import ABC, abstractmethod
-from collections.abc import Sequence
-from typing import ClassVar, Protocol, TypeVar
+from collections.abc import Iterable, Sequence
 
-from attr import attrs
-from pydantic import BaseModel
+from attr import attrs, evolve
 from PySide6.QtGui import QColor
 
-from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
-from foundry.core.palette.Palette import (
-    AbstractPalette,
-    HashablePaletteProtocol,
-    MutablePalette,
-    MutablePaletteProtocol,
-    Palette,
-    PaletteCreator,
-    PaletteProtocol,
-    PydanticPaletteProtocol,
+from foundry.core.namespace import (
+    ConcreteValidator,
+    KeywordValidator,
+    SequenceValidator,
+    default_validator,
+    validate,
 )
+from foundry.core.palette import COLORS_PER_PALETTE, PALETTES_PER_PALETTES_GROUP
+from foundry.core.palette.Palette import Palette
 from foundry.core.palette.util import get_internal_palette_offset
 
 
-class PaletteGroupProtocol(Protocol):
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+@default_validator
+class PaletteGroup(ConcreteValidator, KeywordValidator):
     """
-    A representation of a group of palettes.
-    """
-
-    palettes: Sequence[PaletteProtocol]
-
-    def __bytes__(self) -> bytes:
-        ...
-
-    def __getitem__(self, item: int) -> PaletteProtocol:
-        ...
-
-    @property
-    def background_color(self) -> QColor:
-        ...
-
-
-class MutablePaletteGroupProtocol(PaletteGroupProtocol, Protocol):
-    """
-    A mutable representation of a group of palettes.
+    A concrete implementation of a hashable and immutable group of palettes.
     """
 
-    def __setitem__(self, key: int, value: PaletteProtocol):
-        ...
+    __names__ = ("__PALETTE_GROUP_VALIDATOR__", "palette group", "Palette Group", "PALETTE GROUP")
+    __required_validators__ = (SequenceValidator, Palette)
 
+    palettes: tuple[Palette]
 
-class HashablePaletteGroupProtocol(PaletteGroupProtocol, Protocol):
-    """
-    A hashable and immutable representation of a group of palettes.
-    """
-
-    def __hash__(self) -> int:
-        ...
-
-
-_T = TypeVar("_T", bound="AbstractPaletteGroup")
-
-
-class AbstractPaletteGroup(ABC):
-    """
-    A partial implementation of a palette group that implements the critical parts of a palette group
-    independent of its mutability or ability to be hashed.
-    """
-
-    palettes: Sequence[PaletteProtocol]
-
-    PALETTE_TYPE: ClassVar[type[AbstractPalette]] = AbstractPalette
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}({[str(p) for p in self.palettes]})"
 
     def __bytes__(self) -> bytes:
         b = bytearray()
@@ -75,7 +36,7 @@ class AbstractPaletteGroup(ABC):
             b.extend(bytes(palette))
         return bytes(b)
 
-    def __getitem__(self, item: int) -> PaletteProtocol:
+    def __getitem__(self, item: int) -> Palette:
         return self.palettes[item]
 
     @property
@@ -83,37 +44,7 @@ class AbstractPaletteGroup(ABC):
         return self.palettes[0].colors[0]
 
     @classmethod
-    @abstractmethod
-    def from_values(cls: type[_T], *values: PaletteProtocol) -> _T:
-        """
-        A generalized way to create itself from a series of values.
-
-        Returns
-        -------
-        AbstractPaletteGroup
-            The created palette group from the series.
-        """
-        ...
-
-    @classmethod
-    def from_palette_group(cls: type[_T], palette_group: PaletteGroupProtocol) -> _T:
-        """
-        Generates a AbstractPaletteGroup of this type from another PaletteGroupProtocol.
-
-        Parameters
-        ----------
-        palette_group : PaletteGroupProtocol
-            The palette to be converted to this type.
-
-        Returns
-        -------
-        AbstractPaletteGroup
-            A palette group that is equal to the original palette group.
-        """
-        return cls.from_values(*palette_group.palettes)
-
-    @classmethod
-    def as_empty(cls: type[_T]) -> _T:
+    def as_empty(cls):
         """
         Makes an empty palette group of default values.
 
@@ -122,10 +53,10 @@ class AbstractPaletteGroup(ABC):
         AbstractPaletteGroup
             The palette group filled with default values.
         """
-        return cls.from_values(*[cls.PALETTE_TYPE.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)])
+        return cls(tuple(Palette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)))
 
     @classmethod
-    def from_rom(cls: type[_T], address: int) -> _T:
+    def from_rom(cls, address: int):
         """
         Creates a palette group from an absolute address in ROM.
 
@@ -139,11 +70,11 @@ class AbstractPaletteGroup(ABC):
         AbstractPaletteGroup
             The palette group that represents the absolute address in ROM.
         """
-        return cls.from_values(
-            *[
-                cls.PALETTE_TYPE.from_rom(address + offset)
+        return cls(
+            tuple(
+                Palette.from_rom(address + offset)
                 for offset in [COLORS_PER_PALETTE * i for i in range(PALETTES_PER_PALETTES_GROUP)]
-            ]
+            )
         )
 
     @classmethod
@@ -160,68 +91,20 @@ class AbstractPaletteGroup(ABC):
 
         Returns
         -------
-        MutablePaletteGroup
+        PaletteGroup
             The PaletteGroup that represents the tileset's palette group at the provided offset.
         """
         offset = get_internal_palette_offset(tileset) + index * PALETTES_PER_PALETTES_GROUP * COLORS_PER_PALETTE
         return cls.from_rom(offset)
 
-
-_MT = TypeVar("_MT", bound="MutablePaletteGroup")
-
-
-@attrs(slots=True, auto_attribs=True, eq=True)
-class MutablePaletteGroup(AbstractPaletteGroup):
-    """
-    A concrete implementation of a mutable group of palettes.
-    """
-
-    palettes: list[MutablePaletteProtocol]
-
-    PALETTE_TYPE: ClassVar[type[MutablePalette]] = MutablePalette
-
-    def __setitem__(self, key: int, value: MutablePaletteProtocol):
-        self.palettes[key] = value
-
     @classmethod
-    def from_values(cls: type[_MT], *values: PaletteProtocol) -> _MT:
-        return cls([cls.PALETTE_TYPE.from_palette(palette) for palette in values])
+    @validate(palettes=SequenceValidator.generate_class(Palette))
+    def validate(cls, palettes: Sequence[Palette]):
+        return cls(tuple(palettes))
 
-
-_PT = TypeVar("_PT", bound="PaletteGroup")
-
-
-@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
-class PaletteGroup(AbstractPaletteGroup):
-    """
-    A concrete implementation of a hashable and immutable group of palettes.
-    """
-
-    palettes: tuple[HashablePaletteProtocol]
-
-    PALETTE_TYPE: ClassVar[type[Palette]] = Palette
-
-    @classmethod
-    def from_values(cls: type[_PT], *values: PaletteProtocol) -> _PT:
-        return cls(tuple(cls.PALETTE_TYPE.from_palette(palette) for palette in values))
-
-
-class PydanticPaletteGroup(BaseModel):
-    """
-    A generic representation of :class:`~foundry.core.palette.PaletteGroup.PaletteGroup`.
-
-    Attributes
-    ----------
-    palettes: list[PaletteCreator]
-        The palettes that compose the palette group.
-    """
-
-    palettes: list[PaletteCreator]
-
-    @property
-    def palette_protocols(self) -> list[PydanticPaletteProtocol]:
-        return self.palettes  # type: ignore
-
-    @property
-    def palette_group(self) -> PaletteGroupProtocol:
-        return PaletteGroup.from_values(*[p.palette for p in self.palette_protocols])
+    def evolve_palettes(self, palette_index: int, palette: Palette):
+        palettes: Iterable[Palette] = list(self.palettes)
+        palettes[palette_index] = palette
+        if any(map(lambda p: p != palette, palettes)):
+            palettes = map(lambda p: p.evolve_color_index(0, palette[0]), palettes)
+        return evolve(self, palettes=tuple(palettes))

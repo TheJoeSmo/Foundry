@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QHBoxLayout, QLayout, QStatusBar, QToolBar, QWidge
 
 from foundry import icon
 from foundry.core.geometry import Point
-from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
@@ -25,7 +25,7 @@ from foundry.gui.SpriteViewerWidget import SpriteViewerWidget
 class PlayerFrameEditorModel:
     animation: PlayerAnimation
     power_up_offsets: list[int]
-    palette_group: MutablePaletteGroupProtocol
+    palette_group: PaletteGroup
     is_mario: bool
 
 
@@ -39,7 +39,7 @@ class PlayerFrameEditorController(CustomChildWindow):
         parent: QWidget | None,
         animation: PlayerAnimation,
         power_up_offsets: list[int],
-        palette_group: MutablePaletteGroupProtocol,
+        palette_group: PaletteGroup,
         is_mario: bool = True,
         title: str = "Player Frame Editor",
         zoom: int = 2,
@@ -107,11 +107,11 @@ class PlayerFrameEditorController(CustomChildWindow):
         self._update_view_animations()
 
     @property
-    def palette_group(self) -> MutablePaletteGroupProtocol:
+    def palette_group(self) -> PaletteGroup:
         return self.model.palette_group
 
     @palette_group.setter
-    def palette_group(self, palette_group: MutablePaletteGroupProtocol):
+    def palette_group(self, palette_group: PaletteGroup):
         self.model.palette_group = palette_group
         self._update_view_animations()
 

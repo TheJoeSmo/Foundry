@@ -1,12 +1,12 @@
 from PySide6.QtWidgets import QDialog, QWidget
 
-from foundry.core.palette.Palette import MutablePaletteProtocol
+from foundry.core.palette.Palette import Palette
 from foundry.gui.ColorSelector import ColorSelector
 from foundry.gui.PaletteWidget import PaletteWidget
 
 
 class PaletteEditorWidget(PaletteWidget):
-    def __init__(self, parent: QWidget | None, palette: MutablePaletteProtocol):
+    def __init__(self, parent: QWidget | None, palette: Palette):
         super().__init__(parent, palette)
 
         for idx, btn in enumerate(self._buttons):
@@ -16,6 +16,4 @@ class PaletteEditorWidget(PaletteWidget):
         selector = ColorSelector(self)
 
         if QDialog.Accepted == selector.exec_():
-            palette = self.palette
-            palette[button_index] = selector.last_selected_color_index
-            self.palette = palette
+            self.palette = self.palette.evolve_color_index(button_index, selector.last_selected_color_index)

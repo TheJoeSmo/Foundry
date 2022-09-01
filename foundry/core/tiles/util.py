@@ -4,12 +4,8 @@ from functools import cache, lru_cache
 from attr import attrs
 from PySide6.QtGui import QImage
 
-from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.Palette import (
-    HashablePaletteProtocol,
-    Palette,
-    PaletteProtocol,
-)
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette.Palette import Palette
 from foundry.core.tiles import (
     BYTES_PER_TILE,
     MASK_COLOR,
@@ -27,16 +23,16 @@ class _Tile:
     Attributes
     ----------
     index: int
-        The tile index that define the graphics from the GraphicsSetProtocol.
+        The tile index that define the graphics from the GraphicsSet.
     palette: HashablePaletteProtocol
         The a hashable palette.
-    graphics_set: GraphicsSetProtocol
+    graphics_set: GraphicsSet
         The base of all images generated for the tile.
     """
 
     index: int
-    palette: HashablePaletteProtocol
-    graphics_set: GraphicsSetProtocol
+    palette: Palette
+    graphics_set: GraphicsSet
 
     @cache
     def __bytes__(self) -> bytes:
@@ -104,8 +100,8 @@ def _tile_to_image(tile: _Tile, scale_factor: int = 1) -> QImage:
 @lru_cache(2**10)
 def cached_tile_to_image(
     tile_index: int,
-    palette: HashablePaletteProtocol,
-    graphics_set: GraphicsSetProtocol,
+    palette: Palette,
+    graphics_set: GraphicsSet,
     scale_factor: int = 1,
 ) -> QImage:
     """
@@ -117,7 +113,7 @@ def cached_tile_to_image(
         The tile index into the graphics set.
     palette : HashablePaletteProtocol
         The specific palette to use for the tile.
-    graphics_set : GraphicsSetProtocol
+    graphics_set : GraphicsSet
         The specific graphics to use for the tile.
     scale_factor : int, optional
         The multiple of 8 that the image will be created as, by default 1
@@ -135,9 +131,7 @@ def cached_tile_to_image(
     return _tile_to_image(_Tile(tile_index, palette, graphics_set), scale_factor)
 
 
-def tile_to_image(
-    tile_index: int, palette: PaletteProtocol, graphics_set: GraphicsSetProtocol, scale_factor: int = 1
-) -> QImage:
+def tile_to_image(tile_index: int, palette: Palette, graphics_set: GraphicsSet, scale_factor: int = 1) -> QImage:
     """
     Generates a tile with a given palette and graphics as a QImage.
 
@@ -145,9 +139,9 @@ def tile_to_image(
     ----------
     tile_index: int
         The tile index into the graphics set.
-    palette : PaletteProtocol
+    palette : Palette
         The specific palette to use for the tile.
-    graphics_set : GraphicsSetProtocol
+    graphics_set : GraphicsSet
         The specific graphics to use for the tile.
     scale_factor : int, optional
         The multiple of 8 that the image will be created as, by default 1
@@ -157,4 +151,4 @@ def tile_to_image(
     QImage
         That represents the tile.
     """
-    return cached_tile_to_image(tile_index, Palette.from_palette(palette), graphics_set, scale_factor)
+    return cached_tile_to_image(tile_index, palette, graphics_set, scale_factor)

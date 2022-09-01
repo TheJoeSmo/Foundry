@@ -1,11 +1,8 @@
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import COLORS_PER_PALETTE
-from foundry.core.palette.Palette import MutablePalette
-from foundry.core.palette.PaletteGroup import (
-    MutablePaletteGroup,
-    MutablePaletteGroupProtocol,
-)
+from foundry.core.palette.Palette import Palette
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.player_animations import (
     PLAYER_FRAME_PAGE_OFFSET,
     PLAYER_FRAME_START,
@@ -45,7 +42,7 @@ def get_animations_palette_index(is_mario: bool, power_up: int) -> int:
 
 def load_player_animation(
     animation: PlayerAnimation,
-    palette_group: MutablePaletteGroupProtocol,
+    palette_group: PaletteGroup,
     is_mario: bool,
     power_up: int,
     offsets: list[int],
@@ -62,7 +59,7 @@ def load_player_animation(
 
 def load_player_animation_data(
     animations: list[PlayerAnimation],
-    palette_group: MutablePaletteGroupProtocol,
+    palette_group: PaletteGroup,
     is_mario: bool,
     power_up: int,
     offsets: list[int],
@@ -73,10 +70,10 @@ def load_player_animation_data(
     return animation_data
 
 
-def load_power_up_palettes() -> MutablePaletteGroupProtocol:
-    return MutablePaletteGroup(
+def load_power_up_palettes() -> PaletteGroup:
+    return PaletteGroup(
         [
-            MutablePalette.from_rom(PLAYER_POWER_UPS_PALETTES + address * COLORS_PER_PALETTE)
+            Palette.from_rom(PLAYER_POWER_UPS_PALETTES + address * COLORS_PER_PALETTE)
             for address in range(PLAYER_POWER_UPS_PALETTE_COUNT)
         ]
     )

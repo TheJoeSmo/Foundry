@@ -1,34 +1,34 @@
 from pytest import raises
 
-from foundry.core.namespace import InvalidChildName, Path, is_valid_name
+from foundry.core.namespace import InvalidChildName, Path
 
 
 def test_is_valid_name_empty():
-    assert not is_valid_name("")
+    assert not Path.is_valid_name("")
 
 
 def test_is_valid_name_short_simple():
-    assert is_valid_name("a")
+    assert Path.is_valid_name("a")
 
 
 def test_is_valid_name_simple():
-    assert is_valid_name("hello")
+    assert Path.is_valid_name("hello")
 
 
 def test_is_valid_name_simple_caps():
-    assert is_valid_name("HELLO")
+    assert Path.is_valid_name("HELLO")
 
 
 def test_is_valid_name_with_underscore_start():
-    assert is_valid_name("_hello")
+    assert Path.is_valid_name("_hello")
 
 
 def test_is_valid_name_with_dot():
-    assert not is_valid_name("hello.world")
+    assert not Path.is_valid_name("hello.world")
 
 
 def test_is_valid_with_int():
-    assert not is_valid_name(1)
+    assert not Path.is_valid_name(1)
 
 
 def test_empty_path():
