@@ -1,15 +1,15 @@
 from attr import attrs
 
-from foundry.core.graphics_set.GraphicsSet import GraphicsSetProtocol
-from foundry.core.palette.PaletteGroup import MutablePaletteGroupProtocol
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 
 
 @attrs(slots=True, auto_attribs=True)
 class PlayerAnimationData:
     animation: PlayerAnimation
-    graphics_set: GraphicsSetProtocol
-    palette_group: MutablePaletteGroupProtocol
+    graphics_set: GraphicsSet
+    palette_group: PaletteGroup
     palette_index: int
     is_kicking: bool = False
 

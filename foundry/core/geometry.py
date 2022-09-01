@@ -1,15 +1,28 @@
 from __future__ import annotations
 
 from math import sqrt
+from typing import TypeVar
 
 from attr import attrs
-from pydantic.errors import MissingError, NumberNotGeError
-from pydantic.validators import int_validator
-from PySide6.QtCore import QPoint, QRect
+from PySide6.QtCore import QPoint, QRect, QSize
+
+from foundry.core.namespace import (
+    ConcreteValidator,
+    IntegerValidator,
+    KeywordValidator,
+    NonNegativeIntegerValidator,
+    default_validator,
+    validate,
+)
+
+_P = TypeVar("_P", bound="Point")
+_S = TypeVar("_S", bound="Size")
+_R = TypeVar("_R", bound="Rect")
 
 
-@attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Point:
+@attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=True)
+@default_validator
+class Point(ConcreteValidator, KeywordValidator):
     """
     A two dimensional representation of a point on a plain.
 
@@ -23,6 +36,11 @@ class Point:
 
     x: int
     y: int
+    __names__ = ("__POINT_VALIDATOR__", "point", "Point", "POINT")
+    __required_validators__ = (IntegerValidator,)
+
+    def __eq__(self, other: Point):
+        return self.x == other.x and self.y == other.y
 
     def __lt__(self, other: Point):
         return self.distance_from_origin < other.distance_from_origin
@@ -76,18 +94,9 @@ class Point:
         return self.__class__(self.x ^ other.x, self.y ^ other.y)
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, values) -> Point:
-        if "x" not in values:
-            MissingError()
-        if "y" not in values:
-            MissingError()
-        x: int = int_validator(values["x"])
-        y: int = int_validator(values["y"])
-        return Point(x, y)
+    @validate(x=IntegerValidator, y=IntegerValidator)
+    def validate(cls: type[_P], x: int, y: int) -> _P:
+        return cls(x, y)
 
     @classmethod
     def from_qpoint(cls, point: QPoint) -> Point:
@@ -112,7 +121,8 @@ class Point:
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Size:
+@default_validator
+class Size(ConcreteValidator, KeywordValidator):
     """
     A two dimensional representation of a size.
 
@@ -126,6 +136,8 @@ class Size:
 
     width: int
     height: int
+    __names__ = ("__SIZE_VALIDATOR__", "size", "Size", "SIZE")
+    __required_validators__ = (NonNegativeIntegerValidator,)
 
     def __lt__(self, other: Size):
         return self.width * self.height < other.width * other.height
@@ -154,51 +166,105 @@ class Size:
     def __pow__(self, other: int) -> Size:
         return self.__class__(self.width**other, self.height**other)
 
-    def __add__(self, other: Size) -> Size:
-        return self.__class__(self.width + other.width, self.height + other.height)
+    def __add__(self, other: Size | int) -> Size:
+        if isinstance(other, Size):
+            return self.__class__(self.width + other.width, self.height + other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width + other, self.height + other)
+        return NotImplemented
 
-    def __sub__(self, other: Size) -> Size:
-        return self.__class__(self.width - other.width, self.height - other.height)
+    def __sub__(self, other: Size | int) -> Size:
+        if isinstance(other, Size):
+            return self.__class__(self.width - other.width, self.height - other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width - other, self.height - other)
+        return NotImplemented
 
-    def __mul__(self, other: Size) -> Size:
-        return self.__class__(self.width * other.width, self.height * other.height)
+    def __mul__(self, other: Size | int) -> Size:
+        if isinstance(other, Size):
+            return self.__class__(self.width * other.width, self.height * other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width * other, self.height * other)
+        return NotImplemented
 
     def __floordiv__(self, other: Size) -> Size:
-        return self.__class__(self.width // other.width, self.height // other.height)
+        if isinstance(other, Size):
+            return self.__class__(self.width // other.width, self.height // other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width // other, self.height // other)
+        return NotImplemented
 
     def __mod__(self, other: Size) -> Size:
-        return self.__class__(self.width % other.width, self.height % other.height)
+        if isinstance(other, Size):
+            return self.__class__(self.width % other.width, self.height % other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width % other, self.height % other)
+        return NotImplemented
 
     def __and__(self, other: Size) -> Size:
-        return self.__class__(self.width & other.width, self.height & other.height)
+        if isinstance(other, Size):
+            return self.__class__(self.width & other.width, self.height & other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width & other, self.height & other)
+        return NotImplemented
 
     def __or__(self, other: Size) -> Size:
-        return self.__class__(self.width | other.width, self.height | other.height)
+        if isinstance(other, Size):
+            return self.__class__(self.width | other.width, self.height | other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width | other, self.height | other)
+        return NotImplemented
 
     def __xor__(self, other: Size) -> Size:
-        return self.__class__(self.width ^ other.width, self.height ^ other.height)
+        if isinstance(other, Size):
+            return self.__class__(self.width ^ other.width, self.height ^ other.height)
+        elif isinstance(other, int):
+            return self.__class__(self.width ^ other, self.height ^ other)
+        return NotImplemented
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
+    @validate(width=NonNegativeIntegerValidator, height=NonNegativeIntegerValidator)
+    def validate(cls: type[_S], width: int, height: int) -> _S:
+        return cls(width, height)
 
     @classmethod
-    def validate(cls, values) -> Size:
-        if "width" not in values:
-            MissingError()
-        if "height" not in values:
-            MissingError()
-        width: int = int_validator(values["width"])
-        height: int = int_validator(values["height"])
-        if width < 0:
-            raise NumberNotGeError(limit_value=0)
-        if height < 0:
-            raise NumberNotGeError(limit_value=0)
-        return Size(width, height)
+    def from_qsize(cls, size: QSize):
+        """
+        Generates a size from a QSize for easy conversion.
+
+        Parameters
+        ----------
+        size : QSize
+            To be converted.
+
+        Returns
+        -------
+        Size
+            Of the QSize represented inside Python.
+        """
+        return cls(size.width(), size.height())
+
+    @property
+    def qsize(self) -> QSize:
+        """
+        Generates a QSize from a Size.
+
+        Parameters
+        ----------
+        rect : Size
+            The rect to be converted to a Size.
+
+        Returns
+        -------
+        QSize
+            The QSize derived from the Size.
+        """
+        return QSize(self.width, self.height)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
-class Rect:
+@default_validator
+class Rect(ConcreteValidator, KeywordValidator):
     """
     A two dimensional representation of a box, that uses ``attrs`` to create a basic
     implementation.
@@ -213,32 +279,27 @@ class Rect:
 
     point: Point
     size: Size
+    __names__ = ("__RECT_VALIDATOR__", "rect", "Rect", "Rect")
+    __required_validators__ = (Point, Size)
+
+    @property
+    def qrect(self) -> QRect:
+        """
+        Generates a QRect from a Rect.
+
+        Parameters
+        ----------
+        rect : Rect
+            The rect to be converted to a Rect.
+
+        Returns
+        -------
+        QRect
+            The QRect derived from the Rect.
+        """
+        return QRect(self.point.x, self.point.y, self.size.width, self.size.height)
 
     @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, values) -> Rect:
-        if "point" not in values:
-            MissingError()
-        if "size" not in values:
-            MissingError()
-        return Rect(Point.validate(values["point"]), Size.validate(values["size"]))
-
-
-def to_qrect(rect: Rect) -> QRect:
-    """
-    Generates a QRect from a Rect.
-
-    Parameters
-    ----------
-    rect : Rect
-        The rect to be converted to a Rect.
-
-    Returns
-    -------
-    QRect
-        The QRect derived from the Rect.
-    """
-    return QRect(rect.point.x, rect.point.y, rect.size.width, rect.size.height)
+    @validate(point=Point, size=Size)
+    def validate(cls: type[_R], point: Point, size: Size) -> _R:
+        return cls(point, size)

@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.core.palette.Palette import MutablePaletteProtocol
+from foundry.core.palette.Palette import Palette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 
 
@@ -15,9 +15,9 @@ class PaletteWidget(QWidget):
         Slot associated with the palette viewer changing its palette.
     """
 
-    palette_changed: SignalInstance = Signal(MutablePaletteProtocol)  # type: ignore
+    palette_changed: SignalInstance = Signal(Palette)  # type: ignore
 
-    def __init__(self, parent: QWidget | None, palette: MutablePaletteProtocol):
+    def __init__(self, parent: QWidget | None, palette: Palette):
         super().__init__(parent)
         self._palette = palette
 
@@ -33,11 +33,11 @@ class PaletteWidget(QWidget):
         return f"{self.__class__.__name__}({self.parent}, {self.palette})"
 
     @property
-    def palette(self) -> MutablePaletteProtocol:
+    def palette(self) -> Palette:
         return self._palette
 
     @palette.setter
-    def palette(self, palette: MutablePaletteProtocol):
+    def palette(self, palette: Palette):
         self._palette = palette
         self.palette_changed.emit(palette)
         self._update()

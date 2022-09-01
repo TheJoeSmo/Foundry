@@ -7,10 +7,7 @@
         "graphics": {
           "type": "FILE",
           "elements": {
-            "workshop_port": {
-              "type": "FROM FILE",
-              "path": "$data/gfx.png"
-            }
+            "workshop_port": "$data/gfx.png"
           }
         }
       }
@@ -23,8 +20,7 @@
           "dependencies": ["files.graphics"],
           "elements": {
             "fire_flower": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -41,8 +37,7 @@
               }
             },
             "leaf": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -59,8 +54,7 @@
               }
             },
             "star": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -77,8 +71,7 @@
               }
             },
             "star_continuous": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -95,8 +88,7 @@
               }
             },
             "coins_multiple": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -113,8 +105,7 @@
               }
             },
             "extra_life": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -131,8 +122,7 @@
               }
             },
             "coin": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -149,8 +139,7 @@
               }
             },
             "vine": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -167,8 +156,7 @@
               }
             },
             "p_switch": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -185,8 +173,7 @@
               }
             },
             "coin_silver": {
-              "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -204,7 +191,7 @@
             },
             "coin_invisible": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -222,7 +209,7 @@
             },
             "coin_extra_life": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -240,7 +227,7 @@
             },
             "no_jump": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -258,7 +245,7 @@
             },
             "up_arrow": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -276,7 +263,7 @@
             },
             "down_arrow": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -294,7 +281,7 @@
             },
             "left_arrow": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -312,7 +299,7 @@
             },
             "right_arrow": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -330,7 +317,7 @@
             },
             "item_arrow": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"
@@ -348,7 +335,7 @@
             },
             "empty": {
               "type": "FROM FILE",
-              "image": {
+              "path": {
                 "type": "FROM NAMESPACE",
                 "path": "files.graphics",
                 "name": "workshop_port"

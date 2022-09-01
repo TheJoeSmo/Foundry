@@ -5,9 +5,9 @@ from foundry.core.namespace import (
     CircularImportException,
     Namespace,
     Path,
-    _evolve_child,
     generate_namespace,
     get_namespace_dict_from_path,
+    primitive_manager,
 )
 
 
@@ -231,17 +231,17 @@ def test_namespace_from_path_complex():
 
 
 def test_generate_namespace_initialization_empty(empty_namespace):
-    namespace = generate_namespace({"type": "INTEGER"})
+    namespace = generate_namespace({"type": "INTEGER"}, primitive_manager)
     assert empty_namespace == namespace
 
 
 def test_generate_namespace_initialization_with_int_elements():
-    namespace = generate_namespace({"type": "INTEGER", "elements": {"a": 1, "b": 2, "c": 3}})
+    namespace = generate_namespace({"type": "INTEGER", "elements": {"a": 1, "b": 2, "c": 3}}, primitive_manager)
     assert Namespace(elements={"a": 1, "b": 2, "c": 3}) == namespace
 
 
 def test_generate_namespace_initialization_empty_hierarchy(empty_namespace):
-    namespace = generate_namespace({"type": "INTEGER", "children": {"a": {"type": "INTEGER"}}})
+    namespace = generate_namespace({"type": "INTEGER", "children": {"a": {"type": "INTEGER"}}}, primitive_manager)
     assert Namespace(None, {}, {}, {"a": empty_namespace}) == namespace
 
 
@@ -253,7 +253,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_does_not_exist(
                 "children": {
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -265,7 +266,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy():
                 "foo": {"type": "INTEGER"},
                 "bar": {"type": "INTEGER", "dependencies": ["foo"]},
             },
-        }
+        },
+        primitive_manager,
     )
 
     foo = Namespace()
@@ -281,7 +283,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                 "children": {
                     "foo": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -294,7 +297,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "foo": {"type": "INTEGER", "dependencies": ["bar"]},
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -308,7 +312,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                     "foo_bar": {"type": "INTEGER", "dependencies": ["bar"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -323,7 +328,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_circular_depend
                     "foo_bar": {"type": "INTEGER", "dependencies": ["bar"]},
                     "bar_foo": {"type": "INTEGER", "dependencies": ["foo_bar"]},
                 },
-            }
+            },
+            primitive_manager,
         )
 
 
@@ -339,7 +345,8 @@ def test_generate_namespace_initialization_inheritance_hierarchy_complex():
                 "bar": {"type": "INTEGER", "dependencies": ["foo"]},
                 "bar_foo": {"type": "INTEGER", "dependencies": ["foo.foo_bar"]},
             },
-        }
+        },
+        primitive_manager,
     )
 
     assert "foo" in namespace.children
@@ -365,66 +372,67 @@ def test_get_namespace_dict_from_path_child():
     assert expected_namespace.children["foo"].dict() == get_namespace_dict_from_path(d, Path(("foo",)))
 
 
-def test__evolve_child_from_empty():
+def test_evolve_child_from_empty():
     parent, child = Namespace(), Namespace()
 
-    assert Namespace(children={"foo": Namespace()}) == _evolve_child(parent, "foo", child)
+    assert Namespace(children={"foo": Namespace()}) == parent.evolve_child("foo", child)
 
 
-def test__evolve_child_from_simple():
+def test_evolve_child_from_simple():
     parent, child = Namespace(children={"foo": Namespace()}), Namespace()
 
-    assert Namespace(children={"foo": Namespace(children={"bar": Namespace()})}) == _evolve_child(
-        parent.children["foo"], "bar", child
+    assert Namespace(children={"foo": Namespace(children={"bar": Namespace()})}) == parent.children["foo"].evolve_child(
+        "bar", child
     )
 
 
 def test_generate_namespace_generate_integer():
-    namespace = generate_namespace({"type": "INTEGER", "elements": {"foo": 1}})
+    namespace = generate_namespace({"type": "INTEGER", "elements": {"foo": 1}}, primitive_manager)
 
     assert Namespace(elements={"foo": 1}) == namespace
 
 
 def test_generate_namespace_generate_string():
-    namespace = generate_namespace({"type": "STRING", "elements": {"foo": "string"}})
+    namespace = generate_namespace({"type": "STRING", "elements": {"foo": "string"}}, primitive_manager)
 
     assert Namespace(elements={"foo": "string"}) == namespace
 
 
 def test_generate_namespace_generate_float():
-    namespace = generate_namespace({"type": "FLOAT", "elements": {"foo": 1.1}})
+    namespace = generate_namespace({"type": "FLOAT", "elements": {"foo": 1.1}}, primitive_manager)
 
     assert Namespace(elements={"foo": 1.1}) == namespace
 
 
 def test_generate_namespace_generate_file():
     from foundry import root_dir
-    from foundry.core.file.FilePath import FilePath
+    from foundry.core.file import FilePath
 
-    namespace = generate_namespace(
-        {"type": "FILE", "elements": {"foo": {"type": "FROM FILE", "path": "$data/gfx.png"}}}
-    )
+    namespace = generate_namespace({"type": "FILE", "elements": {"foo": "$data/gfx.png"}}, FilePath.type_manager)
 
     assert Namespace(elements={"foo": FilePath(root_dir) / "data" / "gfx.png"}) == namespace
 
 
 def test_generate_namespace_generate_drawable():
+    from foundry.core.drawable.Drawable import Drawable
+
     # Just test that it loads.
     generate_namespace(
         {
             "type": "NONE",
             "children": {
-                "foo": {"type": "FILE", "elements": {"bar": {"type": "FROM FILE", "path": "$data/gfx.png"}}},
+                "foo": {"type": "FILE", "elements": {"bar": "$data/gfx.png"}},
                 "bar": {
                     "type": "DRAWABLE",
                     "dependencies": ["foo"],
                     "elements": {
                         "foobar": {
                             "type": "FROM FILE",
-                            "image": {"type": "FROM NAMESPACE", "path": "foo", "name": "bar"},
+                            "path": {"type": "FROM NAMESPACE", "path": "foo", "name": "bar"},
                         }
                     },
                 },
             },
-        }
+        },
+        Drawable.type_manager,
     )
