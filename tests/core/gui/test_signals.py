@@ -1,3 +1,4 @@
+from gc import collect
 from itertools import count
 
 from pytest import raises
@@ -17,9 +18,13 @@ class SimpleObject:
 
     def __init__(self) -> None:
         self.count = next(self.counter)
+        self.test_value = 0
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(0x{self.count:02X})"
+
+    def test(self, v: int) -> None:
+        self.test_value = v
 
     @property
     def signal_instance(self) -> SignalInstance:
@@ -81,6 +86,48 @@ class TestSignal:
         assert value == 1
         SimpleObject.class_signal.disconnect(change_value, obj2)
         SimpleObject.class_signal.clear()
+        assert 0 == len(SimpleObject.class_signal)
+
+    def test_class_connection_methods(self):
+        SimpleObject.class_signal.clear()
+        obj, obj2 = SimpleObject(), SimpleObject()
+
+        SimpleObject.class_signal.connect(obj.test, obj)
+        SimpleObject.class_signal.emit(5, obj)
+        assert obj.test_value == 5
+        SimpleObject.class_signal.emit(3, obj2)
+        assert obj.test_value == 5
+        SimpleObject.class_signal.connect(obj2.test, obj2)
+        SimpleObject.class_signal.emit(1, obj2)
+        assert obj.test_value == 5
+        assert obj2.test_value == 1
+        del obj
+        del obj2
+        collect()
+        SimpleObject.class_signal.emit(0, None)
+        assert 0 == len(SimpleObject.class_signal)
+
+    def test_class_connection_max_uses(self):
+        SimpleObject.class_signal.clear()
+        obj, obj2 = SimpleObject(), SimpleObject()
+        value = False
+
+        def change_value(v):
+            nonlocal value
+            value = v
+
+        SimpleObject.class_signal.connect(change_value, obj, max_uses=1)
+        SimpleObject.class_signal.emit(5, obj)
+        assert value == 5
+        SimpleObject.class_signal.emit(3, obj2)
+        assert value == 5
+        SimpleObject.class_signal.connect(change_value, obj2, max_uses=1)
+        SimpleObject.class_signal.emit(1, obj2)
+        assert value == 1
+        SimpleObject.class_signal.emit(5, obj)
+        assert value == 1
+        SimpleObject.class_signal.emit(3, obj)
+        assert value == 1
         assert 0 == len(SimpleObject.class_signal)
 
     def test_silence(self):

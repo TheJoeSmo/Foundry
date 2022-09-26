@@ -17,9 +17,12 @@ class TestObject:
         class SimpleChildObject(Object):
             a: SignalInstance[int]
 
-            @attrs(slots=True, auto_attribs=True, frozen=True, eq=False, hash=True, repr=False)
+            @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
             class Model(BaseModel):
                 b: int
+
+                def __repr__(self) -> str:
+                    return f"<{self.b}>"
 
             def __repr__(self) -> str:
                 return f"SimpleChildObject({self.b})"
@@ -37,7 +40,7 @@ class TestObject:
             b: SignalInstance[str]
             c: SignalInstance[tuple[int, str]]
 
-            @attrs(slots=True, auto_attribs=True, frozen=True, eq=False, hash=True, repr=False)
+            @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True, repr=False)
             class Model(BaseModel):
                 d: int
                 e: str
@@ -77,7 +80,9 @@ class TestObject:
         obj = self.SimpleChildObject(self.SimpleChildObject.Model(0))
         with SignalTester(obj.updated) as tester_updated:
             with SignalTester(obj.a) as tester:
+                print(obj)
                 obj.b = 1  # type: ignore
+                print(obj)
                 assert obj.b == 1
                 assert obj.model.b == 1  # type: ignore
                 assert tester.count == 1

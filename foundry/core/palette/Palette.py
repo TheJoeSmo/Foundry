@@ -12,6 +12,7 @@ from foundry.core.namespace import (
     validate,
 )
 from foundry.core.palette import COLORS_PER_PALETTE
+from foundry.core.palette.Color import Color
 from foundry.core.palette.ColorPalette import ColorPalette
 from foundry.game.File import ROM
 
@@ -37,9 +38,7 @@ class Palette(ConcreteValidator, KeywordValidator):
 
     @property
     def colors(self) -> Sequence[QColor]:
-        return [
-            self.color_palette.colors[index % len(self.color_palette.colors)].qcolor for index in self.color_indexes
-        ]
+        return [self.color_palette[index % len(self.color_palette.colors)].qcolor for index in self.color_indexes]
 
     @classmethod
     def as_empty(cls):
@@ -84,3 +83,9 @@ class Palette(ConcreteValidator, KeywordValidator):
         color_indexes = list(self.color_indexes)
         color_indexes[index] = color_index
         return evolve(self, color_indexes=tuple(color_indexes))
+
+    def color_from_index(self, index: int) -> Color:
+        return self.color_palette[index]
+
+    def index_from_color(self, color: Color) -> int:
+        return

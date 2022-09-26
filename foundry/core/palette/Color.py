@@ -32,6 +32,10 @@ class Color(ConcreteValidator, KeywordValidator):
     def validate(cls, red: int, green: int, blue: int, alpha: int):
         return cls(red, green, blue, alpha)
 
+    @classmethod
+    def from_qt(cls, color: QColor):
+        return cls(color.red(), color.green(), color.blue(), color.alpha())
+
     @property
     def qcolor(self) -> QColor:
         return QColor(self.red, self.green, self.blue, self.alpha)

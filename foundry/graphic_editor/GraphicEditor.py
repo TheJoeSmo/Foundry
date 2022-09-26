@@ -1,13 +1,19 @@
-from attr import attrs
+from typing import Any
+
 from PySide6.QtCore import QSize
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QFileDialog, QMainWindow, QMessageBox, QWidget
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QWidget
 
 from foundry import icon
+from foundry.core.gui import Signal, SignalInstance
+from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.File import ROM
 from foundry.graphic_editor import ROM_FILTER
+from foundry.graphic_editor.Canvas import Canvas
 from foundry.graphic_editor.internal_plugins import CommonIcons
+from foundry.gui.core import MainWindow
 from foundry.gui.Menu import Menu
+from foundry.gui.palette import PaletteGroupWidget
 from foundry.gui.settings import GUILoader, UserSettings, load_gui_loader
 from foundry.gui.SettingsDialog import SettingsDialog
 from foundry.gui.Toolbar import Toolbar
@@ -59,17 +65,38 @@ def open_file(parent: QWidget, path: str | None = None) -> str | None:
     return path
 
 
-@attrs(slots=True, auto_attribs=True)
-class GraphicEditorModel:
-    path: str
+class GraphicEditor(MainWindow):
+    _updated = Signal()
 
+    _file_path: str | None = None
 
-class GraphicEditor(QMainWindow):
-    def __init__(
+    def __init__(self, path: str | None, parent: Any = None, *args, **kwargs) -> None:
+        self._parent = parent
+        self._file_path = path
+        super().__init__(parent)
+
+        self.initialize_state(path, *args, **kwargs)
+
+    @property
+    def updated(self) -> SignalInstance[str | None]:
+        return SignalInstance(self, self._updated)
+
+    @property
+    def is_loaded(self) -> bool:
+        return self.file_path is not None
+
+    @property
+    def file_path(self) -> str | None:
+        return self._file_path
+
+    @file_path.setter
+    def file_path(self, path: str | None) -> None:
+        self._file_path = path
+        self.updated.emit(path)
+
+    def initialize_state(
         self, path: str | None, user_settings: UserSettings | None = None, gui_loader: GUILoader | None = None
     ):
-        super().__init__()
-
         self.setWindowIcon(icon("foundry.ico"))
         self.user_settings = UserSettings() if user_settings is None else user_settings
         self.gui_loader = load_gui_loader() if gui_loader is None else gui_loader
@@ -95,17 +122,30 @@ class GraphicEditor(QMainWindow):
         self.menu_toolbar.add_action(
             "Editor Settings", self.display_settings_dialog, icon=CommonIcons.to_icon(CommonIcons.SETTINGS)
         )
+        self.addToolBar(Qt.TopToolBarArea, self.menu_toolbar)
 
-        path = open_file(self, path)
-        if path is None:
-            self.loaded = False
+        self.bottom_toolbar = Toolbar("Bottom Toolbar", self)
+        self.bottom_toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
+        self.bottom_toolbar.setOrientation(Qt.Horizontal)
+        self.bottom_toolbar.setFloatable(True)
+        self.bottom_toolbar.setAllowedAreas(Qt.BottomToolBarArea | Qt.TopToolBarArea)
+
+        self.palette_group_widget = PaletteGroupWidget(PaletteGroup.as_empty())  # type: ignore
+
+        self.bottom_toolbar.addWidget(self.palette_group_widget)
+        self.addToolBar(Qt.BottomToolBarArea, self.bottom_toolbar)
+
+        self.file_path = open_file(self, self.file_path)
+        if not self.is_loaded:
             return
-        self.loaded = True
+
+        canvas = Canvas(Canvas.Model(), self)
+        self.setCentralWidget(canvas)
 
         self.showMaximized()
 
     def change_active_rom(self, *_, path: str | None = None) -> str | None:
-        path = open_file(self, path)
+        self.file_path = open_file(self, path)
         self.update()
         return path
 

@@ -2,9 +2,13 @@ from __future__ import annotations
 
 from collections import deque
 from collections.abc import Callable, Iterator, Mapping, Sequence
+from contextlib import suppress
+from enum import Enum, auto
+from functools import partial
 from inspect import get_annotations
 from itertools import chain
 from logging import DEBUG, Logger, NullHandler, getLogger
+from types import MethodType
 from typing import (
     Any,
     ClassVar,
@@ -17,11 +21,15 @@ from typing import (
     get_type_hints,
     overload,
 )
-from weakref import ReferenceType, finalize, ref
+from warnings import warn
+from weakref import ReferenceType, WeakMethod, finalize, ref
 
-from attr import Factory, attrs, evolve
-from PySide6.QtCore import QObject
-from PySide6.QtWidgets import QDialog, QMainWindow, QWidget
+from attr import Factory, attrs, evolve, field
+from PySide6.QtCore import QObject, Qt
+from PySide6.QtGui import QFocusEvent, QKeyEvent, QMouseEvent, QWheelEvent
+
+from foundry.core import sequence_to_pretty_str
+from foundry.core.geometry import Point
 
 _T = TypeVar("_T")
 _U = TypeVar("_U")
@@ -29,9 +37,22 @@ _P = ParamSpec("_P")
 
 
 LOGGER_NAME: Literal["GUI"] = "GUI"
+OBJECT_LOGGER_NAME: Literal["OBJ"] = "OBJ"
+SIGNAL_LOGGER_NAME: Literal["SIG"] = "SIG"
+UNDO_LOGGER_NAME: Literal["UNDO"] = "UNDO"
+
 
 log: Logger = getLogger(LOGGER_NAME)
 log.addHandler(NullHandler())
+
+object_log: Logger = getLogger(OBJECT_LOGGER_NAME)
+object_log.addHandler(NullHandler())
+
+signal_log: Logger = getLogger(SIGNAL_LOGGER_NAME)
+signal_log.addHandler(NullHandler())
+
+undo_log: Logger = getLogger(UNDO_LOGGER_NAME)
+undo_log.addHandler(NullHandler())
 
 
 def _remove_garbage(func: Callable[_P, _T]) -> Callable[_P, _T]:
@@ -77,7 +98,9 @@ class _Connection(Generic[_T, _U]):
         if self.condition is None or self.condition(value):
             with SignalBlocker(self.signal_instance):
                 if not self.parent_signal_instance.is_silenced:
-                    log.info(f"{self.signal_instance} is forwarding {value} to {self.parent_signal_instance}")
+                    signal_log.info(
+                        "%s is forwarding %s to %s", self.signal_instance, value, self.parent_signal_instance
+                    )
                 self.parent_signal_instance.emit(
                     value if self.converter is None else self.converter(value)  # type: ignore
                 )
@@ -101,16 +124,25 @@ class _SignalElement(Generic[_T]):
         The method to be called when the signal emits an event.
     is_silenced: bool = False
         If the subscriber should accept the incoming signal.
+    uses_left: int | None = None
+        The amount of uses that a signal can continued to be used for.
     """
 
     uid: int
     subscriber: Callable[[_T], None] | ref
     is_silenced: bool = False
+    uses_left: int | None = field(default=None)
+
+    @uses_left.validator  # type: ignore
+    def _check_uses_left(self, attribute, value) -> None:
+        if value is not None and value < 0:
+            signal_log.warning("%s was provided with a negative value: %s", self, value)
+            warn(RuntimeWarning(f"{self} does not permit {value} to be less than 0."))
 
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}({hex(self.uid)}, {self._get_callable_name(self.subscriber_callable)},"
-            + f" {self.is_silenced})"
+            + f" {self.is_silenced}, {self.uses_left})"
         )
 
     def __str__(self) -> str:
@@ -124,11 +156,13 @@ class _SignalElement(Generic[_T]):
         )
 
     def __call__(self, value: _T) -> None:
+        if self.uses_left:
+            self.uses_left -= 1
         return self.subscriber_callable(value)
 
     @property
     def subscriber_callable(self) -> Callable[[_T], None]:
-        if isinstance(self.subscriber, ref):
+        if isinstance(self.subscriber, (ref, WeakMethod)):
             return self.subscriber()  # type: ignore
         return self.subscriber
 
@@ -233,13 +267,15 @@ class Signal(Generic[_T]):
         if len(instances):
             for element in self.subscribers:
                 if any(id(instance) == element.uid for instance in instances):
-                    log.debug(f"{self.__class__.__name__} removed {element} from {self}")
+                    signal_log.debug("%s removed %s from %s", self.__class__.__name__, element, self)
                 else:
                     subscribers.append(element)
         self.subscribers = subscribers
 
     @_remove_garbage
-    def connect(self, subscriber: Callable[[_T], None], instance: object, weak: bool = True) -> None:
+    def connect(
+        self, subscriber: Callable[[_T], None], instance: object, weak: bool = True, max_uses: int | None = None
+    ) -> None:
         """
         Associates a subscriber to this signal, to be called when this signal receives an action.
 
@@ -251,22 +287,29 @@ class Signal(Generic[_T]):
             The object which is interested in `subscriber`.
         weak : bool, optional
             If the subscriber should automatically be removed when it is no longer required, by default True
+        max_uses : int | None, optional
+            Determines if the subscriber should be removed after a fixed number of uses, by default None or
+            infinite uses are permitted.
 
         Notes:
             For any given object, it can only be connected to a signal once.  This is done with the intention of
-            stopping unknown state, as it is indeterminate which will be called first.  If this is done, the second
-            call will be ignored and a warning will be provided.
+        stopping unknown state, as it is indeterminate which will be called first.  If this is done, the second
+        call will be ignored and a warning will be provided.
         """
         if weak:
-            finalize(subscriber, self._remove_subscriber)  # type: ignore
-            subscriber = ref(subscriber)  # type: ignore
-        element: _SignalElement = _SignalElement(id(instance), subscriber)
+            if isinstance(subscriber, MethodType):
+                finalize(subscriber.__self__, self._remove_subscriber)
+                subscriber = WeakMethod(subscriber)  # type: ignore
+            else:
+                finalize(subscriber, self._remove_subscriber)
+                subscriber = ref(subscriber)  # type: ignore
+        element: _SignalElement = _SignalElement(id(instance), subscriber, uses_left=max_uses)
 
         if element not in self:
-            log.debug(f"{instance.__class__.__name__} adding {element} to {self}")
+            signal_log.debug("%s adding %s to %s", instance.__class__.__name__, element, self)
             self.subscribers.append(element)
         else:
-            log.warning(f"{instance.__class__.__name__} failed to add {element} to {self}")
+            signal_log.warning("%s failed to add %s to %s", instance.__class__.__name__, element, self)
 
     @_remove_garbage
     def disconnect(self, subscriber: Callable[[_T], None], instance: object | None) -> None:
@@ -285,7 +328,7 @@ class Signal(Generic[_T]):
         for idx, sub in enumerate(self.subscribers):
             if sub == element:
                 del self.subscribers[idx]
-                log.debug(f"{self.__class__.__name__} removed {element} from {self}")
+                signal_log.debug("%s removed %s from %s", self.__class__.__name__, element, self)
                 break
 
     @_remove_garbage
@@ -302,8 +345,10 @@ class Signal(Generic[_T]):
         """
         for subscriber in self.subscribers:
             if subscriber.uid == id(instance) and not subscriber.is_silenced:
-                log.debug(f"{self.name} notifying {subscriber} of {value}")
+                signal_log.debug("%s notifying %s of %s", self.name, subscriber, value)
                 subscriber(value)
+                if subscriber.uses_left is not None and not subscriber.uses_left:
+                    self._remove_subscriber()
 
     @_remove_garbage
     def is_silenced(self, instance: object) -> bool:
@@ -334,13 +379,13 @@ class Signal(Generic[_T]):
         is_silenced : bool
             The new silence status to be set.
         """
-        if DEBUG >= log.level:
+        if DEBUG >= signal_log.level:
             _prior_silenced = self.is_silenced(instance)
         for idx, sub in enumerate(self.subscribers):
             if sub.uid == id(instance):
                 self.subscribers[idx].is_silenced = is_silenced
-        if DEBUG >= log.level and _prior_silenced != is_silenced:  # type: ignore
-            log.debug(f"{instance}::{self.name} {'silenced' if is_silenced else 'unsilenced'}")
+        if DEBUG >= signal_log.level and _prior_silenced != is_silenced:  # type: ignore
+            signal_log.debug(f"{instance}::{self.name} {'silenced' if is_silenced else 'unsilenced'}")
 
     def _remove_garbage_subscribers(self) -> None:
         """
@@ -349,14 +394,17 @@ class Signal(Generic[_T]):
         if self._dead_subscribers:
             self._dead_subscribers = False
             self.subscribers = [
-                r for r in self.subscribers if not (isinstance(r.subscriber, ReferenceType) and r.subscriber() is None)
+                r
+                for r in self.subscribers
+                if (not isinstance(r.subscriber, ReferenceType) or r.subscriber() is not None)
+                and (r.uses_left is None or r.uses_left)
             ]
 
     def _remove_subscriber(self) -> None:
         """
         Notifies the signal that subscribers need to be cleaned before any action is taken.
         """
-        log.debug(f"{self.name} queued garbage collection")
+        signal_log.debug("%s queued garbage collection", self.name)
         self._dead_subscribers = True
 
 
@@ -387,6 +435,11 @@ class SignalInstance(Generic[_T]):
     instance: object
     signal: Signal[_T]
 
+    def __attrs_post_init__(self) -> None:
+        if DEBUG >= signal_log.level and not isinstance(self.signal, Signal):
+            signal_log.warning("%s was initialized with a %s, not a Signal", self, type(self.signal))
+            warn(RuntimeWarning(f"{self.signal} is not a Signal"))
+
     def __str__(self) -> str:
         if self.signal.name is None:
             for name in dir(self.instance):
@@ -394,7 +447,7 @@ class SignalInstance(Generic[_T]):
                     self.signal.name = name
                     break
             else:
-                log.warning(f"{self.__class__.__name__} could not find {self.signal} in {self.instance}")
+                signal_log.warning("%s could not find %s in %s", self.__class__.__name__, self.signal, self.instance)
                 return repr(self)
         return f"{self.instance}::{self.signal.name}"
 
@@ -450,8 +503,8 @@ class SignalInstance(Generic[_T]):
     def link(
         self,
         signal_instance: SignalInstance[_U],
-        converter: Callable[[_T], _U],
-        condition: Callable[[_T], bool] | None = None,
+        converter: Callable[[_U], _T],
+        condition: Callable[[_U], bool] | None = None,
     ) -> None:
         ...
 
@@ -476,12 +529,12 @@ class SignalInstance(Generic[_T]):
             signal instance , by default None
         """
         if not isinstance(signal_instance, SignalInstance):
-            log.warning(f"{self} can only link {self.__class__.__name__}, not {signal_instance}")
+            signal_log.warning("%s can only link %s, not %s", self, self.__class__.__name__, signal_instance)
         connection: _Connection[_T, _U] = _Connection(self, signal_instance, converter, condition)
-        log.info(f"{self} linking {connection}")
+        signal_log.info("%s linking %s", self, connection)
         signal_instance.connect(connection, False)
 
-    def connect(self, subscriber: Callable[[_T], None], weak: bool = True) -> None:
+    def connect(self, subscriber: Callable[[_T], None], weak: bool = True, max_uses: int | None = None) -> None:
         """
         Associates a subscriber to this signal, to be called when this signal instance receives an action.
 
@@ -491,9 +544,12 @@ class SignalInstance(Generic[_T]):
             The subscriber, which takes the result of the action from this signal instance.
         weak : bool, optional
             If the subscriber should automatically be removed when it is no longer required, by default True
+        max_uses : int | None, optional
+            Determines if the subscriber should be removed after a fixed number of uses, by default None or
+            infinite uses are permitted.
         """
-        log.debug(f"{self} adding {_SignalElement._get_callable_name(subscriber)}")
-        self.signal.connect(subscriber, self.instance, weak)
+        signal_log.debug("%s adding %s", self, _SignalElement._get_callable_name(subscriber))
+        self.signal.connect(subscriber, self.instance, weak, max_uses)
 
     def disconnect(self, subscriber: Callable[[_T], None]) -> None:
         """
@@ -504,7 +560,7 @@ class SignalInstance(Generic[_T]):
         subscriber : Callable[[_T], None]
             The subscriber, which took the result of the action from this signal instance.
         """
-        log.info(f"{self} removing {_SignalElement._get_callable_name(subscriber)}")
+        signal_log.info("%s removing %s", self, _SignalElement._get_callable_name(subscriber))
         self.signal.disconnect(subscriber, self.instance)
 
     def emit(self, value: _T) -> None:
@@ -517,7 +573,7 @@ class SignalInstance(Generic[_T]):
             The result of an action taken.
         """
         if not self.is_silenced:
-            log.info(f"{self} emitting {value} to <{', '.join(str(v) for v in iter(self))}>")
+            signal_log.info("%s emitting %s to <%s>", self, value, ", ".join(str(v) for v in iter(self)))
             self.signal.emit(value, self.instance)
 
     def silence(self, silence: bool) -> None:
@@ -587,7 +643,7 @@ class SignalBlocker:
         return f"{self.__class__.__name__}{self._signal_names()}"
 
     def __enter__(self):
-        log.debug(f"{self.__class__.__name__} blocking {self._signal_names()}")
+        signal_log.debug("%s blocking %s", self.__class__.__name__, self._signal_names())
         if isinstance(self.signal, SignalInstance):
             self._silenced = self.signal.is_silenced
             self.signal.silence(True)
@@ -598,7 +654,7 @@ class SignalBlocker:
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
-        log.debug(f"{self.__class__.__name__} stop blocking {self._signal_names()}")
+        signal_log.debug("%s stop blocking %s", self.__class__.__name__, self._signal_names())
         if isinstance(self.signal, Sequence):
             for signal, silenced in zip(self.signal, self._silenced):  # type: ignore
                 signal.silence(silenced)
@@ -626,6 +682,8 @@ class Action(Generic[_T]):
         The action required to undo `action`.
     name: str
         A name, purely for easier debugging.
+    peak_: _T | None
+        A suggestion of what the actual will look like.
     """
 
     actor: UndoRedoActor | None
@@ -633,7 +691,14 @@ class Action(Generic[_T]):
     reverse_action: Callable[[], _T]
     name: str = ""
 
+    def __attrs_post_init__(self) -> None:
+        if DEBUG >= log.level and self.action() == self.reverse_action():
+            undo_log.warning("%s will result in no change from %s -> %s.", self, self.action(), self.reverse_action())
+            warn(RuntimeWarning("Action and reverse action violate invariant"))
+
     def __str__(self) -> str:
+        if DEBUG >= log.level:
+            return f"{self.action()}, {self.reverse_action()}"
         return self.name or self.action.__name__
 
     def __eq__(self, other) -> bool:
@@ -653,6 +718,7 @@ class _Object(Generic[_T]):
         child: Object
             The child to be linked into the system.
         """
+        object_log.debug("%s linked child to %s", self, child)
 
     def initialize_state(self, model: _T, *args, **kwargs) -> None:
         """
@@ -663,6 +729,7 @@ class _Object(Generic[_T]):
         model : _T
             The initial state of the system.
         """
+        object_log.debug("%s initialized with %s", self, model)
 
     def change_state(self, model: _T) -> None:
         """
@@ -673,9 +740,10 @@ class _Object(Generic[_T]):
         model : _T
             The new model that this instance must change_state to represent.
         """
+        object_log.info("%s changed state to %s", self, model)
 
 
-@attrs(slots=True, auto_attribs=True)
+@attrs(auto_attribs=True)
 class UndoRedo(Generic[_T]):
     """
     The concrete implementation of undoing and redoing actions.
@@ -695,9 +763,15 @@ class UndoRedo(Generic[_T]):
         A sequence of undone actions, which can be reapplied.
     """
 
+    slots = ("model", "undo_stack", "redo_stack", "_current_model")
+
     model: _T
     undo_stack: deque[Action[_T]] = Factory(lambda: deque(maxlen=1000000000))
     redo_stack: deque[Action[_T]] = Factory(deque)
+
+    def __attrs_post_init__(self) -> None:
+        if DEBUG >= log.level:
+            self._current_model = self.model
 
     def __str__(self) -> str:
         return (
@@ -717,7 +791,23 @@ class UndoRedo(Generic[_T]):
         """
         self.undo_stack.append(action)
         self.redo_stack.clear()
-        log.debug(f"{self.__class__.__name__}<{self.model}> has done {action}")
+        if DEBUG >= log.level:
+            undo_log.debug("%s<%s> has done %s", self.__class__.__name__, self.model, action)
+
+            if self._current_model != action.reverse_action():
+                undo_log.warning(
+                    "Reverse action %s will not put %s into prior state %s",
+                    action.reverse_action(),
+                    self,
+                    self._current_model,
+                )
+                warn(
+                    RuntimeWarning(
+                        f"Reverse action violates invariant: "
+                        f"<{self._current_model} != {action.reverse_action()} -> {action.action()}>"
+                    )
+                )
+            self._current_model = action.action()
 
     @property
     def can_undo(self) -> bool:
@@ -742,7 +832,9 @@ class UndoRedo(Generic[_T]):
         """
         action: Action[_T] = self.undo_stack.pop()
         self.redo_stack.append(action)
-        log.debug(f"{self.__class__.__name__}<{self.model}> has undone {action}")
+        if DEBUG >= log.level:
+            undo_log.debug("%s<%s> has undone %s", self.__class__.__name__, self.model, action)
+            self._current_model = action.reverse_action()
         return action.reverse_action
 
     @property
@@ -768,7 +860,9 @@ class UndoRedo(Generic[_T]):
         """
         action: Action[_T] = self.redo_stack.pop()
         self.undo_stack.append(action)
-        log.debug(f"{self.__class__.__name__}<{self.model}> has redone {action}")
+        if DEBUG >= log.level:
+            undo_log.debug("%s<%s> has redone %s", self.__class__.__name__, self.model, action)
+            self._current_model = action.action()
         return action.action
 
 
@@ -834,13 +928,13 @@ class UndoRedoActor(_Object[_T]):
             This instance's action, which composed the child's action.
         """
         if action.actor is None:
-            log.error(f"{self} cannot determine actor of {action}")
+            undo_log.error("%s cannot determine actor of %s", self, action)
             raise ValueError(f"Cannot determine actor of {action}")
         attribute_name: str = self.get_child_attribute(action.actor)
         return Action(
             self,
-            lambda: evolve(self._model, **{attribute_name: action.action()}),
-            lambda: evolve(self._model, **{attribute_name: action.reverse_action()}),
+            action=partial(evolve, self.model, **{attribute_name: action.action()}),  # type: ignore
+            reverse_action=partial(evolve, self.model, **{attribute_name: action.reverse_action()}),  # type: ignore
         )
 
 
@@ -864,6 +958,8 @@ class UndoRedoForwarder(UndoRedoActor[_T]):
 
     @property
     def action_performed(self) -> SignalInstance[Action[_T]]:
+        if isinstance(self._action_performed, SignalInstance):
+            return self._action_performed
         return SignalInstance(self, self._action_performed)
 
     def link_child(self, child: UndoRedoForwarder) -> None:
@@ -888,14 +984,16 @@ class UndoRedoForwarder(UndoRedoActor[_T]):
             The model to be applied.
         """
         try:
-            self.do(model, self._model_prior)
+            self.do(model_after=model, model_prior=self._model_prior)
+            undo_log.debug("%s changing state from %s to %s", self.__class__.__name__, self._model_prior, model)
         except AttributeError:
-            log.warning(f"{self} does not define a prior model")
-            self.do(model, None)  # type: ignore
+            undo_log.warning("%s does not define a prior model", self)
+            undo_log.debug("%s changing state to %s", self.__class__.__name__, model)
+            self.do(model_after=model, model_prior=None)  # type: ignore
         super().change_state(model)
 
     @final
-    def do(self, model_prior: _T, model_after: _T) -> None:
+    def do(self, model_prior: _T, model_after: _T, name: str = "change_state") -> None:
         """
         Emits that an action has been performed.
 
@@ -905,11 +1003,21 @@ class UndoRedoForwarder(UndoRedoActor[_T]):
             The prior state of the model.
         model_after : _T
             The new state of the model.
+        name: str
+            The name of the action taken place, default 'change_state'.
         """
-        self.action_performed.emit(Action(self, lambda: model_after, lambda: model_prior, "change_state"))
+
+        def action() -> _T:
+            return model_after
+
+        def reverse_action() -> _T:
+            return model_prior
+
+        self.action_performed.emit(Action(self, action=action, reverse_action=reverse_action, name=name))
+        undo_log.debug("%s did action: %s -> %s (%s)", self.__class__.__name__, model_prior, model_after, name)
 
     @final
-    def forward_action(self, action: Action) -> None:
+    def forward_action(self, action: Action[_T]) -> None:
         """
         Forwards a child's action.
 
@@ -918,10 +1026,176 @@ class UndoRedoForwarder(UndoRedoActor[_T]):
         action : Action
             The child's action to be forwarded.
         """
-        self.action_performed.emit(self.compose_child_action(action))
+        try:
+            composed_action: Action[_T] = self.compose_child_action(action)
+            self.action_performed.emit(composed_action)
+            undo_log.debug("%s forwarded action %s", self, composed_action)
+        except ValueError as e:
+            warn(f"{self} failed to compose {action} resulting in {e}")
 
 
-class UndoRedoRoot(UndoRedoActor[_T]):
+class UndoRedoHelper(UndoRedoActor[_T]):
+    __undo_redo__: UndoRedo[_T]
+
+    def initialize_state(self, model: _T, undo_redo: UndoRedo[_T] | None = None, *args, **kwargs) -> None:
+        """
+        Required actions for an undo and redo controller on initialize_state up.
+
+        Notes
+        -----
+        This does not use __init__ to be compatible with `Object`.
+        """
+        super().initialize_state(model, *args, **kwargs)
+        self._setup_undo_redo(undo_redo)
+
+    @final
+    def _setup_undo_redo(self, undo_redo: UndoRedo[_T] | None = None) -> None:
+        """
+        Creates an internal undo and redo controller.
+
+        Parameters
+        ----------
+        undo_redo : UndoRedo[_T] | None, optional
+            The internal undo and redo controller to be used, by default None
+        """
+        self.__undo_redo__ = UndoRedo(self.model) if undo_redo is None else undo_redo  # type: ignore
+
+    @property
+    @final
+    def can_undo(self) -> bool:
+        """
+        If `model` composed with `undo_stack` is equal to `model`.
+
+        Returns
+        -------
+        bool
+            If any actions exist that can be undone.
+        """
+        return self.__undo_redo__.can_undo
+
+    @property
+    def peak_undo(self) -> _T | None:
+        """
+        Attempts to get the model that would incur if an undo was taken.
+
+        Returns
+        -------
+        _T | None
+            The model that would incur if an undo would take place, if one exists.
+        """
+        if not self.can_undo:
+            return None
+        peaked_value = self.__undo_redo__.undo_stack[-1].reverse_action()
+        undo_log.debug("%s peaked undo -> %s", self, peaked_value)
+        return peaked_value
+
+    @property
+    @final
+    def can_redo(self) -> bool:
+        """
+        If there exists any actions that have been undone.
+
+        Returns
+        -------
+        bool
+            If any actions exist that can be redone.
+        """
+        return self.__undo_redo__.can_redo
+
+    @property
+    def peak_redo(self) -> _T | None:
+        """
+        Attempts to get the model that would incur if an redo was taken.
+
+        Returns
+        -------
+        _T | None
+            The model that would incur if an redo would take place, if one exists.
+        """
+        if not self.can_redo:
+            return None
+        peaked_value = self.__undo_redo__.redo_stack[-1].action()
+        undo_log.debug("%s peaked redo -> %s", self, peaked_value)
+        return peaked_value
+
+
+class UndoRedoExtendedForwarder(UndoRedoHelper[_T], UndoRedoForwarder[_T]):
+    _did_action: Signal[Action[_T]] = Signal(name="did_action")
+
+    @property
+    def did_action(self) -> SignalInstance[Action[_T]]:
+        if isinstance(self._did_action, SignalInstance):
+            return self._did_action
+        return SignalInstance(self, self._did_action)
+
+    def initialize_state(self, model: _T, *args, **kwargs) -> None:
+        """
+        Required actions for an undo and redo controller on initialize_state up.
+
+        Notes
+        -----
+        This does not use __init__ to be compatible with `Object`.
+        """
+        super().initialize_state(model, *args, **kwargs)
+        self.did_action.link(self.action_performed)
+        self.did_action.connect(self.__undo_redo__.do)
+
+    @final
+    def undo(self) -> None:
+        """
+        Undoes the last action.
+
+        Returns
+        -------
+        Callable[[], _T]
+            The required action to be performed.
+        """
+        with SignalBlocker(self.did_action):
+            prior = self.model
+            self.model = self.__undo_redo__.undo()()  # type: ignore
+            try:
+                undo_log.info("%s has undone %s -> %s", self, self.__undo_redo__.redo_stack[-1], self.model)
+            except IndexError:
+                undo_log.info("%s has undone -> %s", self, self.model)
+            if prior == self.model:
+                undo_log.warning(
+                    "%s undo has not resulted in a difference in model for %s, %s -> %s",
+                    self.__undo_redo__.redo_stack[-1],
+                    self,
+                    prior,
+                    self.model,
+                )
+                warn(RuntimeWarning("Undo did not change the state of the model"))
+
+    @final
+    def redo(self) -> None:
+        """
+        Redoes the last action.
+
+        Returns
+        -------
+        Callable[[], _T]
+            The required action to be performed.
+        """
+        with SignalBlocker(self.did_action):
+            prior = self.model
+            self.model = self.__undo_redo__.redo()()  # type: ignore
+            try:
+                undo_log.info("%s has undone %s -> %s", self, self.__undo_redo__.undo_stack[-1], self.model)
+            except IndexError:
+                undo_log.info("%s has redone -> %s", self, self.model)
+            if prior == self.model:
+                undo_log.warning(
+                    "%s redo has not resulted in a difference in model for %s, %s -> %s",
+                    self.__undo_redo__.undo_stack[-1],
+                    self,
+                    prior,
+                    self.model,
+                )
+                warn(RuntimeWarning("Redo did not change the state of the model"))
+
+
+class UndoRedoRoot(UndoRedoHelper[_T], UndoRedoActor[_T]):
     """
     An object inside an undo and redo system which manages their own undo and redo stack.
 
@@ -937,6 +1211,7 @@ class UndoRedoRoot(UndoRedoActor[_T]):
     """
 
     __undo_redo__: UndoRedo[_T]
+    _undo_redo_lock: bool
 
     def initialize_state(self, model: _T, *args, **kwargs) -> None:
         """
@@ -946,8 +1221,9 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         -----
         This does not use __init__ to be compatible with `Object`.
         """
-        self._setup_undo_redo()
+        self._undo_redo_lock = False
         super().initialize_state(model, *args, **kwargs)
+        self._undo_redo_lock = True
 
     def change_state(self, model: _T) -> None:
         """
@@ -958,24 +1234,21 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         model : _T
             The model to be applied.
         """
+        if self._model_prior == model:
+            return
+        model_prior = self._model_prior
+
+        def action(m) -> _T:
+            return m
+
         try:
-            self.do(Action(self, lambda: model, lambda: self._model_prior))
+            undo_log.debug("%s changing state from %s to %s", self.__class__.__name__, self._model_prior, model)
+            self.do(Action(self, action=partial(action, model), reverse_action=partial(action, model_prior)))
         except AttributeError:
-            log.warning(f"{self} does not define a prior model")
-            self.do(Action(self, lambda: model, lambda: None))  # type: ignore
+            undo_log.warning("%s does not define a prior model", self)
+            undo_log.debug("%s changing state to %s", self.__class__.__name__, model)
+            self.do(Action(self, action=partial(action, model), reverse_action=partial(action, None)))
         super().change_state(model)
-
-    @final
-    def _setup_undo_redo(self, undo_redo: UndoRedo[_T] | None = None) -> None:
-        """
-        Creates an internal undo and redo controller.
-
-        Parameters
-        ----------
-        undo_redo : UndoRedo[_T] | None, optional
-            The internal undo and redo controller to be used, by default None
-        """
-        self.__undo_redo__ = UndoRedo(self.model) if undo_redo is None else undo_redo
 
     def link_child(self, child: UndoRedoForwarder) -> None:
         """
@@ -999,7 +1272,13 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         action : Action
             The action performed.
         """
-        self.do(self.compose_child_action(action))
+        if not self._undo_redo_lock:
+            return
+
+        try:
+            self.do(self.compose_child_action(action))
+        except ValueError as e:
+            warn(f"{self} failed to compose {action} resulting in {e}")
 
     @final
     def do(self, action: Action[_T], *, apply_action: bool = False) -> None:
@@ -1013,26 +1292,17 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         apply_action: bool = False
             If the action should be applied to the model.
         """
-        self.__undo_redo__.do(action)
-        if apply_action:
-            prior = self.model
-            self.model = action.action()
-            log.info(f"{self} has done {action}: {prior} -> {self.model}")
-            if prior == self.model:
-                log.warning(f"{action} has not resulted in a difference in model for {self}, {self.model}")
-
-    @property
-    @final
-    def can_undo(self) -> bool:
-        """
-        If `model` composed with `undo_stack` is equal to `model`.
-
-        Returns
-        -------
-        bool
-            If any actions exist that can be undone.
-        """
-        return self.__undo_redo__.can_undo
+        if self._undo_redo_lock:
+            self.__undo_redo__.do(action)
+            if apply_action:
+                prior = self.model
+                self.model = action.action()
+                undo_log.info("%s has done %s: %s -> %s", self, action, prior, self.model)
+                if prior == self.model:
+                    undo_log.warning(
+                        "%s has not resulted in a difference in model for %s, %s", action, self, self.model
+                    )
+                    warn(RuntimeWarning("Did the same action twice"))
 
     @final
     def undo(self) -> None:
@@ -1044,27 +1314,20 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         Callable[[], _T]
             The required action to be performed.
         """
+        self._undo_redo_lock = False
         prior = self.model
         self.model = self.__undo_redo__.undo()()  # type: ignore
-        log.info(f"{self} has undone {self.__undo_redo__.redo_stack[-1]} -> {self.model}")
+        try:
+            undo_log.info("%s has undone %s -> %s", self, self.__undo_redo__.redo_stack[-1], self.model)
+        except IndexError:
+            undo_log.info("%s has undone -> %s", self, self.model)
         if prior == self.model:
             log.warning(
                 f"{self.__undo_redo__.redo_stack[-1]} undo has not resulted in a difference in model for {self}, "
                 + f"{prior} -> {self.model}"
             )
-
-    @property
-    @final
-    def can_redo(self) -> bool:
-        """
-        If there exists any actions that have been undone.
-
-        Returns
-        -------
-        bool
-            If any actions exist that can be redone.
-        """
-        return self.__undo_redo__.can_redo
+            warn(RuntimeWarning("Undo did not change the state of the model"))
+        self._undo_redo_lock = True
 
     @final
     def redo(self) -> None:
@@ -1076,14 +1339,20 @@ class UndoRedoRoot(UndoRedoActor[_T]):
         Callable[[], _T]
             The required action to be performed.
         """
+        self._undo_redo_lock = False
         prior = self.model
         self.model = self.__undo_redo__.redo()()  # type: ignore
-        log.info(f"{self} has undone {self.__undo_redo__.undo_stack[-1]} -> {self.model}")
+        try:
+            log.info(f"{self} has undone {self.__undo_redo__.undo_stack[-1]} -> {self.model}")
+        except IndexError:
+            log.info(f"{self} has redone -> {self.model}")
         if prior == self.model:
             log.warning(
                 f"{self.__undo_redo__.undo_stack[-1]} redo has not resulted in a difference in model for {self}, "
                 + f"{prior} -> {self.model}"
             )
+            warn(RuntimeWarning("Redo did not change the state of the model"))
+        self._undo_redo_lock = True
 
 
 class ConnectionError(ValueError):
@@ -1115,12 +1384,15 @@ class _SignalAttribute(Generic[_T]):
     def get_signal_instance(self, instance) -> SignalInstance[_T]:
         signal = getattr(instance, self.signal_attribute)
         if not isinstance(signal, SignalInstance):
-            log.warning(f"{self}::{signal} should be a signal instance")
+            signal_log.warning(f"{self}::{signal} should be a signal instance")
+            warn(f"{signal} is not a signal instance")
         return signal
 
     def emit(self, instance) -> None:
         signal: SignalInstance = self.get_signal_instance(instance)
-        signal.emit(self.get_attribute(instance))
+        attribute = self.get_attribute(instance)
+        signal.emit(attribute)
+        object_log.debug("%s emitted %s as %s", signal, self.attribute, attribute)
 
     @classmethod
     def from_attribute(cls, attribute: str):
@@ -1169,29 +1441,30 @@ class EmittingProperty(Generic[_T]):
         if instance is None:
             return self
         elif self.fget is None:
-            log.error(f"{self} was attempted to be read")
+            signal_log.error(f"{self} was attempted to be read")
             raise AttributeError(f"Cannot read attribute {self.name}")
         return self.fget(instance)
 
     def __set__(self, instance: Object, value: _T) -> None:
         if self.fset is None:
-            log.error(f"{self} was attempted to be set")
+            signal_log.error(f"{self} was attempted to be set")
             raise AttributeError(f"Cannot set attribute {self.name}")
         self._fset(instance, value)
 
     def emit(self, instance: Object) -> None:
         if self.name is None:
-            log.error(f"{self} did not define a name")
+            signal_log.error(f"{self} did not define a name")
             raise TypeError("Name is None")
         _SignalAttribute.from_attribute(self.name).emit(instance)
 
     def _fset(self, instance: Object, value: _T) -> None:
         assert self.fset is not None
         if self.name is None:
-            log.error(f"{self} did not define a name")
+            signal_log.error(f"{self} did not define a name")
             raise TypeError("Name is None")
         with instance.signal_blocker:
             self.fset(instance, value)
+        object_log.debug("%s set %s to %s", instance, self.name, value)
         instance.updated.emit(instance.model)
         self.emit(instance)
 
@@ -1227,13 +1500,18 @@ def _getter(name: str):
 
 def _setter(name: str, signal_attributes: Sequence[_SignalAttribute] = []):
     def _setter(self: Object, value) -> None:
-        log.debug(f"{self}::{name} -> {value}")
+        object_log.debug(f"{self}::{name} -> {value}")
+        prior_value = getattr(getattr(self, "_model"), name, None)
         setattr(self, "model", evolve(getattr(self, "_model"), **{name: value}))
+        if DEBUG >= object_log.level and prior_value == getattr(getattr(self, "_model"), name):
+            object_log.warning("%s did not change %s from %s to %s", self, name, prior_value, value)
+            warn(RuntimeWarning("Did not set value"))
 
         for signal_attribute in signal_attributes:
             signal = signal_attribute.get_signal_instance(self)
             if not isinstance(signal, SignalInstance):
-                log.warning(f"{self}::{signal} should be a signal instance")
+                signal_log.warning(f"{self}::{signal} should be a signal instance")
+                warn(f"{signal} is not a signal instance")
             signal.emit(signal_attribute.get_attribute(self))
 
     return _setter
@@ -1285,13 +1563,20 @@ class ObjectMeta(type(QObject)):
         user_defined_signals: set[str] = set()
         object_bases: list[ObjectMeta] = [base for base in bases if isinstance(base, cls)]
         for object_base in object_bases:
-            for ann_name, annotation in get_type_hints(object_base).items():
-                ann_type = getattr(annotation, "__origin__", None)
-                if isinstance(ann_type, type) and issubclass(ann_type, SignalInstance):
-                    user_defined_signals.add(ann_name)
+            try:
+                for ann_name, annotation in get_type_hints(object_base, localns=locals(), globalns=globals()).items():
+                    ann_type = getattr(annotation, "__origin__", None)
+                    if isinstance(ann_type, type) and issubclass(ann_type, SignalInstance):
+                        user_defined_signals.add(ann_name)
+            except NameError:
+                user_defined_signals |= set(object_base.__user_defined_signals__)
 
         for ann_name, annotation in attrs.get("__annotations__", {}).items():
             ann_type = getattr(annotation, "__origin__", None)
+            with suppress(AttributeError):
+                if ann_type is None and annotation.startswith("SignalInstance"):
+                    # Some type hints annotations won't evaluate properly, so we cheat.
+                    user_defined_signals.add(ann_name)
             if isinstance(ann_type, type) and issubclass(ann_type, SignalInstance):
                 user_defined_signals.add(ann_name)
 
@@ -1313,7 +1598,7 @@ class ObjectMeta(type(QObject)):
 
         # Fields that are defined inside the model provide private signals.
         private_defined_signals: list[str] = (
-            [f"_{a}_updated" for a in get_annotations(Model_).keys()] if Model_.setup_signals else []  # type: ignore
+            [f"_{a}_updated" for a in get_annotations(Model_).keys()] if getattr(Model_, "setup_signals", True) else []
         )
 
         # We allow for properties to also emit signals.  This is to simplify logic of composing child types.
@@ -1340,6 +1625,9 @@ class ObjectMeta(type(QObject)):
             attrs |= {signal_name: signal}
             attrs["__signals__"].append(signal)
 
+        # We store the user defined signals
+        attrs |= {"__user_defined_signals__": user_defined_signals}
+
         # We forward_action all attributes from the model as descriptors into the object.
         # This is so the user can modify the model and for it to retain a valid state.
         # We also allow for the model to not set up signals.  If the model does not want signals, the setter
@@ -1349,7 +1637,7 @@ class ObjectMeta(type(QObject)):
             if ann_name in attrs and isinstance(attrs[ann_name], Signal):
                 log.warn(f"{name} cannot create property for {ann_name} due to signal naming conflicts")
             if ann_name not in attrs:
-                if Model_.setup_signals:
+                if getattr(Model_, "setup_signals", True):
                     attrs[ann_name] = property(
                         _getter(ann_name), _setter(ann_name, [_SignalAttribute(ann_name, f"_{ann_name}_updated")])
                     )
@@ -1392,11 +1680,11 @@ class Object(_Object, metaclass=ObjectMeta):
         self._parent = parent
         self._model = model
         self._setup_listeners__()
-        self.initialize_state(model, *args, **kwargs)
         try:
             super().__init__(parent)  # type: ignore
         except TypeError:
             super().__init__()
+        self.initialize_state(model, *args, **kwargs)
 
     def __repr__(self) -> str:
         if self._parent is not None:
@@ -1420,7 +1708,7 @@ class Object(_Object, metaclass=ObjectMeta):
 
             listener_signal: SignalInstance = getattr(self, f"_{listener_name}_updated")
             if listener_signal is None:
-                log.critical(f"{self.__class__.__name__} could not find {listener_signal}")
+                object_log.critical("%s could not find %s", self.__class__.__name__, listener_signal)
                 raise AttributeError(f"{self} has no attribute '{listener_signal}'")
             for emitter_attr in emitter_names:
                 # two-way connection
@@ -1472,6 +1760,10 @@ class Object(_Object, metaclass=ObjectMeta):
     @model.setter
     @final
     def model(self, value: BaseModel) -> None:
+        object_log.debug("%s changing model to %s", self, value)
+        if self._model == value:
+            object_log.debug("%s detected duplicate model and did not change from %s to %s", self, self._model, value)
+            return  # Don't do anything if nothing changed.
         self._model_prior = self.model
         with self.signal_blocker:
             self._model = value
@@ -1510,13 +1802,481 @@ class Object(_Object, metaclass=ObjectMeta):
         signal.connect(forward_value)
 
 
-class Widget(UndoRedoForwarder, Object, QWidget):
-    pass
+class Orientation(int, Enum):
+    HORIZONTAL = 0x01
+    VERTICAL = 0x02
+
+    @classmethod
+    def from_qt(cls, key: int):
+        return cls(key)
 
 
-class MainWindow(UndoRedoRoot, Object, QMainWindow):
-    pass
+class Focus(int, Enum):
+    NONE = 0x00
+    TAB = 0x01
+    CLICK = 0x02
+    ACTIVE_WINDOW = 0x03
+    POPUP = 0x04
+    SHORTCUT = 0x05
+    MENU_BAR = 0x06
+    OTHER = 0x07
+    STRONG = 0x0B
+    WHEEL = 0x0F
+
+    @classmethod
+    def from_qt(cls, focus: int):
+        return cls(focus)
 
 
-class Dialog(UndoRedoRoot, Object, QDialog):
-    pass
+class Key(int, Enum):
+    SPACE = 0x20
+    EXCLAMATION_MARK = 0x21
+    DOUBLE_QUITE = 0x22
+    HASHTAG = 0x23
+    DOLLAR = 0x24
+    PERCENT = 0x25
+    AMPERSAND = 0x26
+    APOSTROPHE = 0x27
+    LEFT_PARENTHESES = 0x28
+    RIGHT_PARENTHESES = 0x29
+    ASTERISK = 0x2A
+    PLUS = 0x2B
+    COMMA = 0x2C
+    MINUS = 0x2D
+    PERIOD = 0x2E
+    SLASH = 0x2F
+    NUMBER_0 = 0x30
+    NUMBER_1 = 0x31
+    NUMBER_2 = 0x32
+    NUMBER_3 = 0x33
+    NUMBER_4 = 0x34
+    NUMBER_5 = 0x35
+    NUMBER_6 = 0x36
+    NUMBER_7 = 0x37
+    NUMBER_8 = 0x38
+    NUMBER_9 = 0x39
+    COLON = 0x3A
+    SEMICOLON = 0x3B
+    LESS_THAN = 0x3C
+    EQUAL = 0x3D
+    GREATER_THAN = 0x3E
+    QUESTION_MARK0 = 0x3F
+    AT = 0x40
+    A = 0x41  # noqa: E741
+    B = 0x42  # noqa: E741
+    C = 0x43  # noqa: E741
+    D = 0x44  # noqa: E741
+    E = 0x45  # noqa: E741
+    F = 0x46  # noqa: E741
+    G = 0x47  # noqa: E741
+    H = 0x48  # noqa: E741
+    I = 0x49  # noqa: E741
+    J = 0x4A  # noqa: E741
+    K = 0x4B  # noqa: E741
+    L = 0x4C  # noqa: E741
+    M = 0x4D  # noqa: E741
+    N = 0x4E  # noqa: E741
+    O = 0x4F  # noqa: E741
+    P = 0x50  # noqa: E741
+    Q = 0x51  # noqa: E741
+    R = 0x52  # noqa: E741
+    S = 0x53  # noqa: E741
+    T = 0x54  # noqa: E741
+    U = 0x55  # noqa: E741
+    V = 0x56  # noqa: E741
+    W = 0x57  # noqa: E741
+    X = 0x58  # noqa: E741
+    Y = 0x59  # noqa: E741
+    Z = 0x5A  # noqa: E741
+    LEFT_BRACKET = 0x5B
+    BACK_SLASH = 0x5C
+    RIGHT_BRACKET = 0x5D
+    CARROT = 0x5E
+    UNDERSCORE = 0x5F
+    LEFT_QUOTE = 0x60
+    LEFT_BRACE = 0x7B
+    BAR = 0x7C
+    RIGHT_BRACE = 0x7D
+    TILDE = 0x7E
+    ESCAPE = 0x1000000
+    TAB = 0x100001
+    BACK_TAB = 0x1000002
+    BACK_SPACE = 0x1000003
+    RETURN = 0x1000004
+    ENTER = 0x1000005
+    INSERT = 0x1000006
+    DELETE = 0x1000007
+    PAUSE = 0x1000008
+    PRINT = 0x1000009
+    SYSTEM_REQUEST = 0x100000A
+    CLEAR = 0x100000B
+    HOME = 0x1000010
+    END = 0x1000011
+    LEFT = 0x1000012
+    UP = 0x1000013
+    RIGHT = 0x1000014
+    DOWN = 0x1000015
+    PAGE_UP = 0x1000016
+    PAGE_DOWN = 0x1000017
+    SHIFT = 0x1000020
+    CONTROL = 0x1000021
+    META = 0x1000022
+    ALT = 0x1000023
+    CAPS_LOCK = 0x1000024
+    NUMS_LOCK = 0x1000025
+    SCROLL_LOCK = 0x1000026
+    F1 = 0x1000030
+    F2 = 0x1000031
+    F3 = 0x1000032
+    F4 = 0x1000033
+    F5 = 0x1000034
+    F6 = 0x1000035
+    F7 = 0x1000036
+    F8 = 0x1000037
+    F9 = 0x1000038
+    F10 = 0x1000039
+    F11 = 0x100003A
+    F12 = 0x100003B
+    F13 = 0x100003C
+    F14 = 0x100003D
+    F15 = 0x100003E
+    F16 = 0x100003F
+    F17 = 0x1000040
+    F18 = 0x1000041
+    F19 = 0x1000042
+    F20 = 0x1000043
+    F21 = 0x1000044
+    F22 = 0x1000045
+    F23 = 0x1000046
+    F24 = 0x1000047
+    F25 = 0x1000048
+    F26 = 0x1000049
+    F27 = 0x100004A
+    F28 = 0x100004B
+    F29 = 0x100004C
+    F30 = 0x100004D
+    F31 = 0x100004E
+    F32 = 0x100004F
+    F33 = 0x1000050
+    F34 = 0x1000051
+    F35 = 0x1000052
+
+    @classmethod
+    def from_qt(cls, key: int):
+        return cls(key)
+
+
+class Click(Enum):
+    LEFT_CLICK = auto()
+    RIGHT_CLICK = auto()
+    MIDDLE_CLICK = auto()
+    BACK_CLICK = auto()
+    FORWARD_CLICK = auto()
+    EXTRA_CLICK_0 = auto()
+    EXTRA_CLICK_1 = auto()
+    EXTRA_CLICK_2 = auto()
+    EXTRA_CLICK_3 = auto()
+    EXTRA_CLICK_4 = auto()
+    EXTRA_CLICK_5 = auto()
+    EXTRA_CLICK_6 = auto()
+    EXTRA_CLICK_7 = auto()
+    EXTRA_CLICK_8 = auto()
+    EXTRA_CLICK_9 = auto()
+    OTHER = auto()
+
+    @classmethod
+    def from_qt(cls, button: Qt.MouseButton):
+        match button:
+            case Qt.NoButton:
+                return None
+            case Qt.LeftButton:
+                return cls.LEFT_CLICK
+            case Qt.RightButton:
+                return cls.RIGHT_CLICK
+            case Qt.MiddleButton:
+                return cls.MIDDLE_CLICK
+            case Qt.BackButton:
+                return cls.BACK_CLICK
+            case Qt.ForwardButton:
+                return cls.FORWARD_CLICK
+            case Qt.ExtraButton1:
+                return cls.EXTRA_CLICK_0
+            case Qt.ExtraButton2:
+                return cls.EXTRA_CLICK_1
+            case Qt.ExtraButton3:
+                return cls.EXTRA_CLICK_2
+            case Qt.ExtraButton4:
+                return cls.EXTRA_CLICK_3
+            case Qt.ExtraButton5:
+                return cls.EXTRA_CLICK_4
+            case Qt.ExtraButton6:
+                return cls.EXTRA_CLICK_5
+            case Qt.ExtraButton7:
+                return cls.EXTRA_CLICK_6
+            case Qt.ExtraButton8:
+                return cls.EXTRA_CLICK_7
+            case Qt.ExtraButton9:
+                return cls.EXTRA_CLICK_8
+            case Qt.ExtraButton10:
+                return cls.EXTRA_CLICK_9
+            case _:
+                return cls.OTHER
+
+
+class Modifier(Enum):
+    SHIFT = auto()
+    CONTROL = auto()
+    ALT = auto()
+    OTHER = auto()
+
+    def __str__(self) -> str:
+        return self.name
+
+    @classmethod
+    def from_qt(cls, modifier: Qt.KeyboardModifiers):
+        active_modifiers: set[Modifier] = set()
+        if modifier == Qt.NoModifier:
+            return active_modifiers
+        if (modifier & Qt.ShiftModifier) == Qt.ShiftModifier:
+            active_modifiers.add(cls.SHIFT)
+        if (modifier & Qt.ControlModifier) == Qt.ControlModifier:
+            active_modifiers.add(cls.CONTROL)
+        if (modifier & Qt.AltModifier) == Qt.AltModifier:
+            active_modifiers.add(cls.ALT)
+        if not active_modifiers:
+            active_modifiers.add(cls.OTHER)
+        return active_modifiers
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class FocusEvent:
+    has_focus: bool
+    reason: Focus
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}({self.has_focus}, {self.reason.name})"
+
+    @classmethod
+    def from_qt(cls, event: QFocusEvent):
+        return cls(event.gotFocus(), Focus.from_qt(event.reason()))
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class KeyEvent:
+    key: Key | None
+    modifiers: set[Modifier]
+
+    def __str__(self) -> str:
+        if self.key is not None:
+            if self.modifiers:
+                return f"{self.__class__.__name__}({self.key.name}, {sequence_to_pretty_str(list(self.modifiers))})"
+            else:
+                return f"{self.__class__.__name__}({self.key.name})"
+        return f"{self.__class__.__name__}()"
+
+    def __len__(self) -> int:
+        return len(self.modifiers)
+
+    @classmethod
+    def from_qt(cls, event: QKeyEvent):
+        if event.key():
+            return cls(Key.from_qt(event.key()), Modifier.from_qt(event.modifiers()))
+        return cls(None, Modifier.from_qt(event.modifiers()))
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class KeySequence:
+    key: Key
+    primary_modifier: Modifier | None = None
+    secondary_modifier: Modifier | None = None
+    tertiary_modifier: Modifier | None = None
+
+    def __str__(self) -> str:
+        if self.primary_modifier is None:
+            return f"{self.__class__.__name__}({self.key.name})"
+        elif self.secondary_modifier is None:
+            return f"{self.__class__.__name__}({self.key.name}, {self.primary_modifier.name})"
+        elif self.tertiary_modifier is None:
+            return (
+                f"{self.__class__.__name__}({self.key.name}, {self.primary_modifier.name}, "
+                f"{self.secondary_modifier.name})"
+            )
+        return (
+            f"{self.__class__.__name__}({self.key.name}, {self.primary_modifier.name}, {self.secondary_modifier.name}, "
+            f"{self.tertiary_modifier})"
+        )
+
+    def __len__(self) -> int:
+        if self.primary_modifier is None:
+            return 0
+        elif self.secondary_modifier is None:
+            return 1
+        elif self.tertiary_modifier is None:
+            return 2
+        return 3
+
+    def check(self, event: KeyEvent) -> bool:
+        return (
+            self.key == event.key
+            and len(self) == len(event)
+            and (self.primary_modifier is None or self.primary_modifier in event.modifiers)
+            and (self.secondary_modifier is None or self.secondary_modifier in event.modifiers)
+            and (self.tertiary_modifier is None or self.tertiary_modifier in event.modifiers)
+        )
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class MouseEvent:
+    global_position: Point
+    local_position: Point
+    click: Click | None
+    modifiers: set[Modifier]
+
+    def __str__(self) -> str:
+        if self.click is not None and self.modifiers:
+            return (
+                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{sequence_to_pretty_str(list(self.modifiers))})"
+            )
+        elif self.click:
+            return f"{self.__class__.__name__}({self.local_position}, {self.click.name})"
+        elif self.modifiers:
+            return f"{self.__class__.__name__}({self.local_position}, {sequence_to_pretty_str(list(self.modifiers))})"
+        else:
+            return f"{self.__class__.__name__}({self.local_position})"
+
+    def __len__(self) -> int:
+        return len(self.modifiers)
+
+    @property
+    def shift(self) -> bool:
+        return Modifier.SHIFT in self.modifiers
+
+    @property
+    def control(self) -> bool:
+        return Modifier.CONTROL in self.modifiers
+
+    @property
+    def alt(self) -> bool:
+        return Modifier.ALT in self.modifiers
+
+    @classmethod
+    def from_qt(cls, event: QMouseEvent):
+        return cls(
+            Point.from_qpoint(event.globalPos()),
+            Point.from_qpoint(event.pos()),
+            Click.from_qt(event.button()),
+            Modifier.from_qt(event.modifiers()),
+        )
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class MouseWheelEvent(MouseEvent):
+    angle_delta: Point | None
+
+    def __str__(self) -> str:
+        if self.click is not None and self.modifiers:
+            return (
+                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{sequence_to_pretty_str(list(self.modifiers))}, {self.orientation.name}, {self.steps})"
+            )
+        elif self.click:
+            return (
+                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{self.orientation.name}, {self.steps})"
+            )
+        elif self.modifiers:
+            return (
+                f"{self.__class__.__name__}({self.local_position}, {sequence_to_pretty_str(list(self.modifiers))}, "
+                f"{self.orientation.name}, {self.steps})"
+            )
+        else:
+            return f"{self.__class__.__name__}({self.local_position}, {self.orientation.name}, {self.steps})"
+
+    @property
+    def orientation(self) -> Orientation:
+        if self.angle_delta is None:
+            return Orientation.VERTICAL
+        return Orientation.HORIZONTAL if self.angle_delta.x else Orientation.VERTICAL
+
+    @property
+    def delta(self) -> int:
+        if self.angle_delta is None:
+            return 0
+        elif self.angle_delta.x:
+            return self.angle_delta.x
+        return self.angle_delta.y
+
+    @property
+    def degrees(self) -> float:
+        return 0 if self.angle_delta is None else self.delta / 8
+
+    @property
+    def steps(self) -> float:
+        return 0 if self.delta is None else self.delta / 120
+
+    @classmethod
+    def from_qt(cls, event: QWheelEvent):
+        return cls(
+            Point.from_qpoint(event.globalPosition()),
+            Point.from_qpoint(event.position()),
+            Click.from_qt(event.button()),
+            Modifier.from_qt(event.modifiers()),
+            Point.from_qpoint(event.angleDelta()),
+        )
+
+
+class DialogControl(Enum):
+    ACCEPT = auto()
+    REJECT = auto()
+    HELP = auto()
+
+
+@attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
+class DialogEvent(Generic[_T]):
+    control: DialogControl
+    suggestion: _T | None
+
+
+class Border(Enum):
+    NONE = auto()
+    ROUND_DASHED = auto()
+    DASHED = auto()
+    SOLID = auto()
+    DOUBLE = auto()
+    GROOVE = auto()
+    RIDGE = auto()
+    INSET = auto()
+    OUTSET = auto()
+
+    def to_qt_stylesheet(self) -> str:
+        match self:
+            case Border.NONE:
+                return "none"
+            case Border.ROUND_DASHED:
+                return "dotted"
+            case Border.DASHED:
+                return "dashed"
+            case Border.SOLID:
+                return "solid"
+            case Border.DOUBLE:
+                return "double"
+            case Border.GROOVE:
+                return "groove"
+            case Border.RIDGE:
+                return "ridge"
+            case Border.INSET:
+                return "inset"
+            case Border.OUTSET:
+                return "outset"
+            case _:
+                return "none"
+
+
+class Selection(Enum):
+    NONE = auto()
+    PRIMARY = auto()
+    SECONDARY = auto()
+    TERTIARY = auto()
+    UNDO = auto()
+    REDO = auto()

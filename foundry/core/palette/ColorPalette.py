@@ -1,8 +1,10 @@
 from collections.abc import Sequence
 from json import loads
 from pathlib import Path
+from typing import overload
 
 from attr import attrs
+from PySide6.QtGui import QColor
 
 from foundry.core.file import FilePath
 from foundry.core.namespace import (
@@ -30,6 +32,32 @@ class ColorPalette(ConcreteValidator, KeywordValidator):
     __required_validators__ = (SequenceValidator, Color, FilePath)
 
     colors: tuple[Color, ...]
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}({self.colors})"
+
+    @overload
+    def __getitem__(self, item: int) -> Color:
+        pass
+
+    @overload
+    def __getitem__(self, item: Color) -> int:
+        pass
+
+    @overload
+    def __getitem__(self, item: QColor) -> int:
+        pass
+
+    def __getitem__(self, item: int | Color | QColor) -> int | Color:
+        match item:
+            case int():
+                return self.colors[item]
+            case Color():
+                return self.colors.index(item)
+            case QColor():
+                return self.colors.index(Color.from_qt(item))
+            case _:
+                return NotImplemented
 
     @classmethod
     @validate(colors=SequenceValidator.generate_class(Color))

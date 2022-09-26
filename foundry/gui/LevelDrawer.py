@@ -7,7 +7,8 @@ from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 from foundry import data_dir, namespace_path
 from foundry.core.drawable.Drawable import Drawable as DrawableValidator
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.namespace import Namespace, generate_namespace
+from foundry.core.icon import Icon
+from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
 from foundry.core.palette import NESPalette
 from foundry.core.palette.PaletteGroup import PaletteGroup
 from foundry.game.File import ROM
@@ -37,14 +38,21 @@ from foundry.smb3parse.objects.object_set import (
     ICE_OBJECT_SET,
 )
 
+namespace: None | Namespace = None
+level_images: Namespace[DrawableValidator] = None  # type: ignore
+
 
 def load_namespace() -> Namespace:
+    global namespace
+    global level_images
     with open(str(namespace_path)) as f:
-        return generate_namespace(loads(f.read()), validators=DrawableValidator.type_manager)
+        namespace = generate_namespace(
+            loads(f.read()),
+            validators=TypeHandlerManager.from_managers(DrawableValidator.type_manager, Icon.type_manager),
+        )
 
-
-namespace = load_namespace()
-level_images: Namespace[DrawableValidator] = namespace.children["graphics"].children["level_images"]
+    level_images = namespace.children["graphics"].children["level_images"]
+    return namespace
 
 
 png = QImage(str(data_dir / "gfx.png"))
@@ -70,28 +78,28 @@ def _load_from_png(x: int, y: int):
     return image
 
 
-FIRE_FLOWER = level_images["fire_flower"].image()
-LEAF = level_images["leaf"].image()
-NORMAL_STAR = level_images["star"].image()
-CONTINUOUS_STAR = level_images["star_continuous"].image()
-MULTI_COIN = level_images["coins_multiple"].image()
-ONE_UP = level_images["extra_life"].image()
-COIN = level_images["coin"].image()
-VINE = level_images["vine"].image()
-P_SWITCH = level_images["p_switch"].image()
-SILVER_COIN = level_images["coin_silver"].image()
-INVISIBLE_COIN = level_images["coin_invisible"].image()
-INVISIBLE_1_UP = level_images["coin_extra_life"].image()
+FIRE_FLOWER = lambda: level_images["fire_flower"].image()  # noqa: E731
+LEAF = lambda: level_images["leaf"].image()  # noqa: E731
+NORMAL_STAR = lambda: level_images["star"].image()  # noqa: E731
+CONTINUOUS_STAR = lambda: level_images["star_continuous"].image()  # noqa: E731
+MULTI_COIN = lambda: level_images["coins_multiple"].image()  # noqa: E731
+ONE_UP = lambda: level_images["extra_life"].image()  # noqa: E731
+COIN = lambda: level_images["coin"].image()  # noqa: E731
+VINE = lambda: level_images["vine"].image()  # noqa: E731
+P_SWITCH = lambda: level_images["p_switch"].image()  # noqa: E731
+SILVER_COIN = lambda: level_images["coin_silver"].image()  # noqa: E731
+INVISIBLE_COIN = lambda: level_images["coin_invisible"].image()  # noqa: E731
+INVISIBLE_1_UP = lambda: level_images["coin_extra_life"].image()  # noqa: E731
 
-NO_JUMP = level_images["no_jump"].image()
-UP_ARROW = level_images["up_arrow"].image()
-DOWN_ARROW = level_images["down_arrow"].image()
-LEFT_ARROW = level_images["left_arrow"].image()
-RIGHT_ARROW = level_images["right_arrow"].image()
+NO_JUMP = lambda: level_images["no_jump"].image()  # noqa: E731
+UP_ARROW = lambda: level_images["up_arrow"].image()  # noqa: E731
+DOWN_ARROW = lambda: level_images["down_arrow"].image()  # noqa: E731
+LEFT_ARROW = lambda: level_images["left_arrow"].image()  # noqa: E731
+RIGHT_ARROW = lambda: level_images["right_arrow"].image()  # noqa: E731
 
-ITEM_ARROW = level_images["item_arrow"].image()
+ITEM_ARROW = lambda: level_images["item_arrow"].image()  # noqa: E731
 
-EMPTY_IMAGE = level_images["empty"].image()
+EMPTY_IMAGE = lambda: level_images["empty"].image()  # noqa: E731
 
 
 SPECIAL_BACKGROUND_OBJECTS = [
@@ -280,6 +288,9 @@ class LevelDrawer:
                 painter.restore()
 
     def _draw_overlays(self, painter: QPainter, level: Level):
+        if namespace is None:
+            load_namespace()
+
         painter.save()
 
         for level_object in level.get_all_objects():
@@ -317,7 +328,7 @@ class LevelDrawer:
                 trigger_position = (level_object.position.x, level_object.position.y)
 
                 if "left" in name:
-                    image = LEFT_ARROW
+                    image = LEFT_ARROW()
 
                     pos.setX(rect.right())
                     pos.setY(pos.y() - self.block_length / 2)
@@ -327,18 +338,18 @@ class LevelDrawer:
                     trigger_position = (x - 1, y)
 
                 elif "right" in name:
-                    image = RIGHT_ARROW
+                    image = RIGHT_ARROW()
                     pos.setX(rect.left() - self.block_length)
                     pos.setY(pos.y() - self.block_length / 2)
 
                 elif "down" in name:
-                    image = DOWN_ARROW
+                    image = DOWN_ARROW()
 
                     pos.setX(pos.x() - self.block_length / 2)
                     pos.setY(rect.top() - self.block_length)
                 else:
                     # upwards pipe
-                    image = UP_ARROW
+                    image = UP_ARROW()
 
                     pos.setX(pos.x() - self.block_length / 2)
                     pos.setY(rect.bottom())
@@ -348,16 +359,16 @@ class LevelDrawer:
                     trigger_position = (x, y - 1)
 
                 if not self._object_in_jump_area(level, trigger_position):
-                    image = NO_JUMP
+                    image = NO_JUMP()
 
             elif "door" == name or "door (can go" in name or "invisible door" in name or "red invisible note" in name:
                 fill_object = False
 
                 if "note" in name:
-                    image = UP_ARROW
+                    image = UP_ARROW()
                 else:
                     # door
-                    image = DOWN_ARROW
+                    image = DOWN_ARROW()
 
                 pos.setY(rect.top() - self.block_length)
 
@@ -365,7 +376,7 @@ class LevelDrawer:
 
                 # jumps seemingly trigger on the bottom block
                 if not self._object_in_jump_area(level, (x, y + 1)):
-                    image = NO_JUMP
+                    image = NO_JUMP()
 
             # "?" - blocks, note blocks, wooden blocks and bricks
             elif "'?' with" in name or "brick with" in name or "bricks with" in name or "block with" in name:
@@ -375,47 +386,47 @@ class LevelDrawer:
                 pos.setY(pos.y() - self.block_length)
 
                 if "flower" in name:
-                    image = FIRE_FLOWER
+                    image = FIRE_FLOWER()
                 elif "leaf" in name:
-                    image = LEAF
+                    image = LEAF()
                 elif "continuous star" in name:
-                    image = CONTINUOUS_STAR
+                    image = CONTINUOUS_STAR()
                 elif "star" in name:
-                    image = NORMAL_STAR
+                    image = NORMAL_STAR()
                 elif "multi-coin" in name:
-                    image = MULTI_COIN
+                    image = MULTI_COIN()
                 elif "coin" in name:
-                    image = COIN
+                    image = COIN()
                 elif "1-up" in name:
-                    image = ONE_UP
+                    image = ONE_UP()
                 elif "vine" in name:
-                    image = VINE
+                    image = VINE()
                 elif "p-switch" in name:
-                    image = P_SWITCH
+                    image = P_SWITCH()
                 else:
-                    image = EMPTY_IMAGE
+                    image = EMPTY_IMAGE()
 
                 # draw little arrow for the offset item overlay
                 arrow_pos = QPoint(pos)
                 arrow_pos.setY(arrow_pos.y() + self.block_length / 4)
-                painter.drawImage(arrow_pos, ITEM_ARROW.scaled(self.block_length, self.block_length))
+                painter.drawImage(arrow_pos, ITEM_ARROW().scaled(self.block_length, self.block_length))
 
             elif "invisible" in name:
                 if not self.user_settings.draw_invisible_items:
                     continue
 
                 if "coin" in name:
-                    image = INVISIBLE_COIN
+                    image = INVISIBLE_COIN()
                 elif "1-up" in name:
-                    image = INVISIBLE_1_UP
+                    image = INVISIBLE_1_UP()
                 else:
-                    image = EMPTY_IMAGE
+                    image = EMPTY_IMAGE()
 
             elif "silver coins" in name:
                 if not self.user_settings.draw_invisible_items:
                     continue
 
-                image = SILVER_COIN
+                image = SILVER_COIN()
             else:
                 continue
 

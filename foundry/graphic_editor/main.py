@@ -18,11 +18,24 @@ def start():
     parser.add_argument(
         "--dev", default=False, action=BooleanOptionalAction, type=bool, help="Override path with system path"
     )
+    parser.add_argument(
+        "--debug", default="n", choices=["n", "d", "i", "w", "c"], help="Shows additional debug information"
+    )
 
     args = parser.parse_args()
     path: str | None = args.path
     if args.dev:
         path = getenv("SMB3_TEST_ROM")
+    if args.debug != "n":
+        from logging import CRITICAL, DEBUG, INFO, WARNING, basicConfig
+
+        basicConfig(
+            filename="./log.log",
+            level={"d": DEBUG, "i": INFO, "w": WARNING, "c": CRITICAL}[args.debug],
+            encoding="utf-8",
+            filemode="w",
+        )
+
     main(path)
 
 
@@ -48,8 +61,7 @@ def main(path: str | None = None):
 
     load_namespace()
 
-    window = GraphicEditor(path, user_settings=user_settings, gui_loader=gui_loader)
-    if window.loaded:
-        del window.loaded
+    window = GraphicEditor(path=path, user_settings=user_settings, gui_loader=gui_loader)
+    if window.is_loaded:
         app.exec_()
         save_settings(user_settings)
