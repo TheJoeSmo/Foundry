@@ -9,12 +9,12 @@ from foundry.core.drawable.Drawable import Drawable as DrawableValidator
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
 from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
-from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import ColorPalette, PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.objects.EnemyItem import MASK_COLOR, EnemyObject
+from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import (
     GROUND,
     SCREEN_HEIGHT,
@@ -112,7 +112,7 @@ SPECIAL_BACKGROUND_OBJECTS = [
 
 def get_blocks(level: Level) -> list[Block]:
     palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-    palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+    palette_group = palette_group
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
@@ -132,7 +132,7 @@ def _block_from_index(block_index: int, level: Level) -> Block:
     graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
     tsa_data = ROM().get_tsa_data(level.object_set_number)
 
-    return Block(block_index, tuple(tuple(c for c in pal) for pal in palette_group), graphics_set, tsa_data)
+    return Block(block_index, palette_group, graphics_set, tsa_data)
 
 
 class LevelDrawer:
@@ -181,9 +181,9 @@ class LevelDrawer:
         painter.save()
 
         if level.object_set_number == CLOUDY_OBJECT_SET:
-            bg_color = NESPalette[
-                PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3][2]
-            ]
+            bg_color = ColorPalette.from_default()[
+                PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3, 2]
+            ].to_qt()
         else:
             bg_color = PaletteGroup.from_tileset(
                 level.object_set_number, level.header.object_palette_index
@@ -241,14 +241,8 @@ class LevelDrawer:
             bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
 
     def _draw_objects(self, painter: QPainter, level: Level):
-        bg_palette_group = tuple(
-            tuple(c for c in pal)
-            for pal in PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-        )
-        spr_palette_group = tuple(
-            tuple(c for c in pal)
-            for pal in PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
-        )
+        bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+        spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
 
         blocks = get_blocks(level)
         for level_object in level.objects:
@@ -275,7 +269,7 @@ class LevelDrawer:
                 if isinstance(level_object, LevelObject):
                     level_object.draw(painter, self.block_length, self.user_settings.block_transparency, blocks=blocks)
                 else:
-                    level_object.draw(painter, self.block_length, self.user_settings.block_transparency)
+                    level_object.draw(painter, self.block_length, True)
 
             if level_object.selected:
                 painter.save()

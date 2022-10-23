@@ -5,7 +5,7 @@ from attr import attrs
 from PySide6.QtGui import QImage
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette import Color, Palette
 from foundry.core.tiles import (
     BYTES_PER_TILE,
     MASK_COLOR,
@@ -24,8 +24,8 @@ class _Tile:
     ----------
     index: int
         The tile index that define the graphics from the GraphicsSet.
-    palette: HashablePaletteProtocol
-        The a hashable palette.
+    palette: Palette
+        The palette.
     graphics_set: GraphicsSet
         The base of all images generated for the tile.
     """
@@ -67,12 +67,13 @@ class _Tile:
             That represent an RGB tile image.
         """
         pixels = bytearray()
+        assert isinstance(self.palette, Palette)
 
-        for pixel_index in self.pixels:
+        for pixel_index in self.pixels_indexes:
             if pixel_index == 0:
                 pixels.extend(MASK_COLOR)
             else:
-                pixels.extend(self.palette.colors[pixel_index].toTuple()[:3])  # type: ignore
+                pixels.extend(self.palette[pixel_index, Color].to_rgb_bytes())
 
         return bytes(pixels)
 
@@ -111,7 +112,7 @@ def cached_tile_to_image(
     ----------
     tile_index: int
         The tile index into the graphics set.
-    palette : HashablePaletteProtocol
+    palette : Palette
         The specific palette to use for the tile.
     graphics_set : GraphicsSet
         The specific graphics to use for the tile.

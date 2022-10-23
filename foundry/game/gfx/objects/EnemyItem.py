@@ -4,7 +4,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 from foundry.core.geometry import Point
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
@@ -16,15 +17,13 @@ from foundry.game.gfx.drawable.Sprite import get_sprite
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
-MASK_COLOR = [0xFF, 0x33, 0xFF]
-
 
 class EnemyObject(ObjectLike):
     def __init__(self, data, png_data, palette_group: PaletteGroup):
         super().__init__()
         self.enemy = Enemy.from_bytes(data)
 
-        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+        self.palette_group = palette_group
 
         self.png_data = png_data
 

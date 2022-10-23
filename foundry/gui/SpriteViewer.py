@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.gui.CustomChildWindow import CustomChildWindow
@@ -161,7 +161,7 @@ class SpriteViewerView(QWidget):
         for i in range(self.SPRITES):
             sprite = Sprite(
                 i * 2,
-                tuple(tuple(c for c in pal) for pal in self.palette_group),  # type: ignore
+                self.palette_group,
                 self.palette_index,
                 self.graphics_set,
             )

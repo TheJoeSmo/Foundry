@@ -1,5 +1,3 @@
-from typing import Optional
-
 from attr import attrs
 from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, Qt
@@ -8,8 +6,8 @@ from PySide6.QtWidgets import QLayout, QWidget
 from foundry.core.geometry import Point
 from foundry.core.graphics_page.GraphicsGroup import GraphicsGroupProtocol
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.palette import PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 
 
@@ -33,7 +31,7 @@ class PatternViewerController(QWidget):
 
     def __init__(
         self,
-        parent: Optional[QWidget],
+        parent: QWidget | None,
         groups: list[GraphicsGroupProtocol],
         group_indexes: list[int],
         palette_group: PaletteGroup,
@@ -101,9 +99,7 @@ class PatternViewerController(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(
-                i, tuple(tuple(c for c in pal) for pal in self.palette_group), self.palette_index, self.graphics_set
-            )
+            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
 
             x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
             y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale

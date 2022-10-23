@@ -8,8 +8,7 @@ from PySide6.QtGui import QPaintEvent
 from foundry.core.geometry import Point, Size
 from foundry.core.gui import BaseModel
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.Color import Color
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette import Color, Palette
 from foundry.gui.core import GridMouseHandler, Widget
 
 

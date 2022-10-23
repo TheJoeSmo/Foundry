@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.level.Level import Level
 from foundry.gui.PaletteGroupEditor import PaletteGroupEditor

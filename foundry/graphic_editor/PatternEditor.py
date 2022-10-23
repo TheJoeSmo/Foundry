@@ -9,8 +9,8 @@ from foundry.core.geometry import Point, Size
 from foundry.core.graphics_page.GraphicsGroup import GraphicsGroup
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.gui import controller
-from foundry.core.palette.PaletteGroup import PaletteGroup
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.palette import PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.graphic_editor.PatternMatrix import PatternMatrix
 
@@ -106,9 +106,7 @@ class PatternEditorController(QWidget, PatternEditorModel):
 
         size = self.matrix_size
         for i in range(size.height):
-            tile = Tile(
-                i, tuple(tuple(c for c in pal) for pal in self.palette_group), self.palette_index, self.graphics_set
-            )
+            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
 
             x = (i % size.width) * self.pattern_scale
             y = (i // size.width) * self.pattern_scale

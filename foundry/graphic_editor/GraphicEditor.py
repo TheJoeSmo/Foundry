@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QFileDialog, QMessageBox, QWidget
 
 from foundry import icon
 from foundry.core.gui import Signal, SignalInstance
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.graphic_editor import ROM_FILTER
 from foundry.graphic_editor.Canvas import Canvas

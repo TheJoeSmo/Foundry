@@ -19,10 +19,7 @@ from foundry.core.gui import (
     SignalInstance,
     UndoRedoExtendedForwarder,
 )
-from foundry.core.palette.Color import Color
-from foundry.core.palette.ColorPalette import ColorPalette
-from foundry.core.palette.Palette import Palette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import Color, ColorPalette, Palette, PaletteGroup
 from foundry.gui.core import (
     Dialog,
     DialogEvent,
@@ -67,14 +64,14 @@ class ColorButton(Label, MouseHandler):
 
     def change_state(self, model: Model) -> None:
         pix: QPixmap = QPixmap(model.button_size.qsize)
-        pix.fill(model.color.qcolor)
+        pix.fill(model.color.to_qt())
         self.setPixmap(pix)
 
         r, g, b = model.color.red, model.color.green, model.color.blue
         if model.selection_type is Selection.NONE:
             self.setStyleSheet(f"border-color: rgb({r}, {g}, {b}); " f"border-width: 2px; border-style: solid")
         elif model.selection_type is Selection.UNDO or model.selection_type is Selection.REDO:
-            if model.color.qcolor.lightnessF() < 0.25:
+            if model.color.to_qt().lightnessF() < 0.25:
                 self.setStyleSheet(
                     f"border-color: qlineargradient("
                     f"spread:pad, x1:0 y1:0, x2:1 y2:0, "
@@ -95,7 +92,7 @@ class ColorButton(Label, MouseHandler):
                     f"border-width: 2px; border-style: solid;"
                 )
         elif model.selection_type is Selection.SECONDARY:
-            if model.color.qcolor.lightnessF() < 0.25:
+            if model.color.to_qt().lightnessF() < 0.25:
                 self.setStyleSheet(
                     f"border-color: qlineargradient("
                     f"spread:pad, x1:0 y1:0, x2:1 y2:0, "
@@ -120,7 +117,7 @@ class ColorButton(Label, MouseHandler):
                     f"border-width: 2px; border-style: solid;"
                 )
         elif model.selection_type is Selection.TERTIARY:
-            if model.color.qcolor.lightnessF() < 0.25:
+            if model.color.to_qt().lightnessF() < 0.25:
                 self.setStyleSheet(
                     f"border-color: qlineargradient("
                     f"spread:pad, x1:0 y1:0, x2:1 y2:1, "
@@ -144,7 +141,7 @@ class ColorButton(Label, MouseHandler):
                     f"stop:1 rgba({max(0, r - 75)}, {max(0, g - 75)}, {max(0, b - 75)}, 255)); "
                     f"border-width: 2px; border-style: solid;"
                 )
-        elif model.color.qcolor.lightnessF() < 0.25:
+        elif model.color.to_qt().lightnessF() < 0.25:
             self.setStyleSheet(
                 f"border-color: qlineargradient(spread:pad, x1:0 y1:0, x2:1 y2:0, "
                 f"stop:0 rgba({model.color.red}, {model.color.green}, {model.color.blue}, 255), "
