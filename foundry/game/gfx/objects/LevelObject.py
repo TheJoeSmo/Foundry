@@ -7,7 +7,8 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
@@ -58,8 +59,6 @@ BLANK = -1
 SCREEN_HEIGHT = 15
 SCREEN_WIDTH = 16
 
-MASK_COLOR = [0xFF, 0x33, 0xFF]
-
 
 class LevelObject(GeneratorObject):
     def __init__(
@@ -83,7 +82,7 @@ class LevelObject(GeneratorObject):
         self._type_time = 0
         self._orientation_time = 0
 
-        self.palette_group = tuple(tuple(c for c in pal) for pal in palette_group)
+        self.palette_group = palette_group
 
         self._index_in_level = index
         self.objects_ref = objects_ref

@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from foundry.core.palette.ColorPalette import ColorPalette
+from foundry.core.palette import ColorPalette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 from foundry.gui.CustomDialog import CustomDialog
 
@@ -40,7 +40,7 @@ class ColorSelector(CustomDialog):
         for row in range(self.ROWS):
             for column in range(self.COLUMNS):
                 color = self.color_palette.colors[row * self.COLUMNS + column]
-                button = ColorButtonWidget(self, color.qcolor, self.size_)
+                button = ColorButtonWidget(self, color.to_qt(), self.size_)
                 button.setLineWidth(0)
                 self._color_buttons.append(button)
                 self.layout_.addWidget(button, row, column)

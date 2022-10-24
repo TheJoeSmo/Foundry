@@ -1,4 +1,7 @@
-from PySide6.QtGui import Qt
+from collections.abc import Callable
+from typing import Any
+
+from PySide6.QtGui import QAction, QIcon, Qt
 from PySide6.QtWidgets import QMainWindow, QToolBar, QWidget
 
 
@@ -39,3 +42,30 @@ def create_toolbar(
         parent.addToolBar(area, toolbar)
 
     return toolbar
+
+
+class Toolbar(QToolBar):
+    """
+    An extension of the regular `QToolBar`.
+    """
+
+    def add_action(self, text: str, *args: Callable[[], Any], icon: QIcon | None = None) -> QAction:
+        """
+        Adds a toolbar option with `text` that will call `*args` when selected.
+
+        Parameters
+        ----------
+        text : str
+            The text that will be displayed next to the option to select.
+        icon : QIcon | None, optional
+            The icon that will be displayed next to the option, by default None will be displayed.
+
+        Returns
+        -------
+        QAction
+            The action associated with the toolbar option generated.
+        """
+        action = self.addAction(icon, text) if icon else self.addAction(text)
+        for arg in args:
+            action.triggered.connect(arg)  # type: ignore
+        return action

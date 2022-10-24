@@ -13,8 +13,7 @@ from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, 
 from foundry import icon
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block
@@ -239,7 +238,6 @@ class BlockViewerView(QWidget):
         painter = QPainter(self)
 
         palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
-        frozen_palette = tuple(tuple(c for c in pal) for pal in palette)
         bg_color = palette.background_color
         painter.setBrush(QBrush(bg_color))
 
@@ -249,7 +247,7 @@ class BlockViewerView(QWidget):
         tsa_data = ROM.get_tsa_data(self.object_set)
 
         for i in range(self.BLOCKS):
-            block = Block(i, frozen_palette, graphics_set, tsa_data)
+            block = Block(i, palette, graphics_set, tsa_data)
 
             x = (i % self.BLOCKS_PER_ROW) * self.block_scale
             y = (i // self.BLOCKS_PER_ROW) * self.block_scale

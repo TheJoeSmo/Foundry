@@ -9,15 +9,102 @@
           "elements": {
             "workshop_port": "$data/gfx.png"
           }
+        },
+        "icons": {
+          "type": "FILE",
+          "elements": {
+            "settings_icon": "$data/icons/settings.png",
+            "folder_icon": "$data/icons/folder.png",
+            "save_icon": "$data/icons/save.png",
+            "undo_icon": "$data/icons/rotate-ccw.png",
+            "redo_icon": "$data/icons/rotate-cw.png",
+            "play_icon": "$data/icons/play-circle.png",
+            "zoom_in_icon": "$data/icons/zoom-in.png",
+            "zoom_out_icon": "$data/icons/zoom-out.png",
+            "help_icon": "$data/icons/help-circle.png"
+          }
         }
       }
     },
     "graphics": {
       "type": "NONE",
       "children": {
+        "common_icons": {
+          "type": "ICON",
+          "dependencies": [
+            "files.icons"
+          ],
+          "elements": {
+            "settings_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "settings_icon"
+              }
+            },
+            "folder_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "folder_icon"
+              }
+            },
+            "save_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "save_icon"
+              }
+            },
+            "undo_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "undo_icon"
+              }
+            },
+            "redo_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "redo_icon"
+              }
+            },
+            "play_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "play_icon"
+              }
+            },
+            "zoom_in_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "zoom_in_icon"
+              }
+            },
+            "zoom_out_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "zoom_out_icon"
+              }
+            },
+            "help_icon": {
+              "path": {
+                "type": "FROM NAMESPACE",
+                "path": "files.icons",
+                "name": "help_icon"
+              }
+            }
+          }
+        },
         "level_images": {
           "type": "DRAWABLE",
-          "dependencies": ["files.graphics"],
+          "dependencies": [
+            "files.graphics"
+          ],
           "elements": {
             "fire_flower": {
               "path": {

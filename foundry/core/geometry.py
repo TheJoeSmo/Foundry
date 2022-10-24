@@ -4,7 +4,7 @@ from math import sqrt
 from typing import TypeVar
 
 from attr import attrs
-from PySide6.QtCore import QPoint, QRect, QSize
+from PySide6.QtCore import QPoint, QPointF, QRect, QSize
 
 from foundry.core.namespace import (
     ConcreteValidator,
@@ -99,7 +99,7 @@ class Point(ConcreteValidator, KeywordValidator):
         return cls(x, y)
 
     @classmethod
-    def from_qpoint(cls, point: QPoint) -> Point:
+    def from_qpoint(cls, point: QPoint | QPointF) -> Point:
         """
         Generates a point from a QPoint for easy conversion.
 
@@ -113,6 +113,8 @@ class Point(ConcreteValidator, KeywordValidator):
         AbstractPoint
             Of the QPoint represented inside Python.
         """
+        if isinstance(point, QPointF):
+            return cls(int(point.x()), int(point.y()))
         return cls(point.x(), point.y())
 
     @property
@@ -285,17 +287,17 @@ class Rect(ConcreteValidator, KeywordValidator):
     @property
     def qrect(self) -> QRect:
         """
-        Generates a QRect from a Rect.
+            Generates a QRect from a Rect.
 
         Parameters
         ----------
         rect : Rect
             The rect to be converted to a Rect.
 
-        Returns
-        -------
-        QRect
-            The QRect derived from the Rect.
+            Returns
+            -------
+            QRect
+                The QRect derived from the Rect.
         """
         return QRect(self.point.x, self.point.y, self.size.width, self.size.height)
 

@@ -13,7 +13,7 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PatternViewer import PatternViewerController as PatternViewer
@@ -220,7 +220,7 @@ class BlockEditorView(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
         block = Block(
             self.block_index,
-            tuple(tuple(c for c in pal) for pal in self.palette_group),
+            self.palette_group,
             self.graphics_set,
             self.tsa_data,
         )

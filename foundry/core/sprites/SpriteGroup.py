@@ -5,10 +5,10 @@ from PySide6.QtGui import QColor, QImage, QPainter
 
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
 
 
@@ -66,7 +66,7 @@ class SpriteGroup:
             else:
                 sprite = MetaSprite(
                     sprite_data.index,
-                    tuple(tuple(c for c in pal) for pal in self.palette_group),  # type: ignore
+                    self.palette_group,
                     sprite_data.palette_index,
                     self.graphics_set,
                     sprite_data.horizontal_mirror,

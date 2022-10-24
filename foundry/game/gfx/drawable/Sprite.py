@@ -4,10 +4,11 @@ from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import ColorPalette, PaletteGroup
+from foundry.core.tiles import MASK_COLOR
+from foundry.core.tiles.util import cached_tile_to_image
 from foundry.game.File import ROM
-from foundry.game.gfx.drawable import MASK_COLOR, apply_selection_overlay
+from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
 
 
@@ -53,8 +54,8 @@ class Sprite:
         # can't hash list, so turn it into a string instead
         self._sprite_id = (index, str(palette_group), palette_index, graphics_set)
 
-        self.top_tile = Tile(index, palette_group, palette_index, graphics_set)
-        self.bottom_tile = Tile(index + 1, palette_group, palette_index, graphics_set)
+        self.top_tile = cached_tile_to_image(index, palette_group[palette_index], graphics_set)
+        self.bottom_tile = cached_tile_to_image(index + 1, palette_group[palette_index], graphics_set)
 
         if vertical_mirror:
             self.top_tile, self.bottom_tile = self.bottom_tile, self.top_tile
@@ -62,10 +63,10 @@ class Sprite:
         self.image = QImage(Sprite.WIDTH, Sprite.HEIGHT, QImage.Format_RGB888)
 
         painter = QPainter(self.image)
-        painter.drawImage(QPoint(0, 0), self.top_tile.as_image().copy().mirrored(horizontal_mirror, vertical_mirror))
+        painter.drawImage(QPoint(0, 0), self.top_tile.copy().mirrored(horizontal_mirror, vertical_mirror))
         painter.drawImage(
             QPoint(0, Tile.HEIGHT),  # type: ignore
-            self.bottom_tile.as_image().copy().mirrored(horizontal_mirror, vertical_mirror),
+            self.bottom_tile.copy().mirrored(horizontal_mirror, vertical_mirror),
         )
         painter.end()
 
@@ -104,7 +105,7 @@ class Sprite:
         # draw image on background layer, to fill transparent pixels
         background = image.copy()
         try:
-            index = NESPalette[self.palette_group[self.palette_index][0]]
+            index = ColorPalette.from_default()[self.palette_group[self.palette_index, 0]].to_qt()
         except IndexError:
             return image
         background.fill(index)

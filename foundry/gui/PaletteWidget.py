@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QHBoxLayout, QWidget
 
-from foundry.core.palette.Palette import Palette
+from foundry.core.palette import Palette
 from foundry.gui.ColorButtonWidget import ColorButtonWidget
 
 
@@ -24,7 +24,7 @@ class PaletteWidget(QWidget):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(1, 2, 0, 2)
 
-        self._buttons = [ColorButtonWidget(self, color) for color in palette.colors]
+        self._buttons = [ColorButtonWidget(self, color.to_qt()) for color in palette]
 
         for button in self._buttons:
             layout.addWidget(button)
@@ -43,5 +43,5 @@ class PaletteWidget(QWidget):
         self._update()
 
     def _update(self):
-        for idx, color in enumerate(self.palette.colors):
-            self._buttons[idx].color = color
+        for idx, color in enumerate(self.palette):
+            self._buttons[idx].color = color.to_qt()

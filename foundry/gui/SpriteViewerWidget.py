@@ -3,11 +3,11 @@ from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.sprites import SPRITE_SIZE
 from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.core.sprites.SpriteGroup import SpriteGroupProtocol
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.tiles import MASK_COLOR
 
 
 class SpriteViewerWidget(QFrame):

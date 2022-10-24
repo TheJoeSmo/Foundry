@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QHBoxLayout, QLayout, QStatusBar, QToolBar, QWidge
 
 from foundry import icon
 from foundry.core.geometry import Point
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.player_animations import ANIMATION_WIDTH
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 from foundry.core.player_animations.util import (
