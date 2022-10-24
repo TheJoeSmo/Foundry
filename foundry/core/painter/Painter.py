@@ -1,4 +1,5 @@
 from PySide6.QtGui import QImage, QPainter
+from PySide6.QtWidgets import QWidget
 
 
 class Painter:
@@ -8,7 +9,7 @@ class Painter:
     If no context manger is provided for a QPainter, any error during its life-cycle could result in a crash.
     """
 
-    def __init__(self, image: QImage):
+    def __init__(self, image: QImage | QWidget):
         self.image = image
 
     def __enter__(self) -> QPainter:

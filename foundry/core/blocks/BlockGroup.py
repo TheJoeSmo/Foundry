@@ -16,8 +16,8 @@ from foundry.core.namespace import (
     validate,
 )
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import PaletteGroup
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.palette import PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)

@@ -16,7 +16,7 @@ from foundry.core.namespace import (
     custom_validator,
     validate,
 )
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.tiles import MASK_COLOR
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
@@ -54,6 +54,7 @@ class Drawable(ConcreteValidator, KeywordValidator):
         use_transparency: bool = True,
         point_offset: Point = Point(0, 0),
     ):
+        assert use_transparency
         image = image if image_offset is None else image.copy(image_offset.qrect)
         if use_transparency:
             mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
@@ -74,7 +75,7 @@ class Drawable(ConcreteValidator, KeywordValidator):
     @validate(
         path=FilePath,
         image_offset=OptionalValidator.generate_class(Rect),
-        use_transparency=DefaultValidator.generate_class(BoolValidator, False),
+        use_transparency=DefaultValidator.generate_class(BoolValidator, True),
         point_offset=DefaultValidator.generate_class(Point, Point(0, 0)),
     )
     def validate_from_file(cls, path: FilePath, image_offset: Rect | None, use_transparency: bool, point_offset: Point):

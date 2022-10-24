@@ -16,8 +16,8 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import data_dir, icon
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.objects.EnemyItem import MASK_COLOR
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.gui.settings import (

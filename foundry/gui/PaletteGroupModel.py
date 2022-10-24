@@ -4,9 +4,9 @@ from foundry.core.palette import (
     COLORS_PER_PALETTE,
     PALETTE_GROUPS_PER_OBJECT_SET,
     PALETTES_PER_PALETTES_GROUP,
+    PaletteGroup,
+    get_internal_palette_offset,
 )
-from foundry.core.palette.PaletteGroup import PaletteGroup
-from foundry.core.palette.util import get_internal_palette_offset
 from foundry.game.File import ROM
 
 

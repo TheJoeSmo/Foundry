@@ -8,7 +8,7 @@ from foundry.core.blocks import BLOCK_SIZE, PATTERN_LOCATIONS
 from foundry.core.blocks.Block import Block, Pattern
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.painter.Painter import Painter
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.tiles import MASK_COLOR
 from foundry.core.tiles.util import cached_tile_to_image
 

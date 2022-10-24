@@ -1,7 +1,7 @@
 from attr import attrs
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette.PaletteGroup import PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.core.player_animations.PlayerAnimation import PlayerAnimation
 
 

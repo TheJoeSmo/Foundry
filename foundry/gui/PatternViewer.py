@@ -15,9 +15,8 @@ from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 from foundry import icon
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette import NESPalette
-from foundry.core.palette.PaletteGroup import PaletteGroup
-from foundry.game.gfx.drawable import MASK_COLOR
+from foundry.core.palette import ColorPalette, PaletteGroup
+from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
@@ -169,14 +168,12 @@ class PatternViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        bg_color = NESPalette[self.palette_group[self.palette_index][0]]
+        bg_color = ColorPalette[self.palette_group[self.palette_index, 0]].to_qt()
         painter.setBrush(QBrush(bg_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(
-                i, tuple(tuple(c for c in pal) for pal in self.palette_group), self.palette_index, self.graphics_set
-            )
+            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
 
             x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
             y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
