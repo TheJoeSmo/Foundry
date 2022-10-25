@@ -51,7 +51,7 @@ copyright = "2022, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
-release = get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
+release = get_version("foundry_smb3", root_dir, fail=False)  # type: ignore
 
 
 # -- General configuration ---------------------------------------------------
