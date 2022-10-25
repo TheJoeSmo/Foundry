@@ -18,8 +18,6 @@ class ObjectList(QListWidget):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.setWordWrap(True)
 
-        self.setSelectionMode(self.ExtendedSelection)
-
         self.level_ref: LevelRef = level_ref
         self.level_ref.data_changed.connect(self.update_content)
         self.context_menu = context_menu

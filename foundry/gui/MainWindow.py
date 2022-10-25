@@ -157,19 +157,19 @@ class MainWindow(QMainWindow):
 
         self.delete_shortcut = QShortcut(QKeySequence(Qt.Key_Delete), self, self.manager.delete)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_X), self, self.manager.cut)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_C), self, self.manager.copy)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_V), self, self.manager.paste)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_X), self, self.manager.cut)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_C), self, self.manager.copy)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_V), self, self.manager.paste)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Z), self, self.manager.undo)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Y), self, self.manager.redo)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Z), self, self.manager.redo)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_Z), self, self.manager.undo)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_Y), self, self.manager.redo)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.SHIFT | Qt.Key_Z), self, self.manager.redo)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Plus), self, self.manager.zoom_in)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Minus), self, self.manager.zoom_out)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_Plus), self, self.manager.zoom_in)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_Minus), self, self.manager.zoom_out)
 
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_A), self, self.manager.select_all)
-        QShortcut(QKeySequence(Qt.CTRL + Qt.Key_L), self, self.manager.focus_selected)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_A), self, self.manager.select_all)
+        QShortcut(QKeySequence(Qt.CTRL | Qt.Key_L), self, self.manager.focus_selected)
 
         self.loaded = self.on_open_rom(path_to_rom, world, level)
 
