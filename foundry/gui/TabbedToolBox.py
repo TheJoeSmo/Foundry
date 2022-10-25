@@ -15,7 +15,7 @@ class TabbedToolBox(QTabWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.setTabPosition(self.East)
+        self.setTabPosition(QTabWidget.TabPosition.East)
 
         self._recent_toolbox = ObjectToolBox(self)
         self._recent_toolbox.object_icon_clicked.connect(self.selected)
