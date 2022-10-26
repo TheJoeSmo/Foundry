@@ -1,162 +1,321 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; Foundry 0.6.1 documentation</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+    <title>Index &#8212; Foundry  documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
 
-    
+  
   <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
     <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="../search/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
 
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
   <div id="navbar-start">
     
     
-
-<a class="navbar-brand" href="../">
-  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
-</a>      
+  
 
 
+<a class="navbar-brand logo" href="../">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/foundry_logo.ico" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/foundry_logo.ico" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
     
   </div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
   
-  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+  <div class="col-lg-9 navbar-header-items">
     <div id="navbar-center" class="mr-auto">
       
       <div class="navbar-center-item">
-        <ul id="navbar-main-elements" class="navbar-nav">
-    <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../modules/">
-  foundry
- </a>
-</li>
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../modules/">
+                        foundry
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../license/">
-  License
- </a>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../license/">
+                        License
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../contributing/">
-  How To Contribute
- </a>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/">
+                        How To Contribute
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../changelog/">
-  Changelog
- </a>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../changelog/">
+                        Changelog
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../enemy_compatibility/">
-  Enemy Compatibility
- </a>
-</li>
-
-    
-</ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="../enemy_compatibility/">
+                        Enemy Compatibility
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
       </div>
       
     </div>
 
     <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/TheJoeSmo/foundry" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
       
     </div>
   </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
 </div>
-    </nav>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../modules/">
+                        foundry
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../license/">
+                        License
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../contributing/">
+                        How To Contribute
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../changelog/">
+                        Changelog
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../enemy_compatibility/">
+                        Enemy Compatibility
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
     
 
-    <div class="container-xl">
-      <div class="row">
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <div class="bd-toc-item active">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/TheJoeSmo/foundry" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
     
   </div>
-</nav>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
             </div>
             
-          
-
-          
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
             
-          </div>
-          
-
-          
-          
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+            <article class="bd-article" role="main">
               
-              <div>
-                
 
 <h1 id="index">Index</h1>
 
@@ -192,14 +351,28 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.a">a (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.A">A (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.AboutWindow.AboutDialog">AboutDialog (class in foundry.gui.AboutWindow)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogControl.ACCEPT">ACCEPT (DialogControl attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelSelector.WorldMapLevelSelect.accepted">accepted (WorldMapLevelSelect attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.util.Button.action">action (Button attribute)</a>
+      <li><a href="../foundry.core/#foundry.core.gui.Action.action">action (Action attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.util.Button.action">(Button attribute)</a>
 </li>
-      <li><a href="../foundry.core/#foundry.core.redux_store.Action">Action (class in foundry.core.redux_store)</a>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Action">Action (class in foundry.core.gui)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.redux_store.Action">(class in foundry.core.redux_store)</a>
 </li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.action">action (HeaderEditor property)</a>
 
       <ul>
@@ -218,6 +391,8 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelStartEditor.LevelStartDisplay.action_editor">action_editor (LevelStartDisplay attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.action_performed">action_performed (UndoRedoForwarder property)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames">ActionNames (class in foundry.gui.player_lives)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.orb.Actions">Actions (class in foundry.gui.orb)</a>
@@ -228,6 +403,10 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.actions">(LevelManager property)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.ACTIVE_WINDOW">ACTIVE_WINDOW (Focus attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Action.actor">actor (Action attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.Toolbar.Toolbar.add_action">add_action() (Toolbar method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.add_enemy">add_enemy() (Level method)</a>
@@ -268,9 +447,9 @@
         <li><a href="../foundry.gui/#foundry.gui.TabbedToolBox.TabbedToolBox.add_recent_object">(TabbedToolBox method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeHandlerManager.add_type_handler">add_type_handler() (TypeHandlerManager method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.add_worker">add_worker() (TaskManager method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.addItem">addItem() (FlowLayout method)</a>
 </li>
@@ -278,7 +457,23 @@
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.address">address (CodeEdit attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.address_is_global">address_is_global() (INESHeader static method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.alpha">alpha (Color attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.ALT">ALT (Key attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Modifier.ALT">(Modifier attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.alt">alt (MouseEvent property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.AMPERSAND">AMPERSAND (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.angle_delta">angle_delta (MouseWheelEvent attribute)</a>
 </li>
       <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.animation">animation (PlayerAnimationData attribute)</a>
 
@@ -286,6 +481,8 @@
         <li><a href="../foundry.gui/#foundry.gui.PlayerFrameEditor.PlayerFrameEditorModel.animation">(PlayerFrameEditorModel attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup.animation_speed">animation_speed (GraphicsGroup attribute)</a>
+</li>
       <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.PlayerAnimation.PlayerAnimation.animations">animations (PlayerAnimation attribute)</a>
 
       <ul>
@@ -295,6 +492,8 @@
       <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerView.ANIMATIONS_PER_COLUMN">ANIMATIONS_PER_COLUMN (PlayerViewerView attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerView.ANIMATIONS_PER_ROW">ANIMATIONS_PER_ROW (PlayerViewerView attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.APOSTROPHE">APOSTROPHE (Key attribute)</a>
 </li>
       <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.apply_selection_overlay">apply_selection_overlay() (in module foundry.game.gfx.drawable)</a>
 </li>
@@ -309,10 +508,20 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.namespace.TypeInformation.arguments">(TypeInformation attribute)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask.arguments">(WorkerTask attribute)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.ArgumentsValidator">ArgumentsValidator (class in foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.ContextMenu.as_background_menu">as_background_menu() (ContextMenu method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.as_empty">as_empty() (Palette class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.as_empty">(PaletteGroup class method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FinishedTask.as_exception">as_exception() (FinishedTask class method)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject.as_image">as_image() (EnemyObject method)</a>
 
@@ -328,6 +537,10 @@
 </li>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.object_set.assert_valid_object_set_number">assert_valid_object_set_number() (in module foundry.smb3parse.objects.object_set)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.ASTERISK">ASTERISK (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.AT">AT (Key attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.attach">attach() (LevelController method)</a>
 
       <ul>
@@ -337,6 +550,10 @@
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.attach_to_rom">attach_to_rom() (Level method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.attached_to_rom">attached_to_rom (Level property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.attributes">attributes (EmittingProperty attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.AUTOMATED_REMOVAL_DURATION">AUTOMATED_REMOVAL_DURATION (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.AutoSaveDialog.AutoSaveDialog">AutoSaveDialog (class in foundry.gui.AutoSaveDialog)</a>
 </li>
@@ -350,21 +567,43 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.b">b (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.B">B (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.BACK_CLICK">BACK_CLICK (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.BACK_SLASH">BACK_SLASH (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.BACK_SPACE">BACK_SPACE (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.BACK_TAB">BACK_TAB (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.CMAction.BACKGROUND">BACKGROUND (CMAction attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectIcon.background_color">background_color (ObjectIcon property)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.background_color">(PaletteGroup property)</a>
 </li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel.background_index">background_index (PaletteGroupModel attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel.background_palette_group">background_palette_group (PaletteGroupModel attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel.background_palette_group_backup">background_palette_group_backup (PaletteGroupModel attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.BAR">BAR (Key attribute)</a>
+</li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.base_image">base_image (Drawable attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.BASE_PROGRAM_SIZE">BASE_PROGRAM_SIZE (INESHeader attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.BaseModel">BaseModel (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.battery_backed_ram">battery_backed_ram (INESHeader attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask.begin_task">begin_task() (WorkerTask method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.CMMode.BG">BG (CMMode attribute)</a>
 </li>
@@ -402,6 +641,8 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.BlockViewer.BlockViewerView.block_selected">block_selected (BlockViewerView attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.util.block_to_image">block_to_image() (in module foundry.core.blocks.util)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.PydanticUserSettings.block_transparency">block_transparency (PydanticUserSettings attribute)</a>
@@ -412,8 +653,6 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.BlockArea">BlockArea (class in foundry.gui.ObjectViewer)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.BlockArray">BlockArray (class in foundry.gui.ObjectViewer)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.BlockEditor.BlockEditorController">BlockEditorController (class in foundry.gui.BlockEditor)</a>
@@ -446,6 +685,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.BlockViewer.BlockViewerView">BlockViewerView (class in foundry.gui.BlockViewer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.blue">blue (Color attribute)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.bmp_height">bmp_height (EnemyDefinition attribute)</a>
 
       <ul>
@@ -459,6 +700,8 @@
 </li>
       </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.BoolValidator">BoolValidator (class in foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border">Border (class in foundry.core.gui)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.bring_to_background">bring_to_background() (Level method)</a>
 </li>
@@ -476,6 +719,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.C">C (Key attribute)</a>
+</li>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.util.cached_block_to_image">cached_block_to_image() (in module foundry.core.blocks.util)</a>
 </li>
       <li><a href="../foundry.core.tiles/#foundry.core.tiles.util.cached_tile_to_image">cached_tile_to_image() (in module foundry.core.tiles.util)</a>
@@ -503,6 +748,10 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol.can_redo">(UndoControllerProtocol property)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.can_redo">(UndoRedo property)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper.can_redo">(UndoRedoHelper property)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.can_undo">can_undo (HeaderEditor property)</a>
 
@@ -525,14 +774,22 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol.can_undo">(UndoControllerProtocol property)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.can_undo">(UndoRedo property)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper.can_undo">(UndoRedoHelper property)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas">Canvas (class in foundry.graphic_editor.Canvas)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.Model">Canvas.Model (class in foundry.graphic_editor.Canvas)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.CAPS_LOCK">CAPS_LOCK (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames.CARD_GAME_1UP">CARD_GAME_1UP (ActionNames attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.card_game_1up">card_game_1up (State attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.CARROT">CARROT (Key attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.GeneratorType.CENTERED">CENTERED (GeneratorType attribute)</a>, <a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.CENTERED">[1]</a>
 </li>
@@ -552,6 +809,12 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectDrawArea.change_object_set">change_object_set() (ObjectDrawArea method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.change_state">change_state() (UndoRedoForwarder method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.change_state">(UndoRedoRoot method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.util.change_type">change_type() (in module foundry.game.gfx.objects.util)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.changed">changed (Level attribute)</a>
@@ -570,11 +833,15 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.character_size">character_size (INESHeader property)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeySequence.check">check() (KeySequence method)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.check_compatibility">check_compatibility (EnemyDefinition attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ArgumentsValidator.check_for_args_only">check_for_args_only() (ArgumentsValidator class method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.KeywordValidator.check_for_kwargs_only">check_for_kwargs_only() (KeywordValidator class method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.check_if_child_task_finished">check_if_child_task_finished() (TaskManagerProxy method)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.check_level_bounds">check_level_bounds (EnemyDefinition attribute)</a>
 
@@ -598,12 +865,20 @@
         <li><a href="../foundry.core.warnings/#foundry.core.warnings.Warning.Warning.check_object">(Warning method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requester.check_received">check_received() (Requester method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.check_time">check_time() (TaskManager method)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.ParentDoesNotContainChildException.child">child (ParentDoesNotContainChildException attribute)</a>
 
       <ul>
         <li><a href="../foundry.core/#foundry.core.namespace.ParentDoesNotExistException.child">(ParentDoesNotExistException attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.child_recv_from_parent_pipe">child_recv_from_parent_pipe (RequestPipe attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.child_send_to_parent_pipe">child_send_to_parent_pipe (RequestPipe attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.ChildDoesNotExistException">ChildDoesNotExistException</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.children">children (Namespace attribute)</a>
@@ -616,6 +891,8 @@
         <li><a href="../foundry.core/#foundry.core.namespace.MissingException.class_">(MissingException attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.CLEAR">CLEAR (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.clear">clear() (FlowLayout method)</a>
 
       <ul>
@@ -623,12 +900,22 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.ObjectToolBox.ObjectToolBox.clear">(ObjectToolBox method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.Signal.clear">(Signal method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.clear">(SignalInstance method)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Block.Block.clear_cache">clear_cache() (Block class method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.clear_layout">clear_layout() (in module foundry.gui.util)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.clear_spinners">clear_spinners() (SpinnerPanel method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click">Click (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.CLICK">CLICK (Focus attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.click">click (MouseEvent attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.click_released">click_released (Canvas attribute)</a>
 </li>
@@ -649,6 +936,10 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.clicked_grid">clicked_grid (Canvas attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.close">close() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.closed">closed (DilledConnection property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.AutoScrollEditor.AutoScrollEditor.closeEvent">closeEvent() (AutoScrollEditor method)</a>
 
@@ -686,15 +977,31 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.COIN">COIN() (in module foundry.gui.LevelDrawer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.COLON">COLON (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color">Color (class in foundry.core.palette)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ColorButtonWidget.ColorButtonWidget.color">color (ColorButtonWidget property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ColorButtonWidget.ColorButtonWidget.color_changed">color_changed (ColorButtonWidget attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.color_indexes">color_indexes (Palette attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.color_palette">color_palette (Palette attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ColorButtonWidget.ColorButtonWidget">ColorButtonWidget (class in foundry.gui.ColorButtonWidget)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette">ColorPalette (class in foundry.core.palette)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.colors">colors (ColorPalette attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ColorSelector.ColorSelector">ColorSelector (class in foundry.gui.ColorSelector)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorSequence">ColorSequence (class in foundry.core.palette)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ColorSelector.ColorSelector.COLUMNS">COLUMNS (ColorSelector attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.COMMA">COMMA (Key attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons">CommonIcons (class in foundry.graphic_editor.internal_plugins)</a>
 </li>
@@ -706,7 +1013,19 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ComplexValidatorCallableInformation">ComplexValidatorCallableInformation (class in foundry.core.namespace)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoActor.compose_child_action">compose_child_action() (UndoRedoActor method)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.ConcreteValidator">ConcreteValidator (class in foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal.connect">connect() (Signal method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.connect">(SignalInstance method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object.connect_child">connect_child() (Object method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.ConnectionError">ConnectionError</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.context_menu">context_menu (LevelControlled attribute)</a>
 </li>
@@ -719,6 +1038,16 @@
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.continue_lives">continue_lives (State attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.CONTINUOUS_STAR">CONTINUOUS_STAR() (in module foundry.gui.LevelDrawer)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogEvent.control">control (DialogEvent attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.CONTROL">CONTROL (Key attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Modifier.CONTROL">(Modifier attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.control">control (MouseEvent property)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.util.convert_pydantic_to_warning">convert_pydantic_to_warning() (in module foundry.core.warnings.util)</a>
 </li>
@@ -733,9 +1062,19 @@
 </li>
       </ul></li>
       <li><a href="../foundry.game/#foundry.game.Data.MapscreenPointerLocation.count">count (MapscreenPointerLocation attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalTester.count">(SignalTester attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.count">count() (FlowLayout method)</a>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.count">count() (ColorPalette method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.ColorSequence.count">(ColorSequence method)</a>
 </li>
+        <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.count">(FlowLayout method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.Path.create_child">create_child() (Path method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Path.create_child_from_parent">create_child_from_parent() (Path class method)</a>
@@ -806,6 +1145,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.D">D (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUIStyle.DARK_AMBER">DARK_AMBER (GUIStyle attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUIStyle.DARK_BLUE">DARK_BLUE (GUIStyle attribute)</a>
@@ -823,6 +1164,8 @@
       <li><a href="../foundry.gui/#foundry.gui.settings.GUIStyle.DARK_TEAL">DARK_TEAL (GUIStyle attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUIStyle.DARK_YELLOW">DARK_YELLOW (GUIStyle attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.DASHED">DASHED (Border attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.Data.Data">Data (class in foundry.core.Data)</a>
 </li>
@@ -860,6 +1203,12 @@
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternMatrix.PatternMatrix.default">default (PatternMatrix attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.default">default() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.default">(TaskWorker method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.DEFAULT_ARGUMENT">DEFAULT_ARGUMENT (in module foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Validator.default_name">default_name (Validator property)</a>
@@ -900,6 +1249,10 @@
       </ul></li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.definitions">definitions (EnemyItemFactory attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.degrees">degrees (MouseWheelEvent property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.DELETE">DELETE (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.JumpList.JumpList.delete">delete() (JumpList method)</a>
 
       <ul>
@@ -908,6 +1261,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.delete">(LevelManager method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.delta">delta (MouseWheelEvent property)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.dependencies">dependencies (Namespace attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.Definitions.Definition.description">description (Definition attribute)</a>
@@ -958,14 +1313,30 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.DIAG_WEIRD">DIAG_WEIRD (GeneratorType attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogControl">DialogControl (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogEvent">DialogEvent (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames.DICE_GAME_1UP">DICE_GAME_1UP (ActionNames attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.dice_game_1up">dice_game_1up (State attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.dict">dict() (Namespace method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoExtendedForwarder.did_action">did_action (UndoRedoExtendedForwarder property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.dill_connection">dill_connection() (in module foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection">DilledConnection (class in foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.disable_all">disable_all() (SpinnerPanel method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal.disconnect">disconnect() (Signal method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.disconnect">(SignalInstance method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.redux_store.ReduxStore.dispatch">dispatch() (ReduxStore method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.display_autoscroll_editor">display_autoscroll_editor() (LevelController method)</a>
@@ -990,6 +1361,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.display_header_editor">(LevelManager method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.util.Level.display_information">display_information (Level attribute)</a>
 
       <ul>
@@ -1002,8 +1375,6 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.display_jump_editor">(LevelManager method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.display_object_viewer">display_object_viewer() (LevelManager method)</a>
 
       <ul>
@@ -1057,6 +1428,12 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol.do">(UndoControllerProtocol method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.do">(UndoRedo method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.do">(UndoRedoForwarder method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.do">(UndoRedoRoot method)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.Block.Block.do_not_render">do_not_render (Block attribute)</a>
 
@@ -1066,6 +1443,8 @@
         <li><a href="../foundry.core.sprites/#foundry.core.sprites.Sprite.SpriteProtocol.do_not_render">(SpriteProtocol attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.DOLLAR">DOLLAR (Key attribute)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.GeneratorObject.GeneratorObject.domain">domain (GeneratorObject attribute)</a>
 
       <ul>
@@ -1082,9 +1461,15 @@
       </ul></li>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.domain_check">domain_check() (in module foundry.smb3parse.objects)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.DOUBLE">DOUBLE (Border attribute)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.double_clicked">double_clicked (Canvas attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.double_clicked_grid">double_clicked_grid (Canvas attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.DOUBLE_QUITE">DOUBLE_QUITE (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.DOWN">DOWN (Key attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.DOWN_ARROW">DOWN_ARROW() (in module foundry.gui.LevelDrawer)</a>
 </li>
@@ -1206,11 +1591,15 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.E">E (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.util.ease_color">ease_color() (in module foundry.gui.util)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.JumpList.JumpList.edit_jump">edit_jump (JumpList attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.JumpEditor.JumpEditor.edit_jump">edit_jump() (JumpEditor static method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.ehandler">ehandler (TaskMethod attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.elements">elements (Namespace attribute)</a>
 
@@ -1218,6 +1607,18 @@
         <li><a href="../foundry.gui/#foundry.gui.util.WhatIsThis.elements">(WhatIsThis attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.emit">emit() (EmittingProperty method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Signal.emit">(Signal method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.emit">(SignalInstance method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.emitting_property">emitting_property() (in module foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty">EmittingProperty (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.EMPTY_IMAGE">EMPTY_IMAGE() (in module foundry.gui.LevelDrawer)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.enable_domain">enable_domain() (SpinnerPanel method)</a>
@@ -1234,6 +1635,8 @@
         <li><a href="../foundry.gui/#foundry.gui.util.Spinner.enabled">(Spinner attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.END">END (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames.END_CARD_1UP">END_CARD_1UP (ActionNames attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.end_card_1up">end_card_1up (State attribute)</a>
@@ -1278,8 +1681,6 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelGraphicsEditor.LevelGraphicsEditor.enemy_palette_changed">(LevelGraphicsEditor attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.LevelGraphicsEditor.LevelGraphicsDisplay.enemy_palette_editor">enemy_palette_editor (LevelGraphicsDisplay attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.enemy_palette_index">enemy_palette_index (Level property)</a>
@@ -1296,6 +1697,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.util.PydanticLevel.enemy_pointer">(PydanticLevel attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.LevelWarpEditor.LevelWarpEditor.enemy_pointer_changed">enemy_pointer_changed (LevelWarpEditor attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelWarpEditor.LevelWarpDisplay.enemy_pointer_editor">enemy_pointer_editor (LevelWarpDisplay attribute)</a>
@@ -1334,11 +1737,33 @@
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Enemy.EnemyProtocol">EnemyProtocol (class in foundry.game.gfx.objects.Enemy)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.ensure_type">ensure_type() (Color class method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.ENTER">ENTER (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.WarningList.WarningLabel.enterEvent">enterEvent() (WarningLabel method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.EQUAL">EQUAL (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.ESCAPE">ESCAPE (Key attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.evolve_child">evolve_child() (Namespace method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.evolve_color_index">evolve_color_index() (Palette method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.evolve_palettes">evolve_palettes() (PaletteGroup method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FinishedTask.exception">exception (FinishedTask attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskCallback.exception_handler">exception_handler (TaskCallback attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.EXCLAMATION_MARK">EXCLAMATION_MARK (Key attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.EXCLUDED_VALUES">EXCLUDED_VALUES (in module foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.execute_task">execute_task() (TaskWorker method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.exit_after">exit_after() (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.expandingDirections">expandingDirections() (FlowLayout method)</a>
 </li>
@@ -1352,15 +1777,115 @@
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.ExtendToGroundWarning.ExtendToGroundWarning">ExtendToGroundWarning (class in foundry.core.warnings.ExtendToGroundWarning)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_0">EXTRA_CLICK_0 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_1">EXTRA_CLICK_1 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_2">EXTRA_CLICK_2 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_3">EXTRA_CLICK_3 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_4">EXTRA_CLICK_4 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_5">EXTRA_CLICK_5 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_6">EXTRA_CLICK_6 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_7">EXTRA_CLICK_7 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_8">EXTRA_CLICK_8 (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.EXTRA_CLICK_9">EXTRA_CLICK_9 (Click attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F">F (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F1">F1 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F10">F10 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F11">F11 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F12">F12 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F13">F13 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F14">F14 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F15">F15 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F16">F16 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F17">F17 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F18">F18 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F19">F19 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F2">F2 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F20">F20 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F21">F21 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F22">F22 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F23">F23 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F24">F24 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F25">F25 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F26">F26 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F27">F27 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F28">F28 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F29">F29 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F3">F3 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F30">F30 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F31">F31 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F32">F32 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F33">F33 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F34">F34 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F35">F35 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F4">F4 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F5">F5 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F6">F6 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F7">F7 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F8">F8 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.F9">F9 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.FAILURE">FAILURE (Status attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FAST_CONNECTION_POLLING_RATE">FAST_CONNECTION_POLLING_RATE (in module foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.fget">fget (EmittingProperty attribute)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.GraphicEditor.GraphicEditor.file_path">file_path (GraphicEditor property)</a>
 </li>
-      <li><a href="../foundry.core.file/#foundry.core.file.FilePath">FilePath (class in foundry.core.file)</a>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.fileno">fileno() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core.file/#foundry.core.file.FilePath">FilePath (class in foundry.core.file)</a>, <a href="../foundry.core/#foundry.core.file.FilePath">[1]</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.FileSettings">FileSettings (class in foundry.gui.settings)</a>
 </li>
@@ -1374,6 +1899,8 @@
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.util.find_world_position">find_world_position() (in module foundry.smb3parse.levels.util)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FinishedTask">FinishedTask (class in foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.FIRE_FLOWER">FIRE_FLOWER() (in module foundry.gui.LevelDrawer)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.FIRST_VALID_ROW">FIRST_VALID_ROW (in module foundry.smb3parse.levels)</a>
@@ -1382,23 +1909,35 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout">FlowLayout (class in foundry.gui.FlowLayout)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus">Focus (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.focus_selected">focus_selected() (LevelController method)</a>
 
       <ul>
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.focus_selected">(LevelManager method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.FocusEvent">FocusEvent (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.WarningList.WarningList.focusOutEvent">focusOutEvent() (WarningList method)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.FOLDER">FOLDER (CommonIcons attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FORCE_KILL_TIMEOUT">FORCE_KILL_TIMEOUT (in module foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.force_select">force_select() (LevelManager method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FORCE_TERMINATION_TIMEOUT">FORCE_TERMINATION_TIMEOUT (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.CMAction.FOREGROUND">FOREGROUND (CMAction attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.LayoutType.form">form (LayoutType attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.FormLayout.forms">forms (FormLayout attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.forward_action">forward_action() (UndoRedoForwarder method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.FORWARD_CLICK">FORWARD_CLICK (Click attribute)</a>
 </li>
       <li>
     foundry
@@ -1467,7 +2006,7 @@
     foundry.core.file
 
       <ul>
-        <li><a href="../foundry.core.file/#module-foundry.core.file">module</a>
+        <li><a href="../foundry.core.file/#module-foundry.core.file">module</a>, <a href="../foundry.core/#module-foundry.core.file">[1]</a>
 </li>
       </ul></li>
       <li>
@@ -1489,6 +2028,13 @@
 
       <ul>
         <li><a href="../foundry.core.graphics_page/#module-foundry.core.graphics_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    foundry.core.graphics_page.GraphicsGroup
+
+      <ul>
+        <li><a href="../foundry.core.graphics_page/#module-foundry.core.graphics_page.GraphicsGroup">module</a>
 </li>
       </ul></li>
       <li>
@@ -1520,6 +2066,27 @@
 </li>
       </ul></li>
       <li>
+    foundry.core.gui
+
+      <ul>
+        <li><a href="../foundry.core/#module-foundry.core.gui">module</a>
+</li>
+      </ul></li>
+      <li>
+    foundry.core.icon
+
+      <ul>
+        <li><a href="../foundry.core/#module-foundry.core.icon">module</a>
+</li>
+      </ul></li>
+      <li>
+    foundry.core.menu
+
+      <ul>
+        <li><a href="../foundry.core/#module-foundry.core.menu">module</a>
+</li>
+      </ul></li>
+      <li>
     foundry.core.namespace
 
       <ul>
@@ -1538,6 +2105,13 @@
 
       <ul>
         <li><a href="../foundry.core.painter/#module-foundry.core.painter.Painter">module</a>
+</li>
+      </ul></li>
+      <li>
+    foundry.core.palette
+
+      <ul>
+        <li><a href="../foundry.core/#module-foundry.core.palette">module</a>
 </li>
       </ul></li>
       <li>
@@ -1594,6 +2168,13 @@
 
       <ul>
         <li><a href="../foundry.core.sprites/#module-foundry.core.sprites.SpriteGroup">module</a>
+</li>
+      </ul></li>
+      <li>
+    foundry.core.tasks
+
+      <ul>
+        <li><a href="../foundry.core/#module-foundry.core.tasks">module</a>
 </li>
       </ul></li>
       <li>
@@ -1925,6 +2506,8 @@
         <li><a href="../foundry.game.level/#module-foundry.game.level.util">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     foundry.game.level.WorldMap
 
@@ -1988,8 +2571,13 @@
         <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor.PatternMatrix">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    foundry.graphic_editor.PatternViewer
+
+      <ul>
+        <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor.PatternViewer">module</a>
+</li>
+      </ul></li>
       <li>
     foundry.gui
 
@@ -2528,6 +3116,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PlayerFrameEditor.PlayerFrameEditorController.frames_changed">frames_changed (PlayerFrameEditorController attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.freturn">freturn() (TaskMethod method)</a>
+</li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.from_block_group">from_block_group() (Drawable class method)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Enemy.Enemy.from_bytes">from_bytes() (Enemy class method)</a>
@@ -2552,17 +3142,25 @@
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_data">(LevelObjectFactory method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.from_default">from_default() (ColorPalette class method)</a>
+</li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.from_file">from_file() (Drawable class method)</a>
 </li>
       <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet.from_groups">from_groups() (GraphicsSet class method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.from_hsv">from_hsv() (Color class method)</a>
+</li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.from_image">from_image() (Drawable class method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.from_json_file">from_json_file() (ColorPalette class method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.from_m3l">from_m3l() (Level method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeHandlerManager.from_managers">from_managers() (TypeHandlerManager class method)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.level.Level.from_memory">from_memory() (Level static method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.from_palette_file">from_palette_file() (ColorPalette class method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.from_path">from_path() (Namespace method)</a>
 </li>
@@ -2578,14 +3176,48 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.geometry.Size.from_qsize">from_qsize() (Size class method)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerModel.from_rom">from_rom() (PlayerViewerModel class method)</a>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.from_qt">from_qt() (Click class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.Color.from_qt">(Color class method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.Focus.from_qt">(Focus class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.FocusEvent.from_qt">(FocusEvent class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.Key.from_qt">(Key class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.KeyEvent.from_qt">(KeyEvent class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.Modifier.from_qt">(Modifier class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.from_qt">(MouseEvent class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.from_qt">(MouseWheelEvent class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.Orientation.from_qt">(Orientation class method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.from_rom">from_rom() (Palette class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.from_rom">(PaletteGroup class method)</a>
+</li>
+        <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerModel.from_rom">(PlayerViewerModel class method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeHandlerManager.from_select_types">from_select_types() (TypeHandlerManager method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Path.from_string">from_string() (Path class method)</a>
 </li>
-      <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet.from_tileset">from_tileset() (GraphicsSet class method)</a>
+      <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask.from_task">from_task() (WorkerTask class method)</a>
 </li>
+      <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet.from_tileset">from_tileset() (GraphicsSet class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.from_tileset">(PaletteGroup class method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeValidator.from_validator">from_validator() (TypeValidator class method)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.level.Level.from_world_map">from_world_map() (Level static method)</a>
@@ -2600,6 +3232,12 @@
         <li><a href="../foundry.core/#foundry.core.ChainMapView.fromkeys">(ChainMapView class method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.fset">fset (EmittingProperty attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.fsignal">fsignal (TaskMethod attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.fstart">fstart (TaskMethod attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.fully_loaded">fully_loaded (Level property)</a>
 </li>
   </ul></td>
@@ -2608,12 +3246,22 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.g">g (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.G">G (Key attribute)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.Data.Mario3Level.game_world">game_world (Mario3Level attribute)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.world_map.WorldMap.gen_levels">gen_levels() (WorldMap method)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.world_map.WorldMap.gen_positions">gen_positions() (WorldMap method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Request.generate">generate() (Request class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.generate">(RequestPipe class method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.DefaultValidator.generate_class">generate_class() (DefaultValidator class method)</a>
 
       <ul>
@@ -2627,6 +3275,8 @@
       <li><a href="../foundry.game.level/#foundry.game.level.util.generate_default_level_information">generate_default_level_information() (in module foundry.game.level.util)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.generate_dependency_graph">generate_dependency_graph() (in module foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Task.generate_identity">generate_identity() (Task class method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.LayoutCreator.generate_layout">generate_layout() (LayoutCreator class method)</a>
 </li>
@@ -2724,13 +3374,21 @@
 </li>
       <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.util.get_animations_palette_index">get_animations_palette_index() (in module foundry.core.player_animations.util)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requester.get_answer">get_answer() (Requester method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.get_arguments_of_task">get_arguments_of_task() (TaskManager method)</a>
+</li>
       <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Block.get_block">get_block() (in module foundry.game.gfx.drawable.Block)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.get_blocks">get_blocks() (in module foundry.gui.LevelDrawer)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.ROM.get_byte">get_byte() (ROM method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoActor.get_child_attribute">get_child_attribute() (UndoRedoActor method)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.ContextMenu.get_copied_objects">get_copied_objects() (ContextMenu method)</a>
+</li>
+      <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup.get_current_graphics_page">get_current_graphics_page() (GraphicsGroup method)</a>
 </li>
       <li><a href="../foundry/#foundry.get_current_version_name">get_current_version_name() (in module foundry)</a>
 </li>
@@ -2752,7 +3410,11 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeHandler.get_if_validator_uses_parent">get_if_validator_uses_parent() (TypeHandler method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.get_important_return_values">get_important_return_values() (TaskManager method)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternMatrix.PatternMatrix.get_index">get_index() (PatternMatrix method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.get_internal_palette_offset">get_internal_palette_offset() (in module foundry.core.palette)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.get_intersecting_objects">get_intersecting_objects() (Level method)</a>
 </li>
@@ -2834,6 +3496,14 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.redux_store.ReduxStore.get_state">get_state() (ReduxStore method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.GET_STATUS">GET_STATUS (Requests attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.get_status">get_status() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.get_status">(TaskWorker method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject.get_status_info">get_status_info() (EnemyObject method)</a>
 
       <ul>
@@ -2874,6 +3544,10 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.File.getrandbits">getrandbits() (in module foundry.game.File)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.getter">getter() (EmittingProperty method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.global_position">global_position (MouseEvent attribute)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.graphic_set">graphic_set (EnemyItemFactory attribute)</a>
 
       <ul>
@@ -2911,7 +3585,7 @@
 </li>
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.graphics_set">(LevelObjectFactory attribute)</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.graphics_set">(PatternViewerController property)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.graphics_set">(PatternViewerController property)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.graphics_set">[1]</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel.graphics_set">(PatternViewerModel attribute)</a>
 </li>
@@ -2944,9 +3618,15 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelGraphicsEditor.LevelGraphicsDisplay.graphics_set_editor">graphics_set_editor (LevelGraphicsDisplay attribute)</a>
 </li>
+      <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup">GraphicsGroup (class in foundry.core.graphics_page.GraphicsGroup)</a>
+</li>
       <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPage">GraphicsPage (class in foundry.core.graphics_page.GraphicsPage)</a>
 </li>
       <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet">GraphicsSet (class in foundry.core.graphics_set.GraphicsSet)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.GREATER_THAN">GREATER_THAN (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.green">green (Color attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.grid_scale">grid_scale (Canvas property)</a>
 </li>
@@ -2955,6 +3635,12 @@
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.grid_size">grid_size (Canvas property)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.grid_size_updated">grid_size_updated (Canvas attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.GROOVE">GROOVE (Border attribute)</a>
+</li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel.group_indexes">group_indexes (PatternViewerModel attribute)</a>
+</li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel.groups">groups (PatternViewerModel attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.SettingsDialog.SettingsDialog.gui_loader">gui_loader (SettingsDialog attribute)</a>
 </li>
@@ -2972,9 +3658,25 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.h">h (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.H">H (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.handle_request">handle_request() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.handle_request">(TaskWorker method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Replier.handle_requests">handle_requests() (Replier method)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.InvalidTypeArgumentException.handler">handler (InvalidTypeArgumentException attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.handler">handler() (TaskMethod method)</a>
+</li>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.InLevelObject.has_additional_length">has_additional_length (InLevelObject property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.FocusEvent.has_focus">has_focus (FocusEvent attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.has_next_area">has_next_area (Level property)</a>
 </li>
@@ -2991,6 +3693,8 @@
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.has_warnings">has_warnings (LevelManager property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.hasHeightForWidth">hasHeightForWidth() (FlowLayout method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.HASHTAG">HASHTAG (Key attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.ROM.header">header (ROM attribute)</a>
 </li>
@@ -3020,15 +3724,23 @@
         <li><a href="../foundry.core/#foundry.core.geometry.Size.height">(Size attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Sprite.Sprite.HEIGHT">HEIGHT (Sprite attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Sprite.Sprite.HEIGHT">HEIGHT (Sprite attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.heightForWidth">heightForWidth() (FlowLayout method)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.HELP">HELP (CommonIcons attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.DialogControl.HELP">(DialogControl attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.menu.MenuOption.help_text">help_text (MenuOption attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.Spinner.hexadecimal">hexadecimal (Spinner attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.HOME">HOME (Key attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.HORIZ_TO_GROUND">HORIZ_TO_GROUND (GeneratorType attribute)</a>
 </li>
@@ -3046,6 +3758,8 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelDataEditor.LevelDataState.horizontal">(LevelDataState attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Orientation.HORIZONTAL">HORIZONTAL (Orientation attribute)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.HORIZONTAL_2">HORIZONTAL_2 (GeneratorType attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.horizontal_changed">horizontal_changed (HeaderEditor attribute)</a>
@@ -3072,6 +3786,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.WarningList.WarningLabel.hovered">hovered (WarningLabel attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.hue">hue (Color property)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames.HUNDRED_COINS_1UP">HUNDRED_COINS_1UP (ActionNames attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.hundred_coins_1up">hundred_coins_1up (State attribute)</a>
@@ -3082,8 +3798,16 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectViewer.icon">icon (ObjectViewer property)</a>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.I">I (Key attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.icon.Icon">Icon (class in foundry.core.icon)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.menu.MenuOption.icon">icon (MenuOption attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectViewer.icon">(ObjectViewer property)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry/#foundry.icon">icon() (in module foundry)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.icon_height">icon_height (EnemyDefinition attribute)</a>
@@ -3098,6 +3822,18 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.File.ROM.identifier">identifier (ROM property)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FinishedTask.identity">identity (FinishedTask attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.Reply.identity">(Reply attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.Request.identity">(Request attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.Task.identity">(Task attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask.identity">(WorkerTask property)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.BlockGroup.BlockGroup.image">image() (BlockGroup method)</a>
 
       <ul>
@@ -3108,6 +3844,18 @@
         <li><a href="../foundry.core.sprites/#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol.image">(SpriteGroupProtocol method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.incoming_pipe">incoming_pipe (TaskManager attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.incoming_pipe">(TaskManagerProxy attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.incoming_pipe">(TaskWorker attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.incoming_pipe">(TaskWorkerProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalTester.increment_counter">increment_counter() (SignalTester method)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.util.increment_type">increment_type() (in module foundry.game.gfx.objects.util)</a>
 </li>
       <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPage.index">index (GraphicsPage attribute)</a>
@@ -3126,6 +3874,16 @@
         <li><a href="../foundry.core.sprites/#foundry.core.sprites.Sprite.Sprite.index">(Sprite attribute)</a>, <a href="../foundry.game/#foundry.game.EnemyDefinitions.Sprite.index">[1]</a>
 </li>
         <li><a href="../foundry.core.sprites/#foundry.core.sprites.Sprite.SpriteProtocol.index">(SpriteProtocol attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.index">index() (ColorPalette method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.ColorSequence.index">(ColorSequence method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.palette.Palette.index">(Palette method)</a>
+</li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.index">(PatternViewerController method)</a>
 </li>
       </ul></li>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.index_check">index_check() (in module foundry.smb3parse.objects)</a>
@@ -3155,8 +3913,22 @@
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderDisplay.info_editor">info_editor (HeaderDisplay attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.GraphicEditor.GraphicEditor.initialize_state">initialize_state() (GraphicEditor method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoExtendedForwarder.initialize_state">(UndoRedoExtendedForwarder method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper.initialize_state">(UndoRedoHelper method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.initialize_state">(UndoRedoRoot method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.InLevelObject">InLevelObject (class in foundry.smb3parse.objects)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.INSERT">INSERT (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.INSET">INSET (Border attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.instance">instance (SignalInstance attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.PydanticUserSettings.instaplay_arguments">instaplay_arguments (PydanticUserSettings attribute)</a>
 
@@ -3164,6 +3936,8 @@
         <li><a href="../foundry.gui/#foundry.gui.settings.UserSettings.instaplay_arguments">(UserSettings attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.settings.PydanticUserSettings.instaplay_emulator">instaplay_emulator (PydanticUserSettings attribute)</a>
 
       <ul>
@@ -3174,14 +3948,14 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.IntegerValidator">IntegerValidator (class in foundry.core.namespace)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskCallback.internal_task">internal_task (TaskCallback property)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.InvalidChildName.invalid_element">invalid_element (InvalidChildName attribute)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.WarningType.WarningType.invalid_extension_to_ground">invalid_extension_to_ground (WarningType attribute)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.WarningType.WarningType.invalid_position">invalid_position (WarningType attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.WarningType.WarningType.invalid_size">invalid_size (WarningType attribute)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.WarningType.WarningType.invalid_type">invalid_type (WarningType attribute)</a>
@@ -3220,6 +3994,12 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.SelectionSquare.SelectionSquare.is_active">is_active() (SelectionSquare method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.is_alive">is_alive() (TaskManagerProxy method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.is_alive">(TaskWorkerProxy method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.is_attached">is_attached (LevelController property)</a>
 
       <ul>
@@ -3233,6 +4013,8 @@
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Jump.Jump.is_jump">is_jump() (Jump static method)</a>
 </li>
       <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.is_kicking">is_kicking (PlayerAnimationData attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.is_limited">is_limited (TaskManager attribute)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.GraphicEditor.GraphicEditor.is_loaded">is_loaded (GraphicEditor property)</a>
 
@@ -3255,6 +4037,10 @@
       <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerController.is_mario_changed">is_mario_changed (PlayerViewerController attribute)</a>
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit_dict.CodeEditDict.is_option">is_option() (CodeEditDict method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.is_silenced">is_silenced (SignalInstance property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal.is_silenced">is_silenced() (Signal method)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.is_single_block">is_single_block (LevelObject property)</a>
 </li>
@@ -3286,16 +4072,30 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.J">J (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.JOIN">JOIN (Requests attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.join">join() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.join">(TaskManagerProxy method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.join">(TaskWorker method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.join">(TaskWorkerProxy method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Jump.Jump">Jump (class in foundry.game.gfx.objects.Jump)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.jump_destination_action">jump_destination_action (LevelControlled attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.jump_list">jump_list (LevelControlled attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.JumpCreator.JumpCreator">JumpCreator (class in foundry.gui.JumpCreator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.JumpEditor.JumpEditor">JumpEditor (class in foundry.gui.JumpEditor)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.JumpList.JumpList">JumpList (class in foundry.gui.JumpList)</a>
@@ -3314,6 +4114,18 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.K">K (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key">Key (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeyEvent.key">key (KeyEvent attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.KeySequence.key">(KeySequence attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeyEvent">KeyEvent (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.CustomChildWindow.CustomChildWindow.keyPressEvent">keyPressEvent() (CustomChildWindow method)</a>
 
       <ul>
@@ -3324,19 +4136,31 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.KeySequence">KeySequence (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.TypeInformation.keyword_arguments">keyword_arguments (TypeInformation attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ComplexValidatorCallableInformation.keywords_arguments">keywords_arguments (ComplexValidatorCallableInformation attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.KeywordValidator">KeywordValidator (class in foundry.core.namespace)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.kill">kill() (TaskManagerProxy method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.kill">(TaskWorkerProxy method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.L">L (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.util.Form.label">label (Form attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.last_event">last_event (TaskManager attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelSelectorController.last_level">last_level (LevelSelectorController attribute)</a>
 </li>
@@ -3354,7 +4178,19 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.LEAF">LEAF() (in module foundry.gui.LevelDrawer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LEFT">LEFT (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.LEFT_ARROW">LEFT_ARROW() (in module foundry.gui.LevelDrawer)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LEFT_BRACE">LEFT_BRACE (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LEFT_BRACKET">LEFT_BRACKET (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.LEFT_CLICK">LEFT_CLICK (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LEFT_PARENTHESES">LEFT_PARENTHESES (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LEFT_QUOTE">LEFT_QUOTE (Key attribute)</a>
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.length">length (CodeEdit attribute)</a>
 
@@ -3364,6 +4200,8 @@
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.length">(LevelObject property)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.LESS_THAN">LESS_THAN (Key attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level">Level (class in foundry.game.level.Level)</a>
 
       <ul>
@@ -3462,10 +4300,10 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelInformationEditor.LevelInformationEditor">LevelInformationEditor (class in foundry.gui.LevelInformationEditor)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.LevelInformationEditor.LevelInformationEditorDisplay">LevelInformationEditorDisplay (class in foundry.gui.LevelInformationEditor)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.gui/#foundry.gui.LevelInformationEditor.LevelInformationEditorDisplay">LevelInformationEditorDisplay (class in foundry.gui.LevelInformationEditor)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelLike.LevelLike">LevelLike (class in foundry.game.level.LevelLike)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager">LevelManager (class in foundry.game.level.LevelManager)</a>
@@ -3528,6 +4366,18 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUIStyle.LIGHT_YELLOW">LIGHT_YELLOW (GUIStyle attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.LIMIT">LIMIT (Requests attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.limit">limit() (TaskManager method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.link">link() (SignalInstance method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.link_child">link_child() (UndoRedoForwarder method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.link_child">(UndoRedoRoot method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.AboutWindow.LinkLabel">LinkLabel (class in foundry.gui.AboutWindow)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.CMMode.LIST">LIST (CMMode attribute)</a>
@@ -3584,6 +4434,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUILoader.load_style">load_style() (GUILoader method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.local_position">local_position (MouseEvent attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.util.Location">Location (class in foundry.game.level.util)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.Data.Data.location">location (Data attribute)</a>
@@ -3604,6 +4456,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.M">M (Key attribute)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.main.main">main() (in module foundry.graphic_editor.main)</a>
 
       <ul>
@@ -3612,11 +4466,19 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow">MainWindow (class in foundry.gui.MainWindow)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.make_request">make_request() (TaskManagerProxy method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.make_request">(TaskWorkerProxy method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.make_screenshot">make_screenshot() (LevelView method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.MalformedArgumentsExceptions">MalformedArgumentsExceptions</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.Manager">Manager (class in foundry.game.level.LevelManager)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.MANAGER_SLEEP_DURATION">MANAGER_SLEEP_DURATION (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.MapObject.MapObject">MapObject (class in foundry.game.gfx.objects.MapObject)</a>
 </li>
@@ -3670,7 +4532,15 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelSizeBar.SizeBar.maximum_value">(SizeBar property)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.MENU_BAR">MENU_BAR (Focus attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.menu_toolbar_save_action">menu_toolbar_save_action (LevelControlled attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.menu.MenuOption">MenuOption (class in foundry.core.menu)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.META">META (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.MIDDLE_CLICK">MIDDLE_CLICK (Click attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.middle_mouse_release">middle_mouse_release() (LevelController method)</a>
 
@@ -3710,10 +4580,26 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.minimumSize">minimumSize() (FlowLayout method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.MINUS">MINUS (Key attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.MissingException">MissingException</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.MissingTypeArgumentException">MissingTypeArgumentException</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object.model">model (Object property)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.model">(UndoRedo attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Modifier">Modifier (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeyEvent.modifiers">modifiers (KeyEvent attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.modifiers">(MouseEvent attribute)</a>
+</li>
+      </ul></li>
       <li>
     module
 
@@ -3736,13 +4622,15 @@
 </li>
         <li><a href="../foundry.core.drawable/#module-foundry.core.drawable.Drawable">foundry.core.drawable.Drawable</a>
 </li>
-        <li><a href="../foundry.core.file/#module-foundry.core.file">foundry.core.file</a>
+        <li><a href="../foundry.core.file/#module-foundry.core.file">foundry.core.file</a>, <a href="../foundry.core/#module-foundry.core.file">[1]</a>
 </li>
         <li><a href="../foundry.core.file/#module-foundry.core.file.FilePath">foundry.core.file.FilePath</a>
 </li>
         <li><a href="../foundry.core/#module-foundry.core.geometry">foundry.core.geometry</a>
 </li>
         <li><a href="../foundry.core.graphics_page/#module-foundry.core.graphics_page">foundry.core.graphics_page</a>
+</li>
+        <li><a href="../foundry.core.graphics_page/#module-foundry.core.graphics_page.GraphicsGroup">foundry.core.graphics_page.GraphicsGroup</a>
 </li>
         <li><a href="../foundry.core.graphics_page/#module-foundry.core.graphics_page.GraphicsPage">foundry.core.graphics_page.GraphicsPage</a>
 </li>
@@ -3752,11 +4640,19 @@
 </li>
         <li><a href="../foundry.core.graphics_set/#module-foundry.core.graphics_set.util">foundry.core.graphics_set.util</a>
 </li>
+        <li><a href="../foundry.core/#module-foundry.core.gui">foundry.core.gui</a>
+</li>
+        <li><a href="../foundry.core/#module-foundry.core.icon">foundry.core.icon</a>
+</li>
+        <li><a href="../foundry.core/#module-foundry.core.menu">foundry.core.menu</a>
+</li>
         <li><a href="../foundry.core/#module-foundry.core.namespace">foundry.core.namespace</a>
 </li>
         <li><a href="../foundry.core.painter/#module-foundry.core.painter">foundry.core.painter</a>
 </li>
         <li><a href="../foundry.core.painter/#module-foundry.core.painter.Painter">foundry.core.painter.Painter</a>
+</li>
+        <li><a href="../foundry.core/#module-foundry.core.palette">foundry.core.palette</a>
 </li>
         <li><a href="../foundry.core.player_animations/#module-foundry.core.player_animations">foundry.core.player_animations</a>
 </li>
@@ -3773,6 +4669,8 @@
         <li><a href="../foundry.core.sprites/#module-foundry.core.sprites.Sprite">foundry.core.sprites.Sprite</a>
 </li>
         <li><a href="../foundry.core.sprites/#module-foundry.core.sprites.SpriteGroup">foundry.core.sprites.SpriteGroup</a>
+</li>
+        <li><a href="../foundry.core/#module-foundry.core.tasks">foundry.core.tasks</a>
 </li>
         <li><a href="../foundry.core.tiles/#module-foundry.core.tiles">foundry.core.tiles</a>
 </li>
@@ -3885,6 +4783,8 @@
         <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor.main">foundry.graphic_editor.main</a>
 </li>
         <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor.PatternMatrix">foundry.graphic_editor.PatternMatrix</a>
+</li>
+        <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor.PatternViewer">foundry.graphic_editor.PatternViewer</a>
 </li>
         <li><a href="../foundry.gui/#module-foundry.gui">foundry.gui</a>
 </li>
@@ -4051,12 +4951,16 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelSelector.WorldMapLevelSelect.mouseDoubleClickEvent">mouseDoubleClickEvent() (WorldMapLevelSelect method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent">MouseEvent (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.BlockViewer.BlockViewerView.mouseMoveEvent">mouseMoveEvent() (BlockViewerView method)</a>
 
       <ul>
         <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.mouseMoveEvent">(LevelView method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectButton.mouseMoveEvent">(ObjectButton method)</a>
+</li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.mouseMoveEvent">(PatternViewerController method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.mouseMoveEvent">(PatternViewerView method)</a>
 </li>
@@ -4088,6 +4992,8 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.ObjectList.ObjectList.mouseReleaseEvent">(ObjectList method)</a>
 </li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.mouseReleaseEvent">(PatternViewerController method)</a>
+</li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.mouseReleaseEvent">(PatternViewerView method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.SpriteViewer.SpriteViewerView.mouseReleaseEvent">(SpriteViewerView method)</a>
@@ -4097,6 +5003,8 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelSelector.WorldMapLevelSelect.mouseReleaseEvent">(WorldMapLevelSelect method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent">MouseWheelEvent (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject.move_by">move_by() (EnemyObject method)</a>
 
       <ul>
@@ -4149,10 +5057,16 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../foundry.gui/#foundry.gui.util.Button.name">name (Button attribute)</a>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.N">N (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Action.name">name (Action attribute)</a>
 
       <ul>
+        <li><a href="../foundry.gui/#foundry.gui.util.Button.name">(Button attribute)</a>
+</li>
         <li><a href="../foundry.game.level/#foundry.game.level.util.DisplayInformation.name">(DisplayInformation attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.name">(EmittingProperty attribute)</a>
 </li>
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject.name">(EnemyObject property)</a>
 </li>
@@ -4178,6 +5092,18 @@
 </li>
         <li><a href="../foundry.game/#foundry.game.File.ROM.name">(ROM attribute)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.Signal.name">(Signal attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.name">(TaskManager attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.name">(TaskManagerProxy attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.name">(TaskMethod attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.name">(TaskWorker attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.name">(TaskWorkerProxy attribute)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.name_changed">name_changed (HeaderEditor attribute)</a>
 
@@ -4191,8 +5117,6 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.namespace_exists_at_path">namespace_exists_at_path() (Namespace method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core/#foundry.core.namespace.NamespaceValidationException">NamespaceValidationException</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.ChainMap.new_child">new_child() (ChainMap method)</a>
@@ -4203,6 +5127,8 @@
       </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_enemies">next_area_enemies (Level property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_object_set">next_area_object_set (Level property)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_objects">next_area_objects (Level property)</a>
@@ -4223,15 +5149,55 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.NO_JUMP">NO_JUMP() (in module foundry.gui.LevelDrawer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.NONE">NONE (Border attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Focus.NONE">(Focus attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.Selection.NONE">(Selection attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.NoneValidator">NoneValidator (in module foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.NonNegativeIntegerValidator">NonNegativeIntegerValidator (class in foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.NORMAL_STAR">NORMAL_STAR() (in module foundry.gui.LevelDrawer)</a>
 </li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.normalize_point">normalize_point() (PatternViewerController method)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.normalized_address">normalized_address() (INESHeader method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.NOT_DEFINED">NOT_DEFINED (Requests attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.Status.NOT_DEFINED">(Status attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.NOT_PROVIDED_ARGUMENT">NOT_PROVIDED_ARGUMENT (in module foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.NotAPickleException">NotAPickleException</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_0">NUMBER_0 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_1">NUMBER_1 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_2">NUMBER_2 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_3">NUMBER_3 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_4">NUMBER_4 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_5">NUMBER_5 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_6">NUMBER_6 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_7">NUMBER_7 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_8">NUMBER_8 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMBER_9">NUMBER_9 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.NUMS_LOCK">NUMS_LOCK (Key attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -4239,6 +5205,8 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.O">O (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.CMMode.OBJ">OBJ (CMMode attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.obj">obj (ObjectInfo attribute)</a>
@@ -4251,6 +5219,10 @@
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike.obj_index">(ObjectLike attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object">Object (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object.Model">Object.Model (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.object_at">object_at() (Level method)</a>
 
       <ul>
@@ -4329,6 +5301,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectList.ObjectList">ObjectList (class in foundry.gui.ObjectList)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.ObjectMeta">ObjectMeta (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.objects_end">objects_end (Level property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.objects_selected">objects_selected (LevelView attribute)</a>
@@ -4363,20 +5337,24 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PlayerFrameEditor.PlayerFrameEditorController.offset_changed">offset_changed (PlayerFrameEditorController attribute)</a>
 </li>
-      <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.offsets">offsets (Level attribute)</a>
+      <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup.offsets">offsets (GraphicsGroup property)</a>
+
+      <ul>
+        <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.offsets">(Level attribute)</a>
 </li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.ColorSelector.ColorSelector.ok_clicked">ok_clicked (ColorSelector attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_about">on_about() (MainWindow method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_block_viewer">on_block_viewer() (MainWindow method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_check_for_update">on_check_for_update() (MainWindow method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.on_disable">on_disable() (LevelManager method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_edit_autoscroll">on_edit_autoscroll() (MainWindow method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.on_enable">on_enable() (LevelManager method)</a>
@@ -4477,14 +5455,38 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.orb.Orb">Orb (class in foundry.gui.orb)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Orientation">Orientation (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.orientation">orientation (EnemyDefinition attribute)</a>
 
       <ul>
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.orientation">(LevelObject property)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.orientation">(MouseWheelEvent property)</a>
+</li>
         <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.TilesetDefinition.orientation">(TilesetDefinition attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.OTHER">OTHER (Click attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Focus.OTHER">(Focus attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.Modifier.OTHER">(Modifier attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.outgoing_pipe">outgoing_pipe (TaskManager attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.outgoing_pipe">(TaskManagerProxy attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.outgoing_pipe">(TaskWorker attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.outgoing_pipe">(TaskWorkerProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.OUTSET">OUTSET (Border attribute)</a>
+</li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.WarningType.WarningType.outside_level_bounds">outside_level_bounds (WarningType attribute)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.OutsideLevelBoundsWarning.OutsideLevelBoundsWarning">OutsideLevelBoundsWarning (class in foundry.core.warnings.OutsideLevelBoundsWarning)</a>
@@ -4501,13 +5503,21 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.P">P (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.P_SWITCH">P_SWITCH() (in module foundry.gui.LevelDrawer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PAGE_DOWN">PAGE_DOWN (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.PlayerFrameEditor.PlayerFrameEditorController.page_offset">page_offset (PlayerFrameEditorController property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PAGE_UP">PAGE_UP (Key attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.pages">pages (EnemyDefinition attribute)</a>
 
       <ul>
+        <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup.pages">(GraphicsGroup attribute)</a>
+</li>
         <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet.pages">(GraphicsSet attribute)</a>
 </li>
       </ul></li>
@@ -4528,6 +5538,8 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectIcon.paintEvent">(ObjectIcon method)</a>
 </li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.paintEvent">(PatternViewerController method)</a>
+</li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.paintEvent">(PatternViewerView method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.LevelSizeBar.SizeBar.paintEvent">(SizeBar method)</a>
@@ -4539,6 +5551,8 @@
         <li><a href="../foundry.gui/#foundry.gui.WorldMapView.WorldMapView.paintEvent">(WorldMapView method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette">Palette (class in foundry.core.palette)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteWidget.PaletteWidget.palette">palette (PaletteWidget property)</a>
 
       <ul>
@@ -4562,9 +5576,9 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PaletteGroupEditor.PaletteGroupEditor.palette_group">(PaletteGroupEditor property)</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.palette_group">(PatternViewerController property)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.palette_group">(PatternViewerController property)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.palette_group">[1]</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel.palette_group">(PatternViewerModel attribute)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel.palette_group">(PatternViewerModel attribute)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel.palette_group">[1]</a>
 </li>
         <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_group">(PlayerAnimationData attribute)</a>
 </li>
@@ -4614,9 +5628,9 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.BlockEditor.BlockEditorModel.palette_index">(BlockEditorModel attribute)</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.palette_index">(PatternViewerController property)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.palette_index">(PatternViewerController property)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.palette_index">[1]</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel.palette_index">(PatternViewerModel attribute)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel.palette_index">(PatternViewerModel attribute)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel.palette_index">[1]</a>
 </li>
         <li><a href="../foundry.core.player_animations/#foundry.core.player_animations.PlayerAnimationData.PlayerAnimationData.palette_index">(PlayerAnimationData attribute)</a>
 </li>
@@ -4639,11 +5653,15 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteEditorWidget.PaletteEditorWidget">PaletteEditorWidget (class in foundry.gui.PaletteEditorWidget)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup">PaletteGroup (class in foundry.core.palette)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupController.PaletteGroupController">PaletteGroupController (class in foundry.gui.PaletteGroupController)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupEditor.PaletteGroupEditor">PaletteGroupEditor (class in foundry.gui.PaletteGroupEditor)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel">PaletteGroupModel (class in foundry.gui.PaletteGroupModel)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.palettes">palettes (PaletteGroup attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteViewer.PaletteViewer.palettes_per_row">palettes_per_row (PaletteViewer attribute)</a>
 </li>
@@ -4666,6 +5684,10 @@
       <li><a href="../foundry.core/#foundry.core.namespace.PARENT_ARGUMENT">PARENT_ARGUMENT (in module foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.Widget.parent_attribute_name">parent_attribute_name (Widget attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.parent_recv_from_child_pipe">parent_recv_from_child_pipe (RequestPipe attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.parent_send_to_child_pipe">parent_send_to_child_pipe (RequestPipe attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ParentDoesNotContainChildException">ParentDoesNotContainChildException</a>
 </li>
@@ -4693,8 +5715,6 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Path">Path (class in foundry.core.namespace)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPage.path">path (GraphicsPage attribute)</a>
 
       <ul>
@@ -4703,16 +5723,22 @@
         <li><a href="../foundry.game/#foundry.game.File.ROM.path">(ROM attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.pattern_scale">pattern_scale (PatternViewerView property)</a>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.pattern_scale">pattern_scale (PatternViewerController property)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.pattern_scale">(PatternViewerView property)</a>
 </li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.BlockEditor.BlockEditorView.pattern_selected">pattern_selected (BlockEditorView attribute)</a>
 
       <ul>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.pattern_selected">(PatternViewerController attribute)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.pattern_selected">(PatternViewerController attribute)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.pattern_selected">[1]</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.pattern_selected">(PatternViewerView attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternMatrix.PatternMatrix">PatternMatrix (class in foundry.graphic_editor.PatternMatrix)</a>
 </li>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.Block.Block.patterns">patterns (Block attribute)</a>
@@ -4721,19 +5747,51 @@
         <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternMatrix.PatternMatrix.patterns">(PatternMatrix attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS">PATTERNS (PatternViewerView attribute)</a>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.PATTERNS">PATTERNS (PatternViewerController attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS">(PatternViewerView attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS_PER_COLUMN">PATTERNS_PER_COLUMN (PatternViewerView attribute)</a>
+      </ul></li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.patterns_changed">patterns_changed (PatternViewerController attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS_PER_ROW">PATTERNS_PER_ROW (PatternViewerView attribute)</a>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.PATTERNS_PER_COLUMN">PATTERNS_PER_COLUMN (PatternViewerController attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS_PER_COLUMN">(PatternViewerView attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController">PatternViewerController (class in foundry.gui.PatternViewer)</a>
+      </ul></li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.PATTERNS_PER_ROW">PATTERNS_PER_ROW (PatternViewerController attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.PATTERNS_PER_ROW">(PatternViewerView attribute)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel">PatternViewerModel (class in foundry.gui.PatternViewer)</a>
+      </ul></li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController">PatternViewerController (class in foundry.graphic_editor.PatternViewer)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController">(class in foundry.gui.PatternViewer)</a>
 </li>
+      </ul></li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel">PatternViewerModel (class in foundry.graphic_editor.PatternViewer)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerModel">(class in foundry.gui.PatternViewer)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView">PatternViewerView (class in foundry.gui.PatternViewer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PAUSE">PAUSE (Key attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.redux_store.Action.payload">payload (Action attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper.peak_redo">peak_redo (UndoRedoHelper property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper.peak_undo">peak_undo (UndoRedoHelper property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PERCENT">PERCENT (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PERIOD">PERIOD (Key attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.pipe_ends_level">pipe_ends_level (HeaderEditor property)</a>
 
@@ -4785,6 +5843,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PlayerViewer.PlayerViewerView">PlayerViewerView (class in foundry.gui.PlayerViewer)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PLUS">PLUS (Key attribute)</a>
+</li>
       <li><a href="../foundry.core.blocks/#foundry.core.blocks.Block.Block.point">point (Block attribute)</a>
 
       <ul>
@@ -4810,6 +5870,22 @@
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.point_offset">point_offset (Drawable attribute)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Jump.Jump.POINTER_DOMAIN">POINTER_DOMAIN (Jump attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.poll">poll() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.poll_queued_tasks">poll_queued_tasks() (TaskManager method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.poll_tasks">poll_tasks() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.poll_tasks">(TaskManagerProxy method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.poll_tasks">(TaskWorker method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.poll_workers">poll_workers() (TaskManager method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.POPUP">POPUP (Focus attribute)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Enemy.Enemy.position">position (Enemy attribute)</a>
 
@@ -4867,13 +5943,27 @@
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.prefix">prefix (CodeEdit attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Selection.PRIMARY">PRIMARY (Selection attribute)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.primary_expansion">primary_expansion() (LevelObject method)</a>
 
       <ul>
         <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.ObjectLike.ObjectLike.primary_expansion">(ObjectLike method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeySequence.primary_modifier">primary_modifier (KeySequence attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.PrimitiveValidator">PrimitiveValidator (class in foundry.core.namespace)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.PRINT">PRINT (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.process">process (TaskManagerProxy attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.process">(TaskWorkerProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.process_action">process_action() (UndoRedoRoot method)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.program_address">program_address() (INESHeader static method)</a>
 </li>
@@ -4899,13 +5989,19 @@
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.Q">Q (Key attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.WorldMap.WorldMap.q_size">q_size (WorldMap property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.geometry.Rect.qrect">qrect (Rect property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../foundry.core/#foundry.core.geometry.Rect.qrect">qrect (Rect property)</a>
-</li>
       <li><a href="../foundry.core/#foundry.core.geometry.Size.qsize">qsize (Size property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.QUESTION_MARK0">QUESTION_MARK0 (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.queued_tasks">queued_tasks (TaskManager attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -4913,6 +6009,10 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.r">r (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.R">R (Key attribute)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.validators.range_validator">range_validator() (in module foundry.core.validators)</a>
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.read">read() (CodeEdit method)</a>
@@ -4931,7 +6031,17 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.Data.read_string_dict">read_string_dict() (in module foundry.game.Data)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.readable">readable (DilledConnection property)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.Data.Mario3Level.real_obj_set">real_obj_set (Mario3Level attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.FocusEvent.reason">reason (FocusEvent attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requester.receive_answer">receive_answer() (Requester method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Replier.received_request">received_request (Replier property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.recent_returned_values">recent_returned_values (TaskManager attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.geometry.Rect">Rect (class in foundry.core.geometry)</a>
 </li>
@@ -4951,8 +6061,20 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.rect_y_offset">rect_y_offset (EnemyDefinition attribute)</a>
 </li>
-      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.REDO">REDO (CommonIcons attribute)</a>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.recv">recv() (DilledConnection method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.recv_bytes">recv_bytes() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.recv_bytes_into">recv_bytes_into() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.red">red (Color attribute)</a>
+</li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.REDO">REDO (CommonIcons attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Selection.REDO">(Selection attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.redo">redo() (HeaderEditor method)</a>
 
       <ul>
@@ -4974,8 +6096,16 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol.redo">(UndoControllerProtocol method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.redo">(UndoRedo method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoExtendedForwarder.redo">(UndoRedoExtendedForwarder method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.redo">(UndoRedoRoot method)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.redo_action">redo_action (LevelControlled attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.redo_stack">redo_stack (UndoRedo attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.redux_store.ReduxStore">ReduxStore (class in foundry.core.redux_store)</a>
 </li>
@@ -4985,6 +6115,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.refresh">(LevelManager method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogControl.REJECT">REJECT (DialogControl attribute)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.File.INESHeader.relative_address">relative_address() (INESHeader static method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.reload">reload() (Level method)</a>
@@ -5013,10 +6145,10 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.remove_selected_objects">remove_selected_objects() (LevelView method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.remove_stale_return_values">remove_stale_return_values() (TaskManager method)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.removeItem">removeItem() (FlowLayout method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject.render">render() (EnemyObject method)</a>
 
       <ul>
@@ -5031,6 +6163,8 @@
         <li><a href="../foundry.gui/#foundry.gui.orb.View.render">(View method)</a>, <a href="../foundry.gui/#foundry.gui.player_lives.View.render">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.rendered_position">rendered_position (LevelObject property)</a>
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.rendered_size">rendered_size (LevelObject property)</a>
@@ -5041,11 +6175,49 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.replace_object">replace_object() (LevelView method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Replier">Replier (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.replier">replier (RequestPipe property)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.replier">(TaskManager attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.replier">(TaskWorker attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Reply">Reply (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Replier.reply">reply() (Replier method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Request">Request (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Replier.request">request (Replier attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.Requester.request">(Requester attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requester">Requester (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe.requester">requester (RequestPipe property)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.requester">(TaskManagerProxy attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.requester">(TaskWorkerProxy attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RequestPipe">RequestPipe (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests">Requests (class in foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.require_enabled">require_enabled() (in module foundry.game.level.LevelManager)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.require_safe_to_change">require_safe_to_change() (in module foundry.game.level.LevelController)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.MissingException.required_fields">required_fields (MissingException attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Task.required_tasks">required_tasks (Task attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectDrawArea.resize">resize() (ObjectDrawArea method)</a>
 
@@ -5079,6 +6251,8 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.settings.ResizeModes">ResizeModes (class in foundry.gui.settings)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.RESPONSIVE_TIMEOUT">RESPONSIVE_TIMEOUT (in module foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupController.PaletteGroupController.restore">restore() (PaletteGroupController method)</a>
 
       <ul>
@@ -5089,7 +6263,29 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ComplexValidatorCallableInformation.restrict_keywords">restrict_keywords (ComplexValidatorCallableInformation attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.FinishedTask.result">result (FinishedTask attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.RETURN">RETURN (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskCallback.return_task">return_task (TaskCallback attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.return_task">return_task() (TaskMethod method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Action.reverse_action">reverse_action (Action attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.RIDGE">RIDGE (Border attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.RIGHT">RIGHT (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.RIGHT_ARROW">RIGHT_ARROW() (in module foundry.gui.LevelDrawer)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.RIGHT_BRACE">RIGHT_BRACE (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.RIGHT_BRACKET">RIGHT_BRACKET (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Click.RIGHT_CLICK">RIGHT_CLICK (Click attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.RIGHT_PARENTHESES">RIGHT_PARENTHESES (Key attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.ROM">ROM (class in foundry.game.File)</a>
 </li>
@@ -5121,7 +6317,11 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.roulette_1up">roulette_1up (State attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.ROUND_DASHED">ROUND_DASHED (Border attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.ColorSelector.ColorSelector.ROWS">ROWS (ColorSelector attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.RUNNING">RUNNING (Status attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -5129,6 +6329,10 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.s">s (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.S">S (Key attribute)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.safe_to_change">safe_to_change (LevelControlled property)</a>
 
       <ul>
@@ -5138,6 +6342,8 @@
 </li>
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.safe_to_change">safe_to_change() (MainWindow method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.saturation">saturation (Color property)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.SAVE">SAVE (CommonIcons attribute)</a>
 </li>
@@ -5165,6 +6371,10 @@
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.scale">scale (LevelObject property)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.schedule_task">schedule_task() (TaskManagerProxy method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.schedule_tasks">schedule_tasks() (TaskManagerProxy method)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.screenshot">screenshot (LevelController property)</a>
 
       <ul>
@@ -5189,11 +6399,17 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDataEditor.LevelDataDisplay.scroll_editor">scroll_editor (LevelDataDisplay attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SCROLL_LOCK">SCROLL_LOCK (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.scroll_to_objects">scroll_to_objects() (LevelView method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.scroll_type">scroll_type (Level property)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Selection.SECONDARY">SECONDARY (Selection attribute)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.secondary_length">secondary_length (LevelObject property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeySequence.secondary_modifier">secondary_modifier (KeySequence attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.select_all">select_all() (LevelController method)</a>
 
@@ -5233,7 +6449,19 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectList.ObjectList.selected_objects">selected_objects() (ObjectList method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Selection">Selection (class in foundry.core.gui)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.SelectionSquare.SelectionSquare">SelectionSquare (class in foundry.gui.SelectionSquare)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SEMICOLON">SEMICOLON (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.send">send() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.send_bytes">send_bytes() (DilledConnection method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requester.send_request">send_request() (Requester method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.send_task_to_worker">send_task_to_worker() (TaskManager method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.sequence_to_pretty_str">sequence_to_pretty_str() (in module foundry.core)</a>
 </li>
@@ -5287,6 +6515,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.setGeometry">setGeometry() (FlowLayout method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.EmittingProperty.setter">setter() (EmittingProperty method)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.SETTINGS">SETTINGS (CommonIcons attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.File.ROM.settings">settings (ROM property)</a>
@@ -5297,9 +6527,21 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.setup_layout">setup_layout() (in module foundry.gui.util)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.BaseModel.setup_signals">setup_signals (BaseModel attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.util.setup_widget_menu">setup_widget_menu() (in module foundry.gui.util)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.setup_window">setup_window() (in module foundry.gui.util)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SHIFT">SHIFT (Key attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Modifier.SHIFT">(Modifier attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseEvent.shift">shift (MouseEvent property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.SHORTCUT">SHORTCUT (Focus attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.WarningList.WarningList.show">show() (WarningList method)</a>
 </li>
@@ -5315,6 +6557,34 @@
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.side_palette">side_palette (LevelControlled attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal">Signal (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalBlocker.signal">signal (SignalBlocker attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.signal">(SignalInstance attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalTester.signal">(SignalTester attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.signal">signal() (TaskMethod method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object.signal_blocker">signal_blocker (Object property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalBlocker">SignalBlocker (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalInstance">SignalInstance (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Object.signals">signals (Object property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.SignalTester">SignalTester (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal.silence">silence() (Signal method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.SignalInstance.silence">(SignalInstance method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupController.PaletteGroupController.silent_update">silent_update() (PaletteGroupController method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.BlockEditor.BlockEditorController.silent_update_tsa_data">silent_update_tsa_data() (BlockEditorController method)</a>
@@ -5377,11 +6647,23 @@
         <li><a href="../foundry.gui/#foundry.gui.WorldMapView.WorldMapView.sizeHint">(WorldMapView method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SLASH">SLASH (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.SLEEPING">SLEEPING (Status attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.slots">slots (UndoRedo attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.SLOW_CONNECTION_POLLING_RATE">SLOW_CONNECTION_POLLING_RATE (in module foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel.soft_save">soft_save() (PaletteGroupModel method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.SOLID">SOLID (Border attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.sort_topographically">sort_topographically() (in module foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.sorted_offsets">sorted_offsets (Level attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SPACE">SPACE (Key attribute)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.SPECIAL_ENTERABLE_TILES_LIST">SPECIAL_ENTERABLE_TILES_LIST (in module foundry.smb3parse.levels)</a>
 </li>
@@ -5411,6 +6693,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.PaletteGroupModel.PaletteGroupModel.sprite_palette_group_backup">sprite_palette_group_backup (PaletteGroupModel attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.SpriteViewer.SpriteViewerController.sprite_selected">sprite_selected (SpriteViewerController attribute)</a>
 
       <ul>
@@ -5423,8 +6707,6 @@
 </li>
       <li><a href="../foundry.core.sprites/#foundry.core.sprites.SpriteGroup.SpriteGroupProtocol">SpriteGroupProtocol (class in foundry.core.sprites.SpriteGroup)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.core.sprites/#foundry.core.sprites.Sprite.SpriteProtocol">SpriteProtocol (class in foundry.core.sprites.Sprite)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.sprites">sprites (EnemyDefinition attribute)</a>
@@ -5459,6 +6741,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.stable_changes">(LevelManager property)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.stage_task">stage_task() (in module foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderDisplay.start">start (HeaderDisplay property)</a>
 
       <ul>
@@ -5472,10 +6756,28 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.SelectionSquare.SelectionSquare.start">(SelectionSquare method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.start">(TaskManagerProxy method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.start">(TaskMethod method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.start">(TaskWorkerProxy method)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.start_action">start_action (Level property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderDisplay.start_editor">start_editor (HeaderDisplay attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.START_SLEEPING">START_SLEEPING (Requests attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.start_sleeping">start_sleeping() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.start_sleeping">(TaskWorker method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskCallback.start_task">start_task (TaskCallback attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.start_task_manager">start_task_manager() (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.start_x_index">start_x_index (Level property)</a>
 </li>
@@ -5484,6 +6786,8 @@
       <li><a href="../foundry.gui/#foundry.gui.player_lives.ActionNames.STARTING_LIVES">STARTING_LIVES (ActionNames attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.player_lives.State.starting_lives">starting_lives (State attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.STARTUP">STARTUP (Status attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.orb.State">State (class in foundry.gui.orb)</a>
 
@@ -5638,7 +6942,7 @@
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PaletteWidget.PaletteWidget.staticMetaObject">(PaletteWidget attribute)</a>
 </li>
-        <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.staticMetaObject">(PatternViewerController attribute)</a>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.staticMetaObject">(PatternViewerController attribute)</a>, <a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerController.staticMetaObject">[1]</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.staticMetaObject">(PatternViewerView attribute)</a>
 </li>
@@ -5679,7 +6983,37 @@
         <li><a href="../foundry.gui/#foundry.gui.WorldMapView.WorldMapView.staticMetaObject">(WorldMapView attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status">Status (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.status">status (TaskManager attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.status">(TaskWorker attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.status_message_changed">status_message_changed (PatternViewerController attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.MouseWheelEvent.steps">steps (MouseWheelEvent property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.STOP">STOP (Requests attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.SelectionSquare.SelectionSquare.stop">stop() (SelectionSquare method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.stop">(TaskManager method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.stop">(TaskWorker method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Requests.STOP_SLEEPING">STOP_SLEEPING (Requests attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.stop_sleeping">stop_sleeping() (TaskManager method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.stop_sleeping">(TaskWorker method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.STOPPED">STOPPED (Status attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.orb.Store">Store (class in foundry.gui.orb)</a>
 
@@ -5691,6 +7025,8 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.StringValidator">StringValidator (class in foundry.core.namespace)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.STRONG">STRONG (Focus attribute)</a>
+</li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.STRUCTURE_DATA_OFFSETS">STRUCTURE_DATA_OFFSETS (in module foundry.smb3parse.levels)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.GUILoader.style">style (GUILoader attribute)</a>
@@ -5698,6 +7034,10 @@
       <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.subindex">subindex (ObjectInfo attribute)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.redux_store.ReduxStore.subscribe">subscribe() (ReduxStore method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Signal.subscribers">subscribers (Signal attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.SUCCESS">SUCCESS (Status attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.EnemyDefinition.suggested_icon_height">suggested_icon_height (EnemyDefinition property)</a>
 </li>
@@ -5709,15 +7049,71 @@
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.suggested_object">suggested_object (LevelController property)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.DialogEvent.suggestion">suggestion (DialogEvent attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.synchronize">synchronize() (in module foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.SYSTEM_REQUEST">SYSTEM_REQUEST (Key attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.T">T (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.TAB">TAB (Focus attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Key.TAB">(Key attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.TabbedToolBox.TabbedToolBox">TabbedToolBox (class in foundry.gui.TabbedToolBox)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.FlowLayout.FlowLayout.takeAt">takeAt() (FlowLayout method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Task">Task (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.task">task (in module foundry.core.tasks)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.Task.task">(Task attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask.task">(WorkerTask attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod.task_callback">task_callback() (TaskMethod method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.task_count">task_count (TaskWorker attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.task_finished">task_finished (TaskManagerProxy property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskCallback">TaskCallback (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager">TaskManager (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy">TaskManagerProxy (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskMethod">TaskMethod (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker">TaskWorker (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy">TaskWorkerProxy (class in foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManagerProxy.terminate">terminate() (TaskManagerProxy method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorkerProxy.terminate">(TaskWorkerProxy method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.Selection.TERTIARY">TERTIARY (Selection attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.KeySequence.tertiary_modifier">tertiary_modifier (KeySequence attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.menu.MenuOption.text">text (MenuOption attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.TILDE">TILDE (Key attribute)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.WorldMapPosition.WorldMapPosition.tile">tile() (WorldMapPosition method)</a>
 </li>
@@ -5815,6 +7211,8 @@
         <li><a href="../foundry.game.level/#foundry.game.level.WorldMap.WorldMap.to_bytes">(WorldMap method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.to_data">to_data() (LevelController method)</a>
 
       <ul>
@@ -5835,8 +7233,6 @@
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.util.PydanticLocation.to_location">to_location() (PydanticLocation method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.to_m3l">to_m3l() (Level method)</a>
 
       <ul>
@@ -5852,6 +7248,12 @@
       <li><a href="../foundry.game.level/#foundry.game.level.util.to_pydantic_level">to_pydantic_level() (in module foundry.game.level.util)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.util.to_pydantic_location">to_pydantic_location() (in module foundry.game.level.util)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.to_qt">to_qt() (Color method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Border.to_qt_stylesheet">to_qt_stylesheet() (Border method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.to_rgb_bytes">to_rgb_bytes() (Color method)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.TO_THE_SKY">TO_THE_SKY (GeneratorType attribute)</a>
 </li>
@@ -5953,8 +7355,16 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.UNDO">UNDO (CommonIcons attribute)</a>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.U">U (Key attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.UNDERSCORE">UNDERSCORE (Key attribute)</a>
+</li>
+      <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.UNDO">UNDO (CommonIcons attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Selection.UNDO">(Selection attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.undo">undo() (HeaderEditor method)</a>
 
       <ul>
@@ -5976,6 +7386,12 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol.undo">(UndoControllerProtocol method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.undo">(UndoRedo method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoExtendedForwarder.undo">(UndoRedoExtendedForwarder method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.undo">(UndoRedoRoot method)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.undo_action">undo_action (LevelControlled attribute)</a>
 </li>
@@ -5993,11 +7409,27 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelWarpEditor.LevelWarpEditor.undo_controller">(LevelWarpEditor attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedo.undo_stack">undo_stack (UndoRedo attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.undoable">undoable() (in module foundry.gui.LevelView)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.UndoController.UndoController">UndoController (class in foundry.core.UndoController)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.UndoController.UndoControllerProtocol">UndoControllerProtocol (class in foundry.core.UndoController)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedo">UndoRedo (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoActor">UndoRedoActor (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoExtendedForwarder">UndoRedoExtendedForwarder (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder">UndoRedoForwarder (class in foundry.core.gui)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoHelper">UndoRedoHelper (class in foundry.core.gui)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot">UndoRedoRoot (class in foundry.core.gui)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.ChildDoesNotExistException.unfound_child">unfound_child (ChildDoesNotExistException attribute)</a>
 </li>
@@ -6005,10 +7437,10 @@
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelRef.LevelRef.unload_level">unload_level() (LevelRef method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.UP">UP (Key attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.UP_ARROW">UP_ARROW() (in module foundry.gui.LevelDrawer)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.AutoScrollEditor.AutoScrollEditor.update">update() (AutoScrollEditor method)</a>
 
       <ul>
@@ -6029,6 +7461,10 @@
         <li><a href="../foundry.gui/#foundry.gui.SettingsDialog.SettingsDialog.update">(SettingsDialog method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.update">(SpinnerPanel method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.update">(TaskManager method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.TaskWorker.update">(TaskWorker method)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.WarningList.WarningList.update">(WarningList method)</a>
 </li>
@@ -6056,6 +7492,8 @@
       <ul>
         <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.GraphicEditor.GraphicEditor.updated">(GraphicEditor property)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.gui.Object.updated">(Object attribute)</a>
+</li>
       </ul></li>
       <li><a href="../foundry.core/#foundry.core.namespace.ValidatorCallableInformation.use_parent">use_parent (ValidatorCallableInformation attribute)</a>
 </li>
@@ -6075,6 +7513,10 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.v">v (Color property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.V">V (Key attribute)</a>
+</li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.VALID_COLUMNS">VALID_COLUMNS (in module foundry.smb3parse.levels)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.ChainMapView.valid_keys">valid_keys (ChainMapView attribute)</a>
@@ -6094,17 +7536,27 @@
 </li>
         <li><a href="../foundry.core/#foundry.core.namespace.BoolValidator.validate">(BoolValidator class method)</a>
 </li>
-        <li><a href="../foundry.core.file/#foundry.core.file.FilePath.validate">(FilePath class method)</a>
+        <li><a href="../foundry.core/#foundry.core.palette.Color.validate">(Color class method)</a>
+</li>
+        <li><a href="../foundry.core.file/#foundry.core.file.FilePath.validate">(FilePath class method)</a>, <a href="../foundry.core/#foundry.core.file.FilePath.validate">[1]</a>
+</li>
+        <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsGroup.GraphicsGroup.validate">(GraphicsGroup class method)</a>
 </li>
         <li><a href="../foundry.core.graphics_page/#foundry.core.graphics_page.GraphicsPage.GraphicsPage.validate">(GraphicsPage class method)</a>
 </li>
         <li><a href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet.validate">(GraphicsSet class method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.icon.Icon.validate">(Icon class method)</a>
+</li>
         <li><a href="../foundry.core/#foundry.core.namespace.validate">(in module foundry.core.namespace)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.util.LayoutCreator.validate">(LayoutCreator class method)</a>
 </li>
+        <li><a href="../foundry.core/#foundry.core.menu.MenuOption.validate">(MenuOption class method)</a>
+</li>
         <li><a href="../foundry.core/#foundry.core.namespace.OptionalValidator.validate">(OptionalValidator class method)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.palette.PaletteGroup.validate">(PaletteGroup class method)</a>
 </li>
         <li><a href="../foundry.core/#foundry.core.namespace.Path.validate">(Path class method)</a>
 </li>
@@ -6137,16 +7589,30 @@
 </li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.validate_from_block_group">validate_from_block_group() (Drawable class method)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.validate_from_colors">validate_from_colors() (ColorPalette class method)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.palette.Palette.validate_from_colors">(Palette class method)</a>
+</li>
+      </ul></li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.validate_from_default">validate_from_default() (ColorPalette class method)</a>
+</li>
       <li><a href="../foundry.core.drawable/#foundry.core.drawable.Drawable.Drawable.validate_from_file">validate_from_file() (Drawable class method)</a>
 
       <ul>
-        <li><a href="../foundry.core.file/#foundry.core.file.FilePath.validate_from_file">(FilePath class method)</a>
+        <li><a href="../foundry.core.file/#foundry.core.file.FilePath.validate_from_file">(FilePath class method)</a>, <a href="../foundry.core/#foundry.core.file.FilePath.validate_from_file">[1]</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.core/#foundry.core.namespace.Validator.validate_from_namespace">validate_from_namespace() (Validator static method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.validate_from_json_file">validate_from_json_file() (ColorPalette class method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.namespace.Validator.validate_from_namespace">validate_from_namespace() (Validator static method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.ColorPalette.validate_from_palette_file">validate_from_palette_file() (ColorPalette class method)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.palette.Palette.validate_from_rom_address">validate_from_rom_address() (Palette class method)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.namespace.validate_name_is_in_namespace">validate_name_is_in_namespace() (in module foundry.core.namespace)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.validate_namespace">validate_namespace() (in module foundry.core.namespace)</a>
@@ -6197,10 +7663,22 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Namespace.validators">validators (Namespace attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.palette.Color.value">value (Color property)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.tasks.Reply.value">(Reply attribute)</a>
+</li>
+        <li><a href="../foundry.core/#foundry.core.tasks.Request.value">(Request attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.util.Spinner.value_change_action">value_change_action (Spinner attribute)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType.VERTICAL">VERTICAL (GeneratorType attribute)</a>
+
+      <ul>
+        <li><a href="../foundry.core/#foundry.core.gui.Orientation.VERTICAL">(Orientation attribute)</a>
 </li>
+      </ul></li>
       <li><a href="../foundry.core.sprites/#foundry.core.sprites.Sprite.Sprite.vertical_mirror">vertical_mirror (Sprite attribute)</a>, <a href="../foundry.game/#foundry.game.EnemyDefinitions.Sprite.vertical_mirror">[1]</a>
 
       <ul>
@@ -6227,7 +7705,11 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.W">W (Key attribute)</a>
+</li>
       <li><a href="../foundry.game/#foundry.game.File.ROM.W_INIT_OS_LIST">W_INIT_OS_LIST (ROM attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.wait_until">wait_until() (in module foundry.core.tasks)</a>
 </li>
       <li><a href="../foundry.core.warnings/#foundry.core.warnings.Warning.Warning">Warning (class in foundry.core.warnings.Warning)</a>
 </li>
@@ -6263,6 +7745,8 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.util.Widget.what_is_this">what_is_this (Widget attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.gui.Focus.WHEEL">WHEEL (Focus attribute)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.wheel_moved">wheel_moved (Canvas attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.wheelEvent">wheelEvent() (LevelView method)</a>
@@ -6293,6 +7777,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Sprite.Sprite.WIDTH">WIDTH (Sprite attribute)</a>
 </li>
+      <li><a href="../foundry.core/#foundry.core.tasks.WORKER_SLEEP_DURATION">WORKER_SLEEP_DURATION (in module foundry.core.tasks)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.TaskManager.workers">workers (TaskManager attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.WorkerTask">WorkerTask (class in foundry.core.tasks)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.util.Location.world">world (Location attribute)</a>
 
       <ul>
@@ -6316,6 +7806,8 @@
       <li><a href="../foundry.gui/#foundry.gui.WorldMapView.WorldMapView">WorldMapView (class in foundry.gui.WorldMapView)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.WORLDS">WORLDS (Level attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.DilledConnection.writable">writable (DilledConnection property)</a>
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.write">write() (CodeEdit method)</a>
 
@@ -6342,10 +7834,12 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.InLevelObject.x">x (InLevelObject property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.X">X (Key attribute)</a>
+</li>
+      <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.x">x (ObjectInfo attribute)</a>
 
       <ul>
-        <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.x">(ObjectInfo attribute)</a>
-</li>
         <li><a href="../foundry.core/#foundry.core.geometry.Point.x">(Point attribute)</a>
 </li>
       </ul></li>
@@ -6353,6 +7847,8 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.Sprite.x_offset">x_offset (Sprite attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.x_position">x_position (HeaderEditor property)</a>
 
       <ul>
@@ -6363,8 +7859,6 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelStartEditor.LevelStartState.x_position">(LevelStartState attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.x_position_changed">x_position_changed (HeaderEditor attribute)</a>
 
       <ul>
@@ -6380,10 +7874,12 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.InLevelObject.y">y (InLevelObject property)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.Y">Y (Key attribute)</a>
+</li>
+      <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.y">y (ObjectInfo attribute)</a>
 
       <ul>
-        <li><a href="../foundry.game/#foundry.game.Data.ObjectInfo.y">(ObjectInfo attribute)</a>
-</li>
         <li><a href="../foundry.core/#foundry.core.geometry.Point.y">(Point attribute)</a>
 </li>
       </ul></li>
@@ -6391,6 +7887,8 @@
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.Sprite.y_offset">y_offset (Sprite attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.y_position">y_position (HeaderEditor property)</a>
 
       <ul>
@@ -6401,8 +7899,6 @@
         <li><a href="../foundry.gui/#foundry.gui.LevelStartEditor.LevelStartState.y_position">(LevelStartState attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.y_position_changed">y_position_changed (HeaderEditor attribute)</a>
 
       <ul>
@@ -6417,6 +7913,10 @@
 <h2 id="Z">Z</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.core/#foundry.core.gui.Key.Z">Z (Key attribute)</a>
+</li>
+      <li><a href="../foundry.core/#foundry.core.tasks.Status.ZOMBIE">ZOMBIE (Status attribute)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.BlockEditor.BlockEditorView.zoom">zoom (BlockEditorView property)</a>
 
       <ul>
@@ -6425,6 +7925,10 @@
         <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.zoom">(Canvas property)</a>
 </li>
         <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.Canvas.Canvas.Model.zoom">(Canvas.Model attribute)</a>
+</li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerController.zoom">(PatternViewerController property)</a>
+</li>
+        <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.PatternViewer.PatternViewerModel.zoom">(PatternViewerModel attribute)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.PatternViewer.PatternViewerView.zoom">(PatternViewerView property)</a>
 </li>
@@ -6437,10 +7941,10 @@
         <li><a href="../foundry.gui/#foundry.gui.SpriteViewerWidget.SpriteViewerWidget.zoom">(SpriteViewerWidget property)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.gui/#foundry.gui.SpriteViewerWidget.SpriteViewerWidget.zoom_changed">zoom_changed (SpriteViewerWidget attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="../foundry.gui/#foundry.gui.SpriteViewerWidget.SpriteViewerWidget.zoom_changed">zoom_changed (SpriteViewerWidget attribute)</a>
+</li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.internal_plugins.CommonIcons.ZOOM_IN">ZOOM_IN (CommonIcons attribute)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.zoom_in">zoom_in() (LevelController method)</a>
@@ -6470,36 +7974,75 @@
 
 
 
-              </div>
-              
-              
-              <!-- Previous / next buttons -->
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-              
-          </main>
+            </footer>
+            
+          </div>
           
-
-      </div>
-    </div>
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
-<footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
-    &copy; Copyright 2022, TheJoeSmo.<br>
-</p>
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
     </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
-</p>
-    </div>
-    
   </div>
-</footer>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, TheJoeSmo.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
   </body>
 </html>

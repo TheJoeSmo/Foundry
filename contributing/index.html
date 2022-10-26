@@ -1,276 +1,342 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>How To Contribute &#8212; Foundry 0.6.1 documentation</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+    <title>How To Contribute &#8212; Foundry  documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
 
-    
+  
   <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
     <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributing';</script>
     <link rel="shortcut icon" href="../_static/foundry_logo.ico"/>
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
     <link rel="next" title="Changelog" href="../changelog/" />
     <link rel="prev" title="License" href="../license/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
 
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search/" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
   <div id="navbar-start">
     
     
-
-<a class="navbar-brand" href="../">
-  <img src="../_static/foundry_logo.ico" class="logo" alt="logo">
-</a>      
+  
 
 
+<a class="navbar-brand logo" href="../">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/foundry_logo.ico" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/foundry_logo.ico" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
     
   </div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
   
-  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+  <div class="col-lg-9 navbar-header-items">
     <div id="navbar-center" class="mr-auto">
       
       <div class="navbar-center-item">
-        <ul id="navbar-main-elements" class="navbar-nav">
-    <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../modules/">
-  foundry
- </a>
-</li>
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../modules/">
+                        foundry
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../license/">
-  License
- </a>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../license/">
+                        License
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 current active nav-item">
- <a class="current reference internal nav-link" href="#">
-  How To Contribute
- </a>
-</li>
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        How To Contribute
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../changelog/">
-  Changelog
- </a>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../changelog/">
+                        Changelog
+                    </a>
+                </li>
+                
 
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../enemy_compatibility/">
-  Enemy Compatibility
- </a>
-</li>
-
-    
-</ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="../enemy_compatibility/">
+                        Enemy Compatibility
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
       </div>
       
     </div>
 
     <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/TheJoeSmo/foundry" rel="noopener" target="_blank" title="GitHub">
-            <span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label>
-          </a>
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/TheJoeSmo/foundry" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
       </ul>
       </div>
       
     </div>
   </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
 </div>
-    </nav>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../modules/">
+                        foundry
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../license/">
+                        License
+                    </a>
+                </li>
+                
+
+                <li class="nav-item current active">
+                    <a class="nav-link" href="#">
+                        How To Contribute
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../changelog/">
+                        Changelog
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../enemy_compatibility/">
+                        Enemy Compatibility
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
     
 
-    <div class="container-xl">
-      <div class="row">
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search/" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <div class="bd-toc-item active">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/TheJoeSmo/foundry" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
     
   </div>
-</nav>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
             </div>
             
-          
-
-          
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
             
+            <article class="bd-article" role="main">
               
-              <div class="toc-item">
-                
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   How To Contribute
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#support">
-     Support
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#getting-started">
-     Getting Started
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#workflow">
-     Workflow
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#code">
-     Code
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tests">
-     Tests
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#references">
-     References
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#contributor-code-of-conduct">
-   Contributor Code of Conduct
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#our-promise">
-     Our Promise
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#our-standards">
-     Our Standards
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#our-responsibilities">
-     Our Responsibilities
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scope">
-     Scope
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#enforcement">
-     Enforcement
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#attribution">
-     Attribution
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-</nav>
-              </div>
-              
-              <div class="toc-item">
-                
-              </div>
-              
-            
-          </div>
-          
-
-          
-          
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-              
-              <div>
-                
   <section id="how-to-contribute">
-<span id="contributing"></span><h1>How To Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
+<span id="contributing"></span><h1>How To Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading">#</a></h1>
 <p>Thank you for considering to contribute to <code class="docutils literal notranslate"><span class="pre">Foundry</span></code>!
 People like yourself are the lifeblood of the community and this tool.</p>
 <p>The purpose of this document is to codify the processes required to contribute to this
 project to empower yourself and the community to contribute.</p>
 <section id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">#</a></h2>
 <p>If GitHub is overwhelming, but still want to help the community: help fellow developers
-on StackOverflow <a class="footnote-reference brackets" href="#id8" id="id1">1</a>.</p>
+on StackOverflow <a class="footnote-reference brackets" href="#id8" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>The official tag is <code class="docutils literal notranslate"><span class="pre">python-foundry</span></code> and support enables us to improve <code class="docutils literal notranslate"><span class="pre">Foundry</span></code> instead.</p>
 <p>Also, if development is not your forte, you can also help the <a class="reference external" href="https://discord.gg/MMExJKExGG">game design community</a>
-over at Discord <a class="footnote-reference brackets" href="#id9" id="id2">2</a>.</p>
+over at Discord <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 </section>
 <section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
 <p>You will need a working version of Python between the versions specified inside the
-<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a> and to install Poetry <a class="footnote-reference brackets" href="#id10" id="id3">3</a>.
+<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a> and to install Poetry <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.
 To install the remaining dependencies, simply write the following:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:TheJoeSmo/Foundry.git
 <span class="gp">$ </span><span class="nb">cd</span> Foundry
@@ -286,12 +352,12 @@ environment is equivalent to your local one.</p>
 </div>
 </section>
 <section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
+<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>No contribution is too small!  Fixes to typos and grammar are welcome.</p></li>
 <li><p>Try to limit each pull request to a single change.</p></li>
 <li><p>Always add tests and documentation for your code.
-We recommend using test driven development to develop your software <a class="footnote-reference brackets" href="#id11" id="id4">4</a>.
+We recommend using test driven development to develop your software <a class="footnote-reference brackets" href="#id11" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.
 It helps divide the program into smaller parts, which helps both yourself and the reviewer.
 If either tests or documentation are not provided, your code will be ineligible to be merged.</p></li>
 <li><p>Make sure that your new tests would otherwise fail without your change.</p></li>
@@ -303,10 +369,10 @@ so we know you have finished.</p></li>
 </ul>
 </section>
 <section id="code">
-<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p>Obey <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a> and
-<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a> <a class="footnote-reference brackets" href="#id12" id="id5">5</a> <a class="footnote-reference brackets" href="#id13" id="id6">6</a>.
+<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a> <a class="footnote-reference brackets" href="#id12" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id13" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.
 We use <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> for on separate lines for doc-strings.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
 
@@ -414,14 +480,14 @@ following and these checks will be ran before every pull request.</p>
 <p>Notes:</p>
 <p>Depending on your shell you may run into a problem where <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> is not found.
 This is because the path is found inside <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.  We have provided the most common
-fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code> <a class="footnote-reference brackets" href="#id14" id="id7">7</a>.</p>
+fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code> <a class="footnote-reference brackets" href="#id14" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.</p>
 <p>Bash: Add <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.profile</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.</p>
 <p>ZHS: Add <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">-e</span> <span class="pre">~/.profile</span> <span class="pre">]]</span> <span class="pre">&amp;&amp;</span> <span class="pre">emulate</span> <span class="pre">sh</span> <span class="pre">-c</span> <span class="pre">'source</span> <span class="pre">~/.profile'</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code>.</p>
 </li>
 </ul>
 </section>
 <section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p>Tests should write the asserts as <code class="docutils literal notranslate"><span class="pre">expected</span> <span class="pre">==</span> <span class="pre">actual</span></code>, to provide easier readability</p></li>
 <li><p>To run the test suite, simply write the following in your console:</p>
@@ -432,36 +498,43 @@ fixes for <code class="docutils literal notranslate"><span class="pre">bash</spa
 </ul>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<dl class="footnote brackets">
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>StackOverflow: <a class="reference external" href="https://stackoverflow.com/questions/tagged/python-nametable">https://stackoverflow.com/questions/tagged/python-nametable</a></p>
-</dd>
-<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>SMB3 Prime Discord Server: <a class="reference external" href="https://discord.gg/MMExJKExGG">https://discord.gg/MMExJKExGG</a></p>
-</dd>
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>Poetry Installation Guide: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
-</dd>
-<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>Test Driven Development Guide: <a class="reference external" href="https://www.youtube.com/watch?v=yfP_v6qCdcs">https://www.youtube.com/watch?v=yfP_v6qCdcs</a></p>
-</dd>
-<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
-<dd><p>PEP 8: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008">https://www.python.org/dev/peps/pep-0008</a></p>
-</dd>
-<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id6">6</a></span></dt>
-<dd><p>NumpyDoc Guide: <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">https://numpydoc.readthedocs.io/en/latest/format.html</a></p>
-</dd>
-<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id7">7</a></span></dt>
-<dd><p>ZSH and Poetry Guide: <a class="reference external" href="https://superuser.com/questions/187639/zsh-not-hitting-profile">https://superuser.com/questions/187639/zsh-not-hitting-profile</a></p>
-</dd>
-</dl>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id8" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>StackOverflow: <a class="reference external" href="https://stackoverflow.com/questions/tagged/python-nametable">https://stackoverflow.com/questions/tagged/python-nametable</a></p>
+</aside>
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>SMB3 Prime Discord Server: <a class="reference external" href="https://discord.gg/MMExJKExGG">https://discord.gg/MMExJKExGG</a></p>
+</aside>
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Poetry Installation Guide: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
+</aside>
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Test Driven Development Guide: <a class="reference external" href="https://www.youtube.com/watch?v=yfP_v6qCdcs">https://www.youtube.com/watch?v=yfP_v6qCdcs</a></p>
+</aside>
+<aside class="footnote brackets" id="id12" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>PEP 8: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008">https://www.python.org/dev/peps/pep-0008</a></p>
+</aside>
+<aside class="footnote brackets" id="id13" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>NumpyDoc Guide: <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">https://numpydoc.readthedocs.io/en/latest/format.html</a></p>
+</aside>
+<aside class="footnote brackets" id="id14" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">7</a><span class="fn-bracket">]</span></span>
+<p>ZSH and Poetry Guide: <a class="reference external" href="https://superuser.com/questions/187639/zsh-not-hitting-profile">https://superuser.com/questions/187639/zsh-not-hitting-profile</a></p>
+</aside>
+</aside>
 </section>
 </section>
 <section id="contributor-code-of-conduct">
-<h1>Contributor Code of Conduct<a class="headerlink" href="#contributor-code-of-conduct" title="Permalink to this headline">¶</a></h1>
+<h1>Contributor Code of Conduct<a class="headerlink" href="#contributor-code-of-conduct" title="Permalink to this heading">#</a></h1>
 <section id="our-promise">
-<h2>Our Promise<a class="headerlink" href="#our-promise" title="Permalink to this headline">¶</a></h2>
+<h2>Our Promise<a class="headerlink" href="#our-promise" title="Permalink to this heading">#</a></h2>
 <p>We as members, contributors, and leaders promise to provide a harrassment-free experience
 for everyone, regardless of age, body size, visible or invisible disability, ethnicity,
 sex characteristics, gender identity and expression, level of experience, education,
@@ -471,7 +544,7 @@ or sexual identity and orientation.</p>
 and healthy community.</p>
 </section>
 <section id="our-standards">
-<h2>Our Standards<a class="headerlink" href="#our-standards" title="Permalink to this headline">¶</a></h2>
+<h2>Our Standards<a class="headerlink" href="#our-standards" title="Permalink to this heading">#</a></h2>
 <p>Examples of behavior that contributes to creating a positive environment include:</p>
 <ul class="simple">
 <li><p>Using welcoming and inclusive language</p></li>
@@ -490,7 +563,7 @@ and healthy community.</p>
 </ul>
 </section>
 <section id="our-responsibilities">
-<h2>Our Responsibilities<a class="headerlink" href="#our-responsibilities" title="Permalink to this headline">¶</a></h2>
+<h2>Our Responsibilities<a class="headerlink" href="#our-responsibilities" title="Permalink to this heading">#</a></h2>
 <p>Community leaders are responsible for clarifying and enforcing our standards of acceptable
 behavior and will take appropriate and fair corrective action in response to any behavior
 that they deem inappropriate, threatening, offensive, or harmful.</p>
@@ -499,14 +572,14 @@ commits, code, wiki edits, issues, and other contributions that are not aligned 
 Code of Conduct, and will communicate reasons for moderation decisions when appropriate.</p>
 </section>
 <section id="scope">
-<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this heading">#</a></h2>
 <p>This Code of Conduct applies both inside the project and in public spaces where an
 individual is representing the project or its associated community.  Examples of representing
 our community include using an official e-mail address, posting via an official social
 media account, or acting as an appointed representative at an online or offline event.</p>
 </section>
 <section id="enforcement">
-<h2>Enforcement<a class="headerlink" href="#enforcement" title="Permalink to this headline">¶</a></h2>
+<h2>Enforcement<a class="headerlink" href="#enforcement" title="Permalink to this heading">#</a></h2>
 <p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by
 contacting the project team at <a class="reference external" href="mailto:joesmo&#46;joesmo12&#37;&#52;&#48;gmail&#46;com">joesmo<span>&#46;</span>joesmo12<span>&#64;</span>gmail<span>&#46;</span>com</a>.  All complaints will be reviewed and
 investigated and will result in a response that is deemed necessary and appropriate to the
@@ -517,7 +590,7 @@ separately.</p>
 temporary or permanent repercussions as determined by other members of the project’s leadership.</p>
 </section>
 <section id="attribution">
-<h2>Attribution<a class="headerlink" href="#attribution" title="Permalink to this headline">¶</a></h2>
+<h2>Attribution<a class="headerlink" href="#attribution" title="Permalink to this heading">#</a></h2>
 <p>This Code of Conduct is adapted from the
 <a class="reference external" href="https://www.contributor-covenant.org">Contributor Covenant</a>, version 1.4, available
 at &lt;<a class="reference external" href="https://www.contributor-covenant.org/version/1/4/code-of-conduct.html">https://www.contributor-covenant.org/version/1/4/code-of-conduct.html</a>&gt;.</p>
@@ -525,50 +598,181 @@ at &lt;<a class="reference external" href="https://www.contributor-covenant.org/
 </section>
 
 
-              </div>
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../license/" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">License</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../changelog/" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Changelog</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
               
-              
-              <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../license/" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">License</p>
-        </div>
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   How To Contribute
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#support">
+     Support
     </a>
-    <a class='right-next' id="next-link" href="../changelog/" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Changelog</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-started">
+     Getting Started
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#workflow">
+     Workflow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#code">
+     Code
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tests">
+     Tests
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contributor-code-of-conduct">
+   Contributor Code of Conduct
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-promise">
+     Our Promise
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-standards">
+     Our Standards
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-responsibilities">
+     Our Responsibilities
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scope">
+     Scope
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#enforcement">
+     Enforcement
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#attribution">
+     Attribution
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/contributing.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
 </div>
-              
-          </main>
-          
 
-      </div>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
     </div>
-  
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
-<footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
-    &copy; Copyright 2022, TheJoeSmo.<br>
-</p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
-</p>
-    </div>
-    
   </div>
-</footer>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, TheJoeSmo.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
   </body>
 </html>
