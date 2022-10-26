@@ -73,7 +73,7 @@ class LevelView(QWidget):
     ):
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.setMouseTracking(True)
         self.setAcceptDrops(True)
 

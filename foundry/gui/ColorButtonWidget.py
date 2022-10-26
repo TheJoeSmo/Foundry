@@ -33,7 +33,7 @@ class ColorButtonWidget(QLabel):
     ):
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
         if color is not None:
             self._color = color

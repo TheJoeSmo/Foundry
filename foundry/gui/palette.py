@@ -59,7 +59,7 @@ class ColorButton(Label, MouseHandler):
         super().initialize_state(model, *args, **kwargs)
 
         self.setFixedSize(model.button_size.width, model.button_size.height)
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.change_state(model)
 
     def change_state(self, model: Model) -> None:

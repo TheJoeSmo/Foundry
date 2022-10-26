@@ -73,7 +73,7 @@ class ObjectIcon(QWidget, Generic[T]):
     ):
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self._item = item
         self.setToolTip(self.item.name)
         self._background_color = background_color

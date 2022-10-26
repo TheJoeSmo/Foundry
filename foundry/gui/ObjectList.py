@@ -10,7 +10,7 @@ class ObjectList(QListWidget):
     def __init__(self, parent: QWidget, level_ref: LevelRef, context_menu: ContextMenu):
         super().__init__(parent=parent)
 
-        self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
         self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
         self.setSelectionMode(QListWidget.ExtendedSelection)
         scroll_bar = QScrollBar(self)

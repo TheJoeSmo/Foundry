@@ -30,7 +30,7 @@ class SpriteViewerWidget(QFrame):
         self._transparent = transparent
         self.zoom = zoom
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
     @property
     def sprites(self) -> list[SpriteProtocol]:
