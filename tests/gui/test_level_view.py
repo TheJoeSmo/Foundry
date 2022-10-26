@@ -89,7 +89,7 @@ def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_
 
     main_window.hide()
 
-    qtbot.mouseClick(level_view, Qt.LeftButton, pos=QPoint(x, y))
+    qtbot.mouseClick(level_view, Qt.MouseButton.LeftButton, pos=QPoint(x, y))
     assert object_under_cursor.selected
 
     event = QWheelEvent(
@@ -97,7 +97,7 @@ def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_
         QPoint(-1, -1),
         QPoint(0, wheel_delta),
         QPoint(0, wheel_delta),
-        Qt.LeftButton,
+        Qt.MouseButton.LeftButton,
         Qt.NoModifier,
         Qt.ScrollEnd,
         False,

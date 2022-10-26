@@ -122,7 +122,7 @@ class ObjectButton(ObjectIcon):
     object_created: SignalInstance = Signal()  # type: ignore
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        if not (event.buttons() & Qt.LeftButton):
+        if not (event.buttons() & Qt.MouseButton.LeftButton):
             return super().mouseMoveEvent(event)
 
         drag_event = QDrag(self)

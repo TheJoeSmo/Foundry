@@ -41,13 +41,13 @@ class ObjectList(QListWidget):
         return QSize(100, 200)
 
     def mousePressEvent(self, event: QMouseEvent):
-        if event.button() == Qt.RightButton:
+        if event.button() == Qt.MouseButton.RightButton:
             self.on_right_down(event)
         else:
             return super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if event.button() == Qt.RightButton:
+        if event.button() == Qt.MouseButton.RightButton:
             self.on_right_up(event)
         else:
             return super().mouseReleaseEvent(event)

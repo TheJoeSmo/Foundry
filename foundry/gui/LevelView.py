@@ -199,9 +199,9 @@ class LevelView(QWidget):
     def mousePressEvent(self, event: QMouseEvent):
         pressed_button = event.button()
 
-        if pressed_button == Qt.LeftButton:
+        if pressed_button == Qt.MouseButton.LeftButton:
             self._on_left_mouse_button_down(event)
-        elif pressed_button == Qt.RightButton:
+        elif pressed_button == Qt.MouseButton.RightButton:
             self._on_right_mouse_button_down(event)
         else:
             return super().mousePressEvent(event)
@@ -285,9 +285,9 @@ class LevelView(QWidget):
     def mouseReleaseEvent(self, event: QMouseEvent):
         released_button = event.button()
 
-        if released_button == Qt.LeftButton:
+        if released_button == Qt.MouseButton.LeftButton:
             self._on_left_mouse_button_up(event)
-        elif released_button == Qt.RightButton:
+        elif released_button == Qt.MouseButton.RightButton:
             self._on_right_mouse_button_up(event)
         else:
             super().mouseReleaseEvent(event)
