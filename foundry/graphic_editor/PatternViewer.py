@@ -4,7 +4,7 @@ from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, Qt
 from PySide6.QtWidgets import QLayout, QWidget
 
 from foundry.core.geometry import Point
-from foundry.core.graphics_page.GraphicsGroup import GraphicsGroupProtocol
+from foundry.core.graphics_page.GraphicsGroup import GraphicsGroup
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.core.tiles import MASK_COLOR
@@ -13,7 +13,7 @@ from foundry.game.gfx.drawable.Tile import Tile
 
 @attrs(slots=True, auto_attribs=True)
 class PatternViewerModel:
-    groups: list[GraphicsGroupProtocol]
+    groups: list[GraphicsGroup]
     group_indexes: list[int]
     palette_group: PaletteGroup
     palette_index: int
@@ -32,7 +32,7 @@ class PatternViewerController(QWidget):
     def __init__(
         self,
         parent: QWidget | None,
-        groups: list[GraphicsGroupProtocol],
+        groups: list[GraphicsGroup],
         group_indexes: list[int],
         palette_group: PaletteGroup,
         palette_index: int,
