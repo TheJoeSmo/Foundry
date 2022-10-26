@@ -18,6 +18,7 @@ class PatternMatrix:
         The size of the matrix.
     default: int = 0
         The value that will be filled when a value is initialized.
+
     """
 
     size: Size

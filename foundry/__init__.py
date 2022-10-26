@@ -54,7 +54,7 @@ def open_url(url: str | QUrl):
 def get_current_version_name() -> str:
     from single_source import get_version
 
-    return get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
+    return get_version("foundry_smb3", root_dir, fail=False)  # type: ignore
 
 
 def get_latest_version_name(timeout: int = 10) -> str:

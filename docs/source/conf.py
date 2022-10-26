@@ -21,12 +21,14 @@ root_dir = Path(__file__).parent.parent
 sys.path.append(os.path.abspath("../.."))
 sys.path.append(os.path.abspath("../../foundry"))
 sys.path.append(os.path.abspath("../../foundry/core"))
+sys.path.append(os.path.abspath("../../foundry/core/blocks"))
+sys.path.append(os.path.abspath("../../foundry/core/drawable"))
 sys.path.append(os.path.abspath("../../foundry/core/graphics_page"))
 sys.path.append(os.path.abspath("../../foundry/core/graphics_set"))
-sys.path.append(os.path.abspath("../../foundry/core/palette"))
+sys.path.append(os.path.abspath("../../foundry/core/painter"))
 sys.path.append(os.path.abspath("../../foundry/core/player_animations"))
-sys.path.append(os.path.abspath("../../foundry/core/point"))
-sys.path.append(os.path.abspath("../../foundry/core/size"))
+sys.path.append(os.path.abspath("../../foundry/core/sprites"))
+sys.path.append(os.path.abspath("../../foundry/core/tiles"))
 sys.path.append(os.path.abspath("../../foundry/core/warnings"))
 sys.path.append(os.path.abspath("../../foundry/game"))
 sys.path.append(os.path.abspath("../../foundry/game/gfx"))
@@ -51,7 +53,7 @@ copyright = "2022, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
-release = get_version("foundry_smb3", root_dir, fail=True)  # type: ignore
+release = get_version("foundry_smb3", root_dir, fail=False)  # type: ignore
 
 
 # -- General configuration ---------------------------------------------------
