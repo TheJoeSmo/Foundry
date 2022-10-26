@@ -1,0 +1,10 @@
+[tool.isort]
+profile = "black"
+known_first_party = "foundry"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest]
+qt_api = "PySide6"
+ignore = "tests/game/gfx/objects/"
