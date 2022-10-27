@@ -907,6 +907,11 @@
 <span class="sig-name descname"><span class="pre">as_object_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.gui.ContextMenu.ContextMenu" title="foundry.gui.ContextMenu.ContextMenu"><span class="pre">ContextMenu</span></a></span></span><a class="headerlink" href="#foundry.gui.ContextMenu.ContextMenu.as_object_menu" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.ContextMenu.ContextMenu.copied_objects_origin">
+<span class="sig-name descname"><span class="pre">copied_objects_origin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.gui.ContextMenu.ContextMenu.copied_objects_origin" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.ContextMenu.ContextMenu.get_all_menu_item_ids">
 <span class="sig-name descname"><span class="pre">get_all_menu_item_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ContextMenu.ContextMenu.get_all_menu_item_ids" title="Permalink to this definition">#</a></dt>
@@ -914,7 +919,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.ContextMenu.ContextMenu.get_copied_objects">
-<span class="sig-name descname"><span class="pre">get_copied_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.gui.ContextMenu.ContextMenu.get_copied_objects" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_copied_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.gui.ContextMenu.ContextMenu.get_copied_objects" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3438,7 +3443,7 @@ stack, respectively.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.add_enemy">
-<span class="sig-name descname"><span class="pre">add_enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enemy_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.add_enemy" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enemy_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.add_enemy" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3448,17 +3453,17 @@ stack, respectively.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.add_object">
-<span class="sig-name descname"><span class="pre">add_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.add_object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.add_object" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.create_enemy_at">
-<span class="sig-name descname"><span class="pre">create_enemy_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.create_enemy_at" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">create_enemy_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.create_enemy_at" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.create_object_at">
-<span class="sig-name descname"><span class="pre">create_object_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.create_object_at" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">create_object_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.create_object_at" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3474,6 +3479,16 @@ stack, respectively.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.dragMoveEvent">
 <span class="sig-name descname"><span class="pre">dragMoveEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtGui.QDragMoveEvent</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.dragMoveEvent" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.drag_start_point">
+<span class="sig-name descname"><span class="pre">drag_start_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.gui.LevelView.LevelView.drag_start_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.dragging_happened">
+<span class="sig-name descname"><span class="pre">dragging_happened</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.gui.LevelView.LevelView.dragging_happened" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -3531,6 +3546,11 @@ stack, respectively.</p>
 <span class="sig-name descname"><span class="pre">get_selected_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.get_selected_objects" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.last_mouse_position">
+<span class="sig-name descname"><span class="pre">last_mouse_position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.gui.LevelView.LevelView.last_mouse_position" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.level_safe_to_save">
 <span class="sig-name descname"><span class="pre">level_safe_to_save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.level_safe_to_save" title="Permalink to this definition">#</a></dt>
@@ -3558,18 +3578,20 @@ stack, respectively.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.object_at">
-<span class="sig-name descname"><span class="pre">object_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.object_at" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns an enemy or level object at the point. The x and y is relative to the View (for example, when you
-receive a mouse event) and will be converted into level coordinates internally.</p>
+<span class="sig-name descname"><span class="pre">object_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.object_at" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns an object at the supplied point relative to the level view.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – X point on the View, where the object is queried at.</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Y point on the View, where the object is queried at.</p></li>
-</ul>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point</strong><span class="classifier">Point</span></dt><dd><p>The point of the object to return.</p>
+</dd>
+</dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An enemy/level object, or None, if none is at the point.</p>
+<dd class="field-even"><dl class="simple">
+<dt>LevelObject | EnemyObject | None</dt><dd><p>The object, if one is found at the supplied point.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -3591,7 +3613,7 @@ receive a mouse event) and will be converted into level coordinates internally.<
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.paste_objects_at">
-<span class="sig-name descname"><span class="pre">paste_objects_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paste_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.paste_objects_at" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">paste_objects_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItem.EnemyObject" title="foundry.game.gfx.objects.EnemyItem.EnemyObject"><span class="pre">foundry.game.gfx.objects.EnemyItem.EnemyObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.paste_objects_at" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3617,6 +3639,16 @@ receive a mouse event) and will be converted into level coordinates internally.<
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.replace_object">
 <span class="sig-name descname"><span class="pre">replace_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">LevelObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.LevelView.LevelView.replace_object" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.resize_obj_start_point">
+<span class="sig-name descname"><span class="pre">resize_obj_start_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.gui.LevelView.LevelView.resize_obj_start_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.gui.LevelView.LevelView.resizing_happened">
+<span class="sig-name descname"><span class="pre">resizing_happened</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#foundry.gui.LevelView.LevelView.resizing_happened" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -9152,6 +9184,15 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.ContextMenu.ContextMenu.copied_objects_origin">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         ContextMenu.copied_objects_origin
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.gui.ContextMenu.ContextMenu.get_all_menu_item_ids">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -12090,6 +12131,24 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.drag_start_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelView.drag_start_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.dragging_happened">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelView.dragging_happened
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.draw_autoscroll">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -12184,6 +12243,15 @@ automatically to the parent and will work identically to one created through cod
        <code class="docutils literal notranslate">
         <span class="pre">
          LevelView.get_selected_objects()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.last_mouse_position">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelView.last_mouse_position
         </span>
        </code>
       </a>
@@ -12319,6 +12387,24 @@ automatically to the parent and will work identically to one created through cod
        <code class="docutils literal notranslate">
         <span class="pre">
          LevelView.replace_object()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.resize_obj_start_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelView.resize_obj_start_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.gui.LevelView.LevelView.resizing_happened">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelView.resizing_happened
         </span>
        </code>
       </a>
