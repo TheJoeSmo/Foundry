@@ -179,7 +179,7 @@ class LevelSelector(QDialog):
         return self.world_list.currentRow(), self.level_list.currentRow()
 
     def keyPressEvent(self, key_event: QKeyEvent):
-        if key_event.key() == Qt.Key_Escape:
+        if key_event.key() == Qt.Key.Key_Escape:
             self.reject()
 
     def on_world_click(self):
