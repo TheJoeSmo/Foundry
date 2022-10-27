@@ -48,7 +48,7 @@ def main(path_to_rom: str = "", world=None, level=None):
     if auto_save_rom_path.exists():
         result = AutoSaveDialog().exec()
 
-        if result == QMessageBox.AcceptRole:
+        if result == QMessageBox.ButtonRole.AcceptRole:
             path_to_rom = auto_save_rom_path
 
             QMessageBox.information(

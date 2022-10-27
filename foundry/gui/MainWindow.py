@@ -466,11 +466,11 @@ class MainWindow(QMainWindow):
                 self,
                 "Please confirm",
                 "Current content has not been saved! Proceed?",
-                QMessageBox.No | QMessageBox.Yes,
-                QMessageBox.No,
+                QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes,
+                QMessageBox.StandardButton.No,
             )
 
-            return answer == QMessageBox.Yes
+            return answer == QMessageBox.StandardButton.Yes
 
     def _ask_for_palette_save(self) -> bool:
         """
@@ -487,18 +487,20 @@ class MainWindow(QMainWindow):
             "Please confirm",
             "You changed some object palettes. This is a change, that potentially affects other levels in this ROM. Do "
             "you want to save these changes?",
-            QMessageBox.Cancel | QMessageBox.RestoreDefaults | QMessageBox.Yes,
-            QMessageBox.Cancel,
+            QMessageBox.StandardButton.Cancel
+            | QMessageBox.StandardButton.RestoreDefaults
+            | QMessageBox.StandardButton.Yes,
+            QMessageBox.StandardButton.Cancel,
         )
 
-        if answer == QMessageBox.Cancel:
+        if answer == QMessageBox.StandardButton.Cancel:
             self.side_palette.restore()
             self.manager.refresh()
             return False
 
-        if answer == QMessageBox.Yes:
+        if answer == QMessageBox.StandardButton.Yes:
             self.side_palette.save()
-        elif answer == QMessageBox.RestoreDefaults:
+        elif answer == QMessageBox.StandardButton.RestoreDefaults:
             self.side_palette.restore()
             self.manager.refresh()
 
@@ -518,11 +520,11 @@ class MainWindow(QMainWindow):
                 self,
                 reason,
                 f"{additional_info}\n\nDo you want to proceed?",
-                QMessageBox.No | QMessageBox.Yes,
-                QMessageBox.No,
+                QMessageBox.StandardButton.No | QMessageBox.StandardButton.Yes,
+                QMessageBox.StandardButton.No,
             )
 
-            if answer == QMessageBox.No:
+            if answer == QMessageBox.StandardButton.No:
                 return
         self._ask_for_palette_save()
 
@@ -532,14 +534,14 @@ class MainWindow(QMainWindow):
                 "Importing M3L into ROM",
                 "You are currently editing a level stored in an m3l file outside of the ROM. Please select the "
                 "positions in the ROM you want the level objects and enemies/items to be stored.",
-                QMessageBox.Ok,
+                QMessageBox.StandardButton.Ok,
             )
 
             level_selector = LevelSelector(self)
 
             answer = level_selector.exec()
 
-            if answer == QMessageBox.Accepted:
+            if answer == QMessageBox.StandardButton.Accepted:
                 self.manager.attach(level_selector.object_data_offset, level_selector.enemy_data_offset)
 
                 if is_save_as:
@@ -628,11 +630,13 @@ class MainWindow(QMainWindow):
             go_to_github_button.clicked.connect(lambda: open_url(latest_release_url))
 
             info_box = QMessageBox(
-                QMessageBox.Information, "New release available", f"New Version {latest_version} is available."
+                QMessageBox.StandardButton.Information,
+                "New release available",
+                f"New Version {latest_version} is available.",
             )
 
-            info_box.addButton(QMessageBox.Cancel)
-            info_box.addButton(go_to_github_button, QMessageBox.AcceptRole)
+            info_box.addButton(QMessageBox.StandardButton.Cancel)
+            info_box.addButton(go_to_github_button, QMessageBox.ButtonRole.AcceptRole)
 
             info_box.exec()
         else:
