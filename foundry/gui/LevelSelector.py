@@ -281,12 +281,12 @@ class WorldMapLevelSelect(QScrollArea):
             level_info = self.world.level_at_position(x, y)
 
             if level_info is None:
-                self.setCursor(Qt.ArrowCursor)
+                self.setCursor(Qt.CursorShape.ArrowCursor)
 
                 self.setToolTip("")
                 QToolTip.hideText()
             else:
-                self.setCursor(Qt.PointingHandCursor)
+                self.setCursor(Qt.CursorShape.PointingHandCursor)
 
                 level_name = self.world.level_name_at_position(x, y)
 

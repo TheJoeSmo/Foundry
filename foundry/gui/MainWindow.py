@@ -609,7 +609,7 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, type(exp).__name__, f"Couldn't save level to '{pathname}'.")
 
     def on_check_for_update(self):
-        self.setCursor(Qt.WaitCursor)
+        self.setCursor(Qt.CursorShape.WaitCursor)
 
         current_version = get_current_version_name()
 
@@ -617,7 +617,7 @@ class MainWindow(QMainWindow):
             latest_version = get_latest_version_name()
         except ValueError as ve:
             QMessageBox.critical(self, "Error while checking for updates", f"Error: {ve}")
-            self.setCursor(Qt.ArrowCursor)
+            self.setCursor(Qt.CursorShape.ArrowCursor)
             return
 
         if current_version != latest_version:
@@ -637,7 +637,7 @@ class MainWindow(QMainWindow):
         else:
             QMessageBox.information(self, "No newer release", f"Version {current_version} is up to date.")
 
-        self.setCursor(Qt.ArrowCursor)
+        self.setCursor(Qt.CursorShape.ArrowCursor)
 
     def reload_level(self):
         self.manager.refresh()
