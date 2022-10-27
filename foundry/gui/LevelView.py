@@ -17,6 +17,7 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
 from foundry.core.geometry import Point
+from foundry.core.gui import Edge
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -254,9 +255,9 @@ class LevelView(QWidget):
             edges = self._cursor_on_edge_of_object(level_object, point)
 
             if is_resizable and edges:
-                if edges == Qt.RightEdge and level_object.expands() & EXPANDS_HORIZ:
+                if edges == Edge.RightEdge and level_object.expands() & EXPANDS_HORIZ:
                     cursor = Qt.CursorShape.SizeHorCursor
-                elif edges == Qt.BottomEdge and level_object.expands() & EXPANDS_VERT:
+                elif edges == Edge.BottomEdge and level_object.expands() & EXPANDS_VERT:
                     cursor = Qt.CursorShape.SizeVerCursor
                 elif (level_object.expands() & EXPANDS_BOTH) == EXPANDS_BOTH:
                     cursor = Qt.CursorShape.SizeFDiagCursor
@@ -280,13 +281,12 @@ class LevelView(QWidget):
         on_right_edge = point.x in range(right - edge_width, right)
         on_bottom_edge = point.y in range(bottom - edge_width, bottom)
 
-        edges = 0
-
+        edges: int = 0
         if on_right_edge:
-            edges |= Qt.RightEdge
+            edges |= Edge.RightEdge
 
         if on_bottom_edge:
-            edges |= Qt.BottomEdge
+            edges |= Edge.BottomEdge
 
         return edges
 
@@ -426,7 +426,7 @@ class LevelView(QWidget):
             obj: LevelObject | EnemyObject | None = self.object_at(point)
 
             if obj is not None:
-                edge = self._cursor_on_edge_of_object(obj, point)
+                edge: int = self._cursor_on_edge_of_object(obj, point)
 
                 if self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK and edge:
 
@@ -445,10 +445,10 @@ class LevelView(QWidget):
     def _resize_mode_from_edge(edge: int):
         mode = 0
 
-        if edge & Qt.RightEdge:
+        if edge & Qt.Edge.RightEdge:
             mode |= MODE_RESIZE_HORIZ
 
-        if edge & Qt.BottomEdge:
+        if edge & Qt.Edge.BottomEdge:
             mode |= MODE_RESIZE_VERT
 
         return mode

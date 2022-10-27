@@ -2280,3 +2280,24 @@ class Selection(Enum):
     TERTIARY = auto()
     UNDO = auto()
     REDO = auto()
+
+
+class Edge(int, Enum):
+    NoEdge = 0
+    TopEdge = 1
+    LeftEdge = 2
+    RightEdge = 4
+    BottomEdge = 8
+
+    @classmethod
+    def from_qt(cls, edge: Qt.Edge):
+        if edge == Qt.Edge.TopEdge:
+            return cls.TopEdge
+        elif edge == Qt.Edge.LeftEdge:
+            return cls.LeftEdge
+        elif edge == Qt.Edge.RightEdge:
+            return cls.RightEdge
+        elif edge == Qt.Edge.BottomEdge:
+            return cls.BottomEdge
+        else:
+            return cls.NoEdge
