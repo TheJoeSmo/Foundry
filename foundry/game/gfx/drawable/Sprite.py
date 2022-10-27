@@ -60,7 +60,7 @@ class Sprite:
         if vertical_mirror:
             self.top_tile, self.bottom_tile = self.bottom_tile, self.top_tile
 
-        self.image = QImage(Sprite.WIDTH, Sprite.HEIGHT, QImage.Format_RGB888)
+        self.image = QImage(Sprite.WIDTH, Sprite.HEIGHT, QImage.Format.Format_RGB888)
 
         painter = QPainter(self.image)
         painter.drawImage(QPoint(0, 0), self.top_tile.copy().mirrored(horizontal_mirror, vertical_mirror))
@@ -88,7 +88,7 @@ class Sprite:
                 image = image.scaled(width, height)
 
             # mask out the transparent pixels first
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
 
             if not transparent:  # or self._whole_block_is_transparent:

@@ -85,7 +85,7 @@ class BlockGroup(ConcreteValidator, KeywordValidator):
         QImage
             Of the block group and its respective blocks.
         """
-        image = QImage(self.size.width * scale_factor, self.size.height * scale_factor, QImage.Format_RGB888)
+        image = QImage(self.size.width * scale_factor, self.size.height * scale_factor, QImage.Format.Format_RGB888)
         image.fill(QColor(*MASK_COLOR))
 
         with Painter(image) as p:

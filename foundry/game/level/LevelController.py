@@ -88,14 +88,14 @@ class LevelController:
         object_set = self.level_ref.level.next_area_object_set
 
         self.update_level(
-            f"PydanticLevel {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
+            f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
         )
 
     @require_safe_to_change
     def on_select(self):
         selector = LevelSelector(self.parent, ROM().settings, start_level=self.level_selector_last_level)
 
-        if QDialog.Accepted == selector.exec():
+        if QDialog.DialogCode.Accepted == selector.exec():
             self.level_selector_last_level = selector.current_level_index
             self.update_level(
                 selector.level_name if selector.level_name is not None else "",
@@ -187,8 +187,8 @@ class LevelController:
             self.parent.context_menu.set_copied_objects(selected)
 
     @undoable
-    def paste(self, x: int | None = None, y: int | None = None):
-        self.parent.level_view.paste_objects_at(*self.parent.context_menu.get_copied_objects(), x, y)
+    def paste(self, point: Point):
+        self.parent.level_view.paste_objects_at(*self.parent.context_menu.get_copied_objects(), point)
 
     def select_all(self):
         self.parent.level_view.select_all()
@@ -225,7 +225,7 @@ class LevelController:
     @undoable
     def place_object_from_dropdown(self, point: Point) -> None:
         # the dropdown is synchronized with the toolbar, so it doesn't matter where to take it from
-        level_object = self.parent.object_dropdown.currentData(Qt.UserRole)
+        level_object = self.parent.object_dropdown.currentData(Qt.ItemDataRole.UserRole)
 
         self.parent.object_toolbar.add_recent_object(level_object)
 

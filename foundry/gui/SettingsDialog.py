@@ -59,7 +59,7 @@ POWERUPS = [
 ]
 
 png = QImage(str(data_dir / "gfx.png"))
-png.convertTo(QImage.Format_RGB888)
+png.convertTo(QImage.Format.Format_RGB888)
 
 
 class SettingsDialog(CustomDialog):
@@ -260,7 +260,7 @@ class SettingsDialog(CustomDialog):
     @staticmethod
     def _load_from_png(x: int, y: int) -> QIcon:
         image = png.copy(QRect(x * Block.SIDE_LENGTH, y * Block.SIDE_LENGTH, Block.SIDE_LENGTH, Block.SIDE_LENGTH))
-        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
         image.setAlphaChannel(mask)
 
         pixmap = QPixmap.fromImage(image)

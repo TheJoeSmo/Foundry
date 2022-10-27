@@ -105,7 +105,11 @@ class ObjectIcon(QWidget, Generic[T]):
         if self.background_color:
             painter.fillRect(event.rect(), self.item.palette_group[0][0])
 
-        scaled_image = get_minimal_icon_object(self.item).as_image().scaled(self.size(), aspectMode=Qt.KeepAspectRatio)
+        scaled_image = (
+            get_minimal_icon_object(self.item)
+            .as_image()
+            .scaled(self.size(), aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
+        )
 
         x = (self.width() - scaled_image.width()) // 2
         y = (self.height() - scaled_image.height()) // 2
@@ -131,7 +135,7 @@ class ObjectButton(ObjectIcon):
         mime_data.setData("application/level-object", object_bytes)
         drag_event.setMimeData(mime_data)
 
-        if drag_event.exec() == Qt.MoveAction:
+        if drag_event.exec() == Qt.DropAction.MoveAction:
             self.object_created.emit()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
@@ -165,7 +169,7 @@ class ObjectViewer(QWidget):
             name = QLabel(icon.item.name)
             name.setFixedWidth(64)
             name.setWordWrap(True)
-            name.setAlignment(Qt.AlignCenter)
+            name.setAlignment(Qt.AlignmentFlag.AlignCenter)
             name.setContentsMargins(0, 0, 0, 0)
             self.layout_.addWidget(icon)
             self.layout_.addWidget(name)

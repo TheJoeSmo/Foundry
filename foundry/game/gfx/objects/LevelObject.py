@@ -860,13 +860,13 @@ class LevelObject(GeneratorObject):
 
         image = QImage(
             QSize(self.rendered_size.width * Block.SIDE_LENGTH, self.rendered_size.height * Block.SIDE_LENGTH),
-            QImage.Format_RGB888,
+            QImage.Format.Format_RGB888,
         )
 
         bg_color = QColor(*MASK_COLOR).rgb()
 
         image.fill(bg_color)
-        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
         image.setAlphaChannel(mask)
 
         painter = QPainter(image)

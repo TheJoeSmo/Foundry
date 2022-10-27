@@ -1,11 +1,11 @@
 from collections.abc import Callable
 from typing import Protocol, TypeVar
 
-from PySide6.QtCore import QPoint
 from PySide6.QtGui import QAction, QPixmap, Qt
 from PySide6.QtWidgets import QScrollArea, QSplitter
 
 from foundry.core.Data import DataProtocol
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level import LevelByteData
@@ -255,7 +255,7 @@ class LevelManager:
 
     @require_enabled
     def force_select(self, world: int, level: int, *, controller: LevelController):
-        selection = select_by_world_and_level(world, level)
+        selection = select_by_world_and_level(world, level, ROM().settings.levels)
         controller.update_level(
             selection.display_information.name if selection.display_information.name is not None else "",
             selection.generator_pointer - 9,
@@ -316,11 +316,11 @@ class LevelManager:
         controller.delete()
 
     @require_enabled
-    def create_object_from_suggestion(self, position: tuple[int, int], *, controller: LevelController):
+    def create_object_from_suggestion(self, point: Point, *, controller: LevelController):
         if controller.suggested_object != -1:
-            controller.place_object_from_dropdown(position)
+            controller.place_object_from_dropdown(point)
         else:
-            controller.create_object_at(*position)
+            controller.create_object_at(point)
 
     @require_enabled
     def to_foreground(self, controller: LevelController):
@@ -349,8 +349,8 @@ class LevelManager:
         controller.copy()
 
     @require_enabled
-    def paste(self, x: int | None = None, y: int | None = None, *, controller: LevelController):
-        return controller.paste(x, y)
+    def paste(self, point: Point, *, controller: LevelController):
+        return controller.paste(point)
 
     @require_enabled
     def zoom_in(self, controller: LevelController):
@@ -377,8 +377,8 @@ class LevelManager:
         controller.focus_selected()
 
     @require_enabled
-    def middle_mouse_release(self, position: QPoint, *, controller: LevelController):
-        controller.middle_mouse_release(position)
+    def middle_mouse_release(self, point: Point, *, controller: LevelController):
+        controller.middle_mouse_release(point)
 
     @require_enabled
     def display_block_viewer(self, controller: LevelController):

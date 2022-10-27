@@ -17,7 +17,7 @@ class EnemyItemFactory:
     def __init__(self, object_set: int, palette_index: int):
         png = QImage(str(data_dir.joinpath("gfx.png")))
 
-        png.convertTo(QImage.Format_RGB888)
+        png.convertTo(QImage.Format.Format_RGB888)
 
         rows_per_object_set = 256 // 64
 

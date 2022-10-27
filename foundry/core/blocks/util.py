@@ -55,7 +55,7 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
     QImage
         That represents the block.
     """
-    image = QImage(BLOCK_SIZE.width, BLOCK_SIZE.height, QImage.Format_RGB888)
+    image = QImage(BLOCK_SIZE.width, BLOCK_SIZE.height, QImage.Format.Format_RGB888)
     image.fill(QColor(*MASK_COLOR))
     patterns = [
         cached_tile_to_image(index, block.palette_group[block.palette_index], block.graphics_set)

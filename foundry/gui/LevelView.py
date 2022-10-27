@@ -726,17 +726,11 @@ class LevelView(QWidget):
 
         self.update()
 
-    def paste_objects_at(
-        self,
-        objects: list[LevelObject | EnemyObject],
-        origin: Point,
-        x: int | None = None,
-        y: int | None = None,
-    ):
-        if x is None or y is None:
+    def paste_objects_at(self, objects: list[LevelObject | EnemyObject], origin: Point, point: Point | None = None):
+        if point is None:
             point = self.last_mouse_position
         else:
-            point = self._to_level_point(Point(x, y))
+            point = self._to_level_point(point)
 
         pasted_objects = []
 

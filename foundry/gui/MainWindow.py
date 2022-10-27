@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         self.manager.on_enable()
 
         self.menu_toolbar = QToolBar("Menu Toolbar", self)
-        self.menu_toolbar.setOrientation(Qt.Horizontal)
+        self.menu_toolbar.setOrientation(Qt.Orientation.Horizontal)
         self.menu_toolbar.setIconSize(QSize(20, 20))
 
         self.menu_toolbar.addAction(icon("settings.png"), "Editor Settings").triggered.connect(self._on_show_settings)
@@ -658,18 +658,16 @@ class MainWindow(QMainWindow):
             menu_of_action.exec()
 
         elif item_id in self.manager.actions:
-            x, y = self.manager.last_position
-
             if item_id == CMAction.REMOVE:
                 self.manager.delete()
             elif item_id == CMAction.ADD_OBJECT:
-                self.manager.create_object_from_suggestion((x, y))
+                self.manager.create_object_from_suggestion(self.manager.last_position)
             elif item_id == CMAction.CUT:
                 self.manager.cut()
             elif item_id == CMAction.COPY:
                 self.manager.copy()
             elif item_id == CMAction.PASTE:
-                self.manager.paste(x, y)
+                self.manager.paste(self.manager.last_position)
             elif item_id == CMAction.FOREGROUND:
                 self.manager.to_foreground()
             elif item_id == CMAction.BACKGROUND:
@@ -722,7 +720,7 @@ class MainWindow(QMainWindow):
         self.manager.display_jump_editor()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if event.button() == Qt.MiddleButton:
+        if event.button() == Qt.MouseButton.MiddleButton:
             self.manager.middle_mouse_release(Point.from_qpoint(self.mapToGlobal(event.position())))
 
     def on_about(self, _):

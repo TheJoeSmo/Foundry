@@ -57,7 +57,7 @@ class Drawable(ConcreteValidator, KeywordValidator):
         assert use_transparency
         image = image if image_offset is None else image.copy(image_offset.qrect)
         if use_transparency:
-            mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
         return cls(image, point_offset)
 

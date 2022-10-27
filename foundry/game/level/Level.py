@@ -588,7 +588,7 @@ class Level(LevelLike):
 
     def paste_object_at(self, point: Point, obj: EnemyObject | LevelObject) -> EnemyObject | LevelObject:
         if isinstance(obj, EnemyObject):
-            return self.add_enemy(obj.obj_index, point.x, point.y)
+            return self.add_enemy(obj.obj_index, point)
 
         elif isinstance(obj, LevelObject):
             if obj.is_4byte:

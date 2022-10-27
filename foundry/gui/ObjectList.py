@@ -11,11 +11,11 @@ class ObjectList(QListWidget):
         super().__init__(parent=parent)
 
         self.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
-        self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
-        self.setSelectionMode(QListWidget.ExtendedSelection)
+        self.setSizeAdjustPolicy(QListWidget.SizeAdjustPolicy.AdjustToContents)
+        self.setSelectionMode(QListWidget.SelectionMode.ExtendedSelection)
         scroll_bar = QScrollBar(self)
         self.setVerticalScrollBar(scroll_bar)
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.setWordWrap(True)
 
         self.level_ref: LevelRef = level_ref
@@ -97,7 +97,7 @@ class ObjectList(QListWidget):
 
             for index, level_object in enumerate(level_objects):
                 item = self.item(index)
-                item.setData(Qt.UserRole, level_object)
+                item.setData(Qt.ItemDataRole.UserRole, level_object)
                 item.setSelected(level_object.selected)
                 if level_object.selected and index not in currently_selected:
                     ignore_prior_selection = True
@@ -119,7 +119,7 @@ class ObjectList(QListWidget):
             self.setCurrentIndex(prior_selection)
 
     def selected_objects(self):
-        return [self.item(index.row()).data(Qt.UserRole) for index in self.selectedIndexes()]
+        return [self.item(index.row()).data(Qt.ItemDataRole.UserRole) for index in self.selectedIndexes()]
 
     def on_selection_changed(self):
         if self._on_selection_changed_ongoing:

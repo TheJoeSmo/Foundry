@@ -153,7 +153,7 @@ class EnemyObject(ObjectLike):
 
             block = image.copy()
 
-            mask = block.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = block.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             block.setAlphaChannel(mask)
 
             # todo better effect
@@ -200,7 +200,7 @@ class EnemyObject(ObjectLike):
         definition = get_enemy_metadata().__root__[self.obj_index]
         width, height = definition.suggested_icon_width * 16, definition.suggested_icon_height * 16
 
-        image = QImage(QSize(width, height), QImage.Format_RGBA8888)
+        image = QImage(QSize(width, height), QImage.Format.Format_RGBA8888)
         image.fill(QColor(0, 0, 0, 0))
 
         painter = QPainter(image)

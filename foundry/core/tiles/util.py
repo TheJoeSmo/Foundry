@@ -94,7 +94,7 @@ def _tile_to_image(tile: _Tile, scale_factor: int = 1) -> QImage:
     QImage
         That represents the tile.
     """
-    image = QImage(tile.pixels, TILE_SIZE.width, TILE_SIZE.height, QImage.Format_RGB888)
+    image = QImage(tile.pixels, TILE_SIZE.width, TILE_SIZE.height, QImage.Format.Format_RGB888)
     return image.scaled(TILE_SIZE.width * scale_factor, TILE_SIZE.height * scale_factor)
 
 

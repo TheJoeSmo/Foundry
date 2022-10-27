@@ -39,20 +39,20 @@ class AutoScrollDrawer:
 
         self.pixel_length = 1
 
-        self.acceleration_pen = Qt.NoPen
-        self.acceleration_brush = Qt.NoBrush
-        self.scroll_pen = Qt.NoPen
-        self.scroll_brush = Qt.NoBrush
+        self.acceleration_pen = Qt.PenStyle.NoPen
+        self.acceleration_brush = Qt.BrushStyle.NoBrush
+        self.scroll_pen = Qt.PenStyle.NoPen
+        self.scroll_brush = Qt.BrushStyle.NoBrush
 
         self.screen_polygon = QPolygonF()
 
     def draw(self, painter: QPainter, block_length: int):
         self.pixel_length = block_length / Block.WIDTH
 
-        self.scroll_brush = QBrush(Qt.blue)
+        self.scroll_brush = QBrush(Qt.GlobalColor.blue)
         self.scroll_pen = QPen(self.scroll_brush, 2 * self.pixel_length)
 
-        self.acceleration_brush = QBrush(Qt.red)
+        self.acceleration_brush = QBrush(Qt.GlobalColor.red)
         self.acceleration_pen = QPen(self.acceleration_brush, 2 * self.pixel_length)
 
         painter.setPen(self.scroll_pen)
@@ -91,7 +91,7 @@ class AutoScrollDrawer:
         stop_marker = QRectF(QPoint(0, 0), QSizeF(10, 10) * self.pixel_length)
         stop_marker.moveCenter(self.current_pos)
 
-        painter.setPen(Qt.NoPen)
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.drawRect(stop_marker)
 
         painter.setPen(self.scroll_pen)

@@ -341,9 +341,9 @@ class ColorPickerDialog(Dialog, MouseAggregator, KeyHandler):
         self.dialog_options.dialog_event.connect(self._forward_dialog_exit)
 
         layout = QVBoxLayout(self)
-        layout.addWidget(self.palette_tab, alignment=Qt.AlignCenter)
-        layout.addWidget(self.color_picker, alignment=Qt.AlignCenter)
-        layout.addWidget(self.dialog_options, alignment=Qt.AlignCenter)
+        layout.addWidget(self.palette_tab, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.color_picker, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.dialog_options, alignment=Qt.AlignmentFlag.AlignCenter)
 
 
 class PaletteWidget(MouseAggregator, Widget):

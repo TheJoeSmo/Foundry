@@ -112,6 +112,6 @@ class PatternEditorController(QWidget, PatternEditorModel):
             y = (i // size.width) * self.pattern_scale
 
             image = tile.as_image(self.pattern_scale)
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
             painter.drawImage(x, y, image)

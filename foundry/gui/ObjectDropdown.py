@@ -28,14 +28,14 @@ class ObjectDropdown(QComboBox):
         self.setMaxVisibleItems(30)
 
         self.completer().setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
-        self.completer().setFilterMode(Qt.MatchContains)
+        self.completer().setFilterMode(Qt.MatchFlag.MatchContains)
 
-        self.setInsertPolicy(QComboBox.NoInsert)
+        self.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
 
         self.currentIndexChanged.connect(self._on_object_selected)
 
         # guard against overly long item descriptions
-        self.setMaximumWidth(QApplication.primaryScreen().geometry().width() / 5)
+        self.setMaximumWidth(int(QApplication.primaryScreen().geometry().width() / 5))
 
         self.setWhatsThis(
             "<b>Object Dropdown</b><br/>"
@@ -65,7 +65,7 @@ class ObjectDropdown(QComboBox):
         if self.currentIndex() == -1:
             return
 
-        level_object = self.currentData(Qt.UserRole)
+        level_object = self.currentData(Qt.ItemDataRole.UserRole)
 
         self.object_selected.emit(level_object)
 
