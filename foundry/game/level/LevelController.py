@@ -3,11 +3,11 @@ import os
 from collections.abc import Callable
 from typing import Protocol
 
-from PySide6.QtCore import QPoint
 from PySide6.QtGui import QAction, QPixmap, Qt
 from PySide6.QtWidgets import QDialog
 
 from foundry.core.Data import Data, DataProtocol
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -157,14 +157,10 @@ class LevelController:
     def zoom_out(self):
         self.parent.level_view.zoom_out()
 
-    def middle_mouse_release(self, position: QPoint):
-        pointf = self.parent.level_view.mapFromGlobal(position)
-        pos = (int(pointf.x()), int(pointf.y()))
-
-        # If the number is negative do not do anything
-        if any([num < 0 for num in pos]):
+    def middle_mouse_release(self, point: Point):
+        if point.x < 0 or point.y < 0:
             return
-        self.place_object_from_dropdown(pos)
+        self.place_object_from_dropdown(point)
 
     @undoable
     def to_foreground(self):
@@ -175,12 +171,12 @@ class LevelController:
         self.level_ref.level.bring_to_background(self.level_ref.selected_objects)
 
     @undoable
-    def create_object_at(self, x: int, y: int):
-        self.parent.level_view.create_object_at(x, y)
+    def create_object_at(self, point: Point):
+        self.parent.level_view.create_object_at(point)
 
     @undoable
-    def create_enemy_at(self, x: int, y: int):
-        self.parent.level_view.create_enemy_at(x, y)
+    def create_enemy_at(self, point: Point):
+        self.parent.level_view.create_enemy_at(point)
 
     def cut(self):
         self.copy()
@@ -192,7 +188,7 @@ class LevelController:
 
     @undoable
     def paste(self, x: int | None = None, y: int | None = None):
-        self.parent.level_view.paste_objects_at(self.parent.context_menu.get_copied_objects(), x, y)
+        self.parent.level_view.paste_objects_at(*self.parent.context_menu.get_copied_objects(), x, y)
 
     def select_all(self):
         self.parent.level_view.select_all()
@@ -227,16 +223,16 @@ class LevelController:
             self.parent.jump_list.item(index).setText(str(jump))
 
     @undoable
-    def place_object_from_dropdown(self, pos: tuple[int, int]) -> None:
+    def place_object_from_dropdown(self, point: Point) -> None:
         # the dropdown is synchronized with the toolbar, so it doesn't matter where to take it from
         level_object = self.parent.object_dropdown.currentData(Qt.UserRole)
 
         self.parent.object_toolbar.add_recent_object(level_object)
 
         if isinstance(level_object, LevelObject):
-            self.parent.level_view.create_object_at(*pos, level_object.domain, level_object.obj_index)
+            self.parent.level_view.create_object_at(point, level_object.domain, level_object.obj_index)
         elif isinstance(level_object, EnemyObject):
-            self.parent.level_view.add_enemy(level_object.obj_index, *pos, -1)
+            self.parent.level_view.add_enemy(level_object.obj_index, point, -1)
 
     @undoable
     def on_spin(self, _):

@@ -1,6 +1,8 @@
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import Qt
 
+from foundry.core.geometry import Point
+
 
 def test_open(main_window):
     pass
@@ -15,14 +17,14 @@ def test_middle_click_adds_object(main_window, qtbot):
     # WHEN a middle click happens in the level view without an object present
     pos = QPoint(100, 100)
 
-    assert level_view.object_at(*pos.toTuple()) is None
+    assert level_view.object_at(Point.from_qpoint(pos)) is None
 
     qtbot.mouseClick(main_window, Qt.MiddleButton, pos=pos)
 
     # THEN there is now the selected object
     selected_object = main_window.object_dropdown.currentData(Qt.UserRole)
 
-    new_object = level_view.object_at(*pos.toTuple())
+    new_object = level_view.object_at(Point.from_qpoint(pos))
 
     assert new_object is not None
     assert new_object.domain == selected_object.domain

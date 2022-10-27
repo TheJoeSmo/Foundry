@@ -15,6 +15,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.Level import Level as LevelMeta
 from foundry.game.level.util import Level, get_world_levels
@@ -272,13 +273,11 @@ class WorldMapLevelSelect(QScrollArea):
         self.setMouseTracking(True)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        x, y = self.world_view.mapFromParent(event.position().toPoint()).toTuple()
-
-        x //= Block.WIDTH * 2
-        y //= Block.HEIGHT * 2
+        point: Point = Point.from_qpoint(self.world_view.mapFromParent(event.position().toPoint()))
+        point = point // Point(Block.WIDTH * 2, Block.HEIGHT * 2)
 
         try:
-            level_info = self.world.level_at_position(x, y)
+            level_info: tuple[int, int, int] | None = self.world.level_at_position(point)
 
             if level_info is None:
                 self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -288,7 +287,7 @@ class WorldMapLevelSelect(QScrollArea):
             else:
                 self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-                level_name = self.world.level_name_at_position(x, y)
+                level_name = self.world.level_name_at_position(point)
 
                 object_set = level_info[0]
                 object_set_name = OBJECT_SET_ITEMS[object_set].split(" ", 1)[1]
@@ -306,18 +305,16 @@ class WorldMapLevelSelect(QScrollArea):
         return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        x, y = self.world_view.mapFromParent(event.position().toPoint()).toTuple()
-
-        x //= Block.WIDTH * 2
-        y //= Block.HEIGHT * 2
+        point: Point = Point.from_qpoint(self.world_view.mapFromParent(event.position().toPoint()))
+        point = point // Point(Block.WIDTH * 2, Block.HEIGHT * 2)
 
         try:
-            level_info = self.world.level_at_position(x, y)
+            level_info: tuple[int, int, int] | None = self.world.level_at_position(point)
         except ValueError:
             level_info = None
 
         if level_info is not None:
-            self.level_selected.emit(self.world.level_name_at_position(x, y), *level_info)
+            self.level_selected.emit(self.world.level_name_at_position(point), *level_info)
 
     def mouseDoubleClickEvent(self, event: QMouseEvent):
         self.mouseReleaseEvent(event)

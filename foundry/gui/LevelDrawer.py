@@ -6,6 +6,7 @@ from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
 from foundry.core.drawable.Drawable import Drawable as DrawableValidator
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
 from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
@@ -70,8 +71,8 @@ def _make_image_selected(image: QImage) -> QImage:
     return selected_image
 
 
-def _load_from_png(x: int, y: int):
-    image = png.copy(QRect(x * 16, y * 16, 16, 16))
+def _load_from_png(point: Point):
+    image = png.copy(QRect(point.x * 16, point.y * 16, 16, 16))
     mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
     image.setAlphaChannel(mask)
 

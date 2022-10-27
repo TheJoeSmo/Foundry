@@ -1,33 +1,33 @@
+from typing import Any
+
+from attr import attrs
+
+from foundry.core.geometry import Point
+
+
+@attrs(slots=True, auto_attribs=True, eq=False)
 class WorldMapPosition:
-    def __init__(self, world, screen: int, row: int, column: int):
-        self.world = world
-        self.screen = screen
-        self.row = row
-        self.column = column
+    world: Any
+    screen: int
+    point: Point
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}({self.world}, {self.screen}, {self.point})"
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, WorldMapPosition):
+            return False
+        return self.screen == other.screen and self.point == other.point
 
     @property
-    def level_info(self) -> tuple[int, int, int]:
-        return self.world.level_for_position(self.screen, self.row, self.column)
+    def level_info(self) -> tuple[int, Point]:
+        return self.world.level_for_position(self.screen, self.point)
 
     def can_have_level(self):
         return self.world.is_enterable(self.tile())
 
     def tile(self):
-        return self.world.tile_at(self.screen, self.row, self.column)
+        return self.world.tile_at(self.screen, self.point)
 
     def tuple(self):
-        return self.world.number, self.screen, self.row, self.column
-
-    def __eq__(self, other):
-        if not isinstance(other, WorldMapPosition):
-            return False
-
-        return (
-            self.world.number == other.world.number
-            and self.screen == other.screen
-            and self.row == other.row
-            and self.column == other.column
-        )
-
-    def __repr__(self):
-        return f"WorldMapPosition({self.world}, screen={self.screen}, row={self.row}, column={self.column})"
+        return self.world.number, self.screen, self.point

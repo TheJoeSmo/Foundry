@@ -79,7 +79,7 @@ class Jump(GeneratorObject):
     def position(self, position: Point) -> None:
         pass
 
-    def move_by(self, dx, dy):
+    def move_by(self, point: Point) -> None:
         pass
 
     def point_in(self, x, y):

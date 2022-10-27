@@ -1,3 +1,4 @@
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.game.gfx.objects.Jump import Jump
@@ -14,7 +15,7 @@ class LevelObjectFactory:
     palette_group_index: int
 
     graphics_set: GraphicsSet | None = None
-    palette_group: list = []
+    palette_group: PaletteGroup
 
     def __init__(
         self,
@@ -70,26 +71,22 @@ class LevelObjectFactory:
         self,
         domain: int,
         object_index: int,
-        x: int,
-        y: int,
+        point: Point,
         length: int | None,
         index: int,
     ):
         assert isinstance(domain, int)
         assert isinstance(object_index, int)
-        assert isinstance(x, int)
-        assert isinstance(y, int)
+        assert isinstance(point, Point)
         assert isinstance(index, int)
         if self.vertical_level:
-            offset = y // SCREEN_HEIGHT
-            y %= SCREEN_HEIGHT
-
-            x += offset * SCREEN_WIDTH
+            offset = point.y // SCREEN_HEIGHT
+            point = Point(offset * SCREEN_WIDTH, point.y % SCREEN_HEIGHT)
 
         data = bytearray(3)
 
-        data[0] = domain << 5 | y
-        data[1] = x
+        data[0] = domain << 5 | point.y
+        data[1] = point.x
         data[2] = object_index
 
         if length is not None:

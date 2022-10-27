@@ -29,6 +29,7 @@ from foundry import (
     open_url,
     releases_link,
 )
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.level.LevelManager import LevelManager
 from foundry.gui.AboutWindow import AboutDialog
@@ -718,7 +719,7 @@ class MainWindow(QMainWindow):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         if event.button() == Qt.MiddleButton:
-            self.manager.middle_mouse_release(self.mapToGlobal(event.position()))
+            self.manager.middle_mouse_release(Point.from_qpoint(self.mapToGlobal(event.position())))
 
     def on_about(self, _):
         about = AboutDialog(self)

@@ -4,6 +4,7 @@ from PySide6.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QDrag, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QLabel, QSizePolicy, QVBoxLayout, QWidget
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
@@ -31,17 +32,14 @@ def get_minimal_icon_object(level_object: T) -> T:
 
     if level_object.obj_index >= 0x1F:
         obj = factory.from_properties(
-            domain=level_object.domain,
-            object_index=(level_object.obj_index // 0x10) * 0x10,
-            x=0,
-            y=0,
-            length=None,
-            index=0,
+            level_object.domain,
+            (level_object.obj_index // 0x10) * 0x10,
+            Point(0, 0),
+            None,
+            0,
         )
     else:
-        obj = factory.from_properties(
-            domain=level_object.domain, object_index=level_object.obj_index, x=0, y=0, length=None, index=0
-        )
+        obj = factory.from_properties(level_object.domain, level_object.obj_index, Point(0, 0), None, 0)
 
     obj.palette_group = level_object.palette_group  # transfer old palette group
 

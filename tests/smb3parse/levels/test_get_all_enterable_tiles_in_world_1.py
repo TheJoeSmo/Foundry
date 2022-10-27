@@ -46,14 +46,15 @@ world_8_positions = [
 
 @pytest.mark.parametrize("world_number, stock_positions", [(1, world_1_positions), (8, world_8_positions)])
 def test_get_all_level_locations_in_world(world_number, stock_positions, rom):
-    world = WorldMap.from_world_number(rom, world_number)
+    world: WorldMap = WorldMap.from_world_number(rom, world_number)
 
     enterable_positions = []
 
     for world_map_position in world.gen_positions():
         if world_map_position.can_have_level():
-            _, screen, row, column = world_map_position.tuple()
-            enterable_positions.append((screen, row, column))
+            enterable_positions.append(
+                (world_map_position.screen, world_map_position.point.y, world_map_position.point.x)
+            )
 
     for stock, found in zip(stock_positions, enterable_positions):
         assert found == stock

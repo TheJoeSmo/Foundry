@@ -1,5 +1,6 @@
 import pytest
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -14,9 +15,10 @@ def level(rom_singleton, qtbot):
 
 
 @pytest.mark.parametrize(
-    "method, params", [("add_object", (0, 0, 0, 0, None)), ("add_enemy", (0, 0, 0)), ("add_jump", tuple())]
+    "method, params",
+    [("add_object", (0, 0, Point(0, 0), None)), ("add_enemy", (0, Point(0, 0))), ("add_jump", tuple())],
 )
-def test_level_too_big(rom_singleton, level, method, params, qtbot):
+def test_level_too_big(rom_singleton, level: Level, method, params, qtbot):
     # GIVEN a level
     pass
 
@@ -27,7 +29,7 @@ def test_level_too_big(rom_singleton, level, method, params, qtbot):
     assert level.is_too_big()
 
 
-def test_not_too_big_jump(level):
+def test_not_too_big_jump(level: Level) -> None:
     # GIVEN a level
     pass
 
@@ -41,7 +43,7 @@ def test_not_too_big_jump(level):
     assert not level.is_too_big()
 
 
-def test_not_too_big_object(level):
+def test_not_too_big_object(level: Level) -> None:
     # GIVEN a level
     pass
 
@@ -55,7 +57,7 @@ def test_not_too_big_object(level):
     assert not level.is_too_big()
 
 
-def test_not_too_big_enemy(level):
+def test_not_too_big_enemy(level: Level) -> None:
     # GIVEN a level
     pass
 
@@ -69,7 +71,7 @@ def test_not_too_big_enemy(level):
     assert not level.is_too_big()
 
 
-def test_not_too_big_nothing(level):
+def test_not_too_big_nothing(level: Level) -> None:
     # GIVEN a level
     pass
 
@@ -80,7 +82,7 @@ def test_not_too_big_nothing(level):
     assert not level.is_too_big()
 
 
-def test_level_insert_in_vertical_level(level):
+def test_level_insert_in_vertical_level(level: Level) -> None:
     # GIVEN a vertical level without objects
     level.is_vertical = True
 
@@ -89,15 +91,11 @@ def test_level_insert_in_vertical_level(level):
     level.jumps.clear()
 
     # WHEN an object is added at a Y-value, too large for horizontal levels
-    domain = object_index = 0x00
-    x, y = 0, LEVEL_DEFAULT_HEIGHT * 2
-
-    level.add_object(domain, object_index, x, y, None)
+    level.add_object(0, 0, Point(0, LEVEL_DEFAULT_HEIGHT * 2), None)
 
     # THEN that object is still the same and at the correct point
-    added_object = level.objects[0]
+    added_object: LevelObject = level.objects[0]
 
-    assert added_object.domain == domain
-    assert added_object.obj_index == object_index
-    assert added_object.rendered_position.x == x
-    assert added_object.rendered_position.y == y
+    assert added_object.domain == 0
+    assert added_object.obj_index == 0
+    assert added_object.rendered_position == Point(0, LEVEL_DEFAULT_HEIGHT * 2)
