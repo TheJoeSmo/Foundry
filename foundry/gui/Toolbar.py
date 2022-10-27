@@ -29,10 +29,10 @@ def create_toolbar(
     """
 
     toolbar = QToolBar(name, parent)
-    toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
-    toolbar.setOrientation(Qt.Horizontal)
+    toolbar.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
+    toolbar.setOrientation(Qt.Orientation.Horizontal)
     toolbar.setFloatable(True)
-    toolbar.setAllowedAreas(Qt.LeftToolBarArea | Qt.RightToolBarArea)
+    toolbar.setAllowedAreas(Qt.ToolBarArea.LeftToolBarArea | Qt.ToolBarArea.RightToolBarArea)
 
     if widgets is not None:
         for widget in widgets:

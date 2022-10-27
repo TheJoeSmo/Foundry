@@ -158,7 +158,7 @@ class LevelManager:
 
         # Toolbar Creation
         splitter = QSplitter(self.parent)
-        splitter.setOrientation(Qt.Vertical)
+        splitter.setOrientation(Qt.Orientation.Vertical)
 
         splitter.addWidget(self.parent.object_list)
         splitter.setStretchFactor(1, 1)
@@ -167,12 +167,14 @@ class LevelManager:
 
         splitter.setChildrenCollapsible(False)
 
-        create_toolbar(self.parent, "Generator Editor", [self.parent.spinner_panel], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "Generator Dropdown", [self.parent.object_dropdown], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "palette", [self.parent.side_palette], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "PydanticLevel Size", [self.parent.level_size_bar], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "Enemy Size", [self.parent.enemy_size_bar], Qt.RightToolBarArea)
-        create_toolbar(self.parent, "Splitter", [splitter], Qt.RightToolBarArea)
+        create_toolbar(self.parent, "Generator Editor", [self.parent.spinner_panel], Qt.ToolBarArea.RightToolBarArea)
+        create_toolbar(
+            self.parent, "Generator Dropdown", [self.parent.object_dropdown], Qt.ToolBarArea.RightToolBarArea
+        )
+        create_toolbar(self.parent, "palette", [self.parent.side_palette], Qt.ToolBarArea.RightToolBarArea)
+        create_toolbar(self.parent, "PydanticLevel Size", [self.parent.level_size_bar], Qt.ToolBarArea.RightToolBarArea)
+        create_toolbar(self.parent, "Enemy Size", [self.parent.enemy_size_bar], Qt.ToolBarArea.RightToolBarArea)
+        create_toolbar(self.parent, "Splitter", [splitter], Qt.ToolBarArea.RightToolBarArea)
 
         self.parent.object_toolbar = ObjectToolBar(self.parent)
         self.parent.object_toolbar_viewer = ObjectToolbarViewer(self.parent)
@@ -192,8 +194,10 @@ class LevelManager:
         self.parent.object_toolbar.selected.connect(set_object_viewer)
         self.parent.object_toolbar.selected.connect(self.parent.object_dropdown.select_object)
 
-        create_toolbar(self.parent, "Object Viewer", [self.parent.object_toolbar_viewer], Qt.LeftToolBarArea)
-        create_toolbar(self.parent, "Object Toolbar", [self.parent.object_toolbar], Qt.LeftToolBarArea)
+        create_toolbar(
+            self.parent, "Object Viewer", [self.parent.object_toolbar_viewer], Qt.ToolBarArea.LeftToolBarArea
+        )
+        create_toolbar(self.parent, "Object Toolbar", [self.parent.object_toolbar], Qt.ToolBarArea.LeftToolBarArea)
 
         # Warning List Creation
 

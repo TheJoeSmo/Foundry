@@ -211,10 +211,10 @@ class PlayerViewerController(CustomChildWindow):
         self.side_toolbar.addWidget(LayoutWidget(self.side_toolbar, side_toolbar_layout))
 
         self.addToolBar(self.toolbar)
-        self.addToolBar(Qt.RightToolBarArea, self.side_toolbar)
+        self.addToolBar(Qt.ToolBarArea.RightToolBarArea, self.side_toolbar)
 
         self.setStatusBar(QStatusBar(self))
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     def closeEvent(self, event: QCloseEvent):
         if self.frame_editor is not None:

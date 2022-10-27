@@ -100,7 +100,7 @@ class BlockViewerController(CustomChildWindow):
 
         self.addToolBar(self.toolbar)
 
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
         self.setStatusBar(QStatusBar(self))
 

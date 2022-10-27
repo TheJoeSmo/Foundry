@@ -154,7 +154,7 @@ class MainWindow(QMainWindow):
         self.warning_action.setDisabled(True)
         self.warning_action.triggered.connect(self.manager.display_warnings)
 
-        self.addToolBar(Qt.TopToolBarArea, self.menu_toolbar)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.menu_toolbar)
 
         self.delete_shortcut = QShortcut(QKeySequence(Qt.Key.Key_Delete), self, self.manager.delete)
 
