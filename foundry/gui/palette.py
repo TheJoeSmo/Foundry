@@ -416,7 +416,7 @@ class PaletteGroupWidget(MouseAggregator, Widget):
         )
         picker.palette_group_changed.connect(change_palette_group)
         picker.dialog_finished.connect(change_palette_group)
-        picker.exec_()
+        picker.exec()
 
     def change_state(self, model: PaletteGroup) -> None:
         for idx, palette in enumerate(model.palettes):

@@ -63,5 +63,5 @@ def main(path: str | None = None):
 
     window = GraphicEditor(path=path, user_settings=user_settings, gui_loader=gui_loader)
     if window.is_loaded:
-        app.exec_()
+        app.exec()
         save_settings(user_settings)

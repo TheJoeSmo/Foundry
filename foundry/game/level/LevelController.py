@@ -317,7 +317,7 @@ class LevelController:
             self.level_ref.data_changed.emit()
 
         header_editor.state_changed.connect(update_level_header)
-        header_editor.exec_()
+        header_editor.exec()
 
     def display_jump_editor(self):
         index = self.parent.jump_list.currentIndex().row()
@@ -332,10 +332,10 @@ class LevelController:
         self.on_jump_edited(updated_jump)
 
     def display_palette_viewer(self):
-        PaletteViewer(self.parent, self.level_ref).exec_()
+        PaletteViewer(self.parent, self.level_ref).exec()
 
     def display_autoscroll_editor(self):
-        AutoScrollEditor(self.parent, self.level_ref).exec_()
+        AutoScrollEditor(self.parent, self.level_ref).exec()
 
     def display_block_viewer(self):
         block_viewer = BlockViewer(parent=self.parent)

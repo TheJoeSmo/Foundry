@@ -131,7 +131,7 @@ class ObjectButton(ObjectIcon):
         mime_data.setData("application/level-object", object_bytes)
         drag_event.setMimeData(mime_data)
 
-        if drag_event.exec_() == Qt.MoveAction:
+        if drag_event.exec() == Qt.MoveAction:
             self.object_created.emit()
 
     def mouseReleaseEvent(self, event: QMouseEvent):

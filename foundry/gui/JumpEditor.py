@@ -89,7 +89,7 @@ class JumpEditor(CustomDialog):
     def edit_jump(parent: QWidget | None, jump: Jump, is_horizontal: bool, suggested_max_size: int = MAX_SCREEN_INDEX):
         jump_editor = JumpEditor(parent, jump, is_horizontal, suggested_max_size)
 
-        jump_editor.exec_()
+        jump_editor.exec()
 
         return jump_editor.jump
 

@@ -104,6 +104,6 @@ class ApprovalDialog(QDialog):
 
         dialog = ApprovalDialog(test_name, reference_image, generated_image)
 
-        dialog.exec_()
+        dialog.exec()
 
         return dialog.result()

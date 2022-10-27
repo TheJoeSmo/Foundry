@@ -177,7 +177,7 @@ class MainWindow(QMainWindow):
         self.showMaximized()
 
     def _on_show_settings(self):
-        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec_()
+        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec()
 
     @staticmethod
     def _save_auto_rom():
@@ -537,7 +537,7 @@ class MainWindow(QMainWindow):
 
             level_selector = LevelSelector(self)
 
-            answer = level_selector.exec_()
+            answer = level_selector.exec()
 
             if answer == QMessageBox.Accepted:
                 self.manager.attach(level_selector.object_data_offset, level_selector.enemy_data_offset)
@@ -634,7 +634,7 @@ class MainWindow(QMainWindow):
             info_box.addButton(QMessageBox.Cancel)
             info_box.addButton(go_to_github_button, QMessageBox.AcceptRole)
 
-            info_box.exec_()
+            info_box.exec()
         else:
             QMessageBox.information(self, "No newer release", f"Version {current_version} is up to date.")
 
@@ -651,7 +651,7 @@ class MainWindow(QMainWindow):
 
             # if setting a checkbox, keep the menu open
             menu_of_action: QMenu = self.sender()
-            menu_of_action.exec_()
+            menu_of_action.exec()
 
         elif item_id in self.manager.actions:
             x, y = self.manager.last_position

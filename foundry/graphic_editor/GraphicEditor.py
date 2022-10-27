@@ -150,4 +150,4 @@ class GraphicEditor(MainWindow):
         return path
 
     def display_settings_dialog(self):
-        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec_()
+        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec()
