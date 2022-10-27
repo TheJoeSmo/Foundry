@@ -445,10 +445,10 @@ class LevelView(QWidget):
     def _resize_mode_from_edge(edge: int):
         mode = 0
 
-        if edge & Qt.Edge.RightEdge:
+        if edge & Edge.RightEdge:
             mode |= MODE_RESIZE_HORIZ
 
-        if edge & Qt.Edge.BottomEdge:
+        if edge & Edge.BottomEdge:
             mode |= MODE_RESIZE_VERT
 
         return mode
