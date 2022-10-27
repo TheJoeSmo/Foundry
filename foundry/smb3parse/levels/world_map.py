@@ -1,8 +1,8 @@
 from collections import defaultdict
 from collections.abc import Generator
-from typing import Any
 from warnings import warn
 
+from foundry.core.geometry import Point
 from foundry.smb3parse.constants import (
     TILE_BOWSER_CASTLE,
     TILE_CASTLE_BOTTOM,
@@ -50,6 +50,7 @@ from foundry.smb3parse.levels import (
     LevelBase,
 )
 from foundry.smb3parse.levels.level import Level
+from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
 from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
 from foundry.smb3parse.util.rom import Rom
 
@@ -177,7 +178,7 @@ class WorldMap(LevelBase):
         self.level_count_s3 = y_pos_start_by_screen[3] - y_pos_start_by_screen[2]
         self.level_count_s4 = level_y_pos_list_end - y_pos_start_by_screen[3]
 
-    def level_for_position(self, screen: int, player_row: int, player_column: int):
+    def level_for_position(self, screen: int, point: Point) -> tuple[int, int, int] | None:
         """
         The rom takes the point of the current player, so the world, the screen and the x and y coordinates, and
         operates on them. First it is checked, whether or not the player is located on a tile, that is able to be
@@ -197,10 +198,8 @@ class WorldMap(LevelBase):
         ----------
         screen : int
             The screen index of the level to acquire.
-        player_row : int
-            The row of the player.
-        player_column : int
-            The column of the player.
+        point: Point
+            The point the player is located at.
 
         Returns
         -------
@@ -209,10 +208,9 @@ class WorldMap(LevelBase):
         address. Or None, if there is no level at the map point.
         """
         assert isinstance(screen, int)
-        assert isinstance(player_row, int)
-        assert isinstance(player_column, int)
+        assert isinstance(point, Point)
 
-        tile = self.tile_at(screen, player_row, player_column)
+        tile = self.tile_at(screen, point)
 
         if tile in [TILE_SPADE_HOUSE, TILE_MUSHROOM_HOUSE_1, TILE_MUSHROOM_HOUSE_2]:
             warn("Spade and mushroom house currently not supported, when getting a level address.")
@@ -221,18 +219,17 @@ class WorldMap(LevelBase):
         if not self.is_enterable(tile):
             return None
 
-        level_indexes = self.level_indexes(screen, player_row, player_column)
-
+        level_indexes = self.level_indexes(WorldMapPosition(None, screen, point))
         if level_indexes is None:
             return None
 
-        row_address, column_address, level_offset_address, enemy_offset_address = level_indexes
+        point_address, level_offset_address, enemy_offset_address = level_indexes
 
         level_offset = self._rom.little_endian(level_offset_address)
 
         assert 0xA000 <= level_offset < 0xC000, level_offset  # suppose that level layouts are only in this range?
 
-        correct_row_value = self._rom.int(row_address)
+        correct_row_value = self._rom.int(point_address.y)
         object_set_number = correct_row_value & 0x0F
 
         object_set_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + object_set_number) * 2 - 10) * 0x1000
@@ -244,25 +241,23 @@ class WorldMap(LevelBase):
 
         return object_set_number, absolute_level_address, enemy_address
 
-    def replace_level_at_position(self, level_info, position):
+    def replace_level_at_position(self, level_info, position: WorldMapPosition):
         level_address, enemy_address, object_set_number = level_info
 
-        existing_level = self.level_for_position(position.screen, position.row, position.column)
+        existing_level = self.level_for_position(position.screen, position.point)
 
         if existing_level is None:
             raise LookupError("No existing level at point.")
 
-        _, screen, row, column = position.tuple()
+        level_index = self.level_indexes(position)
+        assert level_index is not None
+        point, level_offset_address, enemy_offset_address = level_index
 
-        row_address, column_address, level_offset_address, enemy_offset_address = self.level_indexes(
-            screen, row, column
-        )
+        row_value: int = ((position.point.y + FIRST_VALID_ROW) << 4) + object_set_number
+        self._rom.write(point.y, bytes([row_value]))
 
-        row_value = ((row + FIRST_VALID_ROW) << 4) + object_set_number
-        self._rom.write(row_address, bytes([row_value]))
-
-        column_value = ((screen - 1) << 4) + column
-        self._rom.write(column_address, bytes([column_value]))
+        column_value: int = ((position.screen - 1) << 4) + position.point.x
+        self._rom.write(point.x, bytes([column_value]))
 
         object_set_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + object_set_number) * 2 - 10) * 0x1000
         level_offset = level_address - object_set_offset - BASE_OFFSET
@@ -273,16 +268,20 @@ class WorldMap(LevelBase):
 
         self._rom.write_little_endian(enemy_offset_address, enemy_offset)
 
-    def level_indexes(self, screen, player_row, player_column):
+    def level_indexes(self, position: WorldMapPosition) -> tuple[Point, int, int] | None:
         """
+        Provide the level index from a given screen and point.
 
-        :param int screen: On which screen the level is positioned.
-        :param int player_row: In which row the level is positioned.
-        :param int player_column: In which column the level is positioned.
+        Parameters
+        ----------
+        position: WorldMapPosition
+            The position inside the world map.
 
-        :return: The memory addresses of the row, column and level offset point.
+        Returns
+        -------
+        tuple[Point, int, int] | None
+            The level indexes, if it exists.
         """
-
         level_y_pos_list_start = WORLD_MAP_BASE_OFFSET + self._rom.little_endian(
             LEVEL_Y_POS_LISTS + OFFSET_SIZE * self.world_index
         )
@@ -294,7 +293,9 @@ class WorldMap(LevelBase):
         row_amount = col_amount = level_x_pos_list_start - level_y_pos_list_start
 
         row_start_index = sum(
-            [self.level_count_s1, self.level_count_s2, self.level_count_s3, self.level_count_s4][0 : screen - 1]
+            [self.level_count_s1, self.level_count_s2, self.level_count_s3, self.level_count_s4][
+                0 : position.screen - 1
+            ]
         )
 
         # find the row point
@@ -304,7 +305,7 @@ class WorldMap(LevelBase):
             # adjust the value, so that we ignore the black border tiles around the map
             row = (value >> 4) - FIRST_VALID_ROW
 
-            if row == player_row:
+            if row == position.point.y:
                 break
         else:
             # no level on row of player
@@ -313,30 +314,29 @@ class WorldMap(LevelBase):
         for col_index in range(row_index, col_amount):
             column = self._rom.int(level_x_pos_list_start + col_index) & 0x0F
 
-            if column == player_column:
+            if column == position.point.x:
                 break
         else:
             # no column for row
             return None
 
-        row_position = level_y_pos_list_start + col_index
-        col_position = level_x_pos_list_start + col_index
+        point: Point = Point(level_x_pos_list_start + col_index, level_y_pos_list_start + col_index)
 
         # get level offset
-        level_list_offset_position = LEVELS_IN_WORLD_LIST_OFFSET + self.world_index * OFFSET_SIZE
-        level_list_address = WORLD_MAP_BASE_OFFSET + self._rom.little_endian(level_list_offset_position)
+        level_list_offset_position: int = LEVELS_IN_WORLD_LIST_OFFSET + self.world_index * OFFSET_SIZE
+        level_list_address: int = WORLD_MAP_BASE_OFFSET + self._rom.little_endian(level_list_offset_position)
 
-        level_offset_position = level_list_address + OFFSET_SIZE * col_index
+        level_offset_position: int = level_list_address + OFFSET_SIZE * col_index
 
-        enemy_list_start_offset = LEVEL_ENEMY_LIST_OFFSET + self.world_index * OFFSET_SIZE
-        enemy_list_start = WORLD_MAP_BASE_OFFSET + self._rom.little_endian(enemy_list_start_offset)
+        enemy_list_start_offset: int = LEVEL_ENEMY_LIST_OFFSET + self.world_index * OFFSET_SIZE
+        enemy_list_start: int = WORLD_MAP_BASE_OFFSET + self._rom.little_endian(enemy_list_start_offset)
 
-        enemy_offset_position = enemy_list_start + col_index * OFFSET_SIZE
+        enemy_offset_position: int = enemy_list_start + col_index * OFFSET_SIZE
 
-        return row_position, col_position, level_offset_position, enemy_offset_position
+        return point, level_offset_position, enemy_offset_position
 
-    def level_name_for_position(self, screen: int, player_row: int, player_column: int) -> str:
-        tile = self.tile_at(screen, player_row, player_column)
+    def level_name_for_position(self, screen: int, point: Point) -> str:
+        tile = self.tile_at(screen, point)
 
         if not self.is_enterable(tile):
             return ""
@@ -346,34 +346,29 @@ class WorldMap(LevelBase):
 
         return f"Level {self.number}-{TILE_NAMES[tile]}"
 
-    def tile_at(self, screen: int, row: int, column: int) -> int:
+    def tile_at(self, screen: int, point: Point) -> int:
         """
         Returns the tile value at the given coordinates. We define (0, 0) to be the topmost, leftmost tile, under the
         black border, so we'll adjust them accordingly, when bound checking.
-
-        :param screen:
-        :param row:
-        :param column:
-        :return:
         """
         assert isinstance(screen, int)
-        assert isinstance(row, int)
-        assert isinstance(column, int)
+        assert isinstance(point, Point)
 
-        if row + FIRST_VALID_ROW not in VALID_ROWS:
+        if point.y + FIRST_VALID_ROW not in VALID_ROWS:
             raise ValueError(
-                f"Given row {row} is outside the valid range for world maps. First valid row is " f"{FIRST_VALID_ROW}."
+                f"Given row {point.y} is outside the valid range for world maps. First valid row is "
+                f"{FIRST_VALID_ROW}."
             )
 
-        if column not in VALID_COLUMNS:
+        if point.x not in VALID_COLUMNS:
             raise ValueError(
-                f"Given column {column} is outside the valid range for world maps. Remember the black " f"border."
+                f"Given column {point.x} is outside the valid range for world maps. Remember the black " f"border."
             )
 
         if screen - 1 not in range(self.screen_count):
             raise ValueError(f"World {self.number} has {self.screen_count} screens. " f"Given number {screen} invalid.")
 
-        return self.layout_bytes[(screen - 1) * WORLD_MAP_SCREEN_SIZE + row * WORLD_MAP_SCREEN_WIDTH + column]
+        return self.layout_bytes[(screen - 1) * WORLD_MAP_SCREEN_SIZE + point.y * WORLD_MAP_SCREEN_WIDTH + point.x]
 
     def is_enterable(self, tile_index: int) -> bool:
         """
@@ -393,23 +388,22 @@ class WorldMap(LevelBase):
             or tile_index in self._special_enterable_tiles
         )
 
-    def gen_positions(self) -> Generator[Any, None, None]:
+    def gen_positions(self) -> Generator[WorldMapPosition, None, None]:
         """
         Returns a generator, which yield WorldMapPosition objects, one screen at a time, one row at a time.
         """
-        from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
 
         for screen in range(1, self.screen_count + 1):
             for row in range(WORLD_MAP_HEIGHT):
                 for column in range(WORLD_MAP_SCREEN_WIDTH):
-                    yield WorldMapPosition(self, screen, row, column)
+                    yield WorldMapPosition(self, screen, Point(column, row))
 
     def gen_levels(self):
         """
         Returns a generator, which yields all levels accessible from this world map.
         """
         for position in self.gen_positions():
-            level_info_tuple = self.level_for_position(position.screen, position.row, position.column)
+            level_info_tuple = self.level_for_position(position.screen, position.point)
 
             if level_info_tuple is None:
                 continue

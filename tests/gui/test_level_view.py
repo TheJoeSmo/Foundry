@@ -2,6 +2,7 @@ import pytest
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import Qt, QWheelEvent
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level.util import DisplayInformation
 from foundry.game.level.util import Level as LevelInformationState
@@ -28,15 +29,13 @@ def level_view(main_window, qtbot):
 @pytest.mark.parametrize(
     "coordinates, obj_index, domain, object_set_number",
     [
-        ((0, 0), 0x03, 0x00, PLAINS_OBJECT_SET),  # background symbols
-        ((361, 283), 0xE2, 0x00, PLAINS_OBJECT_SET),  # background cloud
-        ((233, 409), 0x72, 0x00, None),  # goomba
+        (Point(0, 0), 0x03, 0x00, PLAINS_OBJECT_SET),  # background symbols
+        (Point(361, 283), 0xE2, 0x00, PLAINS_OBJECT_SET),  # background cloud
+        (Point(233, 409), 0x72, 0x00, None),  # goomba
     ],
 )
 def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain, object_set_number):
-    screen_coordinates = coordinates  # in pixels
-
-    level_object = level_view.object_at(*screen_coordinates)
+    level_object = level_view.object_at(coordinates)
 
     assert level_object
     assert level_object.obj_index == obj_index
@@ -68,14 +67,12 @@ def test_level_larger(level_view, empty_file_settings: FileSettings):
 
 
 @pytest.mark.parametrize("scroll_amount", [0, 100])
-@pytest.mark.parametrize("coordinates", [(233, 409)])  # goomba
+@pytest.mark.parametrize("coordinates", [Point(233, 409)])  # goomba
 @pytest.mark.parametrize("wheel_delta, type_change", [(10, 1), (-10, -1)])  # scroll wheel up  # scroll wheel down
 def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_window, qtbot):
     # GIVEN a level view and a cursor point over an object
-    x, y = coordinates
-
     level_view = main_window.level_view
-    object_under_cursor = level_view.object_at(x, y)
+    object_under_cursor = level_view.object_at(coordinates)
     original_type = object_under_cursor.type
 
     main_window.user_settings.object_scroll_enabled = True
@@ -89,15 +86,15 @@ def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_
 
     main_window.hide()
 
-    qtbot.mouseClick(level_view, Qt.LeftButton, pos=QPoint(x, y))
+    qtbot.mouseClick(level_view, Qt.MouseButton.LeftButton, pos=QPoint(coordinates.x, coordinates.y))
     assert object_under_cursor.selected
 
     event = QWheelEvent(
-        QPoint(x, y),
+        QPoint(coordinates.x, coordinates.y),
         QPoint(-1, -1),
         QPoint(0, wheel_delta),
         QPoint(0, wheel_delta),
-        Qt.LeftButton,
+        Qt.MouseButton.LeftButton,
         Qt.NoModifier,
         Qt.ScrollEnd,
         False,
@@ -106,6 +103,6 @@ def test_wheel_event(scroll_amount, coordinates, wheel_delta, type_change, main_
     assert level_view.wheelEvent(event)
 
     # THEN the type of the object should have changed
-    new_type = level_view.object_at(*coordinates).type
+    new_type = level_view.object_at(coordinates).type
 
     assert new_type == original_type + type_change, (original_type, new_type)

@@ -2,6 +2,7 @@ from PySide6.QtCore import QRect
 from PySide6.QtGui import QImage
 
 from foundry import data_dir
+from foundry.core.geometry import Point
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
@@ -16,7 +17,7 @@ class EnemyItemFactory:
     def __init__(self, object_set: int, palette_index: int):
         png = QImage(str(data_dir.joinpath("gfx.png")))
 
-        png.convertTo(QImage.Format_RGB888)
+        png.convertTo(QImage.Format.Format_RGB888)
 
         rows_per_object_set = 256 // 64
 
@@ -29,12 +30,12 @@ class EnemyItemFactory:
     def from_data(self, data, _):
         return EnemyObject(data, self.png_data, self.palette_group)
 
-    def from_properties(self, enemy_item_id: int, x: int, y: int):
+    def from_properties(self, enemy_item_id: int, point: Point):
         data = bytearray(3)
 
         data[0] = enemy_item_id
-        data[1] = x
-        data[2] = y
+        data[1] = point.x
+        data[2] = point.y
 
         obj = self.from_data(data, 0)
 

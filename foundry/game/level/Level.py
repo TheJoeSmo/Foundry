@@ -3,6 +3,7 @@ from typing import overload
 
 from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
 
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
@@ -502,9 +503,9 @@ class Level(LevelLike):
     def get_object_names(self):
         return [obj.name for obj in self.get_all_objects()]
 
-    def object_at(self, x: int, y: int) -> EnemyObject | LevelObject | None:
+    def object_at(self, point: Point) -> EnemyObject | LevelObject | None:
         for obj in reversed(self.get_all_objects()):
-            if (x, y) in obj:
+            if point in obj:
                 return obj
         else:
             return None
@@ -585,9 +586,9 @@ class Level(LevelLike):
     def draw(self, *_):
         pass
 
-    def paste_object_at(self, x: int, y: int, obj: EnemyObject | LevelObject) -> EnemyObject | LevelObject:
+    def paste_object_at(self, point: Point, obj: EnemyObject | LevelObject) -> EnemyObject | LevelObject:
         if isinstance(obj, EnemyObject):
-            return self.add_enemy(obj.obj_index, x, y)
+            return self.add_enemy(obj.obj_index, point)
 
         elif isinstance(obj, LevelObject):
             if obj.is_4byte:
@@ -595,45 +596,43 @@ class Level(LevelLike):
             else:
                 length = None
 
-            return self.add_object(obj.domain, obj.obj_index, x, y, length)
+            return self.add_object(obj.domain, obj.obj_index, point, length)
 
-    def create_object_at(self, x: int, y: int, domain: int = 0, object_index: int = 0):
+    def create_object_at(self, point: Point, domain: int = 0, object_index: int = 0):
         assert isinstance(domain, int)
         assert isinstance(object_index, int)
-        assert isinstance(x, int)
-        assert isinstance(y, int)
+        assert isinstance(point, Point)
         assert isinstance(object_index, int)
 
-        self.add_object(domain, object_index, x, y, None, len(self.objects))
+        self.add_object(domain, object_index, point, None, len(self.objects))
 
-    def create_enemy_at(self, x: int, y: int):
+    def create_enemy_at(self, point: Point):
         # goomba to have something to display
-        self.add_enemy(0x72, x, y, len(self.enemies))
+        self.add_enemy(0x72, point, len(self.enemies))
 
     def add_object(
-        self, domain: int, object_index: int, x: int, y: int, length: int | None, index: int = -1
+        self, domain: int, object_index: int, point: Point, length: int | None, index: int = -1
     ) -> LevelObject:
         assert isinstance(domain, int)
         assert isinstance(object_index, int)
-        assert isinstance(x, int)
-        assert isinstance(y, int)
+        assert isinstance(point, Point)
         assert isinstance(index, int)
 
         if index == -1:
             index = len(self.objects)
 
-        obj = self.object_factory.from_properties(domain, object_index, x, y, length, index)
+        obj = self.object_factory.from_properties(domain, object_index, point, length, index)
         self.objects.insert(index, obj)
 
         return obj
 
-    def add_enemy(self, object_index: int, x: int, y: int, index: int = -1) -> EnemyObject:
+    def add_enemy(self, object_index: int, point: Point, index: int = -1) -> EnemyObject:
         if index == -1:
             index = len(self.enemies)
         else:
             index %= len(self.objects)
 
-        enemy = self.enemy_item_factory.from_data([object_index, x, y], -1)
+        enemy = self.enemy_item_factory.from_data([object_index, point.x, point.y], -1)
 
         self.enemies.insert(index, enemy)
 

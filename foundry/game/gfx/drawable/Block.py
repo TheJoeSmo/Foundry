@@ -68,7 +68,7 @@ class Block:
             self.ru_tile = Tile(ru, self.palette_group, self.palette_index, graphics_set)
             self.rd_tile = Tile(rd, self.palette_group, self.palette_index, graphics_set)
 
-        self.image = QImage(Block.WIDTH, Block.HEIGHT, QImage.Format_RGB888)
+        self.image = QImage(Block.WIDTH, Block.HEIGHT, QImage.Format.Format_RGB888)
         painter = QPainter(self.image)
 
         painter.drawImage(QPoint(0, 0), self.lu_tile.as_image())
@@ -97,7 +97,7 @@ class Block:
                 image = image.scaled(block_length, block_length)
 
             # mask out the transparent pixels first
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
 
             if not transparent:  # or self._whole_block_is_transparent:
@@ -126,6 +126,6 @@ class Block:
 def _image_only_one_color(image):
     copy = image.copy()
 
-    copy.convertTo(QImage.Format_Indexed8)
+    copy.convertTo(QImage.Format.Format_Indexed8)
 
     return copy.colorCount() == 1

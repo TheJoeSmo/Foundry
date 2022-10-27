@@ -599,8 +599,8 @@ class LevelObject(GeneratorObject):
             transparent=transparent,
         )
 
-    def move_by(self, dx: int, dy: int):
-        self.position = Point(self.position.x + dx, self.position.y + dy)
+    def move_by(self, point: Point) -> None:
+        self.position = self.position + point
 
     @property
     def position(self) -> Point:
@@ -833,13 +833,11 @@ class LevelObject(GeneratorObject):
         else:
             return EXPANDS_BOTH
 
-    def __contains__(self, item: tuple[int, int]) -> bool:
-        x, y = item
+    def __contains__(self, item: Point) -> bool:
+        return self.point_in(item)
 
-        return self.point_in(x, y)
-
-    def point_in(self, x: int, y: int) -> bool:
-        return self.rect.contains(x, y)
+    def point_in(self, point: Point) -> bool:
+        return self.rect.contains(point.x, point.y)
 
     def get_status_info(self) -> list[tuple]:
         return [
@@ -862,13 +860,13 @@ class LevelObject(GeneratorObject):
 
         image = QImage(
             QSize(self.rendered_size.width * Block.SIDE_LENGTH, self.rendered_size.height * Block.SIDE_LENGTH),
-            QImage.Format_RGB888,
+            QImage.Format.Format_RGB888,
         )
 
         bg_color = QColor(*MASK_COLOR).rgb()
 
         image.fill(bg_color)
-        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+        mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
         image.setAlphaChannel(mask)
 
         painter = QPainter(image)

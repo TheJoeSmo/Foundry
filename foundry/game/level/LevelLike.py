@@ -1,5 +1,6 @@
 import abc
 
+from foundry.core.geometry import Point
 from foundry.smb3parse.levels import LevelBase
 
 
@@ -17,7 +18,7 @@ class LevelLike(LevelBase, abc.ABC):
         pass
 
     @abc.abstractmethod
-    def object_at(self, x, y):
+    def object_at(self, point: Point):
         pass
 
     @abc.abstractmethod

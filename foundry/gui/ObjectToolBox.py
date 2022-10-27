@@ -3,6 +3,7 @@ from itertools import product
 from PySide6.QtCore import Signal, SignalInstance
 from PySide6.QtWidgets import QWidget
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -40,16 +41,14 @@ class ObjectToolBox(QWidget):
         if graphic_set_index == -1:
             graphic_set_index = object_set_index
 
-        factory = LevelObjectFactory(
+        factory: LevelObjectFactory = LevelObjectFactory(
             object_set_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
         )
 
         object_ids = list(range(0x00, 0x10)) + list(range(0x10, MAX_ID_VALUE, 0x10))
 
         for domain, obj_index in product(range(MAX_DOMAIN + 1), object_ids):
-            level_object = factory.from_properties(
-                domain=domain, object_index=obj_index, x=0, y=0, length=None, index=0
-            )
+            level_object = factory.from_properties(domain, obj_index, Point(0, 0), None, 0)
 
             if not isinstance(level_object, LevelObject) or level_object.name in ["MSG_NOTHING", "MSG_CRASH"]:
                 continue
@@ -62,7 +61,7 @@ class ObjectToolBox(QWidget):
         factory = EnemyItemFactory(object_set_index, spr_palette_index)
 
         for obj_index in range(MAX_ENEMY_ITEM_ID + 1):
-            enemy_item = factory.from_properties(obj_index, x=0, y=0)
+            enemy_item = factory.from_properties(obj_index, Point(0, 0))
 
             if enemy_item.name in ["MSG_NOTHING", "MSG_CRASH"]:
                 continue

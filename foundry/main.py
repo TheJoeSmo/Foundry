@@ -46,9 +46,9 @@ def main(path_to_rom: str = "", world=None, level=None):
     app = QApplication()
 
     if auto_save_rom_path.exists():
-        result = AutoSaveDialog().exec_()
+        result = AutoSaveDialog().exec()
 
-        if result == QMessageBox.AcceptRole:
+        if result == QMessageBox.ButtonRole.AcceptRole:
             path_to_rom = auto_save_rom_path
 
             QMessageBox.information(
@@ -58,7 +58,7 @@ def main(path_to_rom: str = "", world=None, level=None):
     window = MainWindow(path_to_rom, world, level, user_settings=user_settings, gui_loader=gui_loader)
     if window.loaded:
         del window.loaded
-        app.exec_()
+        app.exec()
         save_settings(user_settings)
 
 
@@ -77,5 +77,5 @@ if __name__ == "__main__":
             f"An unexpected error occurred! Please contact the developers at {github_issue_link} "
             f"with the error below:\n\n{str(e)}\n\n{traceback.format_exc()}"
         )
-        box.exec_()
+        box.exec()
         raise

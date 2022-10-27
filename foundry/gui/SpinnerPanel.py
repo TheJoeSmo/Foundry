@@ -23,7 +23,7 @@ class SpinnerPanel(QWidget):
     def __init__(self, parent: QWidget | None, level_ref: LevelRef):
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
         self.level_ref = level_ref
         self.level_ref.data_changed.connect(self.update)

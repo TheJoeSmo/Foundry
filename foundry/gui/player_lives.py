@@ -305,14 +305,14 @@ class View(CustomDialog):
         self.rom_interface = rom_interface
         self.store = store
 
-        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+        main_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom, self)
 
         main_layout.addLayout(self._create_invalid_rom_layout())
         main_layout.addLayout(self._create_lives_layout())
         main_layout.addLayout(self._create_death_options_layout())
         main_layout.addLayout(self._create_1up_layout())
         main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(self._create_button_options_layout(), alignment=Qt.AlignRight)
+        main_layout.addWidget(self._create_button_options_layout(), alignment=Qt.AlignmentFlag.AlignRight)
 
         self.store.subscribe(self.render)
         self.render()
@@ -326,7 +326,7 @@ class View(CustomDialog):
         creates a warning label to the user to let them know that some of the
         features are unsupported."""
 
-        _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
         self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING.value}")
         self._invalid_rom_warning.setWordWrap(True)
         self._invalid_rom_warning.setFixedWidth(400)
@@ -357,7 +357,7 @@ class View(CustomDialog):
     def _create_death_options_layout(self) -> QBoxLayout:
         """Creates layout for when a death occurs."""
 
-        layout = QBoxLayout(QBoxLayout.LeftToRight)
+        layout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
         self._death_takes_lives = View._create_checkbox(
             _UIStrings.DEATH_TAKES_LIVES.value, self._on_death_takes_lives, layout
         )
@@ -367,17 +367,17 @@ class View(CustomDialog):
         """Creates layout for the OK/CANCEL buttons."""
 
         button_box = QDialogButtonBox()
-        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self._on_ok)
-        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self._on_cancel)
+        button_box.addButton(QDialogButtonBox.StandardButton.Ok).clicked.connect(self._on_ok)
+        button_box.addButton(QDialogButtonBox.StandardButton.Cancel).clicked.connect(self._on_cancel)
 
         return button_box
 
     def _create_1up_layout(self) -> QBoxLayout:
         """Creates the layout for all of the possible 1up sources."""
 
-        external_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        external_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group = QGroupBox(f"{_UIStrings.TITLE_1UP.value}")
-        internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        internal_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group.setLayout(internal_layout)
 
         self._mushroom_1up = View._create_checkbox(
@@ -477,11 +477,11 @@ class View(CustomDialog):
     def _on_ok(self):
         """Process UI press of OK button."""
         self.rom_interface.write_state(self.store.get_state())
-        self.done(QDialogButtonBox.Ok)
+        self.done(QDialogButtonBox.StandardButton.Ok)
 
     def _on_cancel(self):
         """Process UI press of CANCEL button."""
-        self.done(QDialogButtonBox.Cancel)
+        self.done(QDialogButtonBox.StandardButton.Cancel)
 
     def _on_starting_lives(self, text: str):
         """Process UI change of number of starting lives"""

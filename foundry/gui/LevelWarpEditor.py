@@ -286,7 +286,7 @@ class LevelWarpEditor(QWidget):
 
     def _set_warp_state_from_level(self):
         level_selector = LevelSelector(self, self.file_settings)
-        level_was_selected = level_selector.exec_() == QDialog.Accepted
+        level_was_selected = level_selector.exec() == QDialog.Accepted
 
         if level_was_selected:
             self.state = LevelWarpState(

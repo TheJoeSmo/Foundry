@@ -11,10 +11,10 @@ class CustomChildWindow(QMainWindow):
         super().__init__(parent)
 
         self.setWindowTitle(title)
-        self.setWindowFlag(Qt.WindowStaysOnTopHint)
+        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
 
     def keyPressEvent(self, event: QKeyEvent):
-        if event.key() == Qt.Key_Escape:
+        if event.key() == Qt.Key.Key_Escape:
             self.on_exit()
 
     def on_exit(self):

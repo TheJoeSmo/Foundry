@@ -16,7 +16,7 @@ class SelectionSquare:
 
         self.pen = QPen(STROKE_COLOR)
         self.pen.setWidth(1)
-        self.brush = Qt.NoBrush
+        self.brush = Qt.BrushStyle.NoBrush
 
     def is_active(self):
         return self.active

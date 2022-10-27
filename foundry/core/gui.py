@@ -1987,37 +1987,37 @@ class Click(Enum):
     @classmethod
     def from_qt(cls, button: Qt.MouseButton):
         match button:
-            case Qt.NoButton:
+            case Qt.MouseButton.NoButton:
                 return None
-            case Qt.LeftButton:
+            case Qt.MouseButton.LeftButton:
                 return cls.LEFT_CLICK
-            case Qt.RightButton:
+            case Qt.MouseButton.RightButton:
                 return cls.RIGHT_CLICK
-            case Qt.MiddleButton:
+            case Qt.MouseButton.MiddleButton:
                 return cls.MIDDLE_CLICK
-            case Qt.BackButton:
+            case Qt.MouseButton.BackButton:
                 return cls.BACK_CLICK
-            case Qt.ForwardButton:
+            case Qt.MouseButton.ForwardButton:
                 return cls.FORWARD_CLICK
-            case Qt.ExtraButton1:
+            case Qt.MouseButton.ExtraButton1:
                 return cls.EXTRA_CLICK_0
-            case Qt.ExtraButton2:
+            case Qt.MouseButton.ExtraButton2:
                 return cls.EXTRA_CLICK_1
-            case Qt.ExtraButton3:
+            case Qt.MouseButton.ExtraButton3:
                 return cls.EXTRA_CLICK_2
-            case Qt.ExtraButton4:
+            case Qt.MouseButton.ExtraButton4:
                 return cls.EXTRA_CLICK_3
-            case Qt.ExtraButton5:
+            case Qt.MouseButton.ExtraButton5:
                 return cls.EXTRA_CLICK_4
-            case Qt.ExtraButton6:
+            case Qt.MouseButton.ExtraButton6:
                 return cls.EXTRA_CLICK_5
-            case Qt.ExtraButton7:
+            case Qt.MouseButton.ExtraButton7:
                 return cls.EXTRA_CLICK_6
-            case Qt.ExtraButton8:
+            case Qt.MouseButton.ExtraButton8:
                 return cls.EXTRA_CLICK_7
-            case Qt.ExtraButton9:
+            case Qt.MouseButton.ExtraButton9:
                 return cls.EXTRA_CLICK_8
-            case Qt.ExtraButton10:
+            case Qt.MouseButton.ExtraButton10:
                 return cls.EXTRA_CLICK_9
             case _:
                 return cls.OTHER
@@ -2033,15 +2033,15 @@ class Modifier(Enum):
         return self.name
 
     @classmethod
-    def from_qt(cls, modifier: Qt.KeyboardModifiers):
+    def from_qt(cls, modifier: Qt.KeyboardModifier.KeyboardModifiers):
         active_modifiers: set[Modifier] = set()
-        if modifier == Qt.NoModifier:
+        if modifier == Qt.KeyboardModifier.NoModifier:
             return active_modifiers
-        if (modifier & Qt.ShiftModifier) == Qt.ShiftModifier:
+        if (modifier & Qt.KeyboardModifier.ShiftModifier) == Qt.KeyboardModifier.ShiftModifier:
             active_modifiers.add(cls.SHIFT)
-        if (modifier & Qt.ControlModifier) == Qt.ControlModifier:
+        if (modifier & Qt.KeyboardModifier.ControlModifier) == Qt.KeyboardModifier.ControlModifier:
             active_modifiers.add(cls.CONTROL)
-        if (modifier & Qt.AltModifier) == Qt.AltModifier:
+        if (modifier & Qt.KeyboardModifier.AltModifier) == Qt.KeyboardModifier.AltModifier:
             active_modifiers.add(cls.ALT)
         if not active_modifiers:
             active_modifiers.add(cls.OTHER)
@@ -2280,3 +2280,24 @@ class Selection(Enum):
     TERTIARY = auto()
     UNDO = auto()
     REDO = auto()
+
+
+class Edge(int, Enum):
+    NoEdge = 0
+    TopEdge = 1
+    LeftEdge = 2
+    RightEdge = 4
+    BottomEdge = 8
+
+    @classmethod
+    def from_qt(cls, edge: Qt.Edge):
+        if edge == Qt.Edge.TopEdge:
+            return cls.TopEdge
+        elif edge == Qt.Edge.LeftEdge:
+            return cls.LeftEdge
+        elif edge == Qt.Edge.RightEdge:
+            return cls.RightEdge
+        elif edge == Qt.Edge.BottomEdge:
+            return cls.BottomEdge
+        else:
+            return cls.NoEdge

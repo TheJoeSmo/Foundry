@@ -35,6 +35,7 @@ class BlockEditorController(CustomChildWindow):
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     palette_index_changed: SignalInstance = Signal(int)  # type: ignore
     destroyed: SignalInstance = Signal()  # type: ignore
+    _last_point: Point
 
     def __init__(
         self,
@@ -50,8 +51,7 @@ class BlockEditorController(CustomChildWindow):
         self.model = BlockEditorModel(tsa_data, block_index, graphics_set, palette_group, palette_index)
         self.view = BlockEditorView(self, tsa_data, block_index, graphics_set, palette_group, palette_index)
         self.pattern_viewer = None
-        self._last_x = 0
-        self._last_y = 0
+        self._last_point = Point(0, 0)
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
@@ -69,7 +69,7 @@ class BlockEditorController(CustomChildWindow):
         self.addToolBar(self.toolbar)
         self.setStatusBar(QStatusBar(self))
 
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
@@ -145,9 +145,8 @@ class BlockEditorController(CustomChildWindow):
         if self.pattern_viewer is not None:
             self.pattern_viewer.palette_index = value
 
-    def _on_pattern_selected(self, x: int, y: int):
-        self._last_x = x
-        self._last_y = y
+    def _on_pattern_selected(self, point: Point):
+        self._last_point = point
 
         def remove_viewer(*_):
             self.pattern_viewer = None
@@ -155,15 +154,15 @@ class BlockEditorController(CustomChildWindow):
         if self.pattern_viewer is None:
             self.pattern_viewer = PatternViewer(self, self.graphics_set, self.palette_group, self.block_index // 0x40)
             self.pattern_viewer.pattern_selected.connect(
-                lambda ptn: self._on_block_pattern_change(self._last_x, self._last_y, ptn)
+                lambda ptn: self._on_block_pattern_change(self._last_point, ptn)
             )
             self.pattern_viewer.destroyed.connect(remove_viewer)
             self.pattern_viewer.show()
         else:
             self.pattern_viewer.palette_index = self.block_index // 0x40
 
-    def _on_block_pattern_change(self, x: int, y: int, pattern: int):
-        index = self.block_index + 0x100 * (x * 2 + y)
+    def _on_block_pattern_change(self, point: Point, pattern: int):
+        index = self.block_index + 0x100 * (point.x * 2 + point.y)
         tsa_data = self.tsa_data
         tsa_data[index] = pattern
         self.tsa_data = tsa_data

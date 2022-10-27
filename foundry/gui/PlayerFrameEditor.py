@@ -79,7 +79,7 @@ class PlayerFrameEditorController(CustomChildWindow):
         self.addToolBar(self.toolbar)
 
         self.setStatusBar(QStatusBar(self))
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()

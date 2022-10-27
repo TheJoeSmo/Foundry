@@ -117,23 +117,23 @@ class GraphicEditor(MainWindow):
 
         # Set up the primary options
         self.menu_toolbar = Toolbar("Menu Toolbar", self)
-        self.menu_toolbar.setOrientation(Qt.Horizontal)
+        self.menu_toolbar.setOrientation(Qt.Orientation.Horizontal)
         self.menu_toolbar.setIconSize(QSize(20, 20))
         self.menu_toolbar.add_action(
             "Editor Settings", self.display_settings_dialog, icon=CommonIcons.to_icon(CommonIcons.SETTINGS)
         )
-        self.addToolBar(Qt.TopToolBarArea, self.menu_toolbar)
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.menu_toolbar)
 
         self.bottom_toolbar = Toolbar("Bottom Toolbar", self)
-        self.bottom_toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
-        self.bottom_toolbar.setOrientation(Qt.Horizontal)
+        self.bottom_toolbar.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
+        self.bottom_toolbar.setOrientation(Qt.Orientation.Horizontal)
         self.bottom_toolbar.setFloatable(True)
-        self.bottom_toolbar.setAllowedAreas(Qt.BottomToolBarArea | Qt.TopToolBarArea)
+        self.bottom_toolbar.setAllowedAreas(Qt.ToolBarArea.BottomToolBarArea | Qt.ToolBarArea.TopToolBarArea)
 
         self.palette_group_widget = PaletteGroupWidget(PaletteGroup.as_empty())  # type: ignore
 
         self.bottom_toolbar.addWidget(self.palette_group_widget)
-        self.addToolBar(Qt.BottomToolBarArea, self.bottom_toolbar)
+        self.addToolBar(Qt.ToolBarArea.BottomToolBarArea, self.bottom_toolbar)
 
         self.file_path = open_file(self, self.file_path)
         if not self.is_loaded:
@@ -150,4 +150,4 @@ class GraphicEditor(MainWindow):
         return path
 
     def display_settings_dialog(self):
-        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec_()
+        SettingsDialog(self, user_settings=self.user_settings, gui_loader=self.gui_loader).exec()

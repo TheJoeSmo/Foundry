@@ -70,7 +70,7 @@ class LevelSizeBar(QWidget):
         self.label = label
         self._current_value = current_value
 
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.setWhatsThis(
             "<b>Size Bar</b><br/>"

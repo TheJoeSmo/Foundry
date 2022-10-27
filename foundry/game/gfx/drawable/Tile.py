@@ -72,7 +72,7 @@ class Tile:
         if tile_length not in self.cached_tiles.keys():
             width = height = tile_length
 
-            image = QImage(self.pixels, self.WIDTH, self.HEIGHT, QImage.Format_RGB888)
+            image = QImage(self.pixels, self.WIDTH, self.HEIGHT, QImage.Format.Format_RGB888)
 
             image = image.scaled(width, height)
 

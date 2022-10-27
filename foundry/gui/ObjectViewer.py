@@ -85,7 +85,7 @@ class ObjectViewer(CustomChildWindow):
 
         self.setCentralWidget(central_widget)
 
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
         return
 

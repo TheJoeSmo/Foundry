@@ -59,7 +59,7 @@ class ColorButton(Label, MouseHandler):
         super().initialize_state(model, *args, **kwargs)
 
         self.setFixedSize(model.button_size.width, model.button_size.height)
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.change_state(model)
 
     def change_state(self, model: Model) -> None:
@@ -341,9 +341,9 @@ class ColorPickerDialog(Dialog, MouseAggregator, KeyHandler):
         self.dialog_options.dialog_event.connect(self._forward_dialog_exit)
 
         layout = QVBoxLayout(self)
-        layout.addWidget(self.palette_tab, alignment=Qt.AlignCenter)
-        layout.addWidget(self.color_picker, alignment=Qt.AlignCenter)
-        layout.addWidget(self.dialog_options, alignment=Qt.AlignCenter)
+        layout.addWidget(self.palette_tab, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.color_picker, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.dialog_options, alignment=Qt.AlignmentFlag.AlignCenter)
 
 
 class PaletteWidget(MouseAggregator, Widget):
@@ -416,7 +416,7 @@ class PaletteGroupWidget(MouseAggregator, Widget):
         )
         picker.palette_group_changed.connect(change_palette_group)
         picker.dialog_finished.connect(change_palette_group)
-        picker.exec_()
+        picker.exec()
 
     def change_state(self, model: PaletteGroup) -> None:
         for idx, palette in enumerate(model.palettes):

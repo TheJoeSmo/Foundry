@@ -1,5 +1,6 @@
 from PySide6.QtCore import QPoint, QSize
 
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
@@ -92,11 +93,11 @@ class WorldMap(LevelLike):
     def get_all_objects(self):
         return self.objects
 
-    def object_at(self, x, y):
-        point = QPoint(x, y)
+    def object_at(self, point: Point):
+        qpoint = QPoint(point.x, point.y)
 
         for obj in reversed(self.objects):
-            if obj.rect.contains(point):
+            if obj.rect.contains(qpoint):
                 return obj
 
         return None
@@ -125,19 +126,14 @@ class WorldMap(LevelLike):
     def remove_object(self, obj):
         self.objects.remove(obj)
 
-    def level_at_position(self, x: int, y: int):
-        assert isinstance(x, int)
-        assert isinstance(y, int)
+    def level_at_position(self, point: Point):
+        assert isinstance(point, Point)
 
-        screen = x // WORLD_MAP_SCREEN_WIDTH + 1
+        return self._internal_world_map.level_for_position(
+            point.x // WORLD_MAP_SCREEN_WIDTH + 1, Point(point.x % WORLD_MAP_SCREEN_WIDTH, point.y)
+        )
 
-        x %= WORLD_MAP_SCREEN_WIDTH
-
-        return self._internal_world_map.level_for_position(screen, y, x)
-
-    def level_name_at_position(self, x: int, y: int) -> str:
-        screen = x // WORLD_MAP_SCREEN_WIDTH + 1
-
-        x %= WORLD_MAP_SCREEN_WIDTH
-
-        return self._internal_world_map.level_name_for_position(screen, y, x)
+    def level_name_at_position(self, point: Point) -> str:
+        return self._internal_world_map.level_name_for_position(
+            point.x // WORLD_MAP_SCREEN_WIDTH + 1, Point(point.x % WORLD_MAP_SCREEN_WIDTH, point.y)
+        )

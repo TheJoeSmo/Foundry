@@ -52,7 +52,7 @@ class PatternEditorController(QWidget, PatternEditorModel):
         self.model = PatternEditorModel(
             groups, group_indexes, palette_group, palette_index, PatternMatrix(max_size), max_size, zoom
         )
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     @property
     def graphics_set(self) -> GraphicsSet:
@@ -112,6 +112,6 @@ class PatternEditorController(QWidget, PatternEditorModel):
             y = (i // size.width) * self.pattern_scale
 
             image = tile.as_image(self.pattern_scale)
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
             painter.drawImage(x, y, image)

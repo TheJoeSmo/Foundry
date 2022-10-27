@@ -10,12 +10,12 @@ class ObjectList(QListWidget):
     def __init__(self, parent: QWidget, level_ref: LevelRef, context_menu: ContextMenu):
         super().__init__(parent=parent)
 
-        self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        self.setSizeAdjustPolicy(QListWidget.AdjustToContents)
-        self.setSelectionMode(QListWidget.ExtendedSelection)
+        self.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding)
+        self.setSizeAdjustPolicy(QListWidget.SizeAdjustPolicy.AdjustToContents)
+        self.setSelectionMode(QListWidget.SelectionMode.ExtendedSelection)
         scroll_bar = QScrollBar(self)
         self.setVerticalScrollBar(scroll_bar)
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.setWordWrap(True)
 
         self.level_ref: LevelRef = level_ref
@@ -41,13 +41,13 @@ class ObjectList(QListWidget):
         return QSize(100, 200)
 
     def mousePressEvent(self, event: QMouseEvent):
-        if event.button() == Qt.RightButton:
+        if event.button() == Qt.MouseButton.RightButton:
             self.on_right_down(event)
         else:
             return super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if event.button() == Qt.RightButton:
+        if event.button() == Qt.MouseButton.RightButton:
             self.on_right_up(event)
         else:
             return super().mouseReleaseEvent(event)
@@ -97,7 +97,7 @@ class ObjectList(QListWidget):
 
             for index, level_object in enumerate(level_objects):
                 item = self.item(index)
-                item.setData(Qt.UserRole, level_object)
+                item.setData(Qt.ItemDataRole.UserRole, level_object)
                 item.setSelected(level_object.selected)
                 if level_object.selected and index not in currently_selected:
                     ignore_prior_selection = True
@@ -119,7 +119,7 @@ class ObjectList(QListWidget):
             self.setCurrentIndex(prior_selection)
 
     def selected_objects(self):
-        return [self.item(index.row()).data(Qt.UserRole) for index in self.selectedIndexes()]
+        return [self.item(index.row()).data(Qt.ItemDataRole.UserRole) for index in self.selectedIndexes()]
 
     def on_selection_changed(self):
         if self._on_selection_changed_ongoing:

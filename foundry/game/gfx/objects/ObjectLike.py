@@ -30,7 +30,7 @@ class ObjectLike(ABC):
         pass
 
     @abstractmethod
-    def move_by(self, dx, dy):
+    def move_by(self, point: Point) -> None:
         pass
 
     @property

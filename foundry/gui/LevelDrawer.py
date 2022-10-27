@@ -6,6 +6,7 @@ from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
 from foundry.core.drawable.Drawable import Drawable as DrawableValidator
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
 from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
@@ -56,7 +57,7 @@ def load_namespace() -> Namespace:
 
 
 png = QImage(str(data_dir / "gfx.png"))
-png.convertTo(QImage.Format_RGB888)
+png.convertTo(QImage.Format.Format_RGB888)
 
 
 def _make_image_selected(image: QImage) -> QImage:
@@ -70,9 +71,9 @@ def _make_image_selected(image: QImage) -> QImage:
     return selected_image
 
 
-def _load_from_png(x: int, y: int):
-    image = png.copy(QRect(x * 16, y * 16, 16, 16))
-    mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+def _load_from_png(point: Point):
+    image = png.copy(QRect(point.x * 16, point.y * 16, 16, 16))
+    mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
     image.setAlphaChannel(mask)
 
     return image
@@ -459,7 +460,7 @@ class LevelDrawer:
             if self.user_settings.draw_expansion:
                 painter.save()
 
-                painter.setPen(Qt.NoPen)
+                painter.setPen(Qt.PenStyle.NoPen)
 
                 if level_object.expands() == EXPANDS_BOTH:
                     painter.setBrush(QColor(0xFF, 0, 0xFF, 0x80))
@@ -475,7 +476,7 @@ class LevelDrawer:
     def _draw_mario(self, painter: QPainter, level: Level):
         mario_actions = QImage(str(data_dir / "mario.png"))
 
-        mario_actions.convertTo(QImage.Format_RGBA8888)
+        mario_actions.convertTo(QImage.Format.Format_RGBA8888)
 
         mario_position = QPoint(*level.header.mario_position()) * self.block_length
 
@@ -491,7 +492,7 @@ class LevelDrawer:
 
     def _draw_jumps(self, painter: QPainter, level: Level):
         for jump in level.jumps:
-            painter.setBrush(QBrush(QColor(0xFF, 0x00, 0x00), Qt.FDiagPattern))
+            painter.setBrush(QBrush(QColor(0xFF, 0x00, 0x00), Qt.BrushStyle.FDiagPattern))
 
             painter.drawRect(jump.get_rect(self.block_length, level.is_vertical))
 

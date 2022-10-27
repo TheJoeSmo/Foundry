@@ -30,7 +30,7 @@ class SpriteViewerWidget(QFrame):
         self._transparent = transparent
         self.zoom = zoom
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
     @property
     def sprites(self) -> list[SpriteProtocol]:
@@ -98,7 +98,7 @@ class SpriteViewerWidget(QFrame):
 
         image = self.sprite_group.image(self.zoom)
         if self.transparent:
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
 
         painter.drawImage(0, 0, image)

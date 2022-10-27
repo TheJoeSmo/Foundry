@@ -3,6 +3,7 @@ from enum import Enum
 from PySide6.QtCore import QPoint
 from PySide6.QtWidgets import QMenu
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.level.LevelRef import LevelRef
@@ -30,13 +31,15 @@ MAX_ORIGIN = 0xFF, 0xFF
 
 
 class ContextMenu(QMenu):
+    copied_objects_origin: Point
+
     def __init__(self, level_ref: LevelRef):
         super().__init__()
 
         self.level_ref = level_ref
 
         self.copied_objects = None
-        self.copied_objects_origin = 0, 0
+        self.copied_objects_origin = Point(0, 0)
         self.last_opened_at = QPoint(0, 0)
 
         self.cut_action = self.addAction("Cut")
@@ -81,9 +84,9 @@ class ContextMenu(QMenu):
         min_x = max(min_x, 0)
         min_y = max(min_y, 0)
 
-        self.copied_objects_origin = min_x, min_y
+        self.copied_objects_origin = Point(min_x, min_y)
 
-    def get_copied_objects(self) -> tuple[list[LevelObject | EnemyObject], tuple[int, int]]:
+    def get_copied_objects(self) -> tuple[list[LevelObject | EnemyObject], Point]:
         return self.copied_objects, self.copied_objects_origin
 
     def set_position(self, position: QPoint):

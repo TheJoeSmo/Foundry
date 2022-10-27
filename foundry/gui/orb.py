@@ -214,13 +214,13 @@ class View(CustomDialog):
         self.rom_interface = rom_interface
         self.store = store
 
-        main_layout = QBoxLayout(QBoxLayout.TopToBottom, self)
+        main_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom, self)
 
         main_layout.addLayout(self._create_invalid_rom_layout())
         main_layout.addLayout(self._create_touch_options_layout())
         main_layout.addLayout(self._create_move_options_layout())
         main_layout.addWidget(HorizontalLine())
-        main_layout.addWidget(self._create_button_options_layout(), alignment=Qt.AlignRight)
+        main_layout.addWidget(self._create_button_options_layout(), alignment=Qt.AlignmentFlag.AlignRight)
 
         self.store.subscribe(self.render)
         self.render()
@@ -234,7 +234,7 @@ class View(CustomDialog):
         creates a warning label to the user to let them know that some of the
         features are unsupported."""
 
-        _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.LeftToRight)
+        _invalid_rom_warning_layout = QBoxLayout(QBoxLayout.Direction.LeftToRight)
         self._invalid_rom_warning = QLabel(f"{_UIStrings.INVALID_ROM_WARNING.value}")
         self._invalid_rom_warning.setWordWrap(True)
         self._invalid_rom_warning.setFixedWidth(500)
@@ -244,9 +244,9 @@ class View(CustomDialog):
         return _invalid_rom_warning_layout
 
     def _create_touch_options_layout(self) -> QBoxLayout:
-        external_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        external_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group = QGroupBox(f"{_UIStrings.TOUCH_TITLE.value}")
-        internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        internal_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group.setLayout(internal_layout)
 
         self._touch_game_timer_stops = View._create_checkbox(
@@ -257,9 +257,9 @@ class View(CustomDialog):
         return external_layout
 
     def _create_move_options_layout(self) -> QBoxLayout:
-        external_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        external_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group = QGroupBox(f"{_UIStrings.MOVE_TITLE.value}")
-        internal_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        internal_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
         group.setLayout(internal_layout)
 
         self._move_touch_to_timer = View._create_checkbox(
@@ -277,8 +277,8 @@ class View(CustomDialog):
         """Creates layout for the OK/CANCEL buttons."""
 
         button_box = QDialogButtonBox()
-        button_box.addButton(QDialogButtonBox.Ok).clicked.connect(self._on_ok)
-        button_box.addButton(QDialogButtonBox.Cancel).clicked.connect(self._on_cancel)
+        button_box.addButton(QDialogButtonBox.StandardButton.Ok).clicked.connect(self._on_ok)
+        button_box.addButton(QDialogButtonBox.StandardButton.Cancel).clicked.connect(self._on_cancel)
 
         return button_box
 
@@ -326,11 +326,11 @@ class View(CustomDialog):
     def _on_ok(self):
         """Process UI press of OK button."""
         self.rom_interface.write_state(self.store.get_state())
-        self.done(QDialogButtonBox.Ok)
+        self.done(QDialogButtonBox.StandardButton.Ok)
 
     def _on_cancel(self):
         """Process UI press of CANCEL button."""
-        self.done(QDialogButtonBox.Cancel)
+        self.done(QDialogButtonBox.StandardButton.Cancel)
 
     def _on_move_touch_to_timer(self):
         self.store.dispatch(Action(Actions.MOVE_TOUCH_TO_TIMER.value, self._move_touch_to_timer.isChecked()))

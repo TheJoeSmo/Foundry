@@ -67,4 +67,4 @@ class JumpList(QListWidget):
             remove_action = menu.addAction("Remove Jump")
             remove_action.triggered.connect(self.remove_jump.emit)
 
-        menu.exec_(event.globalPos())
+        menu.exec(event.globalPos())

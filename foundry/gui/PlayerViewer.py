@@ -89,7 +89,9 @@ class PlayerViewerModel:
             is_mario,
             power_up,
             [i for i in power_up_offsets],
-            PaletteGroup([Palette([j for j in palette_group[i : (i + 4)]]) for i in range(len(palette_group) // 4)]),
+            PaletteGroup(
+                tuple(Palette(tuple(j for j in palette_group[i : (i + 4)])) for i in range(len(palette_group) // 4))
+            ),
             load_animations(animations, page_offsets),
         )
 
@@ -211,10 +213,10 @@ class PlayerViewerController(CustomChildWindow):
         self.side_toolbar.addWidget(LayoutWidget(self.side_toolbar, side_toolbar_layout))
 
         self.addToolBar(self.toolbar)
-        self.addToolBar(Qt.RightToolBarArea, self.side_toolbar)
+        self.addToolBar(Qt.ToolBarArea.RightToolBarArea, self.side_toolbar)
 
         self.setStatusBar(QStatusBar(self))
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     def closeEvent(self, event: QCloseEvent):
         if self.frame_editor is not None:
@@ -273,9 +275,9 @@ class PlayerViewerController(CustomChildWindow):
 
     @palette.setter
     def palette(self, palette: Palette):
-        palette_group = self.palette_group
-        palette_group[get_animations_palette_index(self.is_mario, self.power_up)] = palette
-        self.palette_group = palette_group
+        self.palette_group = self.palette_group.evolve_palettes(
+            get_animations_palette_index(self.is_mario, self.power_up), palette
+        )
 
     @property
     def palette_group(self) -> PaletteGroup:

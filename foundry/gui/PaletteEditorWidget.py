@@ -15,5 +15,5 @@ class PaletteEditorWidget(PaletteWidget):
     def _open_color_selector(self, button_index: int):
         selector = ColorSelector(self)
 
-        if QDialog.Accepted == selector.exec_():
+        if QDialog.DialogCode.Accepted == selector.exec():
             self.palette = self.palette.evolve_color_index(button_index, selector.last_selected_color_index)

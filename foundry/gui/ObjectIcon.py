@@ -4,6 +4,7 @@ from PySide6.QtCore import QMimeData, QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QDrag, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QLabel, QSizePolicy, QVBoxLayout, QWidget
 
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
@@ -31,17 +32,14 @@ def get_minimal_icon_object(level_object: T) -> T:
 
     if level_object.obj_index >= 0x1F:
         obj = factory.from_properties(
-            domain=level_object.domain,
-            object_index=(level_object.obj_index // 0x10) * 0x10,
-            x=0,
-            y=0,
-            length=None,
-            index=0,
+            level_object.domain,
+            (level_object.obj_index // 0x10) * 0x10,
+            Point(0, 0),
+            None,
+            0,
         )
     else:
-        obj = factory.from_properties(
-            domain=level_object.domain, object_index=level_object.obj_index, x=0, y=0, length=None, index=0
-        )
+        obj = factory.from_properties(level_object.domain, level_object.obj_index, Point(0, 0), None, 0)
 
     obj.palette_group = level_object.palette_group  # transfer old palette group
 
@@ -73,7 +71,7 @@ class ObjectIcon(QWidget, Generic[T]):
     ):
         super().__init__(parent)
 
-        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self._item = item
         self.setToolTip(self.item.name)
         self._background_color = background_color
@@ -107,7 +105,11 @@ class ObjectIcon(QWidget, Generic[T]):
         if self.background_color:
             painter.fillRect(event.rect(), self.item.palette_group[0][0])
 
-        scaled_image = get_minimal_icon_object(self.item).as_image().scaled(self.size(), aspectMode=Qt.KeepAspectRatio)
+        scaled_image = (
+            get_minimal_icon_object(self.item)
+            .as_image()
+            .scaled(self.size(), aspectMode=Qt.AspectRatioMode.KeepAspectRatio)
+        )
 
         x = (self.width() - scaled_image.width()) // 2
         y = (self.height() - scaled_image.height()) // 2
@@ -122,7 +124,7 @@ class ObjectButton(ObjectIcon):
     object_created: SignalInstance = Signal()  # type: ignore
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        if not (event.buttons() & Qt.LeftButton):
+        if not (event.buttons() & Qt.MouseButton.LeftButton):
             return super().mouseMoveEvent(event)
 
         drag_event = QDrag(self)
@@ -133,7 +135,7 @@ class ObjectButton(ObjectIcon):
         mime_data.setData("application/level-object", object_bytes)
         drag_event.setMimeData(mime_data)
 
-        if drag_event.exec_() == Qt.MoveAction:
+        if drag_event.exec() == Qt.DropAction.MoveAction:
             self.object_created.emit()
 
     def mouseReleaseEvent(self, event: QMouseEvent):
@@ -167,7 +169,7 @@ class ObjectViewer(QWidget):
             name = QLabel(icon.item.name)
             name.setFixedWidth(64)
             name.setWordWrap(True)
-            name.setAlignment(Qt.AlignCenter)
+            name.setAlignment(Qt.AlignmentFlag.AlignCenter)
             name.setContentsMargins(0, 0, 0, 0)
             self.layout_.addWidget(icon)
             self.layout_.addWidget(name)

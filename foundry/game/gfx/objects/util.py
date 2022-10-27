@@ -1,3 +1,4 @@
+from foundry.core.geometry import Point
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.ObjectLike import EXPANDS_HORIZ, EXPANDS_VERT
@@ -82,11 +83,10 @@ def set_level_object_height(item: LevelObject, height: int, *, render: bool = Tr
         item._render()
 
 
-def resize_level_object(item: LevelObject, width_difference: int, height_difference: int):
-    if width_difference:
-        set_level_object_width(item, item.position.x + width_difference, render=False)
-
-    if height_difference:
-        set_level_object_height(item, item.position.y + height_difference, render=False)
+def resize_level_object(item: LevelObject, point_difference: Point):
+    if point_difference.x:
+        set_level_object_width(item, item.position.x + point_difference.x, render=False)
+    if point_difference.y:
+        set_level_object_height(item, item.position.y + point_difference.y, render=False)
 
     item._render()

@@ -29,4 +29,4 @@ class JumpCreator(QWidget):
     def show_jump_dest(self):
         header_editor = HeaderEditor(self, self.level_ref)
         header_editor.tab_widget.setCurrentIndex(3)
-        header_editor.exec_()
+        header_editor.exec()

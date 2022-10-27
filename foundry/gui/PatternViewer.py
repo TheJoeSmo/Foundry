@@ -63,7 +63,7 @@ class PatternViewerController(CustomChildWindow):
         self.addToolBar(self.toolbar)
         self.setStatusBar(QStatusBar(self))
 
-        self.layout().setSizeConstraint(QLayout.SetFixedSize)
+        self.layout().setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
 
     def closeEvent(self, event: QCloseEvent):
         self.toolbar.close()
@@ -179,6 +179,6 @@ class PatternViewerView(QWidget):
             y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
 
             image = tile.as_image(self.pattern_scale)
-            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskOutColor)
+            mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
             painter.drawImage(x, y, image)

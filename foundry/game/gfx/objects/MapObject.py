@@ -180,8 +180,8 @@ class MapObject(ObjectLike):
     def to_bytes(self):
         return self.block.index
 
-    def move_by(self, dx, dy):
-        self.position = Point(self.x_position + dx, self.y_position + dy)
+    def move_by(self, point: Point) -> None:
+        self.position = self.position + point
 
     def resize_to(self, x, y):
         return
