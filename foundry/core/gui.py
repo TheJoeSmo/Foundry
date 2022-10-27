@@ -2033,15 +2033,15 @@ class Modifier(Enum):
         return self.name
 
     @classmethod
-    def from_qt(cls, modifier: Qt.KeyboardModifiers):
+    def from_qt(cls, modifier: Qt.KeyboardModifier.KeyboardModifiers):
         active_modifiers: set[Modifier] = set()
-        if modifier == Qt.NoModifier:
+        if modifier == Qt.KeyboardModifier.NoModifier:
             return active_modifiers
-        if (modifier & Qt.ShiftModifier) == Qt.ShiftModifier:
+        if (modifier & Qt.KeyboardModifier.ShiftModifier) == Qt.KeyboardModifier.ShiftModifier:
             active_modifiers.add(cls.SHIFT)
-        if (modifier & Qt.ControlModifier) == Qt.ControlModifier:
+        if (modifier & Qt.KeyboardModifier.ControlModifier) == Qt.KeyboardModifier.ControlModifier:
             active_modifiers.add(cls.CONTROL)
-        if (modifier & Qt.AltModifier) == Qt.AltModifier:
+        if (modifier & Qt.KeyboardModifier.AltModifier) == Qt.KeyboardModifier.AltModifier:
             active_modifiers.add(cls.ALT)
         if not active_modifiers:
             active_modifiers.add(cls.OTHER)

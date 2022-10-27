@@ -499,7 +499,7 @@ class LevelView(QWidget):
         clicked_object: LevelObject | EnemyObject | None = self.object_at(point)
         clicked_on_background: bool = clicked_object is None
 
-        if clicked_on_background and not event.modifiers() & Qt.ShiftModifier:
+        if clicked_on_background and not event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
             self._select_object(None)
         else:
             self.mouse_mode = MODE_DRAG
@@ -507,7 +507,8 @@ class LevelView(QWidget):
             selected_objects = self.get_selected_objects()
             nothing_selected = not selected_objects
             if nothing_selected or (
-                not event.modifiers() & Qt.ShiftModifier and not event.modifiers() & Qt.ControlModifier
+                not event.modifiers() & Qt.KeyboardModifier.ShiftModifier
+                and not event.modifiers() & Qt.KeyboardModifier.ControlModifier
             ):
                 self._select_object([clicked_object])
             else:
