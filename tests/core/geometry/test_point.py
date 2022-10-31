@@ -178,11 +178,11 @@ class TestPoint:
         assert Point(1, 1) ^ Point(0, 1) == Point(1, 0)
         assert Point(0, 0) ^ Point(0, 0) == Point(0, 0)
 
-    def test_from_qpoint(self):
-        assert Point(0, 0) == Point.from_qpoint(QPoint(0, 0))
-        assert Point(1, 1) == Point.from_qpoint(QPoint(1, 1))
-        assert Point(1, -1) == Point.from_qpoint(QPoint(1, -1))
-        assert Point(-1, 1) == Point.from_qpoint(QPoint(-1, 1))
+    def test_from_qt(self):
+        assert Point(0, 0) == Point.from_qt(QPoint(0, 0))
+        assert Point(1, 1) == Point.from_qt(QPoint(1, 1))
+        assert Point(1, -1) == Point.from_qt(QPoint(1, -1))
+        assert Point(-1, 1) == Point.from_qt(QPoint(-1, 1))
 
     def test_validate_point(self):
         assert Point(0, 0) == Point.validate(

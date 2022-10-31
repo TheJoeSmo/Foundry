@@ -207,7 +207,7 @@ class BlockEditorView(QWidget):
         return Block.WIDTH * self.zoom
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Point.from_qpoint(event.pos())
+        pos = Point.from_qt(event.pos())
         x, y = pos.x // (self.block_scale // 2), pos.y // (self.block_scale // 2)
         self.pattern_selected.emit((x, y))
 

@@ -721,7 +721,7 @@ class MainWindow(QMainWindow):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         if event.button() == Qt.MouseButton.MiddleButton:
-            self.manager.middle_mouse_release(Point.from_qpoint(self.mapToGlobal(event.position())))
+            self.manager.middle_mouse_release(Point.from_qt(self.mapToGlobal(event.position())))
 
     def on_about(self, _):
         about = AboutDialog(self)

@@ -16,8 +16,8 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
-from foundry.core.geometry import Point
-from foundry.core.gui import Edge
+from foundry.core.geometry import Point, Size
+from foundry.core.gui import Click, Edge, MouseEvent, MouseWheelEvent
 from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -70,6 +70,7 @@ class LevelView(QWidget):
     last_mouse_position: Point
     resize_obj_start_point: Point
     drag_start_point: Point
+    selection_square: SelectionSquare
 
     def __init__(
         self,
@@ -132,107 +133,34 @@ class LevelView(QWidget):
             "If all else fails, click the play button up top to see your level in game in seconds."
         )
 
-    @property
-    def transparency(self):
-        return self.user_settings.block_transparency
-
-    @transparency.setter
-    def transparency(self, value):
-        self.user_settings.block_transparency = value
-
-    @property
-    def draw_grid(self):
-        return self.user_settings.draw_grid
-
-    @draw_grid.setter
-    def draw_grid(self, value):
-        self.user_settings.draw_grid = value
-
-    @property
-    def draw_jumps(self):
-        return self.user_settings.draw_jumps
-
-    @draw_jumps.setter
-    def draw_jumps(self, value):
-        self.user_settings.draw_jumps = value
-
-    @property
-    def draw_mario(self):
-        return self.user_settings.draw_mario
-
-    @draw_mario.setter
-    def draw_mario(self, value):
-        self.user_settings.draw_mario = value
-
-    @property
-    def draw_expansions(self):
-        return self.user_settings.draw_expansion
-
-    @draw_expansions.setter
-    def draw_expansions(self, value):
-        self.user_settings.draw_expansion = value
-
-    @property
-    def draw_jumps_on_objects(self):
-        return self.user_settings.draw_jump_on_objects
-
-    @draw_jumps_on_objects.setter
-    def draw_jumps_on_objects(self, value):
-        self.user_settings.draw_jump_on_objects = value
-
-    @property
-    def draw_items_in_blocks(self):
-        return self.user_settings.draw_items_in_blocks
-
-    @draw_items_in_blocks.setter
-    def draw_items_in_blocks(self, value):
-        self.user_settings.draw_items_in_blocks = value
-
-    @property
-    def draw_invisible_items(self):
-        return self.user_settings.draw_invisible_items
-
-    @draw_invisible_items.setter
-    def draw_invisible_items(self, value):
-        self.user_settings.draw_invisible_items = value
-
-    @property
-    def draw_autoscroll(self):
-        return self.user_settings.draw_autoscroll
-
-    @draw_autoscroll.setter
-    def draw_autoscroll(self, value):
-        self.user_settings.draw_autoscroll = value
-
     def mousePressEvent(self, event: QMouseEvent):
-        pressed_button = event.button()
+        mouse_event: MouseEvent = MouseEvent.from_qt(event)
 
-        if pressed_button == Qt.MouseButton.LeftButton:
-            self._on_left_mouse_button_down(event)
-        elif pressed_button == Qt.MouseButton.RightButton:
-            self._on_right_mouse_button_down(event)
-        else:
-            return super().mousePressEvent(event)
+        if mouse_event.click == Click.LEFT_CLICK:
+            self._on_left_mouse_button_down(mouse_event)
+        elif mouse_event.click == Click.RIGHT_CLICK:
+            self._on_right_mouse_button_down(mouse_event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
+        mouse_event: MouseEvent = MouseEvent.from_qt(event)
+
         if self.mouse_mode == MODE_DRAG:
             self.setCursor(Qt.CursorShape.ClosedHandCursor)
-            self._dragging(event)
+            self._dragging(mouse_event)
 
         elif self.mouse_mode in RESIZE_MODES:
-            previously_selected_objects = self.level_ref.selected_objects
+            previously_selected_objects: list[LevelObject | EnemyObject] = self.level_ref.selected_objects
 
-            self._resizing(event)
-
+            self._resizing(mouse_event)
             self.level_ref.selected_objects = previously_selected_objects
 
-        elif self.selection_square.active:
-            self._set_selection_end(event.position().toPoint())
+        elif self.selection_square.is_active:
+            self._set_selection_end(mouse_event.local_point)
 
         elif self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK:
-            self._set_cursor_for_position(event)
+            self._set_cursor_for_position(mouse_event)
 
-        object_under_cursor = self.object_at(Point.from_qpoint(event.pos()))
+        object_under_cursor: LevelObject | EnemyObject | None = self.object_at(mouse_event.local_point)
 
         if self.user_settings.object_tooltip_enabled and object_under_cursor is not None:
             self.setToolTip(str(object_under_cursor))
@@ -240,11 +168,8 @@ class LevelView(QWidget):
             self.setToolTip("")
             QToolTip.hideText()
 
-        return super().mouseMoveEvent(event)
-
-    def _set_cursor_for_position(self, event: QMouseEvent):
-        point: Point = Point.from_qpoint(event.pos())
-        level_object: LevelObject | EnemyObject | None = self.object_at(point)
+    def _set_cursor_for_position(self, event: MouseEvent):
+        level_object: LevelObject | EnemyObject | None = self.object_at(event.local_point)
 
         if level_object is not None:
             if isinstance(level_object, LevelObject):
@@ -252,7 +177,7 @@ class LevelView(QWidget):
             else:
                 is_resizable = False
 
-            edges = self._cursor_on_edge_of_object(level_object, point)
+            edges = self._cursor_on_edge_of_object(level_object, event.local_point)
 
             if is_resizable and edges:
                 if edges == Edge.RightEdge and level_object.expands() & EXPANDS_HORIZ:
@@ -291,24 +216,20 @@ class LevelView(QWidget):
         return edges
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        released_button = event.button()
+        mouse_event: MouseEvent = MouseEvent.from_qt(event)
 
-        if released_button == Qt.MouseButton.LeftButton:
-            self._on_left_mouse_button_up(event)
-        elif released_button == Qt.MouseButton.RightButton:
-            self._on_right_mouse_button_up(event)
-        else:
-            super().mouseReleaseEvent(event)
+        if mouse_event.click == Click.LEFT_CLICK:
+            self._on_left_mouse_button_up(mouse_event)
+        elif mouse_event.click == Click.RIGHT_CLICK:
+            self._on_right_mouse_button_up(mouse_event)
 
     def wheelEvent(self, event: QWheelEvent):
+        wheel_event: MouseWheelEvent = MouseWheelEvent.from_qt(event)
+
         if self.user_settings.object_scroll_enabled:
-            point = Point.from_qpoint(event.position())
-            obj_under_cursor: LevelObject | EnemyObject | None = self.object_at(point)
+            obj_under_cursor: LevelObject | EnemyObject | None = self.object_at(wheel_event.local_point)
 
-            if obj_under_cursor is None:
-                return False
-
-            if isinstance(self.level_ref.level, WorldMap):
+            if obj_under_cursor is None or isinstance(self.level_ref.level, WorldMap):
                 return False
 
             # scrolling through the level could unintentionally change objects, if the cursor would wander onto them.
@@ -316,12 +237,9 @@ class LevelView(QWidget):
             if obj_under_cursor not in self.level_ref.selected_objects:
                 return False
 
-            self._change_object_on_mouse_wheel(point, event.angleDelta().y())
+            self._change_object_on_mouse_wheel(wheel_event.local_point, wheel_event.delta)
 
-            return True
-        else:
-            super().wheelEvent(event)
-            return False
+        return self.user_settings.object_scroll_enabled
 
     @undoable
     def _change_object_on_mouse_wheel(self, point: Point, y_delta: int) -> None:
@@ -348,19 +266,19 @@ class LevelView(QWidget):
 
         super().update()
 
-    def _on_right_mouse_button_down(self, event: QMouseEvent):
+    def _on_right_mouse_button_down(self, event: MouseEvent):
         if self.mouse_mode == MODE_DRAG:
             return
 
-        self.last_mouse_position = self._to_level_point(Point.from_qpoint(event.pos()))
+        self.last_mouse_position = self._to_level_point(event.local_point)
         if self._select_objects_on_click(event) and self.user_settings.resize_mode == ResizeModes.RESIZE_RIGHT_CLICK:
             self._try_start_resize(MODE_RESIZE_DIAG, event)
 
-    def _try_start_resize(self, resize_mode: int, event: QMouseEvent):
+    def _try_start_resize(self, resize_mode: int, event: MouseEvent):
         if resize_mode not in RESIZE_MODES:
             return
 
-        point: Point = self._to_level_point(Point.from_qpoint(event.pos()))
+        point: Point = self._to_level_point(event.local_point)
         self.mouse_mode: int = resize_mode
 
         self.resize_mouse_start_x = point.x
@@ -369,13 +287,13 @@ class LevelView(QWidget):
         if obj is not None:
             self.resize_obj_start_point = obj.position
 
-    def _resizing(self, event: QMouseEvent) -> None:
+    def _resizing(self, event: MouseEvent) -> None:
         self.resizing_happened = True
 
         if isinstance(self.level_ref.level, WorldMap):
             return
 
-        point: Point = self._to_level_point(Point.from_qpoint(event.pos()))
+        point: Point = self._to_level_point(event.local_point)
         point_difference: Point = Point(0, 0)
 
         if self.mouse_mode & MODE_RESIZE_HORIZ:
@@ -395,7 +313,7 @@ class LevelView(QWidget):
 
         self.update()
 
-    def _on_right_mouse_button_up(self, event: QMouseEvent):
+    def _on_right_mouse_button_up(self, event: MouseEvent):
         if self.resizing_happened:
             self._on_resize_happened_mouse_up(event)
         else:
@@ -404,11 +322,8 @@ class LevelView(QWidget):
             else:
                 menu = self.context_menu.as_background_menu()
 
-            self.context_menu.set_position(event.position().toPoint())
-
-            menu_pos = self.mapToGlobal(event.position().toPoint())
-
-            menu.popup(menu_pos)
+            self.context_menu.set_position(event.local_point.to_qt())
+            menu.popup(event.global_point.to_qt())
 
         self.resizing_happened = False
         self.mouse_mode = MODE_FREE
@@ -420,13 +335,12 @@ class LevelView(QWidget):
         self.mouse_mode = MODE_FREE
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
-    def _on_left_mouse_button_down(self, event: QMouseEvent):
-        point: Point = Point.from_qpoint(event.position())
+    def _on_left_mouse_button_down(self, event: MouseEvent):
         if self._select_objects_on_click(event):
-            obj: LevelObject | EnemyObject | None = self.object_at(point)
+            obj: LevelObject | EnemyObject | None = self.object_at(event.local_point)
 
             if obj is not None:
-                edge: int = self._cursor_on_edge_of_object(obj, point)
+                edge: int = self._cursor_on_edge_of_object(obj, event.local_point)
 
                 if self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK and edge:
 
@@ -434,10 +348,10 @@ class LevelView(QWidget):
                 else:
                     self.drag_start_point = obj.position
         else:
-            self._start_selection_square(event.position().toPoint())
+            self._start_selection_square(event.local_point)
 
-    def _on_resize_happened_mouse_up(self, event: QMouseEvent) -> None:
-        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
+    def _on_resize_happened_mouse_up(self, event: MouseEvent) -> None:
+        point: Point = self._to_level_point(event.local_point)
         if self.resize_mouse_start_x != point.x:
             self._stop_resize()
 
@@ -453,10 +367,10 @@ class LevelView(QWidget):
 
         return mode
 
-    def _dragging(self, event: QMouseEvent):
+    def _dragging(self, event: MouseEvent):
         self.dragging_happened = True
 
-        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
+        point: Point = self._to_level_point(event.local_point)
         point_difference: Point = point - self.last_mouse_position
 
         self.last_mouse_position = point
@@ -468,11 +382,11 @@ class LevelView(QWidget):
 
         self.update()
 
-    def _on_left_mouse_button_up(self, event: QMouseEvent):
+    def _on_left_mouse_button_up(self, event: MouseEvent):
         if self.resizing_happened:
             self._on_resize_happened_mouse_up(event)
         elif self.mouse_mode == MODE_DRAG and self.dragging_happened:
-            obj: LevelObject | EnemyObject | None = self.object_at(Point.from_qpoint(event.position()))
+            obj: LevelObject | EnemyObject | None = self.object_at(event.local_point)
 
             if obj is not None:
                 if self.drag_start_point != obj.position:
@@ -491,29 +405,22 @@ class LevelView(QWidget):
 
         self.dragging_happened = False
 
-    def _select_objects_on_click(self, event: QMouseEvent) -> bool:
-        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
+    def _select_objects_on_click(self, event: MouseEvent) -> bool:
+        self.last_mouse_position = self._to_level_point(event.local_point)
 
-        self.last_mouse_position = point
-
-        clicked_object: LevelObject | EnemyObject | None = self.object_at(point)
+        clicked_object: LevelObject | EnemyObject | None = self.object_at(event.local_point)
         clicked_on_background: bool = clicked_object is None
 
-        if clicked_on_background and not event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
+        if clicked_on_background and not event.shift:
             self._select_object(None)
         else:
             self.mouse_mode = MODE_DRAG
 
-            selected_objects = self.get_selected_objects()
-            nothing_selected = not selected_objects
-            if nothing_selected or (
-                not event.modifiers() & Qt.KeyboardModifier.ShiftModifier
-                and not event.modifiers() & Qt.KeyboardModifier.ControlModifier
-            ):
+            selected_objects: list[LevelObject | EnemyObject] = self.get_selected_objects()
+            if not selected_objects or (not event.shift and not event.control):
                 self._select_object([clicked_object])
             else:
-                self._select_object([clicked_object] + selected_objects)  # type: ignore
-
+                self._select_object([clicked_object] + selected_objects)
         return not clicked_on_background
 
     def _set_zoom(self, zoom):
@@ -531,18 +438,19 @@ class LevelView(QWidget):
     def zoom_in(self):
         self._set_zoom(self.zoom * 2)
 
-    def _start_selection_square(self, position):
-        self.selection_square.start(position)
+    def _start_selection_square(self, point: Point):
+        self.selection_square.start(point)
 
-    def _set_selection_end(self, position):
-        if not self.selection_square.is_active():
+    def _set_selection_end(self, point: Point):
+        if not self.selection_square.is_active:
             return
 
-        self.selection_square.set_current_end(position)
+        self.selection_square.set_current_end(point)
 
-        sel_rect = self.selection_square.get_adjusted_rect(self.block_length, self.block_length)
-
-        touched_objects = [obj for obj in self.level_ref.level.get_all_objects() if sel_rect.intersects(obj.get_rect())]
+        sel_rect = self.selection_square.get_adjusted_rect(Size(self.block_length, self.block_length))
+        touched_objects: list[LevelObject | EnemyObject] = [
+            obj for obj in self.level_ref.level.get_all_objects() if sel_rect.to_qt().intersects(obj.get_rect())
+        ]
 
         if touched_objects != self.level_ref.selected_objects:
             self._set_selected_objects(touched_objects)
@@ -758,7 +666,7 @@ class LevelView(QWidget):
 
     def dragMoveEvent(self, event: QDragMoveEvent):
         level_object: LevelObject | EnemyObject = self._object_from_mime_data(event.mimeData())
-        level_object.position = self._to_level_point(Point.from_qpoint(event.position()))
+        level_object.position = self._to_level_point(Point.from_qt(event.position()))
 
         self.currently_dragged_object = level_object
         self.repaint()
@@ -770,7 +678,7 @@ class LevelView(QWidget):
 
     @undoable
     def dropEvent(self, event: QDropEvent):
-        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
+        point: Point = self._to_level_point(Point.from_qt(event.position()))
         level_object: LevelObject | EnemyObject = self._object_from_mime_data(event.mimeData())
 
         if isinstance(level_object, LevelObject):

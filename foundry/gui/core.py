@@ -293,9 +293,9 @@ class GridMouseHandler(MouseHandler):
             return event
         return evolve(
             event,
-            local_position=Point(
-                max(0, min(grid_size.width, event.local_position.x // self.grid_scale.width)),
-                max(0, min(grid_size.height, event.local_position.y // self.grid_scale.height)),
+            local_point=Point(
+                max(0, min(grid_size.width, event.local_point.x // self.grid_scale.width)),
+                max(0, min(grid_size.height, event.local_point.y // self.grid_scale.height)),
             ),
         )
 
