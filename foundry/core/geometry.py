@@ -121,6 +121,9 @@ class Point(ConcreteValidator, KeywordValidator):
     def distance_from_origin(self) -> float:
         return sqrt(self.x**2 + self.y**2)
 
+    def to_qt(self) -> QPoint:
+        return QPoint(self.x, self.y)
+
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
 @default_validator
