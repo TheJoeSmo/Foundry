@@ -232,7 +232,7 @@ class LevelView(QWidget):
         elif self.user_settings.resize_mode == ResizeModes.RESIZE_LEFT_CLICK:
             self._set_cursor_for_position(event)
 
-        object_under_cursor = self.object_at(Point.from_qpoint(event.pos()))
+        object_under_cursor = self.object_at(Point.from_qpoint(event.position()))
 
         if self.user_settings.object_tooltip_enabled and object_under_cursor is not None:
             self.setToolTip(str(object_under_cursor))
@@ -243,7 +243,7 @@ class LevelView(QWidget):
         return super().mouseMoveEvent(event)
 
     def _set_cursor_for_position(self, event: QMouseEvent):
-        point: Point = Point.from_qpoint(event.pos())
+        point: Point = Point.from_qpoint(event.position())
         level_object: LevelObject | EnemyObject | None = self.object_at(point)
 
         if level_object is not None:
@@ -352,7 +352,7 @@ class LevelView(QWidget):
         if self.mouse_mode == MODE_DRAG:
             return
 
-        self.last_mouse_position = self._to_level_point(Point.from_qpoint(event.pos()))
+        self.last_mouse_position = self._to_level_point(Point.from_qpoint(event.position()))
         if self._select_objects_on_click(event) and self.user_settings.resize_mode == ResizeModes.RESIZE_RIGHT_CLICK:
             self._try_start_resize(MODE_RESIZE_DIAG, event)
 
@@ -360,7 +360,7 @@ class LevelView(QWidget):
         if resize_mode not in RESIZE_MODES:
             return
 
-        point: Point = self._to_level_point(Point.from_qpoint(event.pos()))
+        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
         self.mouse_mode: int = resize_mode
 
         self.resize_mouse_start_x = point.x
@@ -375,7 +375,7 @@ class LevelView(QWidget):
         if isinstance(self.level_ref.level, WorldMap):
             return
 
-        point: Point = self._to_level_point(Point.from_qpoint(event.pos()))
+        point: Point = self._to_level_point(Point.from_qpoint(event.position()))
         point_difference: Point = Point(0, 0)
 
         if self.mouse_mode & MODE_RESIZE_HORIZ:
