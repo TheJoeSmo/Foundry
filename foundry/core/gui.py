@@ -2127,23 +2127,23 @@ class KeySequence:
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
 class MouseEvent:
-    global_position: Point
-    local_position: Point
+    global_point: Point
+    local_point: Point
     click: Click | None
     modifiers: set[Modifier]
 
     def __str__(self) -> str:
         if self.click is not None and self.modifiers:
             return (
-                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{self.__class__.__name__}({self.local_point}, {self.click.name}, "
                 f"{sequence_to_pretty_str(list(self.modifiers))})"
             )
         elif self.click:
-            return f"{self.__class__.__name__}({self.local_position}, {self.click.name})"
+            return f"{self.__class__.__name__}({self.local_point}, {self.click.name})"
         elif self.modifiers:
-            return f"{self.__class__.__name__}({self.local_position}, {sequence_to_pretty_str(list(self.modifiers))})"
+            return f"{self.__class__.__name__}({self.local_point}, {sequence_to_pretty_str(list(self.modifiers))})"
         else:
-            return f"{self.__class__.__name__}({self.local_position})"
+            return f"{self.__class__.__name__}({self.local_point})"
 
     def __len__(self) -> int:
         return len(self.modifiers)
@@ -2177,21 +2177,21 @@ class MouseWheelEvent(MouseEvent):
     def __str__(self) -> str:
         if self.click is not None and self.modifiers:
             return (
-                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{self.__class__.__name__}({self.local_point}, {self.click.name}, "
                 f"{sequence_to_pretty_str(list(self.modifiers))}, {self.orientation.name}, {self.steps})"
             )
         elif self.click:
             return (
-                f"{self.__class__.__name__}({self.local_position}, {self.click.name}, "
+                f"{self.__class__.__name__}({self.local_point}, {self.click.name}, "
                 f"{self.orientation.name}, {self.steps})"
             )
         elif self.modifiers:
             return (
-                f"{self.__class__.__name__}({self.local_position}, {sequence_to_pretty_str(list(self.modifiers))}, "
+                f"{self.__class__.__name__}({self.local_point}, {sequence_to_pretty_str(list(self.modifiers))}, "
                 f"{self.orientation.name}, {self.steps})"
             )
         else:
-            return f"{self.__class__.__name__}({self.local_position}, {self.orientation.name}, {self.steps})"
+            return f"{self.__class__.__name__}({self.local_point}, {self.orientation.name}, {self.steps})"
 
     @property
     def orientation(self) -> Orientation:
