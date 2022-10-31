@@ -1,71 +1,42 @@
-from PySide6.QtCore import QPoint, QPointF, QRect
+from attr import attrs
 from PySide6.QtGui import QColor, QPainter, QPen, Qt
+
+from foundry.core.geometry import Point, Rect, Size
 
 STROKE_COLOR = QColor(0x00, 0x00, 0x00, 0x80)
 
 
+@attrs(slots=True, auto_attribs=True)
 class SelectionSquare:
-    def __init__(self):
-        self.start_point = QPoint(0, 0)
-        self.end_point = QPoint(0, 0)
+    start_point: Point = Point(0, 0)
+    end_point: Point = Point(0, 0)
+    is_active: bool = False
+    should_draw: bool = False
 
-        self.active = False
-        self.should_draw = False
+    @property
+    def rect(self) -> Rect:
+        return Rect.from_vector(self.start_point, self.end_point - self.start_point)
 
-        self.rect = QRect(self.start_point, self.end_point)
-
-        self.pen = QPen(STROKE_COLOR)
-        self.pen.setWidth(1)
-        self.brush = Qt.BrushStyle.NoBrush
-
-    def is_active(self):
-        return self.active
-
-    def start(self, point: QPoint):
-        self.active = True
-
-        # Convert to a regular point
-        if isinstance(point, QPointF):
-            point = point.toPoint()
-
+    def start(self, point: Point) -> None:
+        self.is_active = True
         self.start_point = point
 
-    def set_current_end(self, point: QPoint):
-        if not self.active:
-            return
-
-        # Convert to a regular point
-        if isinstance(point, QPointF):
-            point = point.toPoint()
-
-        self.should_draw = True
-
-        self.end_point = point
-
-        self.rect = QRect(self.start_point, self.end_point)
+    def set_current_end(self, point: Point) -> None:
+        if self.is_active:
+            self.should_draw = True
+            self.end_point = point
 
     def stop(self):
-        self.active = False
+        self.is_active = False
         self.should_draw = False
 
-    def get_rect(self):
-        return self.rect
-
-    def get_adjusted_rect(self, horizontal_factor: int, vertical_factor: int) -> QRect:
-        x, y = self.get_rect().topLeft().toTuple()
-        width, height = self.get_rect().size().toTuple()
-
-        x //= horizontal_factor
-        width //= horizontal_factor
-
-        y //= vertical_factor
-        height //= vertical_factor
-
-        return QRect(x, y, width + 1, height + 1)
+    def get_adjusted_rect(self, scale_factor: Size) -> Rect:
+        return (self.rect // scale_factor) + Size(1, 1)
 
     def draw(self, painter: QPainter):
         if self.should_draw:
-            painter.setPen(self.pen)
-            painter.setBrush(self.brush)
-
-            painter.drawRect(self.rect)
+            pen: QPen = QPen(STROKE_COLOR)
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawRect(self.rect.to_qt())
