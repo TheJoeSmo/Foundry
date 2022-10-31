@@ -117,6 +117,10 @@ class Point(ConcreteValidator, KeywordValidator):
         return cls(x, y)
 
     @classmethod
+    def from_vector(cls, vector: Vector2D):
+        return cls(vector.i_component, vector.j_component)
+
+    @classmethod
     def from_qt(cls, point: QPoint | QPointF) -> Point:
         """
         Generates a point from a QPoint for easy conversion.
@@ -243,6 +247,10 @@ class Size(ConcreteValidator, KeywordValidator):
         return cls(width, height)
 
     @classmethod
+    def from_vector(cls, vector: Vector2D):
+        return cls(vector.i_component, vector.j_component)
+
+    @classmethod
     def from_qsize(cls, size: QSize):
         """
         Generates a size from a QSize for easy conversion.
@@ -297,6 +305,31 @@ class Rect(ConcreteValidator, KeywordValidator):
     __names__ = ("__RECT_VALIDATOR__", "rect", "Rect", "Rect")
     __required_validators__ = (Point, Size)
 
+    def __add__(self, other: Rect | Vector2D):
+        if isinstance(other, Rect):
+            return self.__class__(self.point + other.point, self.size + other.size)
+        return self.__class__(self.point + other, self.size + other)
+
+    def __sub__(self, other: Rect | Vector2D):
+        if isinstance(other, Rect):
+            return self.__class__(self.point - other.point, self.size - other.size)
+        return self.__class__(self.point - other, self.size - other)
+
+    def __mul__(self, other: Rect | Vector2D):
+        if isinstance(other, Rect):
+            return self.__class__(self.point * other.point, self.size * other.size)
+        return self.__class__(self.point * other, self.size * other)
+
+    def __floordiv__(self, other: Rect | Vector2D):
+        if isinstance(other, Rect):
+            return self.__class__(self.point // other.point, self.size // other.size)
+        return self.__class__(self.point // other, self.size // other)
+
+    def __mod__(self, other: Vector2D):
+        if isinstance(other, Rect):
+            return self.__class__(self.point % other.point, self.size % other.size)
+        return self.__class__(self.point % other, self.size % other)
+
     @property
     def upper_left_point(self) -> Point:
         return self.point
@@ -313,8 +346,16 @@ class Rect(ConcreteValidator, KeywordValidator):
     def lower_right_point(self) -> Point:
         return self.point + self.size
 
-    @property
-    def qrect(self) -> QRect:
+    @classmethod
+    @validate(point=Point, size=Size)
+    def validate(cls: type[_R], point: Point, size: Size) -> _R:
+        return cls(point, size)
+
+    @classmethod
+    def from_vector(cls, v1: Vector2D, v2: Vector2D):
+        return cls(Point.from_vector(v1), Size.from_vector(v2))
+
+    def to_qt(self) -> QRect:
         """
             Generates a QRect from a Rect.
 
@@ -329,8 +370,3 @@ class Rect(ConcreteValidator, KeywordValidator):
                 The QRect derived from the Rect.
         """
         return QRect(self.point.x, self.point.y, self.size.width, self.size.height)
-
-    @classmethod
-    @validate(point=Point, size=Size)
-    def validate(cls: type[_R], point: Point, size: Size) -> _R:
-        return cls(point, size)
