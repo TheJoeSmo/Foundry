@@ -2163,8 +2163,8 @@ class MouseEvent:
     @classmethod
     def from_qt(cls, event: QMouseEvent):
         return cls(
-            Point.from_qt(event.globalPos()),
-            Point.from_qt(event.pos()),
+            Point.from_qt(event.globalPosition()),
+            Point.from_qt(event.position()),
             Click.from_qt(event.button()),
             Modifier.from_qt(event.modifiers()),
         )
