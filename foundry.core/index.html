@@ -944,8 +944,8 @@ stack, respectively.</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_qpoint">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtCore.QPoint</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QPointF</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_qpoint" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_qt">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtCore.QPoint</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QPointF</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_qt" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates a point from a QPoint for easy conversion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -962,6 +962,26 @@ stack, respectively.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_vector">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Point.from_vector" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.i_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">i_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.i_component" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.j_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">j_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.j_component" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.to_qt">
+<span class="sig-name descname"><span class="pre">to_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QPoint</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.to_qt" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.validate">
@@ -1018,14 +1038,34 @@ implementation.</p>
 </dl>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.from_vector">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.from_vector" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.lower_left_point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lower_left_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.lower_left_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.lower_right_point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lower_right_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.lower_right_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.geometry.Rect.point">
 <span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.geometry.Rect.qrect">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qrect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">QRect</span></em><a class="headerlink" href="#foundry.core.geometry.Rect.qrect" title="Permalink to this definition">#</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.size">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">Size</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.size" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.to_qt">
+<span class="sig-name descname"><span class="pre">to_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QRect</span></span></span><a class="headerlink" href="#foundry.core.geometry.Rect.to_qt" title="Permalink to this definition">#</a></dt>
 <dd><blockquote>
 <div><p>Generates a QRect from a Rect.</p>
 </div></blockquote>
@@ -1045,9 +1085,14 @@ implementation.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.geometry.Rect.size">
-<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">Size</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.size" title="Permalink to this definition">#</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.upper_left_point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upper_left_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.upper_left_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.upper_right_point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upper_right_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.upper_right_point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1114,9 +1159,24 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.from_vector">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Size.from_vector" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.geometry.Size.height">
 <span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.height" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.i_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">i_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.i_component" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.j_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">j_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.j_component" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -1169,6 +1229,22 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.geometry.Size.width">
 <span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.width" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="foundry.core.geometry.Vector2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vector2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Vector2D" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Vector2D.i_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">i_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Vector2D.i_component" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Vector2D.j_component">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">j_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Vector2D.j_component" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2345,7 +2421,7 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.gui.MouseEvent">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MouseEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.gui.Click" title="foundry.core.gui.Click"><span class="pre">foundry.core.gui.Click</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.gui.Modifier" title="foundry.core.gui.Modifier"><span class="pre">foundry.core.gui.Modifier</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.gui.MouseEvent" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MouseEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.gui.Click" title="foundry.core.gui.Click"><span class="pre">foundry.core.gui.Click</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.gui.Modifier" title="foundry.core.gui.Modifier"><span class="pre">foundry.core.gui.Modifier</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.gui.MouseEvent" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.core.gui.MouseEvent.alt">
@@ -2368,13 +2444,13 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.gui.MouseEvent.global_position">
-<span class="sig-name descname"><span class="pre">global_position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.gui.MouseEvent.global_position" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.core.gui.MouseEvent.global_point">
+<span class="sig-name descname"><span class="pre">global_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.gui.MouseEvent.global_point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.core.gui.MouseEvent.local_position">
-<span class="sig-name descname"><span class="pre">local_position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.gui.MouseEvent.local_position" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.core.gui.MouseEvent.local_point">
+<span class="sig-name descname"><span class="pre">local_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.gui.MouseEvent.local_point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2391,7 +2467,7 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.gui.MouseWheelEvent">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MouseWheelEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.gui.Click" title="foundry.core.gui.Click"><span class="pre">foundry.core.gui.Click</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.gui.Modifier" title="foundry.core.gui.Modifier"><span class="pre">foundry.core.gui.Modifier</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.gui.MouseWheelEvent" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MouseWheelEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">global_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.gui.Click" title="foundry.core.gui.Click"><span class="pre">foundry.core.gui.Click</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#set" title="(in Python v3.12)"><span class="pre">set</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.gui.Modifier" title="foundry.core.gui.Modifier"><span class="pre">foundry.core.gui.Modifier</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.gui.MouseWheelEvent" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.core.gui.MouseEvent" title="foundry.core.gui.MouseEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MouseEvent</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.gui.MouseWheelEvent.angle_delta">
@@ -8832,10 +8908,46 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.from_qpoint">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.from_qt">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Point.from_qpoint()
+         Point.from_qt()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.from_vector">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.from_vector()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.i_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.i_component
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.j_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.j_component
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.to_qt">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.to_qt()
         </span>
        </code>
       </a>
@@ -8879,6 +8991,33 @@ Keyword arguments update the map or new empty dict.</p>
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.from_vector">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.from_vector()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.lower_left_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.lower_left_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.lower_right_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.lower_right_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.point">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -8888,19 +9027,37 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.qrect">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.size">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Rect.qrect
+         Rect.size
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.size">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.to_qt">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Rect.size
+         Rect.to_qt()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.upper_left_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.upper_left_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.upper_right_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.upper_right_point
         </span>
        </code>
       </a>
@@ -8935,10 +9092,37 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.from_vector">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Size.from_vector()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Size.height">
        <code class="docutils literal notranslate">
         <span class="pre">
          Size.height
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.i_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Size.i_component
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.j_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Size.j_component
         </span>
        </code>
       </a>
@@ -8966,6 +9150,35 @@ Keyword arguments update the map or new empty dict.</p>
        <code class="docutils literal notranslate">
         <span class="pre">
          Size.width
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Vector2D
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D.i_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Vector2D.i_component
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D.j_component">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Vector2D.j_component
         </span>
        </code>
       </a>
@@ -11069,19 +11282,19 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.gui.MouseEvent.global_position">
+      <a class="reference internal nav-link" href="#foundry.core.gui.MouseEvent.global_point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         MouseEvent.global_position
+         MouseEvent.global_point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.gui.MouseEvent.local_position">
+      <a class="reference internal nav-link" href="#foundry.core.gui.MouseEvent.local_point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         MouseEvent.local_position
+         MouseEvent.local_point
         </span>
        </code>
       </a>
