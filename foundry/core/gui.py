@@ -2163,8 +2163,8 @@ class MouseEvent:
     @classmethod
     def from_qt(cls, event: QMouseEvent):
         return cls(
-            Point.from_qpoint(event.globalPos()),
-            Point.from_qpoint(event.pos()),
+            Point.from_qt(event.globalPos()),
+            Point.from_qt(event.pos()),
             Click.from_qt(event.button()),
             Modifier.from_qt(event.modifiers()),
         )
@@ -2218,11 +2218,11 @@ class MouseWheelEvent(MouseEvent):
     @classmethod
     def from_qt(cls, event: QWheelEvent):
         return cls(
-            Point.from_qpoint(event.globalPosition()),
-            Point.from_qpoint(event.position()),
+            Point.from_qt(event.globalPosition()),
+            Point.from_qt(event.position()),
             Click.from_qt(event.button()),
             Modifier.from_qt(event.modifiers()),
-            Point.from_qpoint(event.angleDelta()),
+            Point.from_qt(event.angleDelta()),
         )
 
 

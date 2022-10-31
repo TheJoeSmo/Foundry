@@ -148,7 +148,7 @@ class PatternViewerView(QWidget):
         return Tile.WIDTH * self.zoom  # type: ignore
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Point.from_qpoint(event.pos())
+        pos = Point.from_qt(event.pos())
         pos = pos // Point(self.pattern_scale, self.pattern_scale)
 
         dec_index = pos.y * self.PATTERNS_PER_ROW + pos.x
@@ -159,7 +159,7 @@ class PatternViewerView(QWidget):
         self.parent().statusBar().showMessage(status_message)  # type: ignore
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Point.from_qpoint(event.pos())
+        pos = Point.from_qt(event.pos())
         pos = pos // Point(self.pattern_scale, self.pattern_scale)
 
         index = pos.y * self.PATTERNS_PER_ROW + pos.x

@@ -86,7 +86,7 @@ class PatternEditorController(QWidget, PatternEditorModel):
 
     def normalize_point(self, point: Point | QPoint) -> Point:
         if isinstance(point, QPoint):
-            point = Point.from_qpoint(point)
+            point = Point.from_qt(point)
         return point // Point(self.pattern_scale, self.pattern_scale)
 
     def index(self, point: Point) -> int:

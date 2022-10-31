@@ -142,7 +142,7 @@ class SpriteViewerView(QWidget):
         return Size(SPRITE_SIZE.width * self.zoom, SPRITE_SIZE.height * self.zoom)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        pos = Point.from_qpoint(event.pos()) // Point(self.sprite_size.width, self.sprite_size.height)
+        pos = Point.from_qt(event.pos()) // Point(self.sprite_size.width, self.sprite_size.height)
 
         dec_index = pos.y * self.SPRITES_PER_ROW + pos.x
         hex_index = hex(dec_index).upper().replace("X", "x")
@@ -150,7 +150,7 @@ class SpriteViewerView(QWidget):
         self.mouse_moved.emit(pos.x, pos.y, dec_index, hex_index)
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        pos = Point.from_qpoint(event.pos()) // Point(self.sprite_size.width, self.sprite_size.height)
+        pos = Point.from_qt(event.pos()) // Point(self.sprite_size.width, self.sprite_size.height)
 
         index = pos.y * self.SPRITES_PER_ROW + pos.x
         self.sprite_selected.emit(index)

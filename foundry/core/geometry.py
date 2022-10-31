@@ -99,7 +99,7 @@ class Point(ConcreteValidator, KeywordValidator):
         return cls(x, y)
 
     @classmethod
-    def from_qpoint(cls, point: QPoint | QPointF) -> Point:
+    def from_qt(cls, point: QPoint | QPointF) -> Point:
         """
         Generates a point from a QPoint for easy conversion.
 
