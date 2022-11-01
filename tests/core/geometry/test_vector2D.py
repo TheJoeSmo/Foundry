@@ -65,10 +65,6 @@ class TestVector2D:
     def test_not_equal_not_equal(self, i: int, j: int, i2: int, j2: int) -> None:
         assert self.__test_class__(i, j) != self.__test_class__(i2, j2)
 
-    @mark.parametrize("i,j,i2,j2", [(0, 0, ~0, ~0), (0, 1, ~0, ~1), (1, 0, ~1, ~0), (2, 1, ~2, ~1), (1, 2, ~1, ~2)])
-    def test_negation(self, i: int, j: int, i2: int, j2: int) -> None:
-        assert ~self.__test_class__(i, j) == self.__test_class__(i2, j2)
-
     @mark.parametrize("i,j,i2,j2", [(0b11, 0b101, 0b1, 0b10), (1, 1, 0, 0), (0, 0, 0, 0)])
     def test_right_shift(self, i: int, j: int, i2: int, j2: int) -> None:
         assert self.__test_class__(i, j) >> 1 == self.__test_class__(i2, j2)

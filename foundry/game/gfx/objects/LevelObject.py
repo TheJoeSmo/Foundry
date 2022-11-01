@@ -727,12 +727,12 @@ class LevelObject(GeneratorObject):
                 bottom_row = Rect(position, Size(size.width, 1))
                 index_in_level = self.index_in_level
                 for y in range(position.y, self.ground_level):
-                    bottom_row = bottom_row.evolve(bottom=y)
+                    bottom_row = Rect(bottom_row.point, Size(bottom_row.size.width, bottom_row.size.height + 1))
 
                     found = False
                     for obj in self.objects_ref[0:index_in_level]:
-                        if y == obj.rect.top and bottom_row.intersects(obj.rect):
-                            size = evolve(size, height=y - position.y)
+                        if bottom_row.intersects(obj.rect) and "Flat Ground" in obj.name:
+                            size = evolve(size, height=bottom_row.size.height)
                             found = True
                             break
                     if found:

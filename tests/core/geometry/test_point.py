@@ -1,5 +1,5 @@
 from PySide6.QtCore import QPoint
-from pytest import raises
+from pytest import mark, raises
 
 from foundry.core.geometry import Point
 from foundry.core.namespace import (
@@ -132,3 +132,7 @@ class TestPoint(TestVector2D):
     def test_validate_point_respect_namespace_validators(self):
         with raises(MissingTypeArgumentException):
             Point.validate({"x": 0, "y": 0, PARENT_ARGUMENT: Namespace()})
+
+    @mark.parametrize("i,j,i2,j2", [(0, 0, ~0, ~0), (0, 1, ~0, ~1), (1, 0, ~1, ~0), (2, 1, ~2, ~1), (1, 2, ~1, ~2)])
+    def test_negation(self, i: int, j: int, i2: int, j2: int) -> None:
+        assert ~self.__test_class__(i, j) == self.__test_class__(i2, j2)

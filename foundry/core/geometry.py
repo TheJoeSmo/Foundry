@@ -3,7 +3,8 @@ from __future__ import annotations
 from math import sqrt
 from typing import TypeVar
 
-from attr import attrs, evolve
+from attr import attrs, evolve, field
+from attr.validators import ge
 from PySide6.QtCore import QPoint, QPointF, QRect, QSize
 
 from foundry.core.namespace import (
@@ -124,6 +125,9 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
     @property
     def j_component(self) -> int:
         return self.y
+
+    def __str__(self) -> str:
+        return f"<{self.x}, {self.y}>"
 
     def __eq__(self, other: Point) -> bool:
         return self.x == other.x and self.y == other.y
@@ -256,8 +260,8 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
         The height of the object being represented.
     """
 
-    width: int
-    height: int
+    width: int = field(validator=ge(0))
+    height: int = field(validator=ge(0))
     __names__ = ("__SIZE_VALIDATOR__", "size", "Size", "SIZE")
     __required_validators__ = (NonNegativeIntegerValidator,)
 
@@ -268,6 +272,9 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
     @property
     def j_component(self) -> int:
         return self.height
+
+    def __str__(self) -> str:
+        return f"<{self.width, self.height}>"
 
     def __lt__(self, other: Size) -> bool:
         return self.width * self.height < other.width * other.height
@@ -377,6 +384,9 @@ class Rect(ConcreteValidator, KeywordValidator):
     __names__ = ("__RECT_VALIDATOR__", "rect", "Rect", "Rect")
     __required_validators__ = (Point, Size)
 
+    def __str__(self) -> str:
+        return f"<{self.point, self.size}>"
+
     def __add__(self, other: Rect | Vector2D):
         if isinstance(other, Rect):
             return self.__class__(self.point + other.point, self.size + other.size)
@@ -455,13 +465,13 @@ class Rect(ConcreteValidator, KeywordValidator):
         return self.__class__(Point(self.point.x, top), self.size)
 
     def evolve_bottom(self, bottom: int):
-        return self.__class__(self.point, Size(self.size.width, self.point.y - bottom))
+        return self.__class__(self.point, Size(self.size.width, abs(self.point.y - bottom)))
 
     def evolve_left(self, left: int):
         return self.__class__(Point(left, self.point.y), self.size)
 
     def evolve_right(self, right: int):
-        return self.__class__(self.point, Size(self.point.x - right, self.size.height))
+        return self.__class__(self.point, Size(abs(self.point.x - right), self.size.height))
 
     def evolve(
         self, *, top: int | None = None, bottom: int | None = None, left: int | None = None, right: int | None = None
