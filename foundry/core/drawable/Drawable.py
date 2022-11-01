@@ -32,10 +32,10 @@ class Drawable(ConcreteValidator, KeywordValidator):
 
     @property
     def size(self) -> Size:
-        return Size.from_qsize(self.base_image.size())
+        return Size.from_qt(self.base_image.size())
 
     def image(self, scale_factor: int = 1) -> QImage:
-        return self.base_image.scaled((self.size * scale_factor).qsize)
+        return self.base_image.scaled((self.size * scale_factor).to_qt())
 
     @classmethod
     def from_block_group(cls, block_group: BlockGroup, point_offset: Point = Point(0, 0)):

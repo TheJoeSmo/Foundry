@@ -79,10 +79,10 @@ class PatternEditorController(QWidget, PatternEditorModel):
         return self.maximumSize()
 
     def minimumSize(self) -> QSize:
-        return self.pattern_size.qsize
+        return self.pattern_size.to_qt()
 
     def maximumSize(self) -> QSize:
-        return (self.pattern_size * self.model.max_size).qsize
+        return (self.pattern_size * self.model.max_size).to_qt()
 
     def normalize_point(self, point: Point | QPoint) -> Point:
         if isinstance(point, QPoint):
