@@ -29,7 +29,7 @@ class OutsideLevelBoundsWarning(Warning):
         """
         if level is None:
             return False
-        return not level.get_rect().contains(obj.rect)
+        return not level.get_rect().contains(obj.get_rect())
 
     def get_message(self, obj: ObjectLike) -> str:
         return f"{obj} is outside of level bounds."

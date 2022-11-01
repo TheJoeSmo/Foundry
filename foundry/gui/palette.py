@@ -63,7 +63,7 @@ class ColorButton(Label, MouseHandler):
         self.change_state(model)
 
     def change_state(self, model: Model) -> None:
-        pix: QPixmap = QPixmap(model.button_size.to_qt())
+        pix: QPixmap = QPixmap(model.button_size.qsize)
         pix.fill(model.color.to_qt())
         self.setPixmap(pix)
 

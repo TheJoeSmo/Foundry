@@ -2,10 +2,10 @@ from time import time
 from warnings import warn
 
 from attrs import evolve
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.geometry import Point, Rect, Size
+from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.core.tiles import MASK_COLOR
@@ -561,7 +561,7 @@ class LevelObject(GeneratorObject):
         else:
             self.rendered_blocks = self.blocks
 
-        self.rect = Rect(self.rendered_position, rendered_size)
+        self.rect = QRect(self.rendered_position.x, self.rendered_position.y, rendered_size.width, rendered_size.height)
 
     def draw(self, painter: QPainter, block_length, transparent, blocks: list[Block] | None = None):
         size = self._rendered_size  # Use predefine size as it is an expensive call.
@@ -687,11 +687,11 @@ class LevelObject(GeneratorObject):
             size = Size(1, 1)
             for y in range(self.position.y, self.ground_level):
                 size = Size(2 * (y - self.position.y), (y - self.position.y))
-                bottom_row = Rect(Point(self.position.x, y), Size(size.width, 1))
+                bottom_row = QRect(self.position.x, y, size.width, 1)
                 index_in_level = self.index_in_level
                 if any(
                     [
-                        bottom_row.intersects(obj.rect) and y == obj.rect.top
+                        bottom_row.intersects(obj.get_rect()) and y == obj.get_rect().top()
                         for obj in self.objects_ref[0:index_in_level]
                     ]
                 ):
@@ -724,14 +724,15 @@ class LevelObject(GeneratorObject):
             if self.orientation == GeneratorType.HORIZ_TO_GROUND:
                 # to the ground only, until it hits something
                 position = self.position
-                bottom_row = Rect(position, Size(size.width, 1))
+                bottom_row = QRect(position.x, position.y, size.width, 1)
                 index_in_level = self.index_in_level
                 for y in range(position.y, self.ground_level):
-                    bottom_row = bottom_row.evolve(bottom=y)
+                    bottom_row.setBottom(y)
 
                     found = False
                     for obj in self.objects_ref[0:index_in_level]:
-                        if y == obj.rect.top and bottom_row.intersects(obj.rect):
+                        obj_rect = obj.get_rect()
+                        if y == obj_rect.top() and bottom_row.intersects(obj_rect):
                             size = evolve(size, height=y - position.y)
                             found = True
                             break
@@ -836,7 +837,7 @@ class LevelObject(GeneratorObject):
         return self.point_in(item)
 
     def point_in(self, point: Point) -> bool:
-        return self.rect.contains(point)
+        return self.rect.contains(point.x, point.y)
 
     def get_status_info(self) -> list[tuple]:
         return [

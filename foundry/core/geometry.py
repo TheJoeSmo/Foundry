@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from math import sqrt
-from typing import TypeVar
+from typing import Protocol, TypeVar
 
-from attr import attrs, evolve
+from attr import attrs
 from PySide6.QtCore import QPoint, QPointF, QRect, QSize
 
 from foundry.core.namespace import (
@@ -15,92 +15,24 @@ from foundry.core.namespace import (
     validate,
 )
 
-Vector = TypeVar("Vector", bound="Vector2D")
-Point_ = TypeVar("Point_", bound="Point")
-Size_ = TypeVar("Size_", bound="Size")
-Rect_ = TypeVar("Rect_", bound="Rect")
+_P = TypeVar("_P", bound="Point")
+_S = TypeVar("_S", bound="Size")
+_R = TypeVar("_R", bound="Rect")
 
 
-class Vector2D:
-    """
-    A vector with two components.
-    """
-
+class Vector2D(Protocol):
     @property
     def i_component(self) -> int:
-        return NotImplemented
+        ...
 
     @property
     def j_component(self) -> int:
-        return NotImplemented
-
-    @classmethod
-    def from_vector(cls: type[Vector], vector: Vector2D) -> Vector:
-        return NotImplemented
-
-    @classmethod
-    def from_components(cls: type[Vector], i_component: int, j_component: int) -> Vector:
-        return NotImplemented
-
-    def __invert__(self: Vector) -> Vector:
-        return self.from_components(~self.i_component, ~self.j_component)
-
-    def __neg__(self: Vector) -> Vector:
-        return self.from_components(~self.i_component, ~self.j_component)
-
-    def __lshift__(self: Vector, other: int) -> Vector:
-        return self.from_components(self.i_component << other, self.j_component << other)
-
-    def __rshift__(self: Vector, other: int) -> Vector:
-        return self.from_components(self.i_component >> other, self.j_component >> other)
-
-    def __pow__(self: Vector, other: int) -> Vector:
-        return self.from_components(self.i_component**other, self.j_component**other)
-
-    def __add__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component + other, self.j_component + other)
-        return self.from_components(self.i_component + other.i_component, self.j_component + other.j_component)
-
-    def __sub__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component - other, self.j_component - other)
-        return self.from_components(self.i_component - other.i_component, self.j_component - other.j_component)
-
-    def __mul__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component * other, self.j_component * other)
-        return self.from_components(self.i_component * other.i_component, self.j_component * other.j_component)
-
-    def __floordiv__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component // other, self.j_component // other)
-        return self.from_components(self.i_component // other.i_component, self.j_component // other.j_component)
-
-    def __mod__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component % other, self.j_component % other)
-        return self.from_components(self.i_component % other.i_component, self.j_component % other.j_component)
-
-    def __and__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component & other, self.j_component & other)
-        return self.from_components(self.i_component & other.i_component, self.j_component & other.j_component)
-
-    def __or__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component | other, self.j_component | other)
-        return self.from_components(self.i_component | other.i_component, self.j_component | other.j_component)
-
-    def __xor__(self: Vector, other: int | Vector2D) -> Vector:
-        if isinstance(other, int):
-            return self.from_components(self.i_component ^ other, self.j_component ^ other)
-        return self.from_components(self.i_component ^ other.i_component, self.j_component ^ other.j_component)
+        ...
 
 
 @attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=True)
 @default_validator
-class Point(ConcreteValidator, KeywordValidator, Vector2D):
+class Point(ConcreteValidator, KeywordValidator):
     """
     A two dimensional representation of a point on a plain.
 
@@ -125,75 +57,82 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
     def j_component(self) -> int:
         return self.y
 
-    def __eq__(self, other: Point) -> bool:
+    def __eq__(self, other: Point):
         return self.x == other.x and self.y == other.y
 
-    def __lt__(self, other: Point) -> bool:
+    def __lt__(self, other: Point):
         return self.distance_from_origin < other.distance_from_origin
 
-    def __le__(self, other: Point) -> bool:
+    def __le__(self, other: Point):
         return self.distance_from_origin <= other.distance_from_origin
 
-    def __gt__(self, other: Point) -> bool:
+    def __gt__(self, other: Point):
         return self.distance_from_origin > other.distance_from_origin
 
-    def __ge__(self, other: Point) -> bool:
+    def __ge__(self, other: Point):
         return self.distance_from_origin >= other.distance_from_origin
+
+    def __invert__(self) -> Point:
+        return self.__class__(~self.x, ~self.y)
+
+    def __neg__(self) -> Point:
+        return self.__class__(~self.x, ~self.y)
+
+    def __lshift__(self, other: int) -> Point:
+        return self.__class__(self.x << other, self.y << other)
+
+    def __rshift__(self, other: int) -> Point:
+        return self.__class__(self.x >> other, self.y >> other)
+
+    def __pow__(self, other: int) -> Point:
+        return self.__class__(self.x**other, self.y**other)
+
+    def __add__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x + other.i_component, self.y + other.j_component)
+
+    def __sub__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x - other.i_component, self.y - other.j_component)
+
+    def __mul__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x * other.i_component, self.y * other.j_component)
+
+    def __floordiv__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x // other.i_component, self.y // other.j_component)
+
+    def __mod__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x % other.i_component, self.y % other.j_component)
+
+    def __and__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x & other.i_component, self.y & other.j_component)
+
+    def __or__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x | other.i_component, self.y | other.j_component)
+
+    def __xor__(self, other: Vector2D) -> Point:
+        return self.__class__(self.x ^ other.i_component, self.y ^ other.j_component)
 
     @classmethod
     @validate(x=IntegerValidator, y=IntegerValidator)
-    def validate(cls: type[Point_], x: int, y: int) -> Point_:
+    def validate(cls: type[_P], x: int, y: int) -> _P:
         return cls(x, y)
 
     @classmethod
-    def from_components(cls: type[Point_], i_component: int, j_component: int) -> Point_:
-        """
-        Generates a point from the points of a vector.
-
-        Parameters
-        ----------
-        i_component : int
-            The x position of the point.
-        j_component : int
-            The y position of the point.
-
-        Returns
-        -------
-        Point_
-            The point created from the two components.
-        """
-        return cls(i_component, j_component)
-
-    @classmethod
-    def from_vector(cls: type[Point_], vector: Vector2D) -> Point_:
-        """
-        Generates a point from a vector.
-
-        Parameters
-        ----------
-        vector : Vector2D
-            The vector with the i and j components representing the x and y positions of the point, respectively.
-
-        Returns
-        -------
-        Point_
-            The point created from the vector.
-        """
+    def from_vector(cls, vector: Vector2D):
         return cls(vector.i_component, vector.j_component)
 
     @classmethod
-    def from_qt(cls: type[Point_], point: QPoint | QPointF) -> Point_:
+    def from_qt(cls, point: QPoint | QPointF) -> Point:
         """
         Generates a point from a QPoint for easy conversion.
 
         Parameters
         ----------
-        point : QPoint | QPointF
+        point : QPoint
             To be converted.
 
         Returns
         -------
-        Point
+        AbstractPoint
             Of the QPoint represented inside Python.
         """
         if isinstance(point, QPointF):
@@ -202,49 +141,15 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
 
     @property
     def distance_from_origin(self) -> float:
-        """
-        The distance this point is from the origin, Point(0, 0).
-
-        Returns
-        -------
-        float
-            The distance from the origin.
-        """
         return sqrt(self.x**2 + self.y**2)
 
-    def evolve(self: Point_, *, x: int | None = None, y: int | None = None) -> Point_:
-        """
-        A convenience method to modify points quicker.
-
-        Parameters
-        ----------
-        x : int | None, optional
-            The x point that can be evolved, by default will not evolve.
-        y : int | None, optional
-            The y point that can be evolved, by default will not evolve.
-
-        Returns
-        -------
-        Point_
-            The new evolved point.
-        """
-        return evolve(self, x=self.x if x is None else x, y=self.y if y is None else y)
-
     def to_qt(self) -> QPoint:
-        """
-        Converts a point to its PySide equivalent.
-
-        Returns
-        -------
-        QPoint
-            The point in Qt's framework.
-        """
         return QPoint(self.x, self.y)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
 @default_validator
-class Size(ConcreteValidator, KeywordValidator, Vector2D):
+class Size(ConcreteValidator, KeywordValidator):
     """
     A two dimensional representation of a size.
 
@@ -269,62 +174,84 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
     def j_component(self) -> int:
         return self.height
 
-    def __lt__(self, other: Size) -> bool:
+    def __lt__(self, other: Size):
         return self.width * self.height < other.width * other.height
 
-    def __le__(self, other: Size) -> bool:
+    def __le__(self, other: Size):
         return self.width * self.height <= other.width * other.height
 
-    def __gt__(self, other: Size) -> bool:
+    def __gt__(self, other: Size):
         return self.width * self.height > other.width * other.height
 
-    def __ge__(self, other: Size) -> bool:
+    def __ge__(self, other: Size):
         return self.width * self.height >= other.width * other.height
+
+    def __invert__(self) -> Size:
+        return self.__class__(~self.width, ~self.height)
+
+    def __neg__(self) -> Size:
+        return self.__class__(~self.width, ~self.height)
+
+    def __lshift__(self, other: int) -> Size:
+        return self.__class__(self.width << other, self.height << other)
+
+    def __rshift__(self, other: int) -> Size:
+        return self.__class__(self.width >> other, self.height >> other)
+
+    def __pow__(self, other: int) -> Size:
+        return self.__class__(self.width**other, self.height**other)
+
+    def __add__(self, other: Vector2D | int) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width + other, self.height + other)
+        return self.__class__(self.width + other.i_component, self.height + other.j_component)
+
+    def __sub__(self, other: Vector2D | int) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width - other, self.height - other)
+        return self.__class__(self.width - other.i_component, self.height - other.j_component)
+
+    def __mul__(self, other: Vector2D | int) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width * other, self.height * other)
+        return self.__class__(self.width * other.i_component, self.height * other.j_component)
+
+    def __floordiv__(self, other: Vector2D | int) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width // other, self.height // other)
+        return self.__class__(self.width // other.i_component, self.height // other.j_component)
+
+    def __mod__(self, other: Vector2D) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width % other, self.height % other)
+        return self.__class__(self.width % other.i_component, self.height % other.j_component)
+
+    def __and__(self, other: Vector2D) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width & other, self.height & other)
+        return self.__class__(self.width & other.i_component, self.height & other.j_component)
+
+    def __or__(self, other: Vector2D) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width | other, self.height | other)
+        return self.__class__(self.width | other.i_component, self.height | other.j_component)
+
+    def __xor__(self, other: Vector2D) -> Size:
+        if isinstance(other, int):
+            return self.__class__(self.width ^ other, self.height ^ other)
+        return self.__class__(self.width ^ other.i_component, self.height ^ other.j_component)
 
     @classmethod
     @validate(width=NonNegativeIntegerValidator, height=NonNegativeIntegerValidator)
-    def validate(cls: type[Size_], width: int, height: int) -> Size_:
+    def validate(cls: type[_S], width: int, height: int) -> _S:
         return cls(width, height)
 
     @classmethod
-    def from_components(cls: type[Size_], i_component: int, j_component: int) -> Size_:
-        """
-        Generates a size from the components of a vector.
-
-        Parameters
-        ----------
-        i_component : int
-            The width of the size.
-        j_component : int
-            The height of the size.
-
-        Returns
-        -------
-        Size_
-            The size created from the two components.
-        """
-        return cls(i_component, j_component)
-
-    @classmethod
-    def from_vector(cls: type[Size_], vector: Vector2D) -> Size_:
-        """
-        Generates a size from a vector.
-
-        Parameters
-        ----------
-        vector : Vector2D
-            The vector with the i and j components representing the width and height positions of the point,
-            respectively.
-
-        Returns
-        -------
-        Size_
-            The size created from the vector.
-        """
+    def from_vector(cls, vector: Vector2D):
         return cls(vector.i_component, vector.j_component)
 
     @classmethod
-    def from_qt(cls: type[Size_], size: QSize) -> Size_:
+    def from_qsize(cls, size: QSize):
         """
         Generates a size from a QSize for easy conversion.
 
@@ -335,12 +262,13 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
 
         Returns
         -------
-        Size_
+        Size
             Of the QSize represented inside Python.
         """
         return cls(size.width(), size.height())
 
-    def to_qt(self) -> QSize:
+    @property
+    def qsize(self) -> QSize:
         """
         Generates a QSize from a Size.
 
@@ -403,96 +331,33 @@ class Rect(ConcreteValidator, KeywordValidator):
         return self.__class__(self.point % other, self.size % other)
 
     @property
-    def top(self) -> int:
-        return max(self.point.y, self.point.y + self.size.height)
-
-    @property
-    def bottom(self) -> int:
-        return min(self.point.y, self.point.y + self.size.height)
-
-    @property
-    def left(self) -> int:
-        return min(self.point.x, self.point.x + self.size.width)
-
-    @property
-    def right(self) -> int:
-        return max(self.point.x, self.point.x + self.size.width)
-
-    @property
-    def mid_point(self) -> Point:
-        return self.point + (self.size // 2)
-
-    @property
     def upper_left_point(self) -> Point:
-        return Point(self.left, self.top)
+        return self.point
 
     @property
     def upper_right_point(self) -> Point:
-        return Point(self.right, self.top)
+        return Point(self.point.x + self.size.width, self.point.y)
 
     @property
     def lower_left_point(self) -> Point:
-        return Point(self.left, self.bottom)
+        return Point(self.point.x, self.point.y + self.size.height)
 
     @property
     def lower_right_point(self) -> Point:
-        return Point(self.right, self.bottom)
-
-    @property
-    def vertexes(self) -> list[Point]:
-        return [self.upper_left_point, self.upper_right_point, self.lower_left_point, self.lower_right_point]
+        return self.point + self.size
 
     @classmethod
     @validate(point=Point, size=Size)
-    def validate(cls: type[Rect_], point: Point, size: Size) -> Rect_:
+    def validate(cls: type[_R], point: Point, size: Size) -> _R:
         return cls(point, size)
 
     @classmethod
     def from_vector(cls, v1: Vector2D, v2: Vector2D):
         return cls(Point.from_vector(v1), Size.from_vector(v2))
 
-    def evolve_top(self, top: int):
-        return self.__class__(Point(self.point.x, top), self.size)
-
-    def evolve_bottom(self, bottom: int):
-        return self.__class__(self.point, Size(self.size.width, self.point.y - bottom))
-
-    def evolve_left(self, left: int):
-        return self.__class__(Point(left, self.point.y), self.size)
-
-    def evolve_right(self, right: int):
-        return self.__class__(self.point, Size(self.point.x - right, self.size.height))
-
-    def evolve(
-        self, *, top: int | None = None, bottom: int | None = None, left: int | None = None, right: int | None = None
-    ):
-        rect: Rect = self
-        if top is not None:
-            rect = rect.evolve_top(top)
-        if bottom is not None:
-            rect = rect.evolve_bottom(bottom)
-        if left is not None:
-            rect = rect.evolve_left(left)
-        if right is not None:
-            rect = rect.evolve_right(right)
-        return rect
-
-    def intersects(self, rect: Rect) -> bool:
-        return (abs(self.point.x - rect.point.x) * 2 < (self.size.width + rect.size.width)) and (
-            abs(self.point.y - rect.point.y) * 2 < (self.size.height + rect.size.height)
-        )
-
-    def contains(self, component: Rect | Point) -> bool:
-        if isinstance(component, Rect):
-            return self.contains(component.upper_left_point) and self.contains(component.lower_right_point)
-        return (
-            self.point.x <= component.x <= self.point.x + self.size.width
-            and self.point.y <= component.y <= self.point.y + self.size.height
-        )
-
     def to_qt(self) -> QRect:
         """
-        Generates a QRect from a Rect.
+            Generates a QRect from a Rect.
 
         Parameters
         ----------

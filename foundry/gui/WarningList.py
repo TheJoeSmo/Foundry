@@ -22,7 +22,7 @@ class WarningList(QWidget):
         self.object_list = object_list_ref
 
         self.setLayout(QVBoxLayout())
-        self.setWindowFlag(Qt.WindowType.Popup)
+        self.setWindowFlag(Qt.Popup)
         self.layout().setContentsMargins(5, 5, 5, 5)
 
         self._enemy_dict = {}

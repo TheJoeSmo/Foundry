@@ -1,9 +1,9 @@
 from functools import reduce
 from typing import overload
 
-from PySide6.QtCore import QObject, Signal, SignalInstance
+from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
 
-from foundry.core.geometry import Point, Rect, Size
+from foundry.core.geometry import Point
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
@@ -52,7 +52,6 @@ class Level(LevelLike):
 
     offsets = load_level_offsets()
     sorted_offsets = sorted(offsets, key=lambda level: level.generator_pointer)
-    size: Size
 
     WORLDS = get_worlds(offsets)
 
@@ -124,11 +123,11 @@ class Level(LevelLike):
 
     @property
     def width(self):
-        return self.size.width
+        return self.size[0]
 
     @property
     def height(self):
-        return self.size.height
+        return self.size[1]
 
     @property
     def data_changed(self):
@@ -170,7 +169,7 @@ class Level(LevelLike):
         )
         self.enemy_item_factory = EnemyItemFactory(self.object_set_number, self.header.enemy_palette_index)
 
-        self.size = Size(self.header.width, self.header.height)
+        self.size = self.header.width, self.header.height
 
         self.data_changed.emit()
 
@@ -229,8 +228,10 @@ class Level(LevelLike):
     def size_on_disk(self):
         return self.object_size_on_disk + self.enemy_size_on_disk
 
-    def get_rect(self, block_length: int = 1) -> Rect:
-        return Rect(Point(0, 0), self.size * block_length)
+    def get_rect(self, block_length: int = 1):
+        width, height = self.size
+
+        return QRect(QPoint(0, 0), QSize(width, height) * block_length)
 
     def attach_to_rom(self, header_offset: int, enemy_item_offset: int):
         if 0x0 in [header_offset, enemy_item_offset]:

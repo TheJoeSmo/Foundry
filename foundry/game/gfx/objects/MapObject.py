@@ -1,4 +1,6 @@
-from foundry.core.geometry import Point, Rect, Size
+from PySide6.QtCore import QRect
+
+from foundry.core.geometry import Point
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -137,7 +139,7 @@ class MapObject(ObjectLike):
 
         self.block = block
 
-        self.rect = Rect(Point(self.x_position, self.y_position), Size(1, 1))
+        self.rect = QRect(self.x_position, self.y_position, 1, 1)
 
         if self.block.index in map_object_names:
             self.name = map_object_names[self.block.index]
@@ -157,7 +159,7 @@ class MapObject(ObjectLike):
     @position.setter
     def position(self, position: Point):
         self.x_position, self.y_position = position.x, position.y
-        self.rect = Rect(position, self.rect.size)
+        self.rect = QRect(position.x, position.y, 1, 1)
 
     def render(self):
         pass

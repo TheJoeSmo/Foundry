@@ -200,8 +200,8 @@ class LevelView(QWidget):
     def _cursor_on_edge_of_object(
         self, level_object: LevelObject | EnemyObject, point: Point, edge_width: int = 4
     ) -> int:
-        right = level_object.rect.right * self.block_length
-        bottom = level_object.rect.bottom * self.block_length
+        right = (level_object.get_rect().left() + level_object.get_rect().width()) * self.block_length
+        bottom = (level_object.get_rect().top() + level_object.get_rect().height()) * self.block_length
 
         on_right_edge = point.x in range(right - edge_width, right)
         on_bottom_edge = point.y in range(bottom - edge_width, bottom)
@@ -257,7 +257,9 @@ class LevelView(QWidget):
         if not self.level_ref:
             return super().sizeHint()
         else:
-            return (self.level_ref.level.size * self.block_length).to_qt()
+            width, height = self.level_ref.level.size
+
+            return QSize(width * self.block_length, height * self.block_length)
 
     def update(self):
         self.resize(self.sizeHint())
@@ -447,7 +449,7 @@ class LevelView(QWidget):
 
         sel_rect = self.selection_square.get_adjusted_rect(Size(self.block_length, self.block_length))
         touched_objects: list[LevelObject | EnemyObject] = [
-            obj for obj in self.level_ref.level.get_all_objects() if sel_rect.intersects(obj.rect)
+            obj for obj in self.level_ref.level.get_all_objects() if sel_rect.to_qt().intersects(obj.get_rect())
         ]
 
         if touched_objects != self.level_ref.selected_objects:
@@ -717,4 +719,4 @@ class LevelView(QWidget):
         self.selection_square.draw(painter)
 
         if self.currently_dragged_object is not None:
-            self.currently_dragged_object.draw(painter, self.block_length, self.user_settings.block_transparency)
+            self.currently_dragged_object.draw(painter, self.block_length, self.transparency)
