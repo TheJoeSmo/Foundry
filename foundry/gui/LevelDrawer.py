@@ -363,7 +363,7 @@ class LevelDrawer:
                 if not self.user_settings.draw_items_in_blocks:
                     continue
 
-                point = point.evolve(y=point.y - self.block_length)
+                point = point.evolve(y=point.y - (2 * self.block_length))
 
                 if "flower" in name:
                     image = FIRE_FLOWER()
