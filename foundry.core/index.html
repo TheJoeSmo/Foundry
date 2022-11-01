@@ -926,7 +926,7 @@ stack, respectively.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Point" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.ConcreteValidator" title="foundry.core.namespace.ConcreteValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteValidator</span></code></a>, <a class="reference internal" href="#foundry.core.namespace.KeywordValidator" title="foundry.core.namespace.KeywordValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeywordValidator</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.ConcreteValidator" title="foundry.core.namespace.ConcreteValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteValidator</span></code></a>, <a class="reference internal" href="#foundry.core.namespace.KeywordValidator" title="foundry.core.namespace.KeywordValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeywordValidator</span></code></a>, <a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vector2D</span></code></a></p>
 <p>A two dimensional representation of a point on a plain.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes<span class="colon">:</span></dt>
@@ -941,22 +941,75 @@ stack, respectively.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.distance_from_origin">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_from_origin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#foundry.core.geometry.Point.distance_from_origin" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>The distance this point is from the origin, Point(0, 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>The distance from the origin.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_qt">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtCore.QPoint</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QPointF</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_qt" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates a point from a QPoint for easy conversion.</p>
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.evolve" title="Permalink to this definition">#</a></dt>
+<dd><p>A convenience method to modify points quicker.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>point</strong><span class="classifier">QPoint</span></dt><dd><p>To be converted.</p>
+<dt><strong>x</strong><span class="classifier">int | None, optional</span></dt><dd><p>The x point that can be evolved, by default will not evolve.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">int | None, optional</span></dt><dd><p>The y point that can be evolved, by default will not evolve.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>AbstractPoint</dt><dd><p>Of the QPoint represented inside Python.</p>
+<dt><a href="#id1"><span class="problematic" id="id2">Point_</span></a></dt><dd><p>The new evolved point.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_components">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_components" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a point from the points of a vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>i_component</strong><span class="classifier">int</span></dt><dd><p>The x position of the point.</p>
+</dd>
+<dt><strong>j_component</strong><span class="classifier">int</span></dt><dd><p>The y position of the point.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a href="#id3"><span class="problematic" id="id4">Point_</span></a></dt><dd><p>The point created from the two components.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Point.from_qt">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PySide6.QtCore.QPoint</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PySide6.QtCore.QPointF</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_qt" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a point from a QPoint for easy conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>point</strong><span class="classifier">QPoint | QPointF</span></dt><dd><p>To be converted.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Point</dt><dd><p>Of the QPoint represented inside Python.</p>
 </dd>
 </dl>
 </dd>
@@ -965,8 +1018,23 @@ stack, respectively.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.from_vector">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Point.from_vector" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.from_vector" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a point from a vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vector</strong><span class="classifier">Vector2D</span></dt><dd><p>The vector with the i and j components representing the x and y positions of the point, respectively.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a href="#id5"><span class="problematic" id="id6">Point_</span></a></dt><dd><p>The point created from the vector.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.i_component">
@@ -981,7 +1049,16 @@ stack, respectively.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.to_qt">
 <span class="sig-name descname"><span class="pre">to_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QPoint</span></span></span><a class="headerlink" href="#foundry.core.geometry.Point.to_qt" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Converts a point to its PySide equivalent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>QPoint</dt><dd><p>The point in Qt’s framework.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Point.validate">
@@ -1038,9 +1115,54 @@ implementation.</p>
 </dl>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.bottom">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.bottom" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">foundry.core.geometry.Rect</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Rect.contains" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.evolve" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.evolve_bottom">
+<span class="sig-name descname"><span class="pre">evolve_bottom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bottom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.evolve_bottom" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.evolve_left">
+<span class="sig-name descname"><span class="pre">evolve_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.evolve_left" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.evolve_right">
+<span class="sig-name descname"><span class="pre">evolve_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.evolve_right" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.evolve_top">
+<span class="sig-name descname"><span class="pre">evolve_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.evolve_top" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Rect.from_vector">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Rect.from_vector" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.intersects">
+<span class="sig-name descname"><span class="pre">intersects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.core.geometry.Rect.intersects" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.left">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">left</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.left" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -1053,9 +1175,19 @@ implementation.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lower_right_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.lower_right_point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.mid_point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mid_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.mid_point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.geometry.Rect.point">
 <span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.right">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">right</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.right" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1066,9 +1198,7 @@ implementation.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Rect.to_qt">
 <span class="sig-name descname"><span class="pre">to_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QRect</span></span></span><a class="headerlink" href="#foundry.core.geometry.Rect.to_qt" title="Permalink to this definition">#</a></dt>
-<dd><blockquote>
-<div><p>Generates a QRect from a Rect.</p>
-</div></blockquote>
+<dd><p>Generates a QRect from a Rect.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -1084,6 +1214,11 @@ implementation.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Rect.top" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.core.geometry.Rect.upper_left_point">
@@ -1122,12 +1257,17 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.core.geometry.Rect.vertexes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vertexes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">foundry.core.geometry.Point</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#foundry.core.geometry.Rect.vertexes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.geometry.Size">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Size" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.ConcreteValidator" title="foundry.core.namespace.ConcreteValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteValidator</span></code></a>, <a class="reference internal" href="#foundry.core.namespace.KeywordValidator" title="foundry.core.namespace.KeywordValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeywordValidator</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#foundry.core.namespace.ConcreteValidator" title="foundry.core.namespace.ConcreteValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteValidator</span></code></a>, <a class="reference internal" href="#foundry.core.namespace.KeywordValidator" title="foundry.core.namespace.KeywordValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeywordValidator</span></code></a>, <a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vector2D</span></code></a></p>
 <p>A two dimensional representation of a size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes<span class="colon">:</span></dt>
@@ -1140,8 +1280,30 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.core.geometry.Size.from_qsize">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QSize</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Size.from_qsize" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.from_components">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Size_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Size.from_components" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a size from the components of a vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>i_component</strong><span class="classifier">int</span></dt><dd><p>The width of the size.</p>
+</dd>
+<dt><strong>j_component</strong><span class="classifier">int</span></dt><dd><p>The height of the size.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a href="#id7"><span class="problematic" id="id8">Size_</span></a></dt><dd><p>The size created from the two components.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.from_qt">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QSize</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Size_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Size.from_qt" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates a size from a QSize for easy conversion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1152,7 +1314,7 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Size</dt><dd><p>Of the QSize represented inside Python.</p>
+<dt><a href="#id9"><span class="problematic" id="id10">Size_</span></a></dt><dd><p>Of the QSize represented inside Python.</p>
 </dd>
 </dl>
 </dd>
@@ -1161,8 +1323,24 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.core.geometry.Size.from_vector">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Size.from_vector" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Size_</span></span></span><a class="headerlink" href="#foundry.core.geometry.Size.from_vector" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a size from a vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vector</strong><span class="classifier">Vector2D</span></dt><dd><p>The vector with the i and j components representing the width and height positions of the point,
+respectively.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a href="#id11"><span class="problematic" id="id12">Size_</span></a></dt><dd><p>The size created from the vector.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.core.geometry.Size.height">
@@ -1179,9 +1357,9 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">j_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Size.j_component" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.core.geometry.Size.qsize">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qsize</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">QSize</span></em><a class="headerlink" href="#foundry.core.geometry.Size.qsize" title="Permalink to this definition">#</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Size.to_qt">
+<span class="sig-name descname"><span class="pre">to_qt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QSize</span></span></span><a class="headerlink" href="#foundry.core.geometry.Size.to_qt" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates a QSize from a Size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1235,8 +1413,19 @@ to the parent namespace passed inside <cite>values</cite>.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.core.geometry.Vector2D">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vector2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.core.geometry.Vector2D" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Protocol" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vector2D</span></span><a class="headerlink" href="#foundry.core.geometry.Vector2D" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A vector with two components.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Vector2D.from_components">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector</span></span></span><a class="headerlink" href="#foundry.core.geometry.Vector2D.from_components" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.core.geometry.Vector2D.from_vector">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#foundry.core.geometry.Vector2D" title="foundry.core.geometry.Vector2D"><span class="pre">Vector2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector</span></span></span><a class="headerlink" href="#foundry.core.geometry.Vector2D.from_vector" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.core.geometry.Vector2D.i_component">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">i_component</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.core.geometry.Vector2D.i_component" title="Permalink to this definition">#</a></dt>
@@ -8908,6 +9097,24 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.evolve">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.evolve()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Point.from_components">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Point.from_components()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Point.from_qt">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -8991,10 +9198,91 @@ Keyword arguments update the map or new empty dict.</p>
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.bottom">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.bottom
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.contains">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.contains()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.evolve">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.evolve()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.evolve_bottom">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.evolve_bottom()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.evolve_left">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.evolve_left()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.evolve_right">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.evolve_right()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.evolve_top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.evolve_top()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.from_vector">
        <code class="docutils literal notranslate">
         <span class="pre">
          Rect.from_vector()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.intersects">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.intersects()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.left">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.left
         </span>
        </code>
       </a>
@@ -9018,10 +9306,28 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.mid_point">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.mid_point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.point">
        <code class="docutils literal notranslate">
         <span class="pre">
          Rect.point
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.right">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.right
         </span>
        </code>
       </a>
@@ -9040,6 +9346,15 @@ Keyword arguments update the map or new empty dict.</p>
        <code class="docutils literal notranslate">
         <span class="pre">
          Rect.to_qt()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.top
         </span>
        </code>
       </a>
@@ -9071,6 +9386,15 @@ Keyword arguments update the map or new empty dict.</p>
        </code>
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Rect.vertexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Rect.vertexes
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -9083,10 +9407,19 @@ Keyword arguments update the map or new empty dict.</p>
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.from_qsize">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.from_components">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Size.from_qsize()
+         Size.from_components()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.from_qt">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Size.from_qt()
         </span>
        </code>
       </a>
@@ -9128,10 +9461,10 @@ Keyword arguments update the map or new empty dict.</p>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.qsize">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Size.to_qt">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Size.qsize
+         Size.to_qt()
         </span>
        </code>
       </a>
@@ -9165,6 +9498,24 @@ Keyword arguments update the map or new empty dict.</p>
      </code>
     </a>
     <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D.from_components">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Vector2D.from_components()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D.from_vector">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Vector2D.from_vector()
+        </span>
+       </code>
+      </a>
+     </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.core.geometry.Vector2D.i_component">
        <code class="docutils literal notranslate">
