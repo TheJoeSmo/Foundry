@@ -1,7 +1,7 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.geometry import Point
+from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
@@ -36,7 +36,7 @@ class EnemyObject(ObjectLike):
         return get_enemy_metadata().__root__[self.obj_index]
 
     @property
-    def rect(self):
+    def rect(self) -> Rect:
         bmp_width = (
             self.definition.bmp_width
             if not GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation
@@ -45,11 +45,8 @@ class EnemyObject(ObjectLike):
         width = self.definition.rect_width if self.definition.rect_width != 0 else bmp_width
         height = self.definition.rect_height if self.definition.rect_height != 0 else self.definition.bmp_height
 
-        return QRect(
-            self.position.x - self.definition.rect_x_offset,
-            self.position.y - self.definition.rect_y_offset,
-            width,
-            height,
+        return Rect(
+            self.position - Point(self.definition.rect_x_offset, self.definition.rect_y_offset), Size(width, height)
         )
 
     @property
@@ -172,7 +169,7 @@ class EnemyObject(ObjectLike):
         return self.point_in(item)
 
     def point_in(self, point: Point) -> bool:
-        return self.rect.contains(point.x, point.y)
+        return self.rect.contains(point)
 
     def move_by(self, point: Point) -> None:
         self.position = self.position + point

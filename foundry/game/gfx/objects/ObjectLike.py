@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 
-from PySide6.QtCore import QRect
-
-from foundry.core.geometry import Point
+from foundry.core.geometry import Point, Rect, Size
 from foundry.game.Definitions import Definition
 
 EXPANDS_NOT = 0b00
@@ -14,8 +12,7 @@ EXPANDS_BOTH = EXPANDS_HORIZ | EXPANDS_VERT
 class ObjectLike(ABC):
     obj_index: int
     name: str
-
-    rect: QRect
+    rect: Rect
 
     @abstractmethod
     def render(self):
@@ -52,19 +49,8 @@ class ObjectLike(ABC):
     def point_in(self, x, y):
         pass
 
-    def get_rect(self, block_length=1) -> QRect:
-        if block_length != 1:
-            x, y = self.rect.topLeft().toTuple()
-            w, h = self.rect.size().toTuple()
-
-            x *= block_length
-            w *= block_length
-            y *= block_length
-            h *= block_length
-
-            return QRect(x, y, w, h)
-        else:
-            return self.rect
+    def get_rect(self, block_length: int = 1) -> Rect:
+        return self.rect * Size(block_length, block_length)
 
     @abstractmethod
     def __contains__(self, point):
