@@ -184,8 +184,8 @@ class MapObject(ObjectLike):
     def resize_to(self, x, y):
         return
 
-    def point_in(self, x, y):
-        return self.rect.contains(x, y)
+    def point_in(self, point: Point):
+        return point in self.rect
 
     def get_rect(self):
         return self.rect

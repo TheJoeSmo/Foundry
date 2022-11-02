@@ -15,7 +15,7 @@ class SelectionSquare:
 
     @property
     def rect(self) -> Rect:
-        return Rect.from_vector(self.start_point, self.end_point - self.start_point)
+        return Rect.from_points(self.start_point, self.end_point)
 
     def start(self, point: Point) -> None:
         self.is_active = True
@@ -31,7 +31,7 @@ class SelectionSquare:
         self.should_draw = False
 
     def get_adjusted_rect(self, scale_factor: Size) -> Rect:
-        return (self.rect // scale_factor) + Size(1, 1)
+        return self.rect // scale_factor
 
     def draw(self, painter: QPainter):
         if self.should_draw:

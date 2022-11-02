@@ -1,25 +1,26 @@
+from attr import attrs
 from pytest import mark, raises
 
 from foundry.core.geometry import Vector2D
 
 
+@attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
 class SimpleVector(Vector2D):
-    def __init__(self, a: int, b: int) -> None:
-        self._a: int = a
-        self._b: int = b
+    a: int
+    b: int
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, SimpleVector):
             return False
-        return self._a == other._a and self._b == other._b
+        return self.a == other.a and self.b == other.b
 
     @property
     def i_component(self) -> int:
-        return self._a
+        return self.a
 
     @property
     def j_component(self) -> int:
-        return self._b
+        return self.b
 
     @classmethod
     def from_vector(cls, vector: Vector2D):

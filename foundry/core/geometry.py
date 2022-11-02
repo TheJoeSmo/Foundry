@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 from math import sqrt
 from typing import TypeVar
 
@@ -22,6 +23,7 @@ Size_ = TypeVar("Size_", bound="Size")
 Rect_ = TypeVar("Rect_", bound="Rect")
 
 
+@attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=False)
 class Vector2D:
     """
     A vector with two components.
@@ -99,9 +101,42 @@ class Vector2D:
         return self.from_components(self.i_component ^ other.i_component, self.j_component ^ other.j_component)
 
 
+@attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=False)
+class Bound:
+    def __contains__(self, element: Bound) -> bool:
+        return NotImplemented
+
+    @property
+    def points(self) -> Sequence[Point]:
+        return NotImplemented
+
+    @property
+    def edges(self) -> Sequence[Line]:
+        return NotImplemented
+
+    @property
+    def left(self) -> int:
+        return min(point.x for point in self.points)
+
+    @property
+    def right(self) -> int:
+        return max(point.x for point in self.points)
+
+    @property
+    def bottom(self) -> int:
+        return min(point.y for point in self.points)
+
+    @property
+    def top(self) -> int:
+        return max(point.y for point in self.points)
+
+    def intersects(self, bound: Bound) -> bool:
+        return NotImplemented
+
+
 @attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=True)
 @default_validator
-class Point(ConcreteValidator, KeywordValidator, Vector2D):
+class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
     """
     A two dimensional representation of a point on a plain.
 
@@ -117,14 +152,6 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
     y: int
     __names__ = ("__POINT_VALIDATOR__", "point", "Point", "POINT")
     __required_validators__ = (IntegerValidator,)
-
-    @property
-    def i_component(self) -> int:
-        return self.x
-
-    @property
-    def j_component(self) -> int:
-        return self.y
 
     def __str__(self) -> str:
         return f"<{self.x}, {self.y}>"
@@ -143,6 +170,37 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
 
     def __ge__(self, other: Point) -> bool:
         return self.distance_from_origin >= other.distance_from_origin
+
+    def __contains__(self, element: Bound) -> bool:
+        return all(self == point for point in element.points)
+
+    @property
+    def i_component(self) -> int:
+        return self.x
+
+    @property
+    def j_component(self) -> int:
+        return self.y
+
+    @property
+    def points(self) -> Sequence[Point]:
+        return (self,)
+
+    @property
+    def edges(self) -> Sequence[Line]:
+        return ()
+
+    @property
+    def distance_from_origin(self) -> float:
+        """
+        The distance this point is from the origin, Point(0, 0).
+
+        Returns
+        -------
+        float
+            The distance from the origin.
+        """
+        return sqrt(self.x**2 + self.y**2)
 
     @classmethod
     @validate(x=IntegerValidator, y=IntegerValidator)
@@ -204,18 +262,6 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
             return cls(int(point.x()), int(point.y()))
         return cls(point.x(), point.y())
 
-    @property
-    def distance_from_origin(self) -> float:
-        """
-        The distance this point is from the origin, Point(0, 0).
-
-        Returns
-        -------
-        float
-            The distance from the origin.
-        """
-        return sqrt(self.x**2 + self.y**2)
-
     def evolve(self: Point_, *, x: int | None = None, y: int | None = None) -> Point_:
         """
         A convenience method to modify points quicker.
@@ -234,6 +280,9 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
         """
         return evolve(self, x=self.x if x is None else x, y=self.y if y is None else y)
 
+    def intersects(self, bound: Bound) -> bool:
+        return False
+
     def to_qt(self) -> QPoint:
         """
         Converts a point to its PySide equivalent.
@@ -244,6 +293,86 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D):
             The point in Qt's framework.
         """
         return QPoint(self.x, self.y)
+
+
+@attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
+class Line(Bound):
+    endpoint1: Point
+    endpoint2: Point
+
+    def __str__(self) -> str:
+        return f"<{self.endpoint1}, {self.endpoint2}>"
+
+    def __contains__(self, element: Bound) -> bool:
+        for point in element.points:
+            if self.endpoint1 == self.endpoint2 and self.endpoint1 != point:
+                return False
+
+            cross_product: int = (point.y - self.endpoint1.y) * (self.endpoint2.x - self.endpoint1.x) - (
+                point.x - self.endpoint1.x
+            ) * (self.endpoint2.y - self.endpoint1.y)
+            if cross_product != 0:
+                return False
+
+            dot_product: int = (point.x - self.endpoint1.x) * (self.endpoint2.x - self.endpoint1.x) + (
+                point.y - self.endpoint1.y
+            ) * (self.endpoint2.y - self.endpoint1.y)
+            if dot_product < 0:
+                return False
+
+            if dot_product > self.squared_length:
+                return False
+        return True
+
+    @property
+    def points(self) -> Sequence[Point]:
+        return (self.endpoint1, self.endpoint2)
+
+    @property
+    def edges(self) -> Sequence[Line]:
+        return (self,)
+
+    @property
+    def squared_length(self) -> int:
+        return (self.endpoint2.x - self.endpoint1.x) * (self.endpoint2.x - self.endpoint1.x) + (
+            self.endpoint2.y - self.endpoint1.y
+        ) * (self.endpoint2.y - self.endpoint1.y)
+
+    def side(self, point: Point) -> int:
+        d: int = (point.y - self.endpoint1.y) * (self.endpoint2.x - self.endpoint1.x) - (
+            self.endpoint2.y - self.endpoint1.y
+        ) * (point.x - self.endpoint1.x)
+        return 1 if d > 0 else (-1 if d < 0 else 0)
+
+    def collinear(self, line: Line) -> bool:
+        return line.endpoint1 in self and line.endpoint2 in self
+
+    def intersects(self, bound: Bound) -> bool:
+        if not isinstance(bound, Line):
+            return bound.intersects(self)
+
+        if self.endpoint1 == self.endpoint2:
+            return self.endpoint1 == bound.endpoint1 or self.endpoint1 == bound.endpoint2
+        if bound.endpoint1 == bound.endpoint2:
+            return bound.endpoint1 == self.endpoint1 or bound.endpoint1 == self.endpoint2
+
+        s1: int = self.side(bound.endpoint1)
+        s2: int = self.side(bound.endpoint2)
+
+        # Points are collinear
+        if s1 == 0 and s2 == 0:
+            return (
+                bound.endpoint1 in self or bound.endpoint2 in self or self.endpoint1 in bound or self.endpoint2 in bound
+            )
+
+        # Not touching and on same side
+        if s1 and s1 == s2:
+            return False
+
+        s1 = bound.side(self.endpoint1)
+        s2 = bound.side(self.endpoint2)
+
+        return not s1 or s1 != s2
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
@@ -364,9 +493,27 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
         return QSize(self.width, self.height)
 
 
+class SimpleBound(Bound):
+    def __contains__(self, element: Bound) -> bool:
+        return NotImplemented
+
+    @property
+    def points(self) -> Sequence[Point]:
+        return NotImplemented
+
+    @property
+    def edges(self) -> Sequence[Line]:
+        return NotImplemented
+
+    def intersects(self, bound: Bound) -> bool:
+        if bound.right < self.left or self.right < bound.left or bound.top < self.bottom or self.top < bound.bottom:
+            return False
+        return any(edge.intersects(bound_edge) for bound_edge in bound.edges for edge in self.edges)
+
+
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
 @default_validator
-class Rect(ConcreteValidator, KeywordValidator):
+class Rect(ConcreteValidator, KeywordValidator, SimpleBound):
     """
     A two dimensional representation of a box, that uses ``attrs`` to create a basic
     implementation.
@@ -412,21 +559,52 @@ class Rect(ConcreteValidator, KeywordValidator):
             return self.__class__(self.point % other.point, self.size % other.size)
         return self.__class__(self.point % other, self.size % other)
 
+    def __contains__(self, element: Bound) -> bool:
+        return all(
+            self.point.x <= point.x <= self.point.x + self.size.width
+            and self.point.y <= point.y <= self.point.y + self.size.height
+            for point in element.points
+        )
+
+    @property
+    def points(self) -> Sequence[Point]:
+        return (self.upper_left_point, self.upper_right_point, self.lower_left_point, self.lower_right_point)
+
+    @property
+    def edges(self) -> Sequence[Line]:
+        return (self.top_edge, self.bottom_edge, self.left_edge, self.right_edge)
+
     @property
     def top(self) -> int:
         return max(self.point.y, self.point.y + self.size.height)
+
+    @property
+    def top_edge(self) -> Line:
+        return Line(Point(self.left, self.top), Point(self.right, self.top))
 
     @property
     def bottom(self) -> int:
         return min(self.point.y, self.point.y + self.size.height)
 
     @property
+    def bottom_edge(self) -> Line:
+        return Line(Point(self.left, self.bottom), Point(self.right, self.bottom))
+
+    @property
     def left(self) -> int:
         return min(self.point.x, self.point.x + self.size.width)
 
     @property
+    def left_edge(self) -> Line:
+        return Line(Point(self.left, self.top), Point(self.left, self.bottom))
+
+    @property
     def right(self) -> int:
         return max(self.point.x, self.point.x + self.size.width)
+
+    @property
+    def right_edge(self) -> Line:
+        return Line(Point(self.right, self.top), Point(self.right, self.bottom))
 
     @property
     def mid_point(self) -> Point:
@@ -448,14 +626,18 @@ class Rect(ConcreteValidator, KeywordValidator):
     def lower_right_point(self) -> Point:
         return Point(self.right, self.bottom)
 
-    @property
-    def vertexes(self) -> list[Point]:
-        return [self.upper_left_point, self.upper_right_point, self.lower_left_point, self.lower_right_point]
-
     @classmethod
     @validate(point=Point, size=Size)
     def validate(cls: type[Rect_], point: Point, size: Size) -> Rect_:
         return cls(point, size)
+
+    @classmethod
+    def from_points(cls, *points: Point):
+        min_x: int = min(point.x for point in points)
+        min_y: int = min(point.y for point in points)
+        max_x: int = max(point.x for point in points)
+        max_y: int = max(point.y for point in points)
+        return cls(Point(min_x, min_y), Size(max_x - min_x, max_y - min_y))
 
     @classmethod
     def from_vector(cls, v1: Vector2D, v2: Vector2D):
@@ -486,19 +668,6 @@ class Rect(ConcreteValidator, KeywordValidator):
         if right is not None:
             rect = rect.evolve_right(right)
         return rect
-
-    def intersects(self, rect: Rect) -> bool:
-        return (abs(self.point.x - rect.point.x) * 2 < (self.size.width + rect.size.width)) and (
-            abs(self.point.y - rect.point.y) * 2 < (self.size.height + rect.size.height)
-        )
-
-    def contains(self, component: Rect | Point) -> bool:
-        if isinstance(component, Rect):
-            return self.contains(component.upper_left_point) and self.contains(component.lower_right_point)
-        return (
-            self.point.x <= component.x <= self.point.x + self.size.width
-            and self.point.y <= component.y <= self.point.y + self.size.height
-        )
 
     def to_qt(self) -> QRect:
         """

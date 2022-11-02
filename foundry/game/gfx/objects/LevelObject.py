@@ -726,12 +726,14 @@ class LevelObject(GeneratorObject):
                 position = self.position
                 bottom_row = Rect(position, Size(size.width, 1))
                 index_in_level = self.index_in_level
+                objs = [obj for obj in self.objects_ref[0:index_in_level] if "Flat Ground" in obj.name]
+
                 for y in range(position.y, self.ground_level):
                     bottom_row = Rect(bottom_row.point, Size(bottom_row.size.width, bottom_row.size.height + 1))
 
                     found = False
-                    for obj in self.objects_ref[0:index_in_level]:
-                        if bottom_row.intersects(obj.rect) and "Flat Ground" in obj.name:
+                    for obj in objs:
+                        if bottom_row.intersects(obj.rect):
                             size = evolve(size, height=bottom_row.size.height)
                             found = True
                             break
@@ -836,7 +838,7 @@ class LevelObject(GeneratorObject):
         return self.point_in(item)
 
     def point_in(self, point: Point) -> bool:
-        return self.rect.contains(point)
+        return point in self.rect
 
     def get_status_info(self) -> list[tuple]:
         return [

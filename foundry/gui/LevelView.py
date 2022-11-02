@@ -447,7 +447,9 @@ class LevelView(QWidget):
 
         sel_rect = self.selection_square.get_adjusted_rect(Size(self.block_length, self.block_length))
         touched_objects: list[LevelObject | EnemyObject] = [
-            obj for obj in self.level_ref.level.get_all_objects() if sel_rect.intersects(obj.rect)
+            obj
+            for obj in self.level_ref.level.get_all_objects()
+            if obj.rect in sel_rect or sel_rect.intersects(obj.rect)
         ]
 
         if touched_objects != self.level_ref.selected_objects:

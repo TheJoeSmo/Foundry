@@ -432,7 +432,7 @@ class LevelDrawer:
         for jump in level.jumps:
             jump_rect = jump.get_rect(1, level.is_vertical)
 
-            if jump_rect.contains(point):
+            if point in jump_rect:
                 return True
         else:
             return False

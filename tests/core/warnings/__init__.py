@@ -12,7 +12,7 @@ class ObjectLike:
     rendered_height: int = 0
 
     def get_rect(self):
-        return True
+        return self.rect
 
     @property
     def rect(self) -> Rect:

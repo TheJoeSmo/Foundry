@@ -1,4 +1,4 @@
-from PySide6.QtCore import QPoint, QSize
+from PySide6.QtCore import QSize
 
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
@@ -94,10 +94,8 @@ class WorldMap(LevelLike):
         return self.objects
 
     def object_at(self, point: Point):
-        qpoint = QPoint(point.x, point.y)
-
         for obj in reversed(self.objects):
-            if obj.rect.contains(qpoint):
+            if point in obj.rect:
                 return obj
 
         return None

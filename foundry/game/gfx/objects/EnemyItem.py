@@ -169,7 +169,7 @@ class EnemyObject(ObjectLike):
         return self.point_in(item)
 
     def point_in(self, point: Point) -> bool:
-        return self.rect.contains(point)
+        return point in self.rect
 
     def move_by(self, point: Point) -> None:
         self.position = self.position + point

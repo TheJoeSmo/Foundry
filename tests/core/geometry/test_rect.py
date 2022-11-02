@@ -89,6 +89,7 @@ class TestRect:
             (Rect(Point(0, 0), Size(2, 2)), Rect(Point(0, 1), Size(1, 1)), True),
             (Rect(Point(0, 0), Size(2, 2)), Rect(Point(1, 0), Size(1, 1)), True),
             (Rect(Point(0, 0), Size(2, 2)), Rect(Point(1, 1), Size(1, 1)), True),
+            (Rect(Point(0, 0), Size(3, 3)), Rect(Point(1, 1), Size(1, 2)), True),
             (Rect(Point(0, 0), Size(1, 1)), Point(0, 0), True),
             (Rect(Point(0, 0), Size(1, 1)), Point(0, 1), True),
             (Rect(Point(0, 0), Size(1, 1)), Point(1, 0), True),
@@ -96,18 +97,4 @@ class TestRect:
         ],
     )
     def test_contains(self, r: Rect, r2: Point | Rect, c: bool) -> None:
-        assert r.contains(r2) == c
-
-    @mark.parametrize(
-        "r,r2,i",
-        [
-            (Rect(Point(0, 0), Size(1, 1)), Rect(Point(0, 1), Size(1, 1)), False),
-            (Rect(Point(0, 0), Size(1, 1)), Rect(Point(1, 0), Size(1, 1)), False),
-            (Rect(Point(0, 0), Size(1, 1)), Rect(Point(1, 1), Size(1, 1)), False),
-            (Rect(Point(0, 0), Size(2, 2)), Rect(Point(0, 1), Size(1, 2)), True),
-            (Rect(Point(0, 0), Size(2, 2)), Rect(Point(1, 0), Size(2, 1)), True),
-            (Rect(Point(0, 0), Size(2, 2)), Rect(Point(1, 1), Size(2, 2)), True),
-        ],
-    )
-    def test_intersects(self, r: Rect, r2: Rect, i: bool) -> None:
-        assert r.intersects(r2) == i
+        assert (r2 in r) == c

@@ -14,7 +14,7 @@ def level_contains():
     class Level:
         def get_rect(*args, **kwargs):
             class Rect:
-                def contains(*args, **kwargs) -> bool:
+                def __contains__(*args, **kwargs) -> bool:
                     return True
 
             return Rect()
@@ -27,7 +27,7 @@ def level_does_not_contains():
     class Level:
         def get_rect(*args, **kwargs):
             class Rect:
-                def contains(*args, **kwargs) -> bool:
+                def __contains__(*args, **kwargs) -> bool:
                     return False
 
             return Rect()
