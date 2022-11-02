@@ -3,7 +3,7 @@ from pathlib import Path
 from attr import attrs
 from PySide6.QtGui import QColor, QImage, Qt
 
-from foundry.core.blocks.BlockGroup import BlockGroup
+from foundry.core.blocks import BlockGroup
 from foundry.core.file import FilePath
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.namespace import (
