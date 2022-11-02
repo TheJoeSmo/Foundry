@@ -9,8 +9,7 @@ from foundry.core.blocks.Block import Block, Pattern
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.painter.Painter import Painter
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
-from foundry.core.tiles.util import cached_tile_to_image
+from foundry.core.tiles import MASK_COLOR, tile_to_image
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
@@ -58,8 +57,7 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
     image = QImage(BLOCK_SIZE.width, BLOCK_SIZE.height, QImage.Format.Format_RGB888)
     image.fill(QColor(*MASK_COLOR))
     patterns = [
-        cached_tile_to_image(index, block.palette_group[block.palette_index], block.graphics_set)
-        for index in block.patterns
+        tile_to_image(index, block.palette_group[block.palette_index], block.graphics_set) for index in block.patterns
     ]
     with Painter(image) as p:
         for (pattern, point) in zip(patterns, PATTERN_LOCATIONS):

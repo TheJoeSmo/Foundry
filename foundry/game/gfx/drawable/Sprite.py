@@ -5,8 +5,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
-from foundry.core.tiles.util import cached_tile_to_image
+from foundry.core.tiles import MASK_COLOR, tile_to_image
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
@@ -54,8 +53,8 @@ class Sprite:
         # can't hash list, so turn it into a string instead
         self._sprite_id = (index, str(palette_group), palette_index, graphics_set)
 
-        self.top_tile = cached_tile_to_image(index, palette_group[palette_index], graphics_set)
-        self.bottom_tile = cached_tile_to_image(index + 1, palette_group[palette_index], graphics_set)
+        self.top_tile = tile_to_image(index, palette_group[palette_index], graphics_set)
+        self.bottom_tile = tile_to_image(index + 1, palette_group[palette_index], graphics_set)
 
         if vertical_mirror:
             self.top_tile, self.bottom_tile = self.bottom_tile, self.top_tile

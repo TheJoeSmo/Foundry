@@ -4,15 +4,15 @@ from functools import cache, lru_cache
 from attr import attrs
 from PySide6.QtGui import QImage
 
+from foundry.core.geometry import Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import Color, Palette
-from foundry.core.tiles import (
-    BYTES_PER_TILE,
-    MASK_COLOR,
-    PIXEL_OFFSET,
-    PIXELS,
-    TILE_SIZE,
-)
+
+TILE_SIZE: Size = Size(8, 8)
+PIXELS: int = 64
+BYTES_PER_TILE: int = 16
+MASK_COLOR = Color(0xFF, 0x33, 0xFF)
+PIXEL_OFFSET = 8
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
@@ -99,7 +99,7 @@ def _tile_to_image(tile: _Tile, scale_factor: int = 1) -> QImage:
 
 
 @lru_cache(2**10)
-def cached_tile_to_image(
+def tile_to_image(
     tile_index: int,
     palette: Palette,
     graphics_set: GraphicsSet,
@@ -130,26 +130,3 @@ def cached_tile_to_image(
     occur, there is a high chance of an errors to linger throughout the program.
     """
     return _tile_to_image(_Tile(tile_index, palette, graphics_set), scale_factor)
-
-
-def tile_to_image(tile_index: int, palette: Palette, graphics_set: GraphicsSet, scale_factor: int = 1) -> QImage:
-    """
-    Generates a tile with a given palette and graphics as a QImage.
-
-    Parameters
-    ----------
-    tile_index: int
-        The tile index into the graphics set.
-    palette : Palette
-        The specific palette to use for the tile.
-    graphics_set : GraphicsSet
-        The specific graphics to use for the tile.
-    scale_factor : int, optional
-        The multiple of 8 that the image will be created as, by default 1
-
-    Returns
-    -------
-    QImage
-        That represents the tile.
-    """
-    return cached_tile_to_image(tile_index, palette, graphics_set, scale_factor)
