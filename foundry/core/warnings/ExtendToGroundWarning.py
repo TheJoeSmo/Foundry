@@ -22,7 +22,7 @@ class ExtendToGroundWarning(Warning):
         bool
             If the object should emit a warning.
         """
-        return obj.position.y + obj.rendered_size.height == 27
+        return obj.point.y + obj.rendered_size.height == 27
 
     def get_message(self, obj: ObjectLike) -> str:
         return f"{obj} extends until the level bottom. This can crash the game."

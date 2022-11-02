@@ -250,7 +250,7 @@ class ROM(Rom):
 
         super().__init__(ROM.rom_data)
 
-        self.position = 0
+        self.point = 0
 
     @staticmethod
     def get_tsa_data(object_set: int) -> bytearray:

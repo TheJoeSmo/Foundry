@@ -16,10 +16,10 @@ class ObjectLike:
 
     @property
     def rect(self) -> Rect:
-        return Rect(self.position, self.rendered_size)
+        return Rect(self.point, self.rendered_size)
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         return Point(self.x, self.y)
 
     @property

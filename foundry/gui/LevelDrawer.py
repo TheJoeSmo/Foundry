@@ -257,13 +257,13 @@ class LevelDrawer:
 
             if level_object.name.lower() in SPECIAL_BACKGROUND_OBJECTS and isinstance(level_object, LevelObject):
                 width = LEVEL_MAX_LENGTH
-                height = GROUND - level_object.position.y
+                height = GROUND - level_object.point.y
 
                 blocks_to_draw = [level_object.blocks[0]] * width * height
 
                 for index, block_index in enumerate(blocks_to_draw):
-                    x = level_object.position.x + index % width
-                    y = level_object.position.y + index // width
+                    x = level_object.point.x + index % width
+                    y = level_object.point.y + index // width
 
                     level_object._draw_block(painter, block_index, x, y, self.block_length, False, blocks=blocks)
             else:
@@ -318,7 +318,7 @@ class LevelDrawer:
                 fill_object = False
 
                 point: Point = rect.mid_point
-                trigger_position: Point = level_object.position
+                trigger_position: Point = level_object.point
 
                 if "left" in name:
                     image = LEFT_ARROW()
@@ -355,7 +355,7 @@ class LevelDrawer:
                 point = point.evolve(y=rect.top - self.block_length)
 
                 # jumps seemingly trigger on the bottom block
-                if not self._object_in_jump_area(level, level_object.position + Point(0, 1)):
+                if not self._object_in_jump_area(level, level_object.point + Point(0, 1)):
                     image = NO_JUMP()
 
             # "?" - blocks, note blocks, wooden blocks and bricks
@@ -507,6 +507,6 @@ class LevelDrawer:
         else:
             return
 
-        drawer = AutoScrollDrawer(item.position.y, level)
+        drawer = AutoScrollDrawer(item.point.y, level)
 
         drawer.draw(painter, self.block_length)

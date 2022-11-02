@@ -151,13 +151,13 @@ class MapObject(ObjectLike):
         return Definition(description="Map Object", warnings=[])
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         return Point(self.x_position, self.y_position)
 
-    @position.setter
-    def position(self, position: Point):
-        self.x_position, self.y_position = position.x, position.y
-        self.rect = Rect(position, self.rect.size)
+    @point.setter
+    def point(self, point: Point):
+        self.x_position, self.y_position = point.x, point.y
+        self.rect = Rect(point, self.rect.size)
 
     def render(self):
         pass
@@ -179,7 +179,7 @@ class MapObject(ObjectLike):
         return self.block.index
 
     def move_by(self, point: Point) -> None:
-        self.position = self.position + point
+        self.point = self.point + point
 
     def resize_to(self, x, y):
         return

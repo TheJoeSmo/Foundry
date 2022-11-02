@@ -13,7 +13,7 @@ from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
 
 
 class SpriteGroupProtocol(Protocol):
-    position: Point
+    point: Point
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSet
     palette_group: PaletteGroup
@@ -43,7 +43,7 @@ class SpriteGroup:
         The palettes to render the sprites with.
     """
 
-    position: Point
+    point: Point
     sprites: list[SpriteProtocol]
     graphics_set: GraphicsSet
     palette_group: PaletteGroup
@@ -51,8 +51,8 @@ class SpriteGroup:
     @property
     def size(self) -> Size:
         return Size(
-            max(sprites.position.x for sprites in self.sprites) + SPRITE_SIZE.width,
-            max(sprites.position.y for sprites in self.sprites) + SPRITE_SIZE.height,
+            max(sprites.point.x for sprites in self.sprites) + SPRITE_SIZE.width,
+            max(sprites.point.y for sprites in self.sprites) + SPRITE_SIZE.height,
         )
 
     def image(self, scale_factor: int = 1) -> QImage:
@@ -74,8 +74,8 @@ class SpriteGroup:
                 )
                 sprite.draw(
                     painter,
-                    sprite_data.position.x * scale_factor,
-                    sprite_data.position.y * scale_factor,
+                    sprite_data.point.x * scale_factor,
+                    sprite_data.point.y * scale_factor,
                     SPRITE_SIZE.width * scale_factor,
                     SPRITE_SIZE.height * scale_factor,
                     transparent=True,

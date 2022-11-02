@@ -8,8 +8,8 @@ from foundry.core.UndoController import UndoController
 from foundry.core.validators import range_validator
 from foundry.smb3parse.levels.level_header import MARIO_X_POSITIONS, MARIO_Y_POSITIONS
 
-STR_X_POSITIONS = [f"{position >> 4}. Block ({position:0=#4X})".replace("X", "x") for position in MARIO_X_POSITIONS]
-STR_Y_POSITIONS = [f"{position}. Block ({position:0=#4X})".replace("X", "x") for position in MARIO_Y_POSITIONS]
+STR_X_POSITIONS = [f"{point >> 4}. Block ({point:0=#4X})".replace("X", "x") for point in MARIO_X_POSITIONS]
+STR_Y_POSITIONS = [f"{point}. Block ({point:0=#4X})".replace("X", "x") for point in MARIO_Y_POSITIONS]
 ACTIONS = [
     "None",
     "Sliding",

@@ -46,7 +46,7 @@ class EnemyObject(ObjectLike):
         height = self.definition.rect_height if self.definition.rect_height != 0 else self.definition.bmp_height
 
         return Rect(
-            self.position - Point(self.definition.rect_x_offset, self.definition.rect_y_offset), Size(width, height)
+            self.point - Point(self.definition.rect_x_offset, self.definition.rect_y_offset), Size(width, height)
         )
 
     @property
@@ -103,8 +103,8 @@ class EnemyObject(ObjectLike):
             if sprite_info.index < 0:
                 continue
 
-            x = (self.position.x * 2) + (i % self.width) if not is_icon else (i % self.width)
-            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
+            x = (self.point.x * 2) + (i % self.width) if not is_icon else (i % self.width)
+            y = self.point.y + (i // self.width) if not is_icon else (i // self.width)
             x += sprite_info.x_offset / 16
             y -= sprite_info.y_offset / 16
 
@@ -137,8 +137,8 @@ class EnemyObject(ObjectLike):
 
     def draw_blocks(self, painter: QPainter, block_length, is_icon):
         for i, image in enumerate(self.blocks):
-            x = self.position.x + (i % self.width) if not is_icon else (i % self.width)
-            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
+            x = self.point.x + (i % self.width) if not is_icon else (i % self.width)
+            y = self.point.y + (i // self.width) if not is_icon else (i // self.width)
 
             if is_icon:
                 definition = get_enemy_metadata().__root__[self.obj_index]
@@ -163,7 +163,7 @@ class EnemyObject(ObjectLike):
             painter.drawImage(x * block_length, y * block_length, block)
 
     def get_status_info(self):
-        return [("Name", self.name), ("X", self.position.x), ("Y", self.position.y)]
+        return [("Name", self.name), ("X", self.point.x), ("Y", self.point.y)]
 
     def __contains__(self, item: Point) -> bool:
         return self.point_in(item)
@@ -172,15 +172,15 @@ class EnemyObject(ObjectLike):
         return point in self.rect
 
     def move_by(self, point: Point) -> None:
-        self.position = self.position + point
+        self.point = self.point + point
 
     @property
-    def position(self) -> Point:
-        return self.enemy.position
+    def point(self) -> Point:
+        return self.enemy.point
 
-    @position.setter
-    def position(self, position: Point):
-        self.enemy.position = Point(max(0, position.x), max(0, position.y))
+    @point.setter
+    def point(self, point: Point):
+        self.enemy.point = Point(max(0, point.x), max(0, point.y))
 
     @property
     def obj_index(self):
@@ -207,7 +207,7 @@ class EnemyObject(ObjectLike):
         return image
 
     def __str__(self):
-        return f"{self.name} at {self.position.x}, {self.position.y}"
+        return f"{self.name} at {self.point}"
 
     def __repr__(self):
         return f"EnemyObject: {self}"

@@ -23,8 +23,8 @@ class Level(LevelBase):
 
         self.header = LevelHeader(self.header_bytes, self.object_set_number)
 
-    def set_world_map_position(self, position):
-        self.world_map_position = position
+    def set_world_map_position(self, point):
+        self.world_map_position = point
 
     def __eq__(self, other):
         if not isinstance(other, Level):

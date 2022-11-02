@@ -241,23 +241,23 @@ class WorldMap(LevelBase):
 
         return object_set_number, absolute_level_address, enemy_address
 
-    def replace_level_at_position(self, level_info, position: WorldMapPosition):
+    def replace_level_at_position(self, level_info, point: WorldMapPosition):
         level_address, enemy_address, object_set_number = level_info
 
-        existing_level = self.level_for_position(position.screen, position.point)
+        existing_level = self.level_for_position(point.screen, point.point)
 
         if existing_level is None:
             raise LookupError("No existing level at point.")
 
-        level_index = self.level_indexes(position)
+        level_index = self.level_indexes(point)
         assert level_index is not None
-        point, level_offset_address, enemy_offset_address = level_index
+        level_point, level_offset_address, enemy_offset_address = level_index
 
-        row_value: int = ((position.point.y + FIRST_VALID_ROW) << 4) + object_set_number
-        self._rom.write(point.y, bytes([row_value]))
+        row_value: int = ((point.point.y + FIRST_VALID_ROW) << 4) + object_set_number
+        self._rom.write(level_point.y, bytes([row_value]))
 
-        column_value: int = ((position.screen - 1) << 4) + position.point.x
-        self._rom.write(point.x, bytes([column_value]))
+        column_value: int = ((point.screen - 1) << 4) + point.point.x
+        self._rom.write(level_point.x, bytes([column_value]))
 
         object_set_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + object_set_number) * 2 - 10) * 0x1000
         level_offset = level_address - object_set_offset - BASE_OFFSET
@@ -268,14 +268,14 @@ class WorldMap(LevelBase):
 
         self._rom.write_little_endian(enemy_offset_address, enemy_offset)
 
-    def level_indexes(self, position: WorldMapPosition) -> tuple[Point, int, int] | None:
+    def level_indexes(self, point: WorldMapPosition) -> tuple[Point, int, int] | None:
         """
         Provide the level index from a given screen and point.
 
         Parameters
         ----------
-        position: WorldMapPosition
-            The position inside the world map.
+        point: WorldMapPosition
+            The point inside the world map.
 
         Returns
         -------
@@ -293,9 +293,7 @@ class WorldMap(LevelBase):
         row_amount = col_amount = level_x_pos_list_start - level_y_pos_list_start
 
         row_start_index = sum(
-            [self.level_count_s1, self.level_count_s2, self.level_count_s3, self.level_count_s4][
-                0 : position.screen - 1
-            ]
+            [self.level_count_s1, self.level_count_s2, self.level_count_s3, self.level_count_s4][0 : point.screen - 1]
         )
 
         # find the row point
@@ -305,7 +303,7 @@ class WorldMap(LevelBase):
             # adjust the value, so that we ignore the black border tiles around the map
             row = (value >> 4) - FIRST_VALID_ROW
 
-            if row == position.point.y:
+            if row == point.point.y:
                 break
         else:
             # no level on row of player
@@ -314,7 +312,7 @@ class WorldMap(LevelBase):
         for col_index in range(row_index, col_amount):
             column = self._rom.int(level_x_pos_list_start + col_index) & 0x0F
 
-            if column == position.point.x:
+            if column == point.point.x:
                 break
         else:
             # no column for row
@@ -402,8 +400,8 @@ class WorldMap(LevelBase):
         """
         Returns a generator, which yields all levels accessible from this world map.
         """
-        for position in self.gen_positions():
-            level_info_tuple = self.level_for_position(position.screen, position.point)
+        for point in self.gen_positions():
+            level_info_tuple = self.level_for_position(point.screen, point.point)
 
             if level_info_tuple is None:
                 continue

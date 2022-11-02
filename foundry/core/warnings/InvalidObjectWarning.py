@@ -8,7 +8,7 @@ class InvalidObjectWarning(Warning):
     """
 
     def get_message(self, obj: ObjectLike, *args, **kwargs) -> str:
-        return f"Object at {obj.position.x}, {obj.position.y} will likely cause the game to crash"
+        return f"Object at {obj.point} will likely cause the game to crash"
 
 
 class PydanticInvalidObjectWarning(PydanticWarning):

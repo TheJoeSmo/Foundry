@@ -297,8 +297,8 @@ class MainWindow(QMainWindow):
         world = SMB3World.from_world_number(rom, self.user_settings.default_starting_world)
 
         # find point of "level 1" tile in world map
-        for position in world.gen_positions():
-            if position.tile() == TILE_LEVEL_1:
+        for point in world.gen_positions():
+            if point.tile() == TILE_LEVEL_1:
                 break
         else:
             QMessageBox.critical(
@@ -327,7 +327,7 @@ class MainWindow(QMainWindow):
         # replace level information with that of current level
         object_set_number = self.manager.controller.level_ref.level.object_set_number
 
-        world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), position)
+        world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), point)
 
     def _set_default_powerup(self, rom) -> bool:
         *_, powerup, hasPWing = POWERUPS[self.user_settings.default_powerup]

@@ -76,7 +76,7 @@ class ContextMenu(QMenu):
         min_x, min_y = MAX_ORIGIN
 
         for obj in objects:
-            obj_x, obj_y = obj.position.x, obj.position.y
+            obj_x, obj_y = obj.point.x, obj.point.y
 
             min_x = min(min_x, obj_x)
             min_y = min(min_y, obj_y)
@@ -89,8 +89,8 @@ class ContextMenu(QMenu):
     def get_copied_objects(self) -> tuple[list[LevelObject | EnemyObject], Point]:
         return self.copied_objects, self.copied_objects_origin
 
-    def set_position(self, position: QPoint):
-        self.last_opened_at = position
+    def set_position(self, point: QPoint):
+        self.last_opened_at = point
 
     def get_position(self) -> tuple[int, int]:
         x, y = self.last_opened_at.toTuple()

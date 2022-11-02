@@ -37,12 +37,12 @@ class ObjectLike(ABC):
 
     @property
     @abstractmethod
-    def position(self) -> Point:
+    def point(self) -> Point:
         pass
 
-    @position.setter
+    @point.setter
     @abstractmethod
-    def position(self, position: Point) -> None:
+    def point(self, point: Point) -> None:
         pass
 
     @abstractmethod

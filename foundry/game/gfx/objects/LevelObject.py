@@ -234,7 +234,7 @@ class LevelObject(GeneratorObject):
         blocks_to_draw = []
 
         if orientation == GeneratorType.TO_THE_SKY:
-            for _ in range(self.position.y):
+            for _ in range(self.point.y):
                 blocks_to_draw.extend(self.blocks[0 : self.scale.width])
 
             blocks_to_draw.extend(self.blocks[-self.scale.width :])
@@ -379,7 +379,7 @@ class LevelObject(GeneratorObject):
 
         elif orientation == GeneratorType.ENDING:
             page_width = 16
-            page_limit = page_width - self.position.x % page_width
+            page_limit = page_width - self.point.x % page_width
 
             for y in range(SKY, GROUND - 1):
                 blocks_to_draw.append(self.blocks[0])
@@ -600,10 +600,10 @@ class LevelObject(GeneratorObject):
         )
 
     def move_by(self, point: Point) -> None:
-        self.position = self.position + point
+        self.point = self.point + point
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         y = self.data[0] & 0b0001_1111
         x = self.data[1]
 
@@ -615,9 +615,9 @@ class LevelObject(GeneratorObject):
 
         return Point(x, y)
 
-    @position.setter
-    def position(self, position: Point) -> None:
-        x, y = position.x, position.y
+    @point.setter
+    def point(self, point: Point) -> None:
+        x, y = point.x, point.y
 
         # todo also check for the upper bounds
         x = max(0, x)
@@ -640,25 +640,25 @@ class LevelObject(GeneratorObject):
     @property
     def rendered_position(self) -> Point:
         orientation = self.orientation
-        position = self.position
+        point = self.point
 
         if self._ignore_rendered_position:
             return Point(0, 0)
         elif orientation == GeneratorType.TO_THE_SKY:
-            return Point(position.x, SKY)
+            return Point(point.x, SKY)
         elif orientation in [GeneratorType.DIAG_UP_RIGHT]:
-            return Point(position.x, position.y - self.rendered_size.height + 1)
+            return Point(point.x, point.y - self.rendered_size.height + 1)
         elif orientation in [GeneratorType.DIAG_DOWN_LEFT]:
             if self.object_set.number == 3 or self.object_set.number == 14:  # Sky or Hilly tileset
-                return Point(position.x - (self.rendered_size.width - self.scale.width + 1), position.y)
+                return Point(point.x - (self.rendered_size.width - self.scale.width + 1), point.y)
             else:
-                return Point(position.x - (self.rendered_size.width - self.scale.width), position.y)
+                return Point(point.x - (self.rendered_size.width - self.scale.width), point.y)
 
         elif orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
-            return Point(position.x - (self.rendered_size.width // 2) + 1, position.y)
+            return Point(point.x - (self.rendered_size.width // 2) + 1, point.y)
         elif self.name.lower() == "black boss room background":
-            return Point(position.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
-        return position
+            return Point(point.x // SCREEN_WIDTH * SCREEN_WIDTH, 0)
+        return point
 
     @property
     def scale(self) -> Size:
@@ -667,7 +667,7 @@ class LevelObject(GeneratorObject):
     @property
     def rendered_size(self) -> Size:
         if self.orientation == GeneratorType.TO_THE_SKY:
-            result = Size(self.scale.width, self.position.y + self.scale.height - 1)
+            result = Size(self.scale.width, self.point.y + self.scale.height - 1)
         elif self.orientation == GeneratorType.DESERT_PIPE_BOX:
             segments = (self.length + 1) * 2
             result = Size(segments * self.scale.width + 1, 4 * self.scale.height)
@@ -685,9 +685,9 @@ class LevelObject(GeneratorObject):
                 result = Size((self.length + 1) * (self.scale.width - 1), (self.length + 1) * self.scale.height)
         elif self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
             size = Size(1, 1)
-            for y in range(self.position.y, self.ground_level):
-                size = Size(2 * (y - self.position.y), (y - self.position.y))
-                bottom_row = Rect(Point(self.position.x, y), Size(size.width, 1))
+            for y in range(self.point.y, self.ground_level):
+                size = Size(2 * (y - self.point.y), (y - self.point.y))
+                bottom_row = Rect(Point(self.point.x, y), Size(size.width, 1))
                 index_in_level = self.index_in_level
                 if any(
                     [
@@ -699,7 +699,7 @@ class LevelObject(GeneratorObject):
             result = size
         elif self.orientation == GeneratorType.ENDING:
             page_width = 16
-            page_limit = page_width - self.position.x % page_width
+            page_limit = page_width - self.point.x % page_width
             result = Size(page_width + page_limit, (GROUND - 1) - SKY)
         elif self.orientation == GeneratorType.VERTICAL:
             size = Size(self.scale.width, self.length + 1)
@@ -723,12 +723,12 @@ class LevelObject(GeneratorObject):
                 size = evolve(size, width=size.width - 1)
             if self.orientation == GeneratorType.HORIZ_TO_GROUND:
                 # to the ground only, until it hits something
-                position = self.position
-                bottom_row = Rect(position, Size(size.width, 1))
+                point = self.point
+                bottom_row = Rect(point, Size(size.width, 1))
                 index_in_level = self.index_in_level
                 objs = [obj for obj in self.objects_ref[0:index_in_level] if "Flat Ground" in obj.name]
 
-                for y in range(position.y, self.ground_level):
+                for y in range(point.y, self.ground_level):
                     bottom_row = Rect(bottom_row.point, Size(bottom_row.size.width, bottom_row.size.height + 1))
 
                     found = False
@@ -741,7 +741,7 @@ class LevelObject(GeneratorObject):
                         break
                 else:
                     # nothing underneath this object, extend to the ground
-                    size = evolve(size, height=self.ground_level - position.y)
+                    size = evolve(size, height=self.ground_level - point.y)
 
             elif self.orientation == GeneratorType.HORIZONTAL_2 and self.ending == EndType.TWO_ENDS:
                 # floating platforms seem to just be one shorter for some reason
@@ -879,7 +879,7 @@ class LevelObject(GeneratorObject):
         return image
 
     def to_bytes(self) -> bytearray:
-        position = self.position
+        point = self.point
         data = bytearray()
 
         if self.vertical_level:
@@ -887,13 +887,13 @@ class LevelObject(GeneratorObject):
             # seems like you can't convert the coordinates 1:1
             # there seems to be ambiguity
 
-            offset = position.y // SCREEN_HEIGHT
+            offset = point.y // SCREEN_HEIGHT
 
-            x_position = position.x + offset * SCREEN_WIDTH
-            y_position = position.y % SCREEN_HEIGHT
+            x_position = point.x + offset * SCREEN_WIDTH
+            y_position = point.y % SCREEN_HEIGHT
         else:
-            x_position = position.x
-            y_position = position.y
+            x_position = point.x
+            y_position = point.y
 
         if self.orientation in [GeneratorType.PYRAMID_TO_GROUND, GeneratorType.PYRAMID_2]:
             x_position = self.rendered_position.x - 1 + self.rendered_size.width // 2
@@ -909,14 +909,14 @@ class LevelObject(GeneratorObject):
         return data
 
     def __repr__(self) -> str:
-        return f"LevelObject {self.name} at {self.position.x}, {self.position.y}"
+        return f"LevelObject {self.name} at {self.point}"
 
     def __eq__(self, other):
         if not isinstance(other, LevelObject):
             return False
         else:
             # Add a cheeky check to remove most cases.
-            if self.position != other.position:
+            if self.point != other.point:
                 return False
             return self.to_bytes() == other.to_bytes()
 

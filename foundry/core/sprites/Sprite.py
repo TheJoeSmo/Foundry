@@ -6,7 +6,7 @@ from foundry.core.geometry import Point
 
 
 class SpriteProtocol(Protocol):
-    position: Point
+    point: Point
     index: int
     palette_index: int
     horizontal_mirror: bool
@@ -35,7 +35,7 @@ class Sprite:
         If the sprite should not render.
     """
 
-    position: Point
+    point: Point
     index: int
     palette_index: int
     horizontal_mirror: bool = False

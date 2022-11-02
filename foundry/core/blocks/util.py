@@ -62,8 +62,8 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
         for index in block.patterns
     ]
     with Painter(image) as p:
-        for (pattern, position) in zip(patterns, PATTERN_LOCATIONS):
-            p.drawImage(QPoint(position.x, position.y), pattern)
+        for (pattern, point) in zip(patterns, PATTERN_LOCATIONS):
+            p.drawImage(QPoint(point.x, point.y), pattern)
     return image.scaled(scale_factor, scale_factor)
 
 

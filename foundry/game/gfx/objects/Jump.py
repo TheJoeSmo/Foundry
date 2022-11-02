@@ -70,11 +70,11 @@ class Jump(GeneratorObject):
             return Definition(__root__=loads(f.read()))
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         pass
 
-    @position.setter
-    def position(self, position: Point) -> None:
+    @point.setter
+    def point(self, point: Point) -> None:
         pass
 
     def move_by(self, point: Point) -> None:

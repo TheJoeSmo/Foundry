@@ -56,10 +56,10 @@ def set_level_object_width(item: LevelObject, width: int, *, render: bool = True
         return
 
     if item.primary_expansion() == EXPANDS_HORIZ:
-        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, width - item.position.x))
+        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, width - item.point.x))
     else:
         if item.is_4byte:
-            item.data[3] = max(0, min(0xFF, width - item.position.x))
+            item.data[3] = max(0, min(0xFF, width - item.point.x))
         else:
             raise NotImplementedError(f"Resize is not possible for {item}")
 
@@ -72,10 +72,10 @@ def set_level_object_height(item: LevelObject, height: int, *, render: bool = Tr
         return
 
     if item.primary_expansion() == EXPANDS_VERT:
-        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, height - item.position.y))
+        item.obj_index = (item.obj_index & 0xF0) + max(0, min(0x0F, height - item.point.y))
     else:
         if item.is_4byte:
-            item.data[3] = max(0, min(0xFF, height - item.position.y))
+            item.data[3] = max(0, min(0xFF, height - item.point.y))
         else:
             raise NotImplementedError(f"Resize is not possible for {item}")
 
@@ -85,8 +85,8 @@ def set_level_object_height(item: LevelObject, height: int, *, render: bool = Tr
 
 def resize_level_object(item: LevelObject, point_difference: Point):
     if point_difference.x:
-        set_level_object_width(item, item.position.x + point_difference.x, render=False)
+        set_level_object_width(item, item.point.x + point_difference.x, render=False)
     if point_difference.y:
-        set_level_object_height(item, item.position.y + point_difference.y, render=False)
+        set_level_object_height(item, item.point.y + point_difference.y, render=False)
 
     item._render()
