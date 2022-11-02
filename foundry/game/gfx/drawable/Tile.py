@@ -62,7 +62,7 @@ class Tile:
 
             # add alpha values
             if color_index == 0:
-                self.pixels.extend(MASK_COLOR)
+                self.pixels.extend(MASK_COLOR.to_rgb_bytes())
             else:
                 self.pixels.extend(ColorPalette.from_default()[color].to_qt().toTuple()[:3])
 

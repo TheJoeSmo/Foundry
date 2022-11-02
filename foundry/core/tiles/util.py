@@ -71,7 +71,7 @@ class _Tile:
 
         for pixel_index in self.pixels_indexes:
             if pixel_index == 0:
-                pixels.extend(MASK_COLOR)
+                pixels.extend(MASK_COLOR.to_rgb_bytes())
             else:
                 pixels.extend(self.palette[pixel_index, Color].to_rgb_bytes())
 
