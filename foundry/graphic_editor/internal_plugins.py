@@ -6,7 +6,7 @@ from json import loads
 from PySide6.QtGui import QIcon
 
 from foundry import namespace_path
-from foundry.core.drawable.Drawable import Drawable
+from foundry.core.drawable import Drawable
 from foundry.core.icon import Icon
 from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
 

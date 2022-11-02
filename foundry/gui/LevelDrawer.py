@@ -5,7 +5,7 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
-from foundry.core.drawable.Drawable import Drawable as DrawableValidator
+from foundry.core.drawable import Drawable as DrawableValidator
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
