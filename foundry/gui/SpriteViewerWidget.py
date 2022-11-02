@@ -4,12 +4,12 @@ from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
 
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.sprites import SPRITE_SIZE, SpriteGroupProtocol, SpriteProtocol
+from foundry.core.sprites import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.tiles import MASK_COLOR
 
 
 class SpriteViewerWidget(QFrame):
-    sprites_changed: SignalInstance = Signal(list[SpriteProtocol])  # type: ignore
+    sprites_changed: SignalInstance = Signal(list[Sprite])  # type: ignore
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     transparency_changed: SignalInstance = Signal(bool)  # type: ignore
@@ -17,9 +17,7 @@ class SpriteViewerWidget(QFrame):
     mouse_moved_over_widget: SignalInstance = Signal(QMouseEvent)  # type: ignore
     clicked: SignalInstance = Signal(int, int)  # type: ignore
 
-    def __init__(
-        self, parent: QWidget | None, sprite_group: SpriteGroupProtocol, zoom: int = 2, transparent: bool = True
-    ):
+    def __init__(self, parent: QWidget | None, sprite_group: SpriteGroup, zoom: int = 2, transparent: bool = True):
         super().__init__(parent)
 
         self.setMouseTracking(True)
@@ -31,11 +29,11 @@ class SpriteViewerWidget(QFrame):
         self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
     @property
-    def sprites(self) -> list[SpriteProtocol]:
+    def sprites(self) -> list[Sprite]:
         return self.sprite_group.sprites
 
     @sprites.setter
-    def sprites(self, sprites: list[SpriteProtocol]):
+    def sprites(self, sprites: list[Sprite]):
         self.sprite_group.sprites = sprites
         self.sprites_changed.emit(sprites)
         self.update()

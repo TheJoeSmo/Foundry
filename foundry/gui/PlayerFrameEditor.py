@@ -12,13 +12,7 @@ from foundry.core.player_animations.util import (
     get_animations_palette_index,
     load_player_animation,
 )
-from foundry.core.sprites import (
-    SPRITE_SIZE,
-    Sprite,
-    SpriteGroup,
-    SpriteGroupProtocol,
-    SpriteProtocol,
-)
+from foundry.core.sprites import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.Spinner import Spinner
 from foundry.gui.SpriteViewer import SpriteViewerController as SpriteViewer
@@ -141,8 +135,8 @@ class PlayerFrameEditorController(CustomChildWindow):
         self._update_view_animations()
 
     @property
-    def sprite_groups(self) -> list[SpriteGroupProtocol]:
-        sprite_groups: list[SpriteGroupProtocol] = []
+    def sprite_groups(self) -> list[SpriteGroup]:
+        sprite_groups: list[SpriteGroup] = []
 
         for idx in range(len(self.model.power_up_offsets)):
             animation = load_player_animation(
@@ -152,7 +146,7 @@ class PlayerFrameEditorController(CustomChildWindow):
                 idx,
                 self.model.power_up_offsets,
             )
-            sprites: list[SpriteProtocol] = []
+            sprites: list[Sprite] = []
 
             for idx, sprite in enumerate(animation.frames):
                 sprites.append(
@@ -210,7 +204,7 @@ class PlayerFrameEditorView(QWidget):
     def __init__(
         self,
         parent: QWidget | None,
-        sprite_groups: list[SpriteGroupProtocol],
+        sprite_groups: list[SpriteGroup],
         zoom: int = 2,
     ):
         super().__init__(parent)

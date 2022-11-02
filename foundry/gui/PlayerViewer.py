@@ -26,13 +26,7 @@ from foundry.core.player_animations.util import (
     load_power_up_palettes,
     save_player_animations_to_rom,
 )
-from foundry.core.sprites import (
-    SPRITE_SIZE,
-    Sprite,
-    SpriteGroup,
-    SpriteGroupProtocol,
-    SpriteProtocol,
-)
+from foundry.core.sprites import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.UndoController import UndoController
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
@@ -295,8 +289,8 @@ class PlayerViewerController(CustomChildWindow):
         self.palette_group_changed.emit(palette_group)
 
     @property
-    def sprite_groups(self) -> list[SpriteGroupProtocol]:
-        sprite_groups: list[SpriteGroupProtocol] = []
+    def sprite_groups(self) -> list[SpriteGroup]:
+        sprite_groups: list[SpriteGroup] = []
 
         for animation in load_player_animation_data(
             self.model.animations,
@@ -305,7 +299,7 @@ class PlayerViewerController(CustomChildWindow):
             self.model.power_up,
             self.model.power_up_offsets,
         ):
-            sprites: list[SpriteProtocol] = []
+            sprites: list[Sprite] = []
 
             for idx, sprite in enumerate(animation.frames):
                 sprites.append(
@@ -385,7 +379,7 @@ class PlayerViewerView(QWidget):
     def __init__(
         self,
         parent: QWidget | None,
-        sprite_groups: list[SpriteGroupProtocol],
+        sprite_groups: list[SpriteGroup],
         zoom: int = 2,
     ):
         super().__init__(parent)

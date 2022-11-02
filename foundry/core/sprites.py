@@ -1,5 +1,3 @@
-from typing import Protocol
-
 from attr import attrs
 from PySide6.QtGui import QColor, QImage, QPainter
 
@@ -10,15 +8,6 @@ from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
 
 SPRITE_SIZE: Size = Size(8, 16)
-
-
-class SpriteProtocol(Protocol):
-    point: Point
-    index: int
-    palette_index: int
-    horizontal_mirror: bool
-    vertical_mirror: bool
-    do_not_render: bool
 
 
 @attrs(slots=True, auto_attribs=True)
@@ -50,20 +39,6 @@ class Sprite:
     do_not_render: bool = False
 
 
-class SpriteGroupProtocol(Protocol):
-    point: Point
-    sprites: list[SpriteProtocol]
-    graphics_set: GraphicsSet
-    palette_group: PaletteGroup
-
-    @property
-    def size(self) -> Size:
-        ...
-
-    def image(self, scale_factor: int) -> QImage:
-        ...
-
-
 @attrs(slots=True, auto_attribs=True)
 class SpriteGroup:
     """
@@ -73,7 +48,7 @@ class SpriteGroup:
     ----------
     point: Point
         The point of the sprite group.
-    sprites: list[SpriteProtocol]
+    sprites: list[Sprite]
         The sprites that compose the sprite group.
     graphics_set: GraphicsSet
         The graphics to render the sprites with.
@@ -82,7 +57,7 @@ class SpriteGroup:
     """
 
     point: Point
-    sprites: list[SpriteProtocol]
+    sprites: list[Sprite]
     graphics_set: GraphicsSet
     palette_group: PaletteGroup
 
