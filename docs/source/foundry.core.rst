@@ -12,7 +12,6 @@ Subpackages
    foundry.core.graphics_set
    foundry.core.painter
    foundry.core.player_animations
-   foundry.core.sprites
    foundry.core.warnings
 
 Submodules

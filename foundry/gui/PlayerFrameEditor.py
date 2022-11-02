@@ -12,9 +12,13 @@ from foundry.core.player_animations.util import (
     get_animations_palette_index,
     load_player_animation,
 )
-from foundry.core.sprites import SPRITE_SIZE
-from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
-from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
+from foundry.core.sprites import (
+    SPRITE_SIZE,
+    Sprite,
+    SpriteGroup,
+    SpriteGroupProtocol,
+    SpriteProtocol,
+)
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.Spinner import Spinner
 from foundry.gui.SpriteViewer import SpriteViewerController as SpriteViewer

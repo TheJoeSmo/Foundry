@@ -26,9 +26,13 @@ from foundry.core.player_animations.util import (
     load_power_up_palettes,
     save_player_animations_to_rom,
 )
-from foundry.core.sprites import SPRITE_SIZE
-from foundry.core.sprites.Sprite import Sprite, SpriteProtocol
-from foundry.core.sprites.SpriteGroup import SpriteGroup, SpriteGroupProtocol
+from foundry.core.sprites import (
+    SPRITE_SIZE,
+    Sprite,
+    SpriteGroup,
+    SpriteGroupProtocol,
+    SpriteProtocol,
+)
 from foundry.core.UndoController import UndoController
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget
