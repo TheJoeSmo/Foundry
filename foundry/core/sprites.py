@@ -6,10 +6,48 @@ from PySide6.QtGui import QColor, QImage, QPainter
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.sprites import SPRITE_SIZE
-from foundry.core.sprites.Sprite import SpriteProtocol
 from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Sprite import Sprite as MetaSprite
+
+SPRITE_SIZE: Size = Size(8, 16)
+
+
+class SpriteProtocol(Protocol):
+    point: Point
+    index: int
+    palette_index: int
+    horizontal_mirror: bool
+    vertical_mirror: bool
+    do_not_render: bool
+
+
+@attrs(slots=True, auto_attribs=True)
+class Sprite:
+    """
+    A representation of a Sprite inside the game.
+
+    Attributes
+    ----------
+    point: Point
+        The point of the sprite.
+    index: int
+        The index into the graphics set of the sprite.
+    palette_index: int
+        The palette index of the sprite into the PaletteGroup.
+    horizontal_mirror: bool
+        If the sprite should be horizontally flipped.
+    vertical_mirror: bool
+        If the sprite should be vertically flipped.
+    do_not_render: bool
+        If the sprite should not render.
+    """
+
+    point: Point
+    index: int
+    palette_index: int
+    horizontal_mirror: bool = False
+    vertical_mirror: bool = False
+    do_not_render: bool = False
 
 
 class SpriteGroupProtocol(Protocol):
