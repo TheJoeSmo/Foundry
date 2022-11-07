@@ -315,7 +315,9 @@ class PlayerViewerController(CustomChildWindow):
                     )
                 )
 
-            sprite_groups.append(SpriteGroup(Point(0, 0), sprites, animation.graphics_set, animation.palette_group))
+            sprite_groups.append(
+                SpriteGroup(Point(0, 0), tuple(sprites), animation.graphics_set, animation.palette_group)
+            )
 
         return sprite_groups
 

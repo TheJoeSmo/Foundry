@@ -1,3 +1,4 @@
+from attr import evolve
 from PySide6.QtCore import QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
@@ -29,12 +30,12 @@ class SpriteViewerWidget(QFrame):
         self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
     @property
-    def sprites(self) -> list[Sprite]:
+    def sprites(self) -> tuple[Sprite, ...]:
         return self.sprite_group.sprites
 
     @sprites.setter
-    def sprites(self, sprites: list[Sprite]):
-        self.sprite_group.sprites = sprites
+    def sprites(self, sprites: tuple[Sprite, ...]):
+        self.sprite_group = evolve(self.sprite_group, sprites=sprites)
         self.sprites_changed.emit(sprites)
         self.update()
 
@@ -44,7 +45,7 @@ class SpriteViewerWidget(QFrame):
 
     @graphics_set.setter
     def graphics_set(self, graphics_set: GraphicsSet):
-        self.sprite_group.graphics_set = graphics_set
+        self.sprite_group = evolve(self.sprite_group, graphics_set=graphics_set)
         self.graphics_set_changed.emit(graphics_set)
         self.update()
 
@@ -54,7 +55,7 @@ class SpriteViewerWidget(QFrame):
 
     @palette_group.setter
     def palette_group(self, palette_group: PaletteGroup):
-        self.sprite_group.palette_group = palette_group
+        self.sprite_group = evolve(self.sprite_group, palette_group=palette_group)
         self.palette_group_changed.emit(palette_group)
         self.update()
 
