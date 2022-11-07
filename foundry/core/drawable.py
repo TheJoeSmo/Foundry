@@ -532,7 +532,7 @@ def sprite_to_image(
     Returns
     -------
     QImage
-        That represents the block.
+        That represents the sprite.
 
     Notes
     -----
