@@ -508,7 +508,7 @@ def _sprite_to_image(sprite: _Sprite, scale_factor: int = 1) -> QImage:
             bottom_tile.copy().mirrored(sprite.horizontal_mirror, sprite.vertical_mirror),
         )
 
-    return image.scaled(scale_factor, scale_factor)
+    return image.scaled(scale_factor * SPRITE_SIZE.width, scale_factor * SPRITE_SIZE.height)
 
 
 @lru_cache(2**10)
@@ -548,7 +548,8 @@ def sprite_to_image(
             sprite.horizontal_mirror,
             sprite.vertical_mirror,
             sprite.do_not_render,
-        )
+        ),
+        scale_factor,
     )
 
 
