@@ -5,13 +5,13 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.drawable import Drawable as DrawableValidator
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
 from foundry.core.namespace import Namespace, TypeHandlerManager, generate_namespace
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block

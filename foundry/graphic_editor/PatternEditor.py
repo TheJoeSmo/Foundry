@@ -5,12 +5,12 @@ from PySide6.QtCore import QPoint, QRect, QSize, Signal, SignalInstance
 from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, Qt
 from PySide6.QtWidgets import QLayout, QWidget
 
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_page.GraphicsGroup import GraphicsGroup
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.gui import controller
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.graphic_editor.PatternMatrix import PatternMatrix
 

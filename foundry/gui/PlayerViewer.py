@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import icon
+from foundry.core.drawable import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.geometry import Point
 from foundry.core.palette import Palette, PaletteGroup
 from foundry.core.player_animations import ANIMATION_WIDTH
@@ -26,7 +27,6 @@ from foundry.core.player_animations.util import (
     load_power_up_palettes,
     save_player_animations_to_rom,
 )
-from foundry.core.sprites import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.UndoController import UndoController
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PaletteEditorWidget import PaletteEditorWidget

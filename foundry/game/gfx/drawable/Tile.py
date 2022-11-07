@@ -2,9 +2,9 @@ from functools import lru_cache
 
 from PySide6.QtGui import QImage
 
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable import bit_reverse
 
 PIXEL_OFFSET = 8  # both bits describing the color of a pixel are in separate 8 byte chunks at the same index

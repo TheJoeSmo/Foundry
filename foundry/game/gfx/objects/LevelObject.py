@@ -5,10 +5,10 @@ from attrs import evolve
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject

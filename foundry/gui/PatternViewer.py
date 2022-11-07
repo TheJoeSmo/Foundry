@@ -13,10 +13,10 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.gui.CustomChildWindow import CustomChildWindow
 

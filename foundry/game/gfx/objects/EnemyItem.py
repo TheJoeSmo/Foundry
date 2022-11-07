@@ -1,11 +1,11 @@
 from PySide6.QtCore import QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,

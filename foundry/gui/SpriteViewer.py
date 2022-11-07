@@ -4,10 +4,10 @@ from PySide6.QtGui import QCloseEvent, QMouseEvent, QPainter, QPaintEvent, QResi
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import SPRITE_SIZE
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.sprites import SPRITE_SIZE
 from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.gui.CustomChildWindow import CustomChildWindow
 

@@ -3,9 +3,9 @@ from functools import lru_cache
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
+from foundry.core.drawable import MASK_COLOR
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
