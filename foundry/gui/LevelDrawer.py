@@ -245,7 +245,6 @@ class LevelDrawer:
         bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
         spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
 
-        blocks = get_blocks(level)
         for level_object in level.objects:
             level_object.palette_group = bg_palette_group
         for enemy in level.enemies:
@@ -265,10 +264,10 @@ class LevelDrawer:
                     x = level_object.point.x + index % width
                     y = level_object.point.y + index // width
 
-                    level_object._draw_block(painter, block_index, x, y, self.block_length, False, blocks=blocks)
+                    level_object._draw_block(painter, block_index, x, y, self.block_length, False)
             else:
                 if isinstance(level_object, LevelObject):
-                    level_object.draw(painter, self.block_length, self.user_settings.block_transparency, blocks=blocks)
+                    level_object.draw(painter, self.block_length, self.user_settings.block_transparency)
                 else:
                     level_object.draw(painter, self.block_length, True)
 

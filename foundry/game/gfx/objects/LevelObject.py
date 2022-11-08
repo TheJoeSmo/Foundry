@@ -2,15 +2,14 @@ from time import time
 from warnings import warn
 
 from attrs import evolve
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QPoint, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.drawable import MASK_COLOR
+from foundry.core.drawable import MASK_COLOR, Block, block_to_image
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
-from foundry.game.gfx.drawable.Block import Block, get_block
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_BOTH,
@@ -580,24 +579,20 @@ class LevelObject(GeneratorObject):
     def _draw_block(
         self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: list[Block] | None = None
     ):
-        if blocks is not None:
-            block = blocks[block_index if block_index <= 0xFF else ROM().get_byte(block_index)]
-        else:
-            block = get_block(
-                block_index,
-                self.palette_group,
-                self.graphics_set,
-                bytes(self.tsa_data),
-            )
-
-        block.draw(
-            painter,
-            x * block_length,
-            y * block_length,
-            block_length=block_length,
-            selected=self.selected,
-            transparent=transparent,
+        normalized_index: int = block_index if block_index <= 0xFF else ROM().get_byte(block_index)
+        block: Block = (
+            blocks[normalized_index]
+            if blocks is not None
+            else Block.from_tsa(Point(0, 0), normalized_index, self.tsa_data)
         )
+
+        image: QImage = block_to_image(block, self.palette_group, self.graphics_set, block_length)
+        if transparent:
+            image = image.copy()
+            mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+            image.setAlphaChannel(mask)
+
+        painter.drawImage(QPoint(x * block_length, y * block_length), image)
 
     def move_by(self, point: Point) -> None:
         self.point = self.point + point
@@ -852,7 +847,7 @@ class LevelObject(GeneratorObject):
 
     def display_size(self, zoom_factor: int = 1):
         return (
-            QSize(self.rendered_size.width * Block.SIDE_LENGTH, self.rendered_size.height * Block.SIDE_LENGTH)
+            QSize(self.rendered_size.width * Block.size.width, self.rendered_size.height * Block.size.height)
             * zoom_factor
         )
 
@@ -860,7 +855,7 @@ class LevelObject(GeneratorObject):
         self._ignore_rendered_position = True
 
         image = QImage(
-            QSize(self.rendered_size.width * Block.SIDE_LENGTH, self.rendered_size.height * Block.SIDE_LENGTH),
+            QSize(self.rendered_size.width * Block.size.width, self.rendered_size.height * Block.size.height),
             QImage.Format.Format_RGB888,
         )
 
@@ -872,7 +867,7 @@ class LevelObject(GeneratorObject):
 
         painter = QPainter(image)
 
-        self.draw(painter, Block.SIDE_LENGTH, True)
+        self.draw(painter, Block.size.width, True)
 
         self._ignore_rendered_position = False
 

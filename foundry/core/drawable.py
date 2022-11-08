@@ -1,6 +1,7 @@
 from collections.abc import Generator, Sequence
 from functools import cache, lru_cache
 from pathlib import Path
+from typing import ClassVar
 
 from attr import attrs
 from PySide6.QtCore import QPoint
@@ -185,6 +186,13 @@ class Block(ConcreteValidator, KeywordValidator):
     patterns: Pattern
     palette_index: int
     do_not_render: bool = False
+    size: ClassVar[Size] = BLOCK_SIZE
+
+    @classmethod
+    def from_tsa(cls, point: Point, index: int, tsa: bytes, do_not_render: bool = False):
+        return cls(
+            point, (tsa[index], tsa[index + 512], tsa[index + 256], tsa[index + 768]), index // 0x40, do_not_render
+        )
 
     @classmethod
     @validate(
@@ -362,6 +370,7 @@ def block_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
+    assert isinstance(block, Block)
     return _block_to_image(
         _Block(block.patterns, block.palette_index, palette_group, graphics_set, block.do_not_render), scale_factor
     )
