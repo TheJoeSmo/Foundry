@@ -128,6 +128,15 @@ def _tile_to_image(tile: _Tile, scale_factor: int = 1) -> QImage:
 
 
 @lru_cache(2**10)
+def _cached_tile_to_image(
+    tile_index: int,
+    palette: Palette,
+    graphics_set: GraphicsSet,
+    scale_factor: int = 1,
+) -> QImage:
+    return _tile_to_image(_Tile(tile_index, palette, graphics_set), scale_factor)
+
+
 def tile_to_image(
     tile_index: int,
     palette: Palette,
@@ -158,7 +167,7 @@ def tile_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
-    return _tile_to_image(_Tile(tile_index, palette, graphics_set), scale_factor)
+    return _cached_tile_to_image(tile_index, palette, graphics_set, scale_factor)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, hash=True, frozen=True)
@@ -343,6 +352,14 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
 
 
 @lru_cache(2**10)
+def _cached_block_to_image(
+    block: Block, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
+) -> QImage:
+    return _block_to_image(
+        _Block(block.patterns, block.palette_index, palette_group, graphics_set, block.do_not_render), scale_factor
+    )
+
+
 def block_to_image(
     block: Block, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
 ) -> QImage:
@@ -370,10 +387,7 @@ def block_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
-    assert isinstance(block, Block)
-    return _block_to_image(
-        _Block(block.patterns, block.palette_index, palette_group, graphics_set, block.do_not_render), scale_factor
-    )
+    return _cached_block_to_image(block, palette_group, graphics_set, scale_factor)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
@@ -521,6 +535,23 @@ def _sprite_to_image(sprite: _Sprite, scale_factor: int = 1) -> QImage:
 
 
 @lru_cache(2**10)
+def _cached_sprite_to_image(
+    sprite: Sprite, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
+) -> QImage:
+    return _sprite_to_image(
+        _Sprite(
+            sprite.index,
+            sprite.palette_index,
+            palette_group,
+            graphics_set,
+            sprite.horizontal_mirror,
+            sprite.vertical_mirror,
+            sprite.do_not_render,
+        ),
+        scale_factor,
+    )
+
+
 def sprite_to_image(
     sprite: Sprite, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
 ) -> QImage:
@@ -548,18 +579,7 @@ def sprite_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
-    return _sprite_to_image(
-        _Sprite(
-            sprite.index,
-            sprite.palette_index,
-            palette_group,
-            graphics_set,
-            sprite.horizontal_mirror,
-            sprite.vertical_mirror,
-            sprite.do_not_render,
-        ),
-        scale_factor,
-    )
+    return _cached_sprite_to_image(sprite, palette_group, graphics_set, scale_factor)
 
 
 @attrs(slots=True, auto_attribs=True, frozen=True, eq=True, hash=True)
