@@ -12,13 +12,6 @@ foundry.game.gfx.drawable.Block module
    :undoc-members:
    :show-inheritance:
 
-foundry.game.gfx.drawable.Sprite module
----------------------------------------
-
-.. automodule:: foundry.game.gfx.drawable.Sprite
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 foundry.game.gfx.drawable.Tile module
 -------------------------------------
