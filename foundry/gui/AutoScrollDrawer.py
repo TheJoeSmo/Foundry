@@ -1,8 +1,8 @@
 from PySide6.QtCore import QPoint, QPointF, QRectF, QSizeF
 from PySide6.QtGui import QBrush, QPainter, QPen, QPolygonF, Qt
 
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.game.File import ROM
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_WIDTH
 from foundry.game.level.Level import Level
 from foundry.smb3parse.constants import (
@@ -47,7 +47,7 @@ class AutoScrollDrawer:
         self.screen_polygon = QPolygonF()
 
     def draw(self, painter: QPainter, block_length: int):
-        self.pixel_length = block_length / Block.WIDTH
+        self.pixel_length = block_length / BLOCK_SIZE.width
 
         self.scroll_brush = QBrush(Qt.GlobalColor.blue)
         self.scroll_pen = QPen(self.scroll_brush, 2 * self.pixel_length)
@@ -222,11 +222,15 @@ class AutoScrollDrawer:
         self.screen_polygon = self.screen_polygon.united(QPolygonF.fromList(point_list))
 
     def _rect_for_point(self, pos: QPointF):
-        top_right = pos + QPointF(SCREEN_WIDTH // 2, -_ASCROLL_SCREEN_HEIGHT // 2) * self.pixel_length * Block.WIDTH
-        bottom_right = pos + QPoint(SCREEN_WIDTH // 2, _ASCROLL_SCREEN_HEIGHT // 2) * self.pixel_length * Block.WIDTH
+        top_right = (
+            pos + QPointF(SCREEN_WIDTH // 2, -_ASCROLL_SCREEN_HEIGHT // 2) * self.pixel_length * BLOCK_SIZE.width
+        )
+        bottom_right = (
+            pos + QPoint(SCREEN_WIDTH // 2, _ASCROLL_SCREEN_HEIGHT // 2) * self.pixel_length * BLOCK_SIZE.width
+        )
 
-        top_left = top_right - QPointF(SCREEN_WIDTH, 0) * self.pixel_length * Block.WIDTH
-        bottom_left = bottom_right - QPointF(SCREEN_WIDTH, 0) * self.pixel_length * Block.WIDTH
+        top_left = top_right - QPointF(SCREEN_WIDTH, 0) * self.pixel_length * BLOCK_SIZE.width
+        bottom_left = bottom_right - QPointF(SCREEN_WIDTH, 0) * self.pixel_length * BLOCK_SIZE.width
 
         return top_left, top_right, bottom_right, bottom_left
 

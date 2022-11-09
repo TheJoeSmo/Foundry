@@ -15,8 +15,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.core.geometry import Point
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.level.Level import Level as LevelMeta
 from foundry.game.level.util import Level, get_world_levels
 from foundry.game.level.WorldMap import WorldMap
@@ -274,7 +274,7 @@ class WorldMapLevelSelect(QScrollArea):
 
     def mouseMoveEvent(self, event: QMouseEvent):
         point: Point = Point.from_qt(self.world_view.mapFromParent(event.position().toPoint()))
-        point = point // Point(Block.WIDTH * 2, Block.HEIGHT * 2)
+        point = point // (BLOCK_SIZE * 2)
 
         try:
             level_info: tuple[int, int, int] | None = self.world.level_at_position(point)
@@ -306,7 +306,7 @@ class WorldMapLevelSelect(QScrollArea):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         point: Point = Point.from_qt(self.world_view.mapFromParent(event.position().toPoint()))
-        point = point // Point(Block.WIDTH * 2, Block.HEIGHT * 2)
+        point = point // (BLOCK_SIZE * 2)
 
         try:
             level_info: tuple[int, int, int] | None = self.world.level_at_position(point)

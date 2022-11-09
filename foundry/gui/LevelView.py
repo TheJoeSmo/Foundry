@@ -16,9 +16,9 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.core.geometry import Point, Size
 from foundry.core.gui import Click, Edge, MouseEvent, MouseWheelEvent
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.ObjectLike import (
@@ -97,7 +97,7 @@ class LevelView(QWidget):
         self.level_drawer = LevelDrawer(self.user_settings)
 
         self.zoom = 1
-        self.block_length = Block.SIDE_LENGTH * self.zoom
+        self.block_length = BLOCK_SIZE.width * self.zoom
 
         self.changed = False
 
@@ -426,7 +426,7 @@ class LevelView(QWidget):
             return
 
         self.zoom = zoom
-        self.block_length = int(Block.SIDE_LENGTH * self.zoom)
+        self.block_length = int(BLOCK_SIZE.width * self.zoom)
 
         self.update()
 

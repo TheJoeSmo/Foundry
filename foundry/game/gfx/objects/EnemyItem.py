@@ -1,7 +1,7 @@
 from PySide6.QtCore import QPointF, QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.drawable import MASK_COLOR, Sprite, sprite_to_image
+from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR, Sprite, sprite_to_image
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
@@ -12,7 +12,6 @@ from foundry.game.EnemyDefinitions import (
     get_enemy_metadata,
 )
 from foundry.game.gfx.drawable import apply_selection_overlay
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -82,10 +81,10 @@ class EnemyObject(ObjectLike):
         block_ids = self.definition.blocks
 
         for block_id in block_ids:
-            x = (block_id % 64) * Block.WIDTH
-            y = (block_id // 64) * Block.WIDTH
+            x = (block_id % 64) * BLOCK_SIZE.width
+            y = (block_id // 64) * BLOCK_SIZE.height
 
-            self.blocks.append(self.png_data.copy(QRect(x, y, Block.WIDTH, Block.HEIGHT)))
+            self.blocks.append(self.png_data.copy(QRect(x, y, BLOCK_SIZE.width, BLOCK_SIZE.height)))
 
     def render(self):
         # nothing to re-render since enemies are just copied over
@@ -156,7 +155,7 @@ class EnemyObject(ObjectLike):
             if self.selected:
                 apply_selection_overlay(block, mask)
 
-            if block_length != Block.SIDE_LENGTH:
+            if block_length != BLOCK_SIZE.width:
                 block = block.scaled(block_length, block_length)
 
             painter.drawImage(x * block_length, y * block_length, block)
@@ -201,7 +200,7 @@ class EnemyObject(ObjectLike):
 
         painter = QPainter(image)
 
-        self.draw(painter, Block.SIDE_LENGTH, True, is_icon=True)
+        self.draw(painter, BLOCK_SIZE.width, True, is_icon=True)
 
         return image
 
