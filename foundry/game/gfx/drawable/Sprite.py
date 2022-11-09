@@ -1,31 +1,11 @@
-from functools import lru_cache
-
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.drawable import MASK_COLOR, tile_to_image
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Tile import Tile
-
-
-@lru_cache(2**10)
-def get_sprite(
-    index: int,
-    palette_group: PaletteGroup,
-    palette_index: int,
-    graphics_set: GraphicsSet,
-    horizontal_mirror: bool = False,
-    vertical_mirror: bool = False,
-):
-    if index > 0xFF:
-        return Sprite(
-            ROM().get_byte(index), palette_group, palette_index, graphics_set, horizontal_mirror, vertical_mirror
-        )
-    else:
-        return Sprite(index, palette_group, palette_index, graphics_set, horizontal_mirror, vertical_mirror)
 
 
 class Sprite:

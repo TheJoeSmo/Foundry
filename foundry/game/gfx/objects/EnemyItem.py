@@ -1,7 +1,7 @@
-from PySide6.QtCore import QRect, QSize
+from PySide6.QtCore import QPointF, QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.drawable import MASK_COLOR
+from foundry.core.drawable import MASK_COLOR, Sprite, sprite_to_image
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
@@ -13,7 +13,6 @@ from foundry.game.EnemyDefinitions import (
 )
 from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.drawable.Sprite import get_sprite
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -98,16 +97,15 @@ class EnemyObject(ObjectLike):
         else:
             self.draw_sprites(painter, block_length // 2, transparency, is_icon)
 
-    def draw_sprites(self, painter: QPainter, scale_factor, transparency, is_icon):
+    def draw_sprites(self, painter: QPainter, scale_factor: int, transparency: bool, is_icon: bool) -> None:
         for i, sprite_info in enumerate(self.sprites):
             if sprite_info.index < 0:
                 continue
 
-            x = (self.point.x * 2) + (i % self.width) if not is_icon else (i % self.width)
-            y = self.point.y + (i // self.width) if not is_icon else (i // self.width)
+            x: float = (self.point.x * 2) + (i % self.width) if not is_icon else (i % self.width)
+            y: float = self.point.y + (i // self.width) if not is_icon else (i // self.width)
             x += sprite_info.x_offset / 16
             y -= sprite_info.y_offset / 16
-
             if is_icon:
                 definition = get_enemy_metadata().__root__[self.obj_index]
                 x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
@@ -117,23 +115,24 @@ class EnemyObject(ObjectLike):
                 y_offset = self.height - 1
                 y -= y_offset
 
-            sprite = get_sprite(
-                sprite_info.index,
+            image: QImage = sprite_to_image(
+                Sprite(
+                    Point(0, 0),
+                    sprite_info.index,
+                    sprite_info.palette_index,
+                    sprite_info.horizontal_mirror,
+                    sprite_info.vertical_mirror,
+                ),
                 self.palette_group,
-                sprite_info.palette_index,
                 self.graphics_set,
-                sprite_info.horizontal_mirror,
-                sprite_info.vertical_mirror,
+                scale_factor // 8,
             )
-            sprite.draw(
-                painter,
-                x * scale_factor,
-                y * scale_factor * 2,
-                scale_factor,
-                scale_factor * 2,
-                self.selected,
-                transparency,
-            )
+            if transparency:
+                image = image.copy()
+                mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+                image.setAlphaChannel(mask)
+
+            painter.drawImage(QPointF(x * scale_factor, y * scale_factor * 2), image)
 
     def draw_blocks(self, painter: QPainter, block_length, is_icon):
         for i, image in enumerate(self.blocks):
