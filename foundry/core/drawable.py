@@ -57,11 +57,14 @@ class _Tile:
         The palette.
     graphics_set: GraphicsSet
         The base of all images generated for the tile.
+    use_background_color: bool, optional
+        If the natural background color should be used or if a mask color should be applied.
     """
 
     index: int
     palette: Palette
     graphics_set: GraphicsSet
+    use_background_color: bool = False
 
     @cache
     def __bytes__(self) -> bytes:
@@ -99,7 +102,7 @@ class _Tile:
         assert isinstance(self.palette, Palette)
 
         for pixel_index in self.pixels_indexes:
-            if pixel_index == 0:
+            if not self.use_background_color and pixel_index == 0:
                 pixels.extend(MASK_COLOR.to_rgb_bytes())
             else:
                 pixels.extend(self.palette[pixel_index, Color].to_rgb_bytes())
@@ -133,8 +136,9 @@ def _cached_tile_to_image(
     palette: Palette,
     graphics_set: GraphicsSet,
     scale_factor: int = 1,
+    use_background_color: bool = False,
 ) -> QImage:
-    return _tile_to_image(_Tile(tile_index, palette, graphics_set), scale_factor)
+    return _tile_to_image(_Tile(tile_index, palette, graphics_set, use_background_color), scale_factor)
 
 
 def tile_to_image(
@@ -142,6 +146,7 @@ def tile_to_image(
     palette: Palette,
     graphics_set: GraphicsSet,
     scale_factor: int = 1,
+    use_background_color: bool = False,
 ) -> QImage:
     """
     Generates and caches a NES tile with a given palette and graphics as a QImage.
@@ -156,6 +161,8 @@ def tile_to_image(
         The specific graphics to use for the tile.
     scale_factor : int, optional
         The multiple of 8 that the image will be created as, by default 1
+    use_background_color: bool, optional
+        If the natural background color should be used or if a mask color should be applied.
 
     Returns
     -------
@@ -167,7 +174,7 @@ def tile_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
-    return _cached_tile_to_image(tile_index, palette, graphics_set, scale_factor)
+    return _cached_tile_to_image(tile_index, palette, graphics_set, scale_factor, use_background_color)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, hash=True, frozen=True)
@@ -195,13 +202,19 @@ class Block(ConcreteValidator, KeywordValidator):
     patterns: Pattern
     palette_index: int
     do_not_render: bool = False
+    index: int | None = None
     size: ClassVar[Size] = BLOCK_SIZE
 
     @classmethod
     def from_tsa(cls, point: Point, index: int, tsa: bytes, do_not_render: bool = False):
-        return cls(
-            point, (tsa[index], tsa[index + 512], tsa[index + 256], tsa[index + 768]), index // 0x40, do_not_render
+        block = cls(
+            point,
+            (tsa[index], tsa[index + 512], tsa[index + 256], tsa[index + 768]),
+            index // 0x40,
+            do_not_render,
+            index,
         )
+        return block
 
     @classmethod
     @validate(
@@ -324,7 +337,7 @@ class _Block:
     do_not_render: bool = False
 
 
-def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
+def _block_to_image(block: _Block, scale_factor: int = 1, use_background_color: bool = False) -> QImage:
     """
     Generates a QImage of a block from the NES.
 
@@ -334,6 +347,8 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
         The dataclass instance that represents a block inside the game.
     scale_factor : int, optional
         The multiple of 16 that the image will be created as, by default 1.
+    use_background_color: bool, optional
+        If the natural background color should be used or if a mask color should be applied.
 
     Returns
     -------
@@ -341,9 +356,18 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
         That represents the block.
     """
     image = QImage(BLOCK_SIZE.width, BLOCK_SIZE.height, QImage.Format.Format_RGB888)
-    image.fill(QColor(*MASK_COLOR))
+    if use_background_color:
+        image.fill(block.palette_group.background_color)
+    else:
+        image.fill(MASK_COLOR.to_qt())
     patterns = [
-        tile_to_image(index, block.palette_group[block.palette_index], block.graphics_set) for index in block.patterns
+        tile_to_image(
+            index,
+            block.palette_group[block.palette_index],
+            block.graphics_set,
+            use_background_color=use_background_color,
+        )
+        for index in block.patterns
     ]
     with Painter(image) as p:
         for (pattern, point) in zip(patterns, PATTERN_LOCATIONS):
@@ -353,15 +377,25 @@ def _block_to_image(block: _Block, scale_factor: int = 1) -> QImage:
 
 @lru_cache(2**10)
 def _cached_block_to_image(
-    block: Block, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
+    block: Block,
+    palette_group: PaletteGroup,
+    graphics_set: GraphicsSet,
+    scale_factor: int = 1,
+    use_background_color: bool = False,
 ) -> QImage:
     return _block_to_image(
-        _Block(block.patterns, block.palette_index, palette_group, graphics_set, block.do_not_render), scale_factor
+        _Block(block.patterns, block.palette_index, palette_group, graphics_set, block.do_not_render),
+        scale_factor,
+        use_background_color,
     )
 
 
 def block_to_image(
-    block: Block, palette_group: PaletteGroup, graphics_set: GraphicsSet, scale_factor: int = 1
+    block: Block,
+    palette_group: PaletteGroup,
+    graphics_set: GraphicsSet,
+    scale_factor: int = 1,
+    use_background_color: bool = False,
 ) -> QImage:
     """
     Generates and caches a NES block with a given palette and graphics as a QImage.
@@ -376,6 +410,8 @@ def block_to_image(
         The specific graphics to use for the block.
     scale_factor : int, optional
         The multiple of 16 that the image will be created as, by default 1
+    use_background_color: bool, optional
+        If the natural background color should be used or if a mask color should be applied.
 
     Returns
     -------
@@ -387,7 +423,7 @@ def block_to_image(
     Since this method is being cached, it is expected that every parameter is hashable and immutable.  If this does not
     occur, there is a high chance of an errors to linger throughout the program.
     """
-    return _cached_block_to_image(block, palette_group, graphics_set, scale_factor)
+    return _cached_block_to_image(block, palette_group, graphics_set, scale_factor, use_background_color)
 
 
 @attrs(slots=True, auto_attribs=True, eq=True, frozen=True, hash=True)
