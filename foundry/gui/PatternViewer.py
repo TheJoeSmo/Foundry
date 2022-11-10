@@ -16,7 +16,7 @@ from foundry import icon
 from foundry.core.drawable import MASK_COLOR
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette import ColorPalette, PaletteGroup
+from foundry.core.palette import PaletteGroup
 from foundry.game.gfx.drawable.Tile import Tile
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
@@ -167,9 +167,7 @@ class PatternViewerView(QWidget):
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
-
-        bg_color = ColorPalette[self.palette_group[self.palette_index, 0]].to_qt()
-        painter.setBrush(QBrush(bg_color))
+        painter.setBrush(QBrush(self.palette_group.background_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
