@@ -63,7 +63,7 @@ def test_list_all_world_maps_width(rom):
 
 
 @pytest.mark.parametrize(
-    "row, column, object_set, level_address, enemy_address",
+    "row, column, tileset, level_address, enemy_address",
     [
         (0, 4, 0x1, 0x1FB92, 0xC537),
         (0, 8, 0x3, 0x20F3A, 0xC6BA),
@@ -72,10 +72,10 @@ def test_list_all_world_maps_width(rom):
         (8, 4, 0xE, 0x1AA51, 0xC93B),
     ],
 )
-def test_get_level_at_position(world_1: WorldMap, row, column, object_set, level_address, enemy_address):
+def test_get_level_at_position(world_1: WorldMap, row, column, tileset, level_address, enemy_address):
     level_tile = world_1.level_for_position(1, Point(column, row))
 
-    assert level_tile == (object_set, level_address, enemy_address)
+    assert level_tile == (tileset, level_address, enemy_address)
 
 
 def test_get_level_on_screen_2(rom):

@@ -290,7 +290,7 @@ class LevelWarpEditor(QWidget):
 
         if level_was_selected:
             self.state = LevelWarpState(
-                level_selector.object_data_offset, level_selector.enemy_data_offset, level_selector.object_set
+                level_selector.object_data_offset, level_selector.enemy_data_offset, level_selector.tileset
             )
 
 

@@ -93,7 +93,7 @@ class LevelSelector(QDialog):
 
         self.level_name = ""
 
-        self.object_set = 0
+        self.tileset = 0
         self.object_data_offset = 0x0
         self.enemy_data_offset = 0x0
 
@@ -228,24 +228,22 @@ class LevelSelector(QDialog):
 
         self._fill_in_data(object_set_index, object_data_for_lvl, enemy_data_for_lvl)
 
-    def _fill_in_data(self, object_set: int, layout_address: int, enemy_address: int):
-        self.object_set_dropdown.setCurrentIndex(object_set)
+    def _fill_in_data(self, tileset: int, layout_address: int, enemy_address: int):
+        self.object_set_dropdown.setCurrentIndex(tileset)
         self.object_data_spinner.setValue(layout_address)
         self.enemy_data_spinner.setValue(enemy_address)
 
-    def _on_level_selected_via_world_map(
-        self, level_name: str, object_set: int, layout_address: int, enemy_address: int
-    ):
+    def _on_level_selected_via_world_map(self, level_name: str, tileset: int, layout_address: int, enemy_address: int):
         self.level_name = level_name
 
-        self._fill_in_data(object_set, layout_address, enemy_address)
+        self._fill_in_data(tileset, layout_address, enemy_address)
 
-        level_is_overworld = object_set == OVERWORLD_MAPS_INDEX
+        level_is_overworld = tileset == OVERWORLD_MAPS_INDEX
         self.button_ok.setDisabled(level_is_overworld)
         self.enemy_data_spinner.setDisabled(level_is_overworld)
 
     def on_ok(self, _=None):
-        self.object_set = self.object_set_dropdown.currentIndex()
+        self.tileset = self.object_set_dropdown.currentIndex()
         self.object_data_offset = self.object_data_spinner.value()
         # skip the first byte, because it seems useless
         self.enemy_data_offset = self.enemy_data_spinner.value() + 1
@@ -289,8 +287,8 @@ class WorldMapLevelSelect(QScrollArea):
 
                 level_name = self.world.level_name_at_position(point)
 
-                object_set = level_info[0]
-                object_set_name = OBJECT_SET_ITEMS[object_set].split(" ", 1)[1]
+                tileset = level_info[0]
+                object_set_name = OBJECT_SET_ITEMS[tileset].split(" ", 1)[1]
                 layout_address, enemy_address = map(hex, level_info[1:])
 
                 self.setToolTip(

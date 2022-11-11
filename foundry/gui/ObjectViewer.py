@@ -95,27 +95,27 @@ class ObjectViewer(CustomChildWindow):
         self.toolbar_.close()
         super().closeEvent(event)
 
-    def set_object_and_graphic_set(self, object_set: int, graphics_set: int):
-        self.object_set_dropdown.setCurrentIndex(object_set - 1)
+    def set_object_and_graphic_set(self, tileset: int, graphics_set: int):
+        self.object_set_dropdown.setCurrentIndex(tileset - 1)
         self.graphic_set_dropdown.setCurrentIndex(graphics_set)
 
-        self.drawing_area.change_object_set(object_set)
+        self.drawing_area.change_object_set(tileset)
         self.drawing_area.change_graphic_set(graphics_set)
 
         self.block_list.update_object(self.drawing_area.current_object)
         self.status_bar.showMessage(self.drawing_area.current_object.name)
 
     def on_object_set(self):
-        object_set = self.object_set_dropdown.currentIndex() + 1
-        graphics_set = object_set
+        tileset = self.object_set_dropdown.currentIndex() + 1
+        graphics_set = tileset
 
-        self.set_object_and_graphic_set(object_set, graphics_set)
+        self.set_object_and_graphic_set(tileset, graphics_set)
 
     def on_graphic_set(self):
-        object_set = self.object_set_dropdown.currentIndex() + 1
+        tileset = self.object_set_dropdown.currentIndex() + 1
         graphics_set = self.graphic_set_dropdown.currentIndex()
 
-        self.set_object_and_graphic_set(object_set, graphics_set)
+        self.set_object_and_graphic_set(tileset, graphics_set)
 
     def set_object(self, domain: int, obj_index: int, secondary_length: int):
         object_data = bytearray(4)
@@ -151,10 +151,10 @@ class ObjectViewer(CustomChildWindow):
 
 
 class ObjectDrawArea(QWidget):
-    def __init__(self, parent, object_set, graphic_set=1, palette_index=0):
+    def __init__(self, parent, tileset, graphic_set=1, palette_index=0):
         super().__init__(parent)
 
-        self.object_factory = LevelObjectFactory(object_set, graphic_set, palette_index, [], False, size_minimal=True)
+        self.object_factory = LevelObjectFactory(tileset, graphic_set, palette_index, [], False, size_minimal=True)
 
         self.current_object = self.object_factory.from_data(bytearray([0x0, 0x0, 0x0]), 0)
 
@@ -162,8 +162,8 @@ class ObjectDrawArea(QWidget):
 
         self.resize(QSize())
 
-    def change_object_set(self, object_set: int):
-        self.object_factory.set_object_set(object_set)
+    def change_object_set(self, tileset: int):
+        self.object_factory.set_object_set(tileset)
 
         self.update_object()
 

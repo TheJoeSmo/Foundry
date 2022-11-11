@@ -68,7 +68,7 @@ class Level(LevelLike):
         self.changed = False
         """Whether the current level was modified since it was loaded/last saved."""
 
-        self.object_set = ObjectSet(object_set_number)
+        self.tileset = ObjectSet(object_set_number)
 
         self.name = level_name
 
@@ -205,7 +205,7 @@ class Level(LevelLike):
             domain = (obj_data[0] & 0b1110_0000) >> 5
 
             obj_id = obj_data[2]
-            has_length_byte = self.object_set.get_object_byte_length(domain, obj_id) == 4
+            has_length_byte = self.tileset.get_object_byte_length(domain, obj_id) == 4
 
             if has_length_byte:
                 fourth_byte, data = data[0], data[1:]
@@ -698,7 +698,7 @@ class Level(LevelLike):
 
     def from_m3l(self, m3l_bytes: bytearray):
         world_number, level_number, self.object_set_number = m3l_bytes[:3]
-        self.object_set = ObjectSet(self.object_set_number)
+        self.tileset = ObjectSet(self.object_set_number)
 
         self.header_offset = self.enemy_offset = 0
 

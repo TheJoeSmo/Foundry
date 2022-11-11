@@ -29,8 +29,8 @@ class WorldMap(LevelLike):
         self.graphics_set = GraphicsSet.from_tileset(OVERWORLD_GRAPHIC_SET)
         self.palette_group = PaletteGroup.from_tileset(WORLD_MAP_OBJECT_SET, 0)
 
-        self.object_set = WORLD_MAP_OBJECT_SET
-        self.tsa_data = ROM.get_tsa_data(self.object_set)
+        self.tileset = WORLD_MAP_OBJECT_SET
+        self.tsa_data = ROM.get_tsa_data(self.tileset)
 
         self.world = 0
         self.level_number = world_index
