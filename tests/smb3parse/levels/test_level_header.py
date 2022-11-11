@@ -8,10 +8,11 @@ from foundry.smb3parse.levels import (
     is_valid_level_length,
 )
 from foundry.smb3parse.levels.level_header import LevelHeader
-from foundry.smb3parse.objects.object_set import (
+from foundry.smb3parse.objects.tileset import (
     MAX_OBJECT_SET,
     MIN_OBJECT_SET,
-    is_valid_object_set_number,
+    TilesetError,
+    is_tileset_index,
 )
 
 
@@ -41,14 +42,14 @@ def test_construction(header_bytes, object_set_number):
     assert level_header.enemy_palette_index in range(4)
     assert level_header.graphic_set_index in range(32)
 
-    assert is_valid_object_set_number(level_header.jump_object_set_number)
+    assert is_tileset_index(level_header.jump_object_set_number)
 
 
 def test_value_error():
     with pytest.raises(ValueError, match="A level header is made up of"):
         LevelHeader(bytearray(HEADER_LENGTH + 1), MIN_OBJECT_SET)
 
-    with pytest.raises(ValueError, match="Object set number"):
+    with pytest.raises(TilesetError):
         LevelHeader(bytearray(HEADER_LENGTH), MAX_OBJECT_SET + 1)
 
 

@@ -8,7 +8,7 @@ from foundry.smb3parse.levels import (
     LEVEL_LENGTH_INTERVAL,
     LEVEL_MIN_LENGTH,
 )
-from foundry.smb3parse.objects.object_set import assert_valid_object_set_number
+from foundry.smb3parse.objects.tileset import ensure_tileset
 
 MARIO_X_POSITIONS = [0x18, 0x70, 0xD8, 0x80]  # 0x10249
 MARIO_Y_POSITIONS = [0x17, 0x04, 0x00, 0x14, 0x07, 0x0B, 0x0F, 0x18]  # 0x3D7A0 + 0x3D7A8
@@ -19,7 +19,7 @@ class LevelHeader:
         if len(header_bytes) != HEADER_LENGTH:
             raise ValueError(f"A level header is made up of {HEADER_LENGTH} bytes, but {len(header_bytes)} were given.")
 
-        assert_valid_object_set_number(object_set_number)
+        ensure_tileset(object_set_number)
 
         self._object_set_number = object_set_number
 

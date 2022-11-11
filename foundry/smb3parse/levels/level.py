@@ -2,7 +2,7 @@ from typing import Optional
 
 from foundry.smb3parse.levels import HEADER_LENGTH, LevelBase
 from foundry.smb3parse.levels.level_header import LevelHeader
-from foundry.smb3parse.objects.object_set import assert_valid_object_set_number
+from foundry.smb3parse.objects.tileset import ensure_tileset
 from foundry.smb3parse.util.rom import Rom
 
 
@@ -53,7 +53,7 @@ class Level(LevelBase):
 
     @staticmethod
     def from_memory(rom: Rom, object_set_number: int, layout_address: int, enemy_address: int):
-        assert_valid_object_set_number(object_set_number)
+        ensure_tileset(object_set_number)
 
         level = Level(rom, object_set_number, layout_address, enemy_address)
 

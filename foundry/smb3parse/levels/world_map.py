@@ -51,7 +51,7 @@ from foundry.smb3parse.levels import (
 )
 from foundry.smb3parse.levels.level import Level
 from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
-from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
+from foundry.smb3parse.objects.tileset import WORLD_MAP_OBJECT_SET
 from foundry.smb3parse.util.rom import Rom
 
 TILE_NAMES = defaultdict(lambda: "NO NAME")

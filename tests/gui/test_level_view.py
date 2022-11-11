@@ -13,7 +13,7 @@ from foundry.gui.HeaderEditor import (
 )
 from foundry.gui.LevelView import LevelView
 from foundry.gui.settings import FileSettings
-from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.tileset import PLAINS_OBJECT_SET
 
 
 @pytest.fixture
@@ -41,7 +41,7 @@ def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain,
     assert level_object.obj_index == obj_index
     if isinstance(level_object, LevelObject):
         assert level_object.domain == domain
-        assert level_object.object_set.number == object_set_number
+        assert level_object.tileset.number == object_set_number
 
 
 def test_level_larger(level_view, empty_file_settings: FileSettings):

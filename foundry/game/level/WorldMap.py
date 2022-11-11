@@ -13,7 +13,7 @@ from foundry.smb3parse.levels.world_map import (
     WORLD_MAP_SCREEN_WIDTH,
 )
 from foundry.smb3parse.levels.world_map import WorldMap as _WorldMap
-from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
+from foundry.smb3parse.objects.tileset import WORLD_MAP_OBJECT_SET
 
 OVERWORLD_GRAPHIC_SET = 0
 

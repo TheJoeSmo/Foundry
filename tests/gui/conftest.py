@@ -7,7 +7,7 @@ from git.repo.base import Repo
 
 from foundry.game.File import ROM
 from foundry.gui.MainWindow import MainWindow
-from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.tileset import PLAINS_OBJECT_SET
 from tests.conftest import level_1_1_enemy_address, level_1_1_object_address
 
 

@@ -19,7 +19,7 @@ from foundry.game.gfx.objects.ObjectLike import (
 )
 from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
 from foundry.game.Tileset import Tileset
-from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.tileset import PLAINS_OBJECT_SET
 
 SKY = 0
 GROUND = 27

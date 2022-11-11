@@ -31,7 +31,7 @@ from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
 from foundry.gui.settings import UserSettings
 from foundry.smb3parse.constants import OBJ_AUTOSCROLL, TILESET_BACKGROUND_BLOCKS
 from foundry.smb3parse.levels import LEVEL_MAX_LENGTH
-from foundry.smb3parse.objects.object_set import (
+from foundry.smb3parse.objects.tileset import (
     CLOUDY_OBJECT_SET,
     DESERT_OBJECT_SET,
     DUNGEON_OBJECT_SET,
