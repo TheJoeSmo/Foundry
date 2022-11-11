@@ -8,8 +8,8 @@ class LevelLike(LevelBase, abc.ABC):
     width: int
     height: int
 
-    def __init__(self, object_set_number, layout_address):
-        super().__init__(object_set_number, layout_address)
+    def __init__(self, tileset, layout_address):
+        super().__init__(tileset, layout_address)
 
         self.changed = False
 

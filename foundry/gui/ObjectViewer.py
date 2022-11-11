@@ -18,7 +18,7 @@ from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.CustomChildWindow import CustomChildWindow
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
+from foundry.gui.LevelSelector import TILESET_ITEMS
 from foundry.gui.Spinner import Spinner
 from foundry.gui.util import clear_layout
 
@@ -53,18 +53,18 @@ class ObjectViewer(CustomChildWindow):
         self.toolbar_.addWidget(self.spin_type)
         self.toolbar_.addWidget(self.spin_length)
 
-        self.object_set_dropdown = QComboBox(self.toolbar_)
-        self.object_set_dropdown.addItems(OBJECT_SET_ITEMS[1:])
-        self.object_set_dropdown.setCurrentIndex(0)
+        self.tileset_dropdown = QComboBox(self.toolbar_)
+        self.tileset_dropdown.addItems(TILESET_ITEMS[1:])
+        self.tileset_dropdown.setCurrentIndex(0)
 
         self.graphic_set_dropdown = QComboBox(self.toolbar_)
         self.graphic_set_dropdown.addItems(GRAPHIC_SET_NAMES)
         self.graphic_set_dropdown.setCurrentIndex(1)
 
-        self.object_set_dropdown.currentIndexChanged.connect(self.on_object_set)
+        self.tileset_dropdown.currentIndexChanged.connect(self.on_tileset)
         self.graphic_set_dropdown.currentIndexChanged.connect(self.on_graphic_set)
 
-        self.toolbar_.addWidget(self.object_set_dropdown)
+        self.toolbar_.addWidget(self.tileset_dropdown)
         self.toolbar_.addWidget(self.graphic_set_dropdown)
 
         self.addToolBar(self.toolbar_)
@@ -95,27 +95,27 @@ class ObjectViewer(CustomChildWindow):
         self.toolbar_.close()
         super().closeEvent(event)
 
-    def set_object_and_graphic_set(self, object_set: int, graphics_set: int):
-        self.object_set_dropdown.setCurrentIndex(object_set - 1)
+    def set_object_and_graphic_set(self, tileset: int, graphics_set: int):
+        self.tileset_dropdown.setCurrentIndex(tileset - 1)
         self.graphic_set_dropdown.setCurrentIndex(graphics_set)
 
-        self.drawing_area.change_object_set(object_set)
+        self.drawing_area.change_tileset(tileset)
         self.drawing_area.change_graphic_set(graphics_set)
 
         self.block_list.update_object(self.drawing_area.current_object)
         self.status_bar.showMessage(self.drawing_area.current_object.name)
 
-    def on_object_set(self):
-        object_set = self.object_set_dropdown.currentIndex() + 1
-        graphics_set = object_set
+    def on_tileset(self):
+        tileset = self.tileset_dropdown.currentIndex() + 1
+        graphics_set = tileset
 
-        self.set_object_and_graphic_set(object_set, graphics_set)
+        self.set_object_and_graphic_set(tileset, graphics_set)
 
     def on_graphic_set(self):
-        object_set = self.object_set_dropdown.currentIndex() + 1
+        tileset = self.tileset_dropdown.currentIndex() + 1
         graphics_set = self.graphic_set_dropdown.currentIndex()
 
-        self.set_object_and_graphic_set(object_set, graphics_set)
+        self.set_object_and_graphic_set(tileset, graphics_set)
 
     def set_object(self, domain: int, obj_index: int, secondary_length: int):
         object_data = bytearray(4)
@@ -151,10 +151,10 @@ class ObjectViewer(CustomChildWindow):
 
 
 class ObjectDrawArea(QWidget):
-    def __init__(self, parent, object_set, graphic_set=1, palette_index=0):
+    def __init__(self, parent, tileset, graphic_set=1, palette_index=0):
         super().__init__(parent)
 
-        self.object_factory = LevelObjectFactory(object_set, graphic_set, palette_index, [], False, size_minimal=True)
+        self.object_factory = LevelObjectFactory(tileset, graphic_set, palette_index, [], False, size_minimal=True)
 
         self.current_object = self.object_factory.from_data(bytearray([0x0, 0x0, 0x0]), 0)
 
@@ -162,8 +162,8 @@ class ObjectDrawArea(QWidget):
 
         self.resize(QSize())
 
-    def change_object_set(self, object_set: int):
-        self.object_factory.set_object_set(object_set)
+    def change_tileset(self, tileset: int):
+        self.object_factory.set_tileset(tileset)
 
         self.update_object()
 

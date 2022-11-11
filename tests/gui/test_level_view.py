@@ -13,7 +13,7 @@ from foundry.gui.HeaderEditor import (
 )
 from foundry.gui.LevelView import LevelView
 from foundry.gui.settings import FileSettings
-from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.tileset import PLAINS_OBJECT_SET
 
 
 @pytest.fixture
@@ -27,21 +27,21 @@ def level_view(main_window, qtbot):
 
 
 @pytest.mark.parametrize(
-    "coordinates, obj_index, domain, object_set_number",
+    "coordinates, obj_index, domain, tileset_number",
     [
         (Point(0, 0), 0x03, 0x00, PLAINS_OBJECT_SET),  # background symbols
         (Point(361, 283), 0xE2, 0x00, PLAINS_OBJECT_SET),  # background cloud
         (Point(233, 409), 0x72, 0x00, None),  # goomba
     ],
 )
-def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain, object_set_number):
+def test_object_at(level_view: LevelView, qtbot, coordinates, obj_index, domain, tileset_number):
     level_object = level_view.object_at(coordinates)
 
     assert level_object
     assert level_object.obj_index == obj_index
     if isinstance(level_object, LevelObject):
         assert level_object.domain == domain
-        assert level_object.object_set.number == object_set_number
+        assert level_object.tileset.number == tileset_number
 
 
 def test_level_larger(level_view, empty_file_settings: FileSettings):

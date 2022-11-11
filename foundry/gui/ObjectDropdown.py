@@ -50,14 +50,14 @@ class ObjectDropdown(QComboBox):
 
         self.lineEdit().selectAll()
 
-    def set_object_set(
-        self, object_set_index: int, graphic_set_index: int, bg_palette_index: int = 0, spr_palette_index: int = 0
+    def set_tileset(
+        self, tileset_index: int, graphic_set_index: int, bg_palette_index: int = 0, spr_palette_index: int = 0
     ) -> None:
         factory = LevelObjectFactory(
-            object_set_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
+            tileset_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
         )
 
-        enemy_factory: EnemyItemFactory = EnemyItemFactory(object_set_index, spr_palette_index)
+        enemy_factory: EnemyItemFactory = EnemyItemFactory(tileset_index, spr_palette_index)
 
         self._on_object_factory_change(factory, enemy_factory)
 

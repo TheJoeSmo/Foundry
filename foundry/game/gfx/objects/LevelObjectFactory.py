@@ -10,7 +10,7 @@ from foundry.game.gfx.objects.LevelObject import (
 
 
 class LevelObjectFactory:
-    object_set: int
+    tileset: int
     graphic_set: int
     palette_group_index: int
 
@@ -19,14 +19,14 @@ class LevelObjectFactory:
 
     def __init__(
         self,
-        object_set: int,
+        tileset: int,
         graphic_set: int | GraphicsSet,
         palette_group_index: int,
         objects_ref: list[LevelObject],
         vertical_level: bool,
         size_minimal: bool = False,
     ):
-        self.set_object_set(object_set)
+        self.set_tileset(tileset)
         if isinstance(graphic_set, int):
             self.set_graphic_set(graphic_set)
         else:
@@ -38,8 +38,8 @@ class LevelObjectFactory:
 
         self.size_minimal = size_minimal
 
-    def set_object_set(self, object_set: int):
-        self.object_set = object_set
+    def set_tileset(self, tileset: int):
+        self.tileset = tileset
 
     def set_graphic_set(self, graphic_set: int):
         self.graphic_set = graphic_set
@@ -47,7 +47,7 @@ class LevelObjectFactory:
 
     def set_palette_group_index(self, palette_group_index: int):
         self.palette_group_index = palette_group_index
-        self.palette_group = PaletteGroup.from_tileset(self.object_set, self.palette_group_index)
+        self.palette_group = PaletteGroup.from_tileset(self.tileset, self.palette_group_index)
 
     def from_data(self, data: bytearray, index: int):
         if Jump.is_jump(data):
@@ -58,7 +58,7 @@ class LevelObjectFactory:
         # todo get rid of index by fixing ground map
         return LevelObject(
             data,
-            self.object_set,
+            self.tileset,
             self.palette_group,
             self.graphics_set,
             self.objects_ref,

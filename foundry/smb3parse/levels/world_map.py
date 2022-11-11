@@ -51,7 +51,7 @@ from foundry.smb3parse.levels import (
 )
 from foundry.smb3parse.levels.level import Level
 from foundry.smb3parse.levels.WorldMapPosition import WorldMapPosition
-from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
+from foundry.smb3parse.objects.tileset import WORLD_MAP_OBJECT_SET
 from foundry.smb3parse.util.rom import Rom
 
 TILE_NAMES = defaultdict(lambda: "NO NAME")
@@ -110,7 +110,7 @@ class WorldMap(LevelBase):
         width           The width of the world map in blocks across all scenes.
         height          The height of the world map, always 9 blocks.
 
-        object_set      An ObjectSet object for the world map object set.
+        tileset      An Tileset object for the world map object set.
         screen_count    How many screens this world map spans.
     """
 
@@ -230,19 +230,19 @@ class WorldMap(LevelBase):
         assert 0xA000 <= level_offset < 0xC000, level_offset  # suppose that level layouts are only in this range?
 
         correct_row_value = self._rom.int(point_address.y)
-        object_set_number = correct_row_value & 0x0F
+        tileset_number = correct_row_value & 0x0F
 
-        object_set_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + object_set_number) * 2 - 10) * 0x1000
+        tileset_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + tileset_number) * 2 - 10) * 0x1000
 
-        absolute_level_address = 0x0010 + object_set_offset + level_offset
+        absolute_level_address = 0x0010 + tileset_offset + level_offset
 
         # get enemy address
         enemy_address = ENEMY_BASE_OFFSET + self._rom.little_endian(enemy_offset_address)
 
-        return object_set_number, absolute_level_address, enemy_address
+        return tileset_number, absolute_level_address, enemy_address
 
     def replace_level_at_position(self, level_info, point: WorldMapPosition):
-        level_address, enemy_address, object_set_number = level_info
+        level_address, enemy_address, tileset_number = level_info
 
         existing_level = self.level_for_position(point.screen, point.point)
 
@@ -253,14 +253,14 @@ class WorldMap(LevelBase):
         assert level_index is not None
         level_point, level_offset_address, enemy_offset_address = level_index
 
-        row_value: int = ((point.point.y + FIRST_VALID_ROW) << 4) + object_set_number
+        row_value: int = ((point.point.y + FIRST_VALID_ROW) << 4) + tileset_number
         self._rom.write(level_point.y, bytes([row_value]))
 
         column_value: int = ((point.screen - 1) << 4) + point.point.x
         self._rom.write(level_point.x, bytes([column_value]))
 
-        object_set_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + object_set_number) * 2 - 10) * 0x1000
-        level_offset = level_address - object_set_offset - BASE_OFFSET
+        tileset_offset = (self._rom.int(OFFSET_BY_OBJECT_SET_A000 + tileset_number) * 2 - 10) * 0x1000
+        level_offset = level_address - tileset_offset - BASE_OFFSET
 
         self._rom.write_little_endian(level_offset_address, level_offset)
 

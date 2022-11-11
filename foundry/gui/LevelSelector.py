@@ -38,7 +38,7 @@ WORLD_ITEMS = [
     "Lost Levels",
 ]
 
-OBJECT_SET_ITEMS = [
+TILESET_ITEMS = [
     "0 Overworld",
     "1 Plains",
     "2 Dungeon",
@@ -93,7 +93,7 @@ class LevelSelector(QDialog):
 
         self.level_name = ""
 
-        self.object_set = 0
+        self.tileset = 0
         self.object_data_offset = 0x0
         self.enemy_data_offset = 0x0
 
@@ -116,9 +116,9 @@ class LevelSelector(QDialog):
         self.object_data_label = QLabel(parent=self, text="Object Data")
         self.object_data_spinner = Spinner(self)
 
-        self.object_set_label = QLabel(parent=self, text="Object Set")
-        self.object_set_dropdown = QComboBox(self)
-        self.object_set_dropdown.addItems(OBJECT_SET_ITEMS)
+        self.tileset_label = QLabel(parent=self, text="Tileset Set")
+        self.tileset_dropdown = QComboBox(self)
+        self.tileset_dropdown.addItems(TILESET_ITEMS)
 
         self.button_ok = QPushButton("Ok", self)
         self.button_ok.clicked.connect(self.on_ok)
@@ -155,8 +155,8 @@ class LevelSelector(QDialog):
         data_layout.addWidget(self.enemy_data_spinner, 1, 0)
         data_layout.addWidget(self.object_data_spinner, 1, 1)
 
-        data_layout.addWidget(self.object_set_label, 2, 0)
-        data_layout.addWidget(self.object_set_dropdown, 2, 1)
+        data_layout.addWidget(self.tileset_label, 2, 0)
+        data_layout.addWidget(self.tileset_dropdown, 2, 1)
 
         data_layout.addWidget(self.button_ok, 3, 0)
         data_layout.addWidget(self.button_cancel, 3, 1)
@@ -223,29 +223,27 @@ class LevelSelector(QDialog):
         self.enemy_data_spinner.setEnabled(not level_is_overworld)
 
         # if self.world_list.currentRow() >= WORLD_1_INDEX:
-        object_set_index = level.tileset
+        tileset_index = level.tileset
         self.button_ok.setDisabled(level_is_overworld)
 
-        self._fill_in_data(object_set_index, object_data_for_lvl, enemy_data_for_lvl)
+        self._fill_in_data(tileset_index, object_data_for_lvl, enemy_data_for_lvl)
 
-    def _fill_in_data(self, object_set: int, layout_address: int, enemy_address: int):
-        self.object_set_dropdown.setCurrentIndex(object_set)
+    def _fill_in_data(self, tileset: int, layout_address: int, enemy_address: int):
+        self.tileset_dropdown.setCurrentIndex(tileset)
         self.object_data_spinner.setValue(layout_address)
         self.enemy_data_spinner.setValue(enemy_address)
 
-    def _on_level_selected_via_world_map(
-        self, level_name: str, object_set: int, layout_address: int, enemy_address: int
-    ):
+    def _on_level_selected_via_world_map(self, level_name: str, tileset: int, layout_address: int, enemy_address: int):
         self.level_name = level_name
 
-        self._fill_in_data(object_set, layout_address, enemy_address)
+        self._fill_in_data(tileset, layout_address, enemy_address)
 
-        level_is_overworld = object_set == OVERWORLD_MAPS_INDEX
+        level_is_overworld = tileset == OVERWORLD_MAPS_INDEX
         self.button_ok.setDisabled(level_is_overworld)
         self.enemy_data_spinner.setDisabled(level_is_overworld)
 
     def on_ok(self, _=None):
-        self.object_set = self.object_set_dropdown.currentIndex()
+        self.tileset = self.tileset_dropdown.currentIndex()
         self.object_data_offset = self.object_data_spinner.value()
         # skip the first byte, because it seems useless
         self.enemy_data_offset = self.enemy_data_spinner.value() + 1
@@ -289,13 +287,13 @@ class WorldMapLevelSelect(QScrollArea):
 
                 level_name = self.world.level_name_at_position(point)
 
-                object_set = level_info[0]
-                object_set_name = OBJECT_SET_ITEMS[object_set].split(" ", 1)[1]
+                tileset = level_info[0]
+                tileset_name = TILESET_ITEMS[tileset].split(" ", 1)[1]
                 layout_address, enemy_address = map(hex, level_info[1:])
 
                 self.setToolTip(
                     f"<b>{level_name}</b><br/>"
-                    f"<u>Type:</u> {object_set_name}<br/>"
+                    f"<u>Type:</u> {tileset_name}<br/>"
                     f"<u>Objects:</u> {layout_address}<br/>"
                     f"<u>Enemies:</u> {enemy_address}"
                 )

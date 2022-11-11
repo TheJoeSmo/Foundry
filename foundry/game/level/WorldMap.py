@@ -13,7 +13,7 @@ from foundry.smb3parse.levels.world_map import (
     WORLD_MAP_SCREEN_WIDTH,
 )
 from foundry.smb3parse.levels.world_map import WorldMap as _WorldMap
-from foundry.smb3parse.objects.object_set import WORLD_MAP_OBJECT_SET
+from foundry.smb3parse.objects.tileset import WORLD_MAP_OBJECT_SET
 
 OVERWORLD_GRAPHIC_SET = 0
 
@@ -29,8 +29,8 @@ class WorldMap(LevelLike):
         self.graphics_set = GraphicsSet.from_tileset(OVERWORLD_GRAPHIC_SET)
         self.palette_group = PaletteGroup.from_tileset(WORLD_MAP_OBJECT_SET, 0)
 
-        self.object_set = WORLD_MAP_OBJECT_SET
-        self.tsa_data = ROM.get_tsa_data(self.object_set)
+        self.tileset = WORLD_MAP_OBJECT_SET
+        self.tsa_data = ROM.get_tsa_data(self.tileset)
 
         self.world = 0
         self.level_number = world_index

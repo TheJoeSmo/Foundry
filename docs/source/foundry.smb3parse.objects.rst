@@ -20,10 +20,10 @@ foundry.smb3parse.objects.level\_object module
    :undoc-members:
    :show-inheritance:
 
-foundry.smb3parse.objects.object\_set module
+foundry.smb3parse.objects.tileset module
 --------------------------------------------
 
-.. automodule:: foundry.smb3parse.objects.object_set
+.. automodule:: foundry.smb3parse.objects.tileset
    :members:
    :undoc-members:
    :show-inheritance:

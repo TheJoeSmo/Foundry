@@ -235,7 +235,7 @@ How many screens a world map has, is implicitly encoded in the amount of layout 
 The data structure holds information about the positions and memory locations of the levels, among others. They are mostly organized in lists of bytes, which, for each screen, hold some part of the necessary level information.
 
 - how many level entries are in each screen (level counts for screens, that are unused are simply 0)
-- the row position and object set of every level (4 bit row, 4 bit object_set)
+- the row position and object set of every level (4 bit row, 4 bit tileset)
 - the screen and column position for every level (4 bit screen, 4 bit column)
 - addresses pointing to the enemy and item data of the level, that corresponds to the coordinates at the same index (the first address in the list is for the level at the first row and first column in their respective lists)
 - addresses pointing to the level layout data of the level, that corresponds to the coordinates at the same index

@@ -13,7 +13,7 @@ from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.level import LevelByteData
 from foundry.game.level.LevelLike import LevelLike
 from foundry.game.level.util import get_worlds, load_level_offsets
-from foundry.game.ObjectSet import ObjectSet
+from foundry.game.Tileset import Tileset
 from foundry.smb3parse.constants import (
     BASE_OFFSET,
     TILESET_LEVEL_OFFSET,
@@ -58,17 +58,15 @@ class Level(LevelLike):
 
     HEADER_LENGTH = 9  # bytes
 
-    def __init__(
-        self, level_name: str = "", layout_address: int = 0, enemy_data_offset: int = 0, object_set_number: int = 1
-    ):
-        super().__init__(object_set_number, layout_address)
+    def __init__(self, level_name: str = "", layout_address: int = 0, enemy_data_offset: int = 0, tileset: int = 1):
+        super().__init__(tileset, layout_address)
 
         self._signal_emitter = LevelSignaller()
 
         self.changed = False
         """Whether the current level was modified since it was loaded/last saved."""
 
-        self.object_set = ObjectSet(object_set_number)
+        self.tileset = Tileset(tileset)
 
         self.name = level_name
 
@@ -159,16 +157,16 @@ class Level(LevelLike):
         return reduce(lambda count, element: count + len(element), [obj.to_bytes() for obj in self.enemies], 0)
 
     def _parse_header(self):
-        self.header = LevelHeader(self.header_bytes, self.object_set_number)
+        self.header = LevelHeader(self.header_bytes, self.tileset_number)
 
         self.object_factory = LevelObjectFactory(
-            self.object_set_number,
+            self.tileset_number,
             self.header.graphic_set_index,
             self.header.object_palette_index,
             self.objects,
             bool(self.header.is_vertical),
         )
-        self.enemy_item_factory = EnemyItemFactory(self.object_set_number, self.header.enemy_palette_index)
+        self.enemy_item_factory = EnemyItemFactory(self.tileset_number, self.header.enemy_palette_index)
 
         self.size = Size(self.header.width, self.header.height)
 
@@ -205,7 +203,7 @@ class Level(LevelLike):
             domain = (obj_data[0] & 0b1110_0000) >> 5
 
             obj_id = obj_data[2]
-            has_length_byte = self.object_set.get_object_byte_length(domain, obj_id) == 4
+            has_length_byte = self.tileset.get_object_byte_length(domain, obj_id) == 4
 
             if has_length_byte:
                 fourth_byte, data = data[0], data[1:]
@@ -260,7 +258,7 @@ class Level(LevelLike):
         if value == self.header.jump_level_address:
             return
 
-        value -= LEVEL_POINTER_OFFSET + TILESET_LEVEL_OFFSET[self.header.jump_object_set_number]
+        value -= LEVEL_POINTER_OFFSET + TILESET_LEVEL_OFFSET[self.header.jump_tileset_number]
 
         self.header_bytes[0] = 0x00FF & value
         self.header_bytes[1] = value >> 8
@@ -414,12 +412,12 @@ class Level(LevelLike):
         self._parse_header()
 
     @property
-    def next_area_object_set(self):
-        return self.header.jump_object_set_number
+    def next_area_tileset(self):
+        return self.header.jump_tileset_number
 
-    @next_area_object_set.setter
-    def next_area_object_set(self, index):
-        if index == self.header.jump_object_set_number:
+    @next_area_tileset.setter
+    def next_area_tileset(self, index):
+        if index == self.header.jump_tileset_number:
             return
 
         self.header_bytes[6] &= 0b1111_0000
@@ -677,7 +675,7 @@ class Level(LevelLike):
 
         m3l_bytes.append(world_number)
         m3l_bytes.append(level_number)
-        m3l_bytes.append(self.object_set_number)
+        m3l_bytes.append(self.tileset_number)
 
         m3l_bytes.extend(self.header_bytes)
 
@@ -697,8 +695,8 @@ class Level(LevelLike):
         return m3l_bytes
 
     def from_m3l(self, m3l_bytes: bytearray):
-        world_number, level_number, self.object_set_number = m3l_bytes[:3]
-        self.object_set = ObjectSet(self.object_set_number)
+        world_number, level_number, self.tileset_number = m3l_bytes[:3]
+        self.tileset = Tileset(self.tileset_number)
 
         self.header_offset = self.enemy_offset = 0
 

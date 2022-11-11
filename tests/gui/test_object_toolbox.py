@@ -5,7 +5,7 @@ from foundry.core.geometry import Point
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.gui.ObjectIcon import ObjectIcon
 from foundry.gui.ObjectToolBox import ObjectToolBox
-from foundry.smb3parse.objects.object_set import PLAINS_GRAPHICS_SET, PLAINS_OBJECT_SET
+from foundry.smb3parse.objects.tileset import PLAINS_GRAPHICS_SET, PLAINS_OBJECT_SET
 
 
 @pytest.mark.parametrize("domain, obj_index", [(0, 0xA0), (0, 0xA8)])

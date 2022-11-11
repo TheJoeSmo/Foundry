@@ -19,7 +19,7 @@ from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
+from foundry.gui.LevelSelector import TILESET_ITEMS
 from foundry.gui.Spinner import Spinner
 
 
@@ -82,7 +82,7 @@ class BlockViewerController(CustomChildWindow):
             self.tileset = self.bank_dropdown.currentIndex()
 
         self.bank_dropdown = QComboBox(parent=self.toolbar)
-        self.bank_dropdown.addItems(OBJECT_SET_ITEMS)
+        self.bank_dropdown.addItems(TILESET_ITEMS)
         self.bank_dropdown.setCurrentIndex(0)
         self.bank_dropdown.currentIndexChanged.connect(on_combo)  # type: ignore
         self.tileset_changed.connect(self.bank_dropdown.setCurrentIndex)
@@ -135,7 +135,7 @@ class BlockViewerController(CustomChildWindow):
     def tileset(self, value: int):
         self.model.tileset = min(max(value, 0), 0xE)
         self.undo_controller = UndoController(ROM.get_tsa_data(self.tileset))
-        self.view.object_set = self.tileset
+        self.view.tileset = self.tileset
         self.tileset_changed.emit(self.tileset)
         self.view.update()
         if self.editor is not None:
@@ -188,12 +188,12 @@ class BlockViewerView(QWidget):
     BLOCKS_PER_ROW = 16
     BLOCKS_PER_COLUMN = 16
 
-    def __init__(self, parent, object_set=0, palette_group=0, zoom=2):
+    def __init__(self, parent, tileset=0, palette_group=0, zoom=2):
         super().__init__(parent)
 
         self.setMouseTracking(True)
 
-        self.object_set = object_set
+        self.tileset = tileset
         self.palette_group = palette_group
         self.zoom = zoom
 
@@ -235,11 +235,11 @@ class BlockViewerView(QWidget):
 
     def paintEvent(self, event: QPaintEvent):
         painter: QPainter = QPainter(self)
-        palette_group: PaletteGroup = PaletteGroup.from_tileset(self.object_set, self.palette_group)
+        palette_group: PaletteGroup = PaletteGroup.from_tileset(self.tileset, self.palette_group)
         painter.setBrush(QBrush(palette_group.background_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
-        graphics_set: GraphicsSet = GraphicsSet.from_tileset(self.object_set)
-        tsa_data: bytearray = ROM.get_tsa_data(self.object_set)
+        graphics_set: GraphicsSet = GraphicsSet.from_tileset(self.tileset)
+        tsa_data: bytearray = ROM.get_tsa_data(self.tileset)
 
         for i in range(self.BLOCKS):
             block: Block = Block.from_tsa(Point(0, 0), i, tsa_data)

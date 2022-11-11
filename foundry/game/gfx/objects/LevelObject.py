@@ -18,8 +18,8 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_VERT,
 )
 from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
-from foundry.game.ObjectSet import ObjectSet
-from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
+from foundry.game.Tileset import Tileset
+from foundry.smb3parse.objects.tileset import PLAINS_OBJECT_SET
 
 SKY = 0
 GROUND = 27
@@ -63,7 +63,7 @@ class LevelObject(GeneratorObject):
     def __init__(
         self,
         data: bytearray,
-        object_set: int,
+        tileset: int,
         palette_group: PaletteGroup,
         graphics_set: GraphicsSet,
         objects_ref: list["LevelObject"],
@@ -71,7 +71,7 @@ class LevelObject(GeneratorObject):
         index: int,
         size_minimal: bool = False,
     ):
-        self.object_set = ObjectSet(object_set)
+        self.tileset = Tileset(tileset)
 
         self.graphics_set = graphics_set
         self._position = Point(0, 0)
@@ -134,7 +134,7 @@ class LevelObject(GeneratorObject):
 
     @property
     def tsa_data(self) -> bytearray:
-        return ROM.get_tsa_data(self.object_set.number)
+        return ROM.get_tsa_data(self.tileset.number)
 
     @property
     def is_single_block(self) -> bool:
@@ -157,7 +157,7 @@ class LevelObject(GeneratorObject):
 
     @property
     def definition(self) -> TilesetDefinition:
-        return self.object_set.get_definition_of(self.type)
+        return self.tileset.get_definition_of(self.type)
 
     @property
     def obj_index(self) -> int:
@@ -169,7 +169,7 @@ class LevelObject(GeneratorObject):
 
     @property
     def object_info(self):
-        return self.object_set.number, self.domain, self.obj_index
+        return self.tileset.number, self.domain, self.obj_index
 
     @property
     def length(self) -> int:
@@ -386,7 +386,7 @@ class LevelObject(GeneratorObject):
 
             # todo magic number
             # ending graphics
-            rom_offset = ENDING_OBJECT_OFFSET + self.object_set.get_ending_offset() * 0x60
+            rom_offset = ENDING_OBJECT_OFFSET + self.tileset.get_ending_offset() * 0x60
 
             rom = ROM()
 
@@ -644,7 +644,7 @@ class LevelObject(GeneratorObject):
         elif orientation in [GeneratorType.DIAG_UP_RIGHT]:
             return Point(point.x, point.y - self.rendered_size.height + 1)
         elif orientation in [GeneratorType.DIAG_DOWN_LEFT]:
-            if self.object_set.number == 3 or self.object_set.number == 14:  # Sky or Hilly tileset
+            if self.tileset.number == 3 or self.tileset.number == 14:  # Sky or Hilly tileset
                 return Point(point.x - (self.rendered_size.width - self.scale.width + 1), point.y)
             else:
                 return Point(point.x - (self.rendered_size.width - self.scale.width), point.y)
@@ -757,7 +757,7 @@ class LevelObject(GeneratorObject):
                 if self.orientation == GeneratorType.HORIZONTAL and self.is_4byte:
                     # flat ground objects have an artificial limit of 2 lines
                     if (
-                        self.object_set.number == PLAINS_OBJECT_SET
+                        self.tileset.number == PLAINS_OBJECT_SET
                         and self.domain == 0
                         and self.obj_index in range(0xC0, 0xE0)
                     ):

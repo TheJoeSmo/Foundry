@@ -8,20 +8,20 @@ from foundry.smb3parse.levels import (
     LEVEL_LENGTH_INTERVAL,
     LEVEL_MIN_LENGTH,
 )
-from foundry.smb3parse.objects.object_set import assert_valid_object_set_number
+from foundry.smb3parse.objects.tileset import ensure_tileset
 
 MARIO_X_POSITIONS = [0x18, 0x70, 0xD8, 0x80]  # 0x10249
 MARIO_Y_POSITIONS = [0x17, 0x04, 0x00, 0x14, 0x07, 0x0B, 0x0F, 0x18]  # 0x3D7A0 + 0x3D7A8
 
 
 class LevelHeader:
-    def __init__(self, header_bytes: bytearray, object_set_number: int):
+    def __init__(self, header_bytes: bytearray, tileset_number: int):
         if len(header_bytes) != HEADER_LENGTH:
             raise ValueError(f"A level header is made up of {HEADER_LENGTH} bytes, but {len(header_bytes)} were given.")
 
-        assert_valid_object_set_number(object_set_number)
+        ensure_tileset(tileset_number)
 
-        self._object_set_number = object_set_number
+        self._tileset_number = tileset_number
 
         self.data = header_bytes
 
@@ -45,7 +45,7 @@ class LevelHeader:
             self.height = self.length
             self.width = DEFAULT_VERTICAL_WIDTH
 
-        self.jump_object_set_number = self.data[6] & 0b0000_1111  # for indexing purposes
+        self.jump_tileset_number = self.data[6] & 0b0000_1111  # for indexing purposes
 
         self.start_action = (self.data[7] & 0b1110_0000) >> 5
 
@@ -56,7 +56,7 @@ class LevelHeader:
         self.music_index = self.data[8] & 0b0000_1111
 
         self.jump_level_address = (
-            (self.data[1] << 8) + self.data[0] + LEVEL_BASE_OFFSET + TILESET_LEVEL_OFFSET[self.jump_object_set_number]
+            (self.data[1] << 8) + self.data[0] + LEVEL_BASE_OFFSET + TILESET_LEVEL_OFFSET[self.jump_tileset_number]
         )
         self.jump_enemy_address = (self.data[3] << 8) + self.data[2] + ENEMY_BASE_OFFSET
 

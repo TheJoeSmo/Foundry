@@ -253,13 +253,13 @@ class ROM(Rom):
         self.point = 0
 
     @staticmethod
-    def get_tsa_data(object_set: int) -> bytearray:
+    def get_tsa_data(tileset: int) -> bytearray:
         rom = ROM()
 
-        if object_set == 0:
+        if tileset == 0:
             tsa_index = WORLD_MAP_TSA_INDEX
         else:
-            tsa_index = rom.get_byte(TSA_OS_LIST + object_set)
+            tsa_index = rom.get_byte(TSA_OS_LIST + tileset)
 
         tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
         tsa_data = rom.bulk_read(TSA_TABLE_SIZE, rom.header.normalized_address(tsa_start))
@@ -268,12 +268,12 @@ class ROM(Rom):
         return tsa_data
 
     @staticmethod
-    def write_tsa_data(object_set: int, tsa_data: bytearray):
+    def write_tsa_data(tileset: int, tsa_data: bytearray):
         rom = ROM()
 
-        tsa_index = rom.int(TSA_OS_LIST + object_set)
+        tsa_index = rom.int(TSA_OS_LIST + tileset)
 
-        if object_set == 0:
+        if tileset == 0:
             # todo why is the tsa index in the wrong (seemingly) false?
             tsa_index += 1
 

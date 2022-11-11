@@ -52,7 +52,7 @@ class PaletteGroupController(QWidget):
         )
 
     def load_from_level(self, level: Level):
-        self.model.tileset = level.object_set_number
+        self.model.tileset = level.tileset_number
         self.model.background_index = level.object_palette_index
         self.model.sprite_index = level.enemy_palette_index
         self.model.restore()

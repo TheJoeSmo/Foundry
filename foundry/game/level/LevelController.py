@@ -78,17 +78,17 @@ class LevelController:
             level_name=self.level_ref.level.name,
             object_data_offset=self.level_ref.level.header_offset,
             enemy_data_offset=self.level_ref.level.enemy_offset,
-            object_set=self.level_ref.level.object_set_number,
+            tileset=self.level_ref.level.tileset_number,
         )
 
     @require_safe_to_change
     def warp_to_alternative(self):
         level_address = self.level_ref.level.next_area_objects
         enemy_address = self.level_ref.level.next_area_enemies + 1
-        object_set = self.level_ref.level.next_area_object_set
+        tileset = self.level_ref.level.next_area_tileset
 
         self.update_level(
-            f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, object_set
+            f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, tileset
         )
 
     @require_safe_to_change
@@ -101,7 +101,7 @@ class LevelController:
                 selector.level_name if selector.level_name is not None else "",
                 selector.object_data_offset,
                 selector.enemy_data_offset,
-                selector.object_set,
+                selector.tileset,
             )
 
     def to_data(self) -> list[DataProtocol]:
@@ -269,8 +269,8 @@ class LevelController:
             self.level_ref.level.changed or not self.level_ref.level.attached_to_rom or self.parent.side_palette.changed
         )
 
-    def update_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, object_set: int):
-        self.level_ref.load_level(level_name, object_data_offset, enemy_data_offset, object_set)
+    def update_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, tileset: int):
+        self.level_ref.load_level(level_name, object_data_offset, enemy_data_offset, tileset)
         self.update_gui_for_level()
         self.parent.update_title()
         self.parent.side_palette.load_from_level(self.level_ref.level)
@@ -279,14 +279,14 @@ class LevelController:
         self.parent.side_palette.load_from_level(self.level_ref.level)
 
         self.parent.jump_list.update()
-        self.parent.object_dropdown.set_object_set(
-            self.level_ref.level.object_set_number,
+        self.parent.object_dropdown.set_tileset(
+            self.level_ref.level.tileset_number,
             self.level_ref.level.graphic_set,
             self.level_ref.level.object_palette_index,
             self.level_ref.level.enemy_palette_index,
         )
-        self.parent.object_toolbar.set_object_set(
-            self.level_ref.level.object_set_number,
+        self.parent.object_toolbar.set_tileset(
+            self.level_ref.level.tileset_number,
             self.level_ref.level.graphic_set,
             self.level_ref.level.object_palette_index,
             self.level_ref.level.enemy_palette_index,
@@ -339,7 +339,7 @@ class LevelController:
 
     def display_block_viewer(self):
         block_viewer = BlockViewer(parent=self.parent)
-        block_viewer.tileset = self.level_ref.level.object_set.number
+        block_viewer.tileset = self.level_ref.level.tileset.number
         block_viewer.palette_group = self.level_ref.level.object_palette_index
         block_viewer.tile_square_assembly_changed.connect(self.update)
         block_viewer.show()

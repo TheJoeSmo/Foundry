@@ -31,7 +31,7 @@ from foundry.gui.AutoScrollDrawer import AutoScrollDrawer
 from foundry.gui.settings import UserSettings
 from foundry.smb3parse.constants import OBJ_AUTOSCROLL, TILESET_BACKGROUND_BLOCKS
 from foundry.smb3parse.levels import LEVEL_MAX_LENGTH
-from foundry.smb3parse.objects.object_set import (
+from foundry.smb3parse.objects.tileset import (
     CLOUDY_OBJECT_SET,
     DESERT_OBJECT_SET,
     DUNGEON_OBJECT_SET,
@@ -115,9 +115,9 @@ def _block_from_index(block_index: int, scale_factor: int, level: Level, transpa
     Returns the block at the given index, from the TSA table for the given level.
     """
 
-    palette_group: PaletteGroup = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+    palette_group: PaletteGroup = PaletteGroup.from_tileset(level.tileset_number, level.header.object_palette_index)
     graphics_set: GraphicsSet = GraphicsSet.from_tileset(level.header.graphic_set_index)
-    tsa_data: bytearray = ROM().get_tsa_data(level.object_set_number)
+    tsa_data: bytearray = ROM().get_tsa_data(level.tileset_number)
     block: Block = Block.from_tsa(Point(0, 0), block_index, tsa_data)
 
     if transparent:
@@ -146,11 +146,11 @@ class LevelDrawer:
 
         self._draw_default_graphics(painter, level)
 
-        if level.object_set_number == DESERT_OBJECT_SET:
+        if level.tileset_number == DESERT_OBJECT_SET:
             self._draw_desert_default_graphics(painter, level)
-        elif level.object_set_number == DUNGEON_OBJECT_SET:
+        elif level.tileset_number == DUNGEON_OBJECT_SET:
             self._draw_dungeon_default_graphics(painter, level)
-        elif level.object_set_number == ICE_OBJECT_SET:
+        elif level.tileset_number == ICE_OBJECT_SET:
             self._draw_ice_default_graphics(painter, level)
 
         self._draw_objects(painter, level)
@@ -175,13 +175,13 @@ class LevelDrawer:
     def _draw_background(self, painter: QPainter, level: Level):
         painter.save()
 
-        if level.object_set_number == CLOUDY_OBJECT_SET:
+        if level.tileset_number == CLOUDY_OBJECT_SET:
             bg_color = ColorPalette.from_default()[
-                PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)[3, 2]
+                PaletteGroup.from_tileset(level.tileset_number, level.header.object_palette_index)[3, 2]
             ].to_qt()
         else:
             bg_color = PaletteGroup.from_tileset(
-                level.object_set_number, level.header.object_palette_index
+                level.tileset_number, level.header.object_palette_index
             ).background_color
 
         painter.fillRect(level.get_rect(self.block_length).to_qt(), bg_color)
@@ -234,14 +234,14 @@ class LevelDrawer:
             painter.drawImage(QPoint(x * self.block_length, y * self.block_length), bg_block)
 
     def _draw_default_graphics(self, painter: QPainter, level: Level):
-        bg_block = _block_from_index(TILESET_BACKGROUND_BLOCKS[level.object_set_number], self.block_length, level)
+        bg_block = _block_from_index(TILESET_BACKGROUND_BLOCKS[level.tileset_number], self.block_length, level)
 
         for x, y in product(range(level.width), range(level.height)):
             painter.drawImage(QPoint(x * self.block_length, y * self.block_length), bg_block)
 
     def _draw_objects(self, painter: QPainter, level: Level):
-        bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-        spr_palette_group = PaletteGroup.from_tileset(level.object_set_number, 8 + level.header.enemy_palette_index)
+        bg_palette_group = PaletteGroup.from_tileset(level.tileset_number, level.header.object_palette_index)
+        spr_palette_group = PaletteGroup.from_tileset(level.tileset_number, 8 + level.header.enemy_palette_index)
 
         for level_object in level.objects:
             level_object.palette_group = bg_palette_group

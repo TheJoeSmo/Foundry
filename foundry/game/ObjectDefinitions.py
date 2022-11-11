@@ -8,7 +8,7 @@ from foundry import tileset_definitions
 from foundry.core.warnings.OutsideLevelBoundsWarning import OutsideLevelBoundsWarning
 from foundry.core.warnings.Warning import Warning
 from foundry.game.Definitions import Definition
-from foundry.smb3parse.objects.object_set import (
+from foundry.smb3parse.objects.tileset import (
     AIR_SHIP_OBJECT_SET,
     CLOUDY_OBJECT_SET,
     DESERT_OBJECT_SET,
@@ -107,7 +107,7 @@ def get_object_metadata() -> Tilesets:
         return Tilesets(__root__=loads(f.read()))
 
 
-object_set_to_definition = {
+tileset_to_definition_index = {
     WORLD_MAP_OBJECT_SET: 0,
     PLAINS_OBJECT_SET: 1,
     MUSHROOM_OBJECT_SET: 1,

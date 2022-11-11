@@ -71,7 +71,7 @@ def level_to_header_state(level: Level, file_settings: FileSettings) -> HeaderSt
         ),
         LevelStartState(level.start_x_index, level.start_y_index, level.start_action),
         LevelGraphicsState(level.object_palette_index, level.enemy_palette_index, level.graphic_set),
-        LevelWarpState(level.next_area_objects, level.next_area_enemies, level.next_area_object_set),
+        LevelWarpState(level.next_area_objects, level.next_area_enemies, level.next_area_tileset),
         find_level_by_pointers(file_settings.levels, level.object_offset, level.enemy_offset)
         or file_settings.levels[0],
     )

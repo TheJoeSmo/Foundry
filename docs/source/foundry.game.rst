@@ -53,10 +53,10 @@ foundry.game.ObjectDefinitions module
    :undoc-members:
    :show-inheritance:
 
-foundry.game.ObjectSet module
+foundry.game.Tileset module
 -----------------------------
 
-.. automodule:: foundry.game.ObjectSet
+.. automodule:: foundry.game.Tileset
    :members:
    :undoc-members:
    :show-inheritance:

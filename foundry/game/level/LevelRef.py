@@ -19,8 +19,8 @@ class LevelRef(QObject):
     def is_loaded(self) -> bool:
         return self._is_loaded
 
-    def load_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, object_set_number: int):
-        self.level = Level(level_name, object_data_offset, enemy_data_offset, object_set_number)
+    def load_level(self, level_name: str, object_data_offset: int, enemy_data_offset: int, tileset_number: int):
+        self.level = Level(level_name, object_data_offset, enemy_data_offset, tileset_number)
         self._is_loaded = True
 
         # actively emit, because we weren't connected yet, when the level sent it out

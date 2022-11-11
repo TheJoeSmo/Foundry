@@ -89,7 +89,7 @@ class LevelManager:
 
         if self.enabled and self.controller is not None:
             object_viewer.set_object_and_graphic_set(
-                self.controller.level_ref.level.object_set.number, self.controller.level_ref.level.graphic_set
+                self.controller.level_ref.level.tileset.number, self.controller.level_ref.level.graphic_set
             )
 
             if len(self.parent.level_view.get_selected_objects()) == 1:

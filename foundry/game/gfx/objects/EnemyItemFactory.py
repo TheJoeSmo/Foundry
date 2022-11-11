@@ -9,23 +9,23 @@ from foundry.game.gfx.objects.EnemyItem import EnemyObject
 
 
 class EnemyItemFactory:
-    object_set: int
+    tileset: int
     graphic_set: int
 
     definitions: list = []
 
-    def __init__(self, object_set: int, palette_index: int):
+    def __init__(self, tileset: int, palette_index: int):
         png = QImage(str(data_dir.joinpath("gfx.png")))
 
         png.convertTo(QImage.Format.Format_RGB888)
 
-        rows_per_object_set = 256 // 64
+        rows_per_tileset = 256 // 64
 
-        y_offset = 12 * rows_per_object_set * BLOCK_SIZE.height
+        y_offset = 12 * rows_per_tileset * BLOCK_SIZE.height
 
         self.png_data = png.copy(QRect(0, y_offset, png.width(), png.height() - y_offset))
 
-        self.palette_group = PaletteGroup.from_tileset(object_set, PALETTE_GROUPS_PER_OBJECT_SET + palette_index)
+        self.palette_group = PaletteGroup.from_tileset(tileset, PALETTE_GROUPS_PER_OBJECT_SET + palette_index)
 
     def from_data(self, data, _):
         return EnemyObject(data, self.png_data, self.palette_group)
