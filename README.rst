@@ -33,8 +33,8 @@ Downloading the repository and running it with Python and
 
     $ git clone git@github.com:TheJoeSmo/Foundry.git
     $ cd Foundry
-    $ poetry install
-    $ poetry run foundry
+    $ pip install -r requirements-dev.txt
+    $ python -m foundry.main
 
 Call for Contributions
 ======================
