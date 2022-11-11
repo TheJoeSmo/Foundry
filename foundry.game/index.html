@@ -428,8 +428,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.length"><code class="docutils literal notranslate"><span class="pre">Level.length</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.music_index"><code class="docutils literal notranslate"><span class="pre">Level.music_index</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_enemies"><code class="docutils literal notranslate"><span class="pre">Level.next_area_enemies</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_object_set"><code class="docutils literal notranslate"><span class="pre">Level.next_area_object_set</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_objects"><code class="docutils literal notranslate"><span class="pre">Level.next_area_objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_tileset"><code class="docutils literal notranslate"><span class="pre">Level.next_area_tileset</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.object_at"><code class="docutils literal notranslate"><span class="pre">Level.object_at()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.object_palette_index"><code class="docutils literal notranslate"><span class="pre">Level.object_palette_index</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.level/#foundry.game.level.Level.Level.objects_end"><code class="docutils literal notranslate"><span class="pre">Level.objects_end</span></code></a></li>
@@ -1750,7 +1750,7 @@ for more information.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.File.ROM.get_tsa_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_tsa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.get_tsa_data" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_tsa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></span><a class="headerlink" href="#foundry.game.File.ROM.get_tsa_data" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1823,7 +1823,7 @@ for more information.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.File.ROM.write_tsa_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write_tsa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsa_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.write_tsa_data" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write_tsa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsa_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.File.ROM.write_tsa_data" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2204,30 +2204,30 @@ constructed, this enum lists the known generator types.</p>
 <dd></dd></dl>
 
 </section>
-<section id="module-foundry.game.ObjectSet">
-<span id="foundry-game-objectset-module"></span><h2>foundry.game.ObjectSet module<a class="headerlink" href="#module-foundry.game.ObjectSet" title="Permalink to this heading">#</a></h2>
+<section id="module-foundry.game.Tileset">
+<span id="foundry-game-tileset-module"></span><h2>foundry.game.Tileset module<a class="headerlink" href="#module-foundry.game.Tileset" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ObjectSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.Tileset.Tileset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.Tileset.Tileset" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_definition_of">
-<span class="sig-name descname"><span class="pre">get_definition_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.game.ObjectDefinitions.TilesetDefinition" title="foundry.game.ObjectDefinitions.TilesetDefinition"><span class="pre">TilesetDefinition</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_definition_of" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.Tileset.Tileset.get_definition_of">
+<span class="sig-name descname"><span class="pre">get_definition_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#foundry.game.ObjectDefinitions.TilesetDefinition" title="foundry.game.ObjectDefinitions.TilesetDefinition"><span class="pre">TilesetDefinition</span></a></span></span><a class="headerlink" href="#foundry.game.Tileset.Tileset.get_definition_of" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_ending_offset">
-<span class="sig-name descname"><span class="pre">get_ending_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_ending_offset" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.Tileset.Tileset.get_ending_offset">
+<span class="sig-name descname"><span class="pre">get_ending_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.Tileset.Tileset.get_ending_offset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.get_object_byte_length">
-<span class="sig-name descname"><span class="pre">get_object_byte_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.get_object_byte_length" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.Tileset.Tileset.get_object_byte_length">
+<span class="sig-name descname"><span class="pre">get_object_byte_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.Tileset.Tileset.get_object_byte_length" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.ObjectSet.ObjectSet.object_type">
-<span class="sig-name descname"><span class="pre">object_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.ObjectSet.ObjectSet.object_type" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.Tileset.Tileset.object_type">
+<span class="sig-name descname"><span class="pre">object_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#foundry.game.Tileset.Tileset.object_type" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3651,51 +3651,51 @@ constructed, this enum lists the known generator types.</p>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-foundry.game.ObjectSet">
-   foundry.game.ObjectSet module
+  <a class="reference internal nav-link" href="#module-foundry.game.Tileset">
+   foundry.game.Tileset module
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#foundry.game.ObjectSet.ObjectSet">
+    <a class="reference internal nav-link" href="#foundry.game.Tileset.Tileset">
      <code class="docutils literal notranslate">
       <span class="pre">
-       ObjectSet
+       Tileset
       </span>
      </code>
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.ObjectSet.ObjectSet.get_definition_of">
+      <a class="reference internal nav-link" href="#foundry.game.Tileset.Tileset.get_definition_of">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectSet.get_definition_of()
+         Tileset.get_definition_of()
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.ObjectSet.ObjectSet.get_ending_offset">
+      <a class="reference internal nav-link" href="#foundry.game.Tileset.Tileset.get_ending_offset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectSet.get_ending_offset()
+         Tileset.get_ending_offset()
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.ObjectSet.ObjectSet.get_object_byte_length">
+      <a class="reference internal nav-link" href="#foundry.game.Tileset.Tileset.get_object_byte_length">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectSet.get_object_byte_length()
+         Tileset.get_object_byte_length()
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.ObjectSet.ObjectSet.object_type">
+      <a class="reference internal nav-link" href="#foundry.game.Tileset.Tileset.object_type">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectSet.object_type()
+         Tileset.object_type()
         </span>
        </code>
       </a>

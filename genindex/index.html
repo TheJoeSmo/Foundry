@@ -417,7 +417,7 @@
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_enemy_set">add_from_enemy_set() (ObjectToolBox method)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_object_set">add_from_object_set() (ObjectToolBox method)</a>
+      <li><a href="../foundry.gui/#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_tileset">add_from_tileset() (ObjectToolBox method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.JumpList.JumpList.add_jump">add_jump (JumpList attribute)</a>
 </li>
@@ -532,8 +532,6 @@
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.ContextMenu.as_object_menu">as_object_menu() (ContextMenu method)</a>
 </li>
       <li><a href="../foundry.graphic_editor/#foundry.graphic_editor.GraphicEditor.ask_user_to_select_file">ask_user_to_select_file() (in module foundry.graphic_editor.GraphicEditor)</a>
-</li>
-      <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.object_set.assert_valid_object_set_number">assert_valid_object_set_number() (in module foundry.smb3parse.objects.object_set)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.gui.Key.ASTERISK">ASTERISK (Key attribute)</a>
 </li>
@@ -799,14 +797,14 @@
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.util.change_level_object_type">change_level_object_type() (in module foundry.game.gfx.objects.util)</a>
 </li>
-      <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectDrawArea.change_object_set">change_object_set() (ObjectDrawArea method)</a>
-</li>
       <li><a href="../foundry.core/#foundry.core.gui.UndoRedoForwarder.change_state">change_state() (UndoRedoForwarder method)</a>
 
       <ul>
         <li><a href="../foundry.core/#foundry.core.gui.UndoRedoRoot.change_state">(UndoRedoRoot method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectDrawArea.change_tileset">change_tileset() (ObjectDrawArea method)</a>
+</li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.util.change_type">change_type() (in module foundry.game.gfx.objects.util)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.changed">changed (Level attribute)</a>
@@ -1725,6 +1723,8 @@
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.Enemy.EnemyProtocol">EnemyProtocol (class in foundry.game.gfx.objects.Enemy)</a>
 </li>
+      <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.tileset.ensure_tileset">ensure_tileset() (in module foundry.smb3parse.objects.tileset)</a>
+</li>
       <li><a href="../foundry.core/#foundry.core.palette.Color.ensure_type">ensure_type() (Color class method)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.gui.Key.ENTER">ENTER (Key attribute)</a>
@@ -2418,10 +2418,10 @@
 </li>
       </ul></li>
       <li>
-    foundry.game.ObjectSet
+    foundry.game.Tileset
 
       <ul>
-        <li><a href="../foundry.game/#module-foundry.game.ObjectSet">module</a>
+        <li><a href="../foundry.game/#module-foundry.game.Tileset">module</a>
 </li>
       </ul></li>
       <li>
@@ -2966,10 +2966,10 @@
 </li>
       </ul></li>
       <li>
-    foundry.smb3parse.objects.object_set
+    foundry.smb3parse.objects.tileset
 
       <ul>
-        <li><a href="../foundry.smb3parse.objects/#module-foundry.smb3parse.objects.object_set">module</a>
+        <li><a href="../foundry.smb3parse.objects/#module-foundry.smb3parse.objects.tileset">module</a>
 </li>
       </ul></li>
       <li>
@@ -3305,11 +3305,11 @@
 </li>
       <li><a href="../foundry.core/#foundry.core.redux_store.ReduxStore.get_default_state">get_default_state() (ReduxStore method)</a>
 </li>
-      <li><a href="../foundry.game/#foundry.game.ObjectSet.ObjectSet.get_definition_of">get_definition_of() (ObjectSet method)</a>
+      <li><a href="../foundry.game/#foundry.game.Tileset.Tileset.get_definition_of">get_definition_of() (Tileset method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.get_domain">get_domain() (SpinnerPanel method)</a>
 </li>
-      <li><a href="../foundry.game/#foundry.game.ObjectSet.ObjectSet.get_ending_offset">get_ending_offset() (ObjectSet method)</a>
+      <li><a href="../foundry.game/#foundry.game.Tileset.Tileset.get_ending_offset">get_ending_offset() (Tileset method)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.EnemyDefinitions.get_enemy_metadata">get_enemy_metadata() (in module foundry.game.EnemyDefinitions)</a>
 </li>
@@ -3369,7 +3369,7 @@
         <li><a href="../foundry.game.level/#foundry.game.level.WorldMap.WorldMap.get_object">(WorldMap method)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.game/#foundry.game.ObjectSet.ObjectSet.get_object_byte_length">get_object_byte_length() (ObjectSet method)</a>
+      <li><a href="../foundry.game/#foundry.game.Tileset.Tileset.get_object_byte_length">get_object_byte_length() (Tileset method)</a>
 </li>
       <li><a href="../foundry.game/#foundry.game.ObjectDefinitions.get_object_metadata">get_object_metadata() (in module foundry.game.ObjectDefinitions)</a>
 </li>
@@ -3941,6 +3941,8 @@
 </li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObject.LevelObject.is_single_block">is_single_block (LevelObject property)</a>
 </li>
+      <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.tileset.is_tileset_index">is_tileset_index() (in module foundry.smb3parse.objects.tileset)</a>
+</li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.is_too_big">is_too_big() (Level method)</a>
 </li>
       <li><a href="../foundry.smb3parse.util/#foundry.smb3parse.util.code_edit.CodeEdit.is_valid">is_valid() (CodeEdit method)</a>
@@ -3952,8 +3954,6 @@
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.is_valid_level_length">is_valid_level_length() (in module foundry.smb3parse.levels)</a>
 </li>
       <li><a href="../foundry.core/#foundry.core.namespace.Path.is_valid_name">is_valid_name() (Path static method)</a>
-</li>
-      <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.object_set.is_valid_object_set_number">is_valid_object_set_number() (in module foundry.smb3parse.objects.object_set)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.is_vertical">is_vertical (Level property)</a>
 </li>
@@ -4663,7 +4663,7 @@
 </li>
         <li><a href="../foundry.game/#module-foundry.game.ObjectDefinitions">foundry.game.ObjectDefinitions</a>
 </li>
-        <li><a href="../foundry.game/#module-foundry.game.ObjectSet">foundry.game.ObjectSet</a>
+        <li><a href="../foundry.game/#module-foundry.game.Tileset">foundry.game.Tileset</a>
 </li>
         <li><a href="../foundry.graphic_editor/#module-foundry.graphic_editor">foundry.graphic_editor</a>
 </li>
@@ -4819,7 +4819,7 @@
 </li>
         <li><a href="../foundry.smb3parse.objects/#module-foundry.smb3parse.objects.level_object">foundry.smb3parse.objects.level_object</a>
 </li>
-        <li><a href="../foundry.smb3parse.objects/#module-foundry.smb3parse.objects.object_set">foundry.smb3parse.objects.object_set</a>
+        <li><a href="../foundry.smb3parse.objects/#module-foundry.smb3parse.objects.tileset">foundry.smb3parse.objects.tileset</a>
 </li>
         <li><a href="../foundry.smb3parse.util/#module-foundry.smb3parse.util">foundry.smb3parse.util</a>
 </li>
@@ -5020,11 +5020,11 @@
       </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_enemies">next_area_enemies (Level property)</a>
 </li>
-      <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_object_set">next_area_object_set (Level property)</a>
+      <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_objects">next_area_objects (Level property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_objects">next_area_objects (Level property)</a>
+      <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.next_area_tileset">next_area_tileset (Level property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.next_level_enemy_pointer">next_level_enemy_pointer (HeaderEditor property)</a>
 </li>
@@ -5166,12 +5166,6 @@
         <li><a href="../foundry.gui/#foundry.gui.ObjectToolBox.ObjectToolBox.object_selected">(ObjectToolBox attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set">object_set (EnemyItemFactory attribute)</a>
-
-      <ul>
-        <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set">(LevelObjectFactory attribute)</a>
-</li>
-      </ul></li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelControlled.LevelControlled.object_toolbar">object_toolbar (LevelControlled attribute)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.PydanticUserSettings.object_tooltip_enabled">object_tooltip_enabled (PydanticUserSettings attribute)</a>
@@ -5180,7 +5174,7 @@
         <li><a href="../foundry.gui/#foundry.gui.settings.UserSettings.object_tooltip_enabled">(UserSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../foundry.game/#foundry.game.ObjectSet.ObjectSet.object_type">object_type() (ObjectSet method)</a>
+      <li><a href="../foundry.game/#foundry.game.Tileset.Tileset.object_type">object_type() (Tileset method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectIcon.ObjectButton">ObjectButton (class in foundry.gui.ObjectIcon)</a>
 </li>
@@ -5201,8 +5195,6 @@
       <li><a href="../foundry.game.level/#foundry.game.level.Level.Level.objects_end">objects_end (Level property)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelView.LevelView.objects_selected">objects_selected (LevelView attribute)</a>
-</li>
-      <li><a href="../foundry.game/#foundry.game.ObjectSet.ObjectSet">ObjectSet (class in foundry.game.ObjectSet)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectStatusBar.ObjectStatusBar">ObjectStatusBar (class in foundry.gui.ObjectStatusBar)</a>
 </li>
@@ -5248,12 +5240,12 @@
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.on_disable">on_disable() (LevelManager method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_edit_autoscroll">on_edit_autoscroll() (MainWindow method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.on_enable">on_enable() (LevelManager method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.gui/#foundry.gui.CustomChildWindow.CustomChildWindow.on_exit">on_exit() (CustomChildWindow method)</a>
 
       <ul>
@@ -5281,8 +5273,6 @@
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_menu">on_menu() (MainWindow method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_menu_item_checked">on_menu_item_checked() (MainWindow method)</a>
-</li>
-      <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectViewer.on_object_set">on_object_set() (ObjectViewer method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.MainWindow.MainWindow.on_object_viewer">on_object_viewer() (MainWindow method)</a>
 </li>
@@ -5336,6 +5326,8 @@
         <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectViewer.on_spin">(ObjectViewer method)</a>
 </li>
       </ul></li>
+      <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectViewer.on_tileset">on_tileset() (ObjectViewer method)</a>
+</li>
       <li><a href="../foundry.gui/#foundry.gui.LevelSelector.LevelSelector.on_world_click">on_world_click() (LevelSelector method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.LevelDrawer.ONE_UP">ONE_UP() (in module foundry.gui.LevelDrawer)</a>
@@ -6378,22 +6370,22 @@
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ObjectViewer.ObjectViewer.set_object_and_graphic_set">set_object_and_graphic_set() (ObjectViewer method)</a>
 </li>
-      <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set">set_object_set() (LevelObjectFactory method)</a>
-
-      <ul>
-        <li><a href="../foundry.gui/#foundry.gui.ObjectDropdown.ObjectDropdown.set_object_set">(ObjectDropdown method)</a>
-</li>
-        <li><a href="../foundry.gui/#foundry.gui.ObjectToolBar.ObjectToolBar.set_object_set">(ObjectToolBar method)</a>
-</li>
-        <li><a href="../foundry.gui/#foundry.gui.TabbedToolBox.TabbedToolBox.set_object_set">(TabbedToolBox method)</a>
-</li>
-      </ul></li>
       <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">set_palette_group_index() (LevelObjectFactory method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.ContextMenu.ContextMenu.set_position">set_position() (ContextMenu method)</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.settings.set_style">set_style() (in module foundry.gui.settings)</a>
 </li>
+      <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_tileset">set_tileset() (LevelObjectFactory method)</a>
+
+      <ul>
+        <li><a href="../foundry.gui/#foundry.gui.ObjectDropdown.ObjectDropdown.set_tileset">(ObjectDropdown method)</a>
+</li>
+        <li><a href="../foundry.gui/#foundry.gui.ObjectToolBar.ObjectToolBar.set_tileset">(ObjectToolBar method)</a>
+</li>
+        <li><a href="../foundry.gui/#foundry.gui.TabbedToolBox.TabbedToolBox.set_tileset">(TabbedToolBox method)</a>
+</li>
+      </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.SpinnerPanel.SpinnerPanel.set_type">set_type() (SpinnerPanel method)</a>
 </li>
       <li><a href="../foundry.smb3parse.levels/#foundry.smb3parse.levels.level.Level.set_world_map_position">set_world_map_position() (Level method)</a>
@@ -7005,7 +6997,15 @@
       <ul>
         <li><a href="../foundry.gui/#foundry.gui.BlockViewer.BlockViewerModel.tileset">(BlockViewerModel attribute)</a>
 </li>
+      </ul></li>
+      <li><a href="../foundry.game/#foundry.game.Tileset.Tileset">Tileset (class in foundry.game.Tileset)</a>
+</li>
+      <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.tileset">tileset (EnemyItemFactory attribute)</a>
+
+      <ul>
         <li><a href="../foundry.game.level/#foundry.game.level.util.Level.tileset">(Level attribute)</a>
+</li>
+        <li><a href="../foundry.game.gfx.objects/#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.tileset">(LevelObjectFactory attribute)</a>
 </li>
         <li><a href="../foundry.gui/#foundry.gui.LevelWarpEditor.LevelWarpDisplay.tileset">(LevelWarpDisplay property)</a>
 </li>
@@ -7025,6 +7025,8 @@
 </li>
       </ul></li>
       <li><a href="../foundry.gui/#foundry.gui.LevelWarpEditor.LevelWarpDisplay.tileset_editor">tileset_editor (LevelWarpDisplay attribute)</a>
+</li>
+      <li><a href="../foundry.smb3parse.objects/#foundry.smb3parse.objects.tileset.TilesetError">TilesetError</a>
 </li>
       <li><a href="../foundry.gui/#foundry.gui.HeaderEditor.HeaderEditor.time">time (HeaderEditor property)</a>
 
@@ -7080,14 +7082,14 @@
         <li><a href="../foundry.game.level/#foundry.game.level.WorldMap.WorldMap.to_bytes">(WorldMap method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.to_data">to_data() (LevelController method)</a>
 
       <ul>
         <li><a href="../foundry.game.level/#foundry.game.level.LevelManager.LevelManager.to_data">(LevelManager method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../foundry.game.level/#foundry.game.level.util.PydanticDisplayInformation.to_display_information">to_display_information() (PydanticDisplayInformation method)</a>
 </li>
       <li><a href="../foundry.game.level/#foundry.game.level.LevelController.LevelController.to_foreground">to_foreground() (LevelController method)</a>

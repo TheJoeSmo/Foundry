@@ -669,7 +669,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.gui.BlockViewer.BlockViewerView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockViewerView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.BlockViewer.BlockViewerView" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockViewerView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.BlockViewer.BlockViewerView" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.gui.BlockViewer.BlockViewerView.BLOCKS">
@@ -4134,8 +4134,8 @@ dropdown. This is not the selected object inside the level!</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectDropdown.ObjectDropdown.set_object_set">
-<span class="sig-name descname"><span class="pre">set_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.ObjectDropdown.ObjectDropdown.set_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectDropdown.ObjectDropdown.set_tileset">
+<span class="sig-name descname"><span class="pre">set_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.gui.ObjectDropdown.ObjectDropdown.set_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4340,8 +4340,8 @@ dropdown. This is not the selected object inside the level!</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectToolBar.ObjectToolBar.set_object_set">
-<span class="sig-name descname"><span class="pre">set_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBar.ObjectToolBar.set_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectToolBar.ObjectToolBar.set_tileset">
+<span class="sig-name descname"><span class="pre">set_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBar.ObjectToolBar.set_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4360,12 +4360,12 @@ dropdown. This is not the selected object inside the level!</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.ObjectToolBox.ObjectToolBox.add_from_enemy_set">
-<span class="sig-name descname"><span class="pre">add_from_enemy_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_enemy_set" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_from_enemy_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_enemy_set" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectToolBox.ObjectToolBox.add_from_object_set">
-<span class="sig-name descname"><span class="pre">add_from_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectToolBox.ObjectToolBox.add_from_tileset">
+<span class="sig-name descname"><span class="pre">add_from_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4463,7 +4463,7 @@ dropdown. This is not the selected object inside the level!</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectDrawArea">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ObjectDrawArea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectDrawArea" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ObjectDrawArea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tileset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectDrawArea" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectDrawArea.change_graphic_set">
@@ -4471,8 +4471,8 @@ dropdown. This is not the selected object inside the level!</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectDrawArea.change_object_set">
-<span class="sig-name descname"><span class="pre">change_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectDrawArea.change_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectDrawArea.change_tileset">
+<span class="sig-name descname"><span class="pre">change_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectDrawArea.change_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4514,13 +4514,13 @@ dropdown. This is not the selected object inside the level!</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectViewer.on_object_set">
-<span class="sig-name descname"><span class="pre">on_object_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.on_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectViewer.on_spin">
+<span class="sig-name descname"><span class="pre">on_spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.on_spin" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectViewer.on_spin">
-<span class="sig-name descname"><span class="pre">on_spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.on_spin" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectViewer.on_tileset">
+<span class="sig-name descname"><span class="pre">on_tileset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.on_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4530,7 +4530,7 @@ dropdown. This is not the selected object inside the level!</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.gui.ObjectViewer.ObjectViewer.set_object_and_graphic_set">
-<span class="sig-name descname"><span class="pre">set_object_and_graphic_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.set_object_and_graphic_set" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_object_and_graphic_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.ObjectViewer.ObjectViewer.set_object_and_graphic_set" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -5628,8 +5628,8 @@ dropdown. This is not the selected object inside the level!</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.gui.TabbedToolBox.TabbedToolBox.set_object_set">
-<span class="sig-name descname"><span class="pre">set_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.TabbedToolBox.TabbedToolBox.set_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.gui.TabbedToolBox.TabbedToolBox.set_tileset">
+<span class="sig-name descname"><span class="pre">set_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spr_palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.gui.TabbedToolBox.TabbedToolBox.set_tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -13000,10 +13000,10 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectDropdown.ObjectDropdown.set_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectDropdown.ObjectDropdown.set_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectDropdown.set_object_set()
+         ObjectDropdown.set_tileset()
         </span>
        </code>
       </a>
@@ -13364,10 +13364,10 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectToolBar.ObjectToolBar.set_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectToolBar.ObjectToolBar.set_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectToolBar.set_object_set()
+         ObjectToolBar.set_tileset()
         </span>
        </code>
       </a>
@@ -13409,10 +13409,10 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectToolBox.ObjectToolBox.add_from_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectToolBox.add_from_object_set()
+         ObjectToolBox.add_from_tileset()
         </span>
        </code>
       </a>
@@ -13593,10 +13593,10 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectDrawArea.change_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectDrawArea.change_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectDrawArea.change_object_set()
+         ObjectDrawArea.change_tileset()
         </span>
        </code>
       </a>
@@ -13667,19 +13667,19 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectViewer.on_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectViewer.on_spin">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectViewer.on_object_set()
+         ObjectViewer.on_spin()
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectViewer.on_spin">
+      <a class="reference internal nav-link" href="#foundry.gui.ObjectViewer.ObjectViewer.on_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectViewer.on_spin()
+         ObjectViewer.on_tileset()
         </span>
        </code>
       </a>
@@ -15681,10 +15681,10 @@ automatically to the parent and will work identically to one created through cod
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.gui.TabbedToolBox.TabbedToolBox.set_object_set">
+      <a class="reference internal nav-link" href="#foundry.gui.TabbedToolBox.TabbedToolBox.set_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         TabbedToolBox.set_object_set()
+         TabbedToolBox.set_tileset()
         </span>
        </code>
       </a>

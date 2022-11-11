@@ -534,7 +534,7 @@
 <span id="foundry-game-gfx-objects-enemyitemfactory-module"></span><h2>foundry.game.gfx.objects.EnemyItemFactory module<a class="headerlink" href="#module-foundry.game.gfx.objects.EnemyItemFactory" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnemyItemFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnemyItemFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.definitions">
@@ -557,8 +557,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set">
-<span class="sig-name descname"><span class="pre">object_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.tileset">
+<span class="sig-name descname"><span class="pre">tileset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -651,7 +651,7 @@
 <span id="foundry-game-gfx-objects-levelobject-module"></span><h2>foundry.game.gfx.objects.LevelObject module<a class="headerlink" href="#module-foundry.game.gfx.objects.LevelObject" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LevelObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.palette.PaletteGroup" title="foundry.core.palette.PaletteGroup"><span class="pre">PaletteGroup</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'LevelObject'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LevelObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.palette.PaletteGroup" title="foundry.core.palette.PaletteGroup"><span class="pre">PaletteGroup</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'LevelObject'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.GeneratorObject.GeneratorObject" title="foundry.game.gfx.objects.GeneratorObject.GeneratorObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneratorObject</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.as_image">
@@ -820,7 +820,7 @@
 <span id="foundry-game-gfx-objects-levelobjectfactory-module"></span><h2>foundry.game.gfx.objects.LevelObjectFactory module<a class="headerlink" href="#module-foundry.game.gfx.objects.LevelObjectFactory" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LevelObjectFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LevelObjectFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphic_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">foundry.core.graphics_set.GraphicsSet.GraphicsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">objects_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#foundry.game.gfx.objects.LevelObject.LevelObject" title="foundry.game.gfx.objects.LevelObject.LevelObject"><span class="pre">foundry.game.gfx.objects.LevelObject.LevelObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_minimal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.from_data">
@@ -843,11 +843,6 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set">
-<span class="sig-name descname"><span class="pre">object_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group">
 <span class="sig-name descname"><span class="pre">palette_group</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.palette.PaletteGroup" title="foundry.core.palette.PaletteGroup"><span class="pre">PaletteGroup</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -863,13 +858,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set">
-<span class="sig-name descname"><span class="pre">set_object_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">
+<span class="sig-name descname"><span class="pre">set_palette_group_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">
-<span class="sig-name descname"><span class="pre">set_palette_group_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">palette_group_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_tileset">
+<span class="sig-name descname"><span class="pre">set_tileset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tileset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_tileset" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.tileset">
+<span class="sig-name descname"><span class="pre">tileset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.tileset" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1418,10 +1418,10 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.object_set">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItemFactory.EnemyItemFactory.tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         EnemyItemFactory.object_set
+         EnemyItemFactory.tileset
         </span>
        </code>
       </a>
@@ -1940,15 +1940,6 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.object_set">
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         LevelObjectFactory.object_set
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.palette_group">
        <code class="docutils literal notranslate">
         <span class="pre">
@@ -1976,19 +1967,28 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_object_set">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">
        <code class="docutils literal notranslate">
         <span class="pre">
-         LevelObjectFactory.set_object_set()
+         LevelObjectFactory.set_palette_group_index()
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_palette_group_index">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.set_tileset">
        <code class="docutils literal notranslate">
         <span class="pre">
-         LevelObjectFactory.set_palette_group_index()
+         LevelObjectFactory.set_tileset()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObjectFactory.LevelObjectFactory.tileset">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         LevelObjectFactory.tileset
         </span>
        </code>
       </a>
