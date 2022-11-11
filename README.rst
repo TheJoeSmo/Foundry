@@ -26,15 +26,14 @@ Downloading the package through
 
     $ python -m pip install foundry-smb3
 
-Downloading the repository and running it with Python and 
-`Poetry <https://pypi.org/project/poetry/>`_.
+Downloading the repository and running it with Python.
 
 .. code-block:: console
 
     $ git clone git@github.com:TheJoeSmo/Foundry.git
     $ cd Foundry
-    $ poetry install
-    $ poetry run foundry
+    $ pip install -r requirements-dev.txt
+    $ python -m foundry.main
 
 Call for Contributions
 ======================

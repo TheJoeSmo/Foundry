@@ -28,12 +28,13 @@ To install and use Foundry, there are three options:
 
 3. [Download Foundry from Github](https://github.com/TheJoeSmo/Foundry.git)
 
-    This is the developer method.  This will provide you easy access to the entire repository.  In addition to [Python](https://www.python.org/downloads/) you will need [Poetry](https://python-poetry.org/docs/) installed.  Once installed run the following commands into your terminal:
+    This is the developer method.  This will provide you easy access to the entire repository.  This will require [Python](https://www.python.org/downloads/).  Once installed run the following commands into your terminal:
 
     ```
     $ git clone git@github.com:TheJoeSmo/Foundry.git
     $ cd Foundry
-    $ poetry install
+    $ pip install -r requirements-dev.txt
+    $ python -m foundry.main
     ```
 
 Documentation
