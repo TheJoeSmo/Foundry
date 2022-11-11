@@ -338,12 +338,11 @@ select a version and download the version in accordance to your machine.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pip install foundry-smb3
 </pre></div>
 </div>
-<p>Downloading the repository and running it with Python and
-<a class="reference external" href="https://pypi.org/project/poetry/">Poetry</a>.</p>
+<p>Downloading the repository and running it with Python.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:TheJoeSmo/Foundry.git
 <span class="gp">$ </span><span class="nb">cd</span> Foundry
-<span class="gp">$ </span>poetry install
-<span class="gp">$ </span>poetry run foundry
+<span class="gp">$ </span>pip install -r requirements-dev.txt
+<span class="gp">$ </span>python -m foundry.main
 </pre></div>
 </div>
 <section id="call-for-contributions">

@@ -328,26 +328,27 @@ project to empower yourself and the community to contribute.</p>
 <section id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">#</a></h2>
 <p>If GitHub is overwhelming, but still want to help the community: help fellow developers
-on StackOverflow <a class="footnote-reference brackets" href="#id8" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+on StackOverflow <a class="footnote-reference brackets" href="#id7" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>The official tag is <code class="docutils literal notranslate"><span class="pre">python-foundry</span></code> and support enables us to improve <code class="docutils literal notranslate"><span class="pre">Foundry</span></code> instead.</p>
 <p>Also, if development is not your forte, you can also help the <a class="reference external" href="https://discord.gg/MMExJKExGG">game design community</a>
-over at Discord <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+over at Discord <a class="footnote-reference brackets" href="#id8" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 </section>
 <section id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
 <p>You will need a working version of Python between the versions specified inside the
-<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a> and to install Poetry <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.
+<a class="reference external" href="https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml">toml file</a>.
 To install the remaining dependencies, simply write the following:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone git@github.com:TheJoeSmo/Foundry.git
 <span class="gp">$ </span><span class="nb">cd</span> Foundry
-<span class="gp">$ </span>poetry install
+<span class="gp">$ </span>pip install -r requirements-dev.txt
+<span class="gp">$ </span>python -m foundry.main
 </pre></div>
 </div>
 <p>This will install the remaining dependencies.  It is recommended to run this command after
 each fetch or update to the project’s dependencies, as it ensures the continuos integration
 environment is equivalent to your local one.</p>
 <p>If everything worked, you should be able to run the following and see that every test passed:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry run pytest tests/ --verbose --failed-first --ignore<span class="o">=</span><span class="s2">&quot;tests/game/gfx/objects/&quot;</span> --ignore<span class="o">=</span><span class="s2">&quot;tests/game/level/test_level_drawing.py&quot;</span> --ignore<span class="o">=</span><span class="s2">&quot;tests/gui/test_world_map.py&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pytest
 </pre></div>
 </div>
 </section>
@@ -357,7 +358,7 @@ environment is equivalent to your local one.</p>
 <li><p>No contribution is too small!  Fixes to typos and grammar are welcome.</p></li>
 <li><p>Try to limit each pull request to a single change.</p></li>
 <li><p>Always add tests and documentation for your code.
-We recommend using test driven development to develop your software <a class="footnote-reference brackets" href="#id11" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.
+We recommend using test driven development to develop your software <a class="footnote-reference brackets" href="#id10" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.
 It helps divide the program into smaller parts, which helps both yourself and the reviewer.
 If either tests or documentation are not provided, your code will be ineligible to be merged.</p></li>
 <li><p>Make sure that your new tests would otherwise fail without your change.</p></li>
@@ -372,7 +373,7 @@ so we know you have finished.</p></li>
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p>Obey <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a> and
-<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a> <a class="footnote-reference brackets" href="#id12" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id13" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.
+<a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">Numpy Docs style guide</a> <a class="footnote-reference brackets" href="#id11" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id12" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.
 We use <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> for on separate lines for doc-strings.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
 
@@ -480,7 +481,7 @@ following and these checks will be ran before every pull request.</p>
 <p>Notes:</p>
 <p>Depending on your shell you may run into a problem where <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> is not found.
 This is because the path is found inside <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.  We have provided the most common
-fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code> <a class="footnote-reference brackets" href="#id14" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.</p>
+fixes for <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">zsh</span></code> <a class="footnote-reference brackets" href="#id13" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>.</p>
 <p>Bash: Add <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.profile</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.</p>
 <p>ZHS: Add <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">-e</span> <span class="pre">~/.profile</span> <span class="pre">]]</span> <span class="pre">&amp;&amp;</span> <span class="pre">emulate</span> <span class="pre">sh</span> <span class="pre">-c</span> <span class="pre">'source</span> <span class="pre">~/.profile'</span></code> inside <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code>.</p>
 </li>
@@ -491,7 +492,7 @@ fixes for <code class="docutils literal notranslate"><span class="pre">bash</spa
 <ul>
 <li><p>Tests should write the asserts as <code class="docutils literal notranslate"><span class="pre">expected</span> <span class="pre">==</span> <span class="pre">actual</span></code>, to provide easier readability</p></li>
 <li><p>To run the test suite, simply write the following in your console:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>poetry run pytest tests/ --verbose --failed-first<span class="s2">&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pytest
 </pre></div>
 </div>
 </li>
@@ -500,32 +501,32 @@ fixes for <code class="docutils literal notranslate"><span class="pre">bash</spa
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id8" role="note">
+<aside class="footnote brackets" id="id7" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>StackOverflow: <a class="reference external" href="https://stackoverflow.com/questions/tagged/python-nametable">https://stackoverflow.com/questions/tagged/python-nametable</a></p>
 </aside>
-<aside class="footnote brackets" id="id9" role="note">
+<aside class="footnote brackets" id="id8" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>SMB3 Prime Discord Server: <a class="reference external" href="https://discord.gg/MMExJKExGG">https://discord.gg/MMExJKExGG</a></p>
 </aside>
-<aside class="footnote brackets" id="id10" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
 <p>Poetry Installation Guide: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></p>
 </aside>
-<aside class="footnote brackets" id="id11" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id10" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">4</a><span class="fn-bracket">]</span></span>
 <p>Test Driven Development Guide: <a class="reference external" href="https://www.youtube.com/watch?v=yfP_v6qCdcs">https://www.youtube.com/watch?v=yfP_v6qCdcs</a></p>
 </aside>
-<aside class="footnote brackets" id="id12" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">5</a><span class="fn-bracket">]</span></span>
 <p>PEP 8: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008">https://www.python.org/dev/peps/pep-0008</a></p>
 </aside>
-<aside class="footnote brackets" id="id13" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id12" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">6</a><span class="fn-bracket">]</span></span>
 <p>NumpyDoc Guide: <a class="reference external" href="https://numpydoc.readthedocs.io/en/latest/format.html">https://numpydoc.readthedocs.io/en/latest/format.html</a></p>
 </aside>
-<aside class="footnote brackets" id="id14" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">7</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id13" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">7</a><span class="fn-bracket">]</span></span>
 <p>ZSH and Poetry Guide: <a class="reference external" href="https://superuser.com/questions/187639/zsh-not-hitting-profile">https://superuser.com/questions/187639/zsh-not-hitting-profile</a></p>
 </aside>
 </aside>
