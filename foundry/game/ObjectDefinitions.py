@@ -107,7 +107,7 @@ def get_object_metadata() -> Tilesets:
         return Tilesets(__root__=loads(f.read()))
 
 
-object_set_to_definition = {
+tileset_to_definition_index = {
     WORLD_MAP_OBJECT_SET: 0,
     PLAINS_OBJECT_SET: 1,
     MUSHROOM_OBJECT_SET: 1,
