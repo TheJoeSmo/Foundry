@@ -5,8 +5,9 @@ from PySide6.QtCore import QPoint, QRect
 from PySide6.QtGui import QBrush, QColor, QImage, QPainter, QPen, Qt
 
 from foundry import data_dir, namespace_path
-from foundry.core.drawable import MASK_COLOR
+from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR, Block
 from foundry.core.drawable import Drawable as DrawableValidator
+from foundry.core.drawable import block_to_image
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.icon import Icon
@@ -14,7 +15,6 @@ from foundry.core.namespace import Namespace, TypeHandlerManager, generate_names
 from foundry.core.palette import ColorPalette, PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.drawable import apply_selection_overlay
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import (
     GROUND,
@@ -111,36 +111,31 @@ SPECIAL_BACKGROUND_OBJECTS = [
 ]
 
 
-def get_blocks(level: Level) -> list[Block]:
-    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-    palette_group = palette_group
-    graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
-    tsa_data = ROM().get_tsa_data(level.object_set_number)
-
-    return [Block(i, palette_group, graphics_set, tsa_data) for i in range(0x100)]
-
-
-def _block_from_index(block_index: int, level: Level) -> Block:
+def _block_from_index(block_index: int, scale_factor: int, level: Level, transparent: bool = False) -> QImage:
     """
     Returns the block at the given index, from the TSA table for the given level.
-
-    :param block_index:
-    :param level:
-    :return:
     """
 
-    palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
-    graphics_set = GraphicsSet.from_tileset(level.header.graphic_set_index)
-    tsa_data = ROM().get_tsa_data(level.object_set_number)
+    palette_group: PaletteGroup = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
+    graphics_set: GraphicsSet = GraphicsSet.from_tileset(level.header.graphic_set_index)
+    tsa_data: bytearray = ROM().get_tsa_data(level.object_set_number)
+    block: Block = Block.from_tsa(Point(0, 0), block_index, tsa_data)
 
-    return Block(block_index, palette_group, graphics_set, tsa_data)
+    if transparent:
+        image: QImage = block_to_image(block, palette_group, graphics_set, scale_factor).copy()
+        mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+        image.setAlphaChannel(mask)
+    else:
+        image: QImage = block_to_image(block, palette_group, graphics_set, scale_factor, True)
+
+    return image
 
 
 class LevelDrawer:
     def __init__(self, user_settings: UserSettings):
         self.user_settings = user_settings
 
-        self.block_length = Block.WIDTH
+        self.block_length = BLOCK_SIZE.width
 
         self.grid_pen = QPen(QColor(0x80, 0x80, 0x80, 0x80))
         self.grid_pen.setWidth(1)
@@ -196,50 +191,54 @@ class LevelDrawer:
 
     def _draw_dungeon_default_graphics(self, painter: QPainter, level: Level):
         # draw_background
-        bg_block = _block_from_index(140, level)
+        bg_block = _block_from_index(140, self.block_length, level)
 
         for x, y in product(range(level.width), range(level.height)):
-            bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
+            painter.drawImage(QPoint(x * self.block_length, y * self.block_length), bg_block)
 
         # draw ceiling
-        ceiling_block = _block_from_index(139, level)
+        ceiling_block = _block_from_index(139, self.block_length, level)
 
         for x in range(level.width):
-            ceiling_block.draw(painter, x * self.block_length, 0, self.block_length)
+            painter.drawImage(QPoint(x * self.block_length, 0), ceiling_block)
 
         # draw floor
-        upper_floor_blocks = [_block_from_index(20, level), _block_from_index(21, level)]
-        lower_floor_blocks = [_block_from_index(22, level), _block_from_index(23, level)]
+        upper_floor_blocks = [
+            _block_from_index(20, self.block_length, level),
+            _block_from_index(21, self.block_length, level),
+        ]
+        lower_floor_blocks = [
+            _block_from_index(22, self.block_length, level),
+            _block_from_index(23, self.block_length, level),
+        ]
 
         upper_y = (GROUND - 2) * self.block_length
         lower_y = (GROUND - 1) * self.block_length
 
         for block_x in range(level.width):
             pixel_x = block_x * self.block_length
-
-            upper_floor_blocks[block_x % 2].draw(painter, pixel_x, upper_y, self.block_length)
-            lower_floor_blocks[block_x % 2].draw(painter, pixel_x, lower_y, self.block_length)
+            painter.drawImage(QPoint(pixel_x, upper_y), upper_floor_blocks[block_x % 2])
+            painter.drawImage(QPoint(pixel_x, lower_y), lower_floor_blocks[block_x % 2])
 
     def _draw_desert_default_graphics(self, painter: QPainter, level: Level):
         floor_level = (GROUND - 1) * self.block_length
         floor_block_index = 86
-
-        floor_block = _block_from_index(floor_block_index, level)
+        floor_block = _block_from_index(floor_block_index, self.block_length, level)
 
         for x in range(level.width):
-            floor_block.draw(painter, x * self.block_length, floor_level, self.block_length)
+            painter.drawImage(QPoint(x * self.block_length, floor_level), floor_block)
 
     def _draw_ice_default_graphics(self, painter: QPainter, level: Level):
-        bg_block = _block_from_index(0x80, level)
+        bg_block = _block_from_index(0x80, self.block_length, level)
 
         for x, y in product(range(level.width), range(level.height)):
-            bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
+            painter.drawImage(QPoint(x * self.block_length, y * self.block_length), bg_block)
 
     def _draw_default_graphics(self, painter: QPainter, level: Level):
-        bg_block = _block_from_index(TILESET_BACKGROUND_BLOCKS[level.object_set_number], level)
+        bg_block = _block_from_index(TILESET_BACKGROUND_BLOCKS[level.object_set_number], self.block_length, level)
 
         for x, y in product(range(level.width), range(level.height)):
-            bg_block.draw(painter, x * self.block_length, y * self.block_length, self.block_length)
+            painter.drawImage(QPoint(x * self.block_length, y * self.block_length), bg_block)
 
     def _draw_objects(self, painter: QPainter, level: Level):
         bg_palette_group = PaletteGroup.from_tileset(level.object_set_number, level.header.object_palette_index)
