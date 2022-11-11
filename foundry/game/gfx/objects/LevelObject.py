@@ -18,7 +18,7 @@ from foundry.game.gfx.objects.ObjectLike import (
     EXPANDS_VERT,
 )
 from foundry.game.ObjectDefinitions import EndType, GeneratorType, TilesetDefinition
-from foundry.game.ObjectSet import ObjectSet
+from foundry.game.Tileset import Tileset
 from foundry.smb3parse.objects.object_set import PLAINS_OBJECT_SET
 
 SKY = 0
@@ -71,7 +71,7 @@ class LevelObject(GeneratorObject):
         index: int,
         size_minimal: bool = False,
     ):
-        self.tileset = ObjectSet(tileset)
+        self.tileset = Tileset(tileset)
 
         self.graphics_set = graphics_set
         self._position = Point(0, 0)

@@ -6,7 +6,7 @@ from foundry.game.ObjectDefinitions import (
 from foundry.smb3parse.constants import TILESET_ENDINGS, TILESET_NAMES
 
 
-class ObjectSet:
+class Tileset:
     def __init__(self, object_set_number: int):
         self.number = object_set_number
 

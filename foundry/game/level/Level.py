@@ -13,7 +13,7 @@ from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
 from foundry.game.level import LevelByteData
 from foundry.game.level.LevelLike import LevelLike
 from foundry.game.level.util import get_worlds, load_level_offsets
-from foundry.game.ObjectSet import ObjectSet
+from foundry.game.Tileset import Tileset
 from foundry.smb3parse.constants import (
     BASE_OFFSET,
     TILESET_LEVEL_OFFSET,
@@ -68,7 +68,7 @@ class Level(LevelLike):
         self.changed = False
         """Whether the current level was modified since it was loaded/last saved."""
 
-        self.tileset = ObjectSet(object_set_number)
+        self.tileset = Tileset(object_set_number)
 
         self.name = level_name
 
@@ -698,7 +698,7 @@ class Level(LevelLike):
 
     def from_m3l(self, m3l_bytes: bytearray):
         world_number, level_number, self.object_set_number = m3l_bytes[:3]
-        self.tileset = ObjectSet(self.object_set_number)
+        self.tileset = Tileset(self.object_set_number)
 
         self.header_offset = self.enemy_offset = 0
 

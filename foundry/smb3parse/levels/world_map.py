@@ -110,7 +110,7 @@ class WorldMap(LevelBase):
         width           The width of the world map in blocks across all scenes.
         height          The height of the world map, always 9 blocks.
 
-        tileset      An ObjectSet object for the world map object set.
+        tileset      An Tileset object for the world map object set.
         screen_count    How many screens this world map spans.
     """
 
