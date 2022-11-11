@@ -1,42 +1,46 @@
-# SMB3Foundry User Manual
+# Foundry Manual
 
-This document is supposed to help new users take their first steps using this Super Mario Bros. 3 (SMB3) Level editor. It will explain core concepts of SMB3 hacking, but is not meant to be an exhaustive resource on that topic.
+## Purpose
 
-It is also still a work in process.
+Provide a new user with the tools and ideas to readily wrangle Super Mario Bros. 3 to make and share their vision.
 
-## What is this?
+## Usage Overview
 
-This editor takes a ROM file of the Nintendo Entertainment System (NES) game Super Mario Bros. 3 and allows the user to edit the level, change their order, appearance, music etc.
+Foundry is used to modify a copy of the North American release of SMB3 on the Nintendo Entertainment System.  These modifications can be composed to form complex amalgamations which provide a novel experience to the player.  Hence, a file containing a modified copy of SMB3 is referred to a new game or colloquially 'ROM hack', referring to the unintended repurposing of the original Read Only Memory of SMB3.
 
-This leads to something called a "ROM hack", which describes an altered game with user created content, packaged like the original, so other users can play it in an emulator or even the original hardware, as if it was released 30 years ago.
+### Features
 
-In short you can make your own version of Super Mario Bros. 3.
+- Edit, Add, and Remove obstacles inside a level.
+- Edit, Add, and Remove warps inside a level.
+- Edit the starting position of the player inside a level.
+- Edit blocks inside the game.
+- Perform simple graphic edits inside the game.
+- Edit player animations.
+- Safety features to prevent accidental corruption.
 
-## What is a ROM?
+### Disclaimer
 
-A ROM in this context is a file, that contains all the game data of a particular game. This includes the game logic, the graphics, the level data, music and everything else.
+- The editor provides full control for the user to modify and edit the game as desired.  Sometimes this may result in undesired effects, such as but not limited to, corruption, lost data, and immense frustration.  The editor provides no insurance on any mental or physical damage.  For more information please read our [License](https://github.com/TheJoeSmo/Foundry/blob/master/LICENSE.md).
 
-ROM means Read Only Memory. This originally describes a kind of memory chip, that can only be written to once (in the factory, burning the game onto it), and is subsequently read from everytime the game is played inside a console.
+- The editor does not provide a copy the game to be modified.
 
-All the information that is on this ROM chip is read out bit by bit and stored in the ROM file, so emulators and editors can work with and store data in it, just as it was/would've been on the original memory chip.
+- The editor does not provide a method to play the modified game.
 
-## How does a ROM editor work?
+## Implementation
 
-To be able to change the layout of a level or the graphics of a sprite an editor needs to understand the format this information is stored in the ROM in. Additionally editors need to know where to look for the data, so the locations of the levels in memory need to be known, beforehand.
+The editor works by performing a series of specialized modifications to the ROM of SMB3.  A ROM is the unformatted data which is burnt into a chip of an SMB3 cartridge.  Inside this file all logic, graphics, and level data is stored.  At play-time the NES executes this data sequentially to generate the game.  Through the use of specialized modifications to this data the editor can provide novel experiences not provided in the unmodified game.
 
-Luckily community members found out and wrote down the addresses of all the levels in the original SMB3, the location of the graphic data and more, which makes it easier to find, read and parse this data.
+### Application
 
-More advanced editors will incorporate knowledge of the program code, for example how levels are loaded, how the game knows where to find them, or how it makes actual items out of graphics data and code. This allows them to add new levels, move them around and add new jumps to other levels.
-
-The specific features of an editor are highly dependent on the game it is made for. Since most NES games are different in how their memory is used, stored and interpreted, every game needs its own editor made specifically for it.
+As mentioned prior, the data stored inside game is for the most part unformatted.  This has provided a great challenge for the editor.  SMB3 follows very few standards which we take for granted today.  To facilitate the specialized modifications of this data has taken a tremendous amount of work from the community.  Through the use of the [Disassembly](https://github.com/SMB3Prime/smb3) and other research by the community most of the complex components of this editor were derived. 
 
 ## Installation
 
-The editor is packaged as a single file executable for Windows, Linux and Mac, which you can download from the [Releases](https://github.com/mchlnix/SMB3-Foundry/releases) tab.
+The editor is packaged as a single file executable for Windows, Linux and Mac, which you can download from the [Releases](https://github.com/TheJoeSmo/Foundry/releases) tab.
 
-The Linux version is the definitive version, since that is what the developer is using to develop it, but since the underlying technology is platform independent, there shouldn't be any big incompatibilities between the versions.
+The Linux version is the primary version.  It is the environment used for testing.  To provide more universal support other versions have been added.  We tirelessly work to ensure that these versions do not provide significant differences.
 
-### The easy way
+### Getting Started
 
 The easiest way is using the single executable for your operating system. You might have to give it executable rights on Linux and [Mac](https://support.apple.com/guide/terminal/make-a-file-executable-apdd100908f-06b3-4e63-8a87-32e71241bab4/mac), which is done using the terminal.
 
@@ -62,33 +66,51 @@ or
 $ chmod 755 osx-smb3-foundry
 ```
 
-After that a double click should be enough to start the editor.
+Simply double click to start the editor.
 
-### The interesting way
+#### Platform Independent
 
-The editor is written in the programming language Python, specifically version 3.6. If your system has this programming language available you could also download the source code directly as a .zip file and execute the editor, using
+The editor tries to provide a good overview of the most popular operating systems.  However, we admit that the executables provided do not cover the entire set of possibilities.  To circumnavigate this problem, we have also provided a system independent way to install the editor.  This will require the most recent version of [Python](https://www.python.org/downloads/).
 
-```shell script
-$ python3 --version
-Python 3.6.8
-$ python3 foundry/smb3-foundry.py
-```
-
-Note that you need to install the graphical user interface framework, that the editor uses. This is easily done using `pip3`, which should already be installed, when having installed Python.
+Ensure your Python version is greater than the number provided in [Config](https://github.com/TheJoeSmo/Foundry/blob/master/setup.cfg) `python_requires`.
 
 ```shell script
-$ pip3 install PySide6
+$ python --version
+Python 3.10
+$ python -m foundry.main
 ```
 
-## Getting a ROM
+Note: In addition to Python, other dependencies are also required to use the editor.  We have listed all required dependencies for users inside [requirements.txt](https://github.com/TheJoeSmo/Foundry/blob/master/requirements.txt).  Python provides a simple way to install these requirements:
 
-As described above, the editor needs to have a ROM file of Super Mario Bros. 3 to load the graphics and level structures, etc. This editor does not come with such a file, since this would mean distributing a game, for which the developer does not hold the copyright.
+```shell script
+$ pip install -r requirements.txt
+```
 
-You can buy specialty hardware and "dump" the contents of an actual SMB3 cartridge you own into a ROM file. This counts as a private backup, which should be legal.
+## Accessing the Game
 
-Or find someone who dumped the contents of a real ROM memory chip and uploaded it onto the internet. While this is how most people do it and definitely easier, it is technically software piracy and therefore illegal, regardless of SMB3 being more than 30 years old.
+The editor requires a copy of the North American release of SMB3 to provide modifications to the game.  Unfortunately, the editor cannot supply the game directly due to Nintendo enforcing their copyright.
 
-Also make sure, that you have a ROM file of the North American release of SMB3, as it is currently the only supported version.
+### Options
+
+#### Compile the ROM
+
+While we cannot provide you a ROM, we can provide open source alternatives to access the game.  Through the tireless effort of [SouthBird](https://sonicepoch.com/sm3mix/disassembly.html) the game has been completely disassembled.  He owns the copyright to this version of the game and is free to compile and distribute.
+
+We recommend you download the official version from [SMB3 Prime](https://discord.gg/x2M2Z8hErp) at [SMB3 Disassembled](https://github.com/SMB3Prime/smb3).  Once installed, run the following inside the project directory:
+
+```shell script
+$ asm6 smb3.asm
+```
+
+This will generate a file `smb3.bin`.  This is a compiled reproduction of the North American release of SMB3.
+
+#### Dump the ROM with Hardware
+
+It is also possible to buy specialty hardware to obtain the contents of a genuine SMB3 cartridge.  The data obtained from this can be used for your personal use.
+
+#### Disclaimer
+
+All information provided inside this section is not legal advice.  We highly encourage you to conduct your own research before trying any of these methods to ensure you do not violate any laws.
 
 ## How do I ...?
 
@@ -138,13 +160,13 @@ A level consists of objects, with most of them being visible on screen and place
 
 The objects of a level are stored one after the other in the ROM. When the level is supposed to be loaded, the game reads in the first object, determines whether or not it is 3 or 4 bytes long, reads in the rest and displays it. This continues with the next object, until a magic value is read in, that denotes the end of this specific level.
 
-#### Object set
+#### Tileset
 
 Not all objects can be displayed in a level at the same time however, level makers need to decide on one of 12 object sets, that their level is going to use. While some objects, like pipes, doors and coin blocks, are available in all object sets, other objects, like pyramids in the "desert" object set and ice blocks in the "ice" object set, are only available in specific object sets.
 
 That is also the reason, why changing the object set of a level might break certain parts. Objects in different objects sets might have the same ID, but not both be 3 bytes long, for example. This can lead to the game wrongly expecting a 4 byte object and reading in a 3 byte object and the first byte of the next object. Obviously this leads to unintended behaviour and at worst to the game crashing.   
   
-#### Level object
+#### Level Generators
 
 Level objects are things like platforms, clouds, coin blocks, background graphics and in general every non-interactive component that makes up a levels scenery. These are either 3 or 4 byte long each. They consist of a domain, an identifying number a position and, in case of a 4 byte object, an additional byte denoting some kind of length, be it height or with.
 
@@ -174,7 +196,7 @@ Some objects need a length in 2 directions. For example the ground in Level 1-1.
 
 In theory, the 4th byte allows a ground object that is 2^8 so 256 blocks long, or the entire length of the longest SMB3 level. 
 
-#### Enemies & Item
+#### Enemies & Items
 
 Enemies and Items, or generally objects the player can interact with, are part of a special object set, that all levels share. They are always 3 bytes long and are structured slightly different than level objects.
 
@@ -186,9 +208,9 @@ Enemies and Items, or generally objects the player can interact with, are part o
     
 They are also not following the level object in memory, but are stored separately. This may have been so multiple levels, like Bonus levels or Hammer Bros stages, which may repeat in multiple worlds, can share enemy/item data and save space on the ROM chip, which was incredibly expensive compared to todays memory prices.
 
-#### Jumps
+#### Warps
 
-Jumps are a third kind of object. They are the exclusive object type of the 8th domain (domain 7) and are used in Pipes or Doors to transport a player to a different level.
+Warps are a third kind of object, sometimes referred to as Jumps. They are the exclusive object type of the 8th domain (domain 7) and are used in Pipes or Doors to transport a player to a different level.
 
     dddu_ssss aaaa_yyyy xxxx_xxxx
     
