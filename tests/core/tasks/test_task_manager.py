@@ -143,7 +143,7 @@ class TestTaskManager:
         obj = self.Obj()
         manager: TaskManagerProxy = self.manager
         manager.schedule_task(obj.callback(0))
-        wait_until(manager.poll_tasks, True, 1)()
+        wait_until(manager.poll_tasks, True, 10)()
         assert obj.value == 1
         assert obj.return_times == 1
         assert obj.exception_times == 0
@@ -163,7 +163,7 @@ class TestTaskManager:
         manager: TaskManagerProxy = self.manager
         manager.schedule_task(obj1.callback(0))
         manager.schedule_task(obj2.callback(2))
-        wait_until(wait, 2, 1)()
+        wait_until(wait, 2, 10)()
         assert obj1.value == 1
         assert obj1.return_times == 1
         assert obj1.exception_times == 0
@@ -195,7 +195,7 @@ class TestTaskManager:
                 ),
             }
         )
-        wait_until(wait, 2, 1)()
+        wait_until(wait, 2, 10)()
         assert obj1.value == 1
         assert obj1.return_times == 1
         assert obj1.exception_times == 0
