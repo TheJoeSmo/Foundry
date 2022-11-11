@@ -5,7 +5,7 @@ from typing import ClassVar
 
 from attr import attrs
 from PySide6.QtCore import QPoint
-from PySide6.QtGui import QColor, QImage, Qt
+from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
 from foundry.core.file import FilePath
 from foundry.core.geometry import Point, Rect, Size
@@ -39,6 +39,7 @@ PATTERN_LOCATIONS: tuple[Point, Point, Point, Point] = (
     Point(8, 8),
 )
 MASK_COLOR = Color(0xFF, 0x33, 0xFF)
+SELECTION_OVERLAY_COLOR = QColor(20, 87, 159, 80)
 PIXEL_OFFSET = 8
 
 Pattern = tuple[int, int, int, int]
@@ -679,3 +680,13 @@ class Drawable(ConcreteValidator, KeywordValidator):
     )
     def validate_from_file(cls, path: FilePath, image_offset: Rect | None, use_transparency: bool, point_offset: Point):
         return cls.from_file(path, image_offset, use_transparency, point_offset)
+
+
+def apply_selection_overlay(image: QImage, mask: QImage):
+    overlay = image.copy()
+    overlay.fill(SELECTION_OVERLAY_COLOR)
+    overlay.setAlphaChannel(mask)
+
+    _painter = QPainter(image)
+    _painter.drawImage(QPoint(), overlay)
+    _painter.end()

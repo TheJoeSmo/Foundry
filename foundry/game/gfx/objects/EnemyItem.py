@@ -1,7 +1,13 @@
 from PySide6.QtCore import QPointF, QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR, Sprite, sprite_to_image
+from foundry.core.drawable import (
+    BLOCK_SIZE,
+    MASK_COLOR,
+    Sprite,
+    apply_selection_overlay,
+    sprite_to_image,
+)
 from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
@@ -11,7 +17,6 @@ from foundry.game.EnemyDefinitions import (
     GeneratorType,
     get_enemy_metadata,
 )
-from foundry.game.gfx.drawable import apply_selection_overlay
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 

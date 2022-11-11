@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   foundry.game.gfx.drawable
    foundry.game.gfx.objects
 
 Module contents

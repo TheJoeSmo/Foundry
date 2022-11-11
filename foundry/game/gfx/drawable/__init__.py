@@ -259,15 +259,3 @@ bit_reverse = [
     0x7F,
     0xFF,
 ]
-
-SELECTION_OVERLAY_COLOR = QColor(20, 87, 159, 80)
-
-
-def apply_selection_overlay(image, mask):
-    overlay = image.copy()
-    overlay.fill(SELECTION_OVERLAY_COLOR)
-    overlay.setAlphaChannel(mask)
-
-    _painter = QPainter(image)
-    _painter.drawImage(QPoint(), overlay)
-    _painter.end()
