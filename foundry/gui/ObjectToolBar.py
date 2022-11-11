@@ -27,19 +27,19 @@ class ObjectToolBar(QWidget):
 
         layout.addWidget(self.tool_box, stretch=1)
 
-    def set_object_set(
-        self, object_set_index: int, graphic_set_index: int = -1, bg_palette_index: int = 0, spr_palette_index: int = 0
+    def set_tileset(
+        self, tileset_index: int, graphic_set_index: int = -1, bg_palette_index: int = 0, spr_palette_index: int = 0
     ):
         if (
-            self.tileset == object_set_index
+            self.tileset == tileset_index
             and self.bg_palette_index == bg_palette_index
             and self.spr_palette_index == spr_palette_index
         ):
             return
-        self.tileset = object_set_index
+        self.tileset = tileset_index
         self.bg_palette_index = bg_palette_index
         self.spr_palette_index = spr_palette_index
-        self.tool_box.set_object_set(object_set_index, graphic_set_index, bg_palette_index, spr_palette_index)
+        self.tool_box.set_tileset(tileset_index, graphic_set_index, bg_palette_index, spr_palette_index)
 
     def select_object(self, tab_index: int, object_index: int):
         item = self.tool_box.select_object(tab_index, object_index)

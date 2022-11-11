@@ -141,7 +141,7 @@ class LevelBase(ABC):
     width: int
     height: int
 
-    def __init__(self, object_set_number: int, layout_address: int):
+    def __init__(self, tileset_number: int, layout_address: int):
         self.layout_address = layout_address
 
-        self.object_set_number = object_set_number
+        self.tileset_number = tileset_number

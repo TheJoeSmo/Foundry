@@ -19,7 +19,7 @@ from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
 from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
+from foundry.gui.LevelSelector import TILESET_ITEMS
 from foundry.gui.Spinner import Spinner
 
 
@@ -82,7 +82,7 @@ class BlockViewerController(CustomChildWindow):
             self.tileset = self.bank_dropdown.currentIndex()
 
         self.bank_dropdown = QComboBox(parent=self.toolbar)
-        self.bank_dropdown.addItems(OBJECT_SET_ITEMS)
+        self.bank_dropdown.addItems(TILESET_ITEMS)
         self.bank_dropdown.setCurrentIndex(0)
         self.bank_dropdown.currentIndexChanged.connect(on_combo)  # type: ignore
         self.tileset_changed.connect(self.bank_dropdown.setCurrentIndex)

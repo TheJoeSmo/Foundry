@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (
 
 from foundry.core.UndoController import UndoController
 from foundry.core.validators import range_validator
-from foundry.gui.LevelSelector import OBJECT_SET_ITEMS, LevelSelector
+from foundry.gui.LevelSelector import TILESET_ITEMS, LevelSelector
 from foundry.gui.settings import FileSettings
 from foundry.gui.Spinner import Spinner
 
@@ -320,7 +320,7 @@ class LevelWarpDisplay(QFormLayout):
         self.generator_pointer_editor = Spinner(None, maximum=SPINNER_MAX_VALUE)
         self.enemy_pointer_editor = Spinner(None, maximum=SPINNER_MAX_VALUE)
         self.tileset_editor = QComboBox()
-        self.tileset_editor.addItems(OBJECT_SET_ITEMS)
+        self.tileset_editor.addItems(TILESET_ITEMS)
         self.select_from_level_button = QPushButton("Set from Level")
 
         self.generator_pointer = generator_pointer

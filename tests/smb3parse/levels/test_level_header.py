@@ -18,10 +18,10 @@ from foundry.smb3parse.objects.tileset import (
 
 @given(
     header_bytes=strategies.binary(min_size=9, max_size=9),
-    object_set_number=strategies.integers(min_value=MIN_OBJECT_SET, max_value=MAX_OBJECT_SET),
+    tileset_number=strategies.integers(min_value=MIN_OBJECT_SET, max_value=MAX_OBJECT_SET),
 )
-def test_construction(header_bytes, object_set_number):
-    level_header = LevelHeader(header_bytes, object_set_number)
+def test_construction(header_bytes, tileset_number):
+    level_header = LevelHeader(header_bytes, tileset_number)
 
     if level_header.is_vertical:
         assert level_header.width == DEFAULT_VERTICAL_WIDTH
@@ -42,7 +42,7 @@ def test_construction(header_bytes, object_set_number):
     assert level_header.enemy_palette_index in range(4)
     assert level_header.graphic_set_index in range(32)
 
-    assert is_tileset_index(level_header.jump_object_set_number)
+    assert is_tileset_index(level_header.jump_tileset_number)
 
 
 def test_value_error():
@@ -54,10 +54,10 @@ def test_value_error():
 
 
 def test_level_1_1():
-    object_set_number = 1
+    tileset_number = 1
     level_header_bytes = bytearray([0x93, 0xBC, 0x06, 0xC0, 0xEA, 0x80, 0x81, 0x01, 0x00])
 
-    level_header = LevelHeader(level_header_bytes, object_set_number)
+    level_header = LevelHeader(level_header_bytes, tileset_number)
 
     assert level_header.width == 0xB0  # blocks
     assert level_header.height == DEFAULT_HORIZONTAL_HEIGHT  # blocks
@@ -82,10 +82,10 @@ def test_level_1_1():
 
 
 def test_level_1_1_bonus():
-    object_set_number = 1
+    tileset_number = 1
     level_header_bytes = bytearray([0x82, 0xBB, 0x27, 0xC5, 0x81, 0x85, 0xC1, 0x01, 0x01])
 
-    level_header = LevelHeader(level_header_bytes, object_set_number)
+    level_header = LevelHeader(level_header_bytes, tileset_number)
 
     assert level_header.width == 0x20  # blocks
     assert level_header.height == DEFAULT_HORIZONTAL_HEIGHT  # blocks
@@ -110,10 +110,10 @@ def test_level_1_1_bonus():
 
 
 def test_level_7_1():
-    object_set_number = 8
+    tileset_number = 8
     level_header_bytes = bytearray([0x61, 0xAA, 0x4D, 0xC2, 0x07, 0x80, 0xB1, 0x08, 0x01])
 
-    level_header = LevelHeader(level_header_bytes, object_set_number)
+    level_header = LevelHeader(level_header_bytes, tileset_number)
 
     assert level_header.width == DEFAULT_VERTICAL_WIDTH  # blocks
     assert level_header.height == 0x80  # blocks

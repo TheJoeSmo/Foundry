@@ -14,7 +14,7 @@ class PaletteViewer(CustomDialog):
     palettes_per_row = 4
 
     def __init__(self, parent, level_ref: LevelRef):
-        title = f"Palette Groups for Object Set {level_ref.level.object_set_number}"
+        title = f"Palette Groups for Tileset {level_ref.level.tileset_number}"
 
         super().__init__(parent, title=title)
 
@@ -29,7 +29,7 @@ class PaletteViewer(CustomDialog):
             group_box_layout = QVBoxLayout(group_box)
             group_box_layout.setSpacing(0)
 
-            pal = PaletteGroup.from_tileset(self.level_ref.level.object_set_number, palette_group)
+            pal = PaletteGroup.from_tileset(self.level_ref.level.tileset_number, palette_group)
 
             for idx in range(PALETTES_PER_PALETTES_GROUP):
                 group_box_layout.addWidget(PaletteWidget(self, pal[idx]))

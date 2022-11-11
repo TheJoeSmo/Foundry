@@ -37,12 +37,12 @@ class ObjectToolBox(QWidget):
         self.objects.append(level_object)
         self.update()
 
-    def add_from_object_set(self, object_set_index: int, graphic_set_index: int = -1, bg_palette_index: int = 0):
+    def add_from_tileset(self, tileset_index: int, graphic_set_index: int = -1, bg_palette_index: int = 0):
         if graphic_set_index == -1:
-            graphic_set_index = object_set_index
+            graphic_set_index = tileset_index
 
         factory: LevelObjectFactory = LevelObjectFactory(
-            object_set_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
+            tileset_index, graphic_set_index, bg_palette_index, [], vertical_level=False, size_minimal=True
         )
 
         object_ids = list(range(0x00, 0x10)) + list(range(0x10, MAX_ID_VALUE, 0x10))
@@ -56,9 +56,9 @@ class ObjectToolBox(QWidget):
             self.objects.append(level_object)
         self.update()
 
-    def add_from_enemy_set(self, object_set_index: int, spr_palette_index: int = 0):
+    def add_from_enemy_set(self, tileset_index: int, spr_palette_index: int = 0):
         self.clear()
-        factory = EnemyItemFactory(object_set_index, spr_palette_index)
+        factory = EnemyItemFactory(tileset_index, spr_palette_index)
 
         for obj_index in range(MAX_ENEMY_ITEM_ID + 1):
             enemy_item = factory.from_properties(obj_index, Point(0, 0))

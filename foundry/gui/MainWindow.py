@@ -189,7 +189,7 @@ class MainWindow(QMainWindow):
 
         (object_offset, object_data), (enemy_offset, enemy_data) = self.manager.controller.level_ref.level.to_bytes()
 
-        object_set_number = self.manager.controller.level_ref.level.object_set_number
+        tileset_number = self.manager.controller.level_ref.level.tileset_number
 
         base64_data = []
         base64_data.append(
@@ -202,14 +202,14 @@ class MainWindow(QMainWindow):
         )
 
         with open(auto_save_level_data_path, "w") as level_data_file:
-            level_data_file.write(json.dumps([object_set_number, object_offset, enemy_offset, base64_data]))
+            level_data_file.write(json.dumps([tileset_number, object_offset, enemy_offset, base64_data]))
 
     def _load_auto_save(self):
         # rom already loaded
         with open(auto_save_level_data_path) as level_data_file:
             json_data = level_data_file.read()
 
-            object_set_number, level_offset, enemy_offset, base64_data = json.loads(json_data)
+            tileset_number, level_offset, enemy_offset, base64_data = json.loads(json_data)
 
         # load level from ROM, or from m3l file
         if level_offset == enemy_offset == 0:
@@ -223,7 +223,7 @@ class MainWindow(QMainWindow):
             with open(auto_save_m3l_path, "rb") as m3l_file:
                 self.load_m3l(bytearray(m3l_file.read()), auto_save_m3l_path)
         else:
-            self.update_level("recovered level", level_offset, enemy_offset, object_set_number)
+            self.update_level("recovered level", level_offset, enemy_offset, tileset_number)
 
         # restore undo/redo stack
         byte_data = []
@@ -325,9 +325,9 @@ class MainWindow(QMainWindow):
         rom.write(enemy_address, enemy_bytes)
 
         # replace level information with that of current level
-        object_set_number = self.manager.controller.level_ref.level.object_set_number
+        tileset_number = self.manager.controller.level_ref.level.tileset_number
 
-        world.replace_level_at_position((layout_address, enemy_address - 1, object_set_number), point)
+        world.replace_level_at_position((layout_address, enemy_address - 1, tileset_number), point)
 
     def _set_default_powerup(self, rom) -> bool:
         *_, powerup, hasPWing = POWERUPS[self.user_settings.default_powerup]

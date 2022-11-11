@@ -7,10 +7,10 @@ from foundry.smb3parse.util.rom import Rom
 
 
 class Level(LevelBase):
-    def __init__(self, rom: Rom, object_set_number: int, layout_address: int, enemy_address: int):
-        super().__init__(object_set_number, layout_address)
+    def __init__(self, rom: Rom, tileset_number: int, layout_address: int, enemy_address: int):
+        super().__init__(tileset_number, layout_address)
 
-        self.object_set_number = object_set_number
+        self.tileset_number = tileset_number
         self.enemy_address = enemy_address
 
         self.world_map_position = None
@@ -21,7 +21,7 @@ class Level(LevelBase):
 
         self.header_bytes = self._rom.read(self.header_address, HEADER_LENGTH)
 
-        self.header = LevelHeader(self.header_bytes, self.object_set_number)
+        self.header = LevelHeader(self.header_bytes, self.tileset_number)
 
     def set_world_map_position(self, point):
         self.world_map_position = point
@@ -31,7 +31,7 @@ class Level(LevelBase):
             return False
 
         return (
-            self.object_set_number == other.object_set_number
+            self.tileset_number == other.tileset_number
             and self.layout_address == other.layout_address
             and self.enemy_address == other.enemy_address
         )
@@ -43,18 +43,18 @@ class Level(LevelBase):
         if level_info is None:
             return None
 
-        object_set_number, layout_address, enemy_address = level_info
+        tileset_number, layout_address, enemy_address = level_info
 
-        level = Level(rom, object_set_number, layout_address, enemy_address)
+        level = Level(rom, tileset_number, layout_address, enemy_address)
 
         level.set_world_map_position(world_map_position)
 
         return level
 
     @staticmethod
-    def from_memory(rom: Rom, object_set_number: int, layout_address: int, enemy_address: int):
-        ensure_tileset(object_set_number)
+    def from_memory(rom: Rom, tileset_number: int, layout_address: int, enemy_address: int):
+        ensure_tileset(tileset_number)
 
-        level = Level(rom, object_set_number, layout_address, enemy_address)
+        level = Level(rom, tileset_number, layout_address, enemy_address)
 
         return level

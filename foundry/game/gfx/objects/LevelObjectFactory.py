@@ -26,7 +26,7 @@ class LevelObjectFactory:
         vertical_level: bool,
         size_minimal: bool = False,
     ):
-        self.set_object_set(tileset)
+        self.set_tileset(tileset)
         if isinstance(graphic_set, int):
             self.set_graphic_set(graphic_set)
         else:
@@ -38,7 +38,7 @@ class LevelObjectFactory:
 
         self.size_minimal = size_minimal
 
-    def set_object_set(self, tileset: int):
+    def set_tileset(self, tileset: int):
         self.tileset = tileset
 
     def set_graphic_set(self, graphic_set: int):

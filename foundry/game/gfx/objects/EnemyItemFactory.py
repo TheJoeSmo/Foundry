@@ -19,9 +19,9 @@ class EnemyItemFactory:
 
         png.convertTo(QImage.Format.Format_RGB888)
 
-        rows_per_object_set = 256 // 64
+        rows_per_tileset = 256 // 64
 
-        y_offset = 12 * rows_per_object_set * BLOCK_SIZE.height
+        y_offset = 12 * rows_per_tileset * BLOCK_SIZE.height
 
         self.png_data = png.copy(QRect(0, y_offset, png.width(), png.height() - y_offset))
 

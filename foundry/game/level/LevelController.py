@@ -78,14 +78,14 @@ class LevelController:
             level_name=self.level_ref.level.name,
             object_data_offset=self.level_ref.level.header_offset,
             enemy_data_offset=self.level_ref.level.enemy_offset,
-            tileset=self.level_ref.level.object_set_number,
+            tileset=self.level_ref.level.tileset_number,
         )
 
     @require_safe_to_change
     def warp_to_alternative(self):
         level_address = self.level_ref.level.next_area_objects
         enemy_address = self.level_ref.level.next_area_enemies + 1
-        tileset = self.level_ref.level.next_area_object_set
+        tileset = self.level_ref.level.next_area_tileset
 
         self.update_level(
             f"Level {get_level_name_suggestion(level_address + 9)}", level_address, enemy_address, tileset
@@ -279,14 +279,14 @@ class LevelController:
         self.parent.side_palette.load_from_level(self.level_ref.level)
 
         self.parent.jump_list.update()
-        self.parent.object_dropdown.set_object_set(
-            self.level_ref.level.object_set_number,
+        self.parent.object_dropdown.set_tileset(
+            self.level_ref.level.tileset_number,
             self.level_ref.level.graphic_set,
             self.level_ref.level.object_palette_index,
             self.level_ref.level.enemy_palette_index,
         )
-        self.parent.object_toolbar.set_object_set(
-            self.level_ref.level.object_set_number,
+        self.parent.object_toolbar.set_tileset(
+            self.level_ref.level.tileset_number,
             self.level_ref.level.graphic_set,
             self.level_ref.level.object_palette_index,
             self.level_ref.level.enemy_palette_index,

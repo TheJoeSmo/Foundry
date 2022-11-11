@@ -12,14 +12,14 @@ def block_viewer(qtbot):
     return block_viewer
 
 
-def test_prev_object_set(block_viewer, qtbot):
+def test_prev_tileset(block_viewer, qtbot):
     # GIVEN the block viewer at a specific object set, which is not the first
     block_viewer.next_os_action.trigger()
 
-    current_object_set = block_viewer.bank_dropdown.currentIndex()
-    first_object_set = 0
+    current_tileset = block_viewer.bank_dropdown.currentIndex()
+    first_tileset = 0
 
-    assert current_object_set != first_object_set
+    assert current_tileset != first_tileset
 
     current_blocks_shown = block_viewer.view.grab().toImage()
     assert current_blocks_shown == block_viewer.view.grab().toImage()
@@ -28,16 +28,16 @@ def test_prev_object_set(block_viewer, qtbot):
     block_viewer.prev_os_action.trigger()
 
     # THEN the dropdown is updated and a different graphic is shown
-    assert block_viewer.bank_dropdown.currentIndex() == current_object_set - 1
+    assert block_viewer.bank_dropdown.currentIndex() == current_tileset - 1
     assert block_viewer.view.grab() != current_blocks_shown
 
 
-def test_next_object_set(block_viewer, qtbot):
+def test_next_tileset(block_viewer, qtbot):
     # GIVEN the block viewer at a specific object set, which is not the last
-    current_object_set = block_viewer.bank_dropdown.currentIndex()
-    last_object_set = block_viewer.bank_dropdown.count() - 1
+    current_tileset = block_viewer.bank_dropdown.currentIndex()
+    last_tileset = block_viewer.bank_dropdown.count() - 1
 
-    assert current_object_set != last_object_set
+    assert current_tileset != last_tileset
 
     current_blocks_shown = block_viewer.view.grab().toImage()
     assert current_blocks_shown == block_viewer.view.grab().toImage()
@@ -46,7 +46,7 @@ def test_next_object_set(block_viewer, qtbot):
     block_viewer.next_os_action.trigger()
 
     # THEN the dropdown is updated and a different graphic is shown
-    assert block_viewer.bank_dropdown.currentIndex() == current_object_set + 1
+    assert block_viewer.bank_dropdown.currentIndex() == current_tileset + 1
     assert block_viewer.view.grab() != current_blocks_shown
 
 

@@ -7,8 +7,8 @@ from foundry.smb3parse.constants import TILESET_ENDINGS, TILESET_NAMES
 
 
 class Tileset:
-    def __init__(self, object_set_number: int):
-        self.number = object_set_number
+    def __init__(self, tileset: int):
+        self.number = tileset
 
         self.name = TILESET_NAMES[self.number]
 
