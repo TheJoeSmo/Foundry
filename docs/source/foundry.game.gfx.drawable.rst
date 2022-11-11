@@ -5,14 +5,6 @@ Submodules
 ----------
 
 
-foundry.game.gfx.drawable.Tile module
--------------------------------------
-
-.. automodule:: foundry.game.gfx.drawable.Tile
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
