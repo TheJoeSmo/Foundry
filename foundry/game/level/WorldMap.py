@@ -1,10 +1,10 @@
-from PySide6.QtCore import QPoint, QSize
+from PySide6.QtCore import QSize
 
+from foundry.core.drawable import BLOCK_SIZE, Block
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.MapObject import MapObject
 from foundry.game.level.LevelLike import LevelLike
 from foundry.smb3parse.levels.world_map import (
@@ -49,15 +49,8 @@ class WorldMap(LevelLike):
 
             x = screen_offset + (index % WORLD_MAP_SCREEN_WIDTH)
             y = (index // WORLD_MAP_SCREEN_WIDTH) % WORLD_MAP_HEIGHT
-
-            block = Block(
-                world_position.tile(),
-                self.palette_group,
-                self.graphics_set,
-                self.tsa_data,
-            )
-
-            self.objects.append(MapObject(block, x, y))
+            block = Block.from_tsa(Point(x, y), world_position.tile(), self.tsa_data)
+            self.objects.append(MapObject(block, x, y, self.palette_group, self.graphics_set))
 
         assert len(self.objects) % WORLD_MAP_HEIGHT == 0
 
@@ -74,7 +67,7 @@ class WorldMap(LevelLike):
 
     @property
     def q_size(self):
-        return QSize(*self.size) * Block.SIDE_LENGTH
+        return QSize(*self.size) * BLOCK_SIZE.width
 
     @staticmethod
     def _array_index(obj):
@@ -85,7 +78,7 @@ class WorldMap(LevelLike):
 
     def draw(self, dc, zoom, transparency=None, show_expansion=None):
         for obj in self.objects:
-            obj.draw(dc, Block.SIDE_LENGTH * zoom, transparency)
+            obj.draw(dc, BLOCK_SIZE.width * zoom, transparency)
 
     def index_of(self, obj):
         return self.objects.index(obj)
@@ -94,10 +87,8 @@ class WorldMap(LevelLike):
         return self.objects
 
     def object_at(self, point: Point):
-        qpoint = QPoint(point.x, point.y)
-
         for obj in reversed(self.objects):
-            if obj.rect.contains(qpoint):
+            if point in obj.rect:
                 return obj
 
         return None

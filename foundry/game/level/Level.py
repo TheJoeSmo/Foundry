@@ -1,9 +1,9 @@
 from functools import reduce
 from typing import overload
 
-from PySide6.QtCore import QObject, QPoint, QRect, QSize, Signal, SignalInstance
+from PySide6.QtCore import QObject, Signal, SignalInstance
 
-from foundry.core.geometry import Point
+from foundry.core.geometry import Point, Rect, Size
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
@@ -52,6 +52,7 @@ class Level(LevelLike):
 
     offsets = load_level_offsets()
     sorted_offsets = sorted(offsets, key=lambda level: level.generator_pointer)
+    size: Size
 
     WORLDS = get_worlds(offsets)
 
@@ -123,11 +124,11 @@ class Level(LevelLike):
 
     @property
     def width(self):
-        return self.size[0]
+        return self.size.width
 
     @property
     def height(self):
-        return self.size[1]
+        return self.size.height
 
     @property
     def data_changed(self):
@@ -169,7 +170,7 @@ class Level(LevelLike):
         )
         self.enemy_item_factory = EnemyItemFactory(self.object_set_number, self.header.enemy_palette_index)
 
-        self.size = self.header.width, self.header.height
+        self.size = Size(self.header.width, self.header.height)
 
         self.data_changed.emit()
 
@@ -228,10 +229,8 @@ class Level(LevelLike):
     def size_on_disk(self):
         return self.object_size_on_disk + self.enemy_size_on_disk
 
-    def get_rect(self, block_length: int = 1):
-        width, height = self.size
-
-        return QRect(QPoint(0, 0), QSize(width, height) * block_length)
+    def get_rect(self, block_length: int = 1) -> Rect:
+        return Rect(Point(0, 0), self.size * block_length)
 
     def attach_to_rom(self, header_offset: int, enemy_item_offset: int):
         if 0x0 in [header_offset, enemy_item_offset]:
@@ -690,7 +689,7 @@ class Level(LevelLike):
         m3l_bytes.append(0xFF)
         m3l_bytes.append(0x01)
 
-        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.position.x):
+        for enemy in sorted(self.enemies, key=lambda _enemy: _enemy.point.x):
             m3l_bytes.extend(enemy.to_bytes())
 
         m3l_bytes.append(0xFF)
@@ -747,9 +746,9 @@ class Level(LevelLike):
         enemies = bytearray()
 
         if self.is_vertical:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.y)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.point.y)
         else:
-            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.position.x)
+            enemies_objects = sorted(self.enemies, key=lambda _enemy: _enemy.point.x)
 
         for enemy in enemies_objects:
             enemies.extend(enemy.to_bytes())

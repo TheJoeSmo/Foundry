@@ -70,10 +70,10 @@ def load_player_animation_data(
 
 def load_power_up_palettes() -> PaletteGroup:
     return PaletteGroup(
-        [
+        tuple(
             Palette.from_rom(PLAYER_POWER_UPS_PALETTES + address * COLORS_PER_PALETTE)
             for address in range(PLAYER_POWER_UPS_PALETTE_COUNT)
-        ]
+        )
     )
 
 

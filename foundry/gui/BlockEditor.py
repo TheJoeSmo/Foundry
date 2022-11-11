@@ -3,18 +3,21 @@ from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
+    QColor,
+    QImage,
     QMouseEvent,
     QPainter,
     QPaintEvent,
     QResizeEvent,
+    Qt,
 )
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR, Block, block_to_image
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.PatternViewer import PatternViewerController as PatternViewer
 
@@ -55,7 +58,7 @@ class BlockEditorController(CustomChildWindow):
         self.setCentralWidget(self.view)
         self.toolbar = QToolBar(self)
 
-        self.view.pattern_selected.connect(lambda values: self._on_pattern_selected(*values))
+        self.view.pattern_selected.connect(lambda values: self._on_pattern_selected(values))
 
         self.zoom_out_action = self.toolbar.addAction(icon("zoom-out.png"), "Zoom Out")
         self.zoom_in_action = self.toolbar.addAction(icon("zoom-in.png"), "Zoom In")
@@ -204,12 +207,11 @@ class BlockEditorView(QWidget):
 
     @property
     def block_scale(self) -> int:
-        return Block.WIDTH * self.zoom
+        return BLOCK_SIZE.width * self.zoom
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
         pos = Point.from_qt(event.pos())
-        x, y = pos.x // (self.block_scale // 2), pos.y // (self.block_scale // 2)
-        self.pattern_selected.emit((x, y))
+        self.pattern_selected.emit(pos // (self.block_scale // 2))
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
@@ -217,10 +219,9 @@ class BlockEditorView(QWidget):
         bg_color = self.palette_group[0][0]
         painter.setBrush(QBrush(bg_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
-        block = Block(
-            self.block_index,
-            self.palette_group,
-            self.graphics_set,
-            self.tsa_data,
-        )
-        block.draw(painter, 0, 0, self.block_scale)
+
+        block: Block = Block.from_tsa(Point(0, 0), self.block_index, self.tsa_data)
+        image: QImage = block_to_image(block, self.palette_group, self.graphics_set, self.block_scale).copy()
+        mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+        image.setAlphaChannel(mask)
+        painter.drawImage(QPoint(0, 0), image)

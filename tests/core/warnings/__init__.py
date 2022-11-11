@@ -1,6 +1,6 @@
 from attr import attrs
 
-from foundry.core.geometry import Point, Size
+from foundry.core.geometry import Point, Rect, Size
 
 
 @attrs(slots=True, frozen=True, auto_attribs=True)
@@ -12,10 +12,14 @@ class ObjectLike:
     rendered_height: int = 0
 
     def get_rect(self):
-        return True
+        return self.rect
 
     @property
-    def position(self) -> Point:
+    def rect(self) -> Rect:
+        return Rect(self.point, self.rendered_size)
+
+    @property
+    def point(self) -> Point:
         return Point(self.x, self.y)
 
     @property

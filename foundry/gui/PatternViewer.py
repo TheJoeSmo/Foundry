@@ -4,6 +4,7 @@ from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
     QColor,
+    QImage,
     QMouseEvent,
     QPainter,
     QPaintEvent,
@@ -13,11 +14,10 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import MASK_COLOR, TILE_SIZE, tile_to_image
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
-from foundry.core.palette import ColorPalette, PaletteGroup
-from foundry.core.tiles import MASK_COLOR
-from foundry.game.gfx.drawable.Tile import Tile
+from foundry.core.palette import PaletteGroup
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 
@@ -139,13 +139,13 @@ class PatternViewerView(QWidget):
     def zoom(self, value: int):
         self._zoom = value
         self.setFixedSize(
-            self.PATTERNS_PER_ROW * Tile.WIDTH * self.zoom,  # type: ignore
-            self.PATTERNS_PER_COLUMN * Tile.HEIGHT * self.zoom,  # type: ignore
+            self.PATTERNS_PER_ROW * TILE_SIZE.width * self.zoom,
+            self.PATTERNS_PER_COLUMN * TILE_SIZE.height * self.zoom,
         )
 
     @property
     def pattern_scale(self) -> int:
-        return Tile.WIDTH * self.zoom  # type: ignore
+        return TILE_SIZE.width * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
         pos = Point.from_qt(event.pos())
@@ -168,17 +168,13 @@ class PatternViewerView(QWidget):
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
 
-        bg_color = ColorPalette[self.palette_group[self.palette_index, 0]].to_qt()
-        painter.setBrush(QBrush(bg_color))
+        painter.setBrush(QBrush(self.palette_group.background_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
-
-            x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
-            y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
-
-            image = tile.as_image(self.pattern_scale)
+            image: QImage = tile_to_image(i, self.palette_group[self.palette_index], self.graphics_set, self.zoom)
             mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
+            x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
+            y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
             painter.drawImage(x, y, image)

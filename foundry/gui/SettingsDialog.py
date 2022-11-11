@@ -16,8 +16,7 @@ from PySide6.QtWidgets import (
 )
 
 from foundry import data_dir, icon
-from foundry.core.tiles import MASK_COLOR
-from foundry.game.gfx.drawable.Block import Block
+from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.gui.settings import (
@@ -259,7 +258,7 @@ class SettingsDialog(CustomDialog):
 
     @staticmethod
     def _load_from_png(x: int, y: int) -> QIcon:
-        image = png.copy(QRect(x * Block.SIDE_LENGTH, y * Block.SIDE_LENGTH, Block.SIDE_LENGTH, Block.SIDE_LENGTH))
+        image = png.copy(QRect(x * BLOCK_SIZE.width, y * BLOCK_SIZE.height, BLOCK_SIZE.width, BLOCK_SIZE.height))
         mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
         image.setAlphaChannel(mask)
 

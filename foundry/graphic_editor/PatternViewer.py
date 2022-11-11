@@ -1,14 +1,13 @@
 from attr import attrs
 from PySide6.QtCore import QPoint, QRect, Signal, SignalInstance
-from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, Qt
+from PySide6.QtGui import QBrush, QColor, QImage, QMouseEvent, QPainter, QPaintEvent, Qt
 from PySide6.QtWidgets import QLayout, QWidget
 
+from foundry.core.drawable import MASK_COLOR, TILE_SIZE, tile_to_image
 from foundry.core.geometry import Point
 from foundry.core.graphics_page.GraphicsGroup import GraphicsGroup
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
-from foundry.game.gfx.drawable.Tile import Tile
 
 
 @attrs(slots=True, auto_attribs=True)
@@ -76,7 +75,7 @@ class PatternViewerController(QWidget):
 
     @property
     def pattern_scale(self) -> int:
-        return Tile.WIDTH * self.zoom  # type: ignore
+        return TILE_SIZE.width * self.zoom
 
     def normalize_point(self, point: Point | QPoint) -> Point:
         if isinstance(point, QPoint):
@@ -99,12 +98,9 @@ class PatternViewerController(QWidget):
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
 
         for i in range(self.PATTERNS):
-            tile = Tile(i, self.palette_group, self.palette_index, self.graphics_set)
-
-            x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
-            y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
-
-            image = tile.as_image(self.pattern_scale)
+            image: QImage = tile_to_image(i, self.palette_group[self.palette_index], self.graphics_set, self.zoom)
             mask = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
             image.setAlphaChannel(mask)
+            x = (i % self.PATTERNS_PER_ROW) * self.pattern_scale
+            y = (i // self.PATTERNS_PER_ROW) * self.pattern_scale
             painter.drawImage(x, y, image)

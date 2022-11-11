@@ -414,7 +414,7 @@ def test_generate_namespace_generate_file():
 
 
 def test_generate_namespace_generate_drawable():
-    from foundry.core.drawable.Drawable import Drawable
+    from foundry.core.drawable import Drawable
 
     # Just test that it loads.
     generate_namespace(

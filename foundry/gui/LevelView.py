@@ -16,9 +16,9 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QSizePolicy, QToolTip, QWidget
 
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.core.geometry import Point, Size
 from foundry.core.gui import Click, Edge, MouseEvent, MouseWheelEvent
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.ObjectLike import (
@@ -97,7 +97,7 @@ class LevelView(QWidget):
         self.level_drawer = LevelDrawer(self.user_settings)
 
         self.zoom = 1
-        self.block_length = Block.SIDE_LENGTH * self.zoom
+        self.block_length = BLOCK_SIZE.width * self.zoom
 
         self.changed = False
 
@@ -200,8 +200,8 @@ class LevelView(QWidget):
     def _cursor_on_edge_of_object(
         self, level_object: LevelObject | EnemyObject, point: Point, edge_width: int = 4
     ) -> int:
-        right = (level_object.get_rect().left() + level_object.get_rect().width()) * self.block_length
-        bottom = (level_object.get_rect().top() + level_object.get_rect().height()) * self.block_length
+        right = level_object.rect.right * self.block_length
+        bottom = level_object.rect.bottom * self.block_length
 
         on_right_edge = point.x in range(right - edge_width, right)
         on_bottom_edge = point.y in range(bottom - edge_width, bottom)
@@ -257,9 +257,7 @@ class LevelView(QWidget):
         if not self.level_ref:
             return super().sizeHint()
         else:
-            width, height = self.level_ref.level.size
-
-            return QSize(width * self.block_length, height * self.block_length)
+            return (self.level_ref.level.size * self.block_length).to_qt()
 
     def update(self):
         self.resize(self.sizeHint())
@@ -285,7 +283,7 @@ class LevelView(QWidget):
 
         obj: LevelObject | EnemyObject | None = self.object_at(point)
         if obj is not None:
-            self.resize_obj_start_point = obj.position
+            self.resize_obj_start_point = obj.point
 
     def _resizing(self, event: MouseEvent) -> None:
         self.resizing_happened = True
@@ -346,7 +344,7 @@ class LevelView(QWidget):
 
                     self._try_start_resize(self._resize_mode_from_edge(edge), event)
                 else:
-                    self.drag_start_point = obj.position
+                    self.drag_start_point = obj.point
         else:
             self._start_selection_square(event.local_point)
 
@@ -389,7 +387,7 @@ class LevelView(QWidget):
             obj: LevelObject | EnemyObject | None = self.object_at(event.local_point)
 
             if obj is not None:
-                if self.drag_start_point != obj.position:
+                if self.drag_start_point != obj.point:
                     self._stop_drag()
                 else:
                     self.dragging_happened = False
@@ -428,7 +426,7 @@ class LevelView(QWidget):
             return
 
         self.zoom = zoom
-        self.block_length = int(Block.SIDE_LENGTH * self.zoom)
+        self.block_length = int(BLOCK_SIZE.width * self.zoom)
 
         self.update()
 
@@ -449,7 +447,9 @@ class LevelView(QWidget):
 
         sel_rect = self.selection_square.get_adjusted_rect(Size(self.block_length, self.block_length))
         touched_objects: list[LevelObject | EnemyObject] = [
-            obj for obj in self.level_ref.level.get_all_objects() if sel_rect.to_qt().intersects(obj.get_rect())
+            obj
+            for obj in self.level_ref.level.get_all_objects()
+            if obj.rect in sel_rect or sel_rect.intersects(obj.rect)
         ]
 
         if touched_objects != self.level_ref.selected_objects:
@@ -495,8 +495,8 @@ class LevelView(QWidget):
         if not objects:
             return
 
-        min_x = min(obj.position.x for obj in objects) * self.block_length
-        min_y = min(obj.position.y for obj in objects) * self.block_length
+        min_x = min(obj.point.x for obj in objects) * self.block_length
+        min_y = min(obj.point.y for obj in objects) * self.block_length
 
         self.parent().parent().ensureVisible(min_x, min_y)
 
@@ -615,7 +615,7 @@ class LevelView(QWidget):
     def replace_object(self, obj: LevelObject, domain: int, obj_index: int, length: int | None):
         self.remove_object(obj)
 
-        new_obj = self.level_ref.level.add_object(domain, obj_index, obj.position, length, obj.index_in_level)
+        new_obj = self.level_ref.level.add_object(domain, obj_index, obj.point, length, obj.index_in_level)
         new_obj.selected = obj.selected
 
     def replace_enemy(self, old_enemy: EnemyObject, enemy_index: int):
@@ -623,7 +623,7 @@ class LevelView(QWidget):
 
         self.remove_object(old_enemy)
 
-        new_enemy: EnemyObject = self.level_ref.level.add_enemy(enemy_index, old_enemy.position, index_in_level)
+        new_enemy: EnemyObject = self.level_ref.level.add_enemy(enemy_index, old_enemy.point, index_in_level)
         new_enemy.selected = old_enemy.selected
 
     def remove_object(self, obj):
@@ -643,7 +643,7 @@ class LevelView(QWidget):
         pasted_objects = []
 
         for obj in objects:
-            offset_point = obj.position - origin
+            offset_point = obj.point - origin
 
             try:
                 pasted_objects.append(self.level_ref.level.paste_object_at(point + offset_point, obj))
@@ -666,7 +666,7 @@ class LevelView(QWidget):
 
     def dragMoveEvent(self, event: QDragMoveEvent):
         level_object: LevelObject | EnemyObject = self._object_from_mime_data(event.mimeData())
-        level_object.position = self._to_level_point(Point.from_qt(event.position()))
+        level_object.point = self._to_level_point(Point.from_qt(event.position()))
 
         self.currently_dragged_object = level_object
         self.repaint()
@@ -719,4 +719,4 @@ class LevelView(QWidget):
         self.selection_square.draw(painter)
 
         if self.currently_dragged_object is not None:
-            self.currently_dragged_object.draw(painter, self.block_length, self.transparency)
+            self.currently_dragged_object.draw(painter, self.block_length, self.user_settings.block_transparency)

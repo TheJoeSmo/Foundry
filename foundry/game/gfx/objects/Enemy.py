@@ -18,7 +18,7 @@ class EnemyProtocol(Protocol):
     """
 
     type: int
-    position: Point
+    point: Point
 
     def __bytes__(self) -> bytes:
         ...
@@ -42,10 +42,10 @@ class Enemy:
     """
 
     type: int
-    position: Point
+    point: Point
 
     def __bytes__(self) -> bytes:
-        return bytes([self.type, self.position.x, self.position.y])
+        return bytes([self.type, self.point.x, self.point.y])
 
     @classmethod
     def from_bytes(cls, data: bytes):

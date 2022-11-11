@@ -1,5 +1,5 @@
 from PySide6.QtCore import QPoint, QSize
-from PySide6.QtGui import QCloseEvent, QPainter, QPaintEvent
+from PySide6.QtGui import QCloseEvent, QColor, QImage, QPainter, QPaintEvent, Qt
 from PySide6.QtWidgets import (
     QComboBox,
     QHBoxLayout,
@@ -10,8 +10,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from foundry.core.drawable import BLOCK_SIZE, MASK_COLOR, Block, block_to_image
+from foundry.core.geometry import Point
 from foundry.core.graphics_set.util import GRAPHIC_SET_NAMES
-from foundry.game.gfx.drawable.Block import Block, get_block
+from foundry.game.File import ROM
 from foundry.game.gfx.objects.Jump import Jump
 from foundry.game.gfx.objects.LevelObject import LevelObject
 from foundry.game.gfx.objects.LevelObjectFactory import LevelObjectFactory
@@ -173,14 +175,9 @@ class ObjectDrawArea(QWidget):
         if isinstance(self.current_object, Jump):
             return
 
-        self.setMinimumSize(
-            QSize(
-                self.current_object.rendered_size.width * Block.WIDTH,
-                self.current_object.rendered_size.height * Block.HEIGHT,
-            )
-        )
+        self.setMinimumSize((self.current_object.rendered_size * BLOCK_SIZE).to_qt())
 
-    def update_object(self, object_data: bytearray | LevelObject | Jump = None):
+    def update_object(self, object_data: bytearray | LevelObject | Jump | None = None):
         if object_data is None:
             object_data = self.current_object.data
         elif isinstance(object_data, (LevelObject, Jump)):
@@ -196,15 +193,8 @@ class ObjectDrawArea(QWidget):
             return
 
         painter = QPainter(self)
-
-        painter.translate(
-            QPoint(
-                -Block.WIDTH * self.current_object.rendered_position.x,
-                -Block.HEIGHT * self.current_object.rendered_position.y,
-            )
-        )
-
-        self.current_object.draw(painter, Block.WIDTH, transparent=True)
+        painter.translate((self.current_object.rendered_position * BLOCK_SIZE * -1).to_qt())
+        self.current_object.draw(painter, BLOCK_SIZE.width, transparent=True)
 
 
 class BlockArray(QWidget):
@@ -227,30 +217,36 @@ class BlockArray(QWidget):
         clear_layout(self.layout())
 
         for block_index in self.level_object.blocks:
-            block = get_block(
-                block_index,
+            normalized_index: int = block_index if block_index <= 0xFF else ROM().get_byte(block_index)
+            image = block_to_image(
+                Block.from_tsa(Point(0, 0), normalized_index, self.level_object.tsa_data),
                 self.level_object.palette_group,
                 self.level_object.graphics_set,
-                bytes(self.level_object.tsa_data),
+                BLOCK_SIZE.width,
+            ).copy()
+            mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+            image.setAlphaChannel(mask)
+            self.layout().addWidget(
+                BlockArea(
+                    image,
+                    normalized_index,
+                )
             )
-            self.layout().addWidget(BlockArea(block))
 
         self.update()
 
 
 class BlockArea(QWidget):
-    def __init__(self, block: Block):
+    def __init__(self, image: QImage, index: int) -> None:
         super().__init__()
-
-        self.block = block
-
+        self.image = image
         self.setContentsMargins(0, 0, 0, 0)
-        self.setToolTip(hex(self.block.index))
+        self.setToolTip(hex(index))
 
-    def sizeHint(self):
-        return QSize(Block.WIDTH, Block.HEIGHT)
+    def sizeHint(self) -> QSize:
+        return BLOCK_SIZE.to_qt()
 
-    def paintEvent(self, event):
+    def paintEvent(self, event) -> None:
         painter = QPainter(self)
-
-        self.block.draw(painter, 0, 0, Block.WIDTH)
+        painter.drawImage(QPoint(0, 0), self.image)
+        painter.end()

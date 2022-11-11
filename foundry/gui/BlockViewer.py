@@ -11,12 +11,12 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QComboBox, QLabel, QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import BLOCK_SIZE, Block, block_to_image
 from foundry.core.geometry import Point
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
 from foundry.core.UndoController import UndoController
 from foundry.game.File import ROM
-from foundry.game.gfx.drawable.Block import Block
 from foundry.gui.BlockEditor import BlockEditorController as BlockEditor
 from foundry.gui.CustomChildWindow import CustomChildWindow
 from foundry.gui.LevelSelector import OBJECT_SET_ITEMS
@@ -122,7 +122,6 @@ class BlockViewerController(CustomChildWindow):
 
     def _update_tsa_data(self):
         ROM.write_tsa_data(self.tileset, self.tsa_data)
-        Block.clear_cache()
         self.undo_action.setEnabled(self.undo_controller.can_undo)
         self.redo_action.setEnabled(self.undo_controller.can_redo)
         self.tile_square_assembly_changed.emit(self.tsa_data)
@@ -209,12 +208,12 @@ class BlockViewerView(QWidget):
     def zoom(self, value: int):
         self._zoom = value
         self.setFixedSize(
-            self.BLOCKS_PER_ROW * Block.WIDTH * self.zoom, self.BLOCKS_PER_COLUMN * Block.HEIGHT * self.zoom
+            self.BLOCKS_PER_ROW * BLOCK_SIZE.width * self.zoom, self.BLOCKS_PER_COLUMN * BLOCK_SIZE.height * self.zoom
         )
 
     @property
     def block_scale(self) -> int:
-        return Block.WIDTH * self.zoom
+        return BLOCK_SIZE.width * self.zoom
 
     def mouseMoveEvent(self, event: QMouseEvent):
         pos = Point.from_qt(event.pos())
@@ -235,21 +234,16 @@ class BlockViewerView(QWidget):
         self.block_selected.emit(index)
 
     def paintEvent(self, event: QPaintEvent):
-        painter = QPainter(self)
-
-        palette = PaletteGroup.from_tileset(self.object_set, self.palette_group)
-        bg_color = palette.background_color
-        painter.setBrush(QBrush(bg_color))
-
+        painter: QPainter = QPainter(self)
+        palette_group: PaletteGroup = PaletteGroup.from_tileset(self.object_set, self.palette_group)
+        painter.setBrush(QBrush(palette_group.background_color))
         painter.drawRect(QRect(QPoint(0, 0), self.size()))
-
-        graphics_set = GraphicsSet.from_tileset(self.object_set)
-        tsa_data = ROM.get_tsa_data(self.object_set)
+        graphics_set: GraphicsSet = GraphicsSet.from_tileset(self.object_set)
+        tsa_data: bytearray = ROM.get_tsa_data(self.object_set)
 
         for i in range(self.BLOCKS):
-            block = Block(i, palette, graphics_set, tsa_data)
-
+            block: Block = Block.from_tsa(Point(0, 0), i, tsa_data)
+            image = block_to_image(block, palette_group, graphics_set, self.block_scale, True)
             x = (i % self.BLOCKS_PER_ROW) * self.block_scale
             y = (i // self.BLOCKS_PER_ROW) * self.block_scale
-
-            block.draw(painter, x, y, self.block_scale)
+            painter.drawImage(QPoint(x, y), image)

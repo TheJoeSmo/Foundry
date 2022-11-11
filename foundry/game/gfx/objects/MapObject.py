@@ -1,6 +1,10 @@
-from PySide6.QtCore import QRect
+from PySide6.QtCore import QPoint
+from PySide6.QtGui import QImage, QPainter
 
-from foundry.core.geometry import Point
+from foundry.core.drawable import Block, block_to_image
+from foundry.core.geometry import Point, Rect, Size
+from foundry.core.graphics_set.GraphicsSet import GraphicsSet
+from foundry.core.palette import PaletteGroup
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -133,18 +137,19 @@ map_object_names = {
 
 
 class MapObject(ObjectLike):
-    def __init__(self, block, x, y):
+    def __init__(self, block: Block, x: int, y: int, palette_group: PaletteGroup, graphics_set: GraphicsSet):
+        self.block: Block = block
         self.x_position = x
         self.y_position = y
+        self.palette_group = palette_group
+        self.graphics_set = graphics_set
 
-        self.block = block
-
-        self.rect = QRect(self.x_position, self.y_position, 1, 1)
+        self.rect = Rect(Point(self.x_position, self.y_position), Size(1, 1))
 
         if self.block.index in map_object_names:
             self.name = map_object_names[self.block.index]
         else:
-            self.name = str(hex(self.block.index))
+            self.name = str(hex(self.block.index)) if self.block.index is not None else "Undefined"
 
         self.selected = False
 
@@ -153,26 +158,22 @@ class MapObject(ObjectLike):
         return Definition(description="Map Object", warnings=[])
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         return Point(self.x_position, self.y_position)
 
-    @position.setter
-    def position(self, position: Point):
-        self.x_position, self.y_position = position.x, position.y
-        self.rect = QRect(position.x, position.y, 1, 1)
+    @point.setter
+    def point(self, point: Point):
+        self.x_position, self.y_position = point.x, point.y
+        self.rect = Rect(point, self.rect.size)
 
     def render(self):
         pass
 
-    def draw(self, dc, block_length, _=None):
-        self.block.draw(
-            dc,
-            self.x_position * block_length,
-            self.y_position * block_length,
-            block_length=block_length,
-            selected=self.selected,
-            transparent=False,
+    def draw(self, painter: QPainter, block_length: int, _=None):
+        image: QImage = block_to_image(
+            self.block, self.palette_group, self.graphics_set, block_length, use_background_color=True
         )
+        painter.drawImage(QPoint(self.x_position * block_length, self.y_position * block_length), image)
 
     def get_status_info(self):
         return ("x", self.x_position), ("y", self.y_position), ("Block Type", self.name)
@@ -181,13 +182,13 @@ class MapObject(ObjectLike):
         return self.block.index
 
     def move_by(self, point: Point) -> None:
-        self.position = self.position + point
+        self.point = self.point + point
 
     def resize_to(self, x, y):
         return
 
-    def point_in(self, x, y):
-        return self.rect.contains(x, y)
+    def point_in(self, point: Point):
+        return point in self.rect
 
     def get_rect(self):
         return self.rect

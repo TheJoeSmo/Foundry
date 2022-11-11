@@ -2,8 +2,8 @@ from PySide6.QtCore import Qt, Signal, SignalInstance
 from PySide6.QtGui import QIcon, QImage, QPixmap
 from PySide6.QtWidgets import QApplication, QComboBox, QCompleter, QWidget
 
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.core.geometry import Point
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 from foundry.game.gfx.objects.EnemyItemFactory import EnemyItemFactory
 from foundry.game.gfx.objects.LevelObject import LevelObject
@@ -134,6 +134,6 @@ class ObjectDropdown(QComboBox):
 
     @staticmethod
     def _resize_bitmap(source_image: QImage) -> QImage:
-        image = source_image.scaled(Block.SIDE_LENGTH, Block.SIDE_LENGTH)
+        image = source_image.scaled(BLOCK_SIZE.width, BLOCK_SIZE.height)
 
         return image

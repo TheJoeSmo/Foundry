@@ -1,17 +1,15 @@
+from attr import evolve
 from PySide6.QtCore import QSize, Qt, Signal, SignalInstance
 from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent
 from PySide6.QtWidgets import QFrame, QSizePolicy, QWidget
 
+from foundry.core.drawable import MASK_COLOR, SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.sprites import SPRITE_SIZE
-from foundry.core.sprites.Sprite import SpriteProtocol
-from foundry.core.sprites.SpriteGroup import SpriteGroupProtocol
-from foundry.core.tiles import MASK_COLOR
 
 
 class SpriteViewerWidget(QFrame):
-    sprites_changed: SignalInstance = Signal(list[SpriteProtocol])  # type: ignore
+    sprites_changed: SignalInstance = Signal(list[Sprite])  # type: ignore
     graphics_set_changed: SignalInstance = Signal(GraphicsSet)  # type: ignore
     palette_group_changed: SignalInstance = Signal(PaletteGroup)  # type: ignore
     transparency_changed: SignalInstance = Signal(bool)  # type: ignore
@@ -19,9 +17,7 @@ class SpriteViewerWidget(QFrame):
     mouse_moved_over_widget: SignalInstance = Signal(QMouseEvent)  # type: ignore
     clicked: SignalInstance = Signal(int, int)  # type: ignore
 
-    def __init__(
-        self, parent: QWidget | None, sprite_group: SpriteGroupProtocol, zoom: int = 2, transparent: bool = True
-    ):
+    def __init__(self, parent: QWidget | None, sprite_group: SpriteGroup, zoom: int = 2, transparent: bool = True):
         super().__init__(parent)
 
         self.setMouseTracking(True)
@@ -33,12 +29,12 @@ class SpriteViewerWidget(QFrame):
         self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
     @property
-    def sprites(self) -> list[SpriteProtocol]:
+    def sprites(self) -> tuple[Sprite, ...]:
         return self.sprite_group.sprites
 
     @sprites.setter
-    def sprites(self, sprites: list[SpriteProtocol]):
-        self.sprite_group.sprites = sprites
+    def sprites(self, sprites: tuple[Sprite, ...]):
+        self.sprite_group = evolve(self.sprite_group, sprites=sprites)
         self.sprites_changed.emit(sprites)
         self.update()
 
@@ -48,7 +44,7 @@ class SpriteViewerWidget(QFrame):
 
     @graphics_set.setter
     def graphics_set(self, graphics_set: GraphicsSet):
-        self.sprite_group.graphics_set = graphics_set
+        self.sprite_group = evolve(self.sprite_group, graphics_set=graphics_set)
         self.graphics_set_changed.emit(graphics_set)
         self.update()
 
@@ -58,7 +54,7 @@ class SpriteViewerWidget(QFrame):
 
     @palette_group.setter
     def palette_group(self, palette_group: PaletteGroup):
-        self.sprite_group.palette_group = palette_group
+        self.sprite_group = evolve(self.sprite_group, palette_group=palette_group)
         self.palette_group_changed.emit(palette_group)
         self.update()
 

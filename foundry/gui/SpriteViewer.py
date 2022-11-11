@@ -1,14 +1,13 @@
 from attr import attrs
-from PySide6.QtCore import Signal, SignalInstance
+from PySide6.QtCore import QPoint, Signal, SignalInstance
 from PySide6.QtGui import QCloseEvent, QMouseEvent, QPainter, QPaintEvent, QResizeEvent
 from PySide6.QtWidgets import QLayout, QStatusBar, QToolBar, QWidget
 
 from foundry import icon
+from foundry.core.drawable import SPRITE_SIZE, Sprite, SpriteGroup
 from foundry.core.geometry import Point, Size
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.sprites import SPRITE_SIZE
-from foundry.game.gfx.drawable.Sprite import Sprite
 from foundry.gui.CustomChildWindow import CustomChildWindow
 
 
@@ -157,16 +156,19 @@ class SpriteViewerView(QWidget):
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
-
-        for i in range(self.SPRITES):
-            sprite = Sprite(
-                i * 2,
-                self.palette_group,
-                self.palette_index,
+        painter.drawImage(
+            QPoint(0, 0),
+            SpriteGroup(
+                Point(0, 0),
+                tuple(
+                    Sprite(
+                        Point(i % self.SPRITES_PER_ROW, i // self.SPRITES_PER_ROW) * SPRITE_SIZE,
+                        i * 2,
+                        self.palette_index,
+                    )
+                    for i in range(self.SPRITES)
+                ),
                 self.graphics_set,
-            )
-
-            x = (i % self.SPRITES_PER_ROW) * self.sprite_size.width
-            y = (i // self.SPRITES_PER_ROW) * self.sprite_size.height
-
-            sprite.draw(painter, x, y, SPRITE_SIZE.width * self.zoom, SPRITE_SIZE.height * self.zoom, transparent=True)
+                self.palette_group,
+            ).image(self.zoom),
+        )

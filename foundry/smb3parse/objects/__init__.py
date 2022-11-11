@@ -40,7 +40,7 @@ class LevelComponentProtocol(Protocol):
 
     domain: int
     index: int
-    position: Point
+    point: Point
 
 
 def domain_check(instance, attribute, value):
@@ -122,7 +122,7 @@ class LevelComponent:
 
     domain: int = attr.ib(validator=domain_check, default=0)
     index: int = attr.ib(validator=index_check, default=0)
-    position: Point = attr.ib(validator=position_check, default=attr.Factory(lambda: Point(0, 0)))
+    point: Point = attr.ib(validator=position_check, default=attr.Factory(lambda: Point(0, 0)))
 
 
 class InLevelObject(ABC):
@@ -154,19 +154,19 @@ class InLevelObject(ABC):
 
     @property
     def x(self):
-        return self.level_component.position.x
+        return self.level_component.point.x
 
     @x.setter
     def x(self, value):
-        self.level_component.position = evolve(self.level_component.position, x=value)
+        self.level_component.point = evolve(self.level_component.point, x=value)
 
     @property
     def y(self):
-        return self.level_component.position.y
+        return self.level_component.point.y
 
     @y.setter
     def y(self, value):
-        self.level_component.position = evolve(self.level_component.position, y=value)
+        self.level_component.point = evolve(self.level_component.point, y=value)
 
     @property
     def additional_length(self):

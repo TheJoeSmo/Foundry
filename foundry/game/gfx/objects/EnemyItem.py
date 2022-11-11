@@ -1,19 +1,22 @@
-from PySide6.QtCore import QRect, QSize
+from PySide6.QtCore import QPointF, QRect, QSize
 from PySide6.QtGui import QColor, QImage, QPainter, Qt
 
-from foundry.core.geometry import Point
+from foundry.core.drawable import (
+    BLOCK_SIZE,
+    MASK_COLOR,
+    Sprite,
+    apply_selection_overlay,
+    sprite_to_image,
+)
+from foundry.core.geometry import Point, Rect, Size
 from foundry.core.graphics_page.GraphicsPage import GraphicsPage
 from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
-from foundry.core.tiles import MASK_COLOR
 from foundry.game.EnemyDefinitions import (
     EnemyDefinition,
     GeneratorType,
     get_enemy_metadata,
 )
-from foundry.game.gfx.drawable import apply_selection_overlay
-from foundry.game.gfx.drawable.Block import Block
-from foundry.game.gfx.drawable.Sprite import get_sprite
 from foundry.game.gfx.objects.Enemy import Enemy
 from foundry.game.gfx.objects.ObjectLike import ObjectLike
 
@@ -36,7 +39,7 @@ class EnemyObject(ObjectLike):
         return get_enemy_metadata().__root__[self.obj_index]
 
     @property
-    def rect(self):
+    def rect(self) -> Rect:
         bmp_width = (
             self.definition.bmp_width
             if not GeneratorType.SINGLE_SPRITE_OBJECT == self.definition.orientation
@@ -45,11 +48,8 @@ class EnemyObject(ObjectLike):
         width = self.definition.rect_width if self.definition.rect_width != 0 else bmp_width
         height = self.definition.rect_height if self.definition.rect_height != 0 else self.definition.bmp_height
 
-        return QRect(
-            self.position.x - self.definition.rect_x_offset,
-            self.position.y - self.definition.rect_y_offset,
-            width,
-            height,
+        return Rect(
+            self.point - Point(self.definition.rect_x_offset, self.definition.rect_y_offset), Size(width, height)
         )
 
     @property
@@ -86,10 +86,10 @@ class EnemyObject(ObjectLike):
         block_ids = self.definition.blocks
 
         for block_id in block_ids:
-            x = (block_id % 64) * Block.WIDTH
-            y = (block_id // 64) * Block.WIDTH
+            x = (block_id % 64) * BLOCK_SIZE.width
+            y = (block_id // 64) * BLOCK_SIZE.height
 
-            self.blocks.append(self.png_data.copy(QRect(x, y, Block.WIDTH, Block.HEIGHT)))
+            self.blocks.append(self.png_data.copy(QRect(x, y, BLOCK_SIZE.width, BLOCK_SIZE.height)))
 
     def render(self):
         # nothing to re-render since enemies are just copied over
@@ -101,16 +101,15 @@ class EnemyObject(ObjectLike):
         else:
             self.draw_sprites(painter, block_length // 2, transparency, is_icon)
 
-    def draw_sprites(self, painter: QPainter, scale_factor, transparency, is_icon):
+    def draw_sprites(self, painter: QPainter, scale_factor: int, transparency: bool, is_icon: bool) -> None:
         for i, sprite_info in enumerate(self.sprites):
             if sprite_info.index < 0:
                 continue
 
-            x = (self.position.x * 2) + (i % self.width) if not is_icon else (i % self.width)
-            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
+            x: float = (self.point.x * 2) + (i % self.width) if not is_icon else (i % self.width)
+            y: float = self.point.y + (i // self.width) if not is_icon else (i // self.width)
             x += sprite_info.x_offset / 16
             y -= sprite_info.y_offset / 16
-
             if is_icon:
                 definition = get_enemy_metadata().__root__[self.obj_index]
                 x_offset, y_offset = definition.suggested_icon_x_offset, definition.suggested_icon_y_offset
@@ -120,28 +119,29 @@ class EnemyObject(ObjectLike):
                 y_offset = self.height - 1
                 y -= y_offset
 
-            sprite = get_sprite(
-                sprite_info.index,
+            image: QImage = sprite_to_image(
+                Sprite(
+                    Point(0, 0),
+                    sprite_info.index,
+                    sprite_info.palette_index,
+                    sprite_info.horizontal_mirror,
+                    sprite_info.vertical_mirror,
+                ),
                 self.palette_group,
-                sprite_info.palette_index,
                 self.graphics_set,
-                sprite_info.horizontal_mirror,
-                sprite_info.vertical_mirror,
+                scale_factor // 8,
             )
-            sprite.draw(
-                painter,
-                x * scale_factor,
-                y * scale_factor * 2,
-                scale_factor,
-                scale_factor * 2,
-                self.selected,
-                transparency,
-            )
+            if transparency:
+                image = image.copy()
+                mask: QImage = image.createMaskFromColor(QColor(*MASK_COLOR).rgb(), Qt.MaskMode.MaskOutColor)
+                image.setAlphaChannel(mask)
+
+            painter.drawImage(QPointF(x * scale_factor, y * scale_factor * 2), image)
 
     def draw_blocks(self, painter: QPainter, block_length, is_icon):
         for i, image in enumerate(self.blocks):
-            x = self.position.x + (i % self.width) if not is_icon else (i % self.width)
-            y = self.position.y + (i // self.width) if not is_icon else (i // self.width)
+            x = self.point.x + (i % self.width) if not is_icon else (i % self.width)
+            y = self.point.y + (i // self.width) if not is_icon else (i // self.width)
 
             if is_icon:
                 definition = get_enemy_metadata().__root__[self.obj_index]
@@ -160,30 +160,30 @@ class EnemyObject(ObjectLike):
             if self.selected:
                 apply_selection_overlay(block, mask)
 
-            if block_length != Block.SIDE_LENGTH:
+            if block_length != BLOCK_SIZE.width:
                 block = block.scaled(block_length, block_length)
 
             painter.drawImage(x * block_length, y * block_length, block)
 
     def get_status_info(self):
-        return [("Name", self.name), ("X", self.position.x), ("Y", self.position.y)]
+        return [("Name", self.name), ("X", self.point.x), ("Y", self.point.y)]
 
     def __contains__(self, item: Point) -> bool:
         return self.point_in(item)
 
     def point_in(self, point: Point) -> bool:
-        return self.rect.contains(point.x, point.y)
+        return point in self.rect
 
     def move_by(self, point: Point) -> None:
-        self.position = self.position + point
+        self.point = self.point + point
 
     @property
-    def position(self) -> Point:
-        return self.enemy.position
+    def point(self) -> Point:
+        return self.enemy.point
 
-    @position.setter
-    def position(self, position: Point):
-        self.enemy.position = Point(max(0, position.x), max(0, position.y))
+    @point.setter
+    def point(self, point: Point):
+        self.enemy.point = Point(max(0, point.x), max(0, point.y))
 
     @property
     def obj_index(self):
@@ -205,12 +205,12 @@ class EnemyObject(ObjectLike):
 
         painter = QPainter(image)
 
-        self.draw(painter, Block.SIDE_LENGTH, True, is_icon=True)
+        self.draw(painter, BLOCK_SIZE.width, True, is_icon=True)
 
         return image
 
     def __str__(self):
-        return f"{self.name} at {self.position.x}, {self.position.y}"
+        return f"{self.name} at {self.point}"
 
     def __repr__(self):
         return f"EnemyObject: {self}"

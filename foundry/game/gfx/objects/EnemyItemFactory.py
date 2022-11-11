@@ -2,9 +2,9 @@ from PySide6.QtCore import QRect
 from PySide6.QtGui import QImage
 
 from foundry import data_dir
+from foundry.core.drawable import BLOCK_SIZE
 from foundry.core.geometry import Point
 from foundry.core.palette import PALETTE_GROUPS_PER_OBJECT_SET, PaletteGroup
-from foundry.game.gfx.drawable.Block import Block
 from foundry.game.gfx.objects.EnemyItem import EnemyObject
 
 
@@ -21,7 +21,7 @@ class EnemyItemFactory:
 
         rows_per_object_set = 256 // 64
 
-        y_offset = 12 * rows_per_object_set * Block.HEIGHT
+        y_offset = 12 * rows_per_object_set * BLOCK_SIZE.height
 
         self.png_data = png.copy(QRect(0, y_offset, png.width(), png.height() - y_offset))
 

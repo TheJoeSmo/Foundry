@@ -1,9 +1,7 @@
 from json import loads
 
-from PySide6.QtCore import QRect
-
 from foundry import warp_definitions
-from foundry.core.geometry import Point
+from foundry.core.geometry import Point, Rect, Size
 from foundry.game.Definitions import Definition
 from foundry.game.gfx.objects.GeneratorObject import GeneratorObject
 from foundry.game.gfx.objects.LevelObject import GROUND, SCREEN_HEIGHT, SCREEN_WIDTH
@@ -72,11 +70,11 @@ class Jump(GeneratorObject):
             return Definition(__root__=loads(f.read()))
 
     @property
-    def position(self) -> Point:
+    def point(self) -> Point:
         pass
 
-    @position.setter
-    def position(self, position: Point) -> None:
+    @point.setter
+    def point(self, point: Point) -> None:
         pass
 
     def move_by(self, point: Point) -> None:
@@ -85,20 +83,16 @@ class Jump(GeneratorObject):
     def point_in(self, x, y):
         return False
 
-    def get_rect(self, block_length=1, vertical=False) -> QRect:
+    def get_rect(self, block_length=1, vertical=False) -> Rect:
         if vertical:
-            return QRect(
-                0,
-                block_length * (1 + SCREEN_HEIGHT * self.screen_index),
-                block_length * SCREEN_WIDTH,
-                block_length * SCREEN_HEIGHT,
+            return Rect(
+                Point(0, block_length * (1 + SCREEN_HEIGHT * self.screen_index)),
+                Size(block_length * SCREEN_WIDTH, block_length * SCREEN_HEIGHT),
             )
         else:
-            return QRect(
-                block_length * SCREEN_WIDTH * self.screen_index,
-                0,
-                block_length * SCREEN_WIDTH,
-                block_length * GROUND,
+            return Rect(
+                Point(block_length * SCREEN_WIDTH * self.screen_index, 0),
+                Size(block_length * SCREEN_WIDTH, block_length * GROUND),
             )
 
     def __contains__(self, point):

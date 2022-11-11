@@ -31,24 +31,24 @@ class InvalidPositionWarning(Warning):
         """
         return (
             self.max_x is not None
-            and obj.position.x > self.max_x
+            and obj.point.x > self.max_x
             or self.min_x is not None
-            and obj.position.x < self.min_x
+            and obj.point.x < self.min_x
             or self.max_y is not None
-            and obj.position.y > self.max_y
+            and obj.point.y > self.max_y
             or self.min_y is not None
-            and obj.position.y < self.min_y
+            and obj.point.y < self.min_y
         )
 
     def get_message(self, obj: ObjectLike) -> str:
-        if self.max_x is not None and obj.position.x > self.max_x:
-            return f"{obj.name} x point of {obj.position.x} is more than its safe maximum of {self.max_x}."
-        if self.min_x is not None and obj.position.x < self.min_x:
-            return f"{obj.name} x point of {obj.position.x} is less than its safe minimum of {self.min_x}."
-        if self.max_y is not None and obj.position.y > self.max_y:
-            return f"{obj.name} y point of {obj.position.y} is more than its safe maximum of {self.max_y}."
-        if self.min_y is not None and obj.position.y < self.min_y:
-            return f"{obj.name} x point of {obj.position.y} is less than its safe maximum of {self.min_y}."
+        if self.max_x is not None and obj.point.x > self.max_x:
+            return f"{obj.name} x point of {obj.point.x} is more than its safe maximum of {self.max_x}."
+        if self.min_x is not None and obj.point.x < self.min_x:
+            return f"{obj.name} x point of {obj.point.x} is less than its safe minimum of {self.min_x}."
+        if self.max_y is not None and obj.point.y > self.max_y:
+            return f"{obj.name} y point of {obj.point.y} is more than its safe maximum of {self.max_y}."
+        if self.min_y is not None and obj.point.y < self.min_y:
+            return f"{obj.name} x point of {obj.point.y} is less than its safe maximum of {self.min_y}."
         raise NotImplementedError
 
 

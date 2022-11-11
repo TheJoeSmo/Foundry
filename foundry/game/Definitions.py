@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from foundry.core.drawable.Drawable import Drawable
+from foundry.core.drawable import Drawable
 from foundry.core.warnings.Warning import Warning
 from foundry.core.warnings.WarningCreator import WarningCreator
 

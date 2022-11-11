@@ -1,5 +1,5 @@
 from PySide6.QtCore import QPoint
-from pytest import raises
+from pytest import mark, raises
 
 from foundry.core.geometry import Point
 from foundry.core.namespace import (
@@ -8,8 +8,12 @@ from foundry.core.namespace import (
     Namespace,
 )
 
+from .test_vector2D import TestVector2D
 
-class TestPoint:
+
+class TestPoint(TestVector2D):
+    __test_class__ = Point
+
     def test_point_initialization_zero(self):
         p = Point(0, 0)
         assert p.x == 0
@@ -108,76 +112,6 @@ class TestPoint:
         assert Point(1, 1) >= Point(0, 0)
         assert Point(-1, 1) >= Point(0, 0)
 
-    def test_point_negation(self):
-        assert ~Point(0, 0) == Point(~0, ~0)
-        assert ~Point(0, 1) == Point(~0, ~1)
-        assert ~Point(1, 0) == Point(~1, ~0)
-
-    def test_point_right_shift(self):
-        assert Point(0b11, 0b101) >> 1 == Point(0b1, 0b10)
-        assert Point(1, 1) >> 1 == Point(0, 0)
-        assert Point(0, 0) >> 1 == Point(0, 0)
-
-    def test_point_left_shift(self):
-        assert Point(0b11, 0b101) << 1 == Point(0b110, 0b1010)
-        assert Point(0b1, 0b1) << 1 == Point(0b10, 0b10)
-        assert Point(0, 0) << 1 == Point(0, 0)
-
-    def test_point_power(self):
-        assert Point(0, 0) ** 2 == Point(0, 0)
-        assert Point(1, 1) ** 2 == Point(1, 1)
-        assert Point(2, 3) ** 2 == Point(4, 9)
-        assert Point(3, 2) ** 2 == Point(9, 4)
-        assert Point(-2, -3) ** 2 == Point(4, 9)
-
-    def test_point_add(self):
-        assert Point(1, 2) + Point(3, 4) == Point(4, 6)
-        assert Point(-1, -2) + Point(3, 4) == Point(2, 2)
-        assert Point(0, 0) + Point(-1, -2) == Point(-1, -2)
-
-    def test_point_subtract(self):
-        assert Point(1, 2) - Point(3, 4) == Point(-2, -2)
-        assert Point(-1, -2) - Point(3, 4) == Point(-4, -6)
-        assert Point(0, 0) - Point(-1, -2) == Point(1, 2)
-
-    def test_point_multiple(self):
-        assert Point(1, 2) * Point(3, 4) == Point(3, 8)
-        assert Point(-1, -2) * Point(3, 4) == Point(-3, -8)
-        assert Point(0, 0) * Point(-1, -2) == Point(0, 0)
-
-    def test_point_divide(self):
-        assert Point(4, 2) // Point(2, 1) == Point(2, 2)
-        assert Point(2, 4) // Point(1, 2) == Point(2, 2)
-
-    def test_point_divide_zero_error(self):
-        with raises(ZeroDivisionError):
-            Point(1, 0) // Point(0, 1)
-        with raises(ZeroDivisionError):
-            Point(0, 1) // Point(1, 0)
-
-    def test_point_modulo(self):
-        assert Point(1, 2) % Point(4, 4) == Point(1, 2)
-        assert Point(2, 1) % Point(4, 4) == Point(2, 1)
-        assert Point(3, 7) % Point(2, 2) == Point(1, 1)
-
-    def test_point_and(self):
-        assert Point(1, 1) & Point(0, 0) == Point(0, 0)
-        assert Point(1, 1) & Point(1, 0) == Point(1, 0)
-        assert Point(1, 1) & Point(0, 1) == Point(0, 1)
-        assert Point(0, 0) & Point(0, 0) == Point(0, 0)
-
-    def test_point_or(self):
-        assert Point(1, 1) | Point(0, 0) == Point(1, 1)
-        assert Point(1, 1) | Point(1, 0) == Point(1, 1)
-        assert Point(1, 1) | Point(0, 1) == Point(1, 1)
-        assert Point(0, 0) | Point(0, 0) == Point(0, 0)
-
-    def test_point_xor(self):
-        assert Point(1, 1) ^ Point(0, 0) == Point(1, 1)
-        assert Point(1, 1) ^ Point(1, 0) == Point(0, 1)
-        assert Point(1, 1) ^ Point(0, 1) == Point(1, 0)
-        assert Point(0, 0) ^ Point(0, 0) == Point(0, 0)
-
     def test_from_qt(self):
         assert Point(0, 0) == Point.from_qt(QPoint(0, 0))
         assert Point(1, 1) == Point.from_qt(QPoint(1, 1))
@@ -198,3 +132,7 @@ class TestPoint:
     def test_validate_point_respect_namespace_validators(self):
         with raises(MissingTypeArgumentException):
             Point.validate({"x": 0, "y": 0, PARENT_ARGUMENT: Namespace()})
+
+    @mark.parametrize("i,j,i2,j2", [(0, 0, ~0, ~0), (0, 1, ~0, ~1), (1, 0, ~1, ~0), (2, 1, ~2, ~1), (1, 2, ~1, ~2)])
+    def test_negation(self, i: int, j: int, i2: int, j2: int) -> None:
+        assert ~self.__test_class__(i, j) == self.__test_class__(i2, j2)
