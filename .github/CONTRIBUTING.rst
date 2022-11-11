@@ -22,14 +22,15 @@ Getting Started
 ---------------
 
 You will need a working version of Python between the versions specified inside the
-`toml file <https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml>`_ and to install Poetry [3]_.
+`toml file <https://github.com/TheJoeSmo/Foundry/blob/master/pyproject.toml>`_.
 To install the remaining dependencies, simply write the following:
 
 .. code-block:: console
 
     $ git clone git@github.com:TheJoeSmo/Foundry.git
     $ cd Foundry
-    $ poetry install
+    $ pip install -r requirements-dev.txt
+    $ python -m foundry.main
 
 This will install the remaining dependencies.  It is recommended to run this command after
 each fetch or update to the project's dependencies, as it ensures the continuos integration
@@ -39,7 +40,7 @@ If everything worked, you should be able to run the following and see that every
 
 .. code-block:: console
 
-    $ poetry run pytest tests/ --verbose --failed-first --ignore="tests/game/gfx/objects/" --ignore="tests/game/level/test_level_drawing.py" --ignore="tests/gui/test_world_map.py"
+    $ python -m pytest
 
 Workflow
 --------
@@ -190,7 +191,7 @@ Tests
   
   .. code-block:: console
 
-    $ poetry run pytest tests/ --verbose --failed-first"
+    $ python -m pytest
 
 References
 ----------

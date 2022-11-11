@@ -26,8 +26,7 @@ Downloading the package through
 
     $ python -m pip install foundry-smb3
 
-Downloading the repository and running it with Python and 
-`Poetry <https://pypi.org/project/poetry/>`_.
+Downloading the repository and running it with Python.
 
 .. code-block:: console
 
