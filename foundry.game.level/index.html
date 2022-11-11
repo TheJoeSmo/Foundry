@@ -307,20 +307,15 @@
     <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../foundry/">foundry package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../foundry.core/">foundry.core package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.blocks/">foundry.core.blocks package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.drawable/">foundry.core.drawable package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.graphics_page/">foundry.core.graphics_page package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.graphics_set/">foundry.core.graphics_set package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.painter/">foundry.core.painter package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.player_animations/">foundry.core.player_animations package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.sprites/">foundry.core.sprites package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.tiles/">foundry.core.tiles package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.warnings/">foundry.core.warnings package</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../foundry.game/">foundry.game package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="../foundry.game.gfx/">foundry.game.gfx package</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/">foundry.game.gfx.drawable package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.objects/">foundry.game.gfx.objects package</a></li>
 </ul>
 </li>
@@ -523,7 +518,7 @@ objects are in the order, that they appear in, in memory, meaning back to front.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.level.Level.Level.get_rect">
-<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.level.Level.Level.get_rect" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></span></span><a class="headerlink" href="#foundry.game.level.Level.Level.get_rect" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -634,6 +629,11 @@ objects are in the order, that they appear in, in memory, meaning back to front.
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.game.level.Level.Level.scroll_type">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scroll_type</span></span><a class="headerlink" href="#foundry.game.level.Level.Level.scroll_type" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="foundry.game.level.Level.Level.size">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Size" title="foundry.core.geometry.Size"><span class="pre">Size</span></a></em><a class="headerlink" href="#foundry.game.level.Level.Level.size" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -2692,6 +2692,15 @@ objects are in the order, that they appear in, in memory, meaning back to front.
        <code class="docutils literal notranslate">
         <span class="pre">
          Level.scroll_type
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#foundry.game.level.Level.Level.size">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Level.size
         </span>
        </code>
       </a>

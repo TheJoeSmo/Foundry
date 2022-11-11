@@ -43,7 +43,7 @@
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
     <link rel="next" title="foundry.game.level package" href="../foundry.game.level/" />
-    <link rel="prev" title="foundry.game.gfx.drawable package" href="../foundry.game.gfx.drawable/" />
+    <link rel="prev" title="foundry.game.gfx package" href="../foundry.game.gfx/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
@@ -307,20 +307,15 @@
     <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../foundry/">foundry package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../foundry.core/">foundry.core package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.blocks/">foundry.core.blocks package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.drawable/">foundry.core.drawable package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.graphics_page/">foundry.core.graphics_page package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.graphics_set/">foundry.core.graphics_set package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.painter/">foundry.core.painter package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.player_animations/">foundry.core.player_animations package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.sprites/">foundry.core.sprites package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../foundry.core.tiles/">foundry.core.tiles package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../foundry.core.warnings/">foundry.core.warnings package</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../foundry.game/">foundry.game package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../foundry.game.gfx/">foundry.game.gfx package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../foundry.game.gfx.drawable/">foundry.game.gfx.drawable package</a></li>
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">foundry.game.gfx.objects package</a></li>
 </ul>
 </li>
@@ -373,7 +368,7 @@
 <span id="foundry-game-gfx-objects-enemy-module"></span><h2>foundry.game.gfx.objects.Enemy module<a class="headerlink" href="#module-foundry.game.gfx.objects.Enemy" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.Enemy.Enemy">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.Enemy" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.Enemy" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/dev/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A representation of an enemy inside a level, that uses <code class="docutils literal notranslate"><span class="pre">attrs</span></code> to create a basic implementation.</p>
 <dl class="field-list simple">
@@ -392,8 +387,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.Enemy.Enemy.position">
-<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.Enemy.position" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Enemy.Enemy.point">
+<span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.Enemy.point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -424,8 +419,8 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.Enemy.EnemyProtocol.position">
-<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.EnemyProtocol.position" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Enemy.EnemyProtocol.point">
+<span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Enemy.EnemyProtocol.point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -464,7 +459,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.draw_sprites">
-<span class="sig-name descname"><span class="pre">draw_sprites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_icon</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.draw_sprites" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw_sprites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_icon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.draw_sprites" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -497,19 +492,19 @@
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">obj_index</span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.obj_index" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in">
 <span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.position">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.position" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.EnemyItem.EnemyObject.rect">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rect</span></span><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.rect" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.rect" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -611,7 +606,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.get_rect">
-<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QRect</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.get_rect" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.get_rect" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -629,14 +624,14 @@
 <span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.move_by" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.point_in">
 <span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.point_in" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.Jump.Jump.position">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.Jump.Jump.position" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -685,7 +680,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../foundry.game.gfx.drawable/#foundry.game.gfx.drawable.Block.Block" title="foundry.game.gfx.drawable.Block.Block"><span class="pre">foundry.game.gfx.drawable.Block.Block</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.draw" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">foundry.core.drawable.Block</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.draw" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -753,14 +748,14 @@
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">orientation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.game/#foundry.game.ObjectDefinitions.GeneratorType" title="foundry.game.ObjectDefinitions.GeneratorType"><span class="pre">GeneratorType</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.orientation" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.point_in">
 <span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point_in" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.LevelObject.LevelObject.position">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.LevelObject.LevelObject.position" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -884,7 +879,7 @@
 <span id="foundry-game-gfx-objects-mapobject-module"></span><h2>foundry.game.gfx.objects.MapObject module<a class="headerlink" href="#module-foundry.game.gfx.objects.MapObject" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MapObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MapObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.palette.PaletteGroup" title="foundry.core.palette.PaletteGroup"><span class="pre">PaletteGroup</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphics_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core.graphics_set/#foundry.core.graphics_set.GraphicsSet.GraphicsSet" title="foundry.core.graphics_set.GraphicsSet.GraphicsSet"><span class="pre">GraphicsSet</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike" title="foundry.game.gfx.objects.ObjectLike.ObjectLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectLike</span></code></a></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.definition">
@@ -893,7 +888,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.draw" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">painter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QPainter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.draw" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -911,14 +906,14 @@
 <span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/dev/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.move_by" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.point_in">
-<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.point_in" title="Permalink to this definition">#</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.point" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.position">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.position" title="Permalink to this definition">#</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.MapObject.MapObject.point_in">
+<span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.MapObject.MapObject.point_in" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -962,7 +957,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.get_rect">
-<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QRect</span></span></span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.get_rect" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></span></span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.get_rect" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -985,14 +980,14 @@
 <span class="sig-name descname"><span class="pre">obj_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/dev/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.obj_index" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.point">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.position">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Point" title="foundry.core.geometry.Point"><span class="pre">Point</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.position" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1002,7 +997,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="foundry.game.gfx.objects.ObjectLike.ObjectLike.rect">
-<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">QRect</span></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.rect" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../foundry.core/#foundry.core.geometry.Rect" title="foundry.core.geometry.Rect"><span class="pre">Rect</span></a></em><a class="headerlink" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.rect" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1074,11 +1069,11 @@
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="../foundry.game.gfx.drawable/" title="previous page">
+  <a class='left-prev' id="prev-link" href="../foundry.game.gfx/" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">foundry.game.gfx.drawable package</p>
+          <p class="prev-next-title">foundry.game.gfx package</p>
       </div>
   </a>
   <a class='right-next' id="next-link" href="../foundry.game.level/" title="next page">
@@ -1133,10 +1128,10 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Enemy.Enemy.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Enemy.Enemy.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Enemy.position
+         Enemy.point
         </span>
        </code>
       </a>
@@ -1171,10 +1166,10 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Enemy.EnemyProtocol.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Enemy.EnemyProtocol.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         EnemyProtocol.position
+         EnemyProtocol.point
         </span>
        </code>
       </a>
@@ -1306,19 +1301,19 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         EnemyObject.point_in()
+         EnemyObject.point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.EnemyItem.EnemyObject.point_in">
        <code class="docutils literal notranslate">
         <span class="pre">
-         EnemyObject.position
+         EnemyObject.point_in()
         </span>
        </code>
       </a>
@@ -1549,19 +1544,19 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Jump.Jump.point_in">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Jump.Jump.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Jump.point_in()
+         Jump.point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Jump.Jump.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.Jump.Jump.point_in">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Jump.position
+         Jump.point_in()
         </span>
        </code>
       </a>
@@ -1774,19 +1769,19 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point_in">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         LevelObject.point_in()
+         LevelObject.point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObject.LevelObject.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.LevelObject.LevelObject.point_in">
        <code class="docutils literal notranslate">
         <span class="pre">
-         LevelObject.position
+         LevelObject.point_in()
         </span>
        </code>
       </a>
@@ -2062,19 +2057,19 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.MapObject.MapObject.point_in">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.MapObject.MapObject.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         MapObject.point_in()
+         MapObject.point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.MapObject.MapObject.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.MapObject.MapObject.point_in">
        <code class="docutils literal notranslate">
         <span class="pre">
-         MapObject.position
+         MapObject.point_in()
         </span>
        </code>
       </a>
@@ -2197,19 +2192,19 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectLike.point_in()
+         ObjectLike.point
         </span>
        </code>
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.position">
+      <a class="reference internal nav-link" href="#foundry.game.gfx.objects.ObjectLike.ObjectLike.point_in">
        <code class="docutils literal notranslate">
         <span class="pre">
-         ObjectLike.position
+         ObjectLike.point_in()
         </span>
        </code>
       </a>

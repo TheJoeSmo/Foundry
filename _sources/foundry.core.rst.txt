@@ -7,14 +7,11 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   foundry.core.blocks
    foundry.core.drawable
    foundry.core.graphics_page
    foundry.core.graphics_set
    foundry.core.painter
    foundry.core.player_animations
-   foundry.core.sprites
-   foundry.core.tiles
    foundry.core.warnings
 
 Submodules
