@@ -280,7 +280,7 @@ class MainWindow(QMainWindow):
             emulator = self.user_settings.instaplay_emulator
 
         try:
-            subprocess.run([emulator, *arguments])
+            subprocess.Popen([emulator, *arguments])
         except Exception as e:
             QMessageBox.critical(self, "Emulator command failed.", f"Check it under File > Settings.\n{str(e)}")
 
