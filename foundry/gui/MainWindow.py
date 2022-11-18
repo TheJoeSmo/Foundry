@@ -156,21 +156,21 @@ class MainWindow(QMainWindow):
 
         self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.menu_toolbar)
 
-        self.delete_shortcut = QShortcut(QKeySequence(Qt.Key.Key_Delete), self, self.manager.delete)
+        self.delete_shortcut = QShortcut(QKeySequence("Delete"), self, self.manager.delete)
 
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_X), self, self.manager.cut)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_C), self, self.manager.copy)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_V), self, self.manager.paste)
+        QShortcut(QKeySequence("Ctrl+X"), self, self.manager.cut)
+        QShortcut(QKeySequence("Ctrl+C"), self, self.manager.copy)
+        QShortcut(QKeySequence("Ctrl+V"), self, self.manager.paste)
 
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_Z), self, self.manager.undo)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_Y), self, self.manager.redo)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Modifier.SHIFT | Qt.Key.Key_Z), self, self.manager.redo)
+        QShortcut(QKeySequence("Ctrl+Z"), self, self.manager.undo)
+        QShortcut(QKeySequence("Ctrl+Y"), self, self.manager.redo)
+        QShortcut(QKeySequence("Ctrl+Shift+Z"), self, self.manager.redo)
 
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_Plus), self, self.manager.zoom_in)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_Minus), self, self.manager.zoom_out)
+        QShortcut(QKeySequence("Ctrl+Plus"), self, self.manager.zoom_in)
+        QShortcut(QKeySequence("Ctrl+Minus"), self, self.manager.zoom_out)
 
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_A), self, self.manager.select_all)
-        QShortcut(QKeySequence(Qt.Modifier.CTRL | Qt.Key.Key_L), self, self.manager.focus_selected)
+        QShortcut(QKeySequence("Ctrl+A"), self, self.manager.select_all)
+        QShortcut(QKeySequence("Ctrl+L"), self, self.manager.focus_selected)
 
         self.loaded = self.on_open_rom(path_to_rom, world, level)
 
