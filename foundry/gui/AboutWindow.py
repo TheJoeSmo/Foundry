@@ -5,7 +5,8 @@ from foundry import data_dir, get_current_version_name
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 
-LINK_SMB3F = "https://github.com/mchlnix/SMB3-Foundry"
+LINK_SMB3F = "https://github.com/mchlnix"
+LINK_JOE = "https://github.com/TheJoeSmo"
 LINK_HUKKA = "http://hukka.ncn.fi/index.php?about"
 LINK_SMB3WS = "https://www.romhacking.net/utilities/298/"
 LINK_SOUTHBIRD = "https://github.com/captainsouthbird"
@@ -19,7 +20,7 @@ class AboutDialog(CustomDialog):
     def __init__(self, parent):
         super().__init__(parent, title="About SMB3Foundry")
 
-        main_layout = QBoxLayout(QBoxLayout.LeftToRight, self)
+        main_layout = QBoxLayout(QBoxLayout.Direction.LeftToRight, self)
 
         image = QPixmap(str(data_dir.joinpath("foundry.ico"))).scaled(200, 200)
 
@@ -28,11 +29,13 @@ class AboutDialog(CustomDialog):
 
         main_layout.addWidget(icon)
 
-        text_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        text_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
 
         text_layout.addWidget(QLabel(f"SMB3 Foundry v{get_current_version_name()}", self))
         text_layout.addWidget(HorizontalLine())
-        text_layout.addWidget(LinkLabel(self, f'By <a href="{LINK_SMB3F}">Michael</a>'))
+        text_layout.addWidget(
+            LinkLabel(self, f'By <a href="{LINK_SMB3F}">Michael</a> and <a href="{LINK_JOE}">Joe Smo</a>')
+        )
         text_layout.addWidget(QLabel("", self))
         text_layout.addWidget(QLabel("With thanks to:", self))
         text_layout.addWidget(

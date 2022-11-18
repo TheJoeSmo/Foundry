@@ -4,6 +4,7 @@ import urllib.request
 from pathlib import Path
 from typing import Union
 
+from pkg_resources import DistributionNotFound, require
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices, QIcon
 
@@ -52,9 +53,10 @@ def open_url(url: str | QUrl):
 
 
 def get_current_version_name() -> str:
-    from single_source import get_version
-
-    return get_version("foundry_smb3", root_dir, fail=False)  # type: ignore
+    try:
+        return require("foundry_smb3")[0].version
+    except DistributionNotFound:
+        return "Unknown"
 
 
 def get_latest_version_name(timeout: int = 10) -> str:

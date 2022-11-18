@@ -48,7 +48,6 @@ qt-material==2.12
 requests==2.28.1
 setuptools==65.4.1
 shiboken6==6.4.0
-single-source==0.3.0
 smmap==5.0.0
 snowballstemmer==2.2.0
 sortedcontainers==2.4.0
