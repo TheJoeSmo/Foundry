@@ -19,7 +19,7 @@ class AboutDialog(CustomDialog):
     def __init__(self, parent):
         super().__init__(parent, title="About SMB3Foundry")
 
-        main_layout = QBoxLayout(QBoxLayout.LeftToRight, self)
+        main_layout = QBoxLayout(QBoxLayout.Direction.LeftToRight, self)
 
         image = QPixmap(str(data_dir.joinpath("foundry.ico"))).scaled(200, 200)
 
@@ -28,7 +28,7 @@ class AboutDialog(CustomDialog):
 
         main_layout.addWidget(icon)
 
-        text_layout = QBoxLayout(QBoxLayout.TopToBottom)
+        text_layout = QBoxLayout(QBoxLayout.Direction.TopToBottom)
 
         text_layout.addWidget(QLabel(f"SMB3 Foundry v{get_current_version_name()}", self))
         text_layout.addWidget(HorizontalLine())
