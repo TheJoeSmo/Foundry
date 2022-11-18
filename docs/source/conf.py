@@ -14,7 +14,7 @@ import os
 import sys
 from pathlib import Path
 
-from single_source import get_version
+from pkg_resources import DistributionNotFound, require
 
 root_dir = Path(__file__).parent.parent
 
@@ -53,7 +53,10 @@ copyright = "2022, TheJoeSmo"
 author = "TheJoeSmo"
 
 # The full version, including alpha/beta/rc tags
-release = get_version("foundry_smb3", root_dir, fail=False)  # type: ignore
+try:
+    release = require("foundry_smb3")[0].version
+except DistributionNotFound:
+    release = "Unknown"
 
 
 # -- General configuration ---------------------------------------------------
