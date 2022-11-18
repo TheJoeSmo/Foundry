@@ -93,7 +93,7 @@ def test_task_method_simple():
     from foundry.core.tasks import _task_manager
 
     assert _task_manager() is not None
-    assert _task_manager().join(0.1)
+    assert _task_manager().join(1)
     with SignalTester(obj.task_updated) as signal_tester:
         _task_manager().poll_tasks()
         assert signal_tester.count == 1
