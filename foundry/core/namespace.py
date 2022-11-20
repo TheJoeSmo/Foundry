@@ -5,7 +5,7 @@ from contextlib import suppress
 from functools import partial
 from graphlib import CycleError, TopologicalSorter
 from re import findall, search
-from typing import Any, ClassVar, Generic, Literal, TypeVar, overload
+from typing import Any, ClassVar, Generic, Literal, Self, TypeVar, overload
 
 from attr import Factory, attrs, evolve, field, validators
 
@@ -85,11 +85,6 @@ Declare private type hints.
 _T = TypeVar("_T")
 _V = TypeVar("_V", bound="Validator")
 _KV = TypeVar("_KV", bound="KeywordValidator")
-_CV = TypeVar("_CV", bound="ConcreteValidator")
-_TV = TypeVar("_TV", bound="TypeValidator")
-_PV = TypeVar("_PV", bound="PrimitiveValidator")
-_NTH = TypeVar("_NTH", bound="_TypeHandler")
-_NTHM = TypeVar("_NTHM", bound="_TypeHandlerManager")
 
 
 ValidatorCallable = Callable[[type[_T], Any], _T]
@@ -281,7 +276,7 @@ class _TypeHandler(Generic[_T]):
             )
         return NotImplemented
 
-    def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
+    def overwrite_from_parent(self, other: _TypeHandler) -> Self:
         raise NotImplementedError
 
     def get_type_suggestion(self, info: TypeInformation) -> type[_T] | None:
@@ -323,16 +318,16 @@ class _TypeHandlerManager:
     types: ValidatorHandlerMapping = field(default=Factory(dict))  # type: ignore
 
     @classmethod
-    def from_managers(cls: type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
+    def from_managers(cls, *managers: _TypeHandlerManager) -> Self:
         raise NotImplementedError()
 
-    def override_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
+    def override_type_handler(self, type_: str, handler: _TypeHandler) -> Self:
         raise NotImplementedError()
 
-    def add_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
+    def add_type_handler(self, type_: str, handler: _TypeHandler) -> Self:
         raise NotImplementedError()
 
-    def from_select_types(self: _NTHM, *types: str) -> _NTHM:
+    def from_select_types(self, *types: str) -> Self:
         raise NotImplementedError()
 
 
@@ -1060,7 +1055,7 @@ class TypeHandler(_TypeHandler[_T]):
             s = s[:-2]
         return f"{s})"
 
-    def overwrite_from_parent(self: _NTH, other: _TypeHandler) -> _NTH:
+    def overwrite_from_parent(self, other: _TypeHandler) -> Self:
         """
         `other` overwrites or adds additional type validators from this handler
         to form a new handler.
@@ -1234,7 +1229,7 @@ class TypeHandlerManager(_TypeHandlerManager):
         return NotImplemented
 
     @classmethod
-    def from_managers(cls: type[_NTHM], *managers: _TypeHandlerManager) -> _NTHM:
+    def from_managers(cls, *managers: _TypeHandlerManager) -> Self:
         """
         Effectively merges a series of managers together into a single manager.
 
@@ -1249,7 +1244,7 @@ class TypeHandlerManager(_TypeHandlerManager):
                 manager = manager.add_type_handler(type_, handler)
         return manager
 
-    def override_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
+    def override_type_handler(self, type_: str, handler: _TypeHandler) -> Self:
         """
         Generates a new manager which removes the current handler of `type_` if it exists
         and replaces it with `handler`.
@@ -1270,7 +1265,7 @@ class TypeHandlerManager(_TypeHandlerManager):
             return self.__class__(ChainMap({type_: handler}, *self.types.maps))  # No need to make a new ChainMap.
         return self.__class__(ChainMap({type_: handler}, self.types))
 
-    def add_type_handler(self: _NTHM, type_: str, handler: _TypeHandler) -> _NTHM:
+    def add_type_handler(self, type_: str, handler: _TypeHandler) -> Self:
         """
         Generates a new manager which adds a handler to validate `type_`.  If `type_`
         is already defined a new handler will be used which overrides this instance's
@@ -1292,7 +1287,7 @@ class TypeHandlerManager(_TypeHandlerManager):
             return self.override_type_handler(type_, handler)  # Overrides nothing, as it is not there.
         return self.__class__(ChainMap({type_: self.types[type_].overwrite_from_parent(handler)}, self.types))
 
-    def from_select_types(self: _NTHM, *types: str) -> _NTHM:
+    def from_select_types(self, *types: str) -> Self:
         """
         Generates a new manager which ensures only `types` can be validated.
 
@@ -1831,13 +1826,13 @@ class Validator(_ValidatorHelper):
 
     @classmethod
     @property
-    def type_handler(cls: type[_V]) -> TypeHandler[_V]:
+    def type_handler(cls) -> TypeHandler[Self]:
         """
         Provides the type handler for this type.
 
         Returns
         -------
-        TypeHandler[_V]
+        TypeHandler[Self]
             The handler for to validate this type.
         """
         if not hasattr(cls, "__validator_handler__") or not cls.__validator_handler__.types:
@@ -1890,14 +1885,12 @@ class Validator(_ValidatorHelper):
         return handler
 
     @classmethod
-    def _validate_from_namespace(cls: type[_V], parent: Namespace, name: str, path: str) -> _V:
+    def _validate_from_namespace(cls, parent: Namespace, name: str, path: str) -> Self:
         """
         Generates and validates from another existing object from `parent`.
 
         Parameters
         ----------
-        cls: Type[_V]
-            The type to find inside the namespace.
         parent : Namespace
             The namespace with the object to copy.
         name : str
@@ -1907,7 +1900,7 @@ class Validator(_ValidatorHelper):
 
         Returns
         -------
-        _V
+        Self
             The object inside the Namespace.
         """
         return validate_element(parent=parent.from_path(Path.validate(parent=parent, path=path)), name=name, type=cls)
@@ -1959,20 +1952,18 @@ class Validator(_ValidatorHelper):
         return class_._validate_from_namespace(parent, name, path)
 
     @classmethod
-    def validate_by_type(cls: type[_V], v: Mapping) -> _V:
+    def validate_by_type(cls, v: Mapping) -> Self:
         """
         Generates and validates an object by its type defined in `__validator_handler__`.
 
         Parameters
         ----------
-        cls : Type[_V]
-            The type of object to generate.
         v : Mapping
             A mapping containing the information to generate the object.
 
         Returns
         -------
-        _V
+        Self
             The object generated from `v` specified by its type.
         """
         type_ = cls.get_type_information(v)
@@ -2016,21 +2007,19 @@ class Validator(_ValidatorHelper):
         return {DEFAULT_ARGUMENT: v, PARENT_ARGUMENT: parent, TYPE_INFO_ARGUMENT: default_suggestion.type_suggestion}
 
     @classmethod
-    def validate_type(cls: type[_V], v: Any) -> _V:
+    def validate_type(cls, v: Any) -> Self:
         """
         Generates and validates an object by its types and ensures that there is a type
         inside `v` such that it can be validated further.
 
         Parameters
         ----------
-        cls : Type[_V]
-            The type of object to generate.
         v : Any
             A map containing the information to generate the object.
 
         Returns
         -------
-        _V
+        Self
             The object generated from `v` specified by its type.
 
         Raises
@@ -2361,7 +2350,7 @@ class ConcreteValidator(Validator):
 
     @classmethod
     @property
-    def type_handler(cls: type[_CV]) -> TypeHandler[_CV]:
+    def type_handler(cls) -> TypeHandler[Self]:
         handler = super().type_handler
         return evolve(handler, default_type_suggestion=cls)  # type: ignore
 
@@ -2380,18 +2369,18 @@ class TypeValidator(ConcreteValidator, KeywordValidator, TypeHandler):
 
     @classmethod
     @property
-    def type_handler(cls: type[_TV]) -> _TypeHandler[_TV]:
+    def type_handler(cls) -> _TypeHandler[Self]:
         return cls.__validator_handler__
 
     @classmethod
-    def from_validator(cls: type[_TV], validator: type[Validator], parent: Namespace) -> _TV:
+    def from_validator(cls, validator: type[Validator], parent: Namespace) -> Self:
         handler = parent.validators.types.get(validator.default_name, None)
         if handler is None:
             raise MissingTypeArgumentException(validator, parent.validators)
         return cls(handler.types, handler.default_type_suggestion, handler.default_validator)
 
     @classmethod
-    def validate(cls: type[_TV], v: Mapping) -> _TV:
+    def validate(cls, v: Mapping) -> Self:
         """
         Generates and validates a type validator from a map.
 
@@ -2402,7 +2391,7 @@ class TypeValidator(ConcreteValidator, KeywordValidator, TypeHandler):
 
         Returns
         -------
-        _TV
+        Self
             The validated type validator.
 
         Raises
@@ -2693,7 +2682,7 @@ class PrimitiveValidator(ConcreteValidator, SingleArgumentValidator):
         super().__init__()
 
     @classmethod
-    def validate_primitive(cls: type[_PV], v) -> _PV:
+    def validate_primitive(cls, v) -> Self:
         return cls(cls.get_default_argument(v))
 
 
@@ -2740,7 +2729,7 @@ class NonNegativeIntegerValidator(IntegerValidator):
     __slots__ = ()
 
     @classmethod
-    def validate_primitive(cls: type[_PV], v) -> _PV:
+    def validate_primitive(cls, v) -> Self:
         self = super().validate_primitive(v)
         if self < 0:  # type: ignore
             raise ValueError(f"{self} must be a non-negative integer")
@@ -2818,7 +2807,7 @@ def validate(**kwargs: type[Validator]) -> Callable[[Callable[..., _KV]], Valida
     """
 
     def validate(_f: Callable[..., _KV]) -> ValidatorCallable[_KV]:
-        def validate_arguments(cls: type[_KV], values: Any) -> _KV:
+        def validate_arguments(cls, values: Any) -> _KV:
             """
             Validates `values` by the predetermined kwargs validator suggestions with respect
             to the parent namespace passed inside `values`.
