@@ -5,7 +5,7 @@ from colorsys import hsv_to_rgb, rgb_to_hsv
 from functools import cache
 from json import loads
 from pathlib import Path
-from typing import ClassVar, overload
+from typing import ClassVar, Self, overload
 
 from attr import attrs, evolve, field, validators
 from PySide6.QtGui import QColor
@@ -275,7 +275,7 @@ class Color(ConcreteValidator, KeywordValidator):
         return cls(red, green, blue, alpha)
 
     @classmethod
-    def ensure_type(cls, color):
+    def ensure_type(cls, color) -> Self:
         match color:
             case Color():
                 return color
@@ -285,7 +285,7 @@ class Color(ConcreteValidator, KeywordValidator):
                 return NotImplemented
 
     @classmethod
-    def from_hsv(cls, hue: float, saturation: float, value: float):
+    def from_hsv(cls, hue: float, saturation: float, value: float) -> Self:
         """
         Generates a color from a hue, saturation, and value.
 
@@ -306,7 +306,7 @@ class Color(ConcreteValidator, KeywordValidator):
         return cls(*map(lambda v: int(v * 255), hsv_to_rgb(hue, saturation, value)))
 
     @classmethod
-    def from_qt(cls, color: QColor):
+    def from_qt(cls, color: QColor) -> Self:
         return cls(color.red(), color.green(), color.blue(), color.alpha())
 
     def to_qt(self) -> QColor:
@@ -423,39 +423,39 @@ class ColorPalette(ConcreteValidator, KeywordValidator):
 
     @classmethod
     @validate(colors=SequenceValidator.generate_class(Color))
-    def validate_from_colors(cls, colors: Sequence[Color | QColor]):
+    def validate_from_colors(cls, colors: Sequence[Color | QColor]) -> Self:
         return cls(ColorSequence(colors))
 
     @classmethod
-    def from_palette_file(cls, path: Path):
+    def from_palette_file(cls, path: Path) -> Self:
         with open(path, "rb") as f:
             data = f.read()
         return cls(ColorSequence(Color(*data[i : i + 4]) for i in range(PALETTE_FILE_COLOR_OFFSET, len(data), 4)))
 
     @classmethod
     @validate(path=FilePath)
-    def validate_from_palette_file(cls, path: FilePath):
+    def validate_from_palette_file(cls, path: FilePath) -> Self:
         return cls.from_palette_file(path)
 
     @classmethod
-    def from_json_file(cls, path: Path):
+    def from_json_file(cls, path: Path) -> Self:
         with open(path) as f:
             return cls(ColorSequence(Color(**c) for c in loads(f.read())["colors"]))
 
     @classmethod
     @validate(path=FilePath)
-    def validate_from_json_file(cls, path: FilePath):
+    def validate_from_json_file(cls, path: FilePath) -> Self:
         return cls.from_json_file(path)
 
     @classmethod
-    def from_default(cls):
+    def from_default(cls) -> Self:
         if cls._default is None:
             cls._default = cls.from_json_file(PALETTE_FILE_PATH)
         return cls._default
 
     @classmethod
     @validate()
-    def validate_from_default(cls):
+    def validate_from_default(cls) -> Self:
         return cls.from_default()
 
     def index(self, value: Color | QColor, start: int = 0, stop: int | None = None) -> int:
@@ -532,7 +532,7 @@ class Palette(ConcreteValidator, KeywordValidator):
                 return NotImplemented
 
     @classmethod
-    def as_empty(cls):
+    def as_empty(cls) -> Self:
         """
         Makes an empty palette of default values.
 
@@ -544,7 +544,7 @@ class Palette(ConcreteValidator, KeywordValidator):
         return cls((0, 0, 0, 0))
 
     @classmethod
-    def from_rom(cls, address: int):
+    def from_rom(cls, address: int) -> Self:
         """
         Creates a palette from an absolute address in ROM.
 
@@ -562,12 +562,12 @@ class Palette(ConcreteValidator, KeywordValidator):
 
     @classmethod
     @validate(color_indexes=SequenceValidator.generate_class(IntegerValidator), color_palette=ColorPalette)
-    def validate_from_colors(cls, color_indexes: Sequence[int], color_palette: ColorPalette):
+    def validate_from_colors(cls, color_indexes: Sequence[int], color_palette: ColorPalette) -> Self:
         return cls(tuple(color_indexes), color_palette)
 
     @classmethod
     @validate(address=IntegerValidator)
-    def validate_from_rom_address(cls, address: int):
+    def validate_from_rom_address(cls, address: int) -> Self:
         return cls.from_rom(address)
 
     def index(self, value: int | Color | QColor) -> int:
@@ -579,7 +579,7 @@ class Palette(ConcreteValidator, KeywordValidator):
             case _:
                 return NotImplemented
 
-    def evolve_color_index(self, index: int, color_index: int):
+    def evolve_color_index(self, index: int, color_index: int) -> Self:
         color_indexes = list(self.color_indexes)
         color_indexes[index] = color_index
         return evolve(self, color_indexes=tuple(color_indexes))
@@ -642,7 +642,7 @@ class PaletteGroup(ConcreteValidator, KeywordValidator):
         return self.palettes[0][0, QColor]
 
     @classmethod
-    def as_empty(cls):
+    def as_empty(cls) -> Self:
         """
         Makes an empty palette group of default values.
 
@@ -654,7 +654,7 @@ class PaletteGroup(ConcreteValidator, KeywordValidator):
         return cls(tuple(Palette.as_empty() for _ in range(PALETTES_PER_PALETTES_GROUP)))
 
     @classmethod
-    def from_rom(cls, address: int):
+    def from_rom(cls, address: int) -> Self:
         """
         Creates a palette group from an absolute address in ROM.
 
@@ -676,7 +676,7 @@ class PaletteGroup(ConcreteValidator, KeywordValidator):
         )
 
     @classmethod
-    def from_tileset(cls, tileset: int, index: int):
+    def from_tileset(cls, tileset: int, index: int) -> Self:
         """
         Loads a palette group from a tileset with a given index.
 
@@ -697,10 +697,10 @@ class PaletteGroup(ConcreteValidator, KeywordValidator):
 
     @classmethod
     @validate(palettes=SequenceValidator.generate_class(Palette))
-    def validate(cls, palettes: Sequence[Palette]):
+    def validate(cls, palettes: Sequence[Palette]) -> Self:
         return cls(tuple(palettes))
 
-    def evolve_palettes(self, palette_index: int, palette: Palette):
+    def evolve_palettes(self, palette_index: int, palette: Palette) -> Self:
         palettes: Iterable[Palette] = list(self.palettes)
         palettes[palette_index] = palette
         if any(map(lambda p: p != palette, palettes)):

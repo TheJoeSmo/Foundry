@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from math import sqrt
-from typing import TypeVar
+from typing import Self
 
 from attr import attrs, evolve, field
 from attr.validators import ge
@@ -16,11 +16,6 @@ from foundry.core.namespace import (
     default_validator,
     validate,
 )
-
-Vector = TypeVar("Vector", bound="Vector2D")
-Point_ = TypeVar("Point_", bound="Point")
-Size_ = TypeVar("Size_", bound="Size")
-Rect_ = TypeVar("Rect_", bound="Rect")
 
 
 @attrs(slots=True, auto_attribs=True, eq=False, frozen=True, hash=False)
@@ -38,64 +33,64 @@ class Vector2D:
         return NotImplemented
 
     @classmethod
-    def from_vector(cls: type[Vector], vector: Vector2D) -> Vector:
+    def from_vector(cls, vector: Vector2D) -> Self:
         return NotImplemented
 
     @classmethod
-    def from_components(cls: type[Vector], i_component: int, j_component: int) -> Vector:
+    def from_components(cls, i_component: int, j_component: int) -> Self:
         return NotImplemented
 
-    def __invert__(self: Vector) -> Vector:
+    def __invert__(self) -> Self:
         return self.from_components(~self.i_component, ~self.j_component)
 
-    def __neg__(self: Vector) -> Vector:
+    def __neg__(self) -> Self:
         return self.from_components(~self.i_component, ~self.j_component)
 
-    def __lshift__(self: Vector, other: int) -> Vector:
+    def __lshift__(self, other: int) -> Self:
         return self.from_components(self.i_component << other, self.j_component << other)
 
-    def __rshift__(self: Vector, other: int) -> Vector:
+    def __rshift__(self, other: int) -> Self:
         return self.from_components(self.i_component >> other, self.j_component >> other)
 
-    def __pow__(self: Vector, other: int) -> Vector:
+    def __pow__(self, other: int) -> Self:
         return self.from_components(self.i_component**other, self.j_component**other)
 
-    def __add__(self: Vector, other: int | Vector2D) -> Vector:
+    def __add__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component + other, self.j_component + other)
         return self.from_components(self.i_component + other.i_component, self.j_component + other.j_component)
 
-    def __sub__(self: Vector, other: int | Vector2D) -> Vector:
+    def __sub__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component - other, self.j_component - other)
         return self.from_components(self.i_component - other.i_component, self.j_component - other.j_component)
 
-    def __mul__(self: Vector, other: int | Vector2D) -> Vector:
+    def __mul__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component * other, self.j_component * other)
         return self.from_components(self.i_component * other.i_component, self.j_component * other.j_component)
 
-    def __floordiv__(self: Vector, other: int | Vector2D) -> Vector:
+    def __floordiv__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component // other, self.j_component // other)
         return self.from_components(self.i_component // other.i_component, self.j_component // other.j_component)
 
-    def __mod__(self: Vector, other: int | Vector2D) -> Vector:
+    def __mod__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component % other, self.j_component % other)
         return self.from_components(self.i_component % other.i_component, self.j_component % other.j_component)
 
-    def __and__(self: Vector, other: int | Vector2D) -> Vector:
+    def __and__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component & other, self.j_component & other)
         return self.from_components(self.i_component & other.i_component, self.j_component & other.j_component)
 
-    def __or__(self: Vector, other: int | Vector2D) -> Vector:
+    def __or__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component | other, self.j_component | other)
         return self.from_components(self.i_component | other.i_component, self.j_component | other.j_component)
 
-    def __xor__(self: Vector, other: int | Vector2D) -> Vector:
+    def __xor__(self, other: int | Vector2D) -> Self:
         if isinstance(other, int):
             return self.from_components(self.i_component ^ other, self.j_component ^ other)
         return self.from_components(self.i_component ^ other.i_component, self.j_component ^ other.j_component)
@@ -204,11 +199,11 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
 
     @classmethod
     @validate(x=IntegerValidator, y=IntegerValidator)
-    def validate(cls: type[Point_], x: int, y: int) -> Point_:
+    def validate(cls, x: int, y: int) -> Self:
         return cls(x, y)
 
     @classmethod
-    def from_components(cls: type[Point_], i_component: int, j_component: int) -> Point_:
+    def from_components(cls, i_component: int, j_component: int) -> Self:
         """
         Generates a point from the points of a vector.
 
@@ -221,13 +216,13 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
 
         Returns
         -------
-        Point_
+        Self
             The point created from the two components.
         """
         return cls(i_component, j_component)
 
     @classmethod
-    def from_vector(cls: type[Point_], vector: Vector2D) -> Point_:
+    def from_vector(cls, vector: Vector2D) -> Self:
         """
         Generates a point from a vector.
 
@@ -238,13 +233,13 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
 
         Returns
         -------
-        Point_
+        Self
             The point created from the vector.
         """
         return cls(vector.i_component, vector.j_component)
 
     @classmethod
-    def from_qt(cls: type[Point_], point: QPoint | QPointF) -> Point_:
+    def from_qt(cls, point: QPoint | QPointF) -> Self:
         """
         Generates a point from a QPoint for easy conversion.
 
@@ -255,14 +250,14 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
 
         Returns
         -------
-        Point
+        Self
             Of the QPoint represented inside Python.
         """
         if isinstance(point, QPointF):
             return cls(int(point.x()), int(point.y()))
         return cls(point.x(), point.y())
 
-    def evolve(self: Point_, *, x: int | None = None, y: int | None = None) -> Point_:
+    def evolve(self, *, x: int | None = None, y: int | None = None) -> Self:
         """
         A convenience method to modify points quicker.
 
@@ -275,7 +270,7 @@ class Point(ConcreteValidator, KeywordValidator, Vector2D, Bound):
 
         Returns
         -------
-        Point_
+        Self
             The new evolved point.
         """
         return evolve(self, x=self.x if x is None else x, y=self.y if y is None else y)
@@ -419,11 +414,11 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
 
     @classmethod
     @validate(width=NonNegativeIntegerValidator, height=NonNegativeIntegerValidator)
-    def validate(cls: type[Size_], width: int, height: int) -> Size_:
+    def validate(cls, width: int, height: int) -> Self:
         return cls(width, height)
 
     @classmethod
-    def from_components(cls: type[Size_], i_component: int, j_component: int) -> Size_:
+    def from_components(cls, i_component: int, j_component: int) -> Self:
         """
         Generates a size from the components of a vector.
 
@@ -436,13 +431,13 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
 
         Returns
         -------
-        Size_
+        Self
             The size created from the two components.
         """
         return cls(i_component, j_component)
 
     @classmethod
-    def from_vector(cls: type[Size_], vector: Vector2D) -> Size_:
+    def from_vector(cls, vector: Vector2D) -> Self:
         """
         Generates a size from a vector.
 
@@ -454,13 +449,13 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
 
         Returns
         -------
-        Size_
+        Self
             The size created from the vector.
         """
         return cls(vector.i_component, vector.j_component)
 
     @classmethod
-    def from_qt(cls: type[Size_], size: QSize) -> Size_:
+    def from_qt(cls, size: QSize) -> Self:
         """
         Generates a size from a QSize for easy conversion.
 
@@ -471,7 +466,7 @@ class Size(ConcreteValidator, KeywordValidator, Vector2D):
 
         Returns
         -------
-        Size_
+        Self
             Of the QSize represented inside Python.
         """
         return cls(size.width(), size.height())
@@ -628,11 +623,11 @@ class Rect(ConcreteValidator, KeywordValidator, SimpleBound):
 
     @classmethod
     @validate(point=Point, size=Size)
-    def validate(cls: type[Rect_], point: Point, size: Size) -> Rect_:
+    def validate(cls, point: Point, size: Size) -> Self:
         return cls(point, size)
 
     @classmethod
-    def from_points(cls, *points: Point):
+    def from_points(cls, *points: Point) -> Self:
         min_x: int = min(point.x for point in points)
         min_y: int = min(point.y for point in points)
         max_x: int = max(point.x for point in points)
@@ -640,24 +635,24 @@ class Rect(ConcreteValidator, KeywordValidator, SimpleBound):
         return cls(Point(min_x, min_y), Size(max_x - min_x, max_y - min_y))
 
     @classmethod
-    def from_vector(cls, v1: Vector2D, v2: Vector2D):
+    def from_vector(cls, v1: Vector2D, v2: Vector2D) -> Self:
         return cls(Point.from_vector(v1), Size.from_vector(v2))
 
-    def evolve_top(self, top: int):
+    def evolve_top(self, top: int) -> Self:
         return self.__class__(Point(self.point.x, top), self.size)
 
-    def evolve_bottom(self, bottom: int):
+    def evolve_bottom(self, bottom: int) -> Self:
         return self.__class__(self.point, Size(self.size.width, abs(self.point.y - bottom)))
 
-    def evolve_left(self, left: int):
+    def evolve_left(self, left: int) -> Self:
         return self.__class__(Point(left, self.point.y), self.size)
 
-    def evolve_right(self, right: int):
+    def evolve_right(self, right: int) -> Self:
         return self.__class__(self.point, Size(abs(self.point.x - right), self.size.height))
 
     def evolve(
         self, *, top: int | None = None, bottom: int | None = None, left: int | None = None, right: int | None = None
-    ):
+    ) -> Self:
         rect: Rect = self
         if top is not None:
             rect = rect.evolve_top(top)
