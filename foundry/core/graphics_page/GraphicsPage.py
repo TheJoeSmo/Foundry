@@ -48,7 +48,7 @@ class GraphicsPage(ConcreteValidator, KeywordValidator):
 
     def __bytes__(self) -> bytes:
         if self.path is None:
-            return bytes(ROM().bulk_read(CHR_ROM_SEGMENT_SIZE, self.offset, is_graphics=True))
+            return bytes(ROM()[slice(self.offset, self.offset + CHR_ROM_SEGMENT_SIZE), True])
         with open(self.path, "rb") as f:
             return f.read()[CHR_ROM_SEGMENT_SIZE * self.offset : CHR_ROM_SEGMENT_SIZE * (self.offset + 1)]
 

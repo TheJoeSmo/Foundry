@@ -78,12 +78,12 @@ def load_power_up_palettes() -> PaletteGroup:
 
 
 def load_power_up_offsets() -> list[int]:
-    return list(o for o in ROM().bulk_read(PLAYER_POWER_UPS, PLAYER_SUIT_PAGE_OFFSET))
+    return list(o for o in ROM()[PLAYER_SUIT_PAGE_OFFSET : PLAYER_SUIT_PAGE_OFFSET + PLAYER_POWER_UPS])
 
 
 def load_player_animations() -> list[PlayerAnimation]:
-    frame_data = ROM().bulk_read(SPRITES_PER_FRAME * PLAYER_FRAMES, PLAYER_FRAME_START)
-    offset_data = ROM().bulk_read(PLAYER_FRAMES, PLAYER_FRAME_PAGE_OFFSET)
+    frame_data = ROM()[PLAYER_FRAME_START : PLAYER_FRAME_START + SPRITES_PER_FRAME * PLAYER_FRAMES]
+    offset_data = ROM()[PLAYER_FRAME_PAGE_OFFSET : PLAYER_FRAME_PAGE_OFFSET + PLAYER_FRAMES]
     return load_animations(frame_data, offset_data)
 
 

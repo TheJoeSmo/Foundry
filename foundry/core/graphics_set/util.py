@@ -73,8 +73,8 @@ def get_graphics_pages_from_tileset(tileset: int) -> tuple[GraphicsPage, ...]:
     if tileset == UNDERGROUND:
         tileset = CORRECTED_UNDERGROUND
 
-    graphic_page_index_1 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages1)
-    graphic_page_index_2 = ROM().bulk_read(BG_PAGE_COUNT, Level_BG_Pages2)
+    graphic_page_index_1 = ROM()[slice(Level_BG_Pages1, Level_BG_Pages1 + BG_PAGE_COUNT)]
+    graphic_page_index_2 = ROM()[slice(Level_BG_Pages2, Level_BG_Pages2 + BG_PAGE_COUNT)]
     pages = [
         GraphicsPage(graphic_page_index_1[tileset]),
         GraphicsPage(graphic_page_index_1[tileset] + 1),

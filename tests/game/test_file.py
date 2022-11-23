@@ -204,9 +204,6 @@ Tests to ensure get and set item work properly
 def test_getitem(
     rom_singleton: ROM, index: int | slice | tuple[int, bool] | tuple[slice | bool], expected: int | bytearray
 ) -> None:
-    if isinstance(index, tuple):
-        if isinstance(index[0], int):
-            print(hex(len(rom_singleton.rom_data)), hex(rom_singleton.bulk_read(1, index[0], is_graphics=True)[0]))
     assert expected == rom_singleton[index]  # type: ignore
 
 
@@ -215,42 +212,24 @@ Tests to ensure that the ROM is being read from properly.
 """
 
 
-def test_bulk_read_header(rom_singleton: ROM):
-    assert bytes(
-        [0x4E, 0x45, 0x53, 0x1A, 0x10, 0x10, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0]
-    ) == rom_singleton.bulk_read(0x10, 0)
-
-
-def test_bulk_read_regular_program_bank(rom_singleton: ROM):
-    assert bytes(
-        [0xA0, 0xD3, 0x7B, 0xA2, 0x21, 0xA3, 0xA0, 0xD3, 0xA6, 0xA3, 0xDE, 0xA3, 0xAE, 0xA4, 0x2D, 0xAD]
-    ) == rom_singleton.bulk_read(0x10, 0x2010)
-
-
-def test_bulk_read_global_program_bank(rom_singleton: ROM):
-    assert bytes(
-        [0x0, 0x60, 0xB0, 0x61, 0x60, 0x63, 0x10, 0x65, 0xC0, 0x66, 0x70, 0x68, 0x20, 0x6A, 0xD0, 0x6B]
-    ) == rom_singleton.bulk_read(0x10, 0x3C010)
-
-
-def test_bulk_write_header(rom_singleton: ROM):
+def test_bulk_write_header(rom_singleton: ROM) -> None:
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0)
-    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0)
+    assert bytes([0] * 0x10) == rom_singleton[0x00:0x10]
 
 
-def test_bulk_write_regular_program_bank(rom_singleton: ROM):
+def test_bulk_write_regular_program_bank(rom_singleton: ROM) -> None:
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0x2010)
-    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x2010)
+    assert bytes([0] * 0x10) == rom_singleton[0x2010:0x2020]
 
 
-def test_bulk_write_global_program_bank(rom_singleton: ROM):
+def test_bulk_write_global_program_bank(rom_singleton: ROM) -> None:
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3C010)
-    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x3C010)
+    assert bytes([0] * 0x10) == rom_singleton[0x3C010:0x3C020]
 
 
 def test_bulk_write_end(rom_singleton: ROM):
     rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3FFFF)
-    assert bytes([0] * 0x10) == rom_singleton.bulk_read(0x10, 0x3FFFF)
+    assert bytes([0] * 0x10) == rom_singleton[0x3FFFF:0x4000F]
 
 
 def test_tagged_file(rom_singleton: ROM):

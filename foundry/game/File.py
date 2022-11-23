@@ -283,7 +283,8 @@ class ROM:
             tsa_index = rom[TSA_OS_LIST + tileset]
 
         tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
-        tsa_data = rom.bulk_read(TSA_TABLE_SIZE, rom.header.normalized_address(tsa_start))
+        tsa_offset: int = rom.header.normalized_address(tsa_start)
+        tsa_data = rom[tsa_offset : tsa_offset + TSA_TABLE_SIZE]
 
         assert len(tsa_data) == TSA_TABLE_SIZE
         return tsa_data
@@ -409,17 +410,6 @@ class ROM:
     @staticmethod
     def is_loaded() -> bool:
         return bool(ROM.path)
-
-    def bulk_read(self, count: int, position: int, *, is_graphics: bool = False) -> bytearray:
-        if not is_graphics:
-            position = self.header.normalized_address(position)
-
-        if position + count > len(self.rom_data):
-            raise IndexError(
-                f"Cannot read index at 0x{position + count:X} from a file of size 0x{len(self.rom_data):X}"
-            )
-
-        return ROM.rom_data[position : position + count]
 
     def bulk_write(self, data: bytearray, position: int):
         position = self.header.normalized_address(position)
