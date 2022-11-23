@@ -1,4 +1,5 @@
 from os.path import basename
+from pathlib import Path
 from random import getrandbits
 from typing import ClassVar, Self
 
@@ -6,7 +7,6 @@ from attr import attrs
 
 from foundry.gui.settings import FileSettings, load_file_settings, save_file_settings
 from foundry.smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
-from foundry.smb3parse.util.rom import Rom
 
 WORLD_MAP_TSA_INDEX = 12
 TSA_OS_LIST = PAGE_A000_ByTileset
@@ -217,13 +217,13 @@ class INESHeader:
         )
 
 
-class ROM(Rom):
+class ROM:
     NINTENDO_MARKER_VALUE: ClassVar[bytes] = bytes("SUPER MARIO 3", "ascii")
     MARKER_VALUE: ClassVar[bytes] = bytes("SMB3FOUNDRY", "ascii")
 
     rom_data = bytearray()
 
-    path: str = ""
+    path: Path = Path()
     name: str = ""
     header: INESHeader
     _settings: FileSettings
@@ -231,14 +231,12 @@ class ROM(Rom):
 
     W_INIT_OS_LIST: list[int] = []
 
-    def __init__(self, path: str | None = None):
+    def __init__(self, path: Path | None = None):
         if not ROM.rom_data:
             if path is None:
                 raise ValueError("Rom was not loaded!")
 
             ROM.load_from_file(path)
-
-        super().__init__(ROM.rom_data)
 
         self.point = 0
 
@@ -330,7 +328,7 @@ class ROM(Rom):
         str
             The identifier associated with this file.
         """
-        return str(self._id) if self._id is not None else self.path
+        return str(self._id) if self._id is not None else str(self.path)
 
     @property
     def settings(self) -> FileSettings:
@@ -349,7 +347,7 @@ class ROM(Rom):
         self._settings = settings
 
     @staticmethod
-    def load_from_file(path: str):
+    def load_from_file(path: Path):
         with open(path, "rb") as rom:
             data = bytearray(rom.read())
 
@@ -361,7 +359,7 @@ class ROM(Rom):
         ROM.header = INESHeader.from_data(ROM.rom_data)
 
     @staticmethod
-    def save_to_file(path: str, set_new_path=True):
+    def save_to_file(path: Path, set_new_path=True):
         with open(path, "wb") as f:
             f.write(bytearray(ROM.rom_data))
 
@@ -401,3 +399,32 @@ class ROM(Rom):
     def bulk_write(self, data: bytearray, position: int):
         position = self.header.normalized_address(position)
         self.rom_data[position : position + len(data)] = data
+
+    def little_endian(self, offset: int) -> int:
+        """
+        Takes a byte array of length 2 and returns the integer it represents in little endian.
+        """
+        first, second = self.rom_data[offset : offset + 2]
+        return (second << 8) + first
+
+    def write_little_endian(self, offset: int, integer: int) -> None:
+        left_byte, right_byte = integer & 0x00FF, (integer & 0xFF00) >> 8
+        self.write(offset, bytes([left_byte, right_byte]))
+
+    def read(self, offset: int, length: int) -> bytearray:
+        return self.rom_data[offset : offset + length]
+
+    def write(self, offset: int, data: bytes):
+        self.rom_data[offset : offset + len(data)] = data
+
+    def find(self, byte: bytes, offset: int = 0) -> int:
+        return self.rom_data.find(byte, offset)
+
+    def int(self, offset: int) -> int:
+        read_bytes = self.read(offset, 1)
+
+        return read_bytes[0]
+
+    def save_to(self, path: str):
+        with open(path, "wb") as file:
+            file.write(self.rom_data)
