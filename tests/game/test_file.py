@@ -215,22 +215,6 @@ Tests to ensure that the ROM is being read from properly.
 """
 
 
-def test_get_byte_start(rom_singleton: ROM):
-    assert 0x4E == rom_singleton.get_byte(0)
-
-
-def test_get_byte_regular_program_bank(rom_singleton: ROM):
-    assert 0xA0 == rom_singleton.get_byte(0x2010)
-
-
-def test_get_byte_global_program_bank(rom_singleton: ROM):
-    assert 0x00 == rom_singleton.get_byte(0x3C010)
-
-
-def test_get_byte_end(rom_singleton: ROM):
-    assert 0xF7 == rom_singleton.get_byte(0x3FFFF + 0x10)
-
-
 def test_bulk_read_header(rom_singleton: ROM):
     assert bytes(
         [0x4E, 0x45, 0x53, 0x1A, 0x10, 0x10, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0]

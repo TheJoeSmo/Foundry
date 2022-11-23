@@ -280,7 +280,7 @@ class ROM:
         if tileset == 0:
             tsa_index = WORLD_MAP_TSA_INDEX
         else:
-            tsa_index = rom.get_byte(TSA_OS_LIST + tileset)
+            tsa_index = rom[TSA_OS_LIST + tileset]
 
         tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
         tsa_data = rom.bulk_read(TSA_TABLE_SIZE, rom.header.normalized_address(tsa_start))
@@ -409,14 +409,6 @@ class ROM:
     @staticmethod
     def is_loaded() -> bool:
         return bool(ROM.path)
-
-    def get_byte(self, position: int) -> int:
-        position = self.header.normalized_address(position)
-
-        if position > len(self.rom_data):
-            raise IndexError(f"Cannot read index at 0x{position:X} from a file of size 0x{len(self.rom_data):X}")
-
-        return self.rom_data[position]
 
     def bulk_read(self, count: int, position: int, *, is_graphics: bool = False) -> bytearray:
         if not is_graphics:

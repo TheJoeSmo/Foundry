@@ -397,7 +397,7 @@ class LevelObject(GeneratorObject):
 
             for y in range(ending_graphic_height):
                 for x in range(page_width):
-                    block_index = rom.get_byte(rom_offset + y * page_width + x - 1)
+                    block_index = rom[rom_offset + y * page_width + x - 1]
 
                     block_position = (y_offset + y) * (rendered_size.width + 1) + x + page_limit + 1
                     blocks_to_draw[block_position] = block_index
@@ -579,7 +579,7 @@ class LevelObject(GeneratorObject):
     def _draw_block(
         self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: list[Block] | None = None
     ):
-        normalized_index: int = block_index if block_index <= 0xFF else ROM().get_byte(block_index)
+        normalized_index: int = block_index if block_index <= 0xFF else ROM()[block_index]
         block: Block = (
             blocks[normalized_index]
             if blocks is not None
