@@ -22,7 +22,7 @@ def headers():
 
 
 @given(integers(min_value=0), integers(min_value=0), integers(min_value=0), booleans(), booleans())
-def test_initializiation(prg_size, chr_size, mapper, mirroring, memory_backed):
+def test_initialization(prg_size, chr_size, mapper, mirroring, memory_backed):
     INESHeader(prg_size, chr_size, mapper, mirroring, memory_backed)
 
 
