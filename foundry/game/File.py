@@ -1,7 +1,7 @@
 from os.path import basename
 from pathlib import Path
 from random import getrandbits
-from typing import ClassVar, Self
+from typing import ClassVar, Self, overload
 
 from attr import attrs
 
@@ -239,6 +239,39 @@ class ROM:
             ROM.load_from_file(path)
 
         self.point = 0
+
+    @overload
+    def __getitem__(self, index: int | tuple[int, bool]) -> int:
+        pass
+
+    @overload
+    def __getitem__(self, index: slice | tuple[slice, bool]) -> bytearray:
+        pass
+
+    def __getitem__(self, index: int | tuple[int, bool] | slice | tuple[slice, bool]) -> int | bytearray:
+        if isinstance(index, tuple):
+            if len(index) != 2:
+                return NotImplemented
+            index_, graphics = index
+
+            if graphics and isinstance(index_, int):
+                return self.rom_data[self.header.normalized_address(index_)]
+            elif graphics and isinstance(index_, slice):
+                return self.rom_data[
+                    slice(
+                        self.header.normalized_address(index_.start),
+                        self.header.normalized_address(index_.stop),
+                        index_.step,
+                    )
+                ]
+            elif not graphics:
+                return self.rom_data[index_]
+            else:
+                return NotImplemented
+        elif isinstance(index, (int, slice)):
+            return self.rom_data[index]
+        else:
+            return NotImplemented
 
     @staticmethod
     def get_tsa_data(tileset: int) -> bytearray:

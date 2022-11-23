@@ -1,6 +1,6 @@
 from hypothesis import given
 from hypothesis.strategies import booleans, builds, integers
-from pytest import fixture, raises
+from pytest import fixture, mark, raises
 
 from foundry.game.File import ROM, INESHeader, InvalidINESHeader
 
@@ -150,6 +150,36 @@ def test_normalized_address_from_expanded_rom_high_bound(expanded_rom_header: IN
 @given(integers(min_value=0), headers())
 def test_normalized_address_with_same_size_do_not_change(address: int, header: INESHeader):
     assert address == header.normalized_address(address, header.program_size)
+
+
+"""
+Tests to ensure get and set item work properly
+"""
+
+
+@mark.parametrize(
+    "index,expected",
+    [
+        (0, 0x4E),
+        (0x2010, 0xA0),
+        (0x3C010, 0x00),
+        (0x4000F, 0xF7),
+        (
+            slice(0, 0x10),
+            bytearray([0x4E, 0x45, 0x53, 0x1A, 0x10, 0x10, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]),
+        ),
+        (
+            slice(0x2010, 0x2020),
+            bytearray([0xA0, 0xD3, 0x7B, 0xA2, 0x21, 0xA3, 0xA0, 0xD3, 0xA6, 0xA3, 0xDE, 0xA3, 0xAE, 0xA4, 0x2D, 0xAD]),
+        ),
+        (
+            slice(0x3C010, 0x3C020),
+            bytearray([0x0, 0x60, 0xB0, 0x61, 0x60, 0x63, 0x10, 0x65, 0xC0, 0x66, 0x70, 0x68, 0x20, 0x6A, 0xD0, 0x6B]),
+        ),
+    ],
+)
+def test_getitem(rom_singleton: ROM, index: int | slice, expected: int | bytearray) -> None:
+    assert expected == rom_singleton[index]
 
 
 """
