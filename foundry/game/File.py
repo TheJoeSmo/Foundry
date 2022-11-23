@@ -34,7 +34,7 @@ class INESHeader:
 
     Attributes
     ----------
-    INESHEADER_PREFIX: ClassVar[bytes]
+    INES_HEADER_PREFIX: ClassVar[bytes]
         The required prefix for any INES header.
     BASE_PROGRAM_SIZE: ClassVar[int]
         The base program size for a standard copy of SMB3.
@@ -58,7 +58,7 @@ class INESHeader:
         If the file contains battery-backed RAM between 0x6000 and 0x7FFF or any other form of persistent memory.
     """
 
-    INESHEADER_PREFIX: ClassVar[bytes] = bytes([0x4E, 0x45, 0x53, 0x1A])
+    INES_HEADER_PREFIX: ClassVar[bytes] = bytes([0x4E, 0x45, 0x53, 0x1A])
     BASE_PROGRAM_SIZE: ClassVar[int] = 0x40000
     PROGRAM_BANK_SIZE: ClassVar[int] = 0x4000
     CHARACTER_BANK_SIZE: ClassVar[int] = 0x2000
@@ -130,7 +130,7 @@ class INESHeader:
         InvalidINESHeader
             If the data does not follow an INES header.
         """
-        if INESHeader.INESHEADER_PREFIX != data[:4] or len(data) < 0x10:
+        if INESHeader.INES_HEADER_PREFIX != data[:4] or len(data) < 0x10:
             raise InvalidINESHeader(path)
 
         return cls(data[4], data[5], (data[6] & 0xF0) >> 4, bool(data[6] & 0b01), bool(data[6] & 0b10))
