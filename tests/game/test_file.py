@@ -207,7 +207,7 @@ def test_getitem(
     if isinstance(index, tuple):
         if isinstance(index[0], int):
             print(hex(len(rom_singleton.rom_data)), hex(rom_singleton.bulk_read(1, index[0], is_graphics=True)[0]))
-    assert expected == rom_singleton[index]
+    assert expected == rom_singleton[index]  # type: ignore
 
 
 """
