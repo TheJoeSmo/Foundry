@@ -1,6 +1,6 @@
 from os.path import basename
 from random import getrandbits
-from typing import ClassVar, TypeVar
+from typing import ClassVar, Self
 
 from attr import attrs
 
@@ -19,9 +19,6 @@ WORLD_MAP_TSA_INDEX = 12
 TSA_OS_LIST = PAGE_A000_ByTileset
 TSA_TABLE_SIZE = 0x400
 TSA_TABLE_INTERVAL = TSA_TABLE_SIZE + 0x1C00
-
-
-Self = TypeVar("Self")
 
 
 class InvalidINESHeader(TypeError):
@@ -119,7 +116,7 @@ class INESHeader:
         return self.CHARACTER_BANK_SIZE * self.character_banks
 
     @classmethod
-    def from_data(cls: type[Self], data: bytes, path: str | None = None) -> Self:
+    def from_data(cls, data: bytes, path: str | None = None) -> Self:
         """
         Generates an INES header from a file following the header.
 
