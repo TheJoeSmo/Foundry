@@ -8,13 +8,6 @@ from foundry.gui.settings import FileSettings, load_file_settings, save_file_set
 from foundry.smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
 from foundry.smb3parse.util.rom import Rom
 
-WORLD_COUNT = 9  # includes warp zone
-
-# W = WORLD_MAP
-# OS = OFFSET
-
-OS_SIZE = 2  # byte
-
 WORLD_MAP_TSA_INDEX = 12
 TSA_OS_LIST = PAGE_A000_ByTileset
 TSA_TABLE_SIZE = 0x400
