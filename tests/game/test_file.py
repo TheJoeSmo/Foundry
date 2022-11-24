@@ -2,6 +2,7 @@ from hypothesis import given
 from hypothesis.strategies import booleans, builds, integers
 from pytest import fixture, mark, raises
 
+from foundry.core import EndianType
 from foundry.game.File import ROM, INESHeader, InvalidINESHeader
 
 
@@ -205,6 +206,37 @@ def test_getitem(
     rom_singleton: ROM, index: int | slice | tuple[int, bool] | tuple[slice | bool], expected: int | bytearray
 ) -> None:
     assert expected == rom_singleton[index]  # type: ignore
+
+
+"""
+Tests for generic methods.
+"""
+
+
+@mark.parametrize(
+    "index,data,expected",
+    [
+        (0, bytes([0x4E]), 0),
+        (0, bytes([0x10]), 4),
+        (5, bytes([0x10]), 5),
+        (0, bytes([0x10, 0x10]), 4),
+    ],
+)
+def test_find(rom_singleton: ROM, index: int, data: bytes, expected: int) -> None:
+    assert expected == rom_singleton.find(data, index)
+
+
+@mark.parametrize(
+    "type_,value,expected",
+    [
+        (EndianType.LITTLE, 0x0100, [0, 1]),
+        (EndianType.BIG, 0x0001, [0, 1]),
+        (EndianType.LITTLE, 0x0001, [1, 0]),
+        (EndianType.BIG, 0x0100, [1, 0]),
+    ],
+)
+def test_from_endian(rom_singleton: ROM, type_: EndianType, value: int, expected: bytes) -> None:
+    assert list(expected) == list(rom_singleton.from_endian(value, type_))
 
 
 """
