@@ -1,15 +1,15 @@
 import pytest
 
+from foundry.game.File import ROM
 from foundry.smb3parse.constants import TILE_LEVEL_1
 from foundry.smb3parse.levels.world_map import WorldMap
-from foundry.smb3parse.util.rom import Rom
 
 
-def test_find_first_level_coordinates(rom: Rom):
-    original_rom_data = rom._data.copy()
+def test_find_first_level_coordinates(rom_singleton: ROM):
+    original_rom_data = rom_singleton.rom_data.copy()
 
     # get world 1 date
-    world_1 = WorldMap.from_world_number(rom, 1)
+    world_1 = WorldMap.from_world_number(rom_singleton, 1)
 
     # find point of level 1
     for coordinate in world_1.gen_positions():
@@ -27,7 +27,7 @@ def test_find_first_level_coordinates(rom: Rom):
 
     for i in range(0, len(original_rom_data), 0x10):
         original_data = list(map(hex, original_rom_data[i : i + 0x10]))
-        rom_data = list(map(hex, rom._data[i : i + 0x10]))
+        rom_data = list(map(hex, rom_singleton.rom_data[i : i + 0x10]))
 
         if original_data != rom_data:
             assert original_data == rom_data

@@ -1,13 +1,76 @@
 from __future__ import annotations
 
 import contextlib
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, MutableSequence, Sequence
+from enum import Enum, auto
 from reprlib import recursive_repr
-from typing import Any, TypeVar
+from typing import Any, Generic, TypeVar
 
 from attr import attrs
 
 _CMV = TypeVar("_CMV", bound="ChainMapView")
+_T = TypeVar("_T")
+
+
+class EndianType(Enum):
+    LITTLE = auto()
+    BIG = auto()
+
+
+class Endian:
+    def endian(self, index: int, endian: EndianType = EndianType.LITTLE, size: int = 2, *args) -> int:
+        raise NotImplementedError
+
+    @classmethod
+    def from_endian(cls, value: int, endian: EndianType = EndianType.LITTLE, size: int = 2, *args) -> bytes:
+        """
+        Generates a series of bytes associated with an integer of a specific endian type.
+
+        Parameters
+        ----------
+        value : int
+            The value of the integer to be converted.
+        endian : EndianType, optional
+            The endian type for the integer to be converted to, by default EndianType.LITTLE
+        size : int, optional
+            The amount of space the integer requires, by default 2
+
+        Returns
+        -------
+        bytes
+            The bytes associated with the converted integer of a specific endian.
+
+        Raises
+        ------
+        NotImplementedError
+            If an invalid EndianType is provided.
+        """
+        if endian == EndianType.LITTLE:
+            return value.to_bytes(size, "little")
+        elif endian == EndianType.BIG:
+            return value.to_bytes(size, "big")
+        raise NotImplementedError
+
+
+class Findable(Generic[_T]):
+    def find(self, value: _T | Sequence[_T], offset: int = 0) -> int:
+        raise NotImplementedError
+
+
+class FindableSequence(Sequence[_T], Findable[_T]):
+    pass
+
+
+class FindableEndianSequence(Sequence[_T], Findable[_T], Endian):
+    pass
+
+
+class FindableMutableSequence(MutableSequence[_T], FindableSequence[_T]):
+    pass
+
+
+class FindableEndianMutableSequence(FindableMutableSequence[_T], FindableEndianSequence[_T], Endian):
+    pass
 
 
 @attrs(slots=True, auto_attribs=True, init=False, frozen=True, hash=False)

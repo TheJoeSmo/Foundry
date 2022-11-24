@@ -1,3 +1,5 @@
+from collections.abc import MutableSequence
+
 from foundry.smb3parse.constants import TILESET_LEVEL_OFFSET
 from foundry.smb3parse.levels import (
     DEFAULT_HORIZONTAL_HEIGHT,
@@ -15,7 +17,7 @@ MARIO_Y_POSITIONS = [0x17, 0x04, 0x00, 0x14, 0x07, 0x0B, 0x0F, 0x18]  # 0x3D7A0 
 
 
 class LevelHeader:
-    def __init__(self, header_bytes: bytearray, tileset_number: int):
+    def __init__(self, header_bytes: MutableSequence[int], tileset_number: int):
         if len(header_bytes) != HEADER_LENGTH:
             raise ValueError(f"A level header is made up of {HEADER_LENGTH} bytes, but {len(header_bytes)} were given.")
 

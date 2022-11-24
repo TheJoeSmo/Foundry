@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from os.path import basename
 from pathlib import Path
 from random import getrandbits
@@ -5,6 +6,7 @@ from typing import ClassVar, Self, overload
 
 from attr import attrs
 
+from foundry.core import EndianType, FindableEndianMutableSequence
 from foundry.gui.settings import FileSettings, load_file_settings, save_file_settings
 from foundry.smb3parse.constants import BASE_OFFSET, PAGE_A000_ByTileset
 
@@ -217,7 +219,7 @@ class INESHeader:
         )
 
 
-class ROM:
+class ROM(FindableEndianMutableSequence[int]):
     NINTENDO_MARKER_VALUE: ClassVar[bytes] = bytes("SUPER MARIO 3", "ascii")
     MARKER_VALUE: ClassVar[bytes] = bytes("SMB3FOUNDRY", "ascii")
 
@@ -268,10 +270,62 @@ class ROM:
                 return self.rom_data[index_]
             else:
                 return NotImplemented
-        elif isinstance(index, (int, slice)):
+        elif isinstance(index, int):
+            if index > len(self.rom_data):
+                raise IndexError(f"0x{index:08X} exceeds 0x{len(self.rom_data):08X}")
+            return self.rom_data[index]
+        elif isinstance(index, slice):
+            if index.stop is not None and index.stop > len(self.rom_data):
+                raise IndexError(f"0x{index.stop:08X} exceeds 0x{len(self.rom_data):08X}")
             return self.rom_data[index]
         else:
             return NotImplemented
+
+    def __setitem__(self, key: int | slice, value: int) -> None:
+        pass
+
+    def __delitem__(self, key: int | slice) -> None:
+        self[key] = 0x00
+
+    def __iter__(self) -> Iterator[int]:
+        return iter(self.rom_data)
+
+    def __len__(self) -> int:
+        return len(self.rom_data)
+
+    def insert(self, index: int, value: int) -> None:
+        if self[index] != 0x00:
+            raise IndexError
+        self[index] = value
+
+    def endian(self, index: int, endian: EndianType = EndianType.LITTLE, size: int = 2, *args) -> int:
+        """
+        Provides an integer representation of data inside the file.
+
+        Parameters
+        ----------
+        index : int
+            The location to load the data
+        endian : EndianType, optional
+            The endian type, by default EndianType.LITTLE
+        size : int, optional
+            The count of bytes that the integer represents, by default 2
+
+        Returns
+        -------
+        int
+            The integer representation of data inside the file.
+
+        Raises
+        ------
+        NotImplementedError
+            If an invalid EndianType is provided.
+        """
+        if endian == EndianType.LITTLE:
+            return int.from_bytes(self.rom_data[index : index + size], "little")
+        elif endian == EndianType.BIG:
+            return int.from_bytes(self.rom_data[index : index + size], "big")
+        raise NotImplementedError
 
     @staticmethod
     def get_tsa_data(tileset: int) -> bytearray:
@@ -415,30 +469,15 @@ class ROM:
         position = self.header.normalized_address(position)
         self.rom_data[position : position + len(data)] = data
 
-    def little_endian(self, offset: int) -> int:
-        """
-        Takes a byte array of length 2 and returns the integer it represents in little endian.
-        """
-        first, second = self.rom_data[offset : offset + 2]
-        return (second << 8) + first
-
     def write_little_endian(self, offset: int, integer: int) -> None:
         left_byte, right_byte = integer & 0x00FF, (integer & 0xFF00) >> 8
         self.write(offset, bytes([left_byte, right_byte]))
-
-    def read(self, offset: int, length: int) -> bytearray:
-        return self.rom_data[offset : offset + length]
 
     def write(self, offset: int, data: bytes):
         self.rom_data[offset : offset + len(data)] = data
 
     def find(self, byte: bytes, offset: int = 0) -> int:
         return self.rom_data.find(byte, offset)
-
-    def int(self, offset: int) -> int:
-        read_bytes = self.read(offset, 1)
-
-        return read_bytes[0]
 
     def save_to(self, path: str):
         with open(path, "wb") as file:

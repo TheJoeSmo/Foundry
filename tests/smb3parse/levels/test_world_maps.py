@@ -1,6 +1,9 @@
+from typing import Literal
+
 import pytest
 
 from foundry.core.geometry import Point
+from foundry.game.File import ROM
 from foundry.smb3parse.constants import TILE_BOWSER_CASTLE
 from foundry.smb3parse.levels import WORLD_MAP_HEIGHT, WORLD_MAP_SCREEN_WIDTH
 from foundry.smb3parse.levels.world_map import (
@@ -38,27 +41,27 @@ world_1_addresses = [
 ]
 
 
-def test_list_world_map_addresses(rom):
-    assert world_map_addresses == list_world_map_addresses(rom)
+def test_list_world_map_addresses(rom_singleton: ROM):
+    assert world_map_addresses == list_world_map_addresses(rom_singleton)
 
 
-def test_list_all_world_maps_address(rom):
-    for world_map, world_map_address in zip(get_all_world_maps(rom), world_map_addresses):
+def test_list_all_world_maps_address(rom_singleton: ROM):
+    for world_map, world_map_address in zip(get_all_world_maps(rom_singleton), world_map_addresses):
         assert world_map.layout_address == world_map_address
 
 
-def test_list_all_world_maps_height(rom):
-    for world_map in get_all_world_maps(rom):
+def test_list_all_world_maps_height(rom_singleton: ROM):
+    for world_map in get_all_world_maps(rom_singleton):
         assert world_map.height == WORLD_MAP_HEIGHT
 
 
-def test_list_all_world_maps_screen_counts(rom):
-    for world_map, screen_count in zip(get_all_world_maps(rom), world_map_screen_counts):
+def test_list_all_world_maps_screen_counts(rom_singleton: ROM):
+    for world_map, screen_count in zip(get_all_world_maps(rom_singleton), world_map_screen_counts):
         assert world_map.screen_count == screen_count
 
 
-def test_list_all_world_maps_width(rom):
-    for world_map, screen_count in zip(get_all_world_maps(rom), world_map_screen_counts):
+def test_list_all_world_maps_width(rom_singleton: ROM):
+    for world_map, screen_count in zip(get_all_world_maps(rom_singleton), world_map_screen_counts):
         assert world_map.width == screen_count * WORLD_MAP_SCREEN_WIDTH
 
 
@@ -78,10 +81,10 @@ def test_get_level_at_position(world_1: WorldMap, row, column, tileset, level_ad
     assert level_tile == (tileset, level_address, enemy_address)
 
 
-def test_get_level_on_screen_2(rom):
-    level_2_4 = (0x9, 0x29C88, 0xD26F)
+def test_get_level_on_screen_2(rom_singleton: ROM):
+    level_2_4: tuple[Literal[9], Literal[171144], Literal[53871]] = (0x9, 0x29C88, 0xD26F)
 
-    world_2 = WorldMap.from_world_number(rom, 2)
+    world_2 = WorldMap.from_world_number(rom_singleton, 2)
 
     assert world_2.level_for_position(2, Point(2, 0)) == level_2_4
 
@@ -137,10 +140,10 @@ def test_get_tile(world_1: WorldMap):
     assert world_1.tile_at(1, Point(10, 2)) == level_4_tile
 
 
-def test_get_tile_second_screen(rom):
+def test_get_tile_second_screen(rom_singleton: ROM):
     tile_level_4 = 0x06
 
-    world_2 = WorldMap.from_world_number(rom, 2)
+    world_2 = WorldMap.from_world_number(rom_singleton, 2)
 
     assert world_2.tile_at(2, Point(2, 0)) == tile_level_4
 
@@ -151,12 +154,12 @@ def test_get_tile_fourth_screen(world_8: WorldMap):
     assert world_8.tile_at(4, Point(12, 5)) == bowser_castle
 
 
-def test_special_enterable_tiles(rom):
+def test_special_enterable_tiles(rom_singleton: ROM):
     first_special_tile = 0x50  # TILE_TOADHOUSE
 
     last_special_tile = TILE_BOWSER_CASTLE
 
-    special_enterable_tiles = _get_special_enterable_tiles(rom)
+    special_enterable_tiles = _get_special_enterable_tiles(rom_singleton)
 
     assert special_enterable_tiles.find(first_special_tile) == 0
     assert special_enterable_tiles.rfind(last_special_tile) == len(special_enterable_tiles) - 1

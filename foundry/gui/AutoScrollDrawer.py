@@ -146,12 +146,18 @@ class AutoScrollDrawer:
 
                 number_of_commands = movement_loop_end_index - movement_loop_start_index
 
-                movement_loop_commands = self.rom.read(
-                    AScroll_MovementLoop + movement_loop_start_index, number_of_commands
-                )
-                movement_loop_repeats = self.rom.read(
-                    AScroll_MovementLoopTicks + movement_loop_start_index, number_of_commands
-                )
+                movement_loop_commands = self.rom[
+                    AScroll_MovementLoop
+                    + movement_loop_start_index : AScroll_MovementLoop
+                    + movement_loop_start_index
+                    + number_of_commands
+                ]
+                movement_loop_repeats = self.rom[
+                    AScroll_MovementLoopTicks
+                    + movement_loop_start_index : AScroll_MovementLoopTicks
+                    + movement_loop_start_index
+                    + number_of_commands
+                ]
 
                 for _ in range(repeat):
                     for sub_command, sub_repeat in zip(movement_loop_commands, movement_loop_repeats):

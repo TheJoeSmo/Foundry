@@ -1,5 +1,6 @@
 import pytest
 
+from foundry.game.File import ROM
 from foundry.smb3parse.levels.world_map import WorldMap
 
 world_1_positions = [
@@ -45,8 +46,8 @@ world_8_positions = [
 
 
 @pytest.mark.parametrize("world_number, stock_positions", [(1, world_1_positions), (8, world_8_positions)])
-def test_get_all_level_locations_in_world(world_number, stock_positions, rom):
-    world: WorldMap = WorldMap.from_world_number(rom, world_number)
+def test_get_all_level_locations_in_world(world_number, stock_positions, rom_singleton: ROM):
+    world: WorldMap = WorldMap.from_world_number(rom_singleton, world_number)
 
     enterable_positions = []
 

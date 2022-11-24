@@ -1,13 +1,13 @@
+from collections.abc import MutableSequence
 from typing import Optional
 
 from foundry.smb3parse.levels import HEADER_LENGTH, LevelBase
 from foundry.smb3parse.levels.level_header import LevelHeader
 from foundry.smb3parse.objects.tileset import ensure_tileset
-from foundry.smb3parse.util.rom import Rom
 
 
 class Level(LevelBase):
-    def __init__(self, rom: Rom, tileset_number: int, layout_address: int, enemy_address: int):
+    def __init__(self, data: MutableSequence[int], tileset_number: int, layout_address: int, enemy_address: int):
         super().__init__(tileset_number, layout_address)
 
         self.tileset_number = tileset_number
@@ -15,11 +15,11 @@ class Level(LevelBase):
 
         self.world_map_position = None
 
-        self._rom = rom
+        self.data = data
 
         self.header_address = self.layout_address - HEADER_LENGTH
 
-        self.header_bytes = self._rom.read(self.header_address, HEADER_LENGTH)
+        self.header_bytes: MutableSequence[int] = self.data[self.header_address : self.header_address + HEADER_LENGTH]
 
         self.header = LevelHeader(self.header_bytes, self.tileset_number)
 
@@ -37,7 +37,7 @@ class Level(LevelBase):
         )
 
     @staticmethod
-    def from_world_map(rom: Rom, world_map_position) -> Optional["Level"]:
+    def from_world_map(data: MutableSequence[int], world_map_position) -> Optional["Level"]:
         level_info = world_map_position.level_info
 
         if level_info is None:
@@ -45,16 +45,16 @@ class Level(LevelBase):
 
         tileset_number, layout_address, enemy_address = level_info
 
-        level = Level(rom, tileset_number, layout_address, enemy_address)
+        level = Level(data, tileset_number, layout_address, enemy_address)
 
         level.set_world_map_position(world_map_position)
 
         return level
 
     @staticmethod
-    def from_memory(rom: Rom, tileset_number: int, layout_address: int, enemy_address: int):
+    def from_memory(data: MutableSequence[int], tileset_number: int, layout_address: int, enemy_address: int):
         ensure_tileset(tileset_number)
 
-        level = Level(rom, tileset_number, layout_address, enemy_address)
+        level = Level(data, tileset_number, layout_address, enemy_address)
 
         return level

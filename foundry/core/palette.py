@@ -68,7 +68,7 @@ def get_internal_palette_offset(tileset: int) -> int:
     int
         The absolute internal point of the tileset's palette group.
     """
-    return PALETTE_BASE_ADDRESS + ROM().little_endian(PALETTE_OFFSET_LIST + (tileset * PALETTE_OFFSET_SIZE))
+    return PALETTE_BASE_ADDRESS + ROM().endian(PALETTE_OFFSET_LIST + (tileset * PALETTE_OFFSET_SIZE))
 
 
 @attrs(slots=True, frozen=True, eq=True, hash=True)
@@ -558,7 +558,7 @@ class Palette(ConcreteValidator, KeywordValidator):
         AbstractPalette
             The palette that represents the absolute address in ROM.
         """
-        return cls(tuple(int(i) for i in ROM().read(address, COLORS_PER_PALETTE)))
+        return cls(tuple(int(i) for i in ROM()[address : address + COLORS_PER_PALETTE]))
 
     @classmethod
     @validate(color_indexes=SequenceValidator.generate_class(IntegerValidator), color_palette=ColorPalette)

@@ -86,6 +86,7 @@ class Level(LevelLike):
         rom = ROM()
 
         self.header_bytes = rom[self.header_offset : self.header_offset + Level.HEADER_LENGTH]
+        print(self.header_bytes, self.header_offset, self.header_offset + Level.HEADER_LENGTH)
         self._parse_header()
 
         object_data = ROM.rom_data[self.object_offset :]
