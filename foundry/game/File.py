@@ -347,7 +347,7 @@ class ROM(FindableEndianMutableSequence[int]):
     def write_tsa_data(tileset: int, tsa_data: bytearray):
         rom = ROM()
 
-        tsa_index = rom.int(TSA_OS_LIST + tileset)
+        tsa_index = rom[TSA_OS_LIST + tileset]
 
         if tileset == 0:
             # todo why is the tsa index in the wrong (seemingly) false?
