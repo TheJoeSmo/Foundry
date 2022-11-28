@@ -16,7 +16,7 @@ Foundry is the all-in-one editor for modifying copies of the North American rele
 
 Installation
 ------------
-To install and use Foundry, there are three options:
+To install and use Foundry, there are four options:
 
 1. [Download Foundry Executable](https://github.com/TheJoeSmo/Foundry/releases)
     
@@ -36,6 +36,17 @@ To install and use Foundry, there are three options:
     $ pip install -r requirements-dev.txt
     $ python -m foundry.main
     ```
+
+4. [Build Foundry in a Docker Container](https://docs.docker.com/)
+
+    This is a secondary developer method.  This provides a template to build and run Foundry on any machine.  This will require [Docker](https://docs.docker.com/get-docker/).  Once installed run the following commands into your terminal:
+
+    ```
+    $ git clone git@github.com:TheJoeSmo/Foundry.git
+    $ cd Foundry
+    $ docker built -t foundry-dev .
+    $ docker run -it --name foundry-dev --rm --volume $(pwd):/usr/src/app --net=host foundry-dev:latest sh
+    ``` 
 
 Documentation
 -------------
