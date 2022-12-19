@@ -44,7 +44,7 @@ To install and use Foundry, there are four options:
     ```
     $ git clone git@github.com:TheJoeSmo/Foundry.git
     $ cd Foundry
-    $ docker built -t foundry-dev .
+    $ docker build -t foundry-dev .
     $ docker run -it --name foundry-dev --rm --volume $(pwd):/usr/src/app --net=host foundry-dev:latest sh
     ``` 
 

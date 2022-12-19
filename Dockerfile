@@ -11,7 +11,7 @@ RUN apt-get update -y && apt-get install libxcb-xinerama0 libglib2.0-0 ffmpeg li
 RUN apt-get install -y git
 
 # Copy the repository
-COPY . ./foundry
+COPY . ./foundry/requirements-dev.txt
 
 # Download dependencies
 RUN pip install -r foundry/requirements-dev.txt
