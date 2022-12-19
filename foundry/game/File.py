@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from os.path import basename
 from pathlib import Path
 from random import getrandbits
@@ -253,7 +253,7 @@ class ROM(FindableEndianMutableSequence[int]):
     def __getitem__(self, index: int | tuple[int, bool] | slice | tuple[slice, bool]) -> int | bytearray:
         if isinstance(index, tuple):
             if len(index) != 2:
-                return NotImplemented
+                raise NotImplementedError
             index_, graphics = index
 
             if graphics and isinstance(index_, int):
@@ -269,7 +269,7 @@ class ROM(FindableEndianMutableSequence[int]):
             elif not graphics:
                 return self.rom_data[index_]
             else:
-                return NotImplemented
+                raise NotImplementedError
         elif isinstance(index, int):
             if index > len(self.rom_data):
                 raise IndexError(f"0x{index:08X} exceeds 0x{len(self.rom_data):08X}")
@@ -279,9 +279,9 @@ class ROM(FindableEndianMutableSequence[int]):
                 raise IndexError(f"0x{index.stop:08X} exceeds 0x{len(self.rom_data):08X}")
             return self.rom_data[index]
         else:
-            return NotImplemented
+            raise NotImplementedError
 
-    def __setitem__(self, key: int | slice, value: int) -> None:
+    def __setitem__(self, key: int | slice, value: int | bytes | bytearray | Sequence[int]) -> None:
         pass
 
     def __delitem__(self, key: int | slice) -> None:
