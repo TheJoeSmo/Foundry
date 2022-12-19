@@ -103,8 +103,10 @@ class Level(LevelLike):
 
     @property
     def fully_loaded(self):
-        """Whether this object represents a fully loaded PydanticLevel, meaning it was either loaded from a ROM or from an m3l
-        file. If this is false, it is probably just a place holder to use either from_bytes or from_m3l later."""
+        """
+        Whether this object represents a fully loaded PydanticLevel, meaning it was either loaded from a ROM or from
+        an m3l file. If this is false, it is probably just a place holder to use either from_bytes or from_m3l later.
+        """
         # objects, enemies and jumps could be empty, but there are always 9 header bytes, when a level is loaded
         return bool(self.header_bytes)
 

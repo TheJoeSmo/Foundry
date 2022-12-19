@@ -8,9 +8,11 @@ jobs:
   linting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: pre-commit/actions@v2.0.0
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - uses: pre-commit/actions@v3.0.0
 
   test:
     needs: linting
@@ -25,8 +27,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       # Check out the repo and set up python
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'  # cache dependencies

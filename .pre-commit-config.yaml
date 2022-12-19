@@ -1,23 +1,34 @@
+ci:
+    autofix_commit_msg: |
+        [pre-commit.ci] auto fixes from pre-commit.com hooks
+
+        for more information, see https://pre-commit.ci
+    autofix_prs: true
+    autoupdate_branch: ''
+    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+    autoupdate_schedule: weekly
+    skip: []
+    submodules: false
 repos:
   -   repo: https://github.com/asottile/pyupgrade
-      rev: v2.37.3
+      rev: v3.3.1
       hooks:
       -   id: pyupgrade
-          args: [--py310-plus]
+          args: [--py311-plus]
 
   - repo: https://github.com/psf/black
-    rev: 22.1.0
+    rev: 22.12.0
     hooks:
       - id: black
         additional_dependencies: ['click==8.0.4']
 
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
     hooks:
       - id: flake8
 
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.9.0
+    rev: 5.10.1
     hooks:
       - id: isort
         args: ["--profile", "black"]
