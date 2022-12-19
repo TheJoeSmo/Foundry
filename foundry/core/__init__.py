@@ -46,6 +46,7 @@ class Endian:
             If an invalid EndianType is provided.
         """
         if endian == EndianType.LITTLE:
+            print("auto", list(int(a) for a in value.to_bytes(size, "little")))
             return value.to_bytes(size, "little")
         elif endian == EndianType.BIG:
             return value.to_bytes(size, "big")

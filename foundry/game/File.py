@@ -282,7 +282,19 @@ class ROM(FindableEndianMutableSequence[int]):
             raise NotImplementedError
 
     def __setitem__(self, key: int | slice, value: int | bytes | bytearray | Sequence[int]) -> None:
-        pass
+        if isinstance(key, int):
+            if isinstance(value, int):
+                self.rom_data[key] = value
+            else:
+                self.rom_data[key : key + len(value)] = value
+        elif isinstance(key, slice):
+            if isinstance(value, int):
+                self.rom_data[key] = self.from_endian(value, size=key.stop - key.start)
+            else:
+                for value_index, key_index in enumerate(range(key.start, key.stop, key.step or 1)):
+                    self.rom_data[key_index] = value[value_index]
+        else:
+            raise NotImplementedError
 
     def __delitem__(self, key: int | slice) -> None:
         self[key] = 0x00

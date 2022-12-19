@@ -258,9 +258,8 @@ class WorldMap(LevelBase):
         column_value: int = ((point.screen - 1) << 4) + point.point.x
         self.data[level_point.x] = column_value
 
-        tileset_offset = (self.data.endian(OFFSET_BY_OBJECT_SET_A000 + tileset_number, size=1) * 2 - 10) * 0x1000
+        tileset_offset = (self.data[OFFSET_BY_OBJECT_SET_A000 + tileset_number] * 2 - 10) * 0x1000
         level_offset = level_address - tileset_offset - BASE_OFFSET
-
         self.data[level_offset_address : level_offset_address + 1] = self.data.from_endian(level_offset)
 
         enemy_offset = enemy_address - BASE_OFFSET
