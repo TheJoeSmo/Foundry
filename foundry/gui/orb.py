@@ -349,6 +349,6 @@ class Orb:
     """
 
     def __init__(self, parent):
-        rom_interface = RomInterface(ROM())
+        rom_interface = RomInterface(ROM.as_default())
         store = Store(rom_interface.read_state())
         View(parent, store, rom_interface)

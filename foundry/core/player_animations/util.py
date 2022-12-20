@@ -78,12 +78,12 @@ def load_power_up_palettes() -> PaletteGroup:
 
 
 def load_power_up_offsets() -> list[int]:
-    return list(o for o in ROM()[PLAYER_SUIT_PAGE_OFFSET : PLAYER_SUIT_PAGE_OFFSET + PLAYER_POWER_UPS])
+    return list(o for o in ROM.as_default()[PLAYER_SUIT_PAGE_OFFSET : PLAYER_SUIT_PAGE_OFFSET + PLAYER_POWER_UPS])
 
 
 def load_player_animations() -> list[PlayerAnimation]:
-    frame_data = ROM()[PLAYER_FRAME_START : PLAYER_FRAME_START + SPRITES_PER_FRAME * PLAYER_FRAMES]
-    offset_data = ROM()[PLAYER_FRAME_PAGE_OFFSET : PLAYER_FRAME_PAGE_OFFSET + PLAYER_FRAMES]
+    frame_data = ROM.as_default()[PLAYER_FRAME_START : PLAYER_FRAME_START + SPRITES_PER_FRAME * PLAYER_FRAMES]
+    offset_data = ROM.as_default()[PLAYER_FRAME_PAGE_OFFSET : PLAYER_FRAME_PAGE_OFFSET + PLAYER_FRAMES]
     return load_animations(frame_data, offset_data)
 
 
@@ -97,7 +97,7 @@ def load_animations(frame_data: bytes, offset_data: bytes) -> list[PlayerAnimati
 def save_player_animations_to_rom(
     power_up_offsets: bytes, palette_group: bytes, animations: bytes, page_offsets: bytes
 ):
-    rom = ROM()
+    rom = ROM.as_default()
     rom.bulk_write(bytearray(animations), PLAYER_FRAME_START)
     rom.bulk_write(bytearray(page_offsets), PLAYER_FRAME_PAGE_OFFSET)
     rom.bulk_write(bytearray(palette_group), PLAYER_POWER_UPS_PALETTES)

@@ -217,7 +217,7 @@ class BlockArray(QWidget):
         clear_layout(self.layout())
 
         for block_index in self.level_object.blocks:
-            normalized_index: int = block_index if block_index <= 0xFF else ROM()[block_index]
+            normalized_index: int = block_index if block_index <= 0xFF else ROM.as_default()[block_index]
             image = block_to_image(
                 Block.from_tsa(Point(0, 0), normalized_index, self.level_object.tsa_data),
                 self.level_object.palette_group,

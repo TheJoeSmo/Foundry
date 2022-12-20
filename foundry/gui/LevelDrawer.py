@@ -117,7 +117,7 @@ def _block_from_index(block_index: int, scale_factor: int, level: Level, transpa
 
     palette_group: PaletteGroup = PaletteGroup.from_tileset(level.tileset_number, level.header.object_palette_index)
     graphics_set: GraphicsSet = GraphicsSet.from_tileset(level.header.graphic_set_index)
-    tsa_data: bytearray = ROM().get_tsa_data(level.tileset_number)
+    tsa_data: bytearray = ROM.as_default().get_tsa_data(level.tileset_number)
     block: Block = Block.from_tsa(Point(0, 0), block_index, tsa_data)
 
     if transparent:

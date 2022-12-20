@@ -58,7 +58,7 @@ def open_file(parent: QWidget, path: str | None = None) -> str | None:
         return None
 
     try:
-        ROM.load_from_file(path)
+        ROM.from_file(path)
     except OSError as exp:
         QMessageBox.warning(parent, type(exp).__name__, f"Cannot open file '{path}'.")
         return None

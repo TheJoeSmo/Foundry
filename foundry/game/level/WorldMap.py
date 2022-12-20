@@ -20,7 +20,7 @@ OVERWORLD_GRAPHIC_SET = 0
 
 class WorldMap(LevelLike):
     def __init__(self, world_index):
-        self._internal_world_map = _WorldMap.from_world_number(ROM(), world_index)
+        self._internal_world_map = _WorldMap.from_world_number(ROM.as_default(), world_index)
 
         super().__init__(0, self._internal_world_map.layout_address)
 

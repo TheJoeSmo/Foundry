@@ -58,6 +58,6 @@ class PaletteGroupModel:
         )
 
         if rom is None:
-            rom = ROM()
+            rom = ROM.as_default()
         rom.write(bg_offset, bytes(self.background_palette_group))
         rom.write(spr_offset, bytes(self.sprite_palette_group))

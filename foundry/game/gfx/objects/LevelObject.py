@@ -388,7 +388,7 @@ class LevelObject(GeneratorObject):
             # ending graphics
             rom_offset = ENDING_OBJECT_OFFSET + self.tileset.get_ending_offset() * 0x60
 
-            rom = ROM()
+            rom = ROM.as_default()
 
             ending_graphic_height = 6
             floor_height = 1
@@ -579,7 +579,7 @@ class LevelObject(GeneratorObject):
     def _draw_block(
         self, painter: QPainter, block_index, x, y, block_length, transparent, blocks: list[Block] | None = None
     ):
-        normalized_index: int = block_index if block_index <= 0xFF else ROM()[block_index]
+        normalized_index: int = block_index if block_index <= 0xFF else ROM.as_default()[block_index]
         block: Block = (
             blocks[normalized_index]
             if blocks is not None

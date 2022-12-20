@@ -58,7 +58,7 @@ class LevelController:
 
     @property
     def title_suggestion(self) -> str:
-        return f"{self.parent.level_view.level_ref.level.name} - {ROM.name}"
+        return f"{self.parent.level_view.level_ref.level.name} - {ROM.as_default().name}"
 
     @property
     def last_position(self) -> tuple[int, int]:
@@ -93,7 +93,7 @@ class LevelController:
 
     @require_safe_to_change
     def on_select(self):
-        selector = LevelSelector(self.parent, ROM().settings, start_level=self.level_selector_last_level)
+        selector = LevelSelector(self.parent, ROM.as_default().settings, start_level=self.level_selector_last_level)
 
         if QDialog.DialogCode.Accepted == selector.exec():
             self.level_selector_last_level = selector.current_level_index
@@ -296,12 +296,14 @@ class LevelController:
 
     def display_header_editor(self):
         header_editor = HeaderEditor(
-            self.parent, level_to_header_state(self.level_ref.level, ROM().settings), ROM().settings  # type: ignore
+            self.parent,  # type: ignore
+            level_to_header_state(self.level_ref.level, ROM.as_default().settings),
+            ROM.as_default().settings,
         )
         header_editor.current_page = 3
 
         def update_level_header(state):
-            rom = ROM()
+            rom = ROM.as_default()
 
             self.level_ref.level.header_bytes = header_state_to_level_header(state)
             self.level_ref.level.name = state.info.display_information.name
@@ -313,7 +315,7 @@ class LevelController:
             index = get_level_index(levels, self.level_ref.level.object_offset, self.level_ref.level.enemy_offset)
             levels[index] = state.info
             rom._settings.levels = levels
-            ROM().settings = rom.settings
+            ROM.as_default().settings = rom.settings
             self.level_ref.data_changed.emit()
 
         header_editor.state_changed.connect(update_level_header)

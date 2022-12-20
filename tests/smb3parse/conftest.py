@@ -28,7 +28,7 @@ def rom_singleton():
             subprocess.run(["chmod", "+x", rom_directory / "asm6.exe"])  # Give file execution perms
 
     copyfile(rom_path, test_rom_path)
-    rom = ROM(test_rom_path)
+    rom = ROM.from_file(test_rom_path)
 
     yield rom
 

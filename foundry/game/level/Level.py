@@ -83,14 +83,14 @@ class Level(LevelLike):
             # probably loaded to become an m3l
             return
 
-        rom = ROM()
+        rom = ROM.as_default()
 
         self.header_bytes = rom[self.header_offset : self.header_offset + Level.HEADER_LENGTH]
         print(self.header_bytes, self.header_offset, self.header_offset + Level.HEADER_LENGTH)
         self._parse_header()
 
-        object_data = ROM.rom_data[self.object_offset :]
-        enemy_data = ROM.rom_data[self.enemy_offset :]
+        object_data = rom.rom_data[self.object_offset :]
+        enemy_data = rom.rom_data[self.enemy_offset :]
 
         self._load_level_data(object_data, enemy_data)
 

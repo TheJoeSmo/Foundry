@@ -1,3 +1,5 @@
+from collections.abc import Sequence
+
 from hypothesis import given
 from hypothesis.strategies import booleans, builds, integers
 from pytest import fixture, mark, raises
@@ -208,6 +210,58 @@ def test_getitem(
     assert expected == rom_singleton[index]  # type: ignore
 
 
+@mark.parametrize(
+    "index,value,expected_index,expected",
+    [
+        (0, 0, 0, 0),
+        (0, 1, 0, 1),
+        (0x2010, 0, 0x2010, 0),
+        (0x3C010, 1, 0x3C010, 1),
+        (0x4000F, 0, 0x4000F, 0),
+        (slice(0, 3), bytearray([0x00, 0x01, 0x02, 0x03]), slice(0, 3), bytearray([0x00, 0x01, 0x02, 0x03])),
+        (0, bytearray([0x00, 0x01, 0x02, 0x03]), slice(0, 3), bytearray([0x00, 0x01, 0x02, 0x03])),
+    ],
+)
+def test_setitem(
+    rom_singleton: ROM,
+    index: int | slice,
+    value: int | bytes | bytearray | Sequence[int],
+    expected_index: int | slice,
+    expected: Sequence[int],
+) -> None:
+    file: ROM = rom_singleton.copy()
+    file[index] = value
+    if isinstance(expected_index, int):
+        assert expected == file[expected_index]
+    else:
+        for index, offset in enumerate(range(expected_index.start, expected_index.stop, expected_index.step or 1)):
+            assert expected[index] == file[offset]
+
+
+def test_bulk_write_header(rom_singleton: ROM) -> None:
+    file: ROM = rom_singleton.copy()
+    file[0] = bytearray([0] * 0x10)
+    assert bytes([0] * 0x10) == file[0x00:0x10]
+
+
+def test_bulk_write_regular_program_bank(rom_singleton: ROM) -> None:
+    file: ROM = rom_singleton.copy()
+    file[0x2010] = bytearray([0] * 0x10)
+    assert bytes([0] * 0x10) == file[0x2010:0x2020]
+
+
+def test_bulk_write_global_program_bank(rom_singleton: ROM) -> None:
+    file: ROM = rom_singleton.copy()
+    file[0x3C010] = bytearray([0] * 0x10)
+    assert bytes([0] * 0x10) == file[0x3C010:0x3C020]
+
+
+def test_bulk_write_end(rom_singleton: ROM):
+    file: ROM = rom_singleton.copy()
+    file[0x3FFFF] = bytearray([0] * 0x10)
+    assert bytes([0] * 0x10) == file[0x3FFFF:0x4000F]
+
+
 """
 Tests for generic methods.
 """
@@ -237,32 +291,3 @@ def test_find(rom_singleton: ROM, index: int, data: bytes, expected: int) -> Non
 )
 def test_from_endian(rom_singleton: ROM, type_: EndianType, value: int, expected: bytes) -> None:
     assert list(expected) == list(rom_singleton.from_endian(value, type_))
-
-
-"""
-Tests to ensure that the ROM is being read from properly.
-"""
-
-
-def test_bulk_write_header(rom_singleton: ROM) -> None:
-    rom_singleton.bulk_write(bytearray([0] * 0x10), 0)
-    assert bytes([0] * 0x10) == rom_singleton[0x00:0x10]
-
-
-def test_bulk_write_regular_program_bank(rom_singleton: ROM) -> None:
-    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x2010)
-    assert bytes([0] * 0x10) == rom_singleton[0x2010:0x2020]
-
-
-def test_bulk_write_global_program_bank(rom_singleton: ROM) -> None:
-    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3C010)
-    assert bytes([0] * 0x10) == rom_singleton[0x3C010:0x3C020]
-
-
-def test_bulk_write_end(rom_singleton: ROM):
-    rom_singleton.bulk_write(bytearray([0] * 0x10), 0x3FFFF)
-    assert bytes([0] * 0x10) == rom_singleton[0x3FFFF:0x4000F]
-
-
-def test_tagged_file(rom_singleton: ROM):
-    assert rom_singleton.rom_data.find(rom_singleton.MARKER_VALUE) > 0

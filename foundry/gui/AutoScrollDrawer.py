@@ -35,7 +35,7 @@ class AutoScrollDrawer:
         self.horizontal_speed = 0
         self.vertical_speed = 0
 
-        self.rom = ROM()
+        self.rom = ROM.as_default()
 
         self.pixel_length = 1
 

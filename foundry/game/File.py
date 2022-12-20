@@ -14,6 +14,8 @@ WORLD_MAP_TSA_INDEX = 12
 TSA_OS_LIST = PAGE_A000_ByTileset
 TSA_TABLE_SIZE = 0x400
 TSA_TABLE_INTERVAL = TSA_TABLE_SIZE + 0x1C00
+MARKER_VALUE: bytes = bytes("SMB3FOUNDRY", "ascii")
+NINTENDO_MARKER_VALUE: bytes = bytes("SUPER MARIO 3", "ascii")
 
 
 class InvalidINESHeader(TypeError):
@@ -219,28 +221,94 @@ class INESHeader:
         )
 
 
+def generate_identity(data: bytearray) -> int | None:
+    """
+    Generates a identification tag for a file.  This enables the file to be references later on.
+
+    This tag will include the ROM_MARKER value and eight random bytes that serve as the ID of the file.
+
+    Returns
+    -------
+    int | None
+        The ID of the file, if the tag was successfully generated and applied.
+    """
+    nintendo_offset: int = data.find(NINTENDO_MARKER_VALUE)
+    if nintendo_offset == -1:
+        return None
+
+    # 8 random bytes to be used as the id.
+    identity: int = getrandbits(64)
+    data[nintendo_offset : nintendo_offset + len(MARKER_VALUE)] = identity.to_bytes(8, "little")
+    return identity
+
+
+def determine_identity(data: bytearray) -> int | None:
+    """
+    Determines the ID of a bytearray which represents the file.
+
+    Returns
+    -------
+    int | None
+        The ID of the file, if one can exist.
+    """
+    identity: int = data.find(MARKER_VALUE)
+
+    return (
+        generate_identity(data)
+        if identity == -1
+        else int.from_bytes(
+            data[identity + len(MARKER_VALUE) : identity + len(MARKER_VALUE) + 8],
+            "little",
+        )
+    )
+
+
 class ROM(FindableEndianMutableSequence[int]):
-    NINTENDO_MARKER_VALUE: ClassVar[bytes] = bytes("SUPER MARIO 3", "ascii")
-    MARKER_VALUE: ClassVar[bytes] = bytes("SMB3FOUNDRY", "ascii")
-
-    rom_data = bytearray()
-
-    path: Path = Path()
-    name: str = ""
-    header: INESHeader
-    _settings: FileSettings
-    _id: int | None
-
     W_INIT_OS_LIST: list[int] = []
 
-    def __init__(self, path: Path | None = None):
-        if not ROM.rom_data:
-            if path is None:
-                raise ValueError("Rom was not loaded!")
+    def __init__(
+        self, identity: int | None, path: Path, data: bytearray, name: str, header: INESHeader, settings: FileSettings
+    ) -> None:
+        self._id: int | None = identity
+        self.path: Path = path
+        self.rom_data: bytearray = data
+        self.name: str = name
+        self.header: INESHeader = header
+        self.settings = settings
 
-            ROM.load_from_file(path)
+    @staticmethod
+    def set_default(rom) -> None:
+        global _ROM
+        _ROM = rom
 
-        self.point = 0
+    @classmethod
+    def as_default(cls) -> Self:
+        if _ROM is None:
+            raise ValueError("No ROM is set as default")
+        return _ROM
+
+    def copy(self) -> Self:
+        return ROM(self._id, self.path, self.rom_data.copy(), self.name, self.header, self.settings)
+
+    @classmethod
+    def from_file(cls, path: Path, default: bool = True, set_identity: bool = True) -> Self:
+        with open(path, "rb") as f:
+            data: bytearray = bytearray(f.read())
+
+        identity: int | None = determine_identity(data) if set_identity else None
+        file: ROM = ROM(
+            identity,
+            path,
+            data,
+            basename(path),
+            INESHeader.from_data(data),
+            load_file_settings(str(identity)),
+        )
+
+        if default:
+            ROM.set_default(file)
+
+        return file
 
     @overload
     def __getitem__(self, index: int | tuple[int, bool]) -> int:
@@ -341,7 +409,7 @@ class ROM(FindableEndianMutableSequence[int]):
 
     @staticmethod
     def get_tsa_data(tileset: int) -> bytearray:
-        rom = ROM()
+        rom = ROM.as_default()
 
         if tileset == 0:
             tsa_index = WORLD_MAP_TSA_INDEX
@@ -357,7 +425,7 @@ class ROM(FindableEndianMutableSequence[int]):
 
     @staticmethod
     def write_tsa_data(tileset: int, tsa_data: bytearray):
-        rom = ROM()
+        rom = ROM.as_default()
 
         tsa_index = rom[TSA_OS_LIST + tileset]
 
@@ -367,56 +435,7 @@ class ROM(FindableEndianMutableSequence[int]):
 
         tsa_start = BASE_OFFSET + tsa_index * TSA_TABLE_INTERVAL
 
-        rom.bulk_write(tsa_data, tsa_start)
-
-    def generate_tag(self) -> int | None:
-        """
-        Generates a identification tag for a file.  This enables the file to be references later on.
-
-        This tag will include the ROM_MARKER value and eight random bytes that serve as the ID of the file.
-
-        Returns
-        -------
-        Optional[int]
-            The ID of the file, if the tag was successfully generated and applied.
-        """
-        with open(self.path, "rb") as rom:
-            data = bytearray(rom.read())
-
-        nintendo_id_offset = data.find(self.NINTENDO_MARKER_VALUE)
-
-        if nintendo_id_offset == -1:
-            return None
-
-        # 8 random bytes to be used as the id.
-        rom_id = getrandbits(64)
-
-        self.write(nintendo_id_offset, self.MARKER_VALUE + rom_id.to_bytes(8, "big"))
-
-        return rom_id
-
-    def get_id(self) -> int | None:
-        """
-        Determines the ID of the file.
-
-        Returns
-        -------
-        Optional[int]
-            The ID of the file, if one can exist.
-        """
-        with open(self.path, "rb") as rom:
-            data = bytearray(rom.read())
-
-        rom_id_start = data.find(self.MARKER_VALUE)
-
-        return (
-            self.generate_tag()
-            if rom_id_start == -1
-            else int.from_bytes(
-                data[rom_id_start + len(self.MARKER_VALUE) : rom_id_start + len(self.MARKER_VALUE) + 8],
-                "big",
-            )
-        )
+        rom[tsa_start] = tsa_data
 
     @property
     def identifier(self) -> str:
@@ -447,43 +466,26 @@ class ROM(FindableEndianMutableSequence[int]):
         self._settings = settings
 
     @staticmethod
-    def load_from_file(path: Path):
-        with open(path, "rb") as rom:
-            data = bytearray(rom.read())
-
-        ROM.rom_data = data
-        ROM.path = path
-        ROM.name = basename(path)
-        ROM._id = ROM().get_id()
-        ROM._settings = load_file_settings(str(ROM._id))
-        ROM.header = INESHeader.from_data(ROM.rom_data)
-
-    @staticmethod
     def save_to_file(path: Path, set_new_path=True):
-        with open(path, "wb") as f:
-            f.write(bytearray(ROM.rom_data))
+        if _ROM is None:
+            raise ValueError("ROM is not loaded")
 
-        save_file_settings(str(ROM._id), ROM._settings)
+        with open(path, "wb") as f:
+            f.write(bytearray(_ROM.rom_data))
+
+        save_file_settings(str(_ROM._id), _ROM._settings)
 
         if set_new_path:
-            ROM.path = path
-            ROM.name = basename(path)
-
-    @staticmethod
-    def set_additional_data(additional_data):
-        ROM.additional_data = additional_data
+            _ROM.path = path
+            _ROM.name = basename(path)
 
     @staticmethod
     def is_loaded() -> bool:
-        return bool(ROM.path)
+        return _ROM is not None
 
     def bulk_write(self, data: bytearray, position: int):
         position = self.header.normalized_address(position)
         self.rom_data[position : position + len(data)] = data
-
-    def write_little_endian(self, offset: int, integer: int) -> None:
-        left_byte, right_byte = integer & 0x00FF, (integer & 0xFF00) >> 8
-        self.write(offset, bytes([left_byte, right_byte]))
 
     def write(self, offset: int, data: bytes):
         self.rom_data[offset : offset + len(data)] = data
@@ -494,3 +496,6 @@ class ROM(FindableEndianMutableSequence[int]):
     def save_to(self, path: str):
         with open(path, "wb") as file:
             file.write(self.rom_data)
+
+
+_ROM: ROM | None = None

@@ -40,7 +40,7 @@ class GraphicsPage(ConcreteValidator, KeywordValidator):
 
     @property
     def offset(self) -> int:
-        return ROM().header.program_size + self.index * CHR_ROM_SEGMENT_SIZE + INESHeader.INES_HEADER_SIZE
+        return ROM.as_default().header.program_size + self.index * CHR_ROM_SEGMENT_SIZE + INESHeader.INES_HEADER_SIZE
 
     def __hash__(self) -> int:
         # We will assume that the path is the same most of the time to make hashing faster.
@@ -48,7 +48,7 @@ class GraphicsPage(ConcreteValidator, KeywordValidator):
 
     def __bytes__(self) -> bytes:
         if self.path is None:
-            return bytes(ROM()[slice(self.offset, self.offset + CHR_ROM_SEGMENT_SIZE), True])
+            return bytes(ROM.as_default()[slice(self.offset, self.offset + CHR_ROM_SEGMENT_SIZE), True])
         with open(self.path, "rb") as f:
             return f.read()[CHR_ROM_SEGMENT_SIZE * self.offset : CHR_ROM_SEGMENT_SIZE * (self.offset + 1)]
 

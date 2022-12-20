@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def _save_auto_rom():
-        ROM().save_to_file(auto_save_rom_path, set_new_path=False)
+        ROM.as_default().save_to_file(auto_save_rom_path, set_new_path=False)
 
     def _save_auto_data(self):
         if self.manager.controller is None:
@@ -247,7 +247,7 @@ class MainWindow(QMainWindow):
 
         path_to_temp_rom = temp_dir / "instaplay.rom"
 
-        ROM().save_to(str(path_to_temp_rom))
+        ROM.as_default().save_to(str(path_to_temp_rom))
 
         temp_rom = self._open_rom(path_to_temp_rom)
 
@@ -389,7 +389,7 @@ class MainWindow(QMainWindow):
         rom.write(Map_Power_DispResetLocation, bytes([nop, nop, nop]))
 
     def on_screenshot(self, _) -> bool:
-        recommended_file = f"{os.path.expanduser('~')}/{ROM.name} - {self.manager.title_suggestion}.png"
+        recommended_file = f"{os.path.expanduser('~')}/{ROM.as_default().name} - {self.manager.title_suggestion}.png"
 
         pathname, _ = QFileDialog.getSaveFileName(
             self, caption="Save Screenshot", dir=recommended_file, filter=IMG_FILE_FILTER
@@ -418,7 +418,7 @@ class MainWindow(QMainWindow):
 
         # Proceed loading the file chosen by the user
         try:
-            ROM.load_from_file(path_to_rom)
+            ROM.from_file(path_to_rom)
 
             if path_to_rom == auto_save_rom_path:
                 self._load_auto_save()
@@ -578,10 +578,10 @@ class MainWindow(QMainWindow):
 
     def _save_current_changes_to_file(self, pathname: str, set_new_path):
         for data in self.manager.to_data():
-            ROM().bulk_write(bytearray(data.data), data.location)
+            ROM.as_default().bulk_write(bytearray(data.data), data.location)
 
         try:
-            ROM().save_to_file(pathname, set_new_path)
+            ROM.as_default().save_to_file(pathname, set_new_path)
 
             self._save_auto_rom()
         except OSError as exp:

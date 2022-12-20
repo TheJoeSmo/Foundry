@@ -251,11 +251,11 @@ class LevelManager:
     @require_enabled
     def update(self, controller: LevelController):
         controller.update()
-        self.parent.level_view.file_settings = ROM().settings
+        self.parent.level_view.file_settings = ROM.as_default().settings
 
     @require_enabled
     def force_select(self, world: int, level: int, *, controller: LevelController):
-        selection = select_by_world_and_level(world, level, ROM().settings.levels)
+        selection = select_by_world_and_level(world, level, ROM.as_default().settings.levels)
         controller.update_level(
             selection.display_information.name if selection.display_information.name is not None else "",
             selection.generator_pointer - 9,

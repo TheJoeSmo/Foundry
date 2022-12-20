@@ -30,7 +30,7 @@ def test_level_reload_action(main_window):
 def test_load_m3l(main_window, qtbot):
     QFileDialog.getOpenFileName = _mocked_open_file_name
     # GIVEN the load from m3l action, th<t is visible from the menu
-    rom_data_before_load = ROM.rom_data.copy()
+    rom_data_before_load = ROM.as_default().rom_data.copy()
 
     open_m3l_action = main_window.open_m3l_action
 
@@ -48,4 +48,4 @@ def test_load_m3l(main_window, qtbot):
     assert main_window.manager.controller.level_ref.level.to_m3l() == m3l_data
 
     # also the current rom was not overwritten with any data
-    assert ROM.rom_data == rom_data_before_load
+    assert ROM.as_default().rom_data == rom_data_before_load
