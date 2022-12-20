@@ -1,12 +1,6 @@
-from foundry.smb3parse.util import little_endian
-
-
 class Rom:
     def __init__(self, rom_data: bytearray):
         self._data = rom_data
-
-    def little_endian(self, offset: int) -> int:
-        return little_endian(self._data[offset : offset + 2])
 
     def write_little_endian(self, offset: int, integer: int):
         right_byte = (integer & 0xFF00) >> 8
