@@ -2,12 +2,6 @@ class Rom:
     def __init__(self, rom_data: bytearray):
         self._data = rom_data
 
-    def write_little_endian(self, offset: int, integer: int):
-        right_byte = (integer & 0xFF00) >> 8
-        left_byte = integer & 0x00FF
-
-        self.write(offset, bytes([left_byte, right_byte]))
-
     def read(self, offset: int, length: int) -> bytearray:
         return self._data[offset : offset + length]
 
