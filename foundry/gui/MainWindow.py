@@ -1,10 +1,10 @@
 import base64
 import json
 import os
-import pathlib
 import shlex
 import subprocess
 import tempfile
+from pathlib import Path
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction, QCloseEvent, QKeySequence, QMouseEvent, QShortcut, Qt
@@ -242,7 +242,7 @@ class MainWindow(QMainWindow):
         Copies the ROM, including the current level, to a temporary directory, saves the current level as level 1-1 and
         opens the rom in an emulator.
         """
-        temp_dir = pathlib.Path(tempfile.gettempdir()) / "smb3foundry"
+        temp_dir = Path(tempfile.gettempdir()) / "smb3foundry"
         temp_dir.mkdir(parents=True, exist_ok=True)
 
         path_to_temp_rom = temp_dir / "instaplay.rom"
@@ -266,7 +266,7 @@ class MainWindow(QMainWindow):
         arguments = self.user_settings.instaplay_arguments.replace("%f", str(path_to_temp_rom))
         arguments = shlex.split(arguments, posix=False)
 
-        emu_path = pathlib.Path(self.user_settings.instaplay_emulator)
+        emu_path = Path(self.user_settings.instaplay_emulator)
 
         if emu_path.is_absolute():
             if emu_path.exists():
@@ -576,12 +576,13 @@ class MainWindow(QMainWindow):
         if not is_save_as:
             self.manager.safe_to_change = True
 
-    def _save_current_changes_to_file(self, pathname: str, set_new_path):
+    def _save_current_changes_to_file(self, pathname: Path, set_new_path):
+        rom: ROM = ROM.as_default()
         for data in self.manager.to_data():
-            ROM.as_default().bulk_write(bytearray(data.data), data.location)
+            rom[data.location] = data.data
 
         try:
-            ROM.as_default().save_to_file(pathname, set_new_path)
+            rom.save_to_file(pathname, set_new_path)
 
             self._save_auto_rom()
         except OSError as exp:

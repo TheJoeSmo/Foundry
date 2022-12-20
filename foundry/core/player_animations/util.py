@@ -98,7 +98,7 @@ def save_player_animations_to_rom(
     power_up_offsets: bytes, palette_group: bytes, animations: bytes, page_offsets: bytes
 ):
     rom = ROM.as_default()
-    rom.bulk_write(bytearray(animations), PLAYER_FRAME_START)
-    rom.bulk_write(bytearray(page_offsets), PLAYER_FRAME_PAGE_OFFSET)
-    rom.bulk_write(bytearray(palette_group), PLAYER_POWER_UPS_PALETTES)
-    rom.bulk_write(bytearray(power_up_offsets), PLAYER_SUIT_PAGE_OFFSET)
+    rom[PLAYER_FRAME_START] = animations
+    rom[PLAYER_FRAME_PAGE_OFFSET] = page_offsets
+    rom[PLAYER_POWER_UPS_PALETTES] = palette_group
+    rom[PLAYER_SUIT_PAGE_OFFSET] = power_up_offsets

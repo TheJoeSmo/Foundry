@@ -483,13 +483,6 @@ class ROM(FindableEndianMutableSequence[int]):
     def is_loaded() -> bool:
         return _ROM is not None
 
-    def bulk_write(self, data: bytearray, position: int):
-        position = self.header.normalized_address(position)
-        self.rom_data[position : position + len(data)] = data
-
-    def write(self, offset: int, data: bytes):
-        self.rom_data[offset : offset + len(data)] = data
-
     def find(self, byte: bytes, offset: int = 0) -> int:
         return self.rom_data.find(byte, offset)
 
