@@ -15,7 +15,3 @@ class Rom:
         read_bytes = self.read(offset, 1)
 
         return read_bytes[0]
-
-    def save_to(self, path: str):
-        with open(path, "wb") as file:
-            file.write(self._data)

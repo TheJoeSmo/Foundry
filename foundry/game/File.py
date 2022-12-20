@@ -449,35 +449,11 @@ class ROM(FindableEndianMutableSequence[int]):
         """
         return str(self._id) if self._id is not None else str(self.path)
 
-    @property
-    def settings(self) -> FileSettings:
-        """
-        Provides the settings for the file.
+    def save_to_file(self, path: Path | None = None) -> None:
+        with open(path if path is not None else self.path, "wb") as f:
+            f.write(bytearray(self.rom_data))
 
-        Returns
-        -------
-        FileSettings
-            The settings associated with this file.
-        """
-        return self._settings
-
-    @settings.setter
-    def settings(self, settings: FileSettings):
-        self._settings = settings
-
-    @staticmethod
-    def save_to_file(path: Path, set_new_path=True):
-        if _ROM is None:
-            raise ValueError("ROM is not loaded")
-
-        with open(path, "wb") as f:
-            f.write(bytearray(_ROM.rom_data))
-
-        save_file_settings(str(_ROM._id), _ROM._settings)
-
-        if set_new_path:
-            _ROM.path = path
-            _ROM.name = basename(path)
+        save_file_settings(self.identifier, self.settings)
 
     @staticmethod
     def is_loaded() -> bool:
@@ -485,10 +461,6 @@ class ROM(FindableEndianMutableSequence[int]):
 
     def find(self, byte: bytes, offset: int = 0) -> int:
         return self.rom_data.find(byte, offset)
-
-    def save_to(self, path: str):
-        with open(path, "wb") as file:
-            file.write(self.rom_data)
 
 
 _ROM: ROM | None = None

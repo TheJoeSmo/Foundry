@@ -46,7 +46,6 @@ from foundry.smb3parse.constants import (
     Title_PrepForWorldMap,
 )
 from foundry.smb3parse.levels.world_map import WorldMap as SMB3World
-from foundry.smb3parse.util.rom import Rom as SMB3Rom
 
 ROM_FILE_FILTER = "ROM files (*.nes *.rom);;All files (*)"
 M3L_FILE_FILTER = "M3L files (*.m3l);;All files (*)"
@@ -181,7 +180,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def _save_auto_rom():
-        ROM.as_default().save_to_file(auto_save_rom_path, set_new_path=False)
+        ROM.as_default().save_to_file(auto_save_rom_path)
 
     def _save_auto_data(self):
         if self.manager.controller is None:
@@ -247,21 +246,16 @@ class MainWindow(QMainWindow):
 
         path_to_temp_rom = temp_dir / "instaplay.rom"
 
-        ROM.as_default().save_to(str(path_to_temp_rom))
-
-        temp_rom = self._open_rom(path_to_temp_rom)
+        temp_rom: ROM = ROM.as_default.copy()
+        temp_rom.path = path_to_temp_rom
 
         self._put_current_level_to_level_1_1(temp_rom)
         self._set_default_powerup(temp_rom)
 
         self.side_palette.save(temp_rom)
 
-        temp_rom.write(
-            Title_PrepForWorldMap - 0x8,
-            bytes([self.user_settings.default_starting_world - 1]),
-        )
-
-        temp_rom.save_to(str(path_to_temp_rom))
+        temp_rom[Title_PrepForWorldMap - 0x8] = self.user_settings.default_starting_world - 1
+        temp_rom.save_to_file(path_to_temp_rom)
 
         arguments = self.user_settings.instaplay_arguments.replace("%f", str(path_to_temp_rom))
         arguments = shlex.split(arguments, posix=False)
@@ -283,14 +277,6 @@ class MainWindow(QMainWindow):
             subprocess.Popen([emulator, *arguments])
         except Exception as e:
             QMessageBox.critical(self, "Emulator command failed.", f"Check it under File > Settings.\n{str(e)}")
-
-    @staticmethod
-    def _open_rom(path_to_rom):
-        with open(path_to_rom, "rb") as smb3_rom:
-            data = smb3_rom.read()
-
-        rom = SMB3Rom(bytearray(data))
-        return rom
 
     def _put_current_level_to_level_1_1(self, rom) -> bool:
         # load world data
@@ -582,7 +568,9 @@ class MainWindow(QMainWindow):
             rom[data.location] = data.data
 
         try:
-            rom.save_to_file(pathname, set_new_path)
+            rom.save_to_file(pathname)
+            if set_new_path:
+                rom.path = pathname
 
             self._save_auto_rom()
         except OSError as exp:
