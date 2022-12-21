@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Generic, TypeVar
 
-from foundry.smb3parse.util.rom import Rom
+from foundry.game.File import ROM
 
 D = TypeVar("D")
 
@@ -20,7 +20,7 @@ class CodeEdit(ABC, Generic[D]):
 
     Attributes
     ----------
-    rom: Rom
+    rom: ROM
         The ROM to edit.
     address: int
         The address of the edit.
@@ -66,7 +66,7 @@ class CodeEdit(ABC, Generic[D]):
     target code areas isn't found in the shifted target location.
     """
 
-    rom: Rom
+    rom: ROM
     address: int
     length: int
     prefix: bytearray
@@ -78,7 +78,7 @@ class CodeEdit(ABC, Generic[D]):
         """
         if len(data) == 0:
             return True
-        return data == self.rom.read(test_address, len(data))
+        return data == self.rom[test_address : test_address + len(data)]
 
     def is_valid(self) -> bool:
         """

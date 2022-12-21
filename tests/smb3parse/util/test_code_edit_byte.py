@@ -1,38 +1,38 @@
 """ Test CodeEditByte implementation """
 import unittest
 
+from foundry.game.File import ROM
 from foundry.smb3parse.util.code_edit_byte import CodeEditByte
-from foundry.smb3parse.util.rom import Rom
 
 long_prefix = bytearray([0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF])
 long_postfix = bytearray([0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08])
 empty_affix = bytearray([])
 
 
-def get_test_rom() -> Rom:
+def get_test_rom() -> ROM:
     """Create valid test ROM"""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x100 - len(long_prefix), long_prefix)
-    rom.write(0x100, bytes([0x5A]))
-    rom.write(0x101, long_postfix)
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x100 - len(long_prefix)] = long_prefix
+    rom[0x100] = bytes([0x5A])
+    rom[0x101] = long_postfix
     return rom
 
 
 def test_length_is_1():
     """length of edit is 1 (because a byte)"""
-    edit = CodeEditByte(get_test_rom(), 0x100, [], [])
+    edit = CodeEditByte(get_test_rom(), 0x100, bytearray(), bytearray())
     assert 1 == edit.length
 
 
 def test_read():
     """read() gets the correct byte from ROM."""
-    edit = CodeEditByte(get_test_rom(), 0x100, [], [])
+    edit = CodeEditByte(get_test_rom(), 0x100, bytearray(), bytearray())
     assert 0x5A == edit.read()
 
 
 def test_read_invalid():
     """read() returns None when code area is invalid."""
-    edit = CodeEditByte(get_test_rom(), 0x100, [0x11], [])
+    edit = CodeEditByte(get_test_rom(), 0x100, bytearray([0x11]), bytearray())
     assert None is edit.read()
 
 
@@ -47,19 +47,19 @@ def test_write():
 def test_write_blocked_when_invalid():
     """write blocked when invalid"""
     rom = get_test_rom()
-    edit = CodeEditByte(rom, 0x100, [0x11], [])
+    edit = CodeEditByte(rom, 0x100, bytearray([0x11]), bytearray())
     edit.write(0xA5)
-    assert 0x5A == rom.read(0x100, 1)[0]
+    assert 0x5A == rom[0x100]
 
 
 class TestStringMethods(unittest.TestCase):
-    """Class for testing assertion error for OverflowError"""
+    """Class for testing assertion error for ValueError"""
 
     def test_write_larger_than_byte(self):
-        """if given more than a byte, an OverflowError is raised and write is
+        """if given more than a byte, an ValueError is raised and write is
         aborted."""
         edit = CodeEditByte(get_test_rom(), 0x100, long_prefix, long_postfix)
         assert 0x5A == edit.read()
-        with self.assertRaises(OverflowError):
+        with self.assertRaises(ValueError):
             edit.write(0x100)
         assert 0x5A == edit.read()

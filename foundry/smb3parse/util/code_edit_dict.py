@@ -6,8 +6,8 @@ into memory.
 """
 from typing import Any
 
+from foundry.game.File import ROM
 from foundry.smb3parse.util.code_edit import CodeEdit
-from foundry.smb3parse.util.rom import Rom
 
 
 class CodeEditDict(CodeEdit[Any]):
@@ -21,7 +21,7 @@ class CodeEditDict(CodeEdit[Any]):
 
     _options: dict
 
-    def __init__(self, rom: Rom, start_address: int, length: int, prefix: bytearray, options: dict, postfix: bytearray):
+    def __init__(self, rom: ROM, start_address: int, length: int, prefix: bytearray, options: dict, postfix: bytearray):
         """Initialize the CodeEdit area and sets the valid dictionary values
 
         options: dict
@@ -54,7 +54,7 @@ class CodeEditDict(CodeEdit[Any]):
         provided by the user during initialization.  If a matching abstract
         value isn't found, None is returned.
         """
-        rom_value = self.rom.read(self.address, self.length)
+        rom_value: bytearray = self.rom[self.address : self.address + self.length]
         for key, value in self._options.items():
             if rom_value == value:
                 return key
@@ -71,7 +71,7 @@ class CodeEditDict(CodeEdit[Any]):
         try:
             value = self._options[option]
             if len(value) is self.length:
-                self.rom.write(self.address, value)
+                self.rom[self.address] = value
         except KeyError:
             pass
 

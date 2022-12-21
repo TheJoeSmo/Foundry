@@ -20,7 +20,6 @@ from foundry.game.File import ROM
 from foundry.gui.CustomDialog import CustomDialog
 from foundry.gui.HorizontalLine import HorizontalLine
 from foundry.smb3parse.util.code_edit_dict import CodeEditDict
-from foundry.smb3parse.util.rom import Rom
 
 
 class _UIStrings(Enum):
@@ -102,7 +101,7 @@ class RomInterface:
     can also take in a State object and write that into the ROM data.
     """
 
-    def __init__(self, rom: Rom):
+    def __init__(self, rom: ROM):
         """Create all of the CodeEdit objects for all UI selections."""
         self.rom = rom
         nop_x_3 = bytearray([0xEA, 0xEA, 0xEA])
@@ -143,7 +142,7 @@ class RomInterface:
         self._stop_timer.write(state.touch_game_timer_stops)
 
     class StrayOrb:
-        def __init__(self, rom: Rom):
+        def __init__(self, rom: ROM):
             self._rom = rom
 
             self._jump_table = CodeEditDict(

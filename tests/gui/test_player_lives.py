@@ -1,6 +1,6 @@
 """ Tests for the Player Lives UI window """
+from foundry.game.File import ROM
 from foundry.gui.player_lives import Action, ActionNames, RomInterface, State, Store
-from foundry.smb3parse.util.rom import Rom
 
 DEFAULT_STARTING_LIVES = 5
 DEFAULT_CONTINUE_LIVES = 4
@@ -116,17 +116,17 @@ class CallbackTester:
 
 def test_read_state_starting_lives_invalid():
     """Test that starting lines state is None when the ROM is invalid."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().starting_lives
 
 
-def create_starting_lives_rom() -> Rom:
+def create_starting_lives_rom() -> ROM:
     """Create a test ROM that has valid starting lives section."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
 
-    rom.write(0x308E1 - 4, bytes([0xCA, 0x10, 0xF8, 0xA9]))
-    rom.write(0x308E1, bytes([0x04]))
-    rom.write(0x308E1 + 1, bytes([0x8D, 0x36, 0x07, 0x8D]))
+    rom[0x308E1 - 4] = bytes([0xCA, 0x10, 0xF8, 0xA9])
+    rom[0x308E1] = bytes([0x04])
+    rom[0x308E1 + 1] = bytes([0x8D, 0x36, 0x07, 0x8D])
     return rom
 
 
@@ -147,16 +147,16 @@ def test_write_state_starting_lives():
 
 def test_read_state_continue_lives_invalid():
     """Test when ROM invalid, continue lives read results in None."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().continue_lives
 
 
-def create_continue_lives_rom() -> Rom:
+def create_continue_lives_rom() -> ROM:
     """Creates a test ROM with valid section for Continue Lives"""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x3D2D6 - 4, bytes([0x08, 0xD0, 0x65, 0xA9]))
-    rom.write(0x3D2D6, bytes([0x04]))
-    rom.write(0x3D2D6 + 1, bytes([0x9D, 0x36, 0x07, 0xA5]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x3D2D6 - 4] = bytes([0x08, 0xD0, 0x65, 0xA9])
+    rom[0x3D2D6] = bytes([0x04])
+    rom[0x3D2D6 + 1] = bytes([0x9D, 0x36, 0x07, 0xA5])
     return rom
 
 
@@ -177,16 +177,16 @@ def test_write_state_continue_lives():
 
 def test_read_state_death_takes_lives_invalid():
     """Read of death takes lives None when invalid"""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().death_takes_lives
 
 
 def create_death_takes_lives_rom(value):
     """Create valid test ROM for death takes lives"""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x3D133 - 4, bytes([0x8B, 0x07, 0xD0, 0x05]))
-    rom.write(0x3D133, bytes(value))
-    rom.write(0x3D133 + 3, bytes([0x30, 0x0B, 0xA9, 0x80]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x3D133 - 4] = bytes([0x8B, 0x07, 0xD0, 0x05])
+    rom[0x3D133] = bytes(value)
+    rom[0x3D133 + 3] = bytes([0x30, 0x0B, 0xA9, 0x80])
     return rom
 
 
@@ -204,16 +204,16 @@ def test_read_state_death_takes_lives_true():
 
 def test_read_state_100_coins_invalid():
     """100 coins is None when ROM is invalid."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().hundred_coins_1up
 
 
 def create_100_coins_rom(value):
     """Create valid test ROM for 100 coins edit."""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x350A7 - 4, bytes([0x7D, 0xAE, 0x26, 0x07]))
-    rom.write(0x350A7, bytes(value))
-    rom.write(0x350A7 + 3, bytes([0xA9, 0x40, 0x8D, 0xF2]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x350A7 - 4] = bytes([0x7D, 0xAE, 0x26, 0x07])
+    rom[0x350A7] = bytes(value)
+    rom[0x350A7 + 3] = bytes([0xA9, 0x40, 0x8D, 0xF2])
     return rom
 
 
@@ -249,16 +249,16 @@ def test_100_coins_action():
 
 def test_read_state_end_card_invalid():
     """End card read is None when ROM is invalid."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().end_card_1up
 
 
 def create_end_card_rom(value):
     """Create valid test ROM for end card code edit"""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x5D99 - 4, bytes([0x60, 0xAE, 0x26, 0x07]))
-    rom.write(0x5D99, bytes(value))
-    rom.write(0x5D99 + 3, bytes([0xEE, 0x40, 0x04, 0x60]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x5D99 - 4] = bytes([0x60, 0xAE, 0x26, 0x07])
+    rom[0x5D99] = bytes(value)
+    rom[0x5D99 + 3] = bytes([0xEE, 0x40, 0x04, 0x60])
     return rom
 
 
@@ -294,16 +294,16 @@ def test_end_card_action():
 
 def test_read_state_mushroom_1up_invalid():
     """Mushroom 1up Read is None when ROM invalid"""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().mushroom_1up
 
 
 def create_mushroom_1up_rom(value):
     """Create valid test ROM for mushroom 1up"""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0xEB0F - 4, bytes([0x36, 0x07, 0x30, 0x03]))
-    rom.write(0xEB0F, bytes(value))
-    rom.write(0xEB0F + 3, bytes([0xA6, 0xCD, 0xBD, 0xA3]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0xEB0F - 4] = bytes([0x36, 0x07, 0x30, 0x03])
+    rom[0xEB0F] = bytes(value)
+    rom[0xEB0F + 3] = bytes([0xA6, 0xCD, 0xBD, 0xA3])
     return rom
 
 
@@ -339,16 +339,16 @@ def test_mushroom_action():
 
 def test_read_state_dice_game_invalid():
     """Read of Dice game is None when ROM is invalid"""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().dice_game_1up
 
 
 def create_dice_game_rom(value):
     """Create valid test ROM for Dice Game 1up."""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2CD78 - 4, bytes([0x60, 0xAE, 0x26, 0x07]))
-    rom.write(0x2CD78, bytes(value))
-    rom.write(0x2CD78 + 3, bytes([0xEE, 0x40, 0x04, 0x60]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x2CD78 - 4] = bytes([0x60, 0xAE, 0x26, 0x07])
+    rom[0x2CD78] = bytes(value)
+    rom[0x2CD78 + 3] = bytes([0xEE, 0x40, 0x04, 0x60])
     return rom
 
 
@@ -384,16 +384,16 @@ def test_dice_game_action():
 
 def test_read_state_roulette_game_invalid():
     """Roulette game read returns None when ROM is invalid."""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().roulette_1up
 
 
 def create_roulette_game_rom(value):
     """Create a test ROM for roulette code edit."""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2D2BE - 4, bytes([0x36, 0x07, 0x30, 0x03]))
-    rom.write(0x2D2BE, bytes(value))
-    rom.write(0x2D2BE + 3, bytes([0x4C, 0xD2, 0xD2, 0xCE]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x2D2BE - 4] = bytes([0x36, 0x07, 0x30, 0x03])
+    rom[0x2D2BE] = bytes(value)
+    rom[0x2D2BE + 3] = bytes([0x4C, 0xD2, 0xD2, 0xCE])
     return rom
 
 
@@ -429,16 +429,16 @@ def test_roulette_game_action():
 
 def test_read_state_card_game_invalid():
     """Card game read returns None on invalid ROM"""
-    rom = Rom(bytearray([0] * 0x50000))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
     assert None is RomInterface(rom).read_state().card_game_1up
 
 
 def create_card_game_rom(value):
     """Create a valid ROM for card game edit."""
-    rom = Rom(bytearray([0] * 0x50000))
-    rom.write(0x2DD50 - 4, bytes([0x0D, 0xAE, 0x26, 0x07]))
-    rom.write(0x2DD50, bytes(value))
-    rom.write(0x2DD50 + 3, bytes([0xA9, 0x40, 0x8D, 0xF2]))
+    rom: ROM = ROM(None, "test", bytearray([0] * 0x50000), "test", None, None)  # type: ignore
+    rom[0x2DD50 - 4] = bytes([0x0D, 0xAE, 0x26, 0x07])
+    rom[0x2DD50] = bytes(value)
+    rom[0x2DD50 + 3] = bytes([0xA9, 0x40, 0x8D, 0xF2])
     return rom
 
 
