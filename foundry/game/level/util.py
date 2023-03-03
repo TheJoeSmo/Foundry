@@ -340,11 +340,7 @@ def get_worlds(levels: list[PydanticLevel]) -> int:
     int
         The amount of worlds there are.
     """
-    worlds = 0
-    for level in levels:
-        if level.tileset == 0:
-            worlds += 1
-    return worlds
+    return sum(level.tileset == 0 for level in levels)
 
 
 def load_level_offsets() -> list[PydanticLevel]:
