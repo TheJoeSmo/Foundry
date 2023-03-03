@@ -1,5 +1,6 @@
 from collections import defaultdict
 from collections.abc import Generator
+from itertools import product
 from warnings import warn
 
 from foundry.core.geometry import Point
@@ -396,10 +397,10 @@ class WorldMap(LevelBase):
         Returns a generator, which yield WorldMapPosition objects, one screen at a time, one row at a time.
         """
 
-        for screen in range(1, self.screen_count + 1):
-            for row in range(WORLD_MAP_HEIGHT):
-                for column in range(WORLD_MAP_SCREEN_WIDTH):
-                    yield WorldMapPosition(self, screen, Point(column, row))
+        for screen, row, column in product(
+            range(1, self.screen_count + 1), range(WORLD_MAP_HEIGHT), range(WORLD_MAP_SCREEN_WIDTH)
+        ):
+            yield WorldMapPosition(self, screen, Point(column, row))
 
     def gen_levels(self):
         """
