@@ -417,12 +417,9 @@ class WorldMap(LevelBase):
 
     @staticmethod
     def from_world_number(rom: Rom, world_number: int) -> "WorldMap":
-        if not world_number - 1 in range(WORLD_COUNT):
+        if world_number - 1 not in range(WORLD_COUNT):
             raise ValueError(f"World number must be between 1 and {WORLD_COUNT}, including.")
-
-        memory_address = list_world_map_addresses(rom)[world_number - 1]
-
-        return WorldMap(memory_address, rom)
+        return WorldMap(list_world_map_addresses(rom)[world_number - 1], rom)
 
     def __repr__(self):
         return f"World {self.number}"
