@@ -134,14 +134,57 @@ DEFAULT_VERTICAL_WIDTH = 16
 
 
 def is_valid_level_length(level_length: int) -> bool:
+    """
+    Check if a level length is valid.
+
+    Parameters
+    ----------
+    level_length : int
+        The length of the level in bytes.
+
+    Returns
+    -------
+    bool
+        True if the level length is valid, False otherwise.
+
+    Notes
+    -----
+    A level length is considered valid if it is within the range of LEVEL_MIN_LENGTH
+    and LEVEL_MAX_LENGTH, inclusive, and a multiple of LEVEL_LENGTH_INTERVAL.
+
+    """
     return level_length in range(LEVEL_MIN_LENGTH, LEVEL_MAX_LENGTH + 1, LEVEL_LENGTH_INTERVAL)
 
 
 class LevelBase(ABC):
+    """
+    Abstract base class for representing a level in Super Mario Bros 3.
+
+    Attributes
+    ----------
+    width : int
+        The width of the level in blocks.
+    height : int
+        The height of the level in blocks.
+    layout_address : int
+        The address of the level's layout in memory.
+    tileset_number : int
+        The tileset number of the level.
+    """
+
     width: int
     height: int
 
-    def __init__(self, tileset_number: int, layout_address: int):
-        self.layout_address = layout_address
+    def __init__(self, tileset_number: int, layout_address: int) -> None:
+        """
+        Initializes a LevelBase object with the given tileset number and layout address.
 
+        Parameters
+        ----------
+        tileset_number : int
+            The tileset number of the level.
+        layout_address : int
+            The address of the level's layout in memory.
+        """
+        self.layout_address = layout_address
         self.tileset_number = tileset_number
