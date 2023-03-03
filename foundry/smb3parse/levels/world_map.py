@@ -127,8 +127,8 @@ class WorldMap(LevelBase):
 
         try:
             self.number = memory_addresses.index(layout_address) + 1
-        except ValueError:
-            raise ValueError(f"World map was not found at given memory address {hex(layout_address)}.")
+        except ValueError as e:
+            raise ValueError(f"World map was not found at given memory address {hex(layout_address)}.") from e
 
         self.height = WORLD_MAP_HEIGHT
 
@@ -293,7 +293,12 @@ class WorldMap(LevelBase):
         row_amount = col_amount = level_x_pos_list_start - level_y_pos_list_start
 
         row_start_index = sum(
-            [self.level_count_s1, self.level_count_s2, self.level_count_s3, self.level_count_s4][0 : point.screen - 1]
+            [
+                self.level_count_s1,
+                self.level_count_s2,
+                self.level_count_s3,
+                self.level_count_s4,
+            ][: point.screen - 1]
         )
 
         # find the row point
