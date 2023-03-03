@@ -344,5 +344,20 @@ def get_worlds(levels: list[PydanticLevel]) -> int:
 
 
 def load_level_offsets() -> list[PydanticLevel]:
+    """
+    Load and return a list of `PydanticLevel` objects from a JSON file.
+
+    The `PydanticLevel` objects contain level offset information for a game.  This function reads a JSON file containing
+    this information and returns a list of `PydanticLevel` objects constructed from the JSON data.
+
+    Returns
+    -------
+    list[PydanticLevel]:
+        A list of `PydanticLevel` objects, each representing level offset information for a game.
+
+    Raises
+    ------
+    JSONDecodeError: If the JSON file is invalid and cannot be parsed.
+    """
     with open(data_dir.joinpath("levels.json")) as f:
         return [PydanticLevel(**level) for level in loads(f.read())]
