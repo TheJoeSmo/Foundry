@@ -6,6 +6,7 @@ from foundry.core.graphics_set.GraphicsSet import GraphicsSet
 from foundry.core.palette import PaletteGroup
 from foundry.game.File import ROM
 from foundry.game.gfx.objects.MapObject import MapObject
+from foundry.game.gfx.objects.ObjectLike import ObjectLike
 from foundry.game.level.LevelLike import LevelLike
 from foundry.smb3parse.levels.world_map import (
     WORLD_MAP_HEIGHT,
@@ -86,12 +87,8 @@ class WorldMap(LevelLike):
     def get_all_objects(self):
         return self.objects
 
-    def object_at(self, point: Point):
-        for obj in reversed(self.objects):
-            if point in obj.rect:
-                return obj
-
-        return None
+    def object_at(self, point: Point) -> None | ObjectLike:
+        return next((obj for obj in reversed(self.objects) if point in obj.rect), None)
 
     def to_bytes(self):
         return_array = bytearray(len(self.objects))
@@ -111,11 +108,11 @@ class WorldMap(LevelLike):
 
         self._calc_size()
 
-    def get_object(self, index):
+    def get_object(self, index: int) -> None | ObjectLike:
         return self.objects[index]
 
-    def remove_object(self, obj):
-        self.objects.remove(obj)
+    def remove_object(self, object: ObjectLike) -> None:
+        self.objects.remove(object)
 
     def level_at_position(self, point: Point):
         assert isinstance(point, Point)
